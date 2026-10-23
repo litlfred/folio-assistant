@@ -264,7 +264,7 @@
   "Task_Ask": {
    "id": "Task_Ask",
    "name": "Put the merge to the owner, evidence first",
-   "type": "bpmn:Task",
+   "type": "bpmn:CallActivity",
    "lane": "Merging session",
    "skills": [
     {
@@ -272,6 +272,10 @@
      "href": "../../../reference/skill-instructions/merge-to-main.html"
     }
    ],
+   "calls": {
+    "name": "Ask the person",
+    "href": "ask-the-person.html"
+   },
    "role": {
     "name": "merge-steward",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",

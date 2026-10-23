@@ -64,6 +64,7 @@
         "Human actor",
         "Log operator (human)",
         "Owner",
+        "Person",
         "Reader (any actor)",
         "Subscriber (the folio's owner)"
       ],
@@ -77,6 +78,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_AskThePerson/Lane_Person",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
@@ -158,6 +160,15 @@
       "label": "Subscriber (the folio's owner)",
       "scopeNote": "Every CHOICE in the walk is made here and nowhere else: which substrate and at which commit, which of its subgraphs, asset classes and harnesses to hold. The engine never chooses a part on the subscriber's behalf — a subgraph not chosen stays referenced, which is a state, not an omission — and the pre-check on harness needs sends the choice back here rather than resolving it silently.",
       "source": "cat-harness/processes/library/subscribe-kg.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_AskThePerson/Lane_Person",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "label": "Person",
+      "scopeNote": "Answers with one tap. Typing is never required: the person this was written for has very limited hand function.",
+      "source": "cat-harness/processes/process/ask-the-person.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
@@ -951,6 +962,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
@@ -1026,6 +1038,15 @@
       "label": "Agent / platform (automated)",
       "scopeNote": "Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file's presence.\n\nIt is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer's lane instead.",
       "source": "cat-harness/processes/library/translation-workflow.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "label": "Agent",
+      "scopeNote": "Composes, writes and offers the question, then acts on the answer or the default. Never treats a dismissed card as a choice.",
+      "source": "cat-harness/processes/process/ask-the-person.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",

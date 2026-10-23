@@ -366,10 +366,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-23T20:32:08.425Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/35551e387e2c3889cf158fbbd072787d6eb73a72",
-  "sourceCommitSha": "35551e387e2c3889cf158fbbd072787d6eb73a72",
-  "sourceCommitAt": "2026-10-23T20:08:48Z",
+  "generatedAt": "2026-10-23T22:35:33.254Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6cf53d4a8cda2529e5cb085bb668c741f8cb7183",
+  "sourceCommitSha": "6cf53d4a8cda2529e5cb085bb668c741f8cb7183",
+  "sourceCommitAt": "2026-10-23T22:07:14Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -378,11 +378,11 @@
     "Capability": 27,
     "SkillPackage": 18,
     "Decision": 10,
-    "Process": 67,
-    "SequenceFlow": 889,
-    "Lane": 154,
-    "ProcessNode": 856,
-    "Tool": 175,
+    "Process": 68,
+    "SequenceFlow": 900,
+    "Lane": 156,
+    "ProcessNode": 868,
+    "Tool": 176,
     "Schema": 174,
     "ExternalSchema": 28,
     "GraphTypology": 51,
@@ -1217,7 +1217,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
-      "instructionLines": 610,
+      "instructionLines": 663,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1319,7 +1319,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/conduct/security/zero-trust-handover.md",
-      "instructionLines": 404,
+      "instructionLines": 405,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2884,7 +2884,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 1145,
+      "instructionLines": 1133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3529,7 +3529,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
-      "instructionLines": 707,
+      "instructionLines": 718,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -7156,8 +7156,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/Start_Process_CRDM_Close"
       ],
-      "nodeCount": 9,
-      "flowCount": 9,
+      "nodeCount": 10,
+      "flowCount": 10,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -7245,9 +7245,18 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_BA",
@@ -7458,6 +7467,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Archive the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "archive",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Phase complete",
@@ -7470,11 +7503,350 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Ask the person",
+      "summary": "The ONE way a question or decision is put to a person.",
+      "description": "The ONE way a question or decision is put to a person. Called as a subprocess from every step that asks; never run on its own. The rule it carries out is the box at the top of `interaction-modality`.\n\nWHY A SUBPROCESS. The asking rule lived only in a skill, and every diagram had its own ask step with no link to it. Each enforcement was keyed to one tool name (`AskUserQuestion`), so a host with a different question tool (the Claude projects `request_decision` Decision card) asked without the rule, and the owner got bare cards with no question or options (owner, 2026-10-23: \"this is PROCESS FAILURE ... maybe need better subprocess etc associations\"). One subprocess, called by every asking step, makes the association visible in the diagrams and checkable.\n\nTHE ORDER IS THE RULE: the full question goes in the chat FIRST, then the card. Once answered, a card shows only the chosen option; the chat text is the only lasting record of what was asked. This holds whatever the host's own tool guidance says.\n\nWHAT IT DOES NOT DO: decide. The caller owns the decision; this subprocess only gets an answer back to it, or the stated default when none comes.",
+      "enforcement": "strict",
+      "sourcePath": "processes/process/ask-the-person.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/ask-the-person.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/assets/img/workflows/ask-the-person.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson"
+      ],
+      "nodeCount": 10,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/End_Answered",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/End_Default",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Person",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Person",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/user",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Person"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "A question is due",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Compose the full question",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/decision-comparison"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Write it in the chat",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Offer the same options as a tappable card",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Choose an option",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Person",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Answered?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record the answer",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/symbiotic-interaction"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Proceed on the stated default, question left open",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/End_Answered",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Answer returned to the caller",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Answered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/node/End_Default",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Default taken, question still open",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Default"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CRDM_DataModel",
@@ -8538,7 +8910,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Ask who is acting",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_SessionStateMachine",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/user",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_SessionStateMachine/lane/Lane_Human",
@@ -8547,6 +8919,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_3"
       ],
@@ -24356,7 +24729,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Put the merge to the owner, evidence first",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_MergeToMain",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/merge-steward",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_MergeToMain/lane/Lane_Merger",
@@ -24366,6 +24739,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "note",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_MergeToMain/flow/m13"
       ],
@@ -31016,8 +31390,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/Start_Change"
       ],
-      "nodeCount": 15,
-      "flowCount": 16,
+      "nodeCount": 16,
+      "flowCount": 17,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -31169,9 +31543,18 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_CloseBean",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/End_Merged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/End_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
@@ -31478,6 +31861,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_CloseBean"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Archive the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "archive",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f17"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/node/End_Merged",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Merged",
@@ -31490,7 +31897,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f17"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#directory/processes",
@@ -34339,13 +34746,16 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Coordinate? How?",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_RelatedWork",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#role/user",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_RelatedWork/lane/Lane_User",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/interaction-modality"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_AskThePerson",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#process/Process_RelatedWork/flow/SF_Process_RelatedWork_4"
       ],
@@ -44691,6 +45101,58 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-validation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/tex-source-audit.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tools/theme-viewer.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "theme-viewer",
+      "title": "Themes viewer",
+      "description": "Render every theme in the checkout, the platform's and each instance's declared themes, with palette, contrast and art.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat theme:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/theme-viewer.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tools/themes-css.jsonld",
@@ -56885,8 +57347,8 @@
   ],
   "staging": {
     "branch": "claude/repin-ig-ast-l1",
-    "sha": "35551e387e2c3889cf158fbbd072787d6eb73a72",
+    "sha": "6cf53d4a8cda2529e5cb085bb668c741f8cb7183",
     "pr": "2638/merge",
-    "run": "40016946953"
+    "run": "40031522464"
   }
 }

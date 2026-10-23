@@ -212,7 +212,7 @@
   "A_AskWhoIsActing": {
    "id": "A_AskWhoIsActing",
    "name": "Ask who is acting",
-   "type": "bpmn:UserTask",
+   "type": "bpmn:CallActivity",
    "lane": "Human actor",
    "skills": [
     {
@@ -220,6 +220,10 @@
      "href": "../../../reference/skill-instructions/interaction-modality.html"
     }
    ],
+   "calls": {
+    "name": "Ask the person",
+    "href": "ask-the-person.html"
+   },
    "role": {
     "name": "user",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",

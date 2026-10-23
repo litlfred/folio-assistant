@@ -9743,6 +9743,272 @@
           "touchesWorkPlan": false
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+          ],
+          "description": "The ONE way a question or decision is put to a person. Called as a subprocess from every step that asks; never run on its own. The rule it carries out is the box at the top of `interaction-modality`.\n\nWHY A SUBPROCESS. The asking rule lived only in a skill, and every diagram had its own ask step with no link to it. Each enforcement was keyed to one tool name (`AskUserQuestion`), so a host with a different question tool (the Claude projects `request_decision` Decision card) asked without the rule, and the owner got bare cards with no question or options (owner, 2026-10-23: \"this is PROCESS FAILURE ... maybe need better subprocess etc associations\"). One subprocess, called by every asking step, makes the association visible in the diagrams and checkable.\n\nTHE ORDER IS THE RULE: the full question goes in the chat FIRST, then the card. Once answered, a card shows only the chosen option; the chat text is the only lasting record of what was asked. This holds whatever the host's own tool guidance says.\n\nWHAT IT DOES NOT DO: decide. The caller owns the decision; this subprocess only gets an answer back to it, or the stated default when none comes.",
+          "enforcement": "strict",
+          "flowCount": 9,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "Ask the person",
+          "nodeCount": 10,
+          "sourcePath": "processes/process/ask-the-person.bpmn",
+          "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/ask-the-person.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson",
+          "summary": "The ONE way a question or decision is put to a person."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "no",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Answered"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Default"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "Agent",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Person",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "Person",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1",
+          "name": "Compose the full question",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-comparison"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3",
+          "name": "Offer the same options as a tappable card",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7",
+          "name": "Proceed on the stated default, question left open",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6",
+          "name": "Record the answer",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/symbiotic-interaction",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2",
+          "name": "Write it in the chat",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Answered",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8",
+          "name": "Answer returned to the caller",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Default",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9",
+          "name": "Default taken, question still open",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5",
+          "name": "Answered?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "A question is due",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Person",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4",
+          "name": "Choose an option",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM",
           "@type": "bootstrap:Process",
           "conformsTo": [
@@ -10096,14 +10362,22 @@
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-close.svg",
           "description": "The stakeholders sign off, the BA confirms every criterion is met, the feature lands on `main` through the `merge-to-main` sub-process, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.",
           "enforcement": "strict",
-          "flowCount": 9,
+          "flowCount": 10,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "name": "CRDM close-out",
-          "nodeCount": 9,
+          "nodeCount": 10,
           "sourcePath": "processes/process/crdm-close.bpmn",
           "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-close.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/Start_Process_CRDM_Close",
           "summary": "The stakeholders sign off, the BA confirms every criterion is met, the feature lands on `main` through the `merge-to-main` sub-process, and only then does the agent close the issue."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Gate",
@@ -10178,7 +10452,7 @@
           "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
-          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close"
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
@@ -10203,6 +10477,23 @@
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "name": "Stakeholders",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4",
+          "name": "Archive the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "archive"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close",
@@ -10295,7 +10586,7 @@
           "bpmnType": "bpmn:EndEvent",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive",
           "name": "Phase complete",
           "nodeKind": "end",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
@@ -12777,7 +13068,8 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing",
           "@type": "bootstrap:ProcessNode",
-          "bpmnType": "bpmn:UserTask",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/lane/Lane_Human",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_3",
@@ -14602,10 +14894,10 @@
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/code-change-review.svg",
           "description": "Getting a change to the PLATFORM from \"this is needed\" to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else is not left holding.\n\nYou are in this process for a change to folio-assistant itself. `content-change-review` is the same shape for a folio's content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial.\n\nThe loop back through \"root-cause the failure\" is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear.",
           "enforcement": "strict",
-          "flowCount": 16,
+          "flowCount": 17,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "name": "Code change and review",
-          "nodeCount": 15,
+          "nodeCount": 16,
           "sourcePath": "processes/sdlc/code-change-review.bpmn",
           "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/code-change-review.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Start_Change",
@@ -14673,6 +14965,14 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f17",
           "@type": "bootstrap:SequenceFlow",
           "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_CloseBean",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview",
           "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/End_Merged"
@@ -14773,7 +15073,7 @@
           "bpmnType": "bpmn:EndEvent",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f17",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18",
           "name": "Merged",
           "nodeKind": "end",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview",
@@ -14846,6 +15146,23 @@
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/watch",
           "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_ArchiveBean",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f17",
+          "name": "Archive the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f18",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "archive"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_BranchAndAnnounce",
@@ -18273,7 +18590,8 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/node/Task_Ask",
           "@type": "bootstrap:ProcessNode",
-          "bpmnType": "bpmn:Task",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/lane/Lane_Merger",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/flow/m13",
@@ -21366,7 +21684,8 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork/node/U_Coordinate",
           "@type": "bootstrap:ProcessNode",
-          "bpmnType": "bpmn:Task",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork/lane/Lane_User",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork/flow/SF_Process_RelatedWork_4",
@@ -21376,6 +21695,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork",
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
           "touchesWorkPlan": false
         },
         {

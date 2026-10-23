@@ -354,6 +354,126 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_compose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Compose the full question"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What is being decided, stated as what will differ; every id, path and coined name glossed; every option with its letter, a one-line explanation and its trade-off; the recommendation, first and marked; what will happen if no answer comes. Can the reader answer without opening anything? If not, it is not ready. More than one decision open: ask the next one in full and give a count for the rest."
+        }
+      ],
+      "skos:notation": "A_Compose",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#A_Compose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_offercard",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Offer the same options as a tappable card"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whatever the host calls its selection tool (`AskUserQuestion`, `request_decision`, a button card): the same letters and labels as the chat text, the recommended option marked. No host card tool: say so in the chat and keep each answer to one short choice."
+        }
+      ],
+      "skos:notation": "A_OfferCard",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#A_OfferCard",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_proceedondefault",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Proceed on the stated default, question left open"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Do what the question said would happen with no answer, and say so. Nothing irreversible proceeds on a default: such a step waits for the person."
+        }
+      ],
+      "skos:notation": "A_ProceedOnDefault",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#A_ProceedOnDefault",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the answer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Hand the answer back to the calling step, quoted. If it settles how a kind of thing is decided, it is a rule: write it into the governing skill in the same turn."
+        }
+      ],
+      "skos:notation": "A_Record",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#A_Record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_writeinchat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write it in the chat"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Post the whole composed question as ordinary chat text BEFORE any card. This is the copy that survives: a card, once answered, shows only the chosen option, and a dismissed card shows nothing. Never \"see the card\", never a request for a typed reply such as \"1y 2n\"."
+        }
+      ],
+      "skos:notation": "A_WriteInChat",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#A_WriteInChat",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_asktheperson.u_choose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Choose an option"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One tap on the card, or any answer the person prefers to give. Free text is always available and never required."
+        }
+      ],
+      "skos:notation": "U_Choose",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#U_Choose",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_beanlifecycle.task_checkexists",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -611,6 +731,26 @@
       ],
       "skos:notation": "Task_AddressReview",
       "dcterms:source": "cat-harness/processes/sdlc/code-change-review.bpmn#Task_AddressReview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codechangereview.task_archivebean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Archive the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Move the bean, now completed, into the archive, with a line saying which process closed it. A bean still open stays where it is with a note saying why: only a completed or scrapped bean may be archived (check:bean-archive). The periodic sweep still archives anything this step leaves."
+        }
+      ],
+      "skos:notation": "Task_ArchiveBean",
+      "dcterms:source": "cat-harness/processes/sdlc/code-change-review.bpmn#Task_ArchiveBean",
       "skos:note": "candidate"
     },
     {
@@ -1471,6 +1611,26 @@
       ],
       "skos:notation": "Call_Signoff",
       "dcterms:source": "cat-harness/processes/process/crdm-requirements.bpmn#Call_Signoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_close.a_archivebean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Archive the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Move the bean, now completed, into the archive, with a line saying which process closed it. A bean still open stays where it is with a note saying why: only a completed or scrapped bean may be archived (check:bean-archive). The periodic sweep still archives anything this step leaves."
+        }
+      ],
+      "skos:notation": "A_ArchiveBean",
+      "dcterms:source": "cat-harness/processes/process/crdm-close.bpmn#A_ArchiveBean",
       "skos:note": "candidate"
     },
     {
