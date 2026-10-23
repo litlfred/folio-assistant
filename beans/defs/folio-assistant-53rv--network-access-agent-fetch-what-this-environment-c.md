@@ -74,6 +74,22 @@ Order:
 3. Task 2 (IRIS). IG repos: push to a branch `claude/53rv-iris-sources`, and do NOT open a PR. The owner approves PRs on IG repos. SUSHI must pass on the branch before any commit to an IG repo.
 4. Skip task 3 unless the owner asks.
 
+Coordination:
+- This bean is the shared log. The cloud thread "FHIR packages and sources" in the Folio Assistant project watches this branch and the mirror's `main`, and passes results on to the Publisher AST thread (a9tx). The device agent cannot message those threads, so pushing is how it reports.
+- Push after each step finishes (mirror commit, then bean note), not once at the end, so the waiting threads can start early.
+- Before each push, `git pull --rebase`, because other sessions commit to this bean branch too.
+
+Follow-up:
+- Each bean note says what was done, what is still open, and the exact next command. A later run (device or cloud) then resumes from the note without asking.
+- If the run stops part way, leave `status: in-progress` and add a line starting `NEXT:`.
+
+On failure:
+- Never commit a tarball whose `package/package.json` name or version doesn't match, or whose download was cut short. Record it as `FAILED <package>: <error>`.
+- A host that refuses or times out: retry twice, then record `BLOCKED <host>: <HTTP code or error>` and go on with the other items.
+- A missing IRIS item: record its title and the URL tried; don't substitute another edition.
+- SUSHI errors on an IG branch: don't commit to that IG. Record the first error lines and move on.
+- Any FAILED or BLOCKED line keeps the bean open. Set `status: todo` (not completed) and tell the owner in the run's final message.
+
 Report back: append a dated line to this bean listing the mirror commit, each IG's missing count and the IRIS branches, and set `status: completed` only when every Done-when box is ticked.
 
 Status 2026-10-23: none of the three tarballs is in the mirror yet. npm has only older versions (hl7.terminology 7.0.1, crmi 2.0.0-ballot, cqm 1.0.0), so npm is not a substitute. Cloud sessions still get 403 from packages.fhir.org, hl7.org and iris.who.int.
