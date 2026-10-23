@@ -689,10 +689,10 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: ig-indexes
-          path: |
-            */fhir-artifact-index/index.json
-            */fhir-artifact-index/menu.json
-            */fhir-artifact-index/releases.json
+          # The whole directory: index.json names the package.tgz (and the
+          # contexts/ and sidecars/) the same build writes beside it, so a
+          # reader given the index without them fails on the missing file.
+          path: '*/fhir-artifact-index/'
           if-no-files-found: error
           overwrite: true
           retention-days: 3
