@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-23T14:00:00Z
+updated_at: 2026-10-23T14:20:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -101,3 +101,8 @@ On failure:
 Report back: append a dated line to this bean listing the mirror commit, each IG's missing count and the IRIS branches, and set `status: completed` only when every Done-when box is ticked.
 
 Status 2026-10-23: none of the three tarballs is in the mirror yet. npm has only older versions (hl7.terminology 7.0.1, crmi 2.0.0-ballot, cqm 1.0.0), so npm is not a substitute. Cloud sessions still get 403 from packages.fhir.org, hl7.org and iris.who.int.
+
+_2026-10-23T14:20:00Z_ — SUSHI is not blocked in cloud sessions. It runs offline once the seeder fills the cache: read fhir-harness `fhir-validation` §"When a package host refuses you". Packages now reach the mirror without a device: `.github/workflows/mirror.yml` in fhir-package-mirror runs on a GitHub runner, which can reach packages.fhir.org. Mirror c344c47 added the task-1 list (terminology 7.3.0, crmi 2.0.0, cqm 2.0.0, sdc 4.0.0, pubpack 0.2.7, tools r4/r5 1.3.0, terminology.r4 7.4.0, terminology.r5 7.4.0) plus dependencies. Seeder results (`--mirror` c344c47, exact versions):
+- smart-base main b0b0e9f: 0 missing. SUSHI 3.21.0: 0 errors, 17 warnings.
+- smart-trust main 4854001: 5 missing, `ihe.iti.mcsd#3.8.0`, `smart.who.int.ph4h#0.9.9`, `ihe.iti.mhd#4.2.2`, `smart.who.int.base#0.1.0`, `ihe.iti.balp#1.1.3` (run without `--site-repo`). The "FHIR packages and sources" thread is adding these.
+- NEXT: seeder on smart-hiv, smart-base-clinical, smart-immunizations, smart-ra; mirror what it reports missing. (https://claude.ai/code/session_01169eBGfmkjqP7ZrdEh6kKp)
