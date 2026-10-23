@@ -416,6 +416,10 @@ jobs:
             echo "short_sha: \"${GITHUB_SHA:0:7}\""
             echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
+            # Where this commit's CI results appear. The site renders in
+            # parallel with CI and does not wait for it (owner, 2026-10-23),
+            # so it links to the results instead of stating them.
+            echo "checks_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}/checks\""
           } > cat-harness/docs/_data/build.yml
           cat cat-harness/docs/_data/build.yml
 
@@ -1053,11 +1057,12 @@ jobs:
       - name: Write the build stamp for client-side readers
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          CHECKS_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}/checks
         run: |
           MARKERS=$(git rev-parse --path-format=absolute --git-path branch-mounts)
           MOUNTS=$(jq -n '[inputs | select(.id and .tip) | {(.id): .tip}] | add // {}' "$MARKERS"/*.json 2>/dev/null) || MOUNTS='{}'
-          jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" \
-            --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, mounts: $mounts}' > ./_site/build.json
+          jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" --arg checksUrl "$CHECKS_URL" \
+            --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, checksUrl: $checksUrl, mounts: $mounts}' > ./_site/build.json
           cat ./_site/build.json
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
