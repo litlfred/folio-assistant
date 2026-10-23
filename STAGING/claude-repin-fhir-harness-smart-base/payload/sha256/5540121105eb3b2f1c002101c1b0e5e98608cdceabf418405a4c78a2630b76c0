@@ -63,8 +63,10 @@ repository's own branch family: the site and the artefact index
 ([`ig-build-pipeline`](skills/fhir-ig-base/ig-build-pipeline.md), "The IG
 repository's site route"; `ig-repo-site.ts`, `ast-to-artifact-index.ts`), and
 its entry in the `ig-ast` viewer (`gen-ig-ast-pages.ts`, inherited through
-`needs`). **Read that skill and the IG's own AGENTS.md before proposing a
+`needs`). Its `fhir-artifact-index/` (index, menu, releases) is written at
+publish by `ig-index:build` (`build-ig-indexes.ts`) from the same AST and the
+IG's own `sushi-config.yaml`, so an IG instance commits none (#124). **Read that skill and the IG's own AGENTS.md before proposing a
 folder, page or declaration for an IG.** An IG instance that does declare such
-directories does so only because an index mounts files it commits. That is an
-exception, not a pattern to copy. Owner, 2026-10-23: the AST listing "should
+directories does so only because an index still mounts files it commits,
+which #124 retires. That is an exception, not a pattern to copy. Owner, 2026-10-23: the AST listing "should
 be inherited", because the IG depends on this layer.

@@ -61,8 +61,13 @@ declares `remedies` per host it reaches (`check:tools` keeps it so), and
 host it finds unreachable. For packages.fhir.org it is
 `fhir-cache-seed-npm --sushi-config sushi-config.yaml`, and for versions npm
 does not carry, `--mirror` from a repository that `fhir-package-mirror`
-filled on a machine that reaches the host. A GitHub Actions runner is such a
-machine, and a cloud session can drive it alone: push a `claude/mirror-*`
+filled on a machine that reaches the host. Pin that repository with
+`--mirror-commit <full 40-character SHA>`: git cannot fetch an abbreviated
+SHA from a remote, and the seeder refuses one by name (2026-10-23, a short
+`c344c47` dropped the mirror and reported its 3 packages missing).
+
+A GitHub Actions runner reaches the host, and a cloud session can drive it
+alone to fill the mirror: push a `claude/mirror-*`
 branch that edits `packages.txt` in the mirror repository, wait for its
 `mirror.yml` run, merge, re-seed. No person's device is needed (2026-10-23,
 bean `53rv`).

@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-23T22:59:10.283Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7d5ef56b5295c828e1431772474eb49c05f80e8b",
-  "sourceCommitSha": "7d5ef56b5295c828e1431772474eb49c05f80e8b",
-  "sourceCommitAt": "2026-10-23T22:44:36Z",
+  "generatedAt": "2026-10-23T23:51:56.153Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7d41a408000bf77c35bf9b16623d74d302f60ad1",
+  "sourceCommitSha": "7d41a408000bf77c35bf9b16623d74d302f60ad1",
+  "sourceCommitAt": "2026-10-23T23:35:18Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -446,7 +446,7 @@
       "name": "fhir-validation",
       "title": "fhir-validation",
       "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
-      "instructionLines": 110,
+      "instructionLines": 115,
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
@@ -4709,13 +4709,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_jsonld_vocabularies.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -4729,7 +4730,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -4747,14 +4748,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_logical_model_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The Publisher's `output/`.",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -4768,7 +4769,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -5109,13 +5110,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_valueset_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -5129,7 +5131,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -5140,8 +5142,8 @@
   ],
   "staging": {
     "branch": "claude/repin-fhir-harness-smart-base",
-    "sha": "7d5ef56b5295c828e1431772474eb49c05f80e8b",
+    "sha": "7d41a408000bf77c35bf9b16623d74d302f60ad1",
     "pr": "2655/merge",
-    "run": "40035554011"
+    "run": "40040517201"
   }
 }
