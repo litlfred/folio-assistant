@@ -2,11 +2,11 @@
 # folio-assistant-cy4p
 $schema: bean/1.0.0
 title: 'BPMN ENGINE: a Tool node, with downcompilation per coding agent'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-23T08:00:00Z
+updated_at: 2026-10-23T13:35:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -100,7 +100,9 @@ Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
 
 **Option 1: checklist-as-skill through `skills:install`, engine over MCP.** No per-agent compiler. Every host `skills:install` targets (Claude Code, Antigravity; Gemini CLI, Cursor, Copilot pending in `folio-assistant-x4mt`) consumes Markdown, and the generated checklist already is Markdown. So the downcompile is: install each diagram's committed `<stem>.checklist.md` as one skill per host, prefixed per harness (x4mt ruling). Agents with MCP use `bpmn-engine`, which refuses a wrong turn; agents without it walk the checklist by hand. Rejected for now: a Claude Code hook that blocks tool calls when the step is not enabled (option 2), and a native format per agent (option 3).
 
-- [ ] `skills:install` emits one skill per committed checklist, for every host it supports, and the installed text says it is generated from the `.bpmn`
+- [x] `skills:install` emits one skill per committed checklist, for every host it supports, and the installed text says it is generated from the `.bpmn`
 - Depends on: checklists committed and gated (item above); further hosts arrive with x4mt.
 
 _2026-10-23T08:00:00Z_ — The remaining box is built and 100% green in CI on `litlfred/cat-harness-tools#441` (`skills:install: install each committed BPMN checklist as a process skill (cy4p)`, head `2d291d909c`), with `litlfred/cat-harness-tools#445` (`skills:install: Gemini CLI, Cursor and Copilot hosts (0nxe)`, head `7f61ce4833`, also 100% green) stacked on top. Closes once `#441` merges.
+
+_2026-10-23T13:35:00Z_ — Closed. Owner said "merge all three": `litlfred/cat-harness-tools#441` merged (b22e3a7, one `process-<stem>` skill per committed checklist), `#445` merged (cdfce51, Gemini CLI, Cursor and Copilot hosts), and `litlfred/folio-assistant-core#149` merged (5f1662e). Every box is ticked. Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
