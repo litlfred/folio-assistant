@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-boot-dir-exit-status/tool-types/NamespaceLayer.schema.json",
+  "title": "NamespaceLayer",
+  "type": "string",
+  "enum": [
+    "bootstrap",
+    "harness",
+    "core"
+  ],
+  "description": "A namespace layer: bootstrap resolves before anything else, then harness, then core.",
+  "staging": {
+    "branch": "claude/boot-dir-exit-status",
+    "sha": "a181af5a3cacd15f95ae90cd65253c32f85b1aeb",
+    "pr": "2634/merge",
+    "run": "39958278011"
+  }
+}

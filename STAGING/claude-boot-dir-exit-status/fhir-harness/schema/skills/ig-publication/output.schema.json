@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IG Publication Output",
+  "description": "Output schema for FHIR IG publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "publishedUrl"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    },
+    "releaseBranch": {
+      "type": "string"
+    },
+    "publicationRequestPath": {
+      "type": "string"
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
+  "staging": {
+    "branch": "claude/boot-dir-exit-status",
+    "sha": "a181af5a3cacd15f95ae90cd65253c32f85b1aeb",
+    "pr": "2634/merge",
+    "run": "39958278011"
+  }
+}

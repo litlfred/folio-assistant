@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-boot-dir-exit-status/tool-types/TimeWindow.schema.json",
+  "title": "TimeWindow",
+  "type": "string",
+  "pattern": "^(\\d{1,4}[hdw]|\\d{4}-\\d{2}-\\d{2})$",
+  "description": "A history window: a count with a unit (4h, 2d, 1w) or an ISO date.",
+  "staging": {
+    "branch": "claude/boot-dir-exit-status",
+    "sha": "a181af5a3cacd15f95ae90cd65253c32f85b1aeb",
+    "pr": "2634/merge",
+    "run": "39958278011"
+  }
+}

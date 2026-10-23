@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-boot-dir-exit-status/tool-types/InstanceId.schema.json",
+  "title": "InstanceId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+  "staging": {
+    "branch": "claude/boot-dir-exit-status",
+    "sha": "a181af5a3cacd15f95ae90cd65253c32f85b1aeb",
+    "pr": "2634/merge",
+    "run": "39958278011"
+  }
+}

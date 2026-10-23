@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-boot-dir-exit-status/tool-types/LakeCacheAction.schema.json",
+  "title": "LakeCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor"
+  ],
+  "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+  "staging": {
+    "branch": "claude/boot-dir-exit-status",
+    "sha": "a181af5a3cacd15f95ae90cd65253c32f85b1aeb",
+    "pr": "2634/merge",
+    "run": "39958278011"
+  }
+}

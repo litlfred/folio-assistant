@@ -1,0 +1,2544 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_ContentChangeReview",
+ "tasks": {
+  "Task_DescribeChange": {
+   "id": "Task_DescribeChange",
+   "name": "Describe the desired change",
+   "type": "bpmn:Task",
+   "lane": "Content Author",
+   "skills": [],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_ReviewStaging": {
+   "id": "Task_ReviewStaging",
+   "name": "Review staged rendering",
+   "type": "bpmn:Task",
+   "lane": "Content Author",
+   "skills": [
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_RequestRevision": {
+   "id": "Task_RequestRevision",
+   "name": "Request further revisions",
+   "type": "bpmn:Task",
+   "lane": "Content Author",
+   "skills": [
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_SubmitForReview": {
+   "id": "Task_SubmitForReview",
+   "name": "Submit to review committee",
+   "type": "bpmn:Task",
+   "lane": "Content Author",
+   "skills": [
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_DetectScope": {
+   "id": "Task_DetectScope",
+   "name": "Detect change scope & impact",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_CreateBranch": {
+   "id": "Task_CreateBranch",
+   "name": "Create feature branch",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [
+    {
+     "name": "feature-staging"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_EditContent": {
+   "id": "Task_EditContent",
+   "name": "Edit narrative content blocks",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [
+    {
+     "name": "content-author"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_EditLogic": {
+   "id": "Task_EditLogic",
+   "name": "Edit deterministic logic (if needed)",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [
+    {
+     "name": "content-author"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_AssessImpact": {
+   "id": "Task_AssessImpact",
+   "name": "Assess downstream impact",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [
+    {
+     "name": "content-graph"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Call_OptionsAnalysis": {
+   "id": "Call_OptionsAnalysis",
+   "name": "Options analysis how to absorb the impact",
+   "type": "bpmn:CallActivity",
+   "lane": "Folio-Assistant Agent",
+   "skills": [],
+   "calls": {
+    "name": "Options analysis",
+    "href": "options-analysis.html"
+   },
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_CommitPush": {
+   "id": "Task_CommitPush",
+   "name": "Commit, push, update PR",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [
+    {
+     "name": "prepare-merge-auto"
+    },
+    {
+     "name": "before-after-preview"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_Iterate": {
+   "id": "Task_Iterate",
+   "name": "Iterate on author feedback",
+   "type": "bpmn:Task",
+   "lane": "Folio-Assistant Agent",
+   "skills": [
+    {
+     "name": "content-author"
+    },
+    {
+     "name": "before-after-preview"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_CompareBeforeAfter": {
+   "id": "Task_CompareBeforeAfter",
+   "name": "Compare main vs staging",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "staging-review"
+    },
+    {
+     "name": "visual-diff"
+    },
+    {
+     "name": "rendered-impact"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_IngestComments": {
+   "id": "Task_IngestComments",
+   "name": "Ingest tagged review comments",
+   "type": "bpmn:Task",
+   "lane": "Review Coordinator",
+   "skills": [
+    {
+     "name": "review-comments"
+    }
+   ],
+   "role": {
+    "name": "review-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-review-coordinator",
+    "title": "Review coordinator",
+    "skills": [
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "review-heatmap"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "visual-diff"
+     }
+    ]
+   }
+  },
+  "Task_SliceAndAssign": {
+   "id": "Task_SliceAndAssign",
+   "name": "Slice the change and assign reviewers",
+   "type": "bpmn:Task",
+   "lane": "Review Coordinator",
+   "skills": [
+    {
+     "name": "review-heatmap"
+    },
+    {
+     "name": "staging-review"
+    },
+    {
+     "name": "rendered-impact"
+    }
+   ],
+   "role": {
+    "name": "review-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-review-coordinator",
+    "title": "Review coordinator",
+    "skills": [
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "review-heatmap"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "visual-diff"
+     }
+    ]
+   }
+  },
+  "Call_ReviewSlices": {
+   "id": "Call_ReviewSlices",
+   "name": "Review each slice",
+   "type": "bpmn:CallActivity",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "content-review"
+    },
+    {
+     "name": "review-comments"
+    }
+   ],
+   "calls": {
+    "name": "Review task",
+    "href": "review-task.html"
+   },
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_WithdrawComment": {
+   "id": "Task_WithdrawComment",
+   "name": "Withdraw a review comment",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "review-comments"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Call_Adjudication": {
+   "id": "Call_Adjudication",
+   "name": "Adjudicate the disagreement",
+   "type": "bpmn:CallActivity",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "adjudication"
+    }
+   ],
+   "calls": {
+    "name": "Adjudication",
+    "href": "adjudication.html"
+   },
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ReviewUses": {
+   "id": "Task_ReviewUses",
+   "name": "Review the editorial dependencies",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "uses-editorial-review"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ReviewImpact": {
+   "id": "Task_ReviewImpact",
+   "name": "Review impact assessment",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "content-review"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_RequestChanges": {
+   "id": "Task_RequestChanges",
+   "name": "Request changes",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "content-review"
+    },
+    {
+     "name": "content-review"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_Approve": {
+   "id": "Task_Approve",
+   "name": "Approve",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "decision-audit"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_Merge": {
+   "id": "Task_Merge",
+   "name": "Merge, on explicit confirmation",
+   "type": "bpmn:Task",
+   "lane": "Review Committee",
+   "skills": [
+    {
+     "name": "prepare-merge"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_BuildStaging": {
+   "id": "Task_BuildStaging",
+   "name": "Build staging site",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "feature-staging"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_DeployStaging": {
+   "id": "Task_DeployStaging",
+   "name": "Deploy to STAGING/<slug>/",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "feature-staging"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_CommentPR": {
+   "id": "Task_CommentPR",
+   "name": "Comment staging URL on PR",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "feature-staging"
+    },
+    {
+     "name": "rendered-impact"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_WatchBranchCI": {
+   "id": "Task_WatchBranchCI",
+   "name": "Open the branch-watch bean",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "watch"
+    },
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_CleanupStaging": {
+   "id": "Task_CleanupStaging",
+   "name": "Remove STAGING/<slug>/",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "feature-staging"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_RebuildMain": {
+   "id": "Task_RebuildMain",
+   "name": "Rebuild main site",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "content-publish"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_WatchMainCI": {
+   "id": "Task_WatchMainCI",
+   "name": "Note the main-branch watch",
+   "type": "bpmn:Task",
+   "lane": "CI/CD Pipeline",
+   "skills": [
+    {
+     "name": "watch"
+    },
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}

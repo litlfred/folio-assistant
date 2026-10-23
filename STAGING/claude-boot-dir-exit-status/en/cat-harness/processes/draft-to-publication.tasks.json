@@ -1,0 +1,589 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Publication",
+ "tasks": {
+  "Task_OpenReleaseBean": {
+   "id": "Task_OpenReleaseBean",
+   "name": "Open or claim the release bean",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  },
+  "Task_BuildDraft": {
+   "id": "Task_BuildDraft",
+   "name": "Build the draft publication",
+   "type": "bpmn:ServiceTask",
+   "lane": "Corpus + build pipeline (system)",
+   "skills": [
+    {
+     "name": "content-publish"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_PublicationQa": {
+   "id": "Task_PublicationQa",
+   "name": "Run publication QA gates",
+   "type": "bpmn:ServiceTask",
+   "lane": "Corpus + build pipeline (system)",
+   "skills": [
+    {
+     "name": "content-test"
+    },
+    {
+     "name": "quality-control"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "CallActivity_Editing": {
+   "id": "CallActivity_Editing",
+   "name": "Editing and HCI validation",
+   "type": "bpmn:CallActivity",
+   "lane": "Editors + authoring agents",
+   "skills": [
+    {
+     "name": "content-author"
+    },
+    {
+     "name": "content-validate"
+    }
+   ],
+   "calls": {
+    "name": "Editing and HCI validation",
+    "href": "editing-hci-validation.html"
+   },
+   "role": {
+    "name": "editor",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "content-author",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "via": "author"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "decision-audit",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "via": "author"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_CirculateDraft": {
+   "id": "Task_CirculateDraft",
+   "name": "Circulate the draft",
+   "type": "bpmn:UserTask",
+   "lane": "Publication manager",
+   "skills": [
+    {
+     "name": "content-review"
+    },
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "instance-publication"
+     },
+     {
+      "name": "package-release"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "staging-review"
+     }
+    ]
+   }
+  },
+  "CallActivity_PublicComment": {
+   "id": "CallActivity_PublicComment",
+   "name": "Public comment on the review version",
+   "type": "bpmn:CallActivity",
+   "lane": "Public review (commenters, review committee, editor)",
+   "skills": [
+    {
+     "name": "public-comment"
+    }
+   ],
+   "calls": {
+    "name": "Public comment on a review draft",
+    "href": "public-comment.html"
+   },
+   "role": {
+    "name": "review-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-review-coordinator",
+    "title": "Review coordinator",
+    "skills": [
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "review-heatmap"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "visual-diff"
+     }
+    ]
+   }
+  },
+  "Task_ReviewDraft": {
+   "id": "Task_ReviewDraft",
+   "name": "Review the draft publication",
+   "type": "bpmn:UserTask",
+   "lane": "Review team (content · QC · technical officer)",
+   "skills": [
+    {
+     "name": "content-review"
+    },
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_SmeSignoff": {
+   "id": "Task_SmeSignoff",
+   "name": "Clinical / scientific sign-off",
+   "type": "bpmn:UserTask",
+   "lane": "Clinical / scientific SMEs",
+   "skills": [
+    {
+     "name": "content-review"
+    },
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "clinical-sme",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-clinical-sme",
+    "title": "Clinical / scientific SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "via": "reviewer"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_OpenChangeBeans": {
+   "id": "Task_OpenChangeBeans",
+   "name": "Open beans for the change requests",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    },
+    {
+     "name": "content-feedback"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  },
+  "Task_AuthorizeRelease": {
+   "id": "Task_AuthorizeRelease",
+   "name": "Authorise the release",
+   "type": "bpmn:UserTask",
+   "lane": "Programme manager (release authority)",
+   "skills": [
+    {
+     "name": "content-publish"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_PublishRelease": {
+   "id": "Task_PublishRelease",
+   "name": "Version, tag and publish",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publication manager",
+   "skills": [
+    {
+     "name": "content-publish"
+    },
+    {
+     "name": "render-kg-to-cdn"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "instance-publication"
+     },
+     {
+      "name": "package-release"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "staging-review"
+     }
+    ]
+   }
+  },
+  "Task_CloseReleaseBeans": {
+   "id": "Task_CloseReleaseBeans",
+   "name": "Close the release beans",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,159 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Adjudication",
+ "tasks": {
+  "A_StateFinding": {
+   "id": "A_StateFinding",
+   "name": "State the finding and what it read",
+   "type": "bpmn:Task",
+   "lane": "Feedback provider",
+   "skills": [
+    {
+     "name": "content-feedback"
+    }
+   ],
+   "role": {
+    "name": "feedback-provider",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-feedback-provider",
+    "title": "Feedback provider",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_Dispatch": {
+   "id": "A_Dispatch",
+   "name": "Dispatch with adjudicator_sees — never the artefact",
+   "type": "bpmn:Task",
+   "lane": "Adjudicator",
+   "skills": [
+    {
+     "name": "untainted-verification"
+    }
+   ],
+   "role": {
+    "name": "adjudicator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-adjudicator",
+    "title": "Adjudicator",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "A_Adjudicate": {
+   "id": "A_Adjudicate",
+   "name": "Adjudicate the disagreement",
+   "type": "bpmn:Task",
+   "lane": "Adjudicator",
+   "skills": [
+    {
+     "name": "adjudication"
+    }
+   ],
+   "role": {
+    "name": "adjudicator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-adjudicator",
+    "title": "Adjudicator",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  }
+ }
+}

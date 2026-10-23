@@ -1,0 +1,498 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_KgToPortal",
+ "tasks": {
+  "D_Constraints": {
+   "id": "D_Constraints",
+   "name": "State the constraints, with denominators",
+   "type": "bpmn:Task",
+   "lane": "Deployment owner",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "instance-publication"
+     },
+     {
+      "name": "package-release"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "staging-review"
+     }
+    ]
+   }
+  },
+  "E_Scope": {
+   "id": "E_Scope",
+   "name": "Decide what may leave the repository",
+   "type": "bpmn:Task",
+   "lane": "Editorial",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "content-author",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "via": "author"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "decision-audit",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "via": "author"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "A_Select": {
+   "id": "A_Select",
+   "name": "Cut the subgraph that leaves",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "A_Serialize": {
+   "id": "A_Serialize",
+   "name": "Serialize to JSON-LD",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline",
+   "skills": [
+    {
+     "name": "kg-export"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "A_Package": {
+   "id": "A_Package",
+   "name": "Package: files plus a manifest of digests",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "S_Sign": {
+   "id": "S_Sign",
+   "name": "Sign the package and/or each asset",
+   "type": "bpmn:ServiceTask",
+   "lane": "Attestation (GDHCN / WHO SMART Trust)",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "attestation-service",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-attestation-service",
+    "title": "Attestation service",
+    "skills": [
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "E_HumanEyes": {
+   "id": "E_HumanEyes",
+   "name": "Human eyes on the rendered artefact",
+   "type": "bpmn:Task",
+   "lane": "Editorial",
+   "skills": [
+    {
+     "name": "continual-progress"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "content-author",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "via": "author"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "decision-audit",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "via": "author"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "D_Undetermined": {
+   "id": "D_Undetermined",
+   "name": "Record the decision as still open",
+   "type": "bpmn:Task",
+   "lane": "Deployment owner",
+   "skills": [
+    {
+     "name": "decision-audit"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "instance-publication"
+     },
+     {
+      "name": "package-release"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "staging-review"
+     }
+    ]
+   }
+  },
+  "A_Distribute": {
+   "id": "A_Distribute",
+   "name": "Publish to the origin (a cache may front it)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publish target",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started"
+     }
+    ]
+   }
+  },
+  "P_Verify": {
+   "id": "P_Verify",
+   "name": "Verify what arrived against what was signed",
+   "type": "bpmn:Task",
+   "lane": "Portal (external consumer)",
+   "skills": [
+    {
+     "name": "kg-to-portal"
+    }
+   ],
+   "role": {
+    "name": "external-registry",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-external-registry",
+    "title": "External registry",
+    "skills": [
+     {
+      "name": "external-registry-contract"
+     }
+    ]
+   }
+  }
+ }
+}

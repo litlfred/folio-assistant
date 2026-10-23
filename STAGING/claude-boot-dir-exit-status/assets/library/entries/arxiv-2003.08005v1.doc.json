@@ -1,0 +1,358 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2003.08005v1",
+  "title": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images",
+  "variant": "pdf",
+  "pages": 8,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "I Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "II Related Work",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "II-A Traditional Methods",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "II-B CRF and Deep Learning-Based Techniques",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "II-C Object Detection",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "III Creating the TFD-ICDAR2019v2 Dataset",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "IV ScanSSD: Window-Level Detection",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "IV-A Sliding Windows",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "IV-B Region Matching and Default Boxes in SSD",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "IV-C Postprocessing",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "V ScanSSD: Voting-based Pooling from Windows",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "VI Results and Discussion",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "VI-A Training",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "VI-B Quantitative Results",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "VI-C Qualitative results",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "VII Conclusion",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 4967,
+      "summary": null,
+      "keywords": [],
+      "extract": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images Parag Mali, Puneeth Kukkadapu, Mahshad Mahdavi, and, Richard Zanibbi Department of Computer Science, Rochester Institute of Technology Rochester, NY 14623, USA Email: {psm2208, pxk8301, mxm7832, rxzvcs}@rit.edu Abstract—We introduce the Scanning Single Shot Detector (ScanSSD) for locating math formulas offset from text and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1041,
+      "summary": null,
+      "keywords": [],
+      "extract": "[1] K. Davila, R. Joshi, S. Setlur, V. Govindaraju, and R. Zanibbi, “Tangent- v: Math formula image search using line-of-sight graphs,” in ECIR, ser. LNCS, vol. 11437, pp. 681–695. [2] C. Clark and S. Divvala, “Pdfﬁgures 2.0: Mining ﬁgures from research papers,” in 2016 IEEE/ACM Joint Conference on Digital Libraries (JCDL). IEEE, 2016, pp. 143–152. [3] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, S. Reed, C.-Y. Fu,",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [
+      "figure 1",
+      "figure 5"
+    ],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "ScanSSD architecture. Heatmaps illustrate detection conﬁdences with gray ≈0, red ≈0.5, white ≈1.0. Purple and green bounding boxes show formula regions after stitching window-level detections and pooling, respectively",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Default boxes for a 512×512 window. Box centers (⋆) are in a 32×32 grid. Shown are six default boxes around one point with different sizes and aspect ratios (red, green, and yellow boxes) located near a target formula (pink highlight)",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Formula aspect ratios. Most formulas in our dataset have more width than height, i.e., are oriented horizontally",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "6",
+      "title": "Voting. Let B be the set of page-level bounding boxes for detected formulas, and C be set of conﬁdences obtained for",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "7",
+      "title": "Document-level results, IOU ≥0.5 and IOU ≥0.75",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "graphic"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant-sci",
+    "branch": "main",
+    "dir": "library/arxiv-2003.08005v1"
+  }
+}
