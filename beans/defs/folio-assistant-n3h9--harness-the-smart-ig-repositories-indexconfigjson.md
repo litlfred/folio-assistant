@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T14:06:53Z
-updated_at: 2026-10-23T14:10:00Z
+updated_at: 2026-10-23T14:08:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -138,3 +138,4 @@ Owner, 2026-10-23, asked "what goes to WHO: a) IG content only, b) content plus 
 - **Not yet:** a migration bean, issue, or upstream PRs. The forks pull in all of WHO's changes first (smart-base#121, smart-trust#66). WHO repos are never changed without the owner's permission.
 
 Measured 2026-10-23, fork main against WHO main: smart-base 773 ahead and 3 behind, still carrying the folio-assistant submodule; smart-trust 94 ahead and 11 behind; smart-immunizations 109 ahead; smart-ra 213 ahead; smart-hiv 39 ahead; smart-base-clinical 8 ahead; smart-core 8 ahead (on `master`). Thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
+- **Update 14:08.** The owner said "1". Draft PR litlfred/smart-base#123 (issue #122, commit 2d03f4b). With stand-ins (crmi 2.0.0-ballot, sdc 4.0.0-ballot, terminology 7.0.1), SUSHI gives 0 errors, but that is NOT a pass: fhir-harness `ig-publisher-fork` requires exact versions. The PR stays a draft until SUSHI is rerun on the exact versions after 53rv.
