@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T10:02:53Z
-updated_at: 2026-10-21T18:55:00Z
+updated_at: 2026-10-23T20:32:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -90,9 +90,9 @@ the platform can absorb.
 - [x] the **11** test fixture sites renamed with them, or they fail (done)
 - [x] `init-folio` scaffolds `folio/<slug>/` and `folio/schema/` — **done**,
       `cat-harness/scripts/init-folio.ts:639-651`
-- [ ] the **6** workflow files' `cd content` / `working-directory: content` ->
+- [x] the **6** workflow files' `cd content` / `working-directory: content` ->
       `folio`. They are **vendored by folios** (`code-quality-gates.yml` says so
-      outright), so a folio that vendors them needs the rename too (5 of 6 done; only `.github/workflows/publish.yml` retains `cd content` for legacy paper layout)
+      outright), so a folio that vendors them needs the rename too (6 of 6 done: 5 moved to `cat-harness-tools/templates/` with `{{folio}}` under `52dz`, and `.github/workflows/publish.yml` updated in `litlfred/folio-assistant#2650` @ `aee46850`)
 - [x] `cat-harness/content/docs/` — 14 live subgraphs — moved AND declared;
       the old framing left this out entirely (done: moved to `cat-harness/docs/source/` and declared in `cat-harness.json`, bean `rnfl`)
 - [x] a ratchet so `content/` as a folio root cannot come back — the literal
@@ -156,8 +156,8 @@ a fact you can audit and one you can only grep for.
 - [x] 7 tests, including **end to end**: `findPapers` finds a paper in a folio
       whose declaration names `content/`
 - [x] 55 gates, 3533 tests, tsc and eslint clean
-- [ ] **qou declares its folio at `content/`** — coordinated, in that repo
-- [ ] the eight vendored workflows' `cd content`: they move after the folios do
+- [x] **qou declares its folio at `content/`** — coordinated, in that repo (`litlfred/qou#7445`)
+- [x] the eight vendored workflows' `cd content`: they move after the folios do (`litlfred/folio-assistant#2650` @ `aee46850`)
 
 ## 2026-09-20 — the coordinated half is open: litlfred/qou#7445
 
@@ -190,7 +190,7 @@ cross-reference in the corpus. The declaration is four lines.
       ways, and already clean against 37 commits of concurrent work
 - [x] 27 identifiers renamed off `CONTENT_*`
 - [x] qou declares its folio at `content/` (litlfred/qou#7445, OPEN)
-- [ ] the eight vendored workflows' `cd content` — after the folios move
+- [x] the eight vendored workflows' `cd content` — after the folios move (`litlfred/folio-assistant#2650` @ `aee46850`)
 
 
 ## RE-MEASURED 2026-09-22 on `main` at `b7f8945b` — every count in this bean is stale, and one is off by 20×
