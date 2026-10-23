@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-g196-measure-a/tool-types/CommitSha.schema.json",
+  "title": "CommitSha",
+  "type": "string",
+  "pattern": "^[0-9a-f]{7,40}$",
+  "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+  "staging": {
+    "branch": "claude/g196-measure-a",
+    "sha": "c46b08f44fcbd92c7b61b80ee4a788dc6500b309",
+    "pr": "2639/merge",
+    "run": "39982075051"
+  }
+}
