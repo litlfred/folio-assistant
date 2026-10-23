@@ -7,7 +7,7 @@ type: task
 priority: normal
 parent: folio-assistant-ksek
 created_at: 2026-10-23T16:21:05Z
-updated_at: 2026-10-23T16:23:22Z
+updated_at: 2026-10-23T16:45:00Z
 ---
 Owner, 2026-10-23 ("1y"). No PR workflow skipped drafts, and drafts were most of the runner queue: about 59 queued runs that day on the account's shared runners, and 14 of cat-harness's 18 open PRs were drafts. Agents still need quick feedback on a draft, so a draft runs the cheap tier: typecheck, lint, and whatever each workflow already treats as fast or "prepare". The expensive tier (sharded tests and gates, e2e, staging deploys, the comparison with main) runs only when the PR is not a draft. `ready_for_review` is a trigger, so the full tier runs as soon as a PR is marked ready.
 
@@ -25,3 +25,9 @@ Done when the cat-harness-tools PR, the folio-assistant PR and the 11 caller PRs
 - litlfred/cat-harness-tools#616 (issue #615): the `draft-fast-tier` input, opt-in; `pr-tests.yml` draft tiering; the `triggerFor` default-types rule. Merges first.
 - litlfred/folio-assistant#2645 (issue #2644): `code-quality-gates.yml` and `feature-staging.yml`. Merges after cat-harness-tools is re-pinned past #616.
 - The 11 caller PRs are opened once #616 has merged.
+
+## 2026-10-23: caller PRs opened and marked ready (umbrella issue cat-harness-tools#625)
+
+cat-harness-tools#616 merged. Each caller adds `ready_for_review` and `draft-fast-tier: true`: bootstrap#24 bootstrap-tools#36 cat-harness#450 folio-assistant-core#184 folio-assistant-sci#59 fhir-harness#135 smart-base#136 who-iris#79 smart-ra#90 smart-immunizations#72 smart-immunizations-uganda#11 
+
+On each one, the draft run was cancelled when the ready_for_review run started, as designed.
