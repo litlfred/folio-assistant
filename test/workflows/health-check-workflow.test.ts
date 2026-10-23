@@ -30,8 +30,6 @@ import { healthReportPath } from "../../cat-harness/schemas/health-report.ts";
 
 /** This index repository's root, where the workflow runs and its upload path is resolved. */
 const INDEX = resolve(import.meta.dir, "..", "..");
-/** The platform the workflow runs: the mounted cat-harness instance. */
-const PLATFORM = resolve(INDEX, "cat-harness");
 const WORKFLOW = resolve(INDEX, ".github/workflows/health-check.yml");
 
 interface Step {
@@ -131,7 +129,10 @@ describe("the tracking issue", () => {
     // The EXACT path the producer writes, relative to the repository root the
     // step runs in. `toContain(filename)` passed over the pre-#437 path for
     // as long as it was wrong, and the artifact was never kept (bean r7v6, C3).
-    expect(String(upload?.with?.path)).toBe(relative(INDEX, healthReportPath(PLATFORM)));
+    // At the index ROOT: `health` is `scope: "repository"` (owner 2026-10-23,
+    // bean kyrg), so the report about this repository lands in this repository's
+    // own graph, not in the mounted cat-harness instance's.
+    expect(String(upload?.with?.path)).toBe(relative(INDEX, healthReportPath(INDEX)));
     // A missing report is an error, not a warning: `warn` is what let a wrong
     // path stay green.
     expect(upload?.with?.["if-no-files-found"]).toBe("error");
