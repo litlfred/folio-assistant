@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: low
 created_at: 2026-10-24T13:20:00Z
-updated_at: 2026-10-24T13:55:00Z
+updated_at: 2026-10-24T13:53:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -17,3 +17,5 @@ Found walking #215 on smart-immunizations-uganda#12 (see lx2s). The IG route's r
 - [ ] an IG preview publishes `rendered-impact.json`, and the review page lists the rendered pages each change alters
 
 _2026-10-24T13:55Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx. Plan: fhir-harness `igChangeSet` also derives `outline.json` (the IG's pages, then its sources) and a `cone` `rendered-impact.json` (narrative pages with their anchors; other sources listed as undetermined, since the Publisher renders them).
+
+_2026-10-24T13:53Z_ — fhir-harness#169 merged (341fbc7): IG previews write `outline.json` and `rendered-impact.json`. Its CI skipped the test shards, so the tests ran locally only (9 pass). Left open: the boxes need the next Uganda preview to confirm that the review page shows the outline and the page list. Issue fhir-harness#168.
