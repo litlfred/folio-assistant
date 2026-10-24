@@ -36,3 +36,4 @@ fork). Each needs a scope and the owner's go-ahead before any build.
 ## Log
 - 2026-10-24 00:30Z: claimed by the "Publisher AST" thread. Opened at the CI speed thread's request, because a9tx had no open child and that turned `check:bean-rollup` red.
 - 2026-10-24 01:00Z: W8 review of w7r3 done (see a9tx). Fork `72b2ba9` and `3896c6c` fix both causes. Round 4 is bean `w7r4`. W7/W8 stay unticked until w7r4 diffs clean.
+- 2026-10-24 07:45Z: W8 review of w7r4 done (see a9tx). Content and edges match; narrative link fix in `6abb8a5`. Round 5 is bean `w7r5`.

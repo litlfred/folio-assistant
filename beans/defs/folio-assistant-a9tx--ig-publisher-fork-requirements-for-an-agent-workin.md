@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T01:00:00Z
+updated_at: 2026-10-24T07:45:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -156,7 +156,7 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 (`w7r3`) converged in 1 round for both probes; the W8 review (bean `w8rv`) found two causes of difference, fixed in `72b2ba9` and `3896c6c`. Round 4 is bean `folio-assistant-w7r4`.
+- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 (`w7r3`) converged in 1 round for both probes; the W8 review (bean `w8rv`) found two causes of difference, fixed in `72b2ba9` and `3896c6c`. Round 4 (`w7r4`) matched the full build in content and edges; only narrative links to cached resources differed, fixed in `6abb8a5`. Round 5 is bean `folio-assistant-w7r5`.
 - [ ] **W8** diff a full build against the incremental AST, plus the threshold. Not met yet: fpmn's W7 output was itself a full build, so its diff compared full with full.
 
 
@@ -457,4 +457,25 @@ Fixes on the fork, all 64 tests passing:
 **IG finding (WHO content, not changed here):** smart-immunizations' indicator Logic libraries reference `IMMZIndicatorElements` under `.../immunizations/Library/`, but the library is published as `.../immunizations-measles/Library/IMMZIndicatorElements`.
 
 **Tooling note:** `ig-ast.ts diff` reports the noise as changes. Normalising `*.date` and the temp-file names would make W8 read 0 directly. That belongs in fhir-harness, as its own PR.
+
+## W8 review of round 4 (bean w7r4, 2026-10-24, `ast-results/2026-10-24-w7r4` @ `2389671`)
+
+**W7:** both probes converged in 1 round.
+- `cql`: rebuild 84 (43 Libraries, 41 Measures), load 56, 82 edges bound by name.
+- `fml`: rebuild 2, load 5.
+
+**W8**, `ig-ast.ts diff`, full against incremental:
+- **0 edge changes** in both probes.
+- No resource added or removed.
+- The Measures keep their effective data requirements.
+
+What still differs:
+- **Noise**, the same as between two full builds: `*.date`; the temp-file name in the 279 Library narratives ("Exception parsing generated Narrative", the template's liquid error); and the rendered date in 138 PlanDefinition narratives.
+- **Narrative links to cached resources**, in 41 Measures and 2 StructureMaps:
+  - the href was `/ValueSet-X.html` (pathToSpec `""` + `/` + page), not `ValueSet-X.html`;
+  - the library link text showed the canonical, because a dependency's resource resolves through its spec map, which loads content only for examples.
+
+  Fixed in `6abb8a5`, with 67 tests passing. `AstPublisher.checkDependencies` drops the leading `/` from cached web paths before rendering, and `AstPublisher.resolve` adds the cached content, so the name shows.
+
+Round 5 (bean `w7r5`) checks that fix. If round 5 shows nothing but noise, W7 and W8 pass.
 
