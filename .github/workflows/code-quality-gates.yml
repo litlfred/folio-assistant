@@ -4065,6 +4065,101 @@ jobs:
   # Chromium comes from `playwright install --with-deps`, the same call
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
+  e2e-scope:
+    # bpmn-node: Task_E2E
+    # (Whether the e2e shards run on this push; part of that task, as they are.)
+    name: End-to-end scope — can this PR change what the e2e shards test? (not a gate)
+    #
+    # Owner, 2026-10-23: cut CI time. The three e2e shards are the largest
+    # cost in this workflow (about 42 runner-minutes a run), and a PR that
+    # changes only another workflow, a workflow test or the Lean cache action
+    # cannot change anything they exercise. So on a `pull_request` push this
+    # job lists the PR's changed files and answers `affected=false` ONLY when EVERY
+    # one of them (and every renamed file's old path) is in `INERT` below and
+    # none is in `ALWAYS`. Every other answer, and every failure to answer, is
+    # `affected=true`.
+    #
+    # ## How `INERT` was decided — what the shards read
+    #
+    # The shards serve the whole checkout (`test/test-server.mjs`) and build
+    # what they serve from it: `derive:publish` and every declared
+    # `builtAtPublish` writer, `kg-export`, `kg-viewer` and the specs
+    # themselves. The import closure of those (about 300 modules, 2026-10-23)
+    # reads ONE file under `.github/workflows/` — this one
+    # (`lib/gates-workflow.ts`, for the QA working copy) — and nothing under
+    # `test/workflows/`, `.github/scripts/`, `.github/actions/`,
+    # `.github/pages-jekyll/`, `dependabot.yml`, `lake-packages.json` or
+    # `.mcp.json`. Those are `INERT`. The other workflows render the real site
+    # (`docs-site`, `feature-staging`, `publish`), but the shards never run
+    # them, so a change there is tested by those workflows' own runs, not here.
+    #
+    # Deliberately NOT inert, because something the shards run reads them:
+    # the pins (`index.lock.json`, `index.config.json`), `package.json`,
+    # `bun.lock`, `bunfig.toml`, `.github/mount-from-lock.sh`, `uploads/`
+    # (the library pages), `.claude/` (the skills `kg-export` reads), root
+    # `*.md` files, `.gitignore`, `.gitattributes`, and any path not listed —
+    # a new kind of file runs the shards until somebody shows it cannot matter.
+    #
+    # ## What always runs everything
+    #
+    # This job runs only on a non-draft `pull_request` push that is not
+    # `ready_for_review`. A `ready_for_review` run, a push to `main`, a
+    # `workflow_dispatch` and a `merge_group` skip this job, its output is
+    # empty, and the shards run (`!= 'false'` in their `if:`), so marking a PR
+    # ready always runs the full tier once. A PR run that skipped the shards
+    # never lets `main` reuse its verdict: `verdict-reuse.sh` requires all three
+    # shards to have concluded `success`, so the merge's push to `main` runs
+    # them.
+    #
+    # The changed files are the PR's whole diff against its base, not the last
+    # push's, so a later push that touches only `INERT` files still runs the
+    # shards when an earlier commit of the PR changed a pin.
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && github.event.pull_request.draft != true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      affected: ${{ steps.scope.outputs.affected }}
+    steps:
+      - name: Decide from the PR's changed files
+        id: scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          CHANGED: ${{ github.event.pull_request.changed_files }}
+          INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
+          ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
+        run: |
+          decide() {
+            echo "affected=$1" >> "$GITHUB_OUTPUT"
+            printf '### End-to-end scope: affected=%s\n\n%s\n' "$1" "$2" >> "$GITHUB_STEP_SUMMARY"
+            echo "e2e-scope: affected=$1 — $2"
+            exit 0
+          }
+          # Empty only off a pull_request payload, which the `if:` above already rules out.
+          if [ -z "$PR" ] || [ -z "$CHANGED" ]; then
+            decide true "No pull_request number or changed-file count in this event, so the e2e shards run."
+          fi
+          # F<TAB>path for each changed file, P<TAB>path for a renamed file's old path.
+          if ! listing=$(gh api --paginate "repos/$REPO/pulls/$PR/files?per_page=100" \
+              --jq '.[] | "F\t" + .filename, (.previous_filename // empty | "P\t" + .)'); then
+            decide true "Could not list the PR's changed files, so the e2e shards run."
+          fi
+          files=$(printf '%s\n' "$listing" | awk -F'\t' 'NF == 2 && $1 == "F"' | wc -l)
+          if [ "$files" -eq 0 ] || [ "$files" -ne "${CHANGED:-0}" ]; then
+            decide true "Listed $files changed file(s) where the PR reports ${CHANGED:-none}, so the list may be partial and the e2e shards run."
+          fi
+          affecting=$(printf '%s\n' "$listing" | awk -F'\t' -v inert="$INERT" -v always="$ALWAYS" \
+            'NF == 2 && ($2 !~ inert || $2 ~ always) { print $2 }')
+          if [ -n "$affecting" ]; then
+            n=$(printf '%s\n' "$affecting" | wc -l)
+            decide true "$n of $files changed file(s) can change what the e2e shards test, so they run. First: \`$(printf '%s\n' "$affecting" | head -1)\`."
+          fi
+          decide false "All $files changed file(s) are outside what the e2e shards read (\`INERT\` in this job), so the shards are skipped on this push. Marking the PR ready, and every push to \`main\`, still runs them."
+
   e2e-shard:
     # bpmn-node: Task_E2E
     name: End-to-end + accessibility, shard ${{ matrix.shard }}/3
@@ -4098,8 +4193,20 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
-    needs: verdict-reuse
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
+    #
+    # Skipped too on a PR push whose every changed file `e2e-scope` showed the
+    # shards do not read (owner, 2026-10-23). Only the exact answer `false`
+    # skips: a skipped, failed or cancelled `e2e-scope` leaves the output
+    # empty and the shards run.
+    #
+    # Reads the QA working copy and the publish-time pages that
+    # `qa-working-copy` and `publish-pages` build once for this run, as the
+    # `bun test` shards do (owner, 2026-10-23: cut CI time). Each shard used to
+    # build them itself in `e2e-global-setup.ts` (`derive:publish`, which runs
+    # `qa:refresh` for `uml:overview`): about 9 of a shard's ~13 minutes, three
+    # times over, for the bytes `publish-pages` already uploads.
+    needs: [verdict-reuse, e2e-scope, qa-working-copy, publish-pages]
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
     strategy:
       # Every shard reports, so one red shard does not hide another's result.
@@ -4220,9 +4327,51 @@ jobs:
         if: matrix.shard == 1
         run: bun run cat smart-base:processes:render:check
 
+      # The QA working copy and the publish-time pages, restored AFTER the
+      # shard-1 checks above so those read the tree exactly as before, and
+      # before playwright, whose global setup then skips `derive:publish`
+      # (`E2E_DERIVED=present`). Same producers, same bundle and the same
+      # in-place byte check as the `bun test` shards. `!cancelled()` above, so a
+      # failed producer reaches these steps and stops the shard red, saying
+      # why, rather than testing pages nobody built.
+      - name: The QA working copy and the publish-time pages were built for this run
+        env:
+          QA: ${{ needs.qa-working-copy.result }}
+          PAGES: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$QA" != "success" ] || [ "$PAGES" != "success" ]; then
+            echo "::error::qa-working-copy concluded '$QA' and publish-pages '$PAGES', so the pages the e2e specs serve were not built. This shard cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
+
       - name: playwright test
         env:
           E2E_SHARD: ${{ matrix.shard }}/3
+          # The pages were restored above; `e2e-global-setup.ts` builds them
+          # itself only when this is unset, as it is in a local run.
+          E2E_DERIVED: present
         run: bunx playwright test -c cat-harness-tools/playwright.config.ts
 
       # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
