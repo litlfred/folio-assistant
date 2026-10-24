@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-10T14:06:52Z
-updated_at: 2026-10-20T18:19:02Z
+updated_at: 2026-10-24T07:40:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -22,7 +22,7 @@ smart-core is a pre-SUSHI data-element IG with no processes either. So the clini
 
 ## Done when
 - [ ] a decision on where each catalogue lives (smart-base-clinical for clinical; new or existing IGs for public health and health system) and on its shape (BusinessProcessWorkflow + BPMN, with persona ActorDefinitions)
-- [ ] the recommendation-scenario extraction looks catalogues up in its precedence order, and reports "catalogue absent" until they exist
+- [x] the recommendation-scenario extraction looks catalogues up in its precedence order, and reports "catalogue absent" until they exist
 
 _2026-10-16T10:45:00Z_ — Parented to `uhkv` (SMART STACK) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
 
@@ -37,3 +37,5 @@ _2026-10-20, smart-* lane (session https://claude.ai/code/session_016heucWhrncLm
 4. Defer: build none until a DAK needs one. The extraction keeps reporting "catalogue absent".
 
 **Default if you say nothing: 4.** Nothing is built and nothing breaks.
+
+_2026-10-24T07:40:00Z_ — Second done-when item checked on smart-base main (782f011): `scripts/l1-recommendation-scenarios.ts` looks a process up as guide → domain process catalogue → `could-not-determine` (decision D4) and reports "domain process catalogue absent"; `library/9789240116191-eng/l1-extraction/scenarios/scenario-warnings.md` shows it firing for all 18 DTH product-catalogue recommendations. The placement of the public-health and health-system catalogues is the one item left, put to the owner (https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3).
