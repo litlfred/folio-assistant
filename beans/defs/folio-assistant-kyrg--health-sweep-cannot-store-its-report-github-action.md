@@ -2,11 +2,11 @@
 # folio-assistant-kyrg
 $schema: bean/1.0.0
 title: 'HEALTH SWEEP cannot store its report: github-actions[bot] gets 403 on litlfred/cat-harness:cat/cat-harness/health'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-22T13:25:43Z
-updated_at: 2026-10-22T16:20:00Z
+updated_at: 2026-10-24T15:33:00+02:00
 parent: folio-assistant-1xhc
 ---
 
@@ -30,7 +30,7 @@ It never showed before 2026-10-22 because no run reached the step (bean 1dre).
 ## Done when
 
 - [x] the owner has chosen
-- [ ] a daily `health-check.yml` run is green end to end, with the report stored where the choice says
+- [x] a daily `health-check.yml` run is green end to end, with the report stored where the choice says (`litlfred/folio-assistant#2623` merged `2026-10-23T16:16:09Z`; daily `health-check.yml` run `40072157692` on `main` at `2026-10-24T06:56:13Z` completed `success` and stored the report at `litlfred/folio-assistant:cat/cat-harness/health` commit `6e535f3ba5904616287a69b20f77658a01f665e0`)
 
 ## Owner ruling 2026-10-22
 

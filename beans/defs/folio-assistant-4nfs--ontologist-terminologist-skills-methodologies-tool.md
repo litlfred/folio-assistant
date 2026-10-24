@@ -2,11 +2,11 @@
 # folio-assistant-4nfs
 $schema: bean/1.0.0
 title: 'ONTOLOGIST / TERMINOLOGIST: skills, methodologies, tools and processes for reviewing content and classifying/coding it'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-10T14:07:07Z
-updated_at: 2026-10-23T21:13:00Z
+updated_at: 2026-10-24T15:33:30+02:00
 parent: folio-assistant-0lmb
 ---
 
@@ -38,3 +38,5 @@ Related: 5yhm, 2i5f (terminology), 8pzh (L1 extraction).
 - **This bean still owns** the skills, methodologies, tools and processes that equip the role: how a reviewer reads a proposed exclusion against the page, and the BPMN lane in which it signs. No lane is declared yet.
 
 _2026-10-16T10:45:00Z_ — Parented to `0lmb` (CONTENT MODEL) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+_2026-10-24T15:33:30+02:00_ — Completed: [`litlfred/smart-base#140`](https://github.com/litlfred/smart-base/pull/140) (`f184056`) merged on `smart-base` `main` at `2026-10-24T10:25:08Z`; all 4 Done-when boxes met.
