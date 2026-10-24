@@ -84,3 +84,5 @@ _2026-10-24T14:14:00Z_ — litlfred/folio-assistant-core#217 merged (231045cd): 
 _2026-10-24T14:27Z_ — cat-harness#585 merged (summaries batch).
 
 _2026-10-24T14:45Z_ — batch 5 opened as cat-harness#587: 18 blocks in arxiv-2504.21474v1, sammut-bonnici-galea-2015-swot-analysis.
+
+_2026-10-24T14:41Z_ — cat-harness#587 merged (batch 5, 18 blocks).
