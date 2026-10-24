@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T10:31:04Z
-updated_at: 2026-10-24T14:45:00Z
+updated_at: 2026-10-24T15:00:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -28,3 +28,5 @@ _2026-10-24T14:15:00Z_ — Claimed by the "Drain folio-assistant-core beans" thr
 | same, with #756 | 4,134 | 17,052 | 4,587,520 |
 
 The growth was 4,083 one-release tombstones (`migrationTombstones`: each subject's pre-#603 `#fragment`, no `@type`, only `deprecated`/`isReplacedBy`/`sameAs`). #756 leaves them out of the search slice; the published document keeps them. Box 3 (the budget) is the owner's call, asked in the "Drain folio-assistant-core beans" thread.
+
+_2026-10-24T15:00:00Z_ — cat-harness-tools#756 merged (120ab6d). The slice is back under 5 MB once the index pins tools at or after it. Box 3 waits on the owner's budget answer (card in the drain thread).
