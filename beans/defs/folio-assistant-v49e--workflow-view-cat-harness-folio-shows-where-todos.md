@@ -118,3 +118,5 @@ one that draws an empty lane is the failure this repository keeps paying for.
 looks-like-nothing state this bean names.
 
 _2026-10-24T08:20:00Z_ — **Claimed** (owner said "start v49e", 2026-10-24). PR 1: cat-harness-tools#684 (per-instance view, stuck states, processes links) and cat-harness#510 (home-page link). Item 3 (memory/logs by dependency tree) follows. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+_2026-10-24T11:10:00Z_ — PR 1 merged: cat-harness-tools#684 as 99bbe26 and cat-harness#510 as 4506916. Item 3 (working memory and logs by dependency tree, gate refusals) still open; stays in-progress.
