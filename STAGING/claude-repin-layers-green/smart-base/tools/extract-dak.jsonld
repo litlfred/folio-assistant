@@ -366,9 +366,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "dakRepository",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The working directory: a DAK or IG repository holding `input/decision-logic/`, `input/system-requirements/` and `input/dictionary/` spreadsheets in the DAK template layout.",
             "required": true
           }
@@ -395,17 +395,17 @@
         "outputs": [
           {
             "name": "dmn",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Decision tables in the DAK DMN format (namespace `https://www.omg.org/spec/DMN/20240513/MODEL/`), each with an `Annotations` and a `Reference(s)` output."
           },
           {
             "name": "fsh",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "PlanDefinition, ActivityDefinition, Requirements and logical-model FSH, for SUSHI to compile."
           },
           {
             "name": "cql",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "CQL library skeletons, one per decision table, with the definitions already present in `input/cql/` carried over."
           }
         ]

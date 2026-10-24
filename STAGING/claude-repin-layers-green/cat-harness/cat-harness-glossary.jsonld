@@ -614,7 +614,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA"
       ]
     },
     {
@@ -697,6 +698,15 @@
       "label": "Business analyst",
       "scopeNote": "This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell \"not needed\" from \"we chose X\" cannot audit either one.",
       "source": "cat-harness/processes/sdlc/options-analysis.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/business-analyst",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RequirementsFiling",
+      "label": "BA / Feature Requestor",
+      "scopeNote": "Reviews the filed requirement's normative statements, three-axis traceability links, concern-group placement in docs/requirements/index.md, and any supersession or retirement transition, issuing the human adjudication required before a RequirementSet reaches accepted.",
+      "source": "cat-harness/processes/sdlc/requirements-filing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/terminologist",
@@ -949,6 +959,7 @@
         "Agent (playing the machine)",
         "Agent (this session)",
         "Agent / platform (automated)",
+        "Authoring Agent",
         "Designer",
         "Dispatched agent",
         "Query Caller (CLI / MCP / Web)",
@@ -979,6 +990,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
@@ -1191,6 +1203,15 @@
       "label": "Agent",
       "scopeNote": "Searches, sorts and summarizes, and recommends. It never links, blocks, merges or comments on another piece of work before the user has answered, because coordinating is a commitment on behalf of the work's owners.",
       "source": "cat-harness/processes/sdlc/related-work.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RequirementsFiling",
+      "label": "Authoring Agent",
+      "scopeNote": "Executes the deterministic filing steps under methodologies/requirements-filing-and-organisation.md: classifies the filing mode and concern group, promotes the proposal via git mv (preserving git blame and proposedIn), binds Requirement front matter and three-axis lineage, updates superseded or retired records in place, updates docs/requirements/index.md, runs check:requirements, and records the human sign-off attestation.",
+      "source": "cat-harness/processes/sdlc/requirements-filing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",

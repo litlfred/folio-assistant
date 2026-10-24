@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the instance that owns it; the harness site's `assets/workflows/checklists` holds those of the instances below the harness.",
             "required": false,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Verify instead of write: exit 1 on a stale, missing or orphaned checklist.",
             "required": false,
             "arg": {
@@ -407,7 +407,7 @@
         "outputs": [
           {
             "name": "checklists",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn` (owner, 2026-10-14: commit them)."
           }
         ]

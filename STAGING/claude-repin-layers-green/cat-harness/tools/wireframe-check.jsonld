@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "use",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/WireframeUse",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/WireframeUse",
             "description": "`design` or `as-is`. Design needs at least two candidates, compared blind; as-is candidates are drawings of what renders on main, each marked `as-is` in its file name. Anything else exits 2.",
             "required": true,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "topic",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "Which wireframe is checked: its asset directory, docs/wireframes/<topic>/ for as-is use and docs/proposals/<topic>/wireframes/ for design use (docs/wireframes/<topic>/ is also accepted there). With no candidates, every .html in it is checked; a candidate outside it is refused.",
             "required": true,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "surface",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/SurfaceRef",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/SurfaceRef",
             "description": "What is drawn: a visualiser route key or a chrome name. Recorded in report.json; for as-is use it must be the topic itself or a ref docs/wireframes/index.json says the topic covers.",
             "required": true,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "candidates",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Wireframe HTML files, all in the topic's directory. Absent: every .html there. Each must carry both a web and a mobile layout (responsive CSS or two layouts).",
             "required": false,
             "repeated": true,
@@ -424,7 +424,7 @@
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Where screenshots and report.json go; default <the topic's directory>/checks.",
             "required": false,
             "arg": {
@@ -435,7 +435,7 @@
         "outputs": [
           {
             "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "report.json: per candidate, per viewport, per criterion. The screenshots are beside it."
           }
         ]

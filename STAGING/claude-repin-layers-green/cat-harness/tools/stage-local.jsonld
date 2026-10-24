@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "repo",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The checkout to publish, with the platform's layers mounted at its root. Default: the working directory.",
             "required": false,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "branch",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "The branch to publish. Default: the checkout's. The default branch publishes the main site; any other a preview.",
             "required": false,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "A folio preview's base branch, for its ChangeSet and rendered impact.",
             "required": false,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "main",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Publish the main site at the root. Implied on the default branch, refused off it.",
             "required": false,
             "arg": {
@@ -423,7 +423,7 @@
           },
           {
             "name": "plan",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Print what would be built and where, every step named, and stop.",
             "required": false,
             "arg": {
@@ -432,7 +432,7 @@
           },
           {
             "name": "dryRun",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Build and compose the commit in a temporary publish-branch worktree; push nothing.",
             "required": false,
             "arg": {
@@ -441,7 +441,7 @@
           },
           {
             "name": "artifact",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Write a claude.ai Artifact bundle here instead of pushing.",
             "required": false,
             "arg": {
@@ -450,7 +450,7 @@
           },
           {
             "name": "workflowSource",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "An IG: read the reusable workflow from this local checkout instead of fetching it at the ref its caller names.",
             "required": false,
             "arg": {
@@ -459,7 +459,7 @@
           },
           {
             "name": "publisher",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "`folio` or `ig`, when the repository's workflows call both (the folio by default).",
             "required": false,
             "arg": {
@@ -468,7 +468,7 @@
           },
           {
             "name": "runUrl",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "What the commit and render log name as the run. Default: the commit's URL.",
             "required": false,
             "arg": {
@@ -479,7 +479,7 @@
         "outputs": [
           {
             "name": "url",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "Where the site is served once GitHub's Pages deploy has run, with the commit pushed (or, with --dry-run, the commit composed and discarded).",
             "render": {
               "as": "url",

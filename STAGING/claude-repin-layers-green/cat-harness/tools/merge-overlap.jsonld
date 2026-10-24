@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "The base each PR is diffed against from its fork point; default `origin/main`.",
             "required": false,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "branches",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "Branches to compare instead of the open PRs; with none, the open PRs come from `gh`.",
             "required": false,
             "repeated": true,
@@ -408,7 +408,7 @@
         "outputs": [
           {
             "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "`merge-overlap/v1` on stdout: per member `authored_paths`, `region_paths`, `touches_shared`, the two harness flags; every pair that is not independent, with why."
           }
         ]

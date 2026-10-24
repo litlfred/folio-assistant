@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -393,7 +393,7 @@
         "inputs": [
           {
             "name": "dry_run",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Print the flattened order and each step's failure policy without running anything.",
             "required": false,
             "arg": {
@@ -404,7 +404,7 @@
         "outputs": [
           {
             "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Markdown",
             "description": "Per step: ran, failed, skipped, or PENDING — declared with no implementation yet, which is never rendered as a pass."
           }
         ]

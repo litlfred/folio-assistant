@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/CommitSha",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/CommitSha",
             "description": "The commit the train branch starts from.",
             "required": true,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "branch",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "The train branch to create; default `merge-train/<base>-<time>`.",
             "required": false,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "dry-run",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Simulate with `git merge-tree`: classify each member's conflicts against the simulated train and change nothing.",
             "required": false,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "no-main",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Skip merging `origin/main` into the train.",
             "required": false,
             "arg": {
@@ -423,7 +423,7 @@
           },
           {
             "name": "members",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "PR numbers or branches, in train order. On the command line a PR may be pinned to the head CI saw as `N:<sha>`.",
             "required": true,
             "repeated": true,
@@ -435,7 +435,7 @@
         "outputs": [
           {
             "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "`merge-train-report/v1` on stdout: members merged, refused with reasons and conflicted paths, the checks run, main's merge, and the head. Exit 0 built, 1 needs a person, 2 could not start."
           }
         ]

@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "lakeRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The Lake package directory whose lakefile requires (or sentinel-comments) doc-gen4, e.g. `folio/quantum-observable-universe/lean`.",
             "required": true,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "lib",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "The `lean_lib` to document, e.g. `QOU` (a Lean library name: alphanumerics, dot, underscore, hyphen). Repeat for several.",
             "required": true,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "platform",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The index checkout holding `lake-cache.sh`. Default `$FOLIO_ASSISTANT_ROOT`.",
             "required": false,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "restore",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Restore the warm cache first (about 2 minutes) instead of only checking it.",
             "required": false,
             "arg": {
@@ -423,7 +423,7 @@
           },
           {
             "name": "allowCold",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Build without a warm cache: Mathlib from source, 30-60 minutes before doc-gen4 starts.",
             "required": false,
             "arg": {
@@ -432,7 +432,7 @@
           },
           {
             "name": "dryRun",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Run every guard, print the build command, build nothing.",
             "required": false,
             "arg": {
@@ -443,7 +443,7 @@
         "outputs": [
           {
             "name": "render",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`<lake-root>/.lake/build/doc`, doc-gen4's output, printed as the last line. Feed it to `lean-render-publish`."
           }
         ]

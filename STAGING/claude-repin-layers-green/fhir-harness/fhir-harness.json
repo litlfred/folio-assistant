@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T07:50:13.273Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a919d957575998f9320a3aea72eb7e4245340868",
-  "sourceCommitSha": "a919d957575998f9320a3aea72eb7e4245340868",
-  "sourceCommitAt": "2026-10-24T07:31:24Z",
+  "generatedAt": "2026-10-24T09:24:53.234Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+  "sourceCommitAt": "2026-10-24T08:39:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -3381,25 +3381,25 @@
         "inputs": [
           {
             "name": "ig-src",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG source repository: `sushi-config.yaml` and `input/`.",
             "required": true
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The Jekyll source directory to write.",
             "required": true
           },
           {
             "name": "baseurl",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Where the built site is served.",
             "required": false
           },
           {
             "name": "plantuml-jar",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Render `input/images-source/*.plantuml` as the Publisher does; without it a visible `not rendered` marker stands in.",
             "required": false
           }
@@ -3407,12 +3407,12 @@
         "outputs": [
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Pages staged."
           },
           {
             "name": "not-rendered",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Included files the source does not hold and nothing rendered, each replaced by a VISIBLE marker and listed, never an empty include."
           }
         ]
@@ -3443,13 +3443,13 @@
         "inputs": [
           {
             "name": "wireframe",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The wireframe HTML; fields carry `data-element`, layouts `data-layout`.",
             "required": true
           },
           {
             "name": "questionnaire",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The built Questionnaire JSON (`fsh-generated/resources/Questionnaire-<id>.json`), never FSH.",
             "required": true
           }
@@ -3457,7 +3457,7 @@
         "outputs": [
           {
             "name": "findings",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "One line per finding, prefixed with its layout. Exit 0 faithful, 1 a finding, 2 an input could not be read (never a pass)."
           }
         ]
@@ -3488,31 +3488,31 @@
         "inputs": [
           {
             "name": "sushi-config",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`.",
             "required": false
           },
           {
             "name": "cache",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Default `~/.fhir/packages`, which SUSHI and the IG Publisher read.",
             "required": false
           },
           {
             "name": "dry-run",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Resolve and report; download nothing.",
             "required": false
           },
           {
             "name": "mirror",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "A directory or git repository of `<name>#<version>.tgz` filled by `fhir-package-mirror`.",
             "required": false
           },
           {
             "name": "missing-out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Write the missing list, one `name#version` per line: the input `fhir-package-mirror` takes.",
             "required": false
           }
@@ -3520,11 +3520,11 @@
         "outputs": [
           {
             "name": "installed",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count"
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           },
           {
             "name": "missing",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Exit 1 when any is missing. Each is listed with why: not on npm, a different version only, an untrusted maintainer, or not an exact version."
           }
         ]
@@ -3557,13 +3557,13 @@
         "inputs": [
           {
             "name": "mirror-repo-dir",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "A git checkout to fill; committed and pushed when it is one.",
             "required": true
           },
           {
             "name": "missing",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The seeder's `--missing-out` file, so nothing unneeded is mirrored.",
             "required": true
           }
@@ -3571,7 +3571,7 @@
         "outputs": [
           {
             "name": "mirrored",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Exit non-zero when any could not be fetched or named itself differently."
           }
         ]
@@ -3605,7 +3605,7 @@
         "inputs": [
           {
             "name": "igRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone.",
             "required": true,
             "arg": {
@@ -3614,7 +3614,7 @@
           },
           {
             "name": "csv",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Write the report as CSV to this path instead of printing it.",
             "required": false,
             "arg": {
@@ -3623,7 +3623,7 @@
           },
           {
             "name": "top",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero.",
             "required": false,
             "arg": {
@@ -3632,7 +3632,7 @@
           },
           {
             "name": "history",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Report the blast radius over the last N commits instead of a static cone.",
             "required": false,
             "arg": {
@@ -3641,7 +3641,7 @@
           },
           {
             "name": "fileUsers",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build (bean `a9tx`).",
             "required": false,
             "arg": {
@@ -3652,7 +3652,7 @@
         "outputs": [
           {
             "name": "cone",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead."
           }
         ]
@@ -3683,37 +3683,37 @@
         "inputs": [
           {
             "name": "command",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "`write` or `check`.",
             "required": true
           },
           {
             "name": "index",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The `folio-fhir-artifact-index/v2` to write from, or to check against.",
             "required": true
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`write`: the docs root the nodes go under.",
             "required": false
           },
           {
             "name": "dir",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`check`: the built docs root to check.",
             "required": false
           },
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "`write`: the docs root's published URL, for absolute IRIs.",
             "required": false
           },
           {
             "name": "compiled-data",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`write`: where compiled resource files are served, from the docs root.",
             "required": false
           }
@@ -3721,7 +3721,7 @@
         "outputs": [
           {
             "name": "nodes",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Nodes written, or checked; `check` exits 1 with each finding named."
           }
         ]
@@ -3752,22 +3752,22 @@
         "inputs": [
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "head",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "plan",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": false
           },
           {
             "name": "site",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "A directory inside the IG's just-the-docs source; pages are wrapped in Liquid raw blocks so FHIR narratives' Liquid is not executed.",
             "required": false
           }
@@ -3775,11 +3775,11 @@
         "outputs": [
           {
             "name": "changed",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count"
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           },
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Pages written: one index, one per changed or version-changed resource."
           }
         ]
@@ -3810,13 +3810,13 @@
         "inputs": [
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The IG root.",
             "required": true
           },
           {
             "name": "ast-out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Default `<ig>/output-ast`, OUTSIDE the Publisher's `output/`.",
             "required": false
           }
@@ -3824,12 +3824,12 @@
         "outputs": [
           {
             "name": "resources",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Resources written, one file each."
           },
           {
             "name": "edges",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Dependency edges, including those whose target is outside the IG (kept, `resolved: null`)."
           }
         ]
@@ -3863,28 +3863,28 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "cache-folder",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Keeps the `*.ast-cache` packages out of `~/.fhir/packages`.",
             "required": false
           },
           {
             "name": "fsh-users",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`fsh-file-users/v1` from `fsh-cone --file-users`, so a changed RuleSet- or Alias-only file reaches its users instead of forcing a full build.",
             "required": false
           }
@@ -3892,7 +3892,7 @@
         "outputs": [
           {
             "name": "rounds",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Rounds to a fixed point; exit 3 when it does not converge, which means run a full build."
           }
         ]
@@ -3924,14 +3924,14 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           }
         ],
         "outputs": [
           {
             "name": "jsonld",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "JSON-LD on stdout."
           }
         ]
@@ -3962,14 +3962,14 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           }
         ],
         "outputs": [
           {
             "name": "resources",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count"
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           }
         ]
       },
@@ -3999,14 +3999,14 @@
         "inputs": [
           {
             "name": "work-dir",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": false
           }
         ],
         "outputs": [
           {
             "name": "logic-covered",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Logic resources carrying at least one edge to another logic resource in the IG."
           }
         ]
@@ -4042,7 +4042,7 @@
         "inputs": [
           {
             "name": "site",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A site being built: the pages go under it (`visualiser-writers.ts` in cat-harness-tools passes it). Absent, they go under the checkout's site directory.",
             "required": false,
             "arg": {
@@ -4051,7 +4051,7 @@
           },
           {
             "name": "root",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The checkout whose declarations are read. Default: the checkout holding the working directory.",
             "required": false,
             "arg": {
@@ -4060,7 +4060,7 @@
           },
           {
             "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Write nothing; exit 1 when a page is stale, missing or orphaned.",
             "required": false
           }
@@ -4068,7 +4068,7 @@
         "outputs": [
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Pages written: the hub and one per instance."
           }
         ]
@@ -4099,23 +4099,23 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "head",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/CommitSha",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha",
             "description": "Default HEAD; `-staged` diffs the index instead.",
             "required": false
           },
           {
             "name": "fsh-users",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`fsh-file-users/v1` from `fsh-cone --file-users`: lets a changed RuleSet- or Alias-only file reach its users rather than force a full build.",
             "required": false
           }
@@ -4123,7 +4123,7 @@
         "outputs": [
           {
             "name": "rebuild",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "The forward cone. The plan says `full`, with reasons, when a file's effect cannot be determined or the cone exceeds the threshold."
           }
         ]
@@ -4156,19 +4156,19 @@
         "inputs": [
           {
             "name": "repository",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoFullName",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
             "description": "The IG repository that carries the caller (`owner/repo`).",
             "required": true
           },
           {
             "name": "ref",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "What to build; default `main`. Only a commit on the default branch with the tip's inputs is seeded.",
             "required": false
           },
           {
             "name": "force",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Rebuild even when the cache is valid.",
             "required": false
           }
@@ -4176,7 +4176,7 @@
         "outputs": [
           {
             "name": "result",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The run's verdict before (`valid`, `stale`, `cannot-tell`, `missing`) and whether it seeded; the AST as a run artifact when it did not."
           }
         ]
@@ -4208,20 +4208,20 @@
         "inputs": [
           {
             "name": "delta",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`ig-ast-delta/v1`, from `ig-ast-diff --json`.",
             "required": true
           },
           {
             "name": "site",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           }
         ],
         "outputs": [
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count"
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           }
         ]
       },
@@ -4251,17 +4251,17 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "toolchain",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The Publisher that would run now. Without it the toolchain is ASSUMED unchanged, and the result says so.",
             "required": false
           }
@@ -4269,7 +4269,7 @@
         "outputs": [
           {
             "name": "verdict",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "Exit 0 valid, 1 stale-inputs, 2 cannot-tell. Cannot-tell is never a pass."
           }
         ]
@@ -4301,13 +4301,13 @@
         "inputs": [
           {
             "name": "repo",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "A clone that has the pages branch fetched.",
             "required": false
           },
           {
             "name": "ref",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "Default `origin/gh-pages`.",
             "required": false
           }
@@ -4315,7 +4315,7 @@
         "outputs": [
           {
             "name": "audit",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A table, or `ig-binary-audit/v1` JSON with `--json`."
           }
         ]
@@ -4347,7 +4347,7 @@
         "inputs": [
           {
             "name": "action",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/IgCacheAction",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IgCacheAction",
             "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
             "required": true,
             "arg": {
@@ -4356,7 +4356,7 @@
           },
           {
             "name": "igRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG whose AST is acted on.",
             "required": false,
             "arg": {
@@ -4365,7 +4365,7 @@
           },
           {
             "name": "package",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "required": false,
             "arg": {
               "flag": "--package"
@@ -4373,7 +4373,7 @@
           },
           {
             "name": "remote",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream (WHO) and the cache lives on a fork.",
             "required": false,
             "arg": {
@@ -4384,7 +4384,7 @@
         "outputs": [
           {
             "name": "result",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
           }
         ]
@@ -4417,7 +4417,7 @@
         "inputs": [
           {
             "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The instance directory: holds `fhir-artifact-index/` and receives `docs/`.",
             "required": true,
             "arg": {
@@ -4426,7 +4426,7 @@
           },
           {
             "name": "site",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A site being built: write ONLY the route pages of the visualisers declared `renderedBy: ig-pages` (`<locale>/<harness>/<id>/` and, per instance, `…/<instance>/`) under it, and nothing else: not `docs/`, not the instance. Each opens the IG's artefact index where the site carries it, and is that index otherwise. A repository's own site build passes it (`visualiser-writers.ts` in cat-harness-tools), since the instance is a pinned mount.",
             "required": false,
             "arg": {
@@ -4435,43 +4435,43 @@
           },
           {
             "name": "label",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The IG's display name. The index carries only the package id, which stands in when this is absent.",
             "required": false
           },
           {
             "name": "chrome-owner",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The instance whose `chrome.json` styles the pages. Absent, the pages are unstyled and the build says so. The banner's identity is always the index's; a chrome ingested from another IG lends its tokens, never its status.",
             "required": false
           },
           {
             "name": "summary",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Open the index page with the instance's own declaration (`harness_details.html` with `instance=`), making it the instance's landing page.",
             "required": false
           },
           {
             "name": "full-pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "The opt-out. Without it (the default since 2026-10-12, owner: \"make thin default\") each artefact page is a THIN shell at the same address: identity and a pointer, the artefact's JSON-LD node beside it, the index node (`artifact/index.jsonld`) the IG site's list pages draw, and one shared renderer, `assets/ig-artifact.js`. With it, the full pages as before, and no JSON-LD. `--thin`, the old opt-in, is accepted and changes nothing.",
             "required": false
           },
           {
             "name": "jsonld-base",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "Thin pages only: the docs root's published URL, so each node's IRIs are absolute. Absent, they are relative to the node's own file.",
             "required": false
           },
           {
             "name": "compiled-data",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Where a compiled index's resource files are served, as a path from the docs root. In an IG site the docs root IS the site root, so it is `ast-data`, not `../ast-data`.",
             "required": false
           },
           {
             "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Write nothing; exit 1 when any page is stale or orphaned.",
             "required": false
           }
@@ -4479,7 +4479,7 @@
         "outputs": [
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Pages written; the menu and chrome are reported as present or COULD NOT DETERMINE, never silently absent."
           }
         ]
@@ -4510,25 +4510,25 @@
         "inputs": [
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG checkout; the current directory by default.",
             "required": false
           },
           {
             "name": "baseurl",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`compose`: the site's base path; `FOLIO_SITE_BASEURL` from the site build when absent.",
             "required": false
           },
           {
             "name": "plantuml-jar",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`compose`: render `input/images-source/*.plantuml` as the Publisher does.",
             "required": false
           },
           {
             "name": "work",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The site build's work directory (`SITE_WORK` when absent): where `ast` writes its verdict, a layer above leaves the IG API sidecars, and `compose` the index `publisher-pages` serves.",
             "required": false
           }
@@ -4536,7 +4536,7 @@
         "outputs": [
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Pages composed, or AST files served."
           }
         ]
@@ -4568,19 +4568,19 @@
         "inputs": [
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG root: holds `sushi-config.yaml`, or `fhir-artifact-index/index.json` for a published IG.",
             "required": true
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`<site>/_data/fhir.json` — Jekyll has one `_data/`, so one IG per site, as under the Publisher.",
             "required": true
           },
           {
             "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Write nothing; exit 1 when the file is stale.",
             "required": false
           }
@@ -4588,12 +4588,12 @@
         "outputs": [
           {
             "name": "written",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Fields written, each from a named source."
           },
           {
             "name": "undetermined",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Fields a Publisher build would have that no source here carries. LISTED, never written as empty strings, because Jekyll prints an empty string and an absent value identically."
           }
         ]
@@ -4624,19 +4624,19 @@
         "inputs": [
           {
             "name": "source",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A checkout of the IG source repository.",
             "required": false
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The instance's `fhir-artifact-index/` directory.",
             "required": true
           },
           {
             "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Write nothing; exit 1 when stale, 2 when it cannot compare.",
             "required": false
           }
@@ -4644,7 +4644,7 @@
         "outputs": [
           {
             "name": "groups",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Menu groups read, each with its items."
           }
         ]
@@ -4675,12 +4675,12 @@
         "inputs": [
           {
             "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "repo",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "`owner/repo`; default the instance menu's recorded IG source, else its declaration's `repository`.",
             "required": false
           }
@@ -4688,7 +4688,7 @@
         "outputs": [
           {
             "name": "releases",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`<instance>/fhir-artifact-index/releases.json`."
           }
         ]
@@ -4719,7 +4719,7 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
@@ -4727,7 +4727,7 @@
         "outputs": [
           {
             "name": "vocabularies",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`*.jsonld` at the published root."
           }
         ]
@@ -4758,7 +4758,7 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
@@ -4766,7 +4766,7 @@
         "outputs": [
           {
             "name": "logicalModelSchemas",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`schemas/<stem>.schema.json`, one per logical model."
           }
         ]
@@ -4797,7 +4797,7 @@
         "inputs": [
           {
             "name": "from",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "A clone of the IG checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot.",
             "required": true
           }
@@ -4805,7 +4805,7 @@
         "outputs": [
           {
             "name": "snapshot",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The `--out` path, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted."
           }
         ]
@@ -4837,25 +4837,25 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The IG's FHIR AST (`output-ast/`): its Questionnaires, and the canonicals a sub-form resolves against.",
             "required": true
           },
           {
             "name": "questionnaire",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A Questionnaire id to check; default every one in the AST.",
             "required": false
           },
           {
             "name": "fixtures",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "One directory per Questionnaire id: `response.json` + `extract-expected.json`, `populate-context.json` + `populate-expected.json`, `behaviour.test.tsx`.",
             "required": false
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Where assembled Questionnaires are written.",
             "required": false
           }
@@ -4863,7 +4863,7 @@
         "outputs": [
           {
             "name": "sdcChecks",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "Per Questionnaire, per check: pass, fail, not-applicable, no-fixture or could-not-determine — the last three never a pass. JSON with `--json`. Exit 1 on an error-severity failure; behavioural tests never fail the run."
           }
         ]
@@ -4894,37 +4894,37 @@
         "inputs": [
           {
             "name": "work",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Scratch directory: each IG's clone and its Jekyll source.",
             "required": true
           },
           {
             "name": "baseurl",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The site's base URL; each IG is served under it at `/<instance>/` or `/<instance>/ig/`.",
             "required": true
           },
           {
             "name": "plantuml-jar",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Render `input/images-source/*.plantuml` as the Publisher does.",
             "required": false
           },
           {
             "name": "changed-files",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Build only the IGs a changed file reaches (the staging cone, bean `4j86`).",
             "required": false
           },
           {
             "name": "compose-into",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Move each staged IG into this host Jekyll source at `<instance>/`, so the host's build renders it: in the thin layout with the host's rail linked (the default), or with the host's full chrome (sidebar, search, language selector) under `--full-pages`.",
             "required": false
           },
           {
             "name": "compose-at-root",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "With `--compose-into` and `--only`: the IG IS the site — compose it at the host's ROOT, based at `--baseurl` itself. An IG repository's own site uses this with a `compose-docs --shell` host, so it wears the main site's chrome (#2235).",
             "required": false,
             "arg": {
@@ -4933,19 +4933,19 @@
           },
           {
             "name": "only",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "Build one IG instance.",
             "required": false
           },
           {
             "name": "source",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "With `--only`: a local checkout of the IG's source to build from instead of cloning the recorded commit — an IG repository building its own site in CI.",
             "required": false
           },
           {
             "name": "full-pages",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "The opt-out. Without it (the default since 2026-10-12, owner: \"make thin default\") `artifacts.html` and `toc.html` are thin pages over the artefact index node, and composed IG pages wear the thin layout with the host's chrome linked, not inlined. With it, the full pages as before; it needs `gen-ig-pages --full-pages` too, and a mismatch is refused.",
             "required": false,
             "arg": {
@@ -4956,7 +4956,7 @@
         "outputs": [
           {
             "name": "sites",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "IGs staged, one stdout line each; an instance with no recorded source is skipped and reported, never silently."
           }
         ]
@@ -4988,7 +4988,7 @@
         "inputs": [
           {
             "name": "igOutput",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The Publisher's `output/`. It runs AFTER the build — the resources it edits are published ones.",
             "required": true
           }
@@ -4996,7 +4996,7 @@
         "outputs": [
           {
             "name": "stripped",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "How many resources were altered. Zero is a determined empty when the output directory was found; a missing output directory is a different state."
           }
         ]
@@ -5027,18 +5027,18 @@
         "inputs": [
           {
             "name": "igOutput",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "required": true
           }
         ],
         "outputs": [
           {
             "name": "rewritten",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count"
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           },
           {
             "name": "references",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "The base the replacement references resolve against. If it is wrong, every rewritten Library points at nothing and the resource still validates."
           }
         ]
@@ -5069,19 +5069,19 @@
         "inputs": [
           {
             "name": "expansions",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`output-ast/expansions.json`.",
             "required": false
           },
           {
             "name": "txcache",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`input-cache/txcache/`.",
             "required": false
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Where `index.json` (or `index.json.gz`) is written.",
             "required": true
           }
@@ -5089,7 +5089,7 @@
         "outputs": [
           {
             "name": "index",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The index file, and a count of codes and value sets on stdout."
           }
         ]
@@ -5120,7 +5120,7 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
@@ -5128,7 +5128,7 @@
         "outputs": [
           {
             "name": "valueSetSchemas",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "One schema per ValueSet, plus the enumeration-response schemas at the IG root."
           }
         ]
@@ -6382,8 +6382,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   }
 }

@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "action",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/IgCacheAction",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IgCacheAction",
             "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
             "required": true,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "igRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The IG whose AST is acted on.",
             "required": false,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "package",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "required": false,
             "arg": {
               "flag": "--package"
@@ -413,7 +413,7 @@
           },
           {
             "name": "remote",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream (WHO) and the cache lives on a fork.",
             "required": false,
             "arg": {
@@ -424,7 +424,7 @@
         "outputs": [
           {
             "name": "result",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
           }
         ]

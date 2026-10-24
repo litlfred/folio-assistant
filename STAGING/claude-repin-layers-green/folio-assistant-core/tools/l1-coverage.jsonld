@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "text",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The publication's body text, page-tagged: `{\"pages\":[{\"page\":n,\"text\":\"…\"}]}` JSON, or plain text with a form feed between pages (what `pdftotext` writes). Headers, references and tables of contents are stripped by the caller.",
             "required": true,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "captured",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "JSON `[{\"id\",\"text\"}]`: every statement the extraction captured, verbatim.",
             "required": true,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "exclusions",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "JSON `[{location|text, reason, signedOffBy?, signedOffAt?}]`. An exclusion without `signedOffBy` is a proposal and leaves its sentence unaccounted.",
             "required": false,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Where to write the report; stdout when absent.",
             "required": false,
             "arg": {
@@ -425,7 +425,7 @@
         "outputs": [
           {
             "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "An `l1-coverage-report/v1` JSON report: definitionVersion, matchMethod, source and graph sha256, totals, pages[] and sentences[]. A per-page table goes to stderr."
           }
         ]

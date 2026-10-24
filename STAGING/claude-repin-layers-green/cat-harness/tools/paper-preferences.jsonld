@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -392,7 +392,7 @@
         "inputs": [
           {
             "name": "action",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/PreferenceAction",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/PreferenceAction",
             "required": false,
             "arg": {
               "flag": "--action"
@@ -400,7 +400,7 @@
           },
           {
             "name": "render_format",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RenderFormat",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RenderFormat",
             "required": false,
             "arg": {
               "flag": "--render-format"
@@ -408,7 +408,7 @@
           },
           {
             "name": "render_scope",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RenderScope",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RenderScope",
             "required": false,
             "arg": {
               "flag": "--render-scope"
@@ -416,7 +416,7 @@
           },
           {
             "name": "latex_engine",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/LatexEngine",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/LatexEngine",
             "required": false,
             "arg": {
               "flag": "--latex-engine"
@@ -424,7 +424,7 @@
           },
           {
             "name": "math_renderer",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/MathRenderer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/MathRenderer",
             "required": false,
             "arg": {
               "flag": "--math-renderer"
@@ -432,7 +432,7 @@
           },
           {
             "name": "auto_preview",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "required": false,
             "arg": {
               "flag": "--auto-preview"
@@ -440,7 +440,7 @@
           },
           {
             "name": "formula_dpi",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Dpi",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Dpi",
             "required": false,
             "arg": {
               "flag": "--formula-dpi"
@@ -448,7 +448,7 @@
           },
           {
             "name": "default_chapter",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "required": false,
             "arg": {
               "flag": "--default-chapter"
@@ -456,7 +456,7 @@
           },
           {
             "name": "print_mode",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/PrintMode",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/PrintMode",
             "required": false,
             "arg": {
               "flag": "--print-mode"
@@ -464,7 +464,7 @@
           },
           {
             "name": "compact_inline_refs",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "required": false,
             "arg": {
               "flag": "--compact-inline-refs"
@@ -474,7 +474,7 @@
         "outputs": [
           {
             "name": "preferences",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Markdown",
             "description": "The preferences after the call."
           }
         ]

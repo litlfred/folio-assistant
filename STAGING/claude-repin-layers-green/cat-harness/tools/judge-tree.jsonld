@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "lock",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The index.lock.json whose fixity digests name every instance but the caller.",
             "required": true,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "caller",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoFullName",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
             "description": "The caller as owner/name (or its lock instance): the entry replaced by its PR tree. Every runner must name it the same way.",
             "required": true,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "caller-dir",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The caller's git checkout; its HEAD^{tree} (or --sha's) is the PR tree.",
             "required": false,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "sha",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/CommitSha",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/CommitSha",
             "description": "The head commit: whose tree is read from --caller-dir, and where the status is published.",
             "required": false,
             "arg": {
@@ -423,7 +423,7 @@
           },
           {
             "name": "root",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The mounted index with the caller swapped in, where run-gates.py runs.",
             "required": false,
             "arg": {
@@ -432,7 +432,7 @@
           },
           {
             "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "The own instance(s) run-gates.py judges; repeatable.",
             "required": false,
             "arg": {
@@ -441,7 +441,7 @@
           },
           {
             "name": "base-verdict",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A stored verdict record standing in for the base run; refused unless its treeDigest is the base tree's (--base-tree).",
             "required": false,
             "arg": {
@@ -450,7 +450,7 @@
           },
           {
             "name": "base-root",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A mounted base tree to run the gates on instead.",
             "required": false,
             "arg": {
@@ -459,7 +459,7 @@
           },
           {
             "name": "test-path",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "What `bun test` runs on each side; none means no tests.",
             "required": false,
             "arg": {
@@ -468,7 +468,7 @@
           },
           {
             "name": "publish",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Post the commit status `judge-tree` when GITHUB_TOKEN/GH_TOKEN is set; without one, the record file is the verdict.",
             "required": false,
             "arg": {
@@ -479,7 +479,7 @@
         "outputs": [
           {
             "name": "record",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The verdict record, `<records-dir>/<treeDigest>.json` unless --out names it; valid against the tools layer's `schemas/verdict-record.schema.json`. Three exit codes: 0 green, 1 red, 2 COULD NOT DETERMINE (no judging scripts, a stored base verdict for another tree, a compare script that crashed, or no gate ran). 2 is never green, and neither is a verdict for another digest."
           }
         ]

@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The downstream instance root; omitted, every declaring instance in the checkout.",
             "required": false,
             "arg": {
@@ -396,7 +396,7 @@
           },
           {
             "name": "staging",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Mount for a staging preview: no signature or consent required.",
             "required": false,
             "arg": {
@@ -405,7 +405,7 @@
           },
           {
             "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Compare the disk against the lock; fetch nothing.",
             "required": false,
             "arg": {
@@ -414,7 +414,7 @@
           },
           {
             "name": "noAgentSurface",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Do not re-render `.claude/commands/` and the agent memory after a mount that changed the lock.",
             "required": false,
             "arg": {
@@ -423,7 +423,7 @@
           },
           {
             "name": "noInstall",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Lay the pinned bytes down without `bun install` in each mounted instance that carries a `package.json`. By default the install runs (`--production`; `--install-all` keeps devDependencies), so the mounted tools run; it writes only `node_modules/`, which no mount digest covers, so `--check` still passes.",
             "required": false,
             "arg": {
@@ -432,7 +432,7 @@
           },
           {
             "name": "seed",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/MountSeed",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/MountSeed",
             "description": "`<name>=<owner/repo>@<40-char sha>`: create or re-pin that remote instance in `index.config.json` instead of mounting, writing its `trust.consent` for that pin in the same write (needs `consentBy` and `evidence`; repeatable; `--whole` mounts every tracked file).",
             "required": false,
             "arg": {
@@ -441,7 +441,7 @@
           },
           {
             "name": "consentBy",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Login",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Login",
             "description": "With `seed`: who consented, as `consent.by`.",
             "required": false,
             "arg": {
@@ -450,7 +450,7 @@
           },
           {
             "name": "evidence",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "With `seed`: where the consent was given, readable (a session, an issue comment), as `consent.evidence`. On stdin because it is free prose: it quotes what was said.",
             "required": false,
             "arg": {
@@ -461,7 +461,7 @@
         "outputs": [
           {
             "name": "outcomes",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "Per instance: mounted, local, skipped, missing (including refused by the trust gate) or could-not-determine."
           }
         ]

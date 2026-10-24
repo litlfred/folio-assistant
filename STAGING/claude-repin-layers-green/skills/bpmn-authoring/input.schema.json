@@ -1,37 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/skills/bpmn-authoring/input.schema.json",
-  "title": "BPMN Authoring Input",
-  "description": "Input schema for BPMN 2.0 business process authoring.",
-  "type": "object",
-  "required": [
-    "processName"
-  ],
-  "properties": {
-    "processName": {
-      "type": "string",
-      "description": "Name of the business process to model."
-    },
-    "sourceWorkflow": {
-      "type": "string",
-      "description": "Textual description or reference to the workflow to model."
-    },
-    "existingBpmn": {
-      "type": "string",
-      "description": "Path to existing BPMN file to update."
-    },
-    "participants": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Actor/participant IDs involved in the process."
+  "title": "BPMN Authoring Input (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/bpmn-authoring/input.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/bpmn-authoring/input.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/bpmn-authoring/input.schema.json"
     }
-  },
+  ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   }
 }

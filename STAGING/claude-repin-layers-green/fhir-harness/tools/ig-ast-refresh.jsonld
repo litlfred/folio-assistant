@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,19 +387,19 @@
         "inputs": [
           {
             "name": "repository",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoFullName",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
             "description": "The IG repository that carries the caller (`owner/repo`).",
             "required": true
           },
           {
             "name": "ref",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "What to build; default `main`. Only a commit on the default branch with the tip's inputs is seeded.",
             "required": false
           },
           {
             "name": "force",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Rebuild even when the cache is valid.",
             "required": false
           }
@@ -407,7 +407,7 @@
         "outputs": [
           {
             "name": "result",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The run's verdict before (`valid`, `stale`, `cannot-tell`, `missing`) and whether it seeded; the AST as a run artifact when it did not."
           }
         ]

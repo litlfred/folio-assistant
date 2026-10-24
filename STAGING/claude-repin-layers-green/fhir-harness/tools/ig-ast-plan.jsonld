@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,23 +387,23 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "ig",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "required": true
           },
           {
             "name": "head",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/CommitSha",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha",
             "description": "Default HEAD; `-staged` diffs the index instead.",
             "required": false
           },
           {
             "name": "fsh-users",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "`fsh-file-users/v1` from `fsh-cone --file-users`: lets a changed RuleSet- or Alias-only file reach its users rather than force a full build.",
             "required": false
           }
@@ -411,7 +411,7 @@
         "outputs": [
           {
             "name": "rebuild",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
             "description": "The forward cone. The plan says `full`, with reasons, when a file's effect cannot be determined or the cone exceeds the threshold."
           }
         ]

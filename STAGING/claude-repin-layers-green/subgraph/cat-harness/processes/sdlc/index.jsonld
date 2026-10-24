@@ -3217,6 +3217,162 @@
       "name": "Open or EDIT the one tracking issue"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling",
+      "@type": "bootstrap:Process",
+      "name": "Requirements filing: promote, organise, trace, supersede, or retire"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Amend",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "amend-or-supersede"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Approved",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "approve / amend"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_CheckFail",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "fail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_CheckPass",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "pass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Held",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "reject / defer / cancel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Promote",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "promote"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Retire",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "retire"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_BA",
+      "@type": "cat-harness:Lane",
+      "name": "BA / Feature Requestor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_BindFrontMatter",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bind Requirement front matter, statements, and 3-axis lineage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_ClassifyFiling",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Classify filing mode, concern group, and req:<slug> ID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_PromoteOrUpdate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "git mv proposal to docs/requirements/<slug>.md and record proposedIn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_RecordFilingSignoff",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record requirement-signoff attestation and set stage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_RunCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run check:requirements schema, collision, and lineage gate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_UpdateIndex",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Organise entry in docs/requirements/index.md by concern group & status"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_UpdateLifecycle",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Mark superseded or retired record in place and update RequirementSet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/BA_ReviewFiling",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review filed requirement, organisation, and sign off"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/End_FilingHeld",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Filing held or deferred — recorded with reason"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/End_RequirementFiled",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Requirement filed and organised in docs/requirements/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/GW_CheckPassed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "check:requirements clean?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/GW_FilingAccepted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Filing accepted?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/GW_FilingMode",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Which filing transition?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/Start_Process_RequirementsFiling",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feature ready to file or requirement lifecycle change requested"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "@type": "bootstrap:Process",
       "name": "Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route"

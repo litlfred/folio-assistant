@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -393,13 +393,13 @@
         "inputs": [
           {
             "name": "process",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/ProcessId",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId",
             "description": "The process to run: a diagram's file stem or its `bpmn:process` id.",
             "required": true
           },
           {
             "name": "node",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId",
             "description": "The step or decision to complete, as `workflow_next` reported it.",
             "required": false
           }
@@ -407,7 +407,7 @@
         "outputs": [
           {
             "name": "enabled",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId",
             "description": "What may be worked next, after each call."
           }
         ]

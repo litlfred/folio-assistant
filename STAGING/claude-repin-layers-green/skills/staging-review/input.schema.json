@@ -1,26 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/skills/staging-review/input.schema.json",
-  "title": "Staging Review Input",
-  "description": "What the reader wants to look at, in their own words (kept verbatim; it narrows, never adds), and the branch or pull request whose preview to list.",
-  "type": "object",
-  "properties": {
-    "ask": {
-      "type": "string",
-      "description": "What the reader wants to look at, verbatim. Absent: the whole preview, every page the branch changed."
-    },
-    "branch": {
-      "type": "string"
-    },
-    "pr": {
-      "type": "integer",
-      "minimum": 1
+  "title": "Staging Review Input (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/staging-review/input.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/staging-review/input.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/staging-review/input.schema.json"
     }
-  },
+  ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   }
 }

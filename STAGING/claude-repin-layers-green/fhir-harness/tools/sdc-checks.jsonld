@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,25 +387,25 @@
         "inputs": [
           {
             "name": "ast",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "The IG's FHIR AST (`output-ast/`): its Questionnaires, and the canonicals a sub-form resolves against.",
             "required": true
           },
           {
             "name": "questionnaire",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A Questionnaire id to check; default every one in the AST.",
             "required": false
           },
           {
             "name": "fixtures",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "One directory per Questionnaire id: `response.json` + `extract-expected.json`, `populate-context.json` + `populate-expected.json`, `behaviour.test.tsx`.",
             "required": false
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/FilesystemPath",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Where assembled Questionnaires are written.",
             "required": false
           }
@@ -413,7 +413,7 @@
         "outputs": [
           {
             "name": "sdcChecks",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "Per Questionnaire, per check: pass, fail, not-applicable, no-fixture or could-not-determine — the last three never a pass. JSON with `--json`. Exit 1 on an error-severity failure; behavioural tests never fail the run."
           }
         ]

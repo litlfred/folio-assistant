@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   },
   "@graph": [
     {
@@ -387,7 +387,7 @@
         "inputs": [
           {
             "name": "spec",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "One JSON object: `src` (the PDF's URL, which must fall under a prefix `pdf-viewer-install` was given, or the viewer refuses it on screen), `title` (what the document is; the frame's accessible name), `route` (a regular expression over the page's pathname whose group 1 is the site root — the `folio-mount.ts` convention) and optionally `page` (open at this 1-based page). On stdin because a title and a regular expression are free text.",
             "required": true,
             "arg": {
@@ -398,7 +398,7 @@
         "outputs": [
           {
             "name": "fragment",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "The HTML fragment on stdout. TypeScript callers import `embed` from the module that implements this Tool instead, as the IRIS replica's `scripts/gen-iris-pages.ts` does."
           }
         ]

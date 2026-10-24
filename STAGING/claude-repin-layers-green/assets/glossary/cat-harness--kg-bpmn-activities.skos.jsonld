@@ -7384,6 +7384,166 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_bindfrontmatter",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bind Requirement front matter, statements, and 3-axis lineage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Author or update the YAML front matter conforming to bootstrap/schemas/requirement.schema.json: `id: req:<slug>`, `title`, `status`, `statements[]` (each with stable `#<key>`, RFC 2119 modality MUST/SHOULD/MAY, normative statement, and measurable successCriteria), backward lineage (`proposedIn`, `derivedFrom`), horizontal dependencies (`dependsOn`), and forward links (`beans`, `skills`, `processes`)."
+        }
+      ],
+      "skos:notation": "A_BindFrontMatter",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_BindFrontMatter",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_classifyfiling",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Classify filing mode, concern group, and req:<slug> ID"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Determine whether this filing promotes a proposal from docs/proposals/<slug>.md (promote), amends an existing requirement or replaces it with a new requirement (amend-or-supersede), or retires an obsolete requirement (retire). Assign the primary semantic concern group from code-lists/concern-group.json (sdlc, process, tools, kg, library, content, ui, conduct) and verify that req:<slug> does not collide across docs/proposals/ and docs/requirements/."
+        }
+      ],
+      "skos:notation": "A_ClassifyFiling",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_ClassifyFiling",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_promoteorupdate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "git mv proposal to docs/requirements/<slug>.md and record proposedIn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record the last commit SHA touching docs/proposals/<slug>.md, execute `git mv docs/proposals/<slug>.md docs/requirements/<slug>.md` so git log --follow preserves the proposal's history, and record `proposedIn: { commit, path: \"docs/proposals/<slug>.md\" }` in the YAML front matter."
+        }
+      ],
+      "skos:notation": "A_PromoteOrUpdate",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_PromoteOrUpdate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_recordfilingsignoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record requirement-signoff attestation and set stage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Append the human sign-off decision to `test/attestations/requirement-signoff/<set-slug>.attestations.json` (recording who, at, scope, outcome, stage, reason, and issue comment permalink) and update the `RequirementSet` stage to match."
+        }
+      ],
+      "skos:notation": "A_RecordFilingSignoff",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_RecordFilingSignoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_runcheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run check:requirements schema, collision, and lineage gate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run `bun run cat check:requirements` to verify schema conformance (`bootstrap/schemas/requirement.schema.json`), slug uniqueness across `docs/proposals/` and `docs/requirements/`, acyclicity of `derivedFrom`, existence of all referenced `derivedFrom` / `dependsOn` / `supersededBy` / `skills` / `processes` targets, and `RequirementSet` sign-off invariants."
+        }
+      ],
+      "skos:notation": "A_RunCheck",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_RunCheck",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_updateindex",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Organise entry in docs/requirements/index.md by concern group & status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Add or update the requirement's row in `docs/requirements/index.md` under its canonical concern group (`sdlc`, `process`, `tools`, `kg`, `library`, `content`, `ui`, `conduct` from `code-lists/concern-group.json`) for `in-force` requirements, or move it to the Superseded and Retired Requirements table when superseded or retired."
+        }
+      ],
+      "skos:notation": "A_UpdateIndex",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_UpdateIndex",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.a_updatelifecycle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mark superseded or retired record in place and update RequirementSet"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Never delete (`git rm`) a superseded or retired requirement. When superseding `req:<old-slug>`, set `status: superseded` and `supersededBy: req:<new-slug>` on `docs/requirements/<old-slug>.md`. When retiring, set `status: retired` and document the retirement reason and authorising issue in prose. Update any `RequirementSet` (`docs/requirements/*.set.json`) so approved/accepted sets hold only `in-force` members."
+        }
+      ],
+      "skos:notation": "A_UpdateLifecycle",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#A_UpdateLifecycle",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_requirementsfiling.ba_reviewfiling",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review filed requirement, organisation, and sign off"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Business Analyst / Owner reviews the filed requirement in `docs/requirements/<slug>.md`, its concern-group organisation in `docs/requirements/index.md`, its three-axis traceability, and any supersession or retirement update, deciding `approve`, `amend`, `reject`, `defer`, or `cancel`."
+        }
+      ],
+      "skos:notation": "BA_ReviewFiling",
+      "dcterms:source": "cat-harness/processes/sdlc/requirements-filing.bpmn#BA_ReviewFiling",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_review.call_codereview",
       "@type": "skos:Concept",
       "skos:inScheme": {

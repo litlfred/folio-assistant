@@ -374,10 +374,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T07:50:18.870Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a919d957575998f9320a3aea72eb7e4245340868",
-  "sourceCommitSha": "a919d957575998f9320a3aea72eb7e4245340868",
-  "sourceCommitAt": "2026-10-24T07:31:24Z",
+  "generatedAt": "2026-10-24T09:25:00.798Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+  "sourceCommitAt": "2026-10-24T08:39:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -2809,7 +2809,7 @@
         "inputs": [
           {
             "name": "mainTex",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The rendered paper's top-level `.tex`, relative to the checkout.",
             "required": true,
             "arg": {
@@ -2820,7 +2820,7 @@
         "outputs": [
           {
             "name": "pdf",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The compiled PDF beside the input."
           }
         ]
@@ -2852,7 +2852,7 @@
         "inputs": [
           {
             "name": "action",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/LakeCacheAction",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/LakeCacheAction",
             "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
             "required": true,
             "arg": {
@@ -2861,7 +2861,7 @@
           },
           {
             "name": "lakeRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The package whose `.lake/` is acted on.",
             "required": false,
             "arg": {
@@ -2870,7 +2870,7 @@
           },
           {
             "name": "package",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "required": false,
             "arg": {
               "flag": "--package"
@@ -2880,7 +2880,7 @@
         "outputs": [
           {
             "name": "result",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
           }
         ]
@@ -2919,19 +2919,19 @@
         "inputs": [
           {
             "name": "lake_dir",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The folio's Lake project directory (holds lakefile.* and .lake/).",
             "required": true
           },
           {
             "name": "root",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Content root to collect lean.ref targets from (default: the folio's declared one).",
             "required": false
           },
           {
             "name": "ingest",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Record the result in the formal cache as source \"elaborated\".",
             "required": false
           }
@@ -2939,7 +2939,7 @@
         "outputs": [
           {
             "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Markdown",
             "description": "The extracted edges, or why they could not be determined — never an empty edge set in place of a failure."
           }
         ]
@@ -2972,7 +2972,7 @@
         "inputs": [
           {
             "name": "lakeRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The Lake package directory whose lakefile requires (or sentinel-comments) doc-gen4, e.g. `folio/quantum-observable-universe/lean`.",
             "required": true,
             "arg": {
@@ -2981,7 +2981,7 @@
           },
           {
             "name": "lib",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "The `lean_lib` to document, e.g. `QOU` (a Lean library name: alphanumerics, dot, underscore, hyphen). Repeat for several.",
             "required": true,
             "arg": {
@@ -2990,7 +2990,7 @@
           },
           {
             "name": "platform",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The index checkout holding `lake-cache.sh`. Default `$FOLIO_ASSISTANT_ROOT`.",
             "required": false,
             "arg": {
@@ -2999,7 +2999,7 @@
           },
           {
             "name": "restore",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Restore the warm cache first (about 2 minutes) instead of only checking it.",
             "required": false,
             "arg": {
@@ -3008,7 +3008,7 @@
           },
           {
             "name": "allowCold",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Build without a warm cache: Mathlib from source, 30-60 minutes before doc-gen4 starts.",
             "required": false,
             "arg": {
@@ -3017,7 +3017,7 @@
           },
           {
             "name": "dryRun",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Run every guard, print the build command, build nothing.",
             "required": false,
             "arg": {
@@ -3028,7 +3028,7 @@
         "outputs": [
           {
             "name": "render",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`<lake-root>/.lake/build/doc`, doc-gen4's output, printed as the last line. Feed it to `lean-render-publish`."
           }
         ]
@@ -3062,7 +3062,7 @@
         "inputs": [
           {
             "name": "docData",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "doc-gen4's `.lake/build/doc-data` from `lean-html-docs`.",
             "required": true,
             "arg": {
@@ -3071,7 +3071,7 @@
           },
           {
             "name": "site",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The folio's built site.",
             "required": true,
             "arg": {
@@ -3080,7 +3080,7 @@
           },
           {
             "name": "route",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "Where under the site. Default `lean`.",
             "required": false,
             "arg": {
@@ -3089,7 +3089,7 @@
           },
           {
             "name": "module",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "description": "A module root to keep (`qou` keeps `QOU`). Repeat for several.",
             "required": false,
             "arg": {
@@ -3098,7 +3098,7 @@
           },
           {
             "name": "contentRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Content tree whose blocks' `lean.ref` become `formalizes` edges.",
             "required": false,
             "arg": {
@@ -3107,7 +3107,7 @@
           },
           {
             "name": "repo",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoFullName",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
             "description": "`owner/repo` for block links.",
             "required": false,
             "arg": {
@@ -3116,7 +3116,7 @@
           },
           {
             "name": "ref",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "Branch or sha for block links.",
             "required": false,
             "arg": {
@@ -3125,7 +3125,7 @@
           },
           {
             "name": "contentPrefix",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Path of the content root inside the repo, for block links.",
             "required": false,
             "arg": {
@@ -3134,7 +3134,7 @@
           },
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "Published `data/` of the base graph; enables the STAGING overlay.",
             "required": false,
             "arg": {
@@ -3143,7 +3143,7 @@
           },
           {
             "name": "externalBase",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "Where links into pruned modules go. Default the community mathlib4 docs.",
             "required": false,
             "arg": {
@@ -3152,7 +3152,7 @@
           },
           {
             "name": "homeLabel",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "The rail's home row.",
             "required": false,
             "arg": {
@@ -3161,7 +3161,7 @@
           },
           {
             "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "As rail-standalone-pages.ts --instance.",
             "required": false,
             "arg": {
@@ -3170,7 +3170,7 @@
           },
           {
             "name": "platform",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The index checkout holding the rail pass.",
             "required": false,
             "arg": {
@@ -3179,7 +3179,7 @@
           },
           {
             "name": "noRail",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Publish only; the caller rails the site.",
             "required": false,
             "arg": {
@@ -3190,7 +3190,7 @@
         "outputs": [
           {
             "name": "viewer",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`<site>/<route>/`: index.html, viewer.js/css, extracted signature styles, config.json and `data/` (index.json, names.json, m/<Module>.jsonld, m/<Module>.<k>.sig.json, overlay.json)."
           }
         ]
@@ -3222,7 +3222,7 @@
         "inputs": [
           {
             "name": "docs",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The doc-gen4 render, `lean-html-docs`'s output.",
             "required": true,
             "arg": {
@@ -3231,7 +3231,7 @@
           },
           {
             "name": "site",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The folio's built site (`_site` from build-folio-site.ts).",
             "required": true,
             "arg": {
@@ -3240,7 +3240,7 @@
           },
           {
             "name": "route",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "Where under the site. Default `lean`.",
             "required": false,
             "arg": {
@@ -3249,7 +3249,7 @@
           },
           {
             "name": "module",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/PackageName",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/PackageName",
             "description": "A Lake package whose module root to keep (`qou` keeps `QOU/`, matched case-insensitively). Repeat for several. Default: keep everything.",
             "required": false,
             "arg": {
@@ -3258,7 +3258,7 @@
           },
           {
             "name": "externalBase",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Url",
             "description": "Where links into pruned modules go. Default the community mathlib4 docs.",
             "required": false,
             "arg": {
@@ -3267,7 +3267,7 @@
           },
           {
             "name": "homeLabel",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "The rail's home row: the folio's instance name, e.g. `qou`.",
             "required": false,
             "arg": {
@@ -3276,7 +3276,7 @@
           },
           {
             "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/InstanceId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/InstanceId",
             "description": "Rail as this instance's own site (its name, mark and graphs), as rail-standalone-pages.ts --instance.",
             "required": false,
             "arg": {
@@ -3285,7 +3285,7 @@
           },
           {
             "name": "platform",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The index checkout holding the rail pass. Default `$FOLIO_ASSISTANT_ROOT`, then the nearest ancestor that has it.",
             "required": false,
             "arg": {
@@ -3294,7 +3294,7 @@
           },
           {
             "name": "noRail",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Flag",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
             "description": "Stage only; the caller rails the site itself.",
             "required": false,
             "arg": {
@@ -3305,7 +3305,7 @@
         "outputs": [
           {
             "name": "pages",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`<site>/<route>/`, railed, plus the rail's shared data under `<site>/assets/navbar/`."
           }
         ]
@@ -3337,7 +3337,7 @@
         "inputs": [
           {
             "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Branch",
             "description": "The ref to diff against. Default `origin/main`.",
             "required": false,
             "arg": {
@@ -3346,7 +3346,7 @@
           },
           {
             "name": "chapters",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`.",
             "required": false,
             "arg": {
@@ -3355,7 +3355,7 @@
           },
           {
             "name": "paper",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
             "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them.",
             "required": false,
             "arg": {
@@ -3364,7 +3364,7 @@
           },
           {
             "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Output directory, which the folio should gitignore. Default `build-feature`.",
             "required": false,
             "arg": {
@@ -3373,7 +3373,7 @@
           },
           {
             "name": "notation",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present.",
             "required": false,
             "arg": {
@@ -3382,7 +3382,7 @@
           },
           {
             "name": "preload",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool.",
             "required": false,
             "arg": {
@@ -3393,7 +3393,7 @@
         "outputs": [
           {
             "name": "preview",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`."
           }
         ]
@@ -3428,7 +3428,7 @@
         "outputs": [
           {
             "name": "engine",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
             "description": "A `pdflatex --version` line on success. The installed packages are system-wide."
           }
         ]
@@ -4343,8 +4343,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   }
 }

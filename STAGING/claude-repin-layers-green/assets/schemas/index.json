@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 290,
+      "count": 291,
       "unit": "modules"
     }
   },
@@ -817,6 +817,13 @@
       "name": "git-scan.test",
       "graphNode": "undeclared",
       "summary": "`xd1g` — the corpus rule, stated once so it is not re-implemented eleven",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/gitlab-username.test.ts",
+      "instance": "cat-harness",
+      "name": "gitlab-username.test",
+      "graphNode": "undeclared",
       "isTest": true
     },
     {
@@ -54695,6 +54702,20 @@
       "module": "cat-harness/schemas/tool-types.ts",
       "kind": "zod-scalar",
       "doc": "A boolean switch.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#GitLabUsernameSchema",
+      "name": "GitLabUsernameSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A GitLab username, e.g. `litlfred` or `jane.doe`. Owner, 2026-10-24 (bean",
       "fields": [],
       "extendsNames": [],
       "values": [],

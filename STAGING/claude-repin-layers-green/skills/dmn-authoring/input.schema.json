@@ -1,52 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/skills/dmn-authoring/input.schema.json",
-  "title": "DMN Authoring Input",
-  "description": "Input schema for DMN (Decision Model and Notation) decision table authoring.",
-  "type": "object",
-  "required": [
-    "decisionName",
-    "inputVariables"
-  ],
-  "properties": {
-    "decisionName": {
-      "type": "string",
-      "description": "Name of the decision to model."
-    },
-    "inputVariables": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name",
-          "type"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "string",
-              "integer",
-              "boolean",
-              "date",
-              "codeable-concept"
-            ]
-          }
-        }
-      }
-    },
-    "sourceLogic": {
-      "type": "string",
-      "description": "Reference to the clinical decision logic being modeled."
+  "title": "DMN Authoring Input (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/dmn-authoring/input.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/dmn-authoring/input.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skills/dmn-authoring/input.schema.json"
     }
-  },
+  ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
+    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
     "pr": "2681/merge",
-    "run": "40074474685"
+    "run": "40078913707"
   }
 }
