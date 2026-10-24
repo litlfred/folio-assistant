@@ -74,3 +74,5 @@ _2026-10-24T09:27:19Z_ — litlfred/cat-harness#493 merged (40254023): 13 kg-dec
 _2026-10-24T10:55:29Z_ — Claim released by the cloud drain thread; the next batch is open to anyone.
 
 _2026-10-24T10:56:06Z_ — Re-claimed by the cloud drain thread "Drain content model and ingest beans" (owner extended the window to ~13:48Z; session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU).
+
+_2026-10-24T13:37:00Z_ — litlfred/cat-harness#543 merged (e8e4cb0f): 15 English drafts for Halko–Martinsson–Tropp (arxiv-0909.4061v2, pages 1–15) are on main and wait for a person. Claim released; later batches are open to anyone.
