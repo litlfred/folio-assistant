@@ -2,10 +2,10 @@
 # folio-assistant-95sk
 $schema: bean/1.0.0
 title: 'FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and reader documents in folio/, cross-library references — wait on the split'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-23T17:59:01Z
-updated_at: 2026-10-24T08:05:00Z
+updated_at: 2026-10-24T08:16:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -34,3 +34,5 @@ They are declarations and paths that only mean something once the repo is split 
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured: unblocked (the split is done) but none of R24, R27, R28, R29 is started. Feature work, not a move.
+
+_2026-10-24T08:16:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx (bean drain, stalled-triage thread).
