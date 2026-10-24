@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T09:25:00Z
+updated_at: 2026-10-24T09:50:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -491,5 +491,5 @@ Fork `8c2d917`, 67 tests. Both incremental builds converged in 1 round with exit
 
 `ig-ast.ts diff`, the W8 full build against the incremental AST, for each probe: 0 added, 0 removed, 0 edge changes, 649 changed and 99 unchanged. Every one of the 649 changes is noise. Each is a `*.date`, a `liquid-<uuid>` temp-file name in the Library narratives, or the rendered build time in the PlanDefinition narratives. Once those are normalised, nothing is left. Two full builds on one commit differ in the same 649 (fpmn review), so the incremental build is as good as a full one on these probes.
 
-Still open: `INCREMENTAL_GUARD` still forces `full` unless `-verify-incremental` is given. Lifting it is the owner's call.
+`INCREMENTAL_GUARD` was lifted by the owner on 2026-10-24 (option A), in fork `1fffc3e`, 67 tests. Incremental is now the default, and a plan that cannot tell still decides `full`. `-verify-incremental` is accepted and ignored, and `w7-round.sh` no longer passes it.
 
