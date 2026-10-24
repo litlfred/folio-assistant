@@ -20,12 +20,38 @@
 #   JSON record is uploaded as `liquid-undefined`. They do not fail the job.
 # - could-not-check is never green: no artifact, no plugin in the source, or
 #   a build that does not complete FAILS the job, with which one it was.
+#
+# TWO WAYS IN, ONE CHECK (owner, 2026-10-23: "green PR must mean green main").
+# - `workflow_call`, from Feature Staging's own run: its `liquid-undefined`
+#   job calls this file once `stage` has handed the source off, so the
+#   verdict is a job of the PULL REQUEST's run, which merge-guard reads
+#   (check 5, `ci`). Before this, a PR render was checked only by a
+#   `workflow_run` run, which GitHub attaches to the DEFAULT BRANCH: a PR
+#   could be green and merge, and the red arrived afterwards on main.
+#   Called, it still builds a SECOND time from the uploaded artifact rather
+#   than from the deploy's own build, so the render stays free of it (bean
+#   8pyz: "CI is in CI not part of render").
+# - `workflow_run` on the Docs site, which renders MAIN itself: that render
+#   has no pull request, so its check is post-merge by nature. Feature
+#   Staging is no longer listed here -- every run of it that stages now
+#   checks itself in-run, and listing it too re-checked the same source on
+#   main.
+#
+# TRIGGERS, ACTUAL: `workflow_run` (Docs site) and `workflow_call`. It has no
+# `pull_request` trigger of its own; the pull request runs named above are
+# Feature Staging's, which call it.
 name: Liquid undefined-variable check
 
 on:
   workflow_run:
-    workflows: ["Docs site (GitHub Pages)", "Feature Staging (GitHub Pages)"]
+    workflows: ["Docs site (GitHub Pages)"]
     types: [completed]
+  workflow_call:
+    inputs:
+      head_sha:
+        description: "The commit the calling run rendered, for the report."
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -38,6 +64,8 @@ permissions:
 # only the newest render's answer matters. The run-id fallback keeps a run
 # with no triggering branch in a group of its own.
 concurrency:
+  # Called (workflow_call), `github.event.workflow_run` is empty, so the run-id
+  # fallback keeps one PR's call from cancelling another's.
   group: liquid-undefined-${{ github.event.workflow_run.head_branch && format('branch-{0}', github.event.workflow_run.head_branch) || format('run-{0}', github.run_id) }}
   cancel-in-progress: true
 
@@ -59,7 +87,8 @@ jobs:
   # NOT CHECKED, so could-not-check stays red.
   rendered:
     name: Did the triggering run render?
-    if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    # Only for a `workflow_run`: a caller calls only once its hand-off ran.
+    if: inputs.head_sha == '' && github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
     runs-on: ubuntu-latest
     outputs:
       ran: ${{ steps.jobs.outputs.ran }}
@@ -82,12 +111,29 @@ jobs:
     # A run that never got as far as the hand-off has nothing to check; one
     # that failed AFTER it still rendered a source worth reading.
     needs: rendered
-    if: needs.rendered.outputs.ran == 'true'
+    # `always()` so a call, where `rendered` is skipped, still runs.
+    if: always() && (inputs.head_sha != '' || needs.rendered.outputs.ran == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      SRC_NAME: ${{ inputs.head_sha != '' && github.workflow || github.event.workflow_run.name }}
+      SRC_URL: ${{ inputs.head_sha != '' && format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) || github.event.workflow_run.html_url }}
+      SRC_BRANCH: ${{ inputs.head_sha != '' && (github.head_ref || github.ref_name) || github.event.workflow_run.head_branch }}
+      SRC_SHA: ${{ inputs.head_sha || github.event.workflow_run.head_sha }}
     steps:
+      # Called: the artifact is this same run's, so no run id is named.
+      - name: The source the calling run rendered
+        id: source_call
+        if: inputs.head_sha != ''
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: jekyll-source
+          path: ./_docs
+
       - name: The source the triggering run rendered
         id: source
+        if: inputs.head_sha == ''
         continue-on-error: true
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
@@ -97,9 +143,11 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: Could it be checked?
+        env:
+          GOT: ${{ steps.source_call.outcome == 'success' || steps.source.outcome == 'success' }}
         run: |
-          src="${{ github.event.workflow_run.name }} run ${{ github.event.workflow_run.html_url }}"
-          if [ "${{ steps.source.outcome }}" != "success" ] || [ ! -f ./_docs/_config.yml ]; then
+          src="$SRC_NAME run $SRC_URL"
+          if [ "$GOT" != "true" ] || [ ! -f ./_docs/_config.yml ]; then
             echo "NOT CHECKED: $src left no jekyll-source artifact (it stopped before the hand-off, or the upload failed)." | tee -a "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
@@ -134,7 +182,7 @@ jobs:
           {
             echo "### Undefined Liquid variables"
             echo
-            echo "Source: ${{ github.event.workflow_run.name }} — ${{ github.event.workflow_run.head_branch }} @ \`${{ github.event.workflow_run.head_sha }}\` ([run](${{ github.event.workflow_run.html_url }}))"
+            echo "Source: $SRC_NAME — $SRC_BRANCH @ \`$SRC_SHA\` ([run]($SRC_URL))"
             echo
             if [ ! -f "$r" ]; then
               echo "NOT CHECKED: the build wrote no record, so the plugin did not run."

@@ -3986,6 +3986,42 @@ jobs:
       - name: every BPMN diagram's checklist is committed and current
         run: bun run cat bpmn:checklist:check
 
+      # THE PR-TIME HALF OF post-merge-regen.yml (owner, 2026-10-23: "a green
+      # PR must mean a green main"). That workflow runs on push to main, so
+      # what it finds reaches the owner as a red main, after the merge. What it
+      # asks, measured against what this workflow already asks:
+      #
+      # - Every repairable `:check` in the gate set, 122 pairs measured on
+      #   3a52ac6 (119 in the browser-free jobs, 3 in `e2e-shard`): ALREADY
+      #   asked on every PR, and more strictly -- here a stale artefact is
+      #   red, there it is repaired. Asking them again would add its 76 min.
+      # - Its three UNGATED inputs (`UNGATED_INPUTS` in regen-after-merge.ts):
+      #   `library:viz`, `schema:viz`, `uploads:viz`. Their checks stay
+      #   ungated by the owner's ruling of 2026-09-20 (`SCRIPT_EXEMPTIONS` in
+      #   gates.ts: stale means a sibling merged, not that this diff forgot),
+      #   and post-merge does not go red on them for being stale either: it
+      #   repairs them. It goes red when a WRITER FAILS, and nothing ran these
+      #   writers before a merge -- only the Docs site deploy and post-merge
+      #   did, both on main. So this step runs them, ~12 s measured, and a
+      #   writer that cannot write is red here first.
+      #
+      # LAST in the job on purpose: the writers rewrite projections that
+      # earlier steps read (`check:nav-names` reads railed pages), so here they
+      # change nothing any other gate judges.
+      #
+      # What a pull request CANNOT ask is main after the merge: a commit that
+      # does not exist yet, built on whatever else merged meanwhile. That is
+      # what post-merge-regen.yml keeps doing; it is not repeated here.
+      #
+      # Each line below is read as a gate (`gatesFrom` in gates.ts), so each
+      # script declares `@covers none` in its docblock: a writer, it judges
+      # nothing (bean `3srh`'s rule, met rather than dodged).
+      - name: post-merge regen, PR-time -- the ungated projections' writers run
+        run: |
+          bun run cat library:viz
+          bun run cat schema:viz
+          bun run cat uploads:viz
+
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
