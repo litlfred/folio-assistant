@@ -2,11 +2,11 @@
 # folio-assistant-f8wp
 $schema: bean/1.0.0
 title: 'Placement PR8: schemas regroup and move with their importers; library sources by group; residual gate'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-24T08:12:00Z
+updated_at: 2026-10-24T08:16:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -37,3 +37,5 @@ Re-measured: not started. `cat-harness/schemas/` is flat (287 `.ts` files; only 
 ## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Same ruling as `8fq9`: **do it now, one concern group per PR** to keep churn down.
+
+_2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: none yet; next after 8fq9 groups.

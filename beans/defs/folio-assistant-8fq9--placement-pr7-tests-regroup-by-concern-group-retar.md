@@ -2,10 +2,10 @@
 # folio-assistant-8fq9
 $schema: bean/1.0.0
 title: 'Placement PR7: tests regroup by concern group, retargeted to cat-harness-tools/'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-24T08:12:00Z
+updated_at: 2026-10-24T08:16:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -28,3 +28,5 @@ Re-measured: not started. `cat-harness-tools/scripts/tests/` is flat (773 files,
 ## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 **"Do them now, one at a time ... in groups so not so much churn"** (option A). One PR per concern group (sdlc, ui, kg, process, library, tools, conduct, content, above-harness), each its own merge, rather than one ~770-file move.
+
+_2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/cat-harness-tools#694 (group 1, content), tracking litlfred/cat-harness-tools#693.
