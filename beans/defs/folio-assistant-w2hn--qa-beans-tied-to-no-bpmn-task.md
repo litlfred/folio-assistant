@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2hn
 title: 'QA: beans tied to no BPMN task, reported as a warning and clustered to find undocumented processes'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-24T08:05:00Z
-updated_at: 2026-10-24T08:05:00Z
+updated_at: 2026-10-24T10:00:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -17,8 +17,10 @@ Follows `v49e` (cat-harness-tools#684), which measured 1,084 of 1,094 beans in n
 A bean counts as tied to a task when (a) a workflow instance names it (`bean`, or a step's history), or (b) the bean names a BPMN process or activity id that exists in a declared diagram (inferred, and shown as such). Anything else is **unlinked**: a WARNING, never a failure.
 
 ## Done when
-- [ ] a QA report lists unlinked open beans, with the link basis (instance / named id / none) for every bean
-- [ ] unlinked beans are grouped (reusing `pipeline/lsi.ts` / `scripts/lsi-epics.ts`), and each large group is shown as a candidate undocumented process with its beans
-- [ ] severity is warning; the report never fails a build
+- [x] a QA report lists unlinked open beans, with the link basis (instance / named id / none) for every bean
+- [x] unlinked beans are grouped (reusing `pipeline/lsi.ts` / `scripts/lsi-epics.ts`), and each large group is shown as a candidate undocumented process with its beans
+- [x] severity is warning; the report never fails a build
 
 Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+_2026-10-24T10:00:00Z_ — **Completed.** cat-harness-tools#703 merged as 13570ae. Report: `bun run cat check:unlinked-beans`; result `test/results/unlinked-beans.qa-results.json`, rendered in each bean store page's `#unlinked-beans` section. First run: 152 open beans, 136 unlinked (89%), 15 candidate groups of 5 or more. Side finding: the store's beans.json no longer declares `defs/archive`, so 631 archived beans are unread. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
