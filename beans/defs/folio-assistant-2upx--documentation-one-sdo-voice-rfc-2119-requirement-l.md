@@ -2,11 +2,11 @@
 # folio-assistant-2upx
 $schema: bean/1.0.0
 title: 'DOCUMENTATION: one SDO voice, RFC 2119 requirement levels, and the pages the knowledge graph is missing'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-21T16:21:34Z
-updated_at: 2026-10-04T15:12:15Z
+updated_at: 2026-10-24T14:48:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -25,3 +25,6 @@ Owner, 2026-09-21. A large body of direction on documentation, captured here as 
 
 ## Not duplicating
 `lqo9` already owns the Glossary content kind; this epic ALIGNS to it rather than restating it. `j79e` owns the detangler. `rkqp` owns model-specific voices. `zzmr` owns the KG's structure. `x3bd` owns top-level topical KG directories. `b5f0` owns what instantiation means. `3q47` owns setting agent context from the KG per task.
+
+## Completed (2026-10-24)
+All 10 child beans of `folio-assistant-2upx` are `completed` (`1gf7`, `5qq3`, `88mg`, `bnuy`, `ibxa`, `kjbb`, `q7ey`, `qh1s` via `litlfred/cat-harness#464`, `rn3o`, `vq8o`), and the referenced sibling beans (`lqo9`, `j79e`, `rkqp`, `x3bd`, `3q47`) are also `completed`.
