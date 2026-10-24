@@ -2,11 +2,11 @@
 # folio-assistant-w8rv
 $schema: bean/1.0.0
 title: 'W8 review of the w7r3 round, then the open provenance criteria (page fragments, dependency closure, terminology)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-24T00:30:00Z
-updated_at: 2026-10-24T11:30:00Z
+updated_at: 2026-10-24T11:25:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -41,3 +41,4 @@ fork). Each needs a scope and the owner's go-ahead before any build.
 - 2026-10-24 09:25Z: w7r6 diffs noise-only on both probes (649 date/temp-file changes, 0 edges). W7 and W8 ticked in a9tx. W3/W4 scoping next.
 - 2026-10-24 10:20Z: guard lifted (`1fffc3e`); W3 built (`2924904`), check is bean `w3r1`; W4 put to the owner.
 - 2026-10-24 11:30Z: w3r2 reviewed; W3 and W4 pass. All a9tx acceptance criteria met.
+- 2026-10-24 11:25Z: owner closed a9tx (option A). Completed.

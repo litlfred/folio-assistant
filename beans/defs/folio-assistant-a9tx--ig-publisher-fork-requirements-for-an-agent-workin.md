@@ -2,11 +2,11 @@
 # folio-assistant-a9tx
 $schema: bean/1.0.0
 title: 'IG PUBLISHER FORK: requirements for an agent working a local experimental fork, and what the AST must carry'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T11:30:00Z
+updated_at: 2026-10-24T11:25:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -62,8 +62,8 @@ this environment.
   are invalid until a full run. Anything reading it says so.
 
 ## Done when
-- [ ] the requirements above are approved by the owner
-- [ ] a brief exists an agent can start from without this bean's context
+- [x] the requirements above are approved by the owner (decision cards 2026-10-23/24; closed by the owner 2026-10-24, option A)
+- [x] a brief exists an agent can start from without this bean's context: the fork README, `litlfred/fhir-ig-publisher` `claude/ast-export` `ast-export/README.md`
 
 
 
