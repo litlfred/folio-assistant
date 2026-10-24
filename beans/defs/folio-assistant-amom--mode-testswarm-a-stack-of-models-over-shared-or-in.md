@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-10-24T07:55:00Z
+updated_at: 2026-10-24T11:25:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -59,3 +59,16 @@ says never to `beans create` bulk machine-generated queues. That rule may
 already settle it.
 
 _2026-10-24T07:55:00Z_ — The owner chose "C. CRDM drafts for both" by card on 2026-10-24 07:45Z. The draft covers amom and oz9e together: `cat-harness/docs/proposals/model-swarm-and-benchmark-2026-10-24.md`, litlfred/cat-harness#500 (draft). It has nine draft requirements and five open owner questions, and nothing is built. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
+
+## 2026-10-24: built on the test process (cloud drain thread)
+
+Owner ask: reuse the infrastructure, with machine QA results as the task bank. `litlfred/cat-harness#500` @ `66bc1a11` maps this bean onto the existing test process (`test-plan/v1`, `folio-test-run/v1`, `test-report/v1`, `test-plan-execution.bpmn`).
+
+Five gaps remain:
+1. `sut` gains `model` and `configuration`.
+2. A run of one plan against N SUTs, with a side-by-side view.
+3. Cost and token fields.
+4. A generator from fixed machine findings to plan cases (overlaps `vm6m`).
+5. A spec-kit `SC-` to plan-case link.
+
+Answers Q2-Q5 are recorded there. Q1 (spec-kit or CRDM) is open.
