@@ -5,7 +5,7 @@ title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendati
 status: todo
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-09-20T15:07:23Z
+updated_at: 2026-10-24T08:58:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -121,3 +121,9 @@ without any new mechanism.
 
 Recorded rather than left, because a blocker stated more broadly than the
 evidence supports is one the next agent takes as impassable.
+
+_2026-10-24T08:58:00Z_ — Re-measured, not claimed (https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx).
+- **Box 1 still unmet.** `beans/workflows/` now holds 12 instances: code-change-review, crdm, merge-train and sampleimport. None of them is `initialize-harness.bpmn`.
+- **Box 2 still unmet.** No health check is per-instance.
+- **Box 3 now collides with an owner pause.** On 2026-10-24 the owner paused todos and sticky notes, saying "they should be the same thing, that's part of the problem" (bean `95sk`, R29). This box makes the harness card a todo sticky, so it waits on that merge too.
+Left `todo`.
