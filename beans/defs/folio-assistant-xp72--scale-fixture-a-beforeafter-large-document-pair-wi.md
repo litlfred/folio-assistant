@@ -2,11 +2,11 @@
 # folio-assistant-xp72
 $schema: bean/1.0.0
 title: 'SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-24T09:10:00Z
+updated_at: 2026-10-24T13:20:00Z
 parent: folio-assistant-q4jm
 ---
 

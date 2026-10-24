@@ -2,11 +2,11 @@
 # folio-assistant-lx2s
 $schema: bean/1.0.0
 title: 'Feature-branch staging under gh-pages (issue #215)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-17T22:29:53Z
-updated_at: 2026-10-24T09:10:00Z
+updated_at: 2026-10-24T13:20:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -256,3 +256,7 @@ All 4 breaks are merged, and the hosted preview of smart-immunizations-uganda#12
 - `logic` refuses the change, as break 3's fix intends.
 
 Gaps left, none blocking: the banner says "PR #n/a" on a manually dispatched build, and the IG build publishes no `outline.json` or `rendered-impact.json`. Results and screenshots: folio-assistant#215 (comment 6384579655), smart-immunizations-uganda#12.
+
+### Closed (2026-10-24)
+
+The owner chose "A Close, file gaps as beans". #215 is closed and the #12 sample is closed unmerged. The two gaps are now folio-assistant-zvl0 (banner names the PR) and folio-assistant-0om7 (outline and rendered impact).
