@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-07T22:13:50Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-24T10:39:15Z
 parent: folio-assistant-zzmr
 ---
 
@@ -14,7 +14,7 @@ Issue #2481. Owner 2026-10-07: 'need named/versioned releases + sha of software.
 
 ## Done when
 - [x] design doc (CRDM) signed off by the owner: tool-release record, per-tool runtime deps, profiles, provisioning cache, PROV-O run record, SPDX export mapping (signed off 2026-10-07: `T1 = (a)`, `T2-4 ok`, `C1 = (a)` by reference `runContext: { sha256 }`)
-- [ ] built only after sign-off (Step 1 of 8 built: `schemas/tool-release.ts`, `schemas/tool-profile.ts`, `schemas/run-context.ts`, `cat-harness/tool-releases/`, and `cat-harness-tools/scripts/tool-releases.ts --check` in `code-quality-gates.yml`; Steps 2–8 resolver/cache `tools:use`, `prov:used`, `tools:sbom`, more tools, `upstream-pins`, `runContext` emission, `test:itb-export` pending)
+- [x] built only after sign-off (Steps 1–8 built: `schemas/tool-release.ts`, `schemas/tool-profile.ts`, `schemas/run-context.ts`, `cat-harness/tool-releases/`, `tools:use`, `tools:which`, `prov:used`, `tools:sbom` SPDX 3.0.1 export, `upstream-pins.json`, `runContext: { sha256 }` emission across run/report schemas, and `test:itb-export` GITB TAR projection in `litlfred/cat-harness#516` @ `04d3f02` and `litlfred/cat-harness-tools#705` @ `4213165`)
 
 Session: https://claude.ai/code/session_01FWGdsHong3XHiU7CMRWmfo
 
