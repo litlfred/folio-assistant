@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T19:31:09Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-24T08:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -359,3 +359,11 @@ before the next session re-derives this.
 **Status unchanged, box unticked.** The trigger has not fired.
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+---
+
+## Revisit trigger re-measured 2026-10-24: 2 of 12, owner asked
+
+I counted with `hasRenderedDecision` (cat-harness-tools/test/health/probes.ts) over the bean store. **2** beans hold a rendered decision: `hajp` itself and `bf5l`. The count was 1 on 09-21 and 09-26, so it is one more in a month. At that rate the trigger will not fire, which this bean's own reasoning reads as evidence that only a gate would change practice.
+
+Since then, `ask-well.sh` also fires on `mcp__hearthbot__request_decision` and `post_widget`. On 2026-10-23 the owner named the failure it misses: a card posted with no written question and context before it ("PROCESS FAILURE"). The hook sees the call, never the prose before it. Put to the owner on 2026-10-24 (session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx).
