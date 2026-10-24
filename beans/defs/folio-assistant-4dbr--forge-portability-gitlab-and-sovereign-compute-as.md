@@ -2,11 +2,11 @@
 # folio-assistant-4dbr
 $schema: bean/1.0.0
 title: 'Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T18:46:11Z
-updated_at: 2026-10-21T17:35:00Z
+updated_at: 2026-10-24T09:20:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -107,3 +107,10 @@ _2026-10-21T07:38:00Z_ — **Umbrella `github` node retired**: the owner answere
 _2026-10-21T17:35:00Z_ — **#387 merged** (cdd56c1), on folio-assistant#2611's tools re-pin. Every PR of steps 1–2 is now on main: cat-harness#380, #385, #386, #387, #389, #390 and cat-harness-tools#502 (lane B2, recorded by the drain coordinator). **Left open, and the only reason this bean is not completed:** the two GitLab gaps — no changed-files node (`glab mr diff` has no `--name-only`) and no request-review node (`--reviewer` replaces existing reviewers; GitLab usernames do not fit `Login`). Either needs a decision (an API-backed node, a new type, or "accepted gap") before step 3's portability claim is whole.
 
 _2026-10-24T08:20:00Z_ — Claimed by the Claude drain thread (smart-trust-demo session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). Other agents: please skip this bean until this claim is released.
+
+_2026-10-24T09:20:00Z_ — **Completed** by the Claude drain thread (session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). The owner chose "A. Fill both gaps". Both GitLab gaps are now filled with API-backed scripts, so step 3's portability claim is whole:
+- litlfred/cat-harness#491, which adds the argv-safe GitLab username type.
+- litlfred/cat-harness-tools#677 (91ad794), which adds `gitlab:mr-files` (changed files from the MR changes API) and `gitlab:request-review` (it adds a reviewer and keeps the existing ones). The owner chose "B. Merge both now" despite the shared corpus-test timeouts, whose cause the CI speed thread owns.
+- litlfred/cat-harness#499 (2e668b2), which adds the Tool nodes gitlab-mr-files and gitlab-mr-request-review and their selection records.
+
+Sovereign compute, the other half of this bean's title, continues as deployment descriptions: bean `o1by` (proposal litlfred/cat-harness#514) with `4y2i` and `61tg` under it.
