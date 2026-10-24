@@ -5,7 +5,7 @@ title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendati
 status: in-progress
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-10-24T14:35:00Z
+updated_at: 2026-10-24T15:00:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -141,3 +141,9 @@ _2026-10-24T14:50:00Z_ — Boxes 1 and 2 claimed by the "Drain folio-assistant-c
 ## 2026-10-24 — owner ruling: work it out at publish time (boxes 1 and 2)
 
 The owner tapped "A. Work out at publish time" at 14:31Z (card in the "Drain folio-assistant-core beans" thread, https://claude.ai/code/session_01MK9nZ3Gmon4cDBRLSURizU). A Tool runs bootstrap-tools' read-only setup check (`init.ts --dry-run --offline`) on every mounted harness at site build, and publishes one state file per harness: its setup steps, the next step to take, and health badges (setup steps done of the total, plus that harness's own `health --instance` verdict). Nothing is committed, so nothing goes stale or drifts between bean copies.
+
+_2026-10-24T15:00:00Z_ — Boxes 1 and 2 built (Drain folio-assistant-core beans thread):
+- cat-harness-tools#766: `bun run cat harness:state` — bootstrap's setup check, offline and dry-run, one `folio-harness-state/v1` file per harness (position, next step, badges `initialization` and `repository`).
+- cat-harness branch `claude/supn-harness-state-tool`: the Tool definition; its PR opens once #766 merges (`check:tools` needs the script).
+- folio-assistant branch `claude/supn-harness-state-deploy`: the deploy line; its PR opens once the index pins tools at or after #766.
+First run on the composed index: every harness reports, and several layers have declared directories that are absent (e.g. `test/health/results/` in cat-harness, core and who-iris).
