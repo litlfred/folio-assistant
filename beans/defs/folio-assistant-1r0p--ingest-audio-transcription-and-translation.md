@@ -2,11 +2,11 @@
 # folio-assistant-1r0p
 $schema: bean/1.0.0
 title: 'INGEST: audio — transcription and translation'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-24T10:17:00Z
 parent: folio-assistant-slw1
 ---
 

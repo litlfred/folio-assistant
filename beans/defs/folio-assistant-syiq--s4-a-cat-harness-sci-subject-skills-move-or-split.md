@@ -2,11 +2,11 @@
 # folio-assistant-syiq
 $schema: bean/1.0.0
 title: 'S4-a: cat-harness sci-subject skills move or split to folio-assistant-sci (watchers, editorial graph, Milnor; ~48 rows)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T08:05:00Z
+updated_at: 2026-10-24T10:17:00Z
 parent: folio-assistant-7x5n
 ---
 
