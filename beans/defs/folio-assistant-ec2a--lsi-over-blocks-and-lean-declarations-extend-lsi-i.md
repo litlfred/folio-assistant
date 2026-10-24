@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:08Z
-updated_at: 2026-10-24T09:35:00Z
+updated_at: 2026-10-24T09:50:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -27,3 +27,7 @@ Step 2 is done: folio-assistant-sci#18 (merged) adds `scripts/lsi-lean-decls.ts`
 ## Claimed 2026-10-24 (cloud drain thread)
 
 This thread is drafting step 3, the cross-graph `lsi:near`, as a design proposal first, with no code. No change here since lane B on 2026-10-12.
+
+## Design draft 2026-10-24
+
+Step 3 design: `litlfred/cat-harness#527` (issue #526), with no code. It recommends per-graph lists first, then a joint index measured on recall@5 against explicit references, with providers declared per instance. It waits on the owner.
