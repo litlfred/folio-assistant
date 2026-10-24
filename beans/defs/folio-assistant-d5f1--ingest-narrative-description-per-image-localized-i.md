@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-24T09:27:19Z
 parent: folio-assistant-slw1
 ---
 
@@ -302,3 +302,5 @@ Asked in the `cat-harness-tools` drain session: when a slot holds several langua
 - [ ] Draft localized narratives for each configured non-English language and queue each draft for human confirmation.
 
 _2026-10-24T08:16:00Z_ — Claimed by the cloud drain thread "Drain content model and ingest beans" (session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU). Open work: French pilot in litlfred/folio-assistant-core#202, then the other locales.
+
+_2026-10-24T09:27:19Z_ — French pilot merged, litlfred/folio-assistant-core#202 (39eb6940): `lang: "fr"` drafts for the 46 arxiv-2510.21603v1 figures. Still open: the other figures and ar, es, ru, zh.

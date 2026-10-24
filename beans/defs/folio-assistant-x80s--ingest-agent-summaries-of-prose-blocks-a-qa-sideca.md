@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-24T09:27:19Z
 parent: folio-assistant-slw1
 ---
 
@@ -68,3 +68,5 @@ _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note
 Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
 
 _2026-10-24T08:16:00Z_ — Claimed by the cloud drain thread "Drain content model and ingest beans" (session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU). Open work: summary batches, litlfred/cat-harness#493.
+
+_2026-10-24T09:27:19Z_ — litlfred/cat-harness#493 merged (40254023): 13 kg-deck drafts are on main and wait for a person in `bun run cat narratives`. More batches still to drain.
