@@ -2,18 +2,18 @@
 # folio-assistant-syiq
 $schema: bean/1.0.0
 title: 'S4-a: cat-harness sci-subject skills move or split to folio-assistant-sci (watchers, editorial graph, Milnor; ~48 rows)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T11:35:00Z
+updated_at: 2026-10-24T13:41:00Z
 parent: folio-assistant-7x5n
 ---
 
 Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — instance=cat-harness, KG kinds, target folio-assistant-sci, pr 'unplanned' (MOVE 15, SPLIT 23, AMBIGUOUS 10). Owner rulings 2026-10-01: Q1 integration-watcher family -> sci, generic integration-watcher stays; Q2 editorial graph split (uses[] stays, Lean comparison -> sci); Q3 Milnor -> sci, markdown-render-check split.
 ## Done when
-- [ ] every listed row moved/split per its verdict
-- [ ] gates green; merged
+- [x] every listed row moved/split per its verdict
+- [x] gates green; merged
 
 ## State 2026-10-09
 Re-derived from `cat-harness/docs/proposals/placement-audit-2026-10-01.json` against the post-split mount (cat-harness bd72c68): of the **48** cat-harness rows marked `unplanned` with a folio-assistant-sci target, **47** are still at their original path. Not started. Now a pair of cross-repository PRs (litlfred/cat-harness → litlfred/folio-assistant-sci), one at a time per `rfuq`. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
@@ -61,3 +61,9 @@ Every row now has a PR, except `lean-verification`:
 No change needed: content-profiles (it describes the profile mechanism, with the paper as its example), narrative-asserts-code (it already hands Lean to sci) and edge-kinds-and-blast-radius (it quotes the maths sources only as lineage).
 
 Open: `lean-verification` can't move alone, because the Lean toolchain cluster hangs off it (toolchain contract and test, lean-toolchain, lean-mcp and lean-atlas capabilities, the lean-build and lean-toolchain-setup tools, the lean-mcp actor, the lean-toolchain role). The owner has been asked: A, a separate bean (recommended); B, move it now; C, keep it.
+
+## Completed 2026-10-24T13:41Z
+
+All PR pairs merged. The owner chose **B, move it all now** for the Lean toolchain cluster (12:26Z): folio-assistant-sci#89 + cat-harness#566. The cluster is the lean-toolchain role and its contract skill, the lean-mcp actor, the lean-toolchain, lean-mcp and lean-atlas capabilities, `req:lean-verification`, the lean-build and lean-toolchain-setup tools, and the contract test.
+
+Merged: cat-harness #557, #558, #559, #560, #561, #562, #563, #566; folio-assistant-sci #83, #84, #85, #86, #87, #88, #89. Every row in the table above is now moved or split. Tracked in cat-harness#529. Session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx
