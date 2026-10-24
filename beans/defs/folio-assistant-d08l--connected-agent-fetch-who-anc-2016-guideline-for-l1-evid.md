@@ -7,7 +7,7 @@ type: task
 priority: normal
 created_at: 2026-10-24T08:24:20Z
 updated_at: 2026-10-24T08:24:20Z
-parent: folio-assistant-0lde
+parent: folio-assistant-qvxh
 ---
 
 Owner, 2026-10-24 08:23Z, on the 0lde evidence-source question: *"A but you make bean for agent connected"*. Option A was to ingest WHO's 2016 antenatal care guideline, the one the ANC DAK is built on, as the evidence the four L1 sections compute from: key-questions (PICO), evidence-retrieval-and-synthesis, certainty-of-evidence (GRADE) and evidence-to-decision.
