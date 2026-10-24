@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — cat-harness-tools",
+      "description": "Cold start for work in this layer: what belongs here, what does not, and which way the dependencies run."
+    }
+  ]
+}

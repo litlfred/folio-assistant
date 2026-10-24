@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ask-the-person",
+      "title": "Ask the person",
+      "description": "Put one question or decision to a person: the full question, context and every option written in the chat FIRST, then the same options as a tappable card. Use before every AskUserQuestion, request_decision / Decision card, button card, or any ask that hands a choice to the owner. Input is the composed question; output is the answer, or the default taken.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/package/conduct-core"
+      ],
+      "instructionsPath": "skills/conduct/conduct-core/ask-the-person.md",
+      "instructionLines": 53,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/skills/ask-the-person/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/skills/ask-the-person/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ask-the-person"
+    }
+  ]
+}

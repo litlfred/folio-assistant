@@ -1,0 +1,332 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_ThemeUIReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview",
+ "tasks": {
+  "A_Inventory": {
+   "id": "A_Inventory",
+   "name": "Inventory the ingested assets",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_Inventory",
+   "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "theme-ui-review",
+     "href": "../../../reference/skill-instructions/theme-ui-review.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "A_Accessibility": {
+   "id": "A_Accessibility",
+   "name": "Accessibility: measure, do not assert",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_Accessibility",
+   "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "theme-ui-review",
+     "href": "../../../reference/skill-instructions/theme-ui-review.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "A_Branding": {
+   "id": "A_Branding",
+   "name": "Branding: does it read as this instance?",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_Branding",
+   "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "theme-ui-review",
+     "href": "../../../reference/skill-instructions/theme-ui-review.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "A_Locales": {
+   "id": "A_Locales",
+   "name": "Languages: extracted, rendered, and RTL",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_Locales",
+   "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "theme-ui-review",
+     "href": "../../../reference/skill-instructions/theme-ui-review.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "R_Judge": {
+   "id": "R_Judge",
+   "name": "Judge the assets in their design",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/R_Judge",
+   "lane": "Reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/lane/Lane_Reviewer",
+   "skills": [],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "A_RaiseFindings": {
+   "id": "A_RaiseFindings",
+   "name": "Raise findings before the assets land",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_RaiseFindings",
+   "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "theme-ui-review",
+     "href": "../../../reference/skill-instructions/theme-ui-review.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  }
+ }
+}

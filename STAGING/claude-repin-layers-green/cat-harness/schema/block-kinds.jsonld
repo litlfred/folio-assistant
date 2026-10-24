@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/block-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/block-kinds",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "block-kinds",
+      "title": "block-kinds",
+      "summary": "The block kinds, as a runtime value — in a leaf module so anything can",
+      "module": "schemas/block-kinds.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-kinds"
+    }
+  ]
+}

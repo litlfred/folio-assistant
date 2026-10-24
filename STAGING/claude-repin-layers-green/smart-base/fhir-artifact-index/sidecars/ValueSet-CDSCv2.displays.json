@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDSCv2.displays.json",
+  "title": "Services and Application Types Display Values",
+  "description": "Display values for Services and Application Types ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "description": "Display values for a specific code fragment by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "A": {
+      "en": "Point of service"
+    },
+    "A1": {
+      "en": "Communication systems"
+    },
+    "A2": {
+      "en": "Community-based information systems"
+    },
+    "A3": {
+      "en": "Decision support systems"
+    },
+    "A4": {
+      "en": "Diagnostics information systems"
+    },
+    "A5": {
+      "en": "Electronic medical record systems"
+    },
+    "A6": {
+      "en": "Laboratory information systems"
+    },
+    "A7": {
+      "en": "Personal health records"
+    },
+    "A8": {
+      "en": "Pharmacy information systems"
+    },
+    "A9": {
+      "en": "Telehealth systems"
+    },
+    "B": {
+      "en": "Health system/Provider administration"
+    },
+    "B1": {
+      "en": "Blood bank information management systems"
+    },
+    "B2": {
+      "en": "Health finance-related information systems"
+    },
+    "B3": {
+      "en": "Health program monitoring systems"
+    },
+    "B4": {
+      "en": "Human resource information systems"
+    },
+    "B5": {
+      "en": "Learning and training systems"
+    },
+    "B6": {
+      "en": "Logistics management information systems (LMIS)"
+    },
+    "B7": {
+      "en": "Patient Administration systems"
+    },
+    "B8": {
+      "en": "Research information systems"
+    },
+    "C": {
+      "en": "Registries and Directories"
+    },
+    "C1": {
+      "en": "Census and population information systems"
+    },
+    "C2": {
+      "en": "Civil registration and vital statistics (CRVS) systems"
+    },
+    "C3": {
+      "en": "Facility management information systems"
+    },
+    "C4": {
+      "en": "(Health) Facility registries"
+    },
+    "C5": {
+      "en": "Health worker registry"
+    },
+    "C6": {
+      "en": "Identification registries and directories"
+    },
+    "C7": {
+      "en": "Immunization information systems"
+    },
+    "C8": {
+      "en": "Master patient index"
+    },
+    "C9": {
+      "en": "Product catalogues"
+    },
+    "C10": {
+      "en": "Public Key directories"
+    },
+    "C11": {
+      "en": "Terminology and classification systems"
+    },
+    "D": {
+      "en": "Data Management services"
+    },
+    "D1": {
+      "en": "Analytics Systems"
+    },
+    "D2": {
+      "en": "Data interchange and interoperability"
+    },
+    "D3": {
+      "en": "Data warehouses"
+    },
+    "D4": {
+      "en": "Environmental monitoring systems"
+    },
+    "D5": {
+      "en": "Geographic information systems (GIS)"
+    },
+    "D6": {
+      "en": "Health Management Information systems (HMIS)"
+    },
+    "D7": {
+      "en": "Knowledge management systems"
+    },
+    "D8": {
+      "en": "Shared Health Record and Health Information Repository"
+    },
+    "E": {
+      "en": "Surveillance and Response"
+    },
+    "E1": {
+      "en": "Emergency preparedness and response systems"
+    },
+    "E2": {
+      "en": "Public health and disease surveillance systems"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:29+00:00"
+}

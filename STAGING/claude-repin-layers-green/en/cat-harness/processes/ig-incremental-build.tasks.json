@@ -1,0 +1,158 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IgIncremental",
+ "tasks": {
+  "Task_Restore": {
+   "id": "Task_Restore",
+   "name": "Restore derived state",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_LogEnvError": {
+   "id": "Task_LogEnvError",
+   "name": "Log the environment error on the bean",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_FullBuild": {
+   "id": "Task_FullBuild",
+   "name": "Full publisher build",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publisher + validator services (JVM)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Cone": {
+   "id": "Task_Cone",
+   "name": "Compute the cone of the change (fsh-cone --changed)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_ConeReport": {
+   "id": "Task_ConeReport",
+   "name": "Post the cone report on the PR",
+   "type": "bpmn:Task",
+   "lane": "PR reviewer / QC reviewer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Checkout": {
+   "id": "Task_Checkout",
+   "name": "Restricted checkout of the backward cone",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Sushi": {
+   "id": "Task_Sushi",
+   "name": "SUSHI on the restricted tank",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_ContextLoad": {
+   "id": "Task_ContextLoad",
+   "name": "Load or reuse the warm context (fhir_context_load)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publisher + validator services (JVM)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Validate": {
+   "id": "Task_Validate",
+   "name": "Validate the cone (fhir_validate)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publisher + validator services (JVM)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_LogFindings": {
+   "id": "Task_LogFindings",
+   "name": "Log findings on the bean",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Render": {
+   "id": "Task_Render",
+   "name": "Re-render the cone's records (fhir_narrative · skip lists)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Merge": {
+   "id": "Task_Merge",
+   "name": "Merge restored and rebuilt records",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Index": {
+   "id": "Task_Index",
+   "name": "Rebuild the meta-index (ig_metaindex_rebuild)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Site": {
+   "id": "Task_Site",
+   "name": "Assemble the site (template · Jekyll)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Qa": {
+   "id": "Task_Qa",
+   "name": "QC gates on the aggregate QA",
+   "type": "bpmn:UserTask",
+   "lane": "PR reviewer / QC reviewer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_QcBeans": {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_DeployPreview": {
+   "id": "Task_DeployPreview",
+   "name": "Deploy the preview site",
+   "type": "bpmn:ServiceTask",
+   "lane": "PR reviewer / QC reviewer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Deploy": {
+   "id": "Task_Deploy",
+   "name": "Deploy the site [content-publish]",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publication manager — deploy and seed",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Seed": {
+   "id": "Task_Seed",
+   "name": "Seed the cache from the green build (ig-cache seed · verify · promote)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publication manager — deploy and seed",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

@@ -1,0 +1,33 @@
+{
+  "@context": "http://smart.who.int/base/smart-base.context.jsonld",
+  "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_MapCurrentState.jsonld",
+  "partOf": "http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_MapCurrentState",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Map the current state and confirm bottlenecks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_02",
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_03"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    }
+  ]
+}

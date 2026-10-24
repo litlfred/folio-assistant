@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-SGAuthoring.Persona.ContentReviewer.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.ContentReviewer",
+  "schema:name": "ContentReviewer",
+  "dcterms:title": "Content Reviewer / Approver",
+  "dcterms:description": "A designated reviewer responsible for approving SMART Guidelines content\nat key decision gates in the authoring lifecycle. Content Reviewers ensure\nthat DAK and IG content meets quality standards, accurately reflects WHO\nnormative guidance, and is ready to proceed to the next phase.\n\nContent Reviewers may be senior technical officers, programme leads, or\ndesignated governance committee members. They provide formal sign-off at\nphase transitions (L2→L3, draft→publication).\n\nKey activities:\n- Review and approve L2 DAK content before L3 authoring begins\n- Review and approve L3 IG content before publication\n- Assess whether content changes are breaking or non-breaking\n- Approve draft publications for stakeholder circulation\n- Provide final sign-off for release publication\n- Ensure content aligns with WHO guidelines governance policies\n- Participate in cross-programme content harmonization reviews\n\n**Source**: IG Starter Kit, Publication page (review process);\nDAK Authoring, Section 2.2 \"Validate DAK content with SMEs\"",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.ContentReviewer"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/SGAuthoring.Persona.ContentReviewer--179ab3f8.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

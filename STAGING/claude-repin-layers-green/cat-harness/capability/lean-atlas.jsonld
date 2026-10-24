@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/capability/lean-atlas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/capability/lean-atlas",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "lean-atlas",
+      "name": "Lean Atlas",
+      "description": "Extracts the Lean constant-dependency graph, classified into type (statement-level) and value (proof-level) edges — the authoritative source for the formal dependency relation. MIT. Added as a Lake require in the CONTENT repo's lakefile.toml (scope NyxFoundation, https://github.com/NyxFoundation/lean-atlas), not installed as a standalone binary, so `lake update` needs github.com egress. Export with `lake exe atlas graph-data --output graph.json --pretty`, then adapt to JSONL for `pipeline/lean-atlas-ingest.ts --ingest`. Requires Lean >= 4.17.0 (v4.28.0 tested); the folio image and CI now pin v4.24.0, matching qou. When unavailable, `lean-atlas-ingest.ts --scan` gives an approximate syntactic fallback and every consumer degrades to n/a rather than a false pass.",
+      "install": "scripts/install-lean-atlas.sh [content-repo-root]",
+      "detection": {
+        "method": "command",
+        "command": "lake exe atlas --help"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/capability/lean-toolchain"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/lean-atlas"
+    }
+  ]
+}

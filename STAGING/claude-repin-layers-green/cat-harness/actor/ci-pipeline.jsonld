@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/actor/ci-pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/actor/ci-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "ci-pipeline",
+      "actorKind": "system",
+      "title": "CI pipeline",
+      "description": "The build and validation system: validate, render, publish, and the mechanical half of the HCI gate. It runs a fixed program and exercises no judgement, so anything needing a decision belongs in another lane.",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/capability/jekyll"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/build-pipeline",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/tester",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/validation-pipeline"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline"
+    }
+  ]
+}

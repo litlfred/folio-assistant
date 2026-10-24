@@ -1,0 +1,38 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IgAstDeltaReview",
+ "tasks": {
+  "Task_Validity": {
+   "id": "Task_Validity",
+   "name": "Check the base AST against the IG's inputs",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Diff": {
+   "id": "Task_Diff",
+   "name": "Diff base → head and render the delta pages",
+   "type": "bpmn:ServiceTask",
+   "lane": "Incremental build (system)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Review": {
+   "id": "Task_Review",
+   "name": "Read the rendered delta",
+   "type": "bpmn:UserTask",
+   "lane": "QC reviewer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_FileCoupling": {
+   "id": "Task_FileCoupling",
+   "name": "Note the missed coupling on the bean",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

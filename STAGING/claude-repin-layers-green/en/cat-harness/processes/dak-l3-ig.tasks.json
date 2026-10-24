@@ -1,0 +1,27 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DakL3Ig",
+ "tasks": {
+  "Task_MapL2": {
+   "id": "Task_MapL2",
+   "name": "Map L2 → L3",
+   "type": "bpmn:UserTask",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "CallActivity_L3Fhir": {
+   "id": "CallActivity_L3Fhir",
+   "name": "L3 FHIR IG pipeline (fhir-harness)",
+   "type": "bpmn:CallActivity",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "calls": {
+    "name": "L3 FHIR IG pipeline",
+    "href": "l3-fhir-pipeline.html",
+    "diagram": "l3-fhir-pipeline.html"
+   },
+   "binding": "unbound"
+  }
+ }
+}

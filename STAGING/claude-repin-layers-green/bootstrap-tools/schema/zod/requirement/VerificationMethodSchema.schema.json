@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/VerificationMethod",
+  "definitions": {
+    "VerificationMethod": {
+      "type": "string",
+      "enum": [
+        "test",
+        "inspection",
+        "review",
+        "analysis"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/bootstrap-tools/schema/zod/requirement/VerificationMethodSchema.schema.json",
+  "title": "VerificationMethodSchema",
+  "description": "Generated from `VerificationMethodSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  }
+}

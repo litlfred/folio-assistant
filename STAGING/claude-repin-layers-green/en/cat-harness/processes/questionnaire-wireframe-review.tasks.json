@@ -1,0 +1,91 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_QuestionnaireWireframeReview",
+ "tasks": {
+  "Task_Read": {
+   "id": "Task_Read",
+   "name": "Read the built Questionnaire JSON",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Render": {
+   "id": "Task_Render",
+   "name": "Render the wireframe and the LHC-Forms view",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Screens": {
+   "id": "Task_Screens",
+   "name": "Screenshots, web and mobile",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Fidelity": {
+   "id": "Task_Fidelity",
+   "name": "Check field for field",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Call_Review": {
+   "id": "Call_Review",
+   "name": "Design review",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst — design review",
+   "skills": [],
+   "calls": {
+    "name": "Wireframe design review",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
+    "diagram": "wireframe-design-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_Stage": {
+   "id": "Task_Stage",
+   "name": "Stage the renderings",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_AskReview": {
+   "id": "Task_AskReview",
+   "name": "Ask for review with deep links",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_ReviewStaged": {
+   "id": "Task_ReviewStaged",
+   "name": "Review the staged form and wireframe",
+   "type": "bpmn:UserTask",
+   "lane": "Clinical reviewer — the staged form",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Triage": {
+   "id": "Task_Triage",
+   "name": "Triage the change request",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Apply": {
+   "id": "Task_Apply",
+   "name": "Apply it, bring the other side in line",
+   "type": "bpmn:UserTask",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

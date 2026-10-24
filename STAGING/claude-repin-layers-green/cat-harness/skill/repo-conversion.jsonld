@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/repo-conversion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/repo-conversion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "repo-conversion",
+      "title": "/repo-conversion — folio-assistant over a repo that already has a life",
+      "description": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/package/conduct-core"
+      ],
+      "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
+      "instructionLines": 225,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion"
+    }
+  ]
+}

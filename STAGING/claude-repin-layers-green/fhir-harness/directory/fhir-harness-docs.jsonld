@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "fhir-harness-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs"
+      ],
+      "description": "This layer's own documentation. Today only `wireframes/`: the wireframe of each visualiser this layer declares (`ig-ast`), with its intent, checks and an `index.json` of the route keys it covers, which `check:wireframes` reads from every declared `docs` directory. Kept beside the viewer it draws so the two land in one pull request, rather than in the platform's docs where a ref to this layer's route would name a layer above the platform. Declared WITH its files in one commit, per bean `dh4f`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs"
+    }
+  ]
+}

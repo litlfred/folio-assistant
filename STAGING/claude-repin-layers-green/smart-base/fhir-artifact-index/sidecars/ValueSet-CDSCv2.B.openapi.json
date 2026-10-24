@@ -1,0 +1,69 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Services and Application Types: Health System/Provider Administration Schema API",
+    "description": "JSON Schema for Services and Application Types: Health System/Provider Administration ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CDSCv2.B.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CDSCv2.B",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CDSCv2.B.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CDSCv2.B",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CDSCv2.B.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CDSCv2.B": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CDSCv2.B.schema.json",
+        "title": "Services and Application Types: Health System/Provider Administration Schema",
+        "description": "JSON Schema for Services and Application Types: Health System/Provider Administration ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/CDSCv2"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "B",
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Services and Application Types: Health System/Provider Administration ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-CDSCv2.B.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CDSCv2.B.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2.B",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-10-20T16:07:28+00:00"
+      }
+    }
+  }
+}

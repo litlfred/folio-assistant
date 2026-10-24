@@ -1,0 +1,46 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IgAstCache",
+ "tasks": {
+  "Task_Restore": {
+   "id": "Task_Restore",
+   "name": "Restore the AST from its cache branch and judge it",
+   "type": "bpmn:ServiceTask",
+   "lane": "Site build (agent, stage-local)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_BuildSite": {
+   "id": "Task_BuildSite",
+   "name": "Build and publish the site from the AST",
+   "type": "bpmn:ServiceTask",
+   "lane": "Site build (agent, stage-local)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Dispatch": {
+   "id": "Task_Dispatch",
+   "name": "Dispatch the IG's ig-ast-refresh.yml",
+   "type": "bpmn:UserTask",
+   "lane": "Publication manager (owner, or the agent the owner delegates to)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Export": {
+   "id": "Task_Export",
+   "name": "Build the IG with the Publisher AST exporter",
+   "type": "bpmn:ServiceTask",
+   "lane": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Seed": {
+   "id": "Task_Seed",
+   "name": "Seed the cache branch (ig-cache seed --push)",
+   "type": "bpmn:ServiceTask",
+   "lane": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

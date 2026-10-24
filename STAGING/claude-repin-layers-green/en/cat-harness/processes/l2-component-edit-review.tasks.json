@@ -1,0 +1,59 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_L2ComponentEditReview",
+ "tasks": {
+  "Task_Edit": {
+   "id": "Task_Edit",
+   "name": "Edit the component",
+   "type": "bpmn:Task",
+   "lane": "Authoring agent",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Check": {
+   "id": "Task_Check",
+   "name": "Run the component's checker [content-validate · content-test]",
+   "type": "bpmn:Task",
+   "lane": "Authoring agent",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_RenderStage": {
+   "id": "Task_RenderStage",
+   "name": "Render, stage, before/after [before-after-preview · feature-staging]",
+   "type": "bpmn:Task",
+   "lane": "Authoring agent",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_RequestReview": {
+   "id": "Task_RequestReview",
+   "name": "Ask for review with staging deep links",
+   "type": "bpmn:Task",
+   "lane": "Authoring agent",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Call_Review": {
+   "id": "Call_Review",
+   "name": "Review the staged component",
+   "type": "bpmn:CallActivity",
+   "lane": "Component reviewer (person)",
+   "skills": [],
+   "calls": {
+    "name": "Review task",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_ReopenUpstream": {
+   "id": "Task_ReopenUpstream",
+   "name": "Reopen upstream, flag derived assets",
+   "type": "bpmn:Task",
+   "lane": "Authoring agent",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

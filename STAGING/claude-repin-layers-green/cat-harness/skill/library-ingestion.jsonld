@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/library-ingestion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/library-ingestion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "library-ingestion",
+      "title": "Library ingestion — the basic flow",
+      "description": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run cat ingest`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/library-ingestion.md",
+      "instructionLines": 159,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion"
+    }
+  ]
+}

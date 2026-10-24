@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style><script src="../../../assets/js/vendor/lunr.min.js"></script><script src="../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>CRDM Phases 2–4 — BPA and requirements | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="CRDM Phases 2–4 — BPA and requirements" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="CRDM Phases 2–4 — BPA and requirements" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-processes-crdm-requirements-definition",
+    "src": "../../../assets/qa/en-cat-harness-processes-crdm-requirements-definition/page.translation.json",
+    "index": "../../../assets/qa/en-cat-harness-processes-crdm-requirements-definition/qa-index.json",
+    "list": "../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../folio-assistant-core/","jsonld":"../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../build.json"><meta name="fa-fsh-guts-src" content="../../../fsh-guts.json"><link rel="stylesheet" href="../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../assets/css/docs-ui.css?v=c5f675d4c764"><link rel="stylesheet" href="../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../assets/css/work-plan.css?v=30bf7780ce27"><link rel="stylesheet" href="../../../assets/css/themes.css?v=16abb4b86867"><link rel="stylesheet" href="../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../assets/css/avatars.css?v=f859ff259779"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../assets/js/harness-data.js" defer></script><script src="../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../assets/js/kg-render.js" defer></script><script src="../../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../../assets/js/docs-ui.js?v=9c88eef1c243" defer></script><script src="../../../assets/js/edit-links.js?v=30eccef16539" defer></script><script src="../../../assets/js/work-plan.js" defer></script><script src="../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../assets/css/navbar.css"><script src="../../../assets/navbar/rail-1z1wl8yp90b.js" defer></script><script src="../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../assets/page-layout.css" data-fa-page-layout><script src="../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-1z1wl8yp90b","here":"/en/cat-harness/processes/crdm-requirements-definition.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#how-it-connects","label":"How it connects"},{"href":"#lanes--who-acts","label":"Lanes — who acts"},{"href":"#steps","label":"Steps"},{"href":"#decisions","label":"Decisions"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/process/crdm-requirements-definition.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p></blockquote><h1 id="crdm-phases-24--bpa-and-requirements"><a href="#crdm-phases-24--bpa-and-requirements" class="anchor-heading" aria-labelledby="crdm-phases-24--bpa-and-requirements"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CRDM Phases 2–4 — BPA and requirements
+  
+  
+</h1><p><code class="language-plaintext highlighter-rouge">Process_CRDM_Requirements</code> · strict · 6 step(s)</p><p>Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.</p><style>.pt-diagram{position:relative;width:100%}.pt-diagram>img{display:block;width:100%;height:auto}.pt-mark{position:absolute;transform:translate(-50%,-50%);width:1.35em;height:1.35em;padding:0;border-radius:50%;border:1px solid #1f6feb;background:#fff;color:#1f6feb;font:bold 0.8em/1 sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.25)}.pt-mark:hover,.pt-mark[aria-expanded=true]{background:#1f6feb;color:#fff}.pt-mark:focus-visible{outline:2px solid #1f6feb;outline-offset:2px}.pt-panel{position:absolute;z-index:5;margin:0.9em 0 0 -0.6em;max-width:min(26em,90vw);min-width:14em;padding:0.6em 0.7em;background:#fff;color:#1b1f24;border:1px solid #8c959f;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:0.85em;line-height:1.35}.pt-close{position:absolute;top:0.2em;right:0.35em;border:0;background:none;font-size:1.2em;cursor:pointer;color:inherit}.pt-obj{border:1px solid #57606a;border-radius:3px;margin:0.15em 0}.pt-head{border-bottom:1px solid #57606a;padding:0.15em 0.45em;background:#f6f8fa;text-decoration:underline}.pt-head .pt-st{text-decoration:none;display:inline-block;margin-right:0.35em}.pt-attr{padding:0.1em 0.45em}.pt-st,.pt-via{color:#57606a;font-size:0.9em}.pt-edge{color:#57606a;font-size:0.85em;padding-left:1em}.pt-role .pt-head{background:#fff8c5}.pt-skill .pt-head{background:#ddf4ff}.pt-task .pt-head{background:#f6f8fa}.pt-none{color:#57606a;font-style:italic;margin-top:0.3em}</style><div class="pt-diagram" data-panel="crdm-requirements-definition.tasks.json"><img src="../../../assets/img/workflows/crdm-requirements-definition.svg" alt="BPMN diagram: CRDM Phases 2–4 — BPA and requirements" /> <button type="button" class="pt-mark" data-task="A_MapWorkflow" style="left:25.31%;top:37.04%" aria-expanded="false" aria-label="About step: Phase 2: Map current workflow (BPA)" title="About: Phase 2: Map current workflow (BPA)">i</button> <button type="button" class="pt-mark" data-task="A_DefineReqs" style="left:35.53%;top:37.04%" aria-expanded="false" aria-label="About step: Phases 3–4: Define requirements + impact" title="About: Phases 3–4: Define requirements + impact">i</button> <button type="button" class="pt-mark" data-task="Call_Wireframe" style="left:49.85%;top:37.04%" aria-expanded="false" aria-label="About step: Wireframe candidates (web + mobile)" title="About: Wireframe candidates (web + mobile)">i</button> <button type="button" class="pt-mark" data-task="A_CompareOptions" style="left:60.07%;top:37.04%" aria-expanded="false" aria-label="About step: Phase 4a: Compare the viable options" title="About: Phase 4a: Compare the viable options">i</button> <button type="button" class="pt-mark" data-task="BA_ReviewReqs" style="left:70.3%;top:8.42%" aria-expanded="false" aria-label="About step: Review requirements and impact analysis" title="About: Review requirements and impact analysis">i</button> <button type="button" class="pt-mark" data-task="S_ApproveReqs" style="left:80.52%;top:65.66%" aria-expanded="false" aria-label="About step: Approve requirements" title="About: Approve requirements">i</button><div class="pt-panel" role="dialog" aria-label="Task details" hidden=""></div></div><script>(function () {
+  Array.prototype.forEach.call(document.querySelectorAll(".pt-diagram:not([data-pt-ready])"), init);
+  function init(root) {
+  root.setAttribute("data-pt-ready", "");
+  var panel = root.querySelector(".pt-panel"), data = null, pending = null, open = null;
+  function load() {
+    if (data) return Promise.resolve(data);
+    if (!pending) pending = fetch(root.getAttribute("data-panel")).then(function (r) {
+      if (!r.ok) throw new Error(r.status + " " + r.statusText);
+      return r.json();
+    }).then(function (j) { data = j; return j; });
+    return pending;
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function link(l, cls) {
+    var e = el(l.href ? "a" : "code", cls, l.name);
+    if (l.href) e.href = l.href; else e.title = "no page for this one";
+    return e;
+  }
+  function obj(stereo, name, kind) {
+    var box = el("div", "pt-obj pt-" + kind), head = el("div", "pt-head");
+    head.appendChild(el("span", "pt-st", "\u00ab" + stereo + "\u00bb"));
+    head.appendChild(typeof name === "string" ? el("b", null, name) : name);
+    box.appendChild(head);
+    return box;
+  }
+  function edge(label) { return el("div", "pt-edge", "\u2502 " + label + " \u25bc"); }
+  function render(t) {
+    panel.textContent = "";
+    var close = el("button", "pt-close", "\u00d7"); close.type = "button"; close.setAttribute("aria-label", "Close");
+    close.onclick = function () { hide(); }; panel.appendChild(close);
+    var task = obj(t.type.replace(/^bpmn:/, ""), link({ name: t.name, href: t.href }), "task");
+    task.appendChild(el("div", "pt-attr", "id = " + t.id));
+    if (t.lane) { var ln = el("div", "pt-attr", "lane = "); ln.appendChild(link({ name: t.lane, href: t.laneHref })); task.appendChild(ln); }
+    if (data && data.processHref) { var pr = el("div", "pt-attr", "process = "); pr.appendChild(link({ name: data.process, href: data.processHref })); task.appendChild(pr); }
+    panel.appendChild(task);
+    if (t.calls) {
+      panel.appendChild(edge("calls"));
+      var cp = obj("Process", link(t.calls), "proc");
+      if (t.calls.diagram && t.calls.diagram !== t.calls.href) { var dg = el("div", "pt-attr"); dg.appendChild(link({ name: "diagram", href: t.calls.diagram })); cp.appendChild(dg); }
+      panel.appendChild(cp);
+    }
+    if (t.shared) {
+      panel.appendChild(edge("calls"));
+      var gt = obj(t.shared.type.replace(/^bpmn:/, ""), t.shared.id, "proc");
+      Object.keys(t.shared.inputs || {}).forEach(function (k) { gt.appendChild(el("div", "pt-attr", k + " = " + t.shared.inputs[k])); });
+      panel.appendChild(gt);
+    }
+    t.skills.forEach(function (s) {
+      panel.appendChild(edge("requires"));
+      var sk = obj("Skill", link(s), "skill");
+      (s.methodologies || []).forEach(function (m) {
+        var row = el("div", "pt-attr"); row.appendChild(el("span", "pt-st", "uses-methodology \u2192 "));
+        row.appendChild(link(m)); sk.appendChild(row);
+      });
+      panel.appendChild(sk);
+    });
+    if (!t.skills.length && !t.calls) panel.appendChild(el("div", "pt-none", "This task names no skill."));
+    if (t.role) {
+      panel.appendChild(edge("lane names"));
+      var role = obj("Role", link(t.role), "role");
+      if (t.role.title) role.appendChild(el("div", "pt-attr", "title = " + t.role.title));
+      var list = el("div", "pt-attr"); list.appendChild(el("span", "pt-st", "hasSkill: "));
+      if (!t.role.skills.length) list.appendChild(el("i", null, "none listed"));
+      t.role.skills.forEach(function (s, i) {
+        if (i) list.appendChild(document.createTextNode(", "));
+        list.appendChild(link(s));
+        if (s.via) list.appendChild(el("span", "pt-via", " (via " + s.via + ")"));
+      });
+      role.appendChild(list); panel.appendChild(role);
+    } else if (t.binding) {
+      panel.appendChild(el("div", "pt-none", "Lane role: " + t.binding + "."));
+    }
+  }
+  function hide() { panel.hidden = true; if (open) open.setAttribute("aria-expanded", "false"); open = null; }
+  root.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest(".pt-mark");
+    if (!b) return;
+    if (open === b) { hide(); return; }
+    if (open) open.setAttribute("aria-expanded", "false");
+    open = b; b.setAttribute("aria-expanded", "true");
+    panel.style.left = b.style.left; panel.style.top = b.style.top;
+    panel.hidden = false; panel.textContent = "Loading\u2026";
+    load().then(function (j) {
+      var t = j.tasks[b.getAttribute("data-task")];
+      if (open === b) { if (t) render(t); else panel.textContent = "No details for this task."; }
+    }).catch(function (e) { if (open === b) panel.textContent = "Could not load task details: " + e.message; });
+  });
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && open) hide(); });
+  }
+})();</script><h2 id="how-it-connects"><a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
+  
+  
+</h2><ul><li><strong>Called by:</strong> <a href="crdm-requirements.html">CRDM requirements</a></li><li><strong>Calls:</strong> <a href="wireframe-design-review.html">Wireframe design review</a></li><li><strong>Presented on:</strong> no docs page section shows this diagram</li></ul><h2 id="lanes--who-acts"><a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>lane</th><th>role</th><th>what it does here</th></tr></thead><tbody><tr><td>BA / Feature Requestor</td><td><code class="language-plaintext highlighter-rouge">business-analyst</code></td><td>The one checkpoint between the agent’s comparison and the stakeholders’ sign-off: BA_ReviewReqs is where someone who can read the impact analysis on its own technical terms vouches for it, because Lane_Stakeholders reviews only at defined checkpoints and needs the requirement already in a form they can approve without re-deriving it.</td></tr><tr><td>Agent</td><td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td><td>Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs’ ‘revise’ branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane’s one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves. When a requirement changes a rendered surface, this lane also designs it before anything is built: GW_RenderedSurface sends it to Call_Wireframe, where the agent is the Designer of Process_WireframeDesignReview and posts its candidates for the BA to choose from. The call sits here rather than in Lane_BA because drawing and checking the candidates is the agent’s work; the BA’s part is the choice, made at BA_ReviewReqs.</td></tr><tr><td>Stakeholders</td><td><code class="language-plaintext highlighter-rouge">stakeholder</code></td><td>The verdict GW_Reqs reads to decide between ending the phase and sending A_DefineReqs around again — a narrower approval than crdm-close.bpmn’s final feature sign-off, since what is being approved here is the REQUIREMENT model itself, not that the delivered feature satisfies it.</td></tr></tbody></table></div><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
+  
+  
+</h2><p>Every one of the 6 step(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>step</th><th>lane</th><th>skill / sub-process</th><th>what it does</th></tr></thead><tbody><tr><td><strong>Phase 2: Map current workflow (BPA)</strong><br /><code class="language-plaintext highlighter-rouge">A_MapWorkflow</code></td><td>Agent</td><td><a href="../../../reference/skill-instructions/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td><td>Business-process analysis here means reading the<br />existing diagrams under processes/ and drawing the gap, so the skill<br />that implements this step is the BPMN one.</td></tr><tr><td><strong>Phases 3–4: Define requirements + impact</strong><br /><code class="language-plaintext highlighter-rouge">A_DefineReqs</code></td><td>Agent</td><td><a href="../../../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a><br /><a href="../../../reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a></td><td>Two skills, because this step is two things: the<br />requirements come from the CRDM process, the impact half is a question about<br />the entities and relations the change touches, which is what data modelling<br />answers. It named <code class="language-plaintext highlighter-rouge">content-graph</code> until placement PR3 (bean <code class="language-plaintext highlighter-rouge">63wl</code>): that is a<br />folio-content skill, and this diagram is the harness’s own.</td></tr><tr><td><strong>Wireframe candidates (web + mobile)</strong><br /><code class="language-plaintext highlighter-rouge">Call_Wireframe</code></td><td>Agent</td><td>calls <a href="wireframe-design-review.html">Wireframe design review</a><br /><a href="../../../reference/skill-instructions/wireframe-design-review.html"><code class="language-plaintext highlighter-rouge">wireframe-design-review</code></a></td><td>Design use of wireframe-design-review, before implementation: a written design intent, at least two mid-fidelity candidates each with a web and a mobile layout, the mechanical checks, and a blind review. The candidates are committed as assets of the request’s proposal, under docs/proposals/<slug>/wireframes/ beside docs/proposals/<slug>.md, on the feature branch so feature-staging publishes them, and shown where the requester will look, chosen from context — the conversation, the issue the request came from, the pull request, or several of these — each place carrying the same staging deep links and screenshots (staging-review, the deep-link rule, point 5: where it goes is a judgement). The requester or BA is the human reviewer and chooses one at BA_ReviewReqs. The owner asked for this on 2026-09-23 (methodologies/wiregen.md): a wireframe is part of the design process for adjudication.<br />The candidates ARE the options A_CompareOptions lays out, so this merges into it rather than producing a second comparison.</slug></slug></td></tr><tr><td><strong>Phase 4a: Compare the viable options</strong><br /><code class="language-plaintext highlighter-rouge">A_CompareOptions</code></td><td>Agent</td><td><a href="../../../reference/skill-instructions/decision-comparison.html"><code class="language-plaintext highlighter-rouge">decision-comparison</code></a></td><td>Phase 4 often ends with a CHOICE rather than a plan,<br />and this is the step that hands it over. Per option: what it does, its pro, its<br />con, what it changes DOWNSTREAM, and how reversible it is — laid out where the<br />rows can be read against each other, then one recommendation and a stated<br />default.<br />A step of its own rather than a line inside A_DefineReqs, because it has a<br />different output and a different reader: the impact analysis is for the record,<br />the comparison is the thing the BA answers from. Folding it in is how it gets<br />skipped — the analysis feels finished, so the options go over as a list of<br />names.<br />When Call_Wireframe ran, its wireframe candidates are among the options: one row per candidate, with a link to its web and mobile screenshots.<br />Skipped legitimately when the analysis yields ONE viable approach. Do not<br />manufacture alternatives to fill a table.</td></tr><tr><td><strong>Review requirements and impact analysis</strong><br /><code class="language-plaintext highlighter-rouge">BA_ReviewReqs</code></td><td>BA / Feature Requestor</td><td><a href="../../../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td><td>The BA reviews the formal requirements and the<br />impact analysis the agent produced. When a requirement changes a rendered<br />surface, the BA (or the requester) also reviews the wireframe candidates, web<br />and mobile, shown wherever the requester will look (the conversation, the<br />issue, the pull request, or several) with staging deep links and screenshots,<br />and chooses one before implementation starts. The agent records<br />the choice; it never makes it.</td></tr><tr><td><strong>Approve requirements</strong><br /><code class="language-plaintext highlighter-rouge">S_ApproveReqs</code></td><td>Stakeholders</td><td>—</td><td>Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person’s behalf.</td></tr></tbody></table></div><h2 id="decisions"><a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
+  
+  
+</h2><p>Every one of the 2 decision(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>decision</th><th>what decides it</th><th>branches</th></tr></thead><tbody><tr><td><strong>Does a requirement change a rendered surface (page, visualiser, navbar, form, app screen)?</strong><br /><code class="language-plaintext highlighter-rouge">GW_RenderedSurface</code></td><td>Answered from the requirements A_DefineReqs just wrote: does any of them change what a person sees — a page, a visualiser, the navbar, a form, an app screen? <code class="language-plaintext highlighter-rouge">yes</code> designs that surface before anything is built; <code class="language-plaintext highlighter-rouge">no</code> goes straight to comparing options. Asked again on every revise loop, because a revised requirement can add or remove a rendered surface.</td><td><strong>yes</strong> → Wireframe candidates (web + mobile)<br /><strong>no</strong> → Phase 4a: Compare the viable options</td></tr><tr><td><strong>BA approves?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Reqs</code></td><td>The BA’s answer to the requirements and impact. <code class="language-plaintext highlighter-rouge">revise</code> goes back to defining them; <code class="language-plaintext highlighter-rouge">yes</code> completes the phase.</td><td><strong>revise</strong> → Phases 3–4: Define requirements + impact<br /><strong>yes</strong> → Phase complete</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

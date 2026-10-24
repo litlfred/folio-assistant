@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/actor/lean-mcp.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/actor/lean-mcp",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "lean-mcp",
+      "actorKind": "system",
+      "title": "Lean MCP Server",
+      "description": "System actor providing Lean 4 proof checking and diagnostics via MCP protocol.",
+      "meta": {
+        "provider": "mcp",
+        "endpoint": "lean-mcp"
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/capability/lean-toolchain"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/lean-toolchain"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/lean-mcp"
+    }
+  ]
+}

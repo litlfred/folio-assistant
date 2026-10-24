@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/category-theory.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/category-theory",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "category-theory",
+      "title": "Category Theory Formalization",
+      "description": "Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4.  Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs.",
+      "instructionsPath": "skills/content/folio-paper-adapter/category-theory.md",
+      "instructionLines": 415,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/category-theory"
+    }
+  ]
+}

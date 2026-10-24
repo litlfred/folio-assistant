@@ -1,0 +1,124 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_L2Dak",
+ "tasks": {
+  "Task_ScopeDak": {
+   "id": "Task_ScopeDak",
+   "name": "Scope the DAK",
+   "type": "bpmn:UserTask",
+   "lane": "Programme manager / technical officer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_L1Library": {
+   "id": "Task_L1Library",
+   "name": "Build the L1 library from Component 1",
+   "type": "bpmn:UserTask",
+   "lane": "Business analyst",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_SeedBeans": {
+   "id": "Task_SeedBeans",
+   "name": "Seed the work plan",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Personas": {
+   "id": "Task_Personas",
+   "name": "Personas and scenarios",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html",
+    "diagram": "l2-component-edit-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_Bpmn": {
+   "id": "Task_Bpmn",
+   "name": "Business processes · BPMN 2.0",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html",
+    "diagram": "l2-component-edit-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_Dmn": {
+   "id": "Task_Dmn",
+   "name": "Decision logic · DMN tables",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html",
+    "diagram": "l2-component-edit-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_DataDict": {
+   "id": "Task_DataDict",
+   "name": "Data dictionary and core data elements",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html",
+    "diagram": "l2-component-edit-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_Indicators": {
+   "id": "Task_Indicators",
+   "name": "Indicators and requirements",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html",
+    "diagram": "l2-component-edit-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_Terminology": {
+   "id": "Task_Terminology",
+   "name": "Terminology bindings",
+   "type": "bpmn:CallActivity",
+   "lane": "Terminologist",
+   "skills": [],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html",
+    "diagram": "l2-component-edit-review.html"
+   },
+   "binding": "unbound"
+  },
+  "Task_SmeValidate": {
+   "id": "Task_SmeValidate",
+   "name": "Clinical validation",
+   "type": "bpmn:UserTask",
+   "lane": "Clinical SME",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_AssembleDak": {
+   "id": "Task_AssembleDak",
+   "name": "Assemble and validate the DAK",
+   "type": "bpmn:UserTask",
+   "lane": "Business analyst",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

@@ -1,0 +1,194 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/conduct-core/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "conduct-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-memory",
+      "@type": "bootstrap:Skill",
+      "name": "agent-memory",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d768279b68ae5954d0ebc4fc20b168e4ae96037f100100ad117415078caacb71",
+        "bytes": 10785,
+        "sha256": "d768279b68ae5954d0ebc4fc20b168e4ae96037f100100ad117415078caacb71"
+      },
+      "title": "Subagent memory — what a durable entry may claim"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-permissions",
+      "@type": "bootstrap:Skill",
+      "name": "agent-permissions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fbd8405506ff00b2c7589f189ade83fc955c765d936d13438f659ce7d53742be",
+        "bytes": 8381,
+        "sha256": "fbd8405506ff00b2c7589f189ade83fc955c765d936d13438f659ce7d53742be"
+      },
+      "title": "Agent permissions — asked for, explained, granted by a person, recorded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ask-the-person",
+      "@type": "bootstrap:Skill",
+      "name": "ask-the-person",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6d26fc4a84418e488adb2643e89fefc4be6a2f2616e7766872ff18e1e05b0b94",
+        "bytes": 2737,
+        "sha256": "6d26fc4a84418e488adb2643e89fefc4be6a2f2616e7766872ff18e1e05b0b94"
+      },
+      "title": "Ask the person"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/communication-language",
+      "@type": "bootstrap:Skill",
+      "name": "communication-language",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/17654fa9fa436c5380a4fc467156e992a1363189bc528184fdb51512918f2513",
+        "bytes": 6546,
+        "sha256": "17654fa9fa436c5380a4fc467156e992a1363189bc528184fdb51512918f2513"
+      },
+      "title": "The language you communicate in"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/confirmation-waiver",
+      "@type": "bootstrap:Skill",
+      "name": "confirmation-waiver",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b929802fafe8ad5193dc3c2a7c430c42b439ed00f314fd58d111c684e6383ad8",
+        "bytes": 8279,
+        "sha256": "b929802fafe8ad5193dc3c2a7c430c42b439ed00f314fd58d111c684e6383ad8"
+      },
+      "title": "A confirmation can be waived — by the person who is owed it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
+      "@type": "bootstrap:Skill",
+      "name": "decision-comparison",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a5b7bca57af1a8c719f680117b01bd02ea9e1f27af4de4ee7bb3a0c1bef2c03",
+        "bytes": 5503,
+        "sha256": "8a5b7bca57af1a8c719f680117b01bd02ea9e1f27af4de4ee7bb3a0c1bef2c03"
+      },
+      "title": "The comparison goes BEFORE the question, not inside the options"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
+      "@type": "bootstrap:Skill",
+      "name": "deletion-requires-confirmation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb9e9a28a2bc06db64bc7d70a51188ee5ea474706c8a4568e8452ec0589d2c28",
+        "bytes": 18712,
+        "sha256": "fb9e9a28a2bc06db64bc7d70a51188ee5ea474706c8a4568e8452ec0589d2c28"
+      },
+      "title": "Deletion requires explicit confirmation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
+      "@type": "bootstrap:Skill",
+      "name": "getting-started",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3f9995d101257e2fa7ebea6821d01e6097cf984d023b7780fe63181cce583ceb",
+        "bytes": 16785,
+        "sha256": "3f9995d101257e2fa7ebea6821d01e6097cf984d023b7780fe63181cce583ceb"
+      },
+      "title": "/getting-started — what did they actually ask for?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
+      "@type": "bootstrap:Skill",
+      "name": "harness-projections",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0544a71c0de19cfbf2ef4e88b0cb6485363898738ed6c5e6f73a675c360218fe",
+        "bytes": 6891,
+        "sha256": "0544a71c0de19cfbf2ef4e88b0cb6485363898738ed6c5e6f73a675c360218fe"
+      },
+      "title": "Harness projections: CI writes them, the owner consents to every hand edit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
+      "@type": "bootstrap:Skill",
+      "name": "interaction-modality",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4edeaade09ce3c96ae0678cccb056a4a02e0c8738fc408c5a4be1935dbe5a961",
+        "bytes": 37435,
+        "sha256": "4edeaade09ce3c96ae0678cccb056a4a02e0c8738fc408c5a4be1935dbe5a961"
+      },
+      "title": "/interaction-modality — ask in a form the person can answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
+      "@type": "bootstrap:Skill",
+      "name": "repo-conversion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/289de306060d9e84e147a618468d9ad8175e05075da6b6dbd72878ab8e9592f3",
+        "bytes": 12723,
+        "sha256": "289de306060d9e84e147a618468d9ad8175e05075da6b6dbd72878ab8e9592f3"
+      },
+      "title": "/repo-conversion — folio-assistant over a repo that already has a life"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/retry-backoff",
+      "@type": "bootstrap:Skill",
+      "name": "retry-backoff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43912933e7df7f6b27e0a18a30920c4df5f26b5edfa7c62f86d62e3c148ea8d6",
+        "bytes": 5869,
+        "sha256": "43912933e7df7f6b27e0a18a30920c4df5f26b5edfa7c62f86d62e3c148ea8d6"
+      },
+      "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/symbiotic-interaction",
+      "@type": "bootstrap:Skill",
+      "name": "symbiotic-interaction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cff907e7bb293f5ce39c51c696e889d35cf3c34ac32c0ac8dc37a026f10429b4",
+        "bytes": 11308,
+        "sha256": "cff907e7bb293f5ce39c51c696e889d35cf3c34ac32c0ac8dc37a026f10429b4"
+      },
+      "title": "symbiotic-interaction — the three registers of author input"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untrusted-input",
+      "@type": "bootstrap:Skill",
+      "name": "untrusted-input",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2a2f8ad59c40c39852fbadf3345a8255e69fb2fd0e087c67697e76dbfa6bffb",
+        "bytes": 8867,
+        "sha256": "f2a2f8ad59c40c39852fbadf3345a8255e69fb2fd0e087c67697e76dbfa6bffb"
+      },
+      "title": "Untrusted input — the value must never become program text"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/unverified-constraints",
+      "@type": "bootstrap:Skill",
+      "name": "unverified-constraints",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e67399c52a572d53bc0097bd1c489d0338e258e2477df3b580f9bff2876109d3",
+        "bytes": 3351,
+        "sha256": "e67399c52a572d53bc0097bd1c489d0338e258e2477df3b580f9bff2876109d3"
+      },
+      "title": "consulted: reference material nobody performs — a DISCIPLINE. \"Never encode a constraint you have not verified\" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-does-this-go",
+      "@type": "bootstrap:Skill",
+      "name": "where-does-this-go",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c1c7230b98f2a2f9ed7404fdf9fdbd1a28bb99bd7f073d45b9418c1eb0cd19ff",
+        "bytes": 7298,
+        "sha256": "c1c7230b98f2a2f9ed7404fdf9fdbd1a28bb99bd7f073d45b9418c1eb0cd19ff"
+      },
+      "title": "Where does this go? — the question, then the skill that answers it"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/conduct/conduct-core",
+  "path": "skills/conduct/conduct-core/"
+}

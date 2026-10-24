@@ -1,0 +1,62 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_L3Fhir",
+ "tasks": {
+  "Task_AuthorFsh": {
+   "id": "Task_AuthorFsh",
+   "name": "Author FSH profiles",
+   "type": "bpmn:UserTask",
+   "lane": "FHIR modeller",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Sushi": {
+   "id": "Task_Sushi",
+   "name": "SUSHI compile → FHIR JSON",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Validate": {
+   "id": "Task_Validate",
+   "name": "Validate against profiles",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_QcGates": {
+   "id": "Task_QcGates",
+   "name": "QC gates",
+   "type": "bpmn:UserTask",
+   "lane": "QC reviewer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_QcBeans": {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_IgPublisher": {
+   "id": "Task_IgPublisher",
+   "name": "IG Publisher build",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_PublishIg": {
+   "id": "Task_PublishIg",
+   "name": "Publish the IG site",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publication manager",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

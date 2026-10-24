@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/prepare-for-handover.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "pr": "2681/merge",
+    "run": "40047569127"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/prepare-for-handover",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "prepare-for-handover",
+      "title": "Prepare for a handover",
+      "description": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/prepare-for-handover.md",
+      "instructionLines": 113,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-for-handover"
+    }
+  ]
+}
