@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T09:48:00Z
+updated_at: 2026-10-24T11:35:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -31,3 +31,13 @@ _2026-10-24T09:40:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGST
 The owner chose **A, keep and split all 7** at 09:47Z: content-graph, corpus-grep, integration-watch, narrative-asserts-code, devils-advocate-watcher, editor and edge-kinds-and-blast-radius stay in cat-harness. Only their maths or Lean passages move to folio-assistant-sci, and sci links down to them. The audit marked editor and edge-kinds-and-blast-radius as plain MOVEs, but both are used generically (editor is a role skill named by `schemas/assistant-workflow.ts`; edge-kinds is the deliberately domain-free form), so they are splits too.
 
 First pair: `milnor-exposition-standard` (ruling Q3), folio-assistant-sci#72 + cat-harness#530, tracked in cat-harness#529. Session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx
+
+## 2026-10-24 — progress, and owner ruling B on the name-only rows
+
+- Milnor (Q3) moved: sci#72 + cat-harness#530, merged.
+- compute- and detangler-integration-watcher (Q1): sci#77 merged, cat-harness#540 open.
+- Dispatch tables inverted (block-density, canonical-watcher, one-voice-integration-watcher, todo-review): sci#78 + cat-harness#544.
+- scientific-accuracy split; the formal-layer half is sci `formal-accuracy`: sci#79 + cat-harness#545.
+- The owner chose **B** at 11:22Z: no science skill name stays in cat-harness prose, "generalize if/as needed". Nine pages were rewritten generically, and 15 sci skills record the lineage: sci#80 + cat-harness#550.
+
+Remaining: 8 science-subject splits (content-profiles, md-authoring, readability-editing, content-test, graph-rendering, lean-verification.json, delivery-summary, html-rendering-qc), uses-editorial-review and markdown-render-check (Q2/Q3 splits), and the 7 kept by ruling A (split their maths passages out).
