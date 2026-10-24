@@ -28,7 +28,7 @@ They are declarations and paths that only mean something once the repo is split 
 
 - [ ] R24: a second harness instance renders the folio pull-down with no code of its own *(who-iris: met via `folio-mount.ts`. FHIR IG pages: fhir-harness#155, open.)*
 - [x] R27: a materialised asset is written under `folio/`, and the glass reads it from there *(met as the owner ruled on 2026-09-21: the folio is the reader's REPOSITORY, of which `library/` and `uploads/` are declared parts. Bytes under `folio/` itself were rejected, because `corpus-grep` reads `library/` only and `folio/` is renderable. See `folio-board-requirements.md` §"R27 and question 1". Gated by `check-catalogue.ts`. Ticked 2026-10-24.)*
-- [ ] R28: creating or linking a document writes it under `folio/`
+- [ ] R28: creating or linking a document writes it under `folio/` *(creating: cat-harness-tools#711, `folio:create`, open. Linking: a referenced `library/` node via `ingest-document.ts`, as ruled.)*
 - [ ] R29: a todo or sticky can carry a reference into another instance's KG, and the reference resolves
 
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
