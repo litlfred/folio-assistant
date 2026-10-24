@@ -21,3 +21,5 @@ A scheme id such as `kg-tools` is shared by every instance's extraction. Term id
 Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
 
 _2026-10-24T08:33:00Z_ — Claimed by the cloud drain thread "Drain content model and ingest beans" (session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU).
+
+_2026-10-24T08:55:00Z_ — Owner ruling B (08:41Z): key by the scheme file as a clean break; the proper key is bean q3n9 under GOAL 1. PRs: `litlfred/cat-harness#524`, `litlfred/cat-harness-tools#708`, `litlfred/folio-assistant-core#206`.
