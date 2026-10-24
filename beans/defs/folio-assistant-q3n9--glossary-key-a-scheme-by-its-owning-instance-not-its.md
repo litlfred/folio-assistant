@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:55:00Z
-updated_at: 2026-10-24T08:58:00Z
+updated_at: 2026-10-24T09:10:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -24,7 +24,7 @@ wvzp keys the term-mapping record by the scheme's **file path** (`litlfred/cat-h
 - Published SKOS is already named `<instance>--<scheme>.skos.jsonld`, so (instance, scheme) matches what is published.
 
 ## Done when
-- [ ] the key after separation is decided by the owner (instance, explicit field, or other), with the analysis above recorded here
+- [x] the key after separation is decided by the owner (instance, explicit field, or other), with the analysis above recorded here
 - [ ] the term-mapping record, `termState` and the glossary page move from `file` to that key in one migration, and the `file` field is retired
 - [ ] a test fails if the page's owner and the record's key disagree for any scheme
 
@@ -47,3 +47,5 @@ _2026-10-24T08:52Z_ — Claimed by the separation drain thread (session https://
 - **A** `(instance, scheme)`, instance = `schemeOwner` (from the source). No new field; layout-independent; one rule.
 - **B** an explicit `instance` field in `folio-glossary/v1`, written by `glossary-extract.ts`, plus a check that it equals `schemeOwner`. Self-describing out of context, but a second statement that can drift.
 - **C** keep the file path (`wvzp` today). Breaks on every move this bean exists to enable.
+
+**Owner ruling 2026-10-24T09:05Z: A.** Key = `(instance, scheme)`, with instance taken from `schemeOwner` (the scheme's source). No new field. Box 1 is done; the moves (each layer declares `glossary/`, following `rfev`) and the record/`termState`/page migration come next.
