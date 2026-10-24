@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T19:59:52Z
-updated_at: 2026-10-03T07:43:33Z
+updated_at: 2026-10-24T07:40:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -48,3 +48,5 @@ Related: `render-order` skill §"What stage 3 writes is not settled", issue
 So no dynamic-state visualiser yet names an input, and the rule above stands:
 no filename is minted here by guess. Left `todo`; re-measure when a viewer
 that reads dynamic state opens a PR.
+
+_2026-10-24T07:40:00Z_ — Re-measured, still blocked on box 1. On cat-harness-tools `main` only `scripts/render-pipeline.ts` names `kg-dynamic`; in cat-harness only the `render-order` / `incremental-render` skills and the `render-order` Tool mention it. No viewer reads a dynamic-state document, so no filename is minted. Left `todo`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

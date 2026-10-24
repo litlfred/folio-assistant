@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T18:07:50Z
-updated_at: 2026-10-22T14:20:00Z
+updated_at: 2026-10-24T07:40:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -156,3 +156,5 @@ so they reach the session that owns the work.
 ## Re-measured 2026-10-22
 - `cat-harness/scripts/special-branches.json` and `cat-harness/scripts/tests/special-branches.test.ts` were retired on 2026-10-05 (`#2191`, bean `rva2`) and archived in `fsh-guts/scripts/special-branches.json` (`fsh-guts/scripts/special-branches.md`) once every special branch moved onto its owning harness declaration (`cat-harness.json`, `folio-assistant-sci.json`, `fhir-harness.json`).
 - On `litlfred/folio-assistant`, `refs/heads/cat/cat-harness/qa-reports`, `refs/heads/cat/cat-harness/state`, `refs/heads/cat/cat-harness/beans`, `refs/heads/cat/cat-harness/todos`, `refs/heads/cat/cat-harness/issue-marks`, `refs/heads/cat/cat-harness/fsh-guts`, and `refs/heads/cat/cat-harness/merge-reviews` exist and legacy `qa-reports` / `state` are absent; on `litlfred/qou`, 15 `refs/heads/lake-cache/*` branches remain (`0` `refs/heads/cat/folio-assistant-sci/lake-cache/*`).
+
+_2026-10-24T07:40:00Z_ — Re-measured. folio-assistant has only the `cat/cat-harness/*` names. litlfred/qou still has **16** legacy `lake-cache/*` heads and none under a new name. GitHub's branch rename API (`POST /repos/{owner}/{repo}/branches/{branch}/rename`) keeps a redirect and deletes nothing, so it is the route this bean's box 5 names. Doing it on qou needs the owner's OK, asked in the drain thread. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

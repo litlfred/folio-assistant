@@ -2,11 +2,11 @@
 # folio-assistant-tdir
 $schema: bean/1.0.0
 title: 'TOOL FOLDERS: one Tool per `tools/<id>/<id>.ts`, its own published JSON-LD and IRI, its I/O types as their own JSON Schema files, and a QA report per Tool — migrate every litlfred instance'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-15T18:05:00Z
-updated_at: 2026-10-21T18:58:00Z
+updated_at: 2026-10-24T07:40:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -123,3 +123,7 @@ gate — promoted once every litlfred instance is migrated).
   - Documented in `cat-harness/skills/folio-core/tool-authoring.md` and `skills-and-tools.md`.
 - Only box 5 (`A Tool's page links its QA verdict`) remains open: as documented in `cat-harness-tools/scripts/kg-export.ts:3791-3797`, Tool QA sidecars (`test/results/kg-qa/tools/<id>.kg-qa.json`) live on the `cat/<instance>/qa-reports` state branch and are not yet published at a URL on the site.
 - **2026-10-23 (`litlfred/cat-harness-tools#628`, `e91d0e9c`):** Wired `toolQaResolver` in `cat-harness-tools/scripts/gen-tools-viz.ts` using `kgQaHomeFor`, `kgQaSidecarPath`, `qaResultHref`, and `siteLinkKey` (`scripts/qa-result-link.ts`) so every Tool row on the Tools page (`<locale>/<harness>/tools/` and `<locale>/<harness>/tools/<instance>/`) links its `kg-qa` verdict (`[\`<verdict>\`](<qaHref>)` when materialised on disk, or `[\`qa-reports\`](<qaHref>)` when not fetched locally), pinned by `tools-viewer.test.ts` and passing `check:qa-result-links`.
+
+## Closed 2026-10-24 — box 5 landed
+
+`litlfred/cat-harness-tools#628` (Tool page links its QA verdict) was green and merged as `09ffee06` on 2026-10-24 inside the owner's merge-when-green window (06:45Z, "+3hrs"). All six Done-when boxes are now ticked on `main`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

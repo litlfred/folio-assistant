@@ -5,7 +5,7 @@ title: Remove the legacy special-branch names (qa-reports, lake-cache/, fhir-ast
 status: todo
 type: task
 created_at: 2026-10-02T18:10:08Z
-updated_at: 2026-10-22T14:20:00Z
+updated_at: 2026-10-24T07:40:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -37,3 +37,5 @@ The other remotes the bean names (litlfred/qou, smart-trust, smart-base and the
 folio-assistant-sci cache host) are outside this session's repository scope and
 were NOT checked, so precondition 3 is half-met and the fallback stays. Session
 https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
+
+_2026-10-24T07:40:00Z_ — Precondition 3 re-measured on litlfred/qou (`git ls-remote --heads`): **16** `lake-cache/*` heads remain, **0** `cat-lake-cache/*` and **0** `cat/folio-assistant-sci/lake-cache/*`, although `9io2` (the declaration and mirrors) is completed. The qou branches themselves were never renamed. The fallback stays until they are; renaming them is a change to qou and goes to the owner first. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
