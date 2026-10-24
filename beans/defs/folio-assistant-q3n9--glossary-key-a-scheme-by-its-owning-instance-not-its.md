@@ -2,11 +2,11 @@
 # folio-assistant-q3n9
 $schema: bean/1.0.0
 title: 'GLOSSARY KEY: key a scheme by its owning instance, not its file path, once glossaries move to their layers (from wvzp)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:55:00Z
-updated_at: 2026-10-24T08:55:00Z
+updated_at: 2026-10-24T08:52:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -29,3 +29,5 @@ wvzp keys the term-mapping record by the scheme's **file path** (`litlfred/cat-h
 - [ ] a test fails if the page's owner and the record's key disagree for any scheme
 
 Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
+
+_2026-10-24T08:52Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e) for the analysis box.
