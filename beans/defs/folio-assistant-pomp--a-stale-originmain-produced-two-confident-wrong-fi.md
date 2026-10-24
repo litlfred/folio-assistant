@@ -2,11 +2,11 @@
 # folio-assistant-pomp
 $schema: bean/1.0.0
 title: A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T06:43:56Z
-updated_at: 2026-10-24T08:45:00Z
+updated_at: 2026-10-24T11:25:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -71,10 +71,10 @@ checked against whatever the checker happens to have.
       you publish that something does not exist" carries the short form,
       because an issue comment is where one of the two was published
 - [x] a ruling on whether this ALSO wants a tool — see below
-- [ ] if a tool: something that answers "does `<path>` exist anywhere reachable
+- [x] if a tool: something that answers "does `<path>` exist anywhere reachable
       — this branch, `origin/main`, or an open PR's head" in one call, since
       the third case is the one neither guard above catches
-- [ ] the two occurrences above stay recorded wherever the corrections went,
+- [x] the two occurrences above stay recorded wherever the corrections went,
       rather than being tidied away once the guard exists
 
 ## Not in scope
@@ -161,3 +161,7 @@ the claim check's last step).
 _2026-10-24T08:30:00Z_ — Reopened and claimed by https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg, plain commit on both copies.
 
 _2026-10-24T08:45:00Z_ — The lookup is the open-work-lookup Tool: definition in litlfred/cat-harness#520, implementation in litlfred/cat-harness-tools#706. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.
+
+## Summary of Changes
+
+Merged 2026-10-24 11:23Z by the owner: litlfred/cat-harness#520 (fb62124: skill `bean-drain` with input/output schemas, Tool definitions drain-queue, bean-claim-check, open-work-lookup, pointers from bean-coordination, idle-backlog, issue-working, AGENTS.md) and litlfred/cat-harness-tools#706 (9b133fa: `beans:drain-queue`, `beans:claim-check`, `lookup:open-work`, 20 tests). Issue litlfred/cat-harness#515. The drain as a BPMN process is bean bssi, waiting on m8gz. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.
