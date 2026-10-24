@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-24T09:31:00Z
+updated_at: 2026-10-24T09:55:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -46,10 +46,10 @@ state both halves; the contrast is the point.
 
 ## Done when
 
-- [ ] the case/verdict pair has a declared schema and a `$schema` tag
-- [ ] the SME's identity and the date are recorded, because an audited review
+- [x] the case/verdict pair has a declared schema and a `$schema` tag
+- [x] the SME's identity and the date are recorded, because an audited review
       without an attributable reviewer is not audited
-- [ ] the review is a BPMN process with the SME in a lane, and that lane's role
+- [x] the review is a BPMN process with the SME in a lane, and that lane's role
       is `judgementOnly` — no procedure yields the answer, which is the whole
       reason a person is in it
 
@@ -57,3 +57,5 @@ state both halves; the contrast is the point.
 
 `TEST DATA: fixed and generated data sets` — these cases are the paradigm
 **fixed** set, and their value comes from being unchanged after review.
+
+_2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `SmeReviewCaseVerdictSchema` (`sme-review-case-verdict/1.0.0`, `smeReviewCases` typology) with discriminated union on `subject` (`decision-support` case vs `indicator-definition` cohort + expected value) and required `reviewer` + `reviewedAt`, BPMN process `cat-harness/processes/sme-test-data-review.bpmn` with `lane_sme` (`actor:sme-reviewer`), role `cat-harness/roles/sme-reviewer.json` (`judgementOnly: true`), and skill `cat-harness/skills/qa/qa-core/sme-test-data-review.md`.
