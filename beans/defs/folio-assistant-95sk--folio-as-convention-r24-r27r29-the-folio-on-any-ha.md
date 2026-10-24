@@ -44,3 +44,7 @@ _2026-10-24T08:16:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGST
 - **R28, R29: not started.** No writer puts a created or linked document under `folio/`. No todo or sticky schema carries a cross-instance reference.
 
 **Correction, same day.** R24 is half met, not open. `who-iris/index.html` on gh-pages carries the platform's folio mount (`data-fa-folio-mount`, `cat-harness-tools/scripts/folio-mount.ts`), which appends `docs-ui.js` from an inline script. My first look only searched `<script src>`. `smart-base/index.html` carries neither, so the remaining R24 work is the FHIR IG pages.
+
+## 2026-10-24 — owner: all four here (Q4 option B); R29 paused
+
+The owner chose to keep R24, R27, R28 and R29 in this bean and work them in order. Then, the same morning: *"R29. dont do stickies. pause that for now."* and *"pause todos too"*. **R29 is paused in full, for both todos and stickies.** Its box stays unticked and is not worked until the owner unpauses it.
