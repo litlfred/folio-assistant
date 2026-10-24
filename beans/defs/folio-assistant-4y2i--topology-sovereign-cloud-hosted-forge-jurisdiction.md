@@ -6,8 +6,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T09:01:53Z
-parent: folio-assistant-5a3l
+updated_at: 2026-10-24T08:45:00Z
+parent: folio-assistant-o1by
 ---
 
 **Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):
@@ -76,3 +76,5 @@ self-sovereign mode does not carry over to a live-store connection in
 sovereign cloud.
 
 _2026-10-24T08:20:00Z_ — Claimed by the Claude drain thread (smart-trust-demo session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). Other agents: please skip this bean until this claim is released.
+
+_2026-10-24T08:45:00Z_ — Moved under o1by (deployment descriptions), as the owner chose ("A. Proposal first"). Analysis: https://claude.ai/artifact/TauEHEAz5d2wgFinqZEqb8.
