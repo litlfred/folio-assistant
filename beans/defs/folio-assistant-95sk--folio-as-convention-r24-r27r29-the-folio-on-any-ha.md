@@ -48,3 +48,5 @@ _2026-10-24T08:16:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGST
 ## 2026-10-24 — owner: all four here (Q4 option B); R29 paused
 
 The owner chose to keep R24, R27, R28 and R29 in this bean and work them in order. Then, the same morning: *"R29. dont do stickies. pause that for now."* and *"pause todos too"*. **R29 is paused in full, for both todos and stickies.** Its box stays unticked and is not worked until the owner unpauses it.
+
+The owner, right after: *"(they should be the same thing, that's part of the problem)"*. Todos and sticky notes are meant to be **one** kind of thing, and having two is part of why R29 is paused. Whoever unpauses R29 starts from one merged kind, not two.
