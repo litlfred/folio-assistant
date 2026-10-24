@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:55:00Z
-updated_at: 2026-10-24T08:52:00Z
+updated_at: 2026-10-24T08:58:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -31,3 +31,19 @@ wvzp keys the term-mapping record by the scheme's **file path** (`litlfred/cat-h
 Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
 
 _2026-10-24T08:52Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e) for the analysis box.
+
+## 2026-10-24 — analysis (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+**Where the glossary files are on main today.** 33 schemes:
+- `folio-assistant-core/glossary/` holds 29: its own authored `folio-assistant-core.glossary.json` and `guideline-domain.glossary.json`, **cat-harness's authored** `cat-harness.glossary.json`, and `generated/<instance>/` for **seven** instances: bootstrap, bootstrap-tools, cat-harness, fhir-harness, folio-assistant-core, folio-assistant-sci, who-iris.
+- `smart-base/glossary/generated/smart-base/` holds 4 (moved out of core by `rfev`, smart-base#137 + core#187, merged 2026-10-24).
+- Of the seven, only who-iris and core declare a `glossary` directory (cat-harness's `glossary/` is the `swimlane-glossary` typology; sci, fhir-harness, bootstrap, bootstrap-tools declare none). `generatedDirFor` in core's `glossary-page.ts` already writes an instance's extraction into its OWN declared `glossary/generated/` when one exists, so the `rfev` move pattern is the mechanism; it needs each instance to declare a `glossary` directory first.
+
+**After separation**, following `rfev`: each instance declares `glossary/` (typology `glossary`) and holds `glossary/generated/<self>/` plus any authored scheme; core keeps only its own. The file's location and its owner then coincide, but a path still differs between the index (`<instance>/glossary/...`) and a standalone checkout (`glossary/...`), so a path stays a poor key.
+
+**Two owner rules exist, and they are not the same kind of rule.** `schemeOwner` (core's page) derives the owner from the scheme's `source` (the defining file's instance), falling back to where its terms come from; it does not depend on where the glossary file sits. The `wvzp` path rule derives it from the file's location (`generated/<instance>/`, then `<instance>.glossary.json`, then the directory's owner). Both agree on all 33 today; after the moves they agree by construction, but only `schemeOwner` survives a file being misplaced.
+
+**The key.** Published SKOS is already `<instance>--<scheme>.skos.jsonld`, so `(instance, scheme)` matches what readers see. Options put to the owner:
+- **A** `(instance, scheme)`, instance = `schemeOwner` (from the source). No new field; layout-independent; one rule.
+- **B** an explicit `instance` field in `folio-glossary/v1`, written by `glossary-extract.ts`, plus a check that it equals `schemeOwner`. Self-describing out of context, but a second statement that can drift.
+- **C** keep the file path (`wvzp` today). Breaks on every move this bean exists to enable.
