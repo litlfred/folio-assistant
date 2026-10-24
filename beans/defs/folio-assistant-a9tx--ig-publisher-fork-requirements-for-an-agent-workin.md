@@ -493,3 +493,12 @@ Fork `8c2d917`, 67 tests. Both incremental builds converged in 1 round with exit
 
 `INCREMENTAL_GUARD` was lifted by the owner on 2026-10-24 (option A), in fork `1fffc3e`, 67 tests. Incremental is now the default, and a plan that cannot tell still decides `full`. `-verify-incremental` is accepted and ignored, and `w7-round.sh` no longer passes it.
 
+## W3/W4 round 1 (bean w3r1, 2026-10-24, `ast-results/2026-10-24-w3r1` @ `347a251`)
+
+Fork `0c3b0ca`. The base, the incremental build and W8 all exit 0, and the incremental build converged in 1 round.
+- `terminology` is the same in the incremental and full builds: tx.fhir.org/r4 0.17.0 and 192 expansions. Only 2 carry `used-codesystem`.
+- `packages` differed: one cache names core `@hl7/hl7.fhir.r4.core`, the other `hl7.fhir.r4.core`.
+- `pages.json` failed in both full builds (`MalformedInputException`: one page is not UTF-8). The incremental round's own pages.json had 1103 fragments and 588 pages, with 0 unresolved includes.
+
+Fixed in `ce950d2`: pages are read byte for byte, package ids drop the npm scope, and each expansion lists its `codeSystems`. Round 2 is bean `w3r2`.
+
