@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-23T20:40:00Z
+updated_at: 2026-10-24T01:00:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -156,7 +156,7 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 is bean `folio-assistant-w7r3`.
+- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 (`w7r3`) converged in 1 round for both probes; the W8 review (bean `w8rv`) found two causes of difference, fixed in `72b2ba9` and `3896c6c`. Round 4 is bean `folio-assistant-w7r4`.
 - [ ] **W8** diff a full build against the incremental AST, plus the threshold. Not met yet: fpmn's W7 output was itself a full build, so its diff compared full with full.
 
 
@@ -434,4 +434,27 @@ Fixes on the fork, all 64 tests passing:
   - `e3c7119`: `TempIgAssembler` copies `input/includes/` and `fsh-generated/includes/`, and `w7-round.sh` runs W8 after a failed W7;
   - `d2d4bfe`: every `path-*` directory exists in the temporary IG.
 - I checked the WHO template's layouts: they include no other static file that the IG supplies.
+
+## W7 round 3 and the W8 review (beans w7r3 and w8rv, 2026-10-24, `ast-results/2026-10-23-w7r3` @ `539c086`)
+
+**W7:** the incremental build converged in 1 round for both probes, and W8 ran (exit 0).
+- `cql`: rebuild 41, load 95, 748 resources merged.
+- `fml`: rebuild 2, load 5.
+
+**W8**, `ig-ast.ts diff`, full against incremental:
+- `fml`: 649 resources changed. All of it is noise (`*.date`, temp-file names in narratives, rendered dates), except 2 StructureMap narratives. Their links to cached resources went to `https://simplifier.net/resolve?scope=<cache package>` instead of `StructureMap-X.html`. 0 edge changes.
+- `cql`: the same noise, plus 39 Measures that lost `contained` (the effective-data-requirements Library) and the `crmi-effectiveDataRequirements` extension. 460 edges were removed, all `relatedArtifact.depends-on` from those requirements.
+
+**Causes and fixes:**
+1. `IMMZIND01Logic` and its siblings name `http://smart.who.int/immunizations/Library/IMMZIndicatorElements`, but that library's url is `.../immunizations-measles/...`. The edge did not resolve, so the cone stopped and the Logic libraries came from the cache. The Publisher compiles a Measure's data requirements only from a library it compiles in the same run (`CqlSubSystem.getLibraryInfo` → `getCqlInfo`, by name). Fixed in `72b2ba9`:
+   - an unresolved edge binds by `Type/name` when the name is unique (`edgesResolvedByName`);
+   - each rebuilt artifact's primary library is compiled with it (`compiledWith`). Such a library does not widen the cone, and the merger seeds no growth from it.
+   On the real full-build AST, the cql probe now plans 84 resources (43 Libraries, 41 Measures), with 82 edges bound by name.
+2. The cache package had no `other/spec.internals`, so the Publisher linked its resources through simplifier.net. Fixed in `3896c6c`: a spec.internals maps each canonical to `Type-id.html`, with an empty package url so the link stays relative. The test drives `SpecMapManager` the way `loadIGPackage` does.
+
+66 tests pass. Round 4 is bean `w7r4`.
+
+**IG finding (WHO content, not changed here):** smart-immunizations' indicator Logic libraries reference `IMMZIndicatorElements` under `.../immunizations/Library/`, but the library is published as `.../immunizations-measles/Library/IMMZIndicatorElements`.
+
+**Tooling note:** `ig-ast.ts diff` reports the noise as changes. Normalising `*.date` and the temp-file names would make W8 read 0 directly. That belongs in fhir-harness, as its own PR.
 

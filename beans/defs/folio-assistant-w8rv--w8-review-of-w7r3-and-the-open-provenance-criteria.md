@@ -29,9 +29,10 @@ These are W3 (criteria 4 and 5) and W4 (criterion 3, the only step that needs th
 fork). Each needs a scope and the owner's go-ahead before any build.
 
 ## Done when
-- [ ] W8 diff and review recorded in a9tx, and W7/W8 ticked or reasons given
+- [x] W8 diff and review recorded in a9tx, and W7/W8 ticked or reasons given (reasons given: two causes, fixed; round 4 is `w7r4`)
 - [ ] W3 scoped and put to the owner
 - [ ] W4 scoped and put to the owner
 
 ## Log
 - 2026-10-24 00:30Z: claimed by the "Publisher AST" thread. Opened at the CI speed thread's request, because a9tx had no open child and that turned `check:bean-rollup` red.
+- 2026-10-24 01:00Z: W8 review of w7r3 done (see a9tx). Fork `72b2ba9` and `3896c6c` fix both causes. Round 4 is bean `w7r4`. W7/W8 stay unticked until w7r4 diffs clean.
