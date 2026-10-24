@@ -1,0 +1,37 @@
+---
+# folio-assistant-w8rv
+$schema: bean/1.0.0
+title: 'W8 review of the w7r3 round, then the open provenance criteria (page fragments, dependency closure, terminology)'
+status: in-progress
+type: task
+priority: high
+created_at: 2026-10-24T00:30:00Z
+updated_at: 2026-10-24T00:30:00Z
+parent: folio-assistant-a9tx
+---
+
+What a9tx still needs, now that its four connected-agent runs (qzex, fpmn, wv7r, w7r3) are
+done. The cloud thread "Publisher AST" holds it.
+
+## 1. W8: diff the w7r3 incremental AST against the full build
+
+Results: `ast-results/2026-10-23-w7r3` @ `539c086`. W7 converged in 1 round for both
+probes. Run `ig-ast.ts diff` for each probe, W7 against W8, and run the
+`ig-ast-delta-review.bpmn` review. Then tick W7 and W8 in a9tx, or say what fails.
+
+## 2. The open criteria in a9tx
+
+- page-fragment provenance: which source produced which output fragment;
+- the resolved dependency closure, with pinned versions;
+- terminology expansion provenance: which server, and which version.
+
+These are W3 (criteria 4 and 5) and W4 (criterion 3, the only step that needs the core
+fork). Each needs a scope and the owner's go-ahead before any build.
+
+## Done when
+- [ ] W8 diff and review recorded in a9tx, and W7/W8 ticked or reasons given
+- [ ] W3 scoped and put to the owner
+- [ ] W4 scoped and put to the owner
+
+## Log
+- 2026-10-24 00:30Z: claimed by the "Publisher AST" thread. Opened at the CI speed thread's request, because a9tx had no open child and that turned `check:bean-rollup` red.
