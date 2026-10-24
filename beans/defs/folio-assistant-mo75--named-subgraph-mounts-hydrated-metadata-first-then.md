@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-24T09:30:02Z
+updated_at: 2026-10-24T10:10:27Z
 parent: folio-assistant-fnx4
 ---
 
@@ -47,3 +47,5 @@ _2026-10-16T10:50:00Z_ — Re-parented `0mpw` → `fnx4` (KG SUBSCRIPTIONS, `0mp
 _2026-10-24T08:53:04Z_: Claimed by the README regen thread (https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5). Starting with G1, after re-measuring the 2026-10-09 notes against current main.
 
 _2026-10-24T09:30:02Z_: G1 done: litlfred/cat-harness-tools#716 merged as 5b36582. Every Tool gets its own tools/<id>/ subgraph with index.jsonld and index.hydrated.jsonld (243 Tools; 176 in cat-harness). For G3: cat-harness-tools' own tools/ holds implementation code, and Tool nodes carry no source path, so a code closure must come from the folder convention or maintainsFrom. kg:materialize --nodes lives in folio-assistant-core/scripts/kg-materialize.ts.
+
+_2026-10-24T10:10:27Z_: G2 built: litlfred/cat-harness#537 (source kind `hydrated`), then litlfred/cat-harness-tools#725 (mount:remote hydrated mode). Gap: no harness commits docs/subgraph/ (builtAtPublish), so a hydrated mount of a real pin finds nothing. Owner chose 2026-10-24 (card, option A): publish the index files per pin in a package, fetched by the Tool the source names. Not B (commit them) nor C (generate at mount time).
