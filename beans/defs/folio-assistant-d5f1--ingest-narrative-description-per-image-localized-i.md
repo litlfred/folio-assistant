@@ -336,3 +336,5 @@ _2026-10-24T15:35Z_ — cat-harness#595 merged (batch G, 19 figures of arxiv-250
 _2026-10-24T15:38Z_ — cat-harness#597 merged (batch H, 28 figures of arxiv-2312.07755v1).
 
 _2026-10-24T15:51Z_ — cat-harness#599 merged (batch I, fr/es/ar/ru/zh narratives for 32 figures of arxiv-2404.04834v4).
+
+_2026-10-24T16:24Z_ — Window wrap-up: last d5f1 batch was cat-harness#599 (merged). Claim released.

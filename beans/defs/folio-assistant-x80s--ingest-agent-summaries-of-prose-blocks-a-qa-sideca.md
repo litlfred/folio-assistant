@@ -114,3 +114,5 @@ _2026-10-24T16:13Z_ — cat-harness#603 merged (batch 15, 20 blocks of arxiv-250
 _2026-10-24T16:21Z_ — cat-harness#605 merged (batch 17, 24 blocks of arxiv-2606.04382v1).
 
 _2026-10-24T16:24Z_ — cat-harness#604 merged (batch 16, 21 blocks of arxiv-2404.04834v4).
+
+_2026-10-24T16:24Z_ — Window wrap-up: cat-harness#583 and #585–#605 merged; all drafts are on main and wait for a person. Claim released; later batches are open to anyone.
