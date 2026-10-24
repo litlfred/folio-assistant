@@ -41,3 +41,23 @@ First pair: `milnor-exposition-standard` (ruling Q3), folio-assistant-sci#72 + c
 - The owner chose **B** at 11:22Z: no science skill name stays in cat-harness prose, "generalize if/as needed". Nine pages were rewritten generically, and 15 sci skills record the lineage: sci#80 + cat-harness#550.
 
 Remaining: 8 science-subject splits (content-profiles, md-authoring, readability-editing, content-test, graph-rendering, lean-verification.json, delivery-summary, html-rendering-qc), uses-editorial-review and markdown-render-check (Q2/Q3 splits), and the 7 kept by ruling A (split their maths passages out).
+
+## Progress 2026-10-24 (second half)
+
+Merged: cat-harness#540 (compute and detangler watchers), folio-assistant-sci#82 (math-render-check).
+
+Every row now has a PR, except `lean-verification`:
+
+| Skill | cat-harness | sci |
+|---|---|---|
+| content-test | #557 | #83 `lean-content-test` |
+| md-authoring | #558 | #84 `math-md-authoring` |
+| html-rendering-qc | #559 | #85 (into `math-render-check`) |
+| readability-editing | #560 | #86 `math-readability-editing` |
+| delivery-summary | #561 (wording only) | none |
+| graph-rendering | #562 | #87 (into `lean-formal-graph`) |
+| ruling A: editor, devils-advocate-watcher, content-graph, corpus-grep, integration-watch | #563 | #88 `formal-layer-editing`, `devils-advocate-paper`, `proof-gap-audit` §K |
+
+No change needed: content-profiles (it describes the profile mechanism, with the paper as its example), narrative-asserts-code (it already hands Lean to sci) and edge-kinds-and-blast-radius (it quotes the maths sources only as lineage).
+
+Open: `lean-verification` can't move alone, because the Lean toolchain cluster hangs off it (toolchain contract and test, lean-toolchain, lean-mcp and lean-atlas capabilities, the lean-build and lean-toolchain-setup tools, the lean-mcp actor, the lean-toolchain role). The owner has been asked: A, a separate bean (recommended); B, move it now; C, keep it.
