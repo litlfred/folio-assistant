@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-22T16:50:00Z
+updated_at: 2026-10-24T14:38:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -31,3 +31,11 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 Themes viewer: litlfred/cat-harness-tools#554 (`theme:viz` / `theme:viz:check`, covering the platform's themes plus each instance's declared themes) and a cat-harness PR (the theme-viewer Tool, the `themes` visualiser and the builtAtPublish entry; it needs #554 first). The l1-extraction listing is NOT part of this claim. Under the owner ruling of 2026-10-16 it is smart-base's own Tool `l1-extraction-pages` (draft cat-harness#323), which lane S holds.
 
 _2026-10-22T16:50:00Z_ — l1-extraction portion claimed by lane S (session https://claude.ai/code/session_016heucWhrncLm4uy52csBcz). smart-base#102 (Tool `l1-extraction-pages`: generator, check, builtAtPublish, 11 tests) has been taken over and is out of draft. Its wireframe now lives at smart-base/findings/wireframes/l1-extraction (e2a8fc28), so cat-harness#323 is no longer needed for it. The themes portion stays with lane B2. Recorded by the coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
+
+_2026-10-24T14:38:00Z_ — Complete row-by-row audit & final row (`smart-trust` `ig-ast`) closed in [`litlfred/fhir-harness#170`](https://github.com/litlfred/fhir-harness/pull/170) (`54cab1f`) + [`litlfred/cat-harness-tools#764`](https://github.com/litlfred/cat-harness-tools/pull/764) (`2c356f4`):
+- **Merged on `main` (4/5 kinds)**:
+  - `openapi` (`smart-trust`) → `/en/cat-harness/openapi/smart-trust/` (`cat-harness/cat-harness.json` `id: "openapi"`, `renderedBy: "openapi-pages"`, `subgraphs: "instance"`)
+  - `external-schema` (`smart-base`) → `/en/cat-harness/external-schemas/instance/smart-base/` (`cat-harness/cat-harness.json` `id: "external-schemas"`, `subgraphs: "instance"`, `subgraphUnder: { "external-schema": "instance" }`)
+  - `l1-extraction` (`smart-base` + `smart-immunizations`) → `/en/smart-base/l1-extraction/smart-base/` (`litlfred/smart-base#102` `237873f` merged)
+  - `themes` (`smart-base`, `who-iris`) → `/en/cat-harness/themes/` (`litlfred/cat-harness-tools#554`, `#565`, `#667` + `litlfred/cat-harness#417`, `#414` merged)
+- **Final row (`smart-trust` `ig-ast`)**: [`litlfred/fhir-harness#170`](https://github.com/litlfred/fhir-harness/pull/170) (`54cab1f`) declares `"writer": ["scripts/gen-ig-ast-pages.ts"]` on the `ig-ast` visualiser in `fhir-harness/fhir-harness.json` (so `derive:publish` schedules `gen-ig-ast-pages.ts` for the branch-kept `smart-trust-ast` directory), and [`litlfred/cat-harness-tools#764`](https://github.com/litlfred/cat-harness-tools/pull/764) (`2c356f4`) updates `viewersOf` (`subRef`) in `scripts/viewer-declarations.ts` to honour `v.writer !== undefined` on subgraphs. Verified `/en/fhir-harness/ig-ast/smart-trust/` resolves with 0 `"no viewer yet"` rows across all 6 rows in `8jur`. Ready to close once `fhir-harness#170` and `cat-harness-tools#764` merge.

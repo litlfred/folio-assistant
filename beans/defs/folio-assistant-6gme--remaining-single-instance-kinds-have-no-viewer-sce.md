@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-23T08:00:00Z
+updated_at: 2026-10-24T14:38:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -65,3 +65,18 @@ _2026-10-23T08:17:00Z_ — Progress update:
 - `litlfred/cat-harness-tools#554` (`theme:viz` / `theme:viz:check`, `ceb3750849`), `litlfred/cat-harness-tools#565` (`14bcf899c3`), and `litlfred/cat-harness#417` (`Build the instance themes at publish`, `5c541ea29d`) are merged; `litlfred/cat-harness#414` (`themes visualiser: Tool, route and built page (6gme)`) is open in CI.
 - `litlfred/folio-assistant-sci#21` (`lean: dynamic visualiser over knowledge-graph shards (doc-gen4 doc-data → JSON-LD), with STAGING overlays`, `f7f766b188`) is merged on `folio-assistant-sci` `main`, adding the `lean-kg-publish` Tool (`tools/lean-kg-publish/lean-kg-publish.ts`) and `adapters/paper/lean/lean-kg-viewer/`.
 - `litlfred/cat-harness-tools#571` (`c726de2`) opened: `scripts/harness-tiles.ts` now honours directory-level `coverage.exempt.visualiser` alongside instance-level `renderExemption`, so `folio-assistant-sci`'s `sci-lean` template directory (`folio-assistant-sci.json` line 181) renders `"no viewer by design"` (`Not a gap`) instead of `"no viewer yet"`, agreeing with `check-subgraph-coverage.ts`.
+
+_2026-10-24T14:38:00Z_ — Complete row-by-row audit & final row (`bootstrap-tools` `skills`) closed in [`litlfred/cat-harness-tools#764`](https://github.com/litlfred/cat-harness-tools/pull/764) (`2c356f4`):
+- **Merged on `main` (11/12 kinds)**:
+  - `scenarios` (×3: `cat-harness`, `smart-base`, `bootstrap-tools` + `folio-assistant-core`, `folio-assistant-sci`, `bootstrap`) → `/en/cat-harness/scenarios/<instance>/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `policies` (`cat-harness`) → `/en/cat-harness/policies/cat-harness/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `uml` (`cat-harness`) → `/cat-harness/auto-docs/uml/uml/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `test-plan` (`cat-harness`) → `/en/cat-harness/test-plans/cat-harness/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `tool-release` (`cat-harness`) → `/en/cat-harness/tool-releases/cat-harness/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `vocab-mapping` (`cat-harness`) → `/en/cat-harness/vocab-mappings/cat-harness/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `voice-vendors` (`cat-harness`) → `/en/cat-harness/voices/cat-harness/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `waiver` (`cat-harness`) → `/en/cat-harness/memory/cat-harness/` (`cat-harness#302`, `cat-harness#380`)
+  - `substrate-snapshot` (`cat-harness`) → `/en/cat-harness/substrate-snapshots/cat-harness/` (`cat-harness-tools#469`, `cat-harness#380`)
+  - `basic-cdn-site` (`cat-harness`) → `/en/cat-harness/site/` (`cat-harness-tools#494`, `cat-harness#390`, `cat-harness#406`)
+  - `lean` (`folio-assistant-sci`) → `"no viewer by design"` (`renderExemption.of: ["visualiser"]`, `folio-assistant-sci#21` + `cat-harness-tools#571` merged)
+- **Final row (`bootstrap-tools` `skills`)**: [`litlfred/cat-harness-tools#764`](https://github.com/litlfred/cat-harness-tools/pull/764) (`2c356f4`) adds `skillsDirectoriesAcrossInstances` to `index/skills` in `scripts/gen-auto-docs.ts` (walking `instanceRootsIn(REPO)` for instances not exempt from `"visualiser"`), emitting `cat-harness/docs/cat-harness/auto-docs/index/skills/bootstrap-tools-skills/index.html` while keeping `bootstrap` exempt. Verified 0 `"no viewer yet"` rows remain across all 14 rows in `6gme`. Ready to close once `cat-harness-tools#764` merges.
