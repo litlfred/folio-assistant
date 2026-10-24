@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-24T07:54:25Z
+updated_at: 2026-10-24T08:16:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -40,3 +40,5 @@ Session https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5.
 What is NOT covered is a library that code IMPORTS rather than RUNS, installed by a package manager: bpmn-moddle, dmn-moddle, katex, playwright. Those appear only in `package.json`, `THIRD-PARTY-NOTICES.md` and type shims.
 
 The likely answer is therefore not a new kind but an extension of `tool-release`: role `library` and kind `npm-package` (or `pip-package`), with the type shim, where one exists, as a field. The proposal must weigh that against a separate kind.
+
+_2026-10-24_ — CLAIMED by the library viewers thread (session https://claude.ai/code/session_01LM4btvYuBEuq57QqgwCrtu). The proposal is written (/mnt/project-files/library-nodes/jbvi-proposal.md) and the owner was asked to choose A (extend tool-release), B (new generated `library` kind, recommended) or C (hand-declare a few). Nothing is built.
