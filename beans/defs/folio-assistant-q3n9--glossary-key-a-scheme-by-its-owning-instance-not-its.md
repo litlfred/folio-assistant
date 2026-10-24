@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:55:00Z
-updated_at: 2026-10-24T09:10:00Z
+updated_at: 2026-10-24T10:15:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -49,3 +49,5 @@ _2026-10-24T08:52Z_ — Claimed by the separation drain thread (session https://
 - **C** keep the file path (`wvzp` today). Breaks on every move this bean exists to enable.
 
 **Owner ruling 2026-10-24T09:05Z: A.** Key = `(instance, scheme)`, with instance taken from `schemeOwner` (the scheme's source). No new field. Box 1 is done; the moves (each layer declares `glossary/`, following `rfev`) and the record/`termState`/page migration come next.
+
+_2026-10-24T10:15Z_ — Box 2 and 3 built, in review. Took over wvzp's three PRs and reworked them: cat-harness#524 (mapping carries a required `instance`, `file` retired), cat-harness-tools#708 (`schemeOwner` moved into `scripts/lib/scheme-owner.ts`, rows and `termState` keyed by (instance, scheme)), folio-assistant-core#206 (page and SKOS automated matches keyed by instance; new test that the page owner and the record key agree over the real checkout). Merge in that order. Boxes tick when they merge.
