@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T04:51:47Z
-updated_at: 2026-10-02T08:01:23Z
+updated_at: 2026-10-24T07:50:00Z
 parent: folio-assistant-5yhm
 ---
 
@@ -149,3 +149,5 @@ schema header, and the outcome set states what is written and where
 (`OUTCOME_WRITES`). The second and fourth items stay open. They are leg 2,
 which waits on its entry condition: non-zero `mapped` on either target, and
 both were 0 when measured on 2026-10-02.
+
+_2026-10-24T07:50:00Z_ — Re-measured: `check:term-mapping` reports 3751 candidates, 0 mapped on `skos` and `fhir`. Leg 2's entry condition (non-zero mapped) is still unmet, so it keeps waiting. Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.

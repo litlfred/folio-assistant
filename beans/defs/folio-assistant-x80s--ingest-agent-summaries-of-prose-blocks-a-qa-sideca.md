@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-24T07:50:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -61,3 +61,8 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 _2026-09-30T08:24:12Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## 2026-10-24 — drain batch
+- 13 drafts for `cat-harness/library/kg-folio-asst-2026-09-30` (the scfh deck), in `litlfred/cat-harness#493`. `drafted_by.model` is `not-disclosed` with the session URL.
+- Measured with `bun run cat summaries` at the folio-assistant lock: 2848 of 3267 prose blocks awaited a summary before this batch, so 2835 after it. 419 drafts (432 after) await a person; 0 confirmed.
+Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.

@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-10T14:06:52Z
-updated_at: 2026-10-23T16:42:00Z
+updated_at: 2026-10-24T07:50:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -36,3 +36,5 @@ Found on the way: `check:glossary` is red on folio-assistant main at the 2026-10
 - **Box 2 (`litlfred/smart-immunizations#73`, `c2b56b93`; `litlfred/smart-hiv#20`, `3b170b52`):**
   - Resolved the `IMMZ.D2.DT.Measles.xlsx` handle typo (`10665/255705` -> real WHO IRIS handle `https://iris.who.int/handle/10665/255377`, *Measles vaccines: WHO position paper – April 2017*, WER 92(17):205–227), ingested `uploads/WER9217-205-227/`, and classified it under `guideline-domain` (`public-health`, `clinical`, `health-system-strengthening`) and `https://smart.who.int/kg/layer` (`l1`) with sources (`litlfred/smart-immunizations#73`).
   - Classified all 5 HIV `uploads/*/intake.json` records (`9789240085138-eng`, `9789240031593-eng`, `9789241549684_eng`, `9789241550581-eng`, `9789240124233-eng`) under `guideline-domain` and `https://smart.who.int/kg/layer` with sources (`litlfred/smart-hiv#20`).
+
+_2026-10-24T07:50:00Z_ — PR status: all three PRs are still OPEN. `litlfred/folio-assistant-core#185` had a conflict with main (the `.pot` templates, after main moved to `v0` namespace IRIs); merged main and pushed `299117c`. `litlfred/smart-immunizations#73` and `litlfred/smart-hiv#20` write the scheme as `.../folio-assistant-core/0.1.0/ns#glossary/guideline-domain`, but main now uses `.../v0/ns#...`; the fix is ready locally, held because sushi cannot run in this environment (packages.fhir.org refused). Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
