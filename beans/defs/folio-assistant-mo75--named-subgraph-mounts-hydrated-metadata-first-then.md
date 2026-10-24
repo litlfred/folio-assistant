@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-24T10:10:27Z
+updated_at: 2026-10-24T12:19:07Z
 parent: folio-assistant-fnx4
 ---
 
@@ -22,7 +22,7 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md`, Option 
 
 ## Done when
 - [x] G1: Tool nodes exported as a named subgraph with `index.jsonld` + `index.hydrated.jsonld` (`subgraph:jsonld:check`)
-- [ ] G2: a mount entry or override can ask for `hydrated: true` — the named subgraph's `index.hydrated.jsonld` at the pin, no files
+- [x] G2: a mount entry or override can ask for `hydrated: true` — the named subgraph's `index.hydrated.jsonld` at the pin, no files
 - [ ] G3: `overrides.<instance>.directories` and `kg:materialize` accept NESTED subgraph ids and NODE ids, resolved through `resolveDirectories` / the hydrated index; code nodes bring their import closure (`check:tools-closure`)
 - [ ] concern names: `"sdlc"` at the top level expands to its kind-first members (`docs/sdlc`, `skills/sdlc`, `processes/sdlc`, `scripts/sdlc`), derived from the `concern-groups/v1` declarations, checked by `check:concern-groups`
 - [ ] the CHOICE made in review is written back to the mount entry (the choice, never the state), so a fresh clone replays it; `index.lock.json` records what it resolved to
@@ -49,3 +49,5 @@ _2026-10-24T08:53:04Z_: Claimed by the README regen thread (https://claude.ai/co
 _2026-10-24T09:30:02Z_: G1 done: litlfred/cat-harness-tools#716 merged as 5b36582. Every Tool gets its own tools/<id>/ subgraph with index.jsonld and index.hydrated.jsonld (243 Tools; 176 in cat-harness). For G3: cat-harness-tools' own tools/ holds implementation code, and Tool nodes carry no source path, so a code closure must come from the folder convention or maintainsFrom. kg:materialize --nodes lives in folio-assistant-core/scripts/kg-materialize.ts.
 
 _2026-10-24T10:10:27Z_: G2 built: litlfred/cat-harness#537 (source kind `hydrated`), then litlfred/cat-harness-tools#725 (mount:remote hydrated mode). Gap: no harness commits docs/subgraph/ (builtAtPublish), so a hydrated mount of a real pin finds nothing. Owner chose 2026-10-24 (card, option A): publish the index files per pin in a package, fetched by the Tool the source names. Not B (commit them) nor C (generate at mount time).
+
+_2026-10-24T12:19:07Z_: G2 done: cat-harness#537 (fb7e393) and cat-harness-tools#725 (040799e) add the hydrated source and mount mode. Per-pin index package (owner option A, then one prerelease per pin): cat-harness#542 (e5794f4) and cat-harness-tools#736 (c810edd). A mount reads the pin's git tree first, then the subgraph-index-<sha> prerelease, checked by sha256, the manifest, the schema and the IRI. Follow-ups: only cat-harness has the publish caller workflow; kg:materialize --nodes (core) still reads the git tree only; G3 needs 2j2r in remote-mount's two planners.
