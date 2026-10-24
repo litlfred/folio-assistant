@@ -2,11 +2,11 @@
 # folio-assistant-d08l
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: fetch WHO''s 2016 antenatal care guideline from IRIS for the L1 evidence sections (0lde network block)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:24:20Z
-updated_at: 2026-10-24T08:24:20Z
+updated_at: 2026-10-24T13:42:30+02:00
 parent: folio-assistant-qvxh
 ---
 
@@ -27,3 +27,6 @@ Nothing in `smart-base/library/` today is a clinical guideline with GRADE tables
 - [ ] 0lde carries a note pointing at the commit and saying which file holds which of the four evidence kinds
 
 Session https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19.
+
+## Log
+- 2026-10-24T13:42:30+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Fetching WHO 2016 ANC guideline + GRADE/EtD web annexes from WHO IRIS and committing to `fsh-guts/uploads/`.
