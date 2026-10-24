@@ -2,10 +2,10 @@
 # folio-assistant-dp1j
 $schema: bean/1.0.0
 title: 'KG AFFORDANCES: browse, materialise, instantiate, copy-into-my-folio — as processes and skills, gated by write capability'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-20T17:13:19Z
-updated_at: 2026-10-23T20:52:00Z
+updated_at: 2026-10-24T09:26:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -93,3 +93,7 @@ than a read-only one.
 verbs), `d308` (Tool nodes — `folio_init` is one), `yj32` (the harness as an
 interface these verbs act through), and the `github-api` /
 `github-connector` capabilities declared this session.
+
+## Closed 2026-10-24 (cloud drain thread)
+
+`litlfred/cat-harness#465` merged as `bf87e969` after main was merged in. The glossary namespaces moved from `/0.1.0/` to `/v0/`. All checks were green.
