@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-24T11:36:00Z
 parent: folio-assistant-9umr
 ---
 
@@ -19,7 +19,7 @@ Remaining: tool-surface skills → a `tools` topic; core/sci editorial skills up
 Waits on PR1 (`ybwt`, not yet on main — link when it lands).
 
 ## Done when
-- [ ] no `cat-harness/skills/folio-core/` directory remains
+- [x] no `cat-harness/skills/folio-core/` directory remains (cat-harness#518, merged a334cf9, 2026-10-24: moved to `skills/tools/folio-core/` under a new `tools` topic)
 - [ ] every topic in `skills/skills.json` holds at least one package; the harness holds no skill placed above it by proposal §1.2
 - [ ] `knownSkills(checkout)` equals PR1's set plus `block-change-summary`
 - [ ] `skill:register:check`, `kg:audit:check`, `check:agents-xref`, `bun run cat gates` green
