@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-17T22:29:53Z
-updated_at: 2026-10-24T09:00:00Z
+updated_at: 2026-10-24T09:10:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -213,3 +213,25 @@ Remaining: walk issue #215's immunization-schedule scenario end to end. Closing 
 _2026-10-24T08:35:00Z_ — **Owner, 2026-10-24 (structured question Q8, 08:29Z): "A".** Walk issue #215's scenario on **litlfred/smart-immunizations-uganda**. One small sample schedule change (for example the HPV single-dose age) goes on a branch. Its preview at `STAGING/<branch>/` (`site-publish.yml`) is compared with main, and the walk records where it breaks. The branch is never merged. `xp72`'s Done-when 3 is walked on the same branch. Closing #215 stays the owner's. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
 
 _2026-10-24T09:00:00Z_ — Claimed by the Preview storage thread for the #215 walk on a never-merged smart-immunizations-uganda branch (owner Q8 "A"). No agy claim found. Session https://claude.ai/code/session_01GQmP3RJREp5xXnAFSYYMi9.
+
+## The #215 walk, 2026-10-24 (owner Q8 "A"): where it breaks
+
+Walked on litlfred/smart-immunizations-uganda#12, a draft that never merges. The sample change: the single HPV dose for girls at 9 years instead of 10. Session https://claude.ai/code/session_01GQmP3RJREp5xXnAFSYYMi9.
+
+| # | Step of the scenario | What happened | Verdict |
+|---|---|---|---|
+| 1 | Author changes the schedule | Branch `claude/sample-215-hpv-9y-do-not-merge`: narrative (`schedule`, `decision-logic`, `differences`, `testing`), CQL, the L2 record, test patient UGHPV01, and the workbook's HPV Q26/R26 | works |
+| 2 | Agent keeps narrative and logic together | The `logic` gate (`checks.yml`: `logic:generate` then `git diff`) **caught** a hand edit of the generated FSH: the workbook is the logic's source. Fixed in c24e688; `logic:generate` and `logic:examples` pass locally | works |
+| 3 | Agent surfaces downstream implications | **No tool did.** The nine places were found by grep. Two stay silent: the CQL is hand-completed and no gate compares its due date with the workbook's R26, and the L2 record still cites P10, which says 10 years, with nothing flagging that the adaptation now contradicts its evidence | **breaks** |
+| 4 | Preview on STAGING | `site-publish.yml` run 40078592557 **refused**: `ig-site:ast`, "the AST is stale-inputs". The workflow refreshes the AST only for the default branch, `ig-ast-refresh.yml` seeds only from it, and no input sets `SITE_ACCEPT_STALE_AST`. The error's advice ("run the IG's Site publish") is the run that failed. **No branch that changes an IG's inputs can get a preview** | **breaks** |
+| 5 | Preview with the preview-only override (built locally, not published) | The site mixes two builds. Narrative pages say **9 years** (branch). `PlanDefinition-…HPVSingleDose`, `Library-…HPVSingleDoseLogic` and `ast-data/` say **10 years** (AST from main's 91b2b5a). `folio-build.json` names the branch commit 3369fc0 as the source of the whole site, so the stamp is wrong for the artefacts: option A's "one stamp names the build for everything under it" does not hold on this route | **breaks** |
+| 6 | Committee compares before and after | The IG route (`stage-local-ig.ts`) writes no `staging.json`, no banner, no ChangeSet, no `rendered-impact.json` and no review page. The committee has nothing that shows what changed. The live root's stamp here is `folio-build.json`, not `build.json` | **breaks** |
+| 7 | Approve, then merge, then publish | Not reached | — |
+
+### What would fix each break (for the owner to choose)
+
+- **4 and 5:** the IG preview uses an AST built from the branch. `ig-ast-refresh.yml` already uploads a non-default branch's AST as a run artefact; `site-publish.yml` would pass `ref: github.ref` and the publish job would restore that artefact for a preview. fhir-harness template plus the workflow.
+- **6:** the IG route gets what the folio route has: `staging.json`, the banner, and a ChangeSet over the IG's narrative pages so the review page works. This is also xp72's Done-when 3.
+- **3:** a check that each CQL due-date constant matches its workbook row, and an evidence check that an L2 `change:` does not contradict its cited L1 rows.
+
+#215 should stay open: steps 3 to 6 break.
