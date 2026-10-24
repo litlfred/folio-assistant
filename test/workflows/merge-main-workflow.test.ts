@@ -31,7 +31,9 @@ const on = (doc.on ?? doc.true)!;
 
 describe("merge-main.yml triggers", () => {
   test("the label trigger is pull_request_target, which fires on a conflicted PR", () => {
-    expect(on.pull_request_target?.types).toEqual(["labeled"]);
+    // `ready_for_review` (bean `dft1`): a labelled draft, skipped while it
+    // was a draft, is merged as soon as it is marked ready.
+    expect(on.pull_request_target?.types).toEqual(["labeled", "ready_for_review"]);
     // `pull_request` would silently never fire for a PR with no merge ref.
     expect("pull_request" in on).toBe(false);
   });
@@ -48,6 +50,18 @@ describe("merge-main.yml triggers", () => {
 
   test("the job conditions name the trigger that exists", () => {
     expect(doc.jobs.select!.if).toContain("pull_request_target");
+  });
+});
+
+describe("a draft gets no merge and no dispatch (bean dft1)", () => {
+  test("select skips a draft PR", () => {
+    const select = doc.jobs.select!.steps.map((s) => s.run ?? "").join("\n");
+    expect(select).toMatch(/jq -r '\.draft'[\s\S]*?skip #\$n: draft[\s\S]*?continue/);
+  });
+
+  test("a ready_for_review event runs select only for a labelled PR", () => {
+    expect(doc.jobs.select!.if).toContain("github.event.action == 'ready_for_review'");
+    expect(doc.jobs.select!.if).toContain("contains(github.event.pull_request.labels.*.name, 'merge-main')");
   });
 });
 

@@ -112,12 +112,13 @@ permissions:
 # 2026-10-05, 16 of 53 queued runs in this repository were such runs, and
 # the queue they lengthened delayed a fix that main's publish was waiting
 # on (#2233). So a PR's runs share one group and the newer cancels the
-# older. Every other event (a push to main, a dispatch from merge-main) is
-# grouped by its own sha and never cancelled: main's history of verdicts is
-# not thinned.
+# older. A push does the same per ref (owner, 2026-10-23: main's queue
+# stacked these, and only the newest main answer matters), as
+# code-quality-gates.yml does. Every other event (a merge-queue entry, a
+# dispatch from merge-main) is grouped by its own sha and never cancelled.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
 
 jobs:
   drift-check:
