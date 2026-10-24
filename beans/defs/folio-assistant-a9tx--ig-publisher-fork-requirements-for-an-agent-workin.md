@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T08:40:00Z
+updated_at: 2026-10-24T09:25:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -156,8 +156,8 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 (`w7r3`) converged in 1 round for both probes; the W8 review (bean `w8rv`) found two causes of difference, fixed in `72b2ba9` and `3896c6c`. Round 4 (`w7r4`) matched the full build in content and edges; only narrative links to cached resources differed, fixed in `6abb8a5`. Round 5 is bean `folio-assistant-w7r5`.
-- [ ] **W8** diff a full build against the incremental AST, plus the threshold. Not met yet: fpmn's W7 output was itself a full build, so its diff compared full with full.
+- [x] **W7** rebuild, PASSED in round 6 (bean `w7r6`, fork `8c2d917`): both probes converged in 1 round, exit 0. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 (`w7r3`) converged in 1 round for both probes; the W8 review (bean `w8rv`) found two causes of difference, fixed in `72b2ba9` and `3896c6c`. Round 4 (`w7r4`) matched the full build in content and edges; only narrative links to cached resources differed, fixed in `6abb8a5`. Round 5 (`w7r5`) crashed in that fix, fixed in `cf45726` and `8c2d917`.
+- [x] **W8** diff a full build against the incremental AST, plus the threshold. PASSED in round 6: on both probes the diff is noise only, the same 649 date and temp-file changes that two full builds show; 0 edges and 0 resources added or removed. Both cones were under the 40% threshold (cql 11.2%, fml 0.3%).
 
 
 ## W7 built, 2026-09-30, untested end to end
@@ -484,4 +484,12 @@ Round 5 (bean `w7r5`) checks that fix. If round 5 shows nothing but noise, W7 an
 Both incremental builds crashed in `AstPublisher.checkDependencies`: `fetchResourcesByType(Resource.class)` refuses to list ValueSets (`java.lang.Error`). The two W8 full builds passed. The plans were as before: cql rebuilds 84 and loads 56 from cache, fml rebuilds 2 and loads 5.
 
 Fixed in `cf45726` and `8c2d917`, with 67 tests passing. The step fetches each cached canonical on its own, and nothing it throws can fail the build. Round 6 is bean `w7r6`.
+
+## Round 6: W7 and W8 pass (bean w7r6, 2026-10-24, `ast-results/2026-10-24-w7r6` @ `38f8557`)
+
+Fork `8c2d917`, 67 tests. Both incremental builds converged in 1 round with exit 0. `checkDependencies` made 250 (cql) and 289 (fml) cached links relative, with no warnings.
+
+`ig-ast.ts diff`, the W8 full build against the incremental AST, for each probe: 0 added, 0 removed, 0 edge changes, 649 changed and 99 unchanged. Every one of the 649 changes is noise. Each is a `*.date`, a `liquid-<uuid>` temp-file name in the Library narratives, or the rendered build time in the PlanDefinition narratives. Once those are normalised, nothing is left. Two full builds on one commit differ in the same 649 (fpmn review), so the incremental build is as good as a full one on these probes.
+
+Still open: `INCREMENTAL_GUARD` still forces `full` unless `-verify-incremental` is given. Lifting it is the owner's call.
 
