@@ -2,11 +2,11 @@
 # folio-assistant-398x
 $schema: bean/1.0.0
 title: 'GUIDELINE DOMAIN: clinical / public health / health system strengthening, as a glossary scheme applied through classifications'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-10T14:06:52Z
-updated_at: 2026-10-24T07:50:00Z
+updated_at: 2026-10-24T08:24:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -38,3 +38,5 @@ Found on the way: `check:glossary` is red on folio-assistant main at the 2026-10
   - Classified all 5 HIV `uploads/*/intake.json` records (`9789240085138-eng`, `9789240031593-eng`, `9789241549684_eng`, `9789241550581-eng`, `9789240124233-eng`) under `guideline-domain` and `https://smart.who.int/kg/layer` with sources (`litlfred/smart-hiv#20`).
 
 _2026-10-24T07:50:00Z_ — PR status: all three PRs are still OPEN. `litlfred/folio-assistant-core#185` had a conflict with main (the `.pot` templates, after main moved to `v0` namespace IRIs); merged main and pushed `299117c`. `litlfred/smart-immunizations#73` and `litlfred/smart-hiv#20` write the scheme as `.../folio-assistant-core/0.1.0/ns#glossary/guideline-domain`, but main now uses `.../v0/ns#...`; the fix is ready locally, held because sushi cannot run in this environment (packages.fhir.org refused). Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
+
+_2026-10-24T08:24:00Z_ — Closed: all three PRs merged. `litlfred/folio-assistant-core#185` (`7066875`), `litlfred/smart-hiv#20` (`1cb92e9`) and `litlfred/smart-immunizations#73` (`aa06c57`); the two content PRs now name the scheme by its `v0` IRI. sushi could not run in the cloud session (packages.fhir.org refused); the owner chose to merge on green checks because the change touched only `uploads/` JSON, which sushi does not read. Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
