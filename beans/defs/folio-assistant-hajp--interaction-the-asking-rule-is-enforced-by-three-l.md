@@ -2,11 +2,11 @@
 # folio-assistant-hajp
 $schema: bean/1.0.0
 title: 'INTERACTION: the asking rule is enforced by three layers, not remembered'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T19:31:09Z
-updated_at: 2026-10-24T08:15:00Z
+updated_at: 2026-10-24T08:58:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -73,7 +73,7 @@ checkable:
 - [x] `HookEventSchema` can express `PreToolUse`
 - [x] `check:command-paths` covers hook commands in `.claude/settings.json`
 - [x] A check asserts the `.claude/skills/` stub's links resolve (`check:command-paths` covers `.claude/skills/`)
-- [ ] **REVISIT GATING at twelve RENDERED decision records.** `bun run cat health`
+- [x] **REVISIT GATING at twelve RENDERED decision records.** *(Settled 2026-10-24 without waiting for twelve: see the closing note.)* `bun run cat health`
       → **`bean-rendered-decision-records`**; it read **1** on 2026-09-21, and
       the one was this bean. This box is the trigger, and it is the whole of
       what makes "gate later" a deferral rather than a decision nobody made.
@@ -367,3 +367,7 @@ _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note
 I counted with `hasRenderedDecision` (cat-harness-tools/test/health/probes.ts) over the bean store. **2** beans hold a rendered decision: `hajp` itself and `bf5l`. The count was 1 on 09-21 and 09-26, so it is one more in a month. At that rate the trigger will not fire, which this bean's own reasoning reads as evidence that only a gate would change practice.
 
 Since then, `ask-well.sh` also fires on `mcp__hearthbot__request_decision` and `post_widget`. On 2026-10-23 the owner named the failure it misses: a card posted with no written question and context before it ("PROCESS FAILURE"). The hook sees the call, never the prose before it. Put to the owner on 2026-10-24 (session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx).
+
+## Closed 2026-10-24 — owner's Q3 choice A: gate cards, failing open
+
+The trigger read 2 of 12 after a month, so it would not have fired. The owner chose to gate now (https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx). cat-harness-tools#699 (merged as feb7b20, issue #698) adds `scripts/ask-gate.ts`, run by `ask-well.sh`. It refuses a `request_decision` card unless a post_message since the person's last message names every option. Any error lets the card through. Replayed over that session's 7 cards, it blocked the 2 sent without a written question and allowed the 5 that followed the rule. It takes effect in folio-assistant on the next cat-harness-tools re-pin.
