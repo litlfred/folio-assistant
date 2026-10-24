@@ -74,3 +74,5 @@ This was asked right after 61tg ("a self-sovereign harness may hold
 credentials"), and the owner chose to keep the two separate. Custody in
 self-sovereign mode does not carry over to a live-store connection in
 sovereign cloud.
+
+_2026-10-24T08:20:00Z_ — Claimed by the Claude drain thread (smart-trust-demo session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). Other agents: please skip this bean until this claim is released.

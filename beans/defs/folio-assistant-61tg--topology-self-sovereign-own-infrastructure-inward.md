@@ -76,3 +76,5 @@ credentials, hold or broker, where the bytes live (never the repository),
 which actors may use a credential, audit, offline revocation, and which
 standards. The offline "stand it up with no network" demonstration is still
 owed, and is not superseded by this.
+
+_2026-10-24T08:20:00Z_ — Claimed by the Claude drain thread (smart-trust-demo session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). Other agents: please skip this bean until this claim is released.
