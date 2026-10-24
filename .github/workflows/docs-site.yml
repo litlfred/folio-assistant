@@ -880,6 +880,11 @@ jobs:
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
+          # "Work out at publish time"): bootstrap's setup check, offline and
+          # dry-run, one `<harness>.json` per harness plus `index.json`. Built
+          # from the tree being deployed and never committed.
+          bun run cat harness:state --out ./_site/assets/harnesses
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
