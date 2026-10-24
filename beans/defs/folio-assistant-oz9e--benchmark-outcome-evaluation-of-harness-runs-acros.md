@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-29T21:30:50Z
-updated_at: 2026-09-29T21:32:03Z
+updated_at: 2026-10-24T07:55:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -54,3 +54,5 @@ An **outcome evaluation** of harness runs:
 
 
 Source: ARG-Designer mapping, [issue #1491](https://github.com/litlfred/folio-assistant/issues/1491) row B8. Related beans: `wp49` (report, not KG content), `amom` (independent queues across a model stack).
+
+_2026-10-24T07:55:00Z_ — The owner chose "C. CRDM drafts for both" by card on 2026-10-24 07:45Z. The draft covers amom and oz9e together: `cat-harness/docs/proposals/model-swarm-and-benchmark-2026-10-24.md`, litlfred/cat-harness#500 (draft). It has nine draft requirements and five open owner questions, and nothing is built. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

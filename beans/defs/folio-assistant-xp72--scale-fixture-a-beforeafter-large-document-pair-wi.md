@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-24T07:55:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -115,3 +115,5 @@ immunization-schedule before/after pair exists in any checkout.
 **Default if no answer: 1.**
 
 _2026-10-15T16:49Z_ — Block lifted: `jwox` is completed (PRs #981, #982, #992 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-24T07:55:00Z_ — **Owner decision: option 1.** The owner chose "A. Keep waiting on lx2s" by card on 2026-10-24 07:45Z. Done-when 3 is walked on lx2s staging with a real immunization-schedule change. The bean stays `todo` until then. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

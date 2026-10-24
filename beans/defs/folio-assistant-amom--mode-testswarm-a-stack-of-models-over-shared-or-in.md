@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T08:55:37Z
+updated_at: 2026-10-24T07:55:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -57,3 +57,5 @@ Whether an independent-queue benchmarking run should touch `beans/` at all. It
 is not work-plan work — it is a test harness execution — and `AGENTS.md` already
 says never to `beans create` bulk machine-generated queues. That rule may
 already settle it.
+
+_2026-10-24T07:55:00Z_ — The owner chose "C. CRDM drafts for both" by card on 2026-10-24 07:45Z. The draft covers amom and oz9e together: `cat-harness/docs/proposals/model-swarm-and-benchmark-2026-10-24.md`, litlfred/cat-harness#500 (draft). It has nine draft requirements and five open owner questions, and nothing is built. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
