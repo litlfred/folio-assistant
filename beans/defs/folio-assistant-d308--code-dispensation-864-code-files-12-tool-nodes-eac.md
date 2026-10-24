@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-20T04:08:50Z
-updated_at: 2026-10-23T13:47:00Z
+updated_at: 2026-10-24T15:05:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -384,3 +384,5 @@ the highest), then the six that need a folio to prove.
 ## All 6 checkboxes met (2026-10-22)
 
 All 28 child beans of `d308` are now closed (`27 completed`, `1 scrapped` `8t6r`), with `v7bg` (`Task_Publish`, including `cat-harness/tools/kg-viewer/kg-viewer.ts` from `cat-harness#406`) re-pinned on `folio-assistant` `main` in `#2614`/`#2616` and closed. Every chosen group has its Tool node(s) declared across `cat-harness` (175 tools), `folio-assistant-core` (33), `folio-assistant-sci` (9), `fhir-harness` (6), and `smart-base` (4). Kept `status: in-progress` until `epic-under-epic:folio-assistant-d308` is removed from `cat-harness-tools/scripts/bean-parents-baseline.json` (which otherwise fails `check-bean-parents.ts` when `d308` closes).
+
+_2026-10-24T15:05:00Z_ — Opened [`litlfred/cat-harness-tools#767`](https://github.com/litlfred/cat-harness-tools/pull/767) (`b6ed0fd`) retiring `"epic-under-epic:folio-assistant-d308"` from `cat-harness-tools/scripts/bean-parents-baseline.json` and marking `d308` `completed` in `cat-harness-tools/beans/defs/`. Ready to flip `v7bg` and `d308` to `completed` once `cat-harness-tools#767` merges and is repinned.

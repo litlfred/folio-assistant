@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T04:34:11Z
-updated_at: 2026-10-23T13:47:00Z
+updated_at: 2026-10-24T15:05:00Z
 parent: folio-assistant-d308
 ---
 
@@ -280,3 +280,5 @@ With `cat-harness/tools/kg-viewer/kg-viewer.ts` (`viewerTool` rendering `cat-har
 _2026-10-23T13:45:00Z_ — Status synced from `in-progress` to `completed` to match the cat-harness-tools copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
 
 _2026-10-23T13:47:00Z_ — Restored `status: in-progress` (all 16/16 checkboxes remain `[x]`) because setting `v7bg` to `completed` while `d308` is `in-progress` trips `check:bean-rollup` (`folio-assistant-d308: in-progress over 7 child(ren), none of them open`), and setting `d308` to `completed` before `epic-under-epic:folio-assistant-d308` is removed from `cat-harness-tools/scripts/bean-parents-baseline.json` trips `check:bean-parents` (`baseline entry epic-under-epic:folio-assistant-d308 matches nothing`). Both `v7bg` and `d308` will flip to `completed` together as soon as the `bean-parents-baseline.json` cleanup PR lands and is repinned.
+
+_2026-10-24T15:05:00Z_ — Opened [`litlfred/cat-harness-tools#767`](https://github.com/litlfred/cat-harness-tools/pull/767) (`b6ed0fd`) retiring `"epic-under-epic:folio-assistant-d308"` from `cat-harness-tools/scripts/bean-parents-baseline.json` and marking `d308` `completed` in `cat-harness-tools/beans/defs/`. Ready to flip `v7bg` and `d308` to `completed` once `cat-harness-tools#767` merges and is repinned.
