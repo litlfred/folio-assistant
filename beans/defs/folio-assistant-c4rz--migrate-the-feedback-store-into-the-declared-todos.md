@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T23:02:16Z
-updated_at: 2026-10-24T09:31:00Z
+updated_at: 2026-10-24T10:10:15Z
 parent: folio-assistant-8jt6
 ---
 
@@ -65,11 +65,11 @@ of this bean. Tracked with the repo-partition work.
 
 ## Done when
 
-- A folio's feedback store is a declared node of its `todos/` graph, with the
-  old path still readable through the transition.
-- At least one producer writes real tags.
-- `folio_init` scaffolds the same layout.
-- A `KgIndex` builder exists and preserves the `undefined` ≠ empty contract.
+- [x] A folio's feedback store is a declared node of its `todos/` graph, with the
+  old path still readable through the transition (`litlfred/cat-harness-tools#692` @ `538d5800`).
+- [x] At least one producer writes real tags (`litlfred/cat-harness-tools#692` @ `538d5800`, `litlfred/folio-assistant-core#204` @ `2fba8963`).
+- [x] `folio_init` scaffolds the same layout (`litlfred/cat-harness-tools#692` @ `538d5800`).
+- [x] A `KgIndex` builder exists and preserves the `undefined` ≠ empty contract (`litlfred/cat-harness-tools#692` @ `538d5800`).
 
 ## Not in scope
 
@@ -83,3 +83,12 @@ _2026-09-29_ — **Re-parented `zzmr` → `8jt6`** by subject, per todo-manager 
 ## 2026-10-20 — belongs with core (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 Lane B2 measured it: FeedbackStore is `cat-harness-tools/src/core/feedback.ts`, but the feedback ROUTES are core's (declared `layer: core`) and the migration has to be verified in a real folio. Natural home: the folio-assistant-core lane (lane C) or the core store. Left `todo`, unclaimed.
+
+## Progress 2026-10-24: cat-harness-tools#692 + folio-assistant-core#204
+- `litlfred/cat-harness-tools#692` (`538d5800`):
+  - `resolveDeclaredFeedbackDir` and `resolveFeedbackStoreDirs` resolve the `todo-feedback` node declared in `todos/todos.json` (`todos/feedback`) as the primary store directory while keeping `.folio-feedback` in `fallbackDirs` so existing items remain readable via `FeedbackStore.read` and `FeedbackStore.listAll` during transition.
+  - `buildFeedbackTags`, `createFeedbackItem`, and `FeedbackStore.create` populate `TodoTags` (`roles`, `processes`, `tasks`, provider-qualified `identities`, `actor`, `references`, and `artefacts`).
+  - `scripts/init-folio.ts` sets `feedbackDir: "todos/feedback"` matching the `todo-feedback` node in `todos/todos.json`.
+  - `buildKgIndex(instanceRoot)` reads declared `roles`, `actors`, and `processes`/`tasks`, returning `undefined` (`not-checked`) when an axis's directory/file is absent and an empty `Set`/`Map` (`dangling`) when present and empty.
+- `litlfred/folio-assistant-core#204` (`2fba8963`):
+  - Wired `POST /api/feedback` (`src/routes/feedback.ts`) to populate `TodoTags` from the submitting context.
