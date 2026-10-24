@@ -2,7 +2,7 @@
 # folio-assistant-q3n9
 $schema: bean/1.0.0
 title: 'GLOSSARY KEY: key a scheme by its owning instance, not its file path, once glossaries move to their layers (from wvzp)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-24T08:55:00Z
@@ -25,8 +25,8 @@ wvzp keys the term-mapping record by the scheme's **file path** (`litlfred/cat-h
 
 ## Done when
 - [x] the key after separation is decided by the owner (instance, explicit field, or other), with the analysis above recorded here
-- [ ] the term-mapping record, `termState` and the glossary page move from `file` to that key in one migration, and the `file` field is retired
-- [ ] a test fails if the page's owner and the record's key disagree for any scheme
+- [x] the term-mapping record, `termState` and the glossary page move from `file` to that key in one migration, and the `file` field is retired
+- [x] a test fails if the page's owner and the record's key disagree for any scheme
 
 Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
 
@@ -51,3 +51,7 @@ _2026-10-24T08:52Z_ — Claimed by the separation drain thread (session https://
 **Owner ruling 2026-10-24T09:05Z: A.** Key = `(instance, scheme)`, with instance taken from `schemeOwner` (the scheme's source). No new field. Box 1 is done; the moves (each layer declares `glossary/`, following `rfev`) and the record/`termState`/page migration come next.
 
 _2026-10-24T10:15Z_ — Box 2 and 3 built, in review. Took over wvzp's three PRs and reworked them: cat-harness#524 (mapping carries a required `instance`, `file` retired), cat-harness-tools#708 (`schemeOwner` moved into `scripts/lib/scheme-owner.ts`, rows and `termState` keyed by (instance, scheme)), folio-assistant-core#206 (page and SKOS automated matches keyed by instance; new test that the page owner and the record key agree over the real checkout). Merge in that order. Boxes tick when they merge.
+
+## Done (2026-10-24)
+
+Merged cat-harness#524 (6c6e761), cat-harness-tools#708 (297818e), folio-assistant-core#206 (907f019). Records key by (instance, scheme); `file` retired.
