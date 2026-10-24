@@ -5,7 +5,7 @@ title: 'Agent memory for every vendor: one memory source, one assembler, per-ven
 status: in-progress
 type: feature
 created_at: 2026-10-06T18:31:42Z
-updated_at: 2026-10-23T20:40:00Z
+updated_at: 2026-10-24T08:25:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -26,3 +26,5 @@ Each declared subagent exists for every supported vendor, each carrying the same
 _2026-10-21T19:15:00Z_ — Progress update: ticked `Assembler reads every declared memory directory (prerequisite, done in ar1s P1)` (`ar1s` completed; `cat-harness-tools/scripts/agent-memory.ts` reads every declared `memory` directory across instances and emits `.claude/agent-memory/`, `.agents/rules/agent-memory.md`, `.agents/skills/*-memory/SKILL.md`, and `.cursor/rules/agent-memory.mdc`).
 
 _2026-10-23T20:40:00Z_ — Ticked repo-wide `AGENTS.md` section from agent-less nodes and per-target budgets + `--check` gate + skill page on the mapping (`litlfred/cat-harness-tools#639`, `litlfred/cat-harness#459`). The 4 vendor per-agent definition targets (`4682`, `5zs1`, `uvfs`, `xxh4`) remain parked per owner ruling 2026-10-20.
+
+_2026-10-24T08:25:00Z_ — `litlfred/cat-harness-tools#639` merged as `86817af` (CI green; one standalone test fixed in `bd2ae42`), and `litlfred/cat-harness#459` merged as `1433cfc`, both inside the owner's merge-when-green window. The owner lifted the hold on the four vendor targets (`4682`, `5zs1`, `uvfs`, `xxh4`) on 2026-10-24 07:47Z, and the "Drain open beans across idle threads" thread is building them. This bean closes when they land. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
