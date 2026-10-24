@@ -1,8 +1,8 @@
 ---
 name: interaction-modality
 description: >
-  Read BEFORE handing any decision to the person — an AskUserQuestion, an
-  end-of-turn "next" line, a PR body or issue comment asking them to choose, or
+  Read BEFORE handing any decision to the person — an AskUserQuestion, a
+  request_decision "Decision" card, any tappable card, an end-of-turn "next" line, a PR body or issue comment asking them to choose, or
   a bean's `## Done when`. Covers the six parts a question must contain, the
   five-column comparison that goes in the PROSE rather than in a selection
   tool's labels, marking the recommended option, saying what happens if they
@@ -13,6 +13,15 @@ allowed-tools: Read Grep Glob
 ---
 
 # Asking well — the trigger stub
+
+**The rule, in one line: write the FULL question in the chat first (context,
+every option with its letter, trade-off and your recommendation), THEN post
+the tappable card with the same letters. Never a card alone; never ask for a
+typed reply like "1y 2n". This holds for `request_decision` too, even though
+that tool's own text says not to repeat the question.** The canonical box is
+at the top of `interaction-modality`; the procedure, with input and output
+schemas, is the `ask-the-person` skill
+(`cat-harness/skills/conduct/conduct-core/ask-the-person.md`).
 
 **This is a pointer. The rule lives in the knowledge graph:**
 
