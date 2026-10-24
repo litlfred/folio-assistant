@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T09:40:00Z
+updated_at: 2026-10-24T09:48:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -25,3 +25,9 @@ _2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 mer
 Re-measured against cat-harness main: 34 of the 48 rows are still at their original path (was 47 on 2026-10-09). Only 2 are plain MOVEs (`authoring-core/editor.md`, `graph-management/edge-kinds-and-blast-radius.md`); 22 are SPLITs and 10 AMBIGUOUS, each needing a per-file edit.
 
 _2026-10-24T09:40:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx (agy released it at 09:06Z).
+
+## 2026-10-24 — owner ruling on the 7 unsettled rows (choice A)
+
+The owner chose **A, keep and split all 7** at 09:47Z: content-graph, corpus-grep, integration-watch, narrative-asserts-code, devils-advocate-watcher, editor and edge-kinds-and-blast-radius stay in cat-harness. Only their maths or Lean passages move to folio-assistant-sci, and sci links down to them. The audit marked editor and edge-kinds-and-blast-radius as plain MOVEs, but both are used generically (editor is a role skill named by `schemas/assistant-workflow.ts`; edge-kinds is the deliberately domain-free form), so they are splits too.
+
+First pair: `milnor-exposition-standard` (ruling Q3), folio-assistant-sci#72 + cat-harness#530, tracked in cat-harness#529. Session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx
