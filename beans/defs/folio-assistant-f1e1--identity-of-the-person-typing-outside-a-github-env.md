@@ -52,3 +52,5 @@ Remaining: identity on other agent hosts, and several people per machine or sess
   - Added multi-person machine/session support (`profiles` map in `identity.json`, explicit `CAT_HARNESS_PROFILE` / `CAT_HARNESS_USER` / `activeProfile` selection, and `ambiguous-multi-user` detection when multiple profiles exist with no disambiguator, falling back to the strictest profile on record via `resolveActiveInteraction()`).
 - `litlfred/cat-harness#502` (`c5546d4b`):
   - Updated `skills/conduct/conduct-core/interaction-modality.md` §3.1 with the agent host identity & `SessionStart` hook table, multi-account provider configuration, and multi-person session disambiguation (`ambiguous-multi-user` fallback to the strictest profile).
+
+_2026-10-24T09:24:00Z_ — Claude drain thread: cat-harness-tools#688 (agent hosts by their markers, `CAT_HARNESS_PERSON`, strictest profile when several people match) and cat-harness#503 (interaction-modality §3.1) are merged. The owner chose to keep #688 as the base (08:21Z). agy rebases the profiles map, the active-account choice and the ambiguous state from #686/#502 onto it, and holds this bean until they land.
