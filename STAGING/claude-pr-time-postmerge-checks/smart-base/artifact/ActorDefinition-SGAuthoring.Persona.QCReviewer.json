@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.QCReviewer",
   "schema:name": "QCReviewer",
   "dcterms:title": "Quality Control Reviewer",
-  "dcterms:description": "A quality assurance specialist responsible for reviewing SMART Guidelines Implementation Guides for publication readiness. QC Reviewers use the publication checklist across L1-L4 layers, interpret QA validation reports, and verify artifact conformance and cross-component consistency. Key activities: Run and interpret IG Publisher QA reports (qa.html) Review publication checklist across L1, L2, L3, L4, and Global sections Verify conformance to Shareable, Publishable, Computable, Executable profiles Validate StructureMap extraction produces expected output Verify CQL execution and measure calculations Check cross-component consistency (personas, data elements, processes) Validate all artifacts have required title, description, and mappings Confirm naming conventions and reference resolution Review change log completeness and versioning compliance Source : IG Starter Kit, QA Check page, Checklist page, Validating IG page",
+  "dcterms:description": "A quality assurance specialist responsible for reviewing SMART Guidelines\nImplementation Guides for publication readiness. QC Reviewers use the\npublication checklist across L1-L4 layers, interpret QA validation reports,\nand verify artifact conformance and cross-component consistency.\n\nKey activities:\n- Run and interpret IG Publisher QA reports (qa.html)\n- Review publication checklist across L1, L2, L3, L4, and Global sections\n- Verify conformance to Shareable, Publishable, Computable, Executable profiles\n- Validate StructureMap extraction produces expected output\n- Verify CQL execution and measure calculations\n- Check cross-component consistency (personas, data elements, processes)\n- Validate all artifacts have required title, description, and mappings\n- Confirm naming conventions and reference resolution\n- Review change log completeness and versioning compliance\n\n**Source**: IG Starter Kit, QA Check page, Checklist page, Validating IG page",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.QCReviewer"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.QCReviewer.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.QCReviewer.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

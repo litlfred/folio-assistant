@@ -11,7 +11,7 @@
   "dcterms:identifier": "StructureDefinition/RequirementsSource",
   "schema:name": "RequirementsSource",
   "dcterms:title": "Requirements Source",
-  "dcterms:description": "Source reference for Requirements - exactly one of the following must be provided: url (url data type): URL to retrieve Requirements definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the Requirements definition instance: Inline Requirements instance data",
+  "dcterms:description": "Source reference for Requirements - exactly one of the following must be provided:\n- url (url data type): URL to retrieve Requirements definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the Requirements definition\n- instance: Inline Requirements instance data",
   "schema:version": "0.3.0",
   "dcterms:type": "Structures: Logical Models",
   "schema:sameAs": {
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/StructureDefinition-RequirementsSource.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/StructureDefinition-RequirementsSource.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

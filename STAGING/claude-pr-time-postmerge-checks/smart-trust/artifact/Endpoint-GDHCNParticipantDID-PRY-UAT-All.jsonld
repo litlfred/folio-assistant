@@ -12,7 +12,7 @@
   "dcterms:title": "GDHCNParticipantDID-PRY-UAT-All",
   "dcterms:description": "Paraguay Trustlist (DID v2) - UAT - All keys did:web:tng-cdn.who.int:v2:trustlist:-:PRY resolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/PRY/did.json",
   "dcterms:type": "Other",
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -21,30 +21,24 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-PRY-UAT-All.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-PRY-UAT-All.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "48540010fe4ca0c25d580dfd0bbb202de23359a0"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.trust",
-    "schema:version": "1.8.0",
+    "schema:version": "1.7.5",
     "schema:sameAs": {
       "@id": "http://smart.who.int/trust"
     }
-  }
+  },
+  "dcterms:conformsTo": [
+    {
+      "@id": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint"
+    }
+  ]
 }

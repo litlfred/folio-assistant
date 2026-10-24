@@ -11,13 +11,13 @@
   "dcterms:identifier": "StructureDefinition/SGUserStory",
   "schema:name": "SGUserStory",
   "dcterms:title": "SGUserStory",
-  "dcterms:description": "Smart Guidelines extension to support structured User Stories (As a Actor I want to capability so that benefit ) extension",
+  "dcterms:description": "Smart Guidelines extension to support structured User Stories (As a `Actor` I want to `capability` so that `benefit`) extension",
   "schema:version": "0.3.0",
   "dcterms:type": "Structures: Extension Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/StructureDefinition/SGUserStory"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/StructureDefinition-SGUserStory.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/StructureDefinition-SGUserStory.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

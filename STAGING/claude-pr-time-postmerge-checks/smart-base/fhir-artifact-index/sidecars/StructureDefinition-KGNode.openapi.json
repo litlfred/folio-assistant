@@ -1,0 +1,182 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph: node API",
+    "description": "One typed node of a knowledge-graph document. Its instance fields are an instance of the logical model of its class (see definedBy), e.g. KGPublication for a publication.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-KGNode.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-KGNode",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-KGNode.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-KGNode",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-KGNode.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-KGNode": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-KGNode.schema.json",
+        "title": "Knowledge graph: node",
+        "description": "One typed node of a knowledge-graph document. Its instance fields are an instance of the logical model of its class (see definedBy), e.g. KGPublication for a publication.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "KGNode",
+            "description": "Resource type identifier for KGNode logical model"
+          },
+          "@context": {
+            "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri",
+                "description": "URI reference to external JSON-LD context"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON-LD context",
+                "properties": {
+                  "@version": {
+                    "type": "number",
+                    "const": 1.1
+                  },
+                  "fhir": {
+                    "type": "string",
+                    "const": "http://hl7.org/fhir/"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "array",
+                "description": "Array of JSON-LD context objects/URIs",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "@type": {
+            "type": "string",
+            "description": "JSON-LD type identifier for KGNode logical model",
+            "examples": [
+              "LogicalModel-KGNode"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "IRI, unique within the document."
+          },
+          "type": {
+            "$ref": "./ValueSet-KGL1ClassesVS.schema.json",
+            "description": "The node's class."
+          },
+          "label": {
+            "type": "string",
+            "description": "Human-readable name. Required so a retrieved node reads without resolving it."
+          },
+          "definedBy": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URL of the logical model giving this node's instance shape."
+          },
+          "properties": {
+            "type": "object",
+            "description": "Instance fields, as declared by the class's logical model."
+          },
+          "derivation": {
+            "$ref": "./ValueSet-KGDerivationVS.schema.json",
+            "description": "derived | inferred | decided."
+          },
+          "note": {
+            "type": "string",
+            "description": "Why it is what it is. Required unless derived."
+          },
+          "evidence": {
+            "$ref": "StructureDefinition-KGEvidenceLocation.schema.json",
+            "description": "Where it came from. Required unless derived."
+          },
+          "flagRef": {
+            "type": "string",
+            "description": "Id of a flag raised while extracting this node."
+          },
+          "skill": {
+            "type": "string",
+            "description": "Skill id that produced this node."
+          }
+        },
+        "required": [
+          "resourceType",
+          "id",
+          "type",
+          "label",
+          "derivation"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/base/StructureDefinition/KGNode"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              },
+              "jsonld:valuesets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "const": [
+                  "KGDerivationVS",
+                  "KGL1ClassesVS"
+                ]
+              },
+              "jsonld:contextTemplate": {
+                "type": "object",
+                "const": {
+                  "@version": 1.1,
+                  "fhir": "http://hl7.org/fhir/",
+                  "KGDerivationVS": "http://smart.who.int/base/ValueSet-KGDerivationVS.jsonld",
+                  "KGL1ClassesVS": "http://smart.who.int/base/ValueSet-KGL1ClassesVS.jsonld"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

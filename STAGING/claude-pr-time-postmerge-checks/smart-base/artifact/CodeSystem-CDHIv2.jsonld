@@ -11,13 +11,13 @@
   "dcterms:identifier": "CodeSystem/CDHIv2",
   "schema:name": "CDHIv2",
   "dcterms:title": "Classification of Digital Health Interventions v2",
-  "dcterms:description": "CodeSystem for the Classification of Digital Interventions, Services and Applications in Health (CDISAH), second edition (2023). ISBN 978-92-4-008194-9. Organised into four groups based on the primary user: Persons Healthcare providers Health management and support personnel Data services New categories vs v1: 1.4.4, 1.6.2, 1.8, 2.5.6, 2.11, 3.1.5, 3.5.7, 3.5.8, 3.8, 4.3.5, 4.4.2, 4.4.3, 4.5. See ConceptMap CDHIv1toCDHIv2 for the full mapping from the first edition.",
+  "dcterms:description": "CodeSystem for the Classification of Digital Interventions, Services and Applications in Health\n(CDISAH), second edition (2023). ISBN 978-92-4-008194-9.\n\nOrganised into four groups based on the primary user:\n  1. Persons\n  2. Healthcare providers\n  3. Health management and support personnel\n  4. Data services\n\nNew categories vs v1: 1.4.4, 1.6.2, 1.8, 2.5.6, 2.11, 3.1.5, 3.5.7, 3.5.8, 3.8, 4.3.5, 4.4.2, 4.4.3, 4.5.\nSee ConceptMap CDHIv1toCDHIv2 for the full mapping from the first edition.",
   "schema:version": "0.3.0",
   "dcterms:type": "Terminology: Code Systems",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/CodeSystem/CDHIv2"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/CodeSystem-CDHIv2.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/CodeSystem-CDHIv2.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

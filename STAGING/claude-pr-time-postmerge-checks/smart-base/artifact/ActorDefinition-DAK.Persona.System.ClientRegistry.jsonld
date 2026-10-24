@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/DAK.Persona.System.ClientRegistry",
   "schema:name": "ClientRegistry",
   "dcterms:title": "Client Registry / Master Patient Index",
-  "dcterms:description": "A digital system that creates, maintains, and provides authoritative unique identifiers for individuals (persons) accessing health services, enabling cross-facility patient matching and de-duplication. The client registry supports DHIs including: Verify a person's unique identity (2.1.1) Enrol person(s) for health services/clinical care plan (2.1.2) Merge, de-duplicate and curate coded datasets (4.2.2) Standards-compliant interoperability to link records across systems (4.4.2) Services and Application Types : C6 — Identification registries and directories C8 — Master patient index",
+  "dcterms:description": "A digital system that creates, maintains, and provides authoritative unique\nidentifiers for individuals (persons) accessing health services, enabling\ncross-facility patient matching and de-duplication.\n\nThe client registry supports DHIs including:\n- Verify a person's unique identity (2.1.1)\n- Enrol person(s) for health services/clinical care plan (2.1.2)\n- Merge, de-duplicate and curate coded datasets (4.2.2)\n- Standards-compliant interoperability to link records across systems (4.4.2)\n\n**Services and Application Types**:\n- C6 — Identification registries and directories\n- C8 — Master patient index",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.ClientRegistry"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.ClientRegistry.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.ClientRegistry.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

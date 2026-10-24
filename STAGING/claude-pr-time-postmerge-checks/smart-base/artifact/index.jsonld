@@ -14,14 +14,24 @@
     "@id": "http://smart.who.int/base"
   },
   "dcterms:title": "WHO SMART Base",
-  "schema:numberOfItems": 225,
+  "schema:numberOfItems": 228,
   "schema:hasPart": [
+    {
+      "@id": "ActivityDefinition-SGDecisionTableGuidance.jsonld",
+      "@type": "fhir:ActivityDefinition",
+      "dcterms:identifier": "ActivityDefinition/SGDecisionTableGuidance",
+      "dcterms:title": "SGDecisionTableGuidance",
+      "dcterms:type": "Other",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ActivityDefinition/SGDecisionTableGuidance"
+      }
+    },
     {
       "@id": "ActorDefinition-DAK.Persona.CommunityHealthWorker.jsonld",
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.CommunityHealthWorker",
       "dcterms:title": "Community Health Worker",
-      "dcterms:description": "A frontline member of the health workforce who delivers health interventions at the community level, acting as a link between communities and formal health facilities. Community health workers are a key sub-group of healthcare providers. Community health workers use DHIs to: Register and follow-up community members (2.1, 2.2.1) Receive community-based decision support and job aids (2.3) Report public health events from point of diagnosis (3.3.1) Access mobile training and competency assessments (2.8) Communicate with supervising clinical staff (2.5.1) Manage their daily visit planning and activities (2.7) ISCO-08 : 3255 (Community health workers), 5321 (Health care assistants). Examples : Village health worker, health extension worker, community health volunteer, lay health advisor, peer educator, traditional birth attendant, community case manager.",
+      "dcterms:description": "A frontline member of the health workforce who delivers health interventions\nat the community level, acting as a link between communities and formal health\nfacilities. Community health workers are a key sub-group of healthcare providers.\n\nCommunity health workers use DHIs to:\n- Register and follow-up community members (2.1, 2.2.1)\n- Receive community-based decision support and job aids (2.3)\n- Report public health events from point of diagnosis (3.3.1)\n- Access mobile training and competency assessments (2.8)\n- Communicate with supervising clinical staff (2.5.1)\n- Manage their daily visit planning and activities (2.7)\n\n**ISCO-08**: 3255 (Community health workers), 5321 (Health care assistants).\n\n**Examples**: Village health worker, health extension worker, community health\nvolunteer, lay health advisor, peer educator, traditional birth attendant,\ncommunity case manager.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.CommunityHealthWorker"
@@ -32,21 +42,10 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.DataManager",
       "dcterms:title": "Health Data Manager and Analyst",
-      "dcterms:description": "A professional who manages, analyses, and disseminates health data to support evidence-based decision-making. This corresponds to the 'Data services' user group in CDISAH v2, providing crosscutting functionality across the health system. Data managers use DHIs to: Create data collection forms and manage data acquisition (4.1.1) Store and aggregate health data (4.1.2) Synthesise and visualise data for reporting and dashboards (4.1.3) Apply automated analytics and predictive modelling including AI/ML (4.1.4) Parse, de-duplicate, and curate coded datasets and terminologies (4.2) Classify disease codes and causes of mortality (4.2.3) Map geographic locations of facilities, events, populations, and providers (4.3) Enable point-to-point data integration and standards-compliant interoperability (4.4) Maintain data governance including authentication, privacy, and consent (4.5) ISCO-08 : 2120 (Mathematicians, actuaries and statisticians), 2521 (Database designers and administrators), 2523 (Computer network professionals), 3120 (Computer network and systems technicians). Examples : Biostatistician, epidemiologist, health informatician, data analyst, DHIS2 administrator, GIS specialist, interoperability engineer, terminology manager.",
+      "dcterms:description": "A professional who manages, analyses, and disseminates health data to support\nevidence-based decision-making. This corresponds to the 'Data services' user\ngroup in CDISAH v2, providing crosscutting functionality across the health system.\n\nData managers use DHIs to:\n- Create data collection forms and manage data acquisition (4.1.1)\n- Store and aggregate health data (4.1.2)\n- Synthesise and visualise data for reporting and dashboards (4.1.3)\n- Apply automated analytics and predictive modelling including AI/ML (4.1.4)\n- Parse, de-duplicate, and curate coded datasets and terminologies (4.2)\n- Classify disease codes and causes of mortality (4.2.3)\n- Map geographic locations of facilities, events, populations, and providers (4.3)\n- Enable point-to-point data integration and standards-compliant interoperability (4.4)\n- Maintain data governance including authentication, privacy, and consent (4.5)\n\n**ISCO-08**: 2120 (Mathematicians, actuaries and statisticians), 2521 (Database\ndesigners and administrators), 2523 (Computer network professionals), 3120\n(Computer network and systems technicians).\n\n**Examples**: Biostatistician, epidemiologist, health informatician, data analyst,\nDHIS2 administrator, GIS specialist, interoperability engineer, terminology manager.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.DataManager"
-      }
-    },
-    {
-      "@id": "ActorDefinition-DAK.Persona.HealthcareProvider.jsonld",
-      "@type": "fhir:ActorDefinition",
-      "dcterms:identifier": "ActorDefinition/DAK.Persona.HealthcareProvider",
-      "dcterms:title": "Healthcare Provider",
-      "dcterms:description": "A member of the health workforce who delivers health interventions. This group has also been described as 'health workers' or 'healthcare workers'. Healthcare providers use DHIs to: Identify and register persons for health services (2.1) Manage person-centred health records (2.2) Receive clinical decision support prompts and checklists (2.3) Conduct telemedicine consultations and remote monitoring (2.4) Communicate with supervisors, peers, and receive AI-assisted content (2.5) Coordinate referrals and emergency transport (2.6) Schedule and plan their clinical activities (2.7) Access training content and assessments (2.8) Manage prescriptions and medication adherence (2.9) Order and receive laboratory and diagnostic results (2.10) Verify health coverage and receive payments from individuals (2.11) ISCO-08 : 2211 (Generalist medical practitioners), 2212 (Specialist medical practitioners), 2221 (Nursing professionals), 2222 (Midwifery professionals), 3211 (Medical imaging and therapeutic equipment technicians), 3212 (Medical and pathology laboratory technicians), 3213 (Pharmaceutical technicians and assistants), 3221 (Nursing associate professionals), 3222 (Midwifery associate professionals), 3255 (Community health workers). Examples : Physician, nurse, midwife, clinical officer, pharmacist, laboratory technician, dentist, allied health professional.",
-      "dcterms:type": "Requirements: Actor Definitions",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.HealthcareProvider"
       }
     },
     {
@@ -54,10 +53,21 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.HealthSystemManager",
       "dcterms:title": "Health System Manager",
-      "dcterms:description": "A professional involved in the administration and oversight of health systems. Health system managers use DHIs to: Manage health workforce information, performance, and certification (3.1) Oversee supply chain, inventory, cold chain, and procurement (3.2) Receive notifications of public health events (3.3) Register and certify vital events — births and deaths (3.4) Administer health coverage schemes, billing, payroll, and budgets (3.5) Monitor and track health equipment and assets (3.6) Manage health facility information and conduct assessments (3.7) Manage person-centred health certificate information (3.8) ISCO-08 : 1342 (Health services managers), 2446 (Social work professionals n.e.c.), 3354 (Government social benefits officials), 4311 (Accounting and bookkeeping clerks). Examples : District health officer, programme manager, supply chain officer, HMIS coordinator, hospital administrator, vital registration officer, health insurance administrator.",
+      "dcterms:description": "A professional involved in the administration and oversight of health systems.\n\nHealth system managers use DHIs to:\n- Manage health workforce information, performance, and certification (3.1)\n- Oversee supply chain, inventory, cold chain, and procurement (3.2)\n- Receive notifications of public health events (3.3)\n- Register and certify vital events — births and deaths (3.4)\n- Administer health coverage schemes, billing, payroll, and budgets (3.5)\n- Monitor and track health equipment and assets (3.6)\n- Manage health facility information and conduct assessments (3.7)\n- Manage person-centred health certificate information (3.8)\n\n**ISCO-08**: 1342 (Health services managers), 2446 (Social work professionals\nn.e.c.), 3354 (Government social benefits officials), 4311 (Accounting and\nbookkeeping clerks).\n\n**Examples**: District health officer, programme manager, supply chain officer,\nHMIS coordinator, hospital administrator, vital registration officer,\nhealth insurance administrator.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.HealthSystemManager"
+      }
+    },
+    {
+      "@id": "ActorDefinition-DAK.Persona.HealthcareProvider.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/DAK.Persona.HealthcareProvider",
+      "dcterms:title": "Healthcare Provider",
+      "dcterms:description": "A member of the health workforce who delivers health interventions. This group\nhas also been described as 'health workers' or 'healthcare workers'.\n\nHealthcare providers use DHIs to:\n- Identify and register persons for health services (2.1)\n- Manage person-centred health records (2.2)\n- Receive clinical decision support prompts and checklists (2.3)\n- Conduct telemedicine consultations and remote monitoring (2.4)\n- Communicate with supervisors, peers, and receive AI-assisted content (2.5)\n- Coordinate referrals and emergency transport (2.6)\n- Schedule and plan their clinical activities (2.7)\n- Access training content and assessments (2.8)\n- Manage prescriptions and medication adherence (2.9)\n- Order and receive laboratory and diagnostic results (2.10)\n- Verify health coverage and receive payments from individuals (2.11)\n\n**ISCO-08**: 2211 (Generalist medical practitioners), 2212 (Specialist medical\npractitioners), 2221 (Nursing professionals), 2222 (Midwifery professionals),\n3211 (Medical imaging and therapeutic equipment technicians), 3212 (Medical\nand pathology laboratory technicians), 3213 (Pharmaceutical technicians and\nassistants), 3221 (Nursing associate professionals), 3222 (Midwifery associate\nprofessionals), 3255 (Community health workers).\n\n**Examples**: Physician, nurse, midwife, clinical officer, pharmacist,\nlaboratory technician, dentist, allied health professional.",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.HealthcareProvider"
       }
     },
     {
@@ -65,7 +75,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.Person",
       "dcterms:title": "Person (Health Service User)",
-      "dcterms:description": "A member of the public who is a potential or current user of health services, including health prevention and wellness activities. Other terms used for this group include 'patient', 'client', 'individual', and 'health service user'. Caregivers of individuals receiving health services are also included. Persons interact with DHIs to: Receive targeted (1.1) and untargeted (1.2) health communications Communicate with other persons as peers (1.3) Track their own health data and records (1.4) Report health events and system feedback (1.5) Access health information on demand including via chatbot/AI (1.6) Manage their financial transactions related to health services (1.7) Manage their consent for health data access and sharing (1.8) ISCO-08 : Not applicable (non-occupational role). Examples : Patient, pregnant woman, caregiver, child, community member, health scheme beneficiary, person living with a chronic condition.",
+      "dcterms:description": "A member of the public who is a potential or current user of health services,\nincluding health prevention and wellness activities. Other terms used for this\ngroup include 'patient', 'client', 'individual', and 'health service user'.\nCaregivers of individuals receiving health services are also included.\n\nPersons interact with DHIs to:\n- Receive targeted (1.1) and untargeted (1.2) health communications\n- Communicate with other persons as peers (1.3)\n- Track their own health data and records (1.4)\n- Report health events and system feedback (1.5)\n- Access health information on demand including via chatbot/AI (1.6)\n- Manage their financial transactions related to health services (1.7)\n- Manage their consent for health data access and sharing (1.8)\n\n**ISCO-08**: Not applicable (non-occupational role).\n\n**Examples**: Patient, pregnant woman, caregiver, child, community member,\nhealth scheme beneficiary, person living with a chronic condition.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.Person"
@@ -76,7 +86,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.ClientRegistry",
       "dcterms:title": "Client Registry / Master Patient Index",
-      "dcterms:description": "A digital system that creates, maintains, and provides authoritative unique identifiers for individuals (persons) accessing health services, enabling cross-facility patient matching and de-duplication. The client registry supports DHIs including: Verify a person's unique identity (2.1.1) Enrol person(s) for health services/clinical care plan (2.1.2) Merge, de-duplicate and curate coded datasets (4.2.2) Standards-compliant interoperability to link records across systems (4.4.2) Services and Application Types : C6 — Identification registries and directories C8 — Master patient index",
+      "dcterms:description": "A digital system that creates, maintains, and provides authoritative unique\nidentifiers for individuals (persons) accessing health services, enabling\ncross-facility patient matching and de-duplication.\n\nThe client registry supports DHIs including:\n- Verify a person's unique identity (2.1.1)\n- Enrol person(s) for health services/clinical care plan (2.1.2)\n- Merge, de-duplicate and curate coded datasets (4.2.2)\n- Standards-compliant interoperability to link records across systems (4.4.2)\n\n**Services and Application Types**:\n- C6 — Identification registries and directories\n- C8 — Master patient index",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.ClientRegistry"
@@ -87,7 +97,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.EMR",
       "dcterms:title": "Electronic Medical Record (EMR) System",
-      "dcterms:description": "A secure, digital system that holds information about people's health and clinical care managed by healthcare providers. Also referred to as an Electronic Health Record (EHR). The EMR system supports DHIs including: Longitudinal tracking of person's health status and services (2.2.1) Management of structured clinical records (2.2.2) Management of unstructured clinical records such as notes and images (2.2.3) Clinical decision support prompts and checklists (2.3) Person identification and registration (2.1) Prescription and medication management (2.9) Laboratory results reception (2.10.1) Routine health indicator data collection (2.2.4) Services and Application Type : A5 — Electronic medical record systems Functional areas : Clinical decision support, record management, person registration, appointment scheduling, referral tracking.",
+      "dcterms:description": "A secure, digital system that holds information about people's health and\nclinical care managed by healthcare providers. Also referred to as an\nElectronic Health Record (EHR).\n\nThe EMR system supports DHIs including:\n- Longitudinal tracking of person's health status and services (2.2.1)\n- Management of structured clinical records (2.2.2)\n- Management of unstructured clinical records such as notes and images (2.2.3)\n- Clinical decision support prompts and checklists (2.3)\n- Person identification and registration (2.1)\n- Prescription and medication management (2.9)\n- Laboratory results reception (2.10.1)\n- Routine health indicator data collection (2.2.4)\n\n**Services and Application Type**: A5 — Electronic medical record systems\n\n**Functional areas**: Clinical decision support, record management,\nperson registration, appointment scheduling, referral tracking.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.EMR"
@@ -98,7 +108,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.HMIS",
       "dcterms:title": "Health Management Information System (HMIS)",
-      "dcterms:description": "A digital system used to collect, process, report, and use aggregate health data for programme planning, monitoring, and evaluation at district and national levels. The HMIS supports DHIs including: Routine health indicator data collection and management (2.2.4) Non-routine data collection and management (4.1.1) Data storage and aggregation (4.1.2) Data synthesis and visualisations (4.1.3) Data exchange across systems (4.4) Services and Application Type : D6 — Health Management Information Systems (HMIS) Functional areas : Data collection, reporting dashboards, target monitoring, programme performance tracking, data quality management.",
+      "dcterms:description": "A digital system used to collect, process, report, and use aggregate health data\nfor programme planning, monitoring, and evaluation at district and national levels.\n\nThe HMIS supports DHIs including:\n- Routine health indicator data collection and management (2.2.4)\n- Non-routine data collection and management (4.1.1)\n- Data storage and aggregation (4.1.2)\n- Data synthesis and visualisations (4.1.3)\n- Data exchange across systems (4.4)\n\n**Services and Application Type**: D6 — Health Management Information Systems (HMIS)\n\n**Functional areas**: Data collection, reporting dashboards, target monitoring,\nprogramme performance tracking, data quality management.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.HMIS"
@@ -109,7 +119,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.InteropPlatform",
       "dcterms:title": "Health Information Exchange / Interoperability Platform",
-      "dcterms:description": "A middleware system or shared infrastructure that enables health data exchange between disparate health information systems using standard protocols and formats. The interoperability platform supports DHIs including: Point-to-point data integration (4.4.1) Standards-compliant interoperability (4.4.2) Message routing to appropriate architecture components (4.4.3) Data storage and aggregation across systems (4.1.2) Services and Application Type : D2 — Data interchange and interoperability Functional areas : Semantic interoperability, technical interoperability, information exchange, data mediation, enterprise service bus.",
+      "dcterms:description": "A middleware system or shared infrastructure that enables health data exchange\nbetween disparate health information systems using standard protocols and formats.\n\nThe interoperability platform supports DHIs including:\n- Point-to-point data integration (4.4.1)\n- Standards-compliant interoperability (4.4.2)\n- Message routing to appropriate architecture components (4.4.3)\n- Data storage and aggregation across systems (4.1.2)\n\n**Services and Application Type**: D2 — Data interchange and interoperability\n\n**Functional areas**: Semantic interoperability, technical interoperability,\ninformation exchange, data mediation, enterprise service bus.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.InteropPlatform"
@@ -120,7 +130,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.LIS",
       "dcterms:title": "Laboratory Information System (LIS)",
-      "dcterms:description": "A digital system that manages the complete lifecycle of laboratory test orders, specimen tracking, result production, and result reporting to healthcare providers and persons. The LIS supports DHIs including: Transmit and track diagnostic orders (2.10.2) Capture diagnostic results from digital devices (2.10.3) Transmit person's diagnostic result to healthcare provider (2.10.1) Transmit diagnostics result or availability of result to person(s) (1.1.4) Track biological specimens (2.10.4) Services and Application Type : A6 — Laboratory information systems Functional areas : Lab requests/test ordering, sample tracking, sample processing, results reporting.",
+      "dcterms:description": "A digital system that manages the complete lifecycle of laboratory test orders,\nspecimen tracking, result production, and result reporting to healthcare providers\nand persons.\n\nThe LIS supports DHIs including:\n- Transmit and track diagnostic orders (2.10.2)\n- Capture diagnostic results from digital devices (2.10.3)\n- Transmit person's diagnostic result to healthcare provider (2.10.1)\n- Transmit diagnostics result or availability of result to person(s) (1.1.4)\n- Track biological specimens (2.10.4)\n\n**Services and Application Type**: A6 — Laboratory information systems\n\n**Functional areas**: Lab requests/test ordering, sample tracking, sample\nprocessing, results reporting.",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.LIS"
@@ -131,7 +141,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.LMIS",
       "dcterms:title": "Logistics Management Information System (LMIS)",
-      "dcterms:description": "A digital system that manages the health supply chain from quantification and forecasting through distribution, inventory management, and consumption tracking. The LMIS supports DHIs including: Manage inventory and distribution of health commodities (3.2.1) Notify stock levels of health commodities (3.2.2) Monitor cold-chain sensitive commodities (3.2.3) Register licensed drugs and health commodities (3.2.4) Manage procurement of commodities (3.2.5) Services and Application Type : B6 — Logistics management information systems (LMIS)",
+      "dcterms:description": "A digital system that manages the health supply chain from quantification\nand forecasting through distribution, inventory management, and consumption tracking.\n\nThe LMIS supports DHIs including:\n- Manage inventory and distribution of health commodities (3.2.1)\n- Notify stock levels of health commodities (3.2.2)\n- Monitor cold-chain sensitive commodities (3.2.3)\n- Register licensed drugs and health commodities (3.2.4)\n- Manage procurement of commodities (3.2.5)\n\n**Services and Application Type**: B6 — Logistics management information systems (LMIS)",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.LMIS"
@@ -142,7 +152,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/DAK.Persona.System.SurveillanceSystem",
       "dcterms:title": "Public Health and Disease Surveillance System",
-      "dcterms:description": "A digital system for detecting, monitoring, investigating, and responding to disease outbreaks and public health threats. The surveillance system supports DHIs including: Notification of public health events from point of diagnosis (3.3.1) Transmit health event alerts to specific population group(s) (1.1.1) Map location of health event (4.3.2) Data synthesis and visualizations for outbreak response (4.1.3) Automated analysis of data to generate predictions (4.1.4) Services and Application Type : E2 — Public health and disease surveillance systems",
+      "dcterms:description": "A digital system for detecting, monitoring, investigating, and responding to\ndisease outbreaks and public health threats.\n\nThe surveillance system supports DHIs including:\n- Notification of public health events from point of diagnosis (3.3.1)\n- Transmit health event alerts to specific population group(s) (1.1.1)\n- Map location of health event (4.3.2)\n- Data synthesis and visualizations for outbreak response (4.1.3)\n- Automated analysis of data to generate predictions (4.1.4)\n\n**Services and Application Type**: E2 — Public health and disease surveillance systems",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.SurveillanceSystem"
@@ -153,7 +163,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.BusinessAnalyst",
       "dcterms:title": "Business Analyst",
-      "dcterms:description": "A digital health informatician specializing in business analysis who authors L2 DAK components. Business analysts translate clinical guidelines and normative products into structured DAK artifacts including business processes, data dictionaries, decision-support logic, and requirements. Key activities: Review L1 source documents and extract structured content Author generic personas based on task-shifting guidelines Create user scenario narratives Design BPMN 2.0 business process diagrams Define core data elements and data dictionary Develop decision-support logic tables (DMN standard) Develop scheduling logic tables Define indicators and performance metrics Capture functional and non-functional requirements Streamline content across DAK components for consistency Source : IG Starter Kit, L2 DAK Authoring, Section 2.1 \"Fill in DAK components\"; Community of Practice page",
+      "dcterms:description": "A digital health informatician specializing in business analysis who authors\nL2 DAK components. Business analysts translate clinical guidelines and\nnormative products into structured DAK artifacts including business processes,\ndata dictionaries, decision-support logic, and requirements.\n\nKey activities:\n- Review L1 source documents and extract structured content\n- Author generic personas based on task-shifting guidelines\n- Create user scenario narratives\n- Design BPMN 2.0 business process diagrams\n- Define core data elements and data dictionary\n- Develop decision-support logic tables (DMN standard)\n- Develop scheduling logic tables\n- Define indicators and performance metrics\n- Capture functional and non-functional requirements\n- Streamline content across DAK components for consistency\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Section 2.1 \"Fill in DAK components\";\nCommunity of Practice page",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.BusinessAnalyst"
@@ -164,7 +174,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.ClinicalSME",
       "dcterms:title": "Clinical Subject Matter Expert",
-      "dcterms:description": "A clinician or subject matter expert (SME) of a specific health area who validates the clinical accuracy and completeness of DAK content against WHO guidelines and other normative products. SMEs should be the authors of the source documents or recognized experts actively engaged in, if not leading, the collaborative development of the DAKs. Key activities: Validate that DAK components accurately reflect L1 recommendations Provide clinical ground-truthing through country visits and interviews Identify gaps or needed changes in DAK content Review decision-support logic for clinical correctness Confirm that workflows represent 80% of clinical scenarios Validate personas against real-world practice settings Advise on cross-programme overlaps (e.g. TB/HIV indicators) Source : IG Starter Kit, L2 DAK Authoring, Sections 1 \"Plan\" and 2.2 \"Validate\"",
+      "dcterms:description": "A clinician or subject matter expert (SME) of a specific health area who\nvalidates the clinical accuracy and completeness of DAK content against\nWHO guidelines and other normative products. SMEs should be the authors\nof the source documents or recognized experts actively engaged in, if not\nleading, the collaborative development of the DAKs.\n\nKey activities:\n- Validate that DAK components accurately reflect L1 recommendations\n- Provide clinical ground-truthing through country visits and interviews\n- Identify gaps or needed changes in DAK content\n- Review decision-support logic for clinical correctness\n- Confirm that workflows represent 80% of clinical scenarios\n- Validate personas against real-world practice settings\n- Advise on cross-programme overlaps (e.g. TB/HIV indicators)\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Sections 1 \"Plan\" and 2.2 \"Validate\"",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.ClinicalSME"
@@ -175,7 +185,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.ContentReviewer",
       "dcterms:title": "Content Reviewer / Approver",
-      "dcterms:description": "A designated reviewer responsible for approving SMART Guidelines content at key decision gates in the authoring lifecycle. Content Reviewers ensure that DAK and IG content meets quality standards, accurately reflects WHO normative guidance, and is ready to proceed to the next phase. Content Reviewers may be senior technical officers, programme leads, or designated governance committee members. They provide formal sign-off at phase transitions (L2→L3, draft→publication). Key activities: Review and approve L2 DAK content before L3 authoring begins Review and approve L3 IG content before publication Assess whether content changes are breaking or non-breaking Approve draft publications for stakeholder circulation Provide final sign-off for release publication Ensure content aligns with WHO guidelines governance policies Participate in cross-programme content harmonization reviews Source : IG Starter Kit, Publication page (review process); DAK Authoring, Section 2.2 \"Validate DAK content with SMEs\"",
+      "dcterms:description": "A designated reviewer responsible for approving SMART Guidelines content\nat key decision gates in the authoring lifecycle. Content Reviewers ensure\nthat DAK and IG content meets quality standards, accurately reflects WHO\nnormative guidance, and is ready to proceed to the next phase.\n\nContent Reviewers may be senior technical officers, programme leads, or\ndesignated governance committee members. They provide formal sign-off at\nphase transitions (L2→L3, draft→publication).\n\nKey activities:\n- Review and approve L2 DAK content before L3 authoring begins\n- Review and approve L3 IG content before publication\n- Assess whether content changes are breaking or non-breaking\n- Approve draft publications for stakeholder circulation\n- Provide final sign-off for release publication\n- Ensure content aligns with WHO guidelines governance policies\n- Participate in cross-programme content harmonization reviews\n\n**Source**: IG Starter Kit, Publication page (review process);\nDAK Authoring, Section 2.2 \"Validate DAK content with SMEs\"",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.ContentReviewer"
@@ -186,7 +196,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.FHIRModeller",
       "dcterms:title": "FHIR Modeller",
-      "dcterms:description": "An L3 author who creates machine-readable FHIR artifacts from L2 DAK specifications. FHIR Modellers use FSH (FHIR Shorthand), SUSHI, and the IG Publisher toolchain to produce conformant Implementation Guides. Key activities: Verify L2 input availability and consistency Author FHIR Logical Models from L2 data dictionaries Create FHIR Profiles (StructureDefinitions) Author FHIR Questionnaires from L2 forms Write CQL for decision logic, scheduling logic, and indicators Create StructureMaps for data extraction Author PlanDefinitions for business processes and decision tables Create ActorDefinitions from L2 personas (reusing Commons repository) Create ExampleScenario resources from L2 user scenarios Author FHIR Measure resources from L2 indicators Create FHIR Requirements resources Develop test cases (TestPlan, TestScript, example instances) Ensure all artifacts conform to CRMI Shareable/Publishable profiles Source : IG Starter Kit, L2-L3 Overview and all L3 authoring pages",
+      "dcterms:description": "An L3 author who creates machine-readable FHIR artifacts from L2 DAK\nspecifications. FHIR Modellers use FSH (FHIR Shorthand), SUSHI, and\nthe IG Publisher toolchain to produce conformant Implementation Guides.\n\nKey activities:\n- Verify L2 input availability and consistency\n- Author FHIR Logical Models from L2 data dictionaries\n- Create FHIR Profiles (StructureDefinitions)\n- Author FHIR Questionnaires from L2 forms\n- Write CQL for decision logic, scheduling logic, and indicators\n- Create StructureMaps for data extraction\n- Author PlanDefinitions for business processes and decision tables\n- Create ActorDefinitions from L2 personas (reusing Commons repository)\n- Create ExampleScenario resources from L2 user scenarios\n- Author FHIR Measure resources from L2 indicators\n- Create FHIR Requirements resources\n- Develop test cases (TestPlan, TestScript, example instances)\n- Ensure all artifacts conform to CRMI Shareable/Publishable profiles\n\n**Source**: IG Starter Kit, L2-L3 Overview and all L3 authoring pages",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.FHIRModeller"
@@ -197,7 +207,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.ProgrammeManager",
       "dcterms:title": "Programme Manager",
-      "dcterms:description": "A programme manager responsible for the overall coordination and management of the Digital Adaptation Kit (DAK) development process. Programme managers lead scoping, resource allocation, timeline planning, and stakeholder engagement. The DAK development team should be small (<10 people) and nimble. The Programme Manager ensures the team is empowered to self-organize and manage DAK-related work including collaboration with stakeholders, content development, validation, and publication. Key activities: Define DAK scope and purpose Form and coordinate the DAK development team Establish development process and governance Define RASCI matrix for roles and responsibilities Plan sprint iterations and maintain the DAK backlog Coordinate SME consultations (workshops, country visits) Draft project roadmap with milestone dates Assess and secure resources and budget Source : IG Starter Kit, L2 DAK Authoring, Section 1 \"Plan\"",
+      "dcterms:description": "A programme manager responsible for the overall coordination and management\nof the Digital Adaptation Kit (DAK) development process. Programme managers\nlead scoping, resource allocation, timeline planning, and stakeholder engagement.\n\nThe DAK development team should be small (<10 people) and nimble. The Programme\nManager ensures the team is empowered to self-organize and manage DAK-related\nwork including collaboration with stakeholders, content development, validation,\nand publication.\n\nKey activities:\n- Define DAK scope and purpose\n- Form and coordinate the DAK development team\n- Establish development process and governance\n- Define RASCI matrix for roles and responsibilities\n- Plan sprint iterations and maintain the DAK backlog\n- Coordinate SME consultations (workshops, country visits)\n- Draft project roadmap with milestone dates\n- Assess and secure resources and budget\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Section 1 \"Plan\"",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.ProgrammeManager"
@@ -208,7 +218,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.PublicationManager",
       "dcterms:title": "Publication Manager",
-      "dcterms:description": "A specialist responsible for managing the FHIR Implementation Guide configuration, build process, versioning, and release publication workflow. Publication Managers ensure IGs are correctly configured, built, and published to smart.who.int following the established publication process. Key activities: Set up IG repositories from smart-ig-empty template Configure sushi-config.yaml (canonical URL, package ID, dependencies) Enable GitHub Pages and CI build workflows Run FHIR IG Publisher builds and verify output Manage semantic versioning (major.minor.patch) Create publication-request.json for releases Create release branches, tags, and GitHub releases Monitor automated publication workflows Coordinate with WHO SMART Guidelines team for smart.who.int updates Manage cross-IG governance for shared artifacts Reset main branch to draft status after publication Source : IG Starter Kit, IG Setup, IG Publication, and IG Configuration pages",
+      "dcterms:description": "A specialist responsible for managing the FHIR Implementation Guide\nconfiguration, build process, versioning, and release publication workflow.\nPublication Managers ensure IGs are correctly configured, built, and\npublished to smart.who.int following the established publication process.\n\nKey activities:\n- Set up IG repositories from smart-ig-empty template\n- Configure sushi-config.yaml (canonical URL, package ID, dependencies)\n- Enable GitHub Pages and CI build workflows\n- Run FHIR IG Publisher builds and verify output\n- Manage semantic versioning (major.minor.patch)\n- Create publication-request.json for releases\n- Create release branches, tags, and GitHub releases\n- Monitor automated publication workflows\n- Coordinate with WHO SMART Guidelines team for smart.who.int updates\n- Manage cross-IG governance for shared artifacts\n- Reset main branch to draft status after publication\n\n**Source**: IG Starter Kit, IG Setup, IG Publication, and IG Configuration pages",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.PublicationManager"
@@ -219,7 +229,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.QCReviewer",
       "dcterms:title": "Quality Control Reviewer",
-      "dcterms:description": "A quality assurance specialist responsible for reviewing SMART Guidelines Implementation Guides for publication readiness. QC Reviewers use the publication checklist across L1-L4 layers, interpret QA validation reports, and verify artifact conformance and cross-component consistency. Key activities: Run and interpret IG Publisher QA reports (qa.html) Review publication checklist across L1, L2, L3, L4, and Global sections Verify conformance to Shareable, Publishable, Computable, Executable profiles Validate StructureMap extraction produces expected output Verify CQL execution and measure calculations Check cross-component consistency (personas, data elements, processes) Validate all artifacts have required title, description, and mappings Confirm naming conventions and reference resolution Review change log completeness and versioning compliance Source : IG Starter Kit, QA Check page, Checklist page, Validating IG page",
+      "dcterms:description": "A quality assurance specialist responsible for reviewing SMART Guidelines\nImplementation Guides for publication readiness. QC Reviewers use the\npublication checklist across L1-L4 layers, interpret QA validation reports,\nand verify artifact conformance and cross-component consistency.\n\nKey activities:\n- Run and interpret IG Publisher QA reports (qa.html)\n- Review publication checklist across L1, L2, L3, L4, and Global sections\n- Verify conformance to Shareable, Publishable, Computable, Executable profiles\n- Validate StructureMap extraction produces expected output\n- Verify CQL execution and measure calculations\n- Check cross-component consistency (personas, data elements, processes)\n- Validate all artifacts have required title, description, and mappings\n- Confirm naming conventions and reference resolution\n- Review change log completeness and versioning compliance\n\n**Source**: IG Starter Kit, QA Check page, Checklist page, Validating IG page",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.QCReviewer"
@@ -230,7 +240,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.TechnicalOfficer",
       "dcterms:title": "Technical Officer",
-      "dcterms:description": "A health area technical officer who coordinates the work on the DAK and performs first-pass review and validation of DAK content. Technical officers are part of the DAK development team and serve as the primary bridge between the development team and the broader group of Subject Matter Experts. Key activities: Coordinate DAK development work within the health programme area Perform first-pass review of drafted DAK components Validate that components accurately reflect L1 recommendations Identify gaps, ambiguities, and alternatives in DAK content Prepare agendas and questions for SME consultation meetings Ensure content is software-neutral and context-appropriate Spread awareness of SMART Guidelines within the department Source : IG Starter Kit, L2 DAK Authoring, Section 2.2 \"Validate DAK content with SMEs\"",
+      "dcterms:description": "A health area technical officer who coordinates the work on the DAK and\nperforms first-pass review and validation of DAK content. Technical officers\nare part of the DAK development team and serve as the primary bridge between\nthe development team and the broader group of Subject Matter Experts.\n\nKey activities:\n- Coordinate DAK development work within the health programme area\n- Perform first-pass review of drafted DAK components\n- Validate that components accurately reflect L1 recommendations\n- Identify gaps, ambiguities, and alternatives in DAK content\n- Prepare agendas and questions for SME consultation meetings\n- Ensure content is software-neutral and context-appropriate\n- Spread awareness of SMART Guidelines within the department\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Section 2.2 \"Validate DAK content with SMEs\"",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.TechnicalOfficer"
@@ -241,7 +251,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.Terminologist",
       "dcterms:title": "Terminologist",
-      "dcterms:description": "A specialist responsible for ensuring semantic interoperability of SMART Guidelines through proper terminology management. Terminologists manage the WHO Commons dictionary, concept mappings, and ensure every data element is mapped to approved standard terminologies. Key activities: Map data elements to WHO Commons dictionary concepts Create and maintain CodeSystem resources Create and maintain ValueSet resources Create ConceptMap resources for cross-terminology mappings Map to ICD-11, SNOMED CT, LOINC, IPS, and WHO FIC Onboard new concepts into the Commons dictionary Verify no duplicate or overlapping concept definitions Review terminology bindings in logical models and profiles Flag unapproved concepts as QA issues before publication Source : IG Starter Kit, Governance Concepts page; L3 authoring pages for CodeSystems, ValueSets, ConceptMaps",
+      "dcterms:description": "A specialist responsible for ensuring semantic interoperability of SMART\nGuidelines through proper terminology management. Terminologists manage\nthe WHO Commons dictionary, concept mappings, and ensure every data element\nis mapped to approved standard terminologies.\n\nKey activities:\n- Map data elements to WHO Commons dictionary concepts\n- Create and maintain CodeSystem resources\n- Create and maintain ValueSet resources\n- Create ConceptMap resources for cross-terminology mappings\n- Map to ICD-11, SNOMED CT, LOINC, IPS, and WHO FIC\n- Onboard new concepts into the Commons dictionary\n- Verify no duplicate or overlapping concept definitions\n- Review terminology bindings in logical models and profiles\n- Flag unapproved concepts as QA issues before publication\n\n**Source**: IG Starter Kit, Governance Concepts page;\nL3 authoring pages for CodeSystems, ValueSets, ConceptMaps",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.Terminologist"
@@ -252,7 +262,7 @@
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.Translator",
       "dcterms:title": "Translator",
-      "dcterms:description": "A language specialist responsible for translating SMART Guidelines Implementation Guide content across UN languages to support global adoption and adaptation. Key activities: Translate IG narrative content across UN languages Translate FHIR resource display names and descriptions Review translated content for accuracy and clinical correctness Manage .pot/.po translation template files Coordinate with clinical SMEs for domain-specific terminology Ensure translated examples are available for each non-abstract profile Source : IG Starter Kit, Checklist L4 (example resources per UN language); PR 288 translation skill infrastructure",
+      "dcterms:description": "A language specialist responsible for translating SMART Guidelines\nImplementation Guide content across UN languages to support global\nadoption and adaptation.\n\nKey activities:\n- Translate IG narrative content across UN languages\n- Translate FHIR resource display names and descriptions\n- Review translated content for accuracy and clinical correctness\n- Manage .pot/.po translation template files\n- Coordinate with clinical SMEs for domain-specific terminology\n- Ensure translated examples are available for each non-abstract profile\n\n**Source**: IG Starter Kit, Checklist L4 (example resources per UN language);\nPR 288 translation skill infrastructure",
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.Translator"
@@ -274,7 +284,7 @@
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/CDHIv2",
       "dcterms:title": "Classification of Digital Health Interventions v2",
-      "dcterms:description": "CodeSystem for the Classification of Digital Interventions, Services and Applications in Health (CDISAH), second edition (2023). ISBN 978-92-4-008194-9. Organised into four groups based on the primary user: Persons Healthcare providers Health management and support personnel Data services New categories vs v1: 1.4.4, 1.6.2, 1.8, 2.5.6, 2.11, 3.1.5, 3.5.7, 3.5.8, 3.8, 4.3.5, 4.4.2, 4.4.3, 4.5. See ConceptMap CDHIv1toCDHIv2 for the full mapping from the first edition.",
+      "dcterms:description": "CodeSystem for the Classification of Digital Interventions, Services and Applications in Health\n(CDISAH), second edition (2023). ISBN 978-92-4-008194-9.\n\nOrganised into four groups based on the primary user:\n  1. Persons\n  2. Healthcare providers\n  3. Health management and support personnel\n  4. Data services\n\nNew categories vs v1: 1.4.4, 1.6.2, 1.8, 2.5.6, 2.11, 3.1.5, 3.5.7, 3.5.8, 3.8, 4.3.5, 4.4.2, 4.4.3, 4.5.\nSee ConceptMap CDHIv1toCDHIv2 for the full mapping from the first edition.",
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/CodeSystem/CDHIv2"
@@ -296,7 +306,7 @@
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/CDSCv2",
       "dcterms:title": "Classification of Digital Health Services and Application Types v2",
-      "dcterms:description": "CodeSystem for the Classification of Digital Health Services and Application Types v2, as defined in the Classification of Digital Interventions, Services and Applications in Health (CDISAH), second edition (2023). ISBN 978-92-4-008194-9. Services and Application Types represent the types of software, ICT systems and services or communication channels that deliver or execute digital health interventions (DHIs) and health content. The types are organised into five representations within the Digital Health Architecture: A. Point of service B. Health system/Provider administration C. Registries and Directories D. Data Management services E. Surveillance and Response",
+      "dcterms:description": "CodeSystem for the Classification of Digital Health Services and Application Types v2,\nas defined in the Classification of Digital Interventions, Services and Applications in Health\n(CDISAH), second edition (2023). ISBN 978-92-4-008194-9.\n\nServices and Application Types represent the types of software, ICT systems and services\nor communication channels that deliver or execute digital health interventions (DHIs) and\nhealth content.\n\nThe types are organised into five representations within the Digital Health Architecture:\n  A. Point of service\n  B. Health system/Provider administration\n  C. Registries and Directories\n  D. Data Management services\n  E. Surveillance and Response",
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/CodeSystem/CDSCv2"
@@ -347,11 +357,264 @@
       }
     },
     {
+      "@id": "CodeSystem-KGCertainty.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGCertainty",
+      "dcterms:title": "Knowledge graph L1: certainty",
+      "dcterms:description": "GRADE certainty of evidence. The 2014 handbook calls it quality of evidence and names certainty as a synonym (§9.1). Rated per outcome on evidence; the overall certainty on a recommendation is the lowest across its critical outcomes (§9.6). Source: smart-kg ontology/l1/l1.json valueSets \"certainty\"; WHO handbook for guideline development (2014) §9.1, §9.5–9.6.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGCertainty"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGChangeStatus.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGChangeStatus",
+      "dcterms:title": "Knowledge graph L1: change status",
+      "dcterms:description": "Whether this edition of a consolidated guideline introduces, updates or carries a recommendation or indicator unchanged. Printed as NEW / UPDATE tags. Source: smart-kg ontology/l1/l1.json valueSets \"change-status\"; Consolidated guidelines on person-centred HIV strategic information (2022), summary recommendations; handbook §1.7.2.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGChangeStatus"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGCitationKind.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGCitationKind",
+      "dcterms:title": "Knowledge graph L1: citation kind",
+      "dcterms:description": "Whether a citation string names a source, or stands in for one that is missing. Source: smart-kg ontology/l1/l1.json valueSets \"citation-kind\"; IMMZ DAK indicators workbook: '[Add appropriate reference]'.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGCitationKind"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGDerivation.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGDerivation",
+      "dcterms:title": "Knowledge graph: derivation",
+      "dcterms:description": "How a node or edge of a SMART Guidelines knowledge graph came to be. Every node and edge is exactly one of the three, and `decided` is the one a reviewer needs to find. Source: smart-kg shapes/recommendation-graph.schema.json $defs.derivation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGDerivation"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGElementType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGElementType",
+      "dcterms:title": "Knowledge graph L1: element type",
+      "dcterms:description": "What kind of printed block a publication element is. Source: smart-kg ontology/l1/l1.json valueSets \"element-type\"; Observed in the ANC and HIV SI guidelines and the immunization summary tables.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGElementType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGEvidenceType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGEvidenceType",
+      "dcterms:title": "Knowledge graph L1: evidence type",
+      "dcterms:description": "Which kind of evidence a row is, and so which scale its certainty is on: GRADE for effects, GRADE-CERQual for qualitative findings. Source: smart-kg ontology/l1/l1.json valueSets \"evidence-type\"; ANC guideline (2016) methods (GRADE and GRADE-CERQual).",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGEvidenceType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGGrcStatus.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGGrcStatus",
+      "dcterms:title": "Knowledge graph L1: grc status",
+      "dcterms:description": "Whether the Guideline Review Committee approved the publication. All WHO publications containing recommendations must be approved (handbook §1.10.1); a consolidated guideline whose recommendations were all previously approved and unchanged does not require review (§1.7.2). Absent means not recorded — not the same as not reviewed. Source: smart-kg ontology/l1/l1.json valueSets \"grc-status\"; WHO handbook for guideline development (2014), §1.7.2, §1.10.1.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGGrcStatus"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGIdentifierType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGIdentifierType",
+      "dcterms:title": "Knowledge graph L1: identifier type",
+      "dcterms:description": "Which kind of identifier a publication carries. The first available, in this order, builds the publication IRI. url comes last: a web address is the least stable identifier and is used only for sources that have no other. Source: smart-kg ontology/l1/l1.json valueSets \"identifier-type\"; WHO IRIS practice; CDHIv2.fsh carries an ISBN.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGIdentifierType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGInterventionType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGInterventionType",
+      "dcterms:title": "Knowledge graph L1: intervention type",
+      "dcterms:description": "DRAFT. What kind of intervention a recommendation or catalogued intervention concerns. To be aligned with the UHC Compendium's categories once checked. Source: smart-kg ontology/l1/l1.json valueSets \"intervention-type\"; WHO handbook §1.7.1 (clinical, health system, public health, diagnostic, surveillance); digital interventions per CDHI.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGInterventionType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGL1Classes.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGL1Classes",
+      "dcterms:title": "Knowledge graph L1: classes",
+      "dcterms:description": "The classes of the L1 layer of the SMART Guidelines knowledge graph. A node's `type` is one of these. Source: smart-base/kg/src/L1.ts (migrated from smart-kg ontology/L1/L1.json).",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGL1Classes"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGL1LibraryClasses.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGL1LibraryClasses",
+      "dcterms:title": "Knowledge graph L1Library: classes",
+      "dcterms:description": "The classes of the L1Library layer of the SMART Guidelines knowledge graph. A node's `type` is one of these. Source: smart-base/kg/src/l1-library.ts (migrated from smart-kg ontology/l1-library/l1-library.json).",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGL1LibraryClasses"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGL1LibraryPredicates.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGL1LibraryPredicates",
+      "dcterms:title": "Knowledge graph L1Library: predicates",
+      "dcterms:description": "The predicates of the L1Library layer. An edge's `predicate` is one of these; which (source, target) pairs each licenses is the layer's edge table. Source: smart-base/kg/src/l1-library.ts (migrated from smart-kg ontology/l1-library/l1-library.json).",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGL1LibraryPredicates"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGL1Predicates.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGL1Predicates",
+      "dcterms:title": "Knowledge graph L1: predicates",
+      "dcterms:description": "The predicates of the L1 layer. An edge's `predicate` is one of these; which (source, target) pairs each licenses is the layer's edge table. Source: smart-base/kg/src/L1.ts (migrated from smart-kg ontology/L1/L1.json).",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGL1Predicates"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGOutcomeImportance.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGOutcomeImportance",
+      "dcterms:title": "Knowledge graph L1: outcome importance",
+      "dcterms:description": "How the guideline development group rated an outcome on the 1–9 scale: 7–9 critical, 4–6 important. Unimportant outcomes are not carried into evidence profiles, so they have no code here. Source: smart-kg ontology/l1/l1.json valueSets \"outcome-importance\"; WHO handbook for guideline development (2014) §7.6, Fig. 7.1.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGOutcomeImportance"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGPublicationType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGPublicationType",
+      "dcterms:title": "Knowledge graph L1: publication type",
+      "dcterms:description": "What kind of publication this is. The distinction that matters most for provenance is guideline versus not: a summary table or position paper restates recommendations made elsewhere, and a §1.9 product makes none of its own. Conflating them makes a citation resolve to the wrong authority. Source: smart-kg ontology/l1/l1.json valueSets \"publication-type\"; WHO handbook for guideline development (2014), Table 1.2 and §1.7–1.9; the BCG decision table's citation for summary-table; CDHIv2.fsh for classification.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGPublicationType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGRecommendationDirection.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGRecommendationDirection",
+      "dcterms:title": "Knowledge graph L1: recommendation direction",
+      "dcterms:description": "For or against. The handbook prefers \"we recommend against X\" to \"X is not recommended\", which is ambiguous between against and no recommendation (§10.6). Source: smart-kg ontology/l1/l1.json valueSets \"recommendation-direction\"; WHO handbook for guideline development (2014) §10.1, §10.6.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGRecommendationDirection"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGRecommendationKind.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGRecommendationKind",
+      "dcterms:title": "Knowledge graph L1: recommendation kind",
+      "dcterms:description": "What sort of normative statement this is. Grading is optional: ANC 2016 prints a direction ('Recommended', 'Not recommended') and no GRADE strength. A strength always needs a direction. A good practice statement and a no-recommendation carry no strength or certainty, and a no-recommendation carries no direction. Source: smart-kg ontology/l1/l1.json valueSets \"recommendation-kind\"; WHO handbook §10.4, §10.7; ANC guideline (2016) Table 1, verified; Guyatt et al. 2016 on good practice statements.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGRecommendationKind"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGRecommendationStatus.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGRecommendationStatus",
+      "dcterms:title": "Knowledge graph L1: recommendation status",
+      "dcterms:description": "Whether a recommendation is still in force. Recommendations in one guideline go out of date at different times (§1.7.2), and a department that doubts a recommendation's validity should say so before the update is done (§12.5.4). This is what impact analysis filters on. Source: smart-kg ontology/l1/l1.json valueSets \"recommendation-status\"; WHO handbook for guideline development (2014) §1.7.2, §12.5.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGRecommendationStatus"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGRecommendationStrength.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGRecommendationStrength",
+      "dcterms:title": "Knowledge graph L1: recommendation strength",
+      "dcterms:description": "GRADE strength. Strength is not certainty: a strong recommendation can rest on low-certainty evidence and a conditional one on high. Record \"weak\" as conditional; the handbook treats them as synonyms (§10.4). Source: smart-kg ontology/l1/l1.json valueSets \"recommendation-strength\"; WHO handbook for guideline development (2014) §10.4.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGRecommendationStrength"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGRemarkType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGRemarkType",
+      "dcterms:title": "Knowledge graph L1: remark type",
+      "dcterms:description": "What a remark is for. Grounded in the six remarks attached to ANC recommendation A.1.1. Source: smart-kg ontology/l1/l1.json valueSets \"remark-type\"; ANC guideline (2016) p. 15; handbook §10.6, §10.8.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGRemarkType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGResolutionStatus.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGResolutionStatus",
+      "dcterms:title": "Knowledge graph L1: resolution status",
+      "dcterms:description": "Whether a citation string has been matched to what it cites. `ambiguous` is a legitimate terminal state — two publications with similar titles is a question for a person — and must not be collapsed to resolved. Source: smart-kg ontology/l1/l1.json valueSets \"resolution-status\"; docs/SCOPE.md.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGResolutionStatus"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGRowType.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGRowType",
+      "dcterms:title": "Knowledge graph L1: row type",
+      "dcterms:description": "The role of a row within a table. Source: smart-kg ontology/l1/l1.json valueSets \"row-type\"; HIV SI guideline Table 2.3; ANC Table 1.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGRowType"
+      }
+    },
+    {
+      "@id": "CodeSystem-KGTerminologySystem.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KGTerminologySystem",
+      "dcterms:title": "Knowledge graph L1: terminology system",
+      "dcterms:description": "Code systems a DAK is expected to use. An unknown system is a warning, because a misspelt system silently breaks joins across guidelines. Source: smart-kg ontology/l1/l1.json valueSets \"terminology-system\"; smart-base input/fsh/profiles/SGLogicalModel.fsh and Aliases.fsh; UHC Compendium; CDHIv2.fsh.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/CodeSystem/KGTerminologySystem"
+      }
+    },
+    {
       "@id": "CodeSystem-SGAuthoringPersonaTypes.jsonld",
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/SGAuthoringPersonaTypes",
       "dcterms:title": "SMART Guidelines Authoring Persona Types",
-      "dcterms:description": "CodeSystem for SMART Guidelines authoring persona types. These represent roles involved in the authoring, review, and publication of SMART Guidelines and Digital Adaptation Kits, as distinct from the clinical/health personas defined within a DAK.",
+      "dcterms:description": "CodeSystem for SMART Guidelines authoring persona types.\nThese represent roles involved in the authoring, review, and publication\nof SMART Guidelines and Digital Adaptation Kits, as distinct from\nthe clinical/health personas defined within a DAK.",
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes"
@@ -362,7 +625,7 @@
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/SGAuthoringSkills",
       "dcterms:title": "SMART Guidelines Authoring Skills",
-      "dcterms:description": "CodeSystem for SMART Guidelines authoring skill capabilities. Each code represents a discrete skill that an authoring persona may possess. Skills are used to define Requirements resources as capability statements.",
+      "dcterms:description": "CodeSystem for SMART Guidelines authoring skill capabilities.\nEach code represents a discrete skill that an authoring persona may possess.\nSkills are used to define Requirements resources as capability statements.",
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/CodeSystem/SGAuthoringSkills"
@@ -384,7 +647,7 @@
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/SGTasks",
       "dcterms:title": "SMART Guidelines Tasks",
-      "dcterms:description": "CodeSystem for SMART Guidelines tasks which are specializations of the Business Process Modeling Notatiton (BPMN) tasks, which are included in this codesystem See BPMN Spectification for more info. The descriptions were adapted from the normative human readable documentation .",
+      "dcterms:description": "CodeSystem for SMART Guidelines tasks which are specializations of the Business Process Modeling Notatiton (BPMN) tasks, which are included in this codesystem\n\nSee [BPMN Spectification](https://www.omg.org/spec/BPMN) for more info.  The descriptions were adapted from the [normative human readable documentation](https://www.omg.org/spec/BPMN/2.0.2/PDF).",
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/CodeSystem/SGTasks"
@@ -406,7 +669,7 @@
       "@type": "fhir:ConceptMap",
       "dcterms:identifier": "ConceptMap/CDHIv1toCDHIv2",
       "dcterms:title": "Mapping from CDHI v1 to CDISAH v2",
-      "dcterms:description": "Mapping from the Classification of Digital Health Interventions v1 (CDHI v1, 2018) to the Classification of Digital Interventions, Services and Applications in Health v2 (CDISAH v2, 2023). Key structural changes reflected in this map: User group labels updated throughout (e.g. 'Clients' → 'Persons', 'Health workers' → 'Healthcare providers', 'Health system managers' → 'Health management and support personnel'). Civil Registration and Vital Statistics (CRVS) consolidated: six v1 codes (3.4.1–3.4.6) merged into two v2 codes (3.4.1, 3.4.2). Health financing section restructured: v1 3.5.1 (insurance membership) and 3.5.2 (billing) updated; v1 3.5.3–3.5.6 shifted by one (now 3.5.4–3.5.6 + new 3.5.3). Data services (group 4) substantially revised: 4.1.1 changed scope, 4.3 expanded from 4 to 5 codes, 4.4 split from 1 to 3 codes, 4.5 is entirely new. New v2 categories with no v1 equivalent are listed as 'unmatched' targets.",
+      "dcterms:description": "Mapping from the Classification of Digital Health Interventions v1 (CDHI v1, 2018)\nto the Classification of Digital Interventions, Services and Applications in Health v2\n(CDISAH v2, 2023).\n\nKey structural changes reflected in this map:\n- User group labels updated throughout (e.g. 'Clients' → 'Persons',\n  'Health workers' → 'Healthcare providers', 'Health system managers' →\n  'Health management and support personnel').\n- Civil Registration and Vital Statistics (CRVS) consolidated: six v1 codes\n  (3.4.1–3.4.6) merged into two v2 codes (3.4.1, 3.4.2).\n- Health financing section restructured: v1 3.5.1 (insurance membership) and\n  3.5.2 (billing) updated; v1 3.5.3–3.5.6 shifted by one (now 3.5.4–3.5.6 + new 3.5.3).\n- Data services (group 4) substantially revised: 4.1.1 changed scope,\n  4.3 expanded from 4 to 5 codes, 4.4 split from 1 to 3 codes, 4.5 is entirely new.\n- New v2 categories with no v1 equivalent are listed as 'unmatched' targets.",
       "dcterms:type": "Terminology: Concept Maps",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ConceptMap/CDHIv1toCDHIv2"
@@ -428,7 +691,7 @@
       "@type": "fhir:ConceptMap",
       "dcterms:identifier": "ConceptMap/CDSCv1toCDSCv2",
       "dcterms:title": "Mapping from CDSC v1 to Services and Application Types v2",
-      "dcterms:description": "Mapping from the Classification of Digital Health System Categories v1 (CDSCv1, 2018) to the Classification of Digital Health Services and Application Types v2 (CDSCv2, 2023). The v1 used 25 single-letter codes (A–Y). The v2 completely restructured this into 5 representations within the digital health enterprise architecture, each with alphanumeric codes (A1–A9, B1–B8, C1–C11, D1–D8, E1–E2). Several new v2 categories have no v1 equivalent: A3 (Decision support), A4 (Diagnostics), B1 (Blood bank), B3 (Health program monitoring), B7 (Patient administration), C4 (Facility registries), C5 (Health worker registry), C7 (Immunisation information), C8 (Master patient index), C9 (Product catalogues), C10 (Public Key directories), D1 (Analytics), D3 (Data warehouses).",
+      "dcterms:description": "Mapping from the Classification of Digital Health System Categories v1 (CDSCv1, 2018)\nto the Classification of Digital Health Services and Application Types v2 (CDSCv2, 2023).\n\nThe v1 used 25 single-letter codes (A–Y). The v2 completely restructured this into\n5 representations within the digital health enterprise architecture, each with\nalphanumeric codes (A1–A9, B1–B8, C1–C11, D1–D8, E1–E2).\n\nSeveral new v2 categories have no v1 equivalent:\nA3 (Decision support), A4 (Diagnostics), B1 (Blood bank), B3 (Health program monitoring),\nB7 (Patient administration), C4 (Facility registries), C5 (Health worker registry),\nC7 (Immunisation information), C8 (Master patient index), C9 (Product catalogues),\nC10 (Public Key directories), D1 (Analytics), D3 (Data warehouses).",
       "dcterms:type": "Terminology: Concept Maps",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ConceptMap/CDSCv1toCDSCv2"
@@ -438,8 +701,8 @@
       "@id": "Questionnaire-DAK.DT.IMMZ.D2.DT.BCGQuestionnaire.jsonld",
       "@type": "fhir:Questionnaire",
       "dcterms:identifier": "Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire",
-      "dcterms:title": "Questionnaire for IMMZ.D2 Determine required vaccination(s) if any",
-      "dcterms:description": "Auto-generated questionnaire for decision table DAK.DT.IMMZ.D2.DT.BCG",
+      "dcterms:title": "IMMZ.D2 Determine required vaccination(s) if any",
+      "dcterms:description": "This questionnaire supports the decision logic for: IMMZ.D2 Determine required vaccination(s) if any",
       "dcterms:type": "Structures: Questionnaires",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire"
@@ -468,6 +731,17 @@
       }
     },
     {
+      "@id": "Requirements-SGAuthoring.Skills.AuthorCQL.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/SGAuthoring.Skills.AuthorCQL",
+      "dcterms:title": "Can author CQL",
+      "dcterms:description": "Capability to write Clinical Quality Language (CQL) for decision logic, scheduling logic, and indicator calculations.",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/Requirements/SGAuthoring.Skills.AuthorCQL"
+      }
+    },
+    {
       "@id": "Requirements-SGAuthoring.Skills.AuthorCodeSystems.jsonld",
       "@type": "fhir:Requirements",
       "dcterms:identifier": "Requirements/SGAuthoring.Skills.AuthorCodeSystems",
@@ -487,17 +761,6 @@
       "dcterms:type": "Requirements: Formal Requirements",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/Requirements/SGAuthoring.Skills.AuthorConceptMaps"
-      }
-    },
-    {
-      "@id": "Requirements-SGAuthoring.Skills.AuthorCQL.jsonld",
-      "@type": "fhir:Requirements",
-      "dcterms:identifier": "Requirements/SGAuthoring.Skills.AuthorCQL",
-      "dcterms:title": "Can author CQL",
-      "dcterms:description": "Capability to write Clinical Quality Language (CQL) for decision logic, scheduling logic, and indicator calculations.",
-      "dcterms:type": "Requirements: Formal Requirements",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/base/Requirements/SGAuthoring.Skills.AuthorCQL"
       }
     },
     {
@@ -912,7 +1175,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/BusinessProcessWorkflowSource",
       "dcterms:title": "Business Process Workflow Source",
-      "dcterms:description": "Source reference for Business Process Workflow - exactly one of the following must be provided: url (url data type): URL to retrieve BusinessProcessWorkflow definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the BusinessProcessWorkflow definition instance: Inline BusinessProcessWorkflow instance data",
+      "dcterms:description": "Source reference for Business Process Workflow - exactly one of the following must be provided:\n- url (url data type): URL to retrieve BusinessProcessWorkflow definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the BusinessProcessWorkflow definition\n- instance: Inline BusinessProcessWorkflow instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/BusinessProcessWorkflowSource"
@@ -934,7 +1197,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/CoreDataElementSource",
       "dcterms:title": "Core Data Element Source",
-      "dcterms:description": "Source reference for Core Data Element - exactly one of the following must be provided: url (url data type): URL to retrieve CoreDataElement definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the CoreDataElement definition instance: Inline CoreDataElement instance data",
+      "dcterms:description": "Source reference for Core Data Element - exactly one of the following must be provided:\n- url (url data type): URL to retrieve CoreDataElement definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the CoreDataElement definition\n- instance: Inline CoreDataElement instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/CoreDataElementSource"
@@ -967,7 +1230,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/DecisionSupportLogicSource",
       "dcterms:title": "Decision Support Logic Source",
-      "dcterms:description": "Source reference for Decision Support Logic - exactly one of the following must be provided: url (url data type): URL to retrieve DecisionSupportLogic definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the DecisionSupportLogic definition instance: Inline DecisionSupportLogic instance data",
+      "dcterms:description": "Source reference for Decision Support Logic - exactly one of the following must be provided:\n- url (url data type): URL to retrieve DecisionSupportLogic definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the DecisionSupportLogic definition\n- instance: Inline DecisionSupportLogic instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource"
@@ -1022,7 +1285,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/GenericPersonaSource",
       "dcterms:title": "Generic Persona Source",
-      "dcterms:description": "Source reference for Generic Persona - exactly one of the following must be provided: url (url data type): URL to retrieve GenericPersona definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the GenericPersona definition instance: Inline GenericPersona instance data",
+      "dcterms:description": "Source reference for Generic Persona - exactly one of the following must be provided:\n- url (url data type): URL to retrieve GenericPersona definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the GenericPersona definition\n- instance: Inline GenericPersona instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/GenericPersonaSource"
@@ -1044,10 +1307,230 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/HealthInterventionsSource",
       "dcterms:title": "Health Interventions Source",
-      "dcterms:description": "Source reference for Health Interventions - exactly one of the following must be provided: url (url data type): URL to retrieve HealthInterventions definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the HealthInterventions definition instance: Inline HealthInterventions instance data",
+      "dcterms:description": "Source reference for Health Interventions - exactly one of the following must be provided:\n- url (url data type): URL to retrieve HealthInterventions definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the HealthInterventions definition\n- instance: Inline HealthInterventions instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/HealthInterventionsSource"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGCitation.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGCitation",
+      "dcterms:title": "Knowledge graph L1: Citation",
+      "dcterms:description": "One citation string exactly as written in a DAK artefact. A cell holding several citations yields several nodes. Content-addressed in the DAK's namespace, so one string is one node across artefacts. Where a citation was found is recorded by appearsIn (L2) and by each use edge (L2-DMN, L3 citesSource), not on the node. Class IRI: http://smart.who.int/kg/citation.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGCitation"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGEdge.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGEdge",
+      "dcterms:title": "Knowledge graph: edge",
+      "dcterms:description": "One reified statement: a predicate from a source node to a target node, with its derivation and evidence.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGEdge"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGEvidence.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGEvidence",
+      "dcterms:title": "Knowledge graph L1: Evidence",
+      "dcterms:description": "One row of an evidence profile: the evidence for one outcome of one key question, with its certainty (handbook §9.2). Class IRI: http://smart.who.int/kg/evidence.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGEvidence"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGEvidenceLocation.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGEvidenceLocation",
+      "dcterms:title": "Knowledge graph: evidence location",
+      "dcterms:description": "Where a node or edge came from in its source. Required on anything not mechanically derived.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGEvidenceLocation"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGGraphDocument.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGGraphDocument",
+      "dcterms:title": "Knowledge graph L1: graph document",
+      "dcterms:description": "One L1 knowledge-graph document: typed nodes and reified edges, provenance-pinned to the sources it was extracted from. In JSON the context element is written @context.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGGraphDocument"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGHealthIntervention.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGHealthIntervention",
+      "dcterms:title": "Knowledge graph L1: Health intervention",
+      "dcterms:description": "An intervention identified in a WHO catalogue or classification (UHC Compendium, ICHI, CDHI), digital interventions included. A peer of recommendation, not a recommendation. A DAK may draw on both. Corresponds to HealthInterventions: identifier and description correspond to HealthInterventions.id and description[x]; not a Parent because HealthInterventions requires reference 1..* DublinCore, which here is an edge (definedIn) rather than a field. Class IRI: http://smart.who.int/kg/health-intervention.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGHealthIntervention"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGImplementationPractice.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGImplementationPractice",
+      "dcterms:title": "Knowledge graph L1-LIBRARY: Implementation practice",
+      "dcterms:description": "A statement of how to put guidance into practice, printed in a publication whose publicationType is implementation-guidance or methodology: the handbook's \"products that are not guidelines\" (§1.9), a \"how to\" document that makes no recommendations of its own. Not a recommendation, and not a good practice statement — both are made by a guideline and approved by the GRC; this is neither. It carries no kind, direction, strength or certainty, because nothing graded it. A handbook's own \"Best practices\" lists are the typical source. Owner ruling 1b, 2026-10-12: model these as their own class, not as recommendation nodes of a new kind. statement is verbatim and is the only stored copy, as recommendation's is. identifier is used in the IRI. There is no remark: L1 3.0's remark is minted under a recommendation (its iriPattern) and hasRemark starts at one, so a remark of a practice needs L1 itself to change — proposed upstream, not patched here. Class IRI: http://smart.who.int/kg/implementation-practice.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGImplementationPractice"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGIndicator.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGIndicator",
+      "dcterms:title": "Knowledge graph L1: Indicator",
+      "dcterms:description": "A WHO indicator, identified by its published reference number. Printed in several places (HIV SI 2022: summary list, Table 2.3, reference sheet) and stored once. variants is a list of {population, definition, numerator, denominator} for population-specific or level-specific forms (PRV.17, PRV.3). Corresponds to ProgramIndicator: definition, numerator, denominator and disaggregation are ProgramIndicator's elements and types (markdown); not a Parent because ProgramIndicator makes them 1..1 and an L1 indicator is recorded with what its source prints. Class IRI: http://smart.who.int/kg/indicator.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGIndicator"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGKeyQuestion.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGKeyQuestion",
+      "dcterms:title": "Knowledge graph L1: Key question",
+      "dcterms:description": "A question in PICO format, framed before the evidence search (handbook §7.1–7.4). P and C are verbatim text with codes through crossReferences; I is also joined to a catalogued intervention; O is the outcome node. Class IRI: http://smart.who.int/kg/key-question.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGKeyQuestion"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGLibraryNode.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGLibraryNode",
+      "dcterms:title": "Knowledge graph L1-LIBRARY: Library node",
+      "dcterms:description": "A node in the ingested library L1 is read from: a source document, a section or a block, addressed by the library's own IRI. Opaque, as L1 asserts nothing about the library's internal model; the library is upstream, so pointing at it keeps the layering rule. Class IRI: http://smart.who.int/kg/library-node.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGLibraryNode"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGNode.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGNode",
+      "dcterms:title": "Knowledge graph: node",
+      "dcterms:description": "One typed node of a knowledge-graph document. Its instance fields are an instance of the logical model of its class (see definedBy), e.g. KGPublication for a publication.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGNode"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGOutcome.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGOutcome",
+      "dcterms:title": "Knowledge graph L1: Outcome",
+      "dcterms:description": "An outcome a guideline group chose to judge a key question by, with its importance in this guideline (handbook §7.6). A node because evidence attaches to it and one list is shared by several questions (ANC Web annex 1). Flat: one node per specific outcome. name as first printed; aliases are the other printed forms (e.g. 'EGWG'); category is the printed group heading (e.g. 'Fetal/newborn morbidity'). Class IRI: http://smart.who.int/kg/outcome.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGOutcome"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGProvenanceSource.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGProvenanceSource",
+      "dcterms:title": "Knowledge graph: provenance source",
+      "dcterms:description": "A source a graph document was extracted from, pinned by hash.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGProvenanceSource"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGPublication.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGPublication",
+      "dcterms:title": "Knowledge graph L1: Publication",
+      "dcterms:description": "A WHO publication: a guideline of any of the handbook's types, a position paper, a summary table, a classification, implementation guidance, or a supplement. Metadata follows Dublin Core. identifiers is a list of {type, value}; type is from identifier-type, and the first of isbn, iris-handle, doi, issn, url builds the IRI, so an edition change is a new publication. issued and modified are Dublin Core. reviewBy is the handbook's review-by date (§12.5.1). sha256 pins the PDF. Derives from DublinCore (smart-base input/fsh/models/DublinCore.fsh); title, creator, publisher, language, rights are its elements. Class IRI: http://smart.who.int/kg/publication.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGPublication"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGPublicationElement.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGPublicationElement",
+      "dcterms:title": "Knowledge graph L1: Publication element",
+      "dcterms:description": "One printed block: a table, a table row, a footnote, a figure, a chart, an image, a flowchart, a box or a list. It records where something is printed and exactly what is printed that no content node holds. It carries no meaning of its own; meaning lives in content nodes, joined by presentedIn. columns is the header text, verbatim. columnMap names, per column, the content field that fills it when the table is re-rendered (e.g. 'Recommendation' -> statement). cells holds only text no content node holds; a cell filled through columnMap is null. text is for unmodelled printed text such as a footnote that is not a remark. sha256 is for images. Class IRI: http://smart.who.int/kg/publication-element.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGPublicationElement"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGPublicationSection.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGPublicationSection",
+      "dcterms:title": "Knowledge graph L1: Publication section",
+      "dcterms:description": "A chapter, annex or numbered section, at any depth. Class IRI: http://smart.who.int/kg/publication-section.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGPublicationSection"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGRecommendation.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGRecommendation",
+      "dcterms:title": "Knowledge graph L1: Recommendation",
+      "dcterms:description": "A normative statement from a WHO guideline. Kinds other than a graded recommendation (context-specific, research-only, good practice statement, no-recommendation) are the same node with a different kind. statement is verbatim and is the only stored copy. intervention, population, setting, provider and timing are verbatim slots taken from the statement, its remarks, or the enclosing caption or heading. setting absorbs the former conditionality. identifier is the published number (e.g. A.1.1), used in the IRI; sub-recommendations append their letter. Class IRI: http://smart.who.int/kg/recommendation.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGRecommendation"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGReferenceEntry.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGReferenceEntry",
+      "dcterms:title": "Knowledge graph L1: Reference entry",
+      "dcterms:description": "One row of a DAK artefact's own reference list: '(1)' and the full bibliographic text and URL it stands for. Resolved once; every citation numbered to it shares the result. Class IRI: http://smart.who.int/kg/reference-entry.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGReferenceEntry"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGRemark.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGRemark",
+      "dcterms:title": "Knowledge graph L1: Remark",
+      "dcterms:description": "A remark attached to a recommendation (handbook §10.6). May also be printed as a table footnote. Class IRI: http://smart.who.int/kg/remark.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGRemark"
+      }
+    },
+    {
+      "@id": "StructureDefinition-KGTerminologyCode.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/KGTerminologyCode",
+      "dcterms:title": "Knowledge graph L1: Terminology code",
+      "dcterms:description": "A code in an external terminology — ICD-10, ICD-11, SNOMED CT, ATC, or a WHO classification such as CDHI. CROSS-REFERENCE ONLY. It records system, code and display, and asserts NOTHING about the terminology: no hierarchy, no subsumption, no synonyms, no post-coordination. The terminology has its own authority, its own release cycle and its own tooling, and a partial copy here would be wrong within one release. Resolve meaning against the terminology server, not against this graph. Derives from Coding (FHIR R4 core datatype); system, code, display, version are its elements. Class IRI: http://smart.who.int/kg/terminology-code.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/KGTerminologyCode"
       }
     },
     {
@@ -1088,7 +1571,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/ProgramIndicatorSource",
       "dcterms:title": "Program Indicator Source",
-      "dcterms:description": "Source reference for Program Indicator - exactly one of the following must be provided: url (url data type): URL to retrieve ProgramIndicator definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the ProgramIndicator definition instance: Inline ProgramIndicator instance data",
+      "dcterms:description": "Source reference for Program Indicator - exactly one of the following must be provided:\n- url (url data type): URL to retrieve ProgramIndicator definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the ProgramIndicator definition\n- instance: Inline ProgramIndicator instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/ProgramIndicatorSource"
@@ -1110,7 +1593,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/RequirementsSource",
       "dcterms:title": "Requirements Source",
-      "dcterms:description": "Source reference for Requirements - exactly one of the following must be provided: url (url data type): URL to retrieve Requirements definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the Requirements definition instance: Inline Requirements instance data",
+      "dcterms:description": "Source reference for Requirements - exactly one of the following must be provided:\n- url (url data type): URL to retrieve Requirements definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the Requirements definition\n- instance: Inline Requirements instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/RequirementsSource"
@@ -1143,7 +1626,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/TestScenarioSource",
       "dcterms:title": "Test Scenario Source",
-      "dcterms:description": "Source reference for Test Scenario - exactly one of the following must be provided: url (url data type): URL to retrieve TestScenario definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the TestScenario definition instance: Inline TestScenario instance data",
+      "dcterms:description": "Source reference for Test Scenario - exactly one of the following must be provided:\n- url (url data type): URL to retrieve TestScenario definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the TestScenario definition\n- instance: Inline TestScenario instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/TestScenarioSource"
@@ -1165,7 +1648,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/UserScenarioSource",
       "dcterms:title": "User Scenario Source",
-      "dcterms:description": "Source reference for User Scenario - exactly one of the following must be provided: url (url data type): URL to retrieve UserScenario definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the UserScenario definition instance: Inline UserScenario instance data",
+      "dcterms:description": "Source reference for User Scenario - exactly one of the following must be provided:\n- url (url data type): URL to retrieve UserScenario definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the UserScenario definition\n- instance: Inline UserScenario instance data",
       "dcterms:type": "Structures: Logical Models",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/UserScenarioSource"
@@ -1194,17 +1677,6 @@
       }
     },
     {
-      "@id": "StructureDefinition-Satisfies.jsonld",
-      "@type": "fhir:StructureDefinition",
-      "dcterms:identifier": "StructureDefinition/Satisfies",
-      "dcterms:title": "Satisfies",
-      "dcterms:description": "Indicates that if the conditions for this requirement are satisified, then that it should be viewed as satisifying the referenced requirement.",
-      "dcterms:type": "Structures: Extension Definitions",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/base/StructureDefinition/Satisfies"
-      }
-    },
-    {
       "@id": "StructureDefinition-SGActorExt.jsonld",
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGActorExt",
@@ -1213,17 +1685,6 @@
       "dcterms:type": "Structures: Extension Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGActorExt"
-      }
-    },
-    {
-      "@id": "StructureDefinition-SGcode.jsonld",
-      "@type": "fhir:StructureDefinition",
-      "dcterms:identifier": "StructureDefinition/SGcode",
-      "dcterms:title": "SGcode",
-      "dcterms:description": "Smart Guidelines code extension",
-      "dcterms:type": "Structures: Extension Definitions",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/base/StructureDefinition/SGcode"
       }
     },
     {
@@ -1286,10 +1747,32 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGUserStory",
       "dcterms:title": "SGUserStory",
-      "dcterms:description": "Smart Guidelines extension to support structured User Stories (As a Actor I want to capability so that benefit ) extension",
+      "dcterms:description": "Smart Guidelines extension to support structured User Stories (As a `Actor` I want to `capability` so that `benefit`) extension",
       "dcterms:type": "Structures: Extension Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGUserStory"
+      }
+    },
+    {
+      "@id": "StructureDefinition-SGcode.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/SGcode",
+      "dcterms:title": "SGcode",
+      "dcterms:description": "Smart Guidelines code extension",
+      "dcterms:type": "Structures: Extension Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/SGcode"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Satisfies.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Satisfies",
+      "dcterms:title": "Satisfies",
+      "dcterms:description": "Indicates that if the conditions for this requirement are satisified, then that it should be viewed as satisifying  the referenced requirement.",
+      "dcterms:type": "Structures: Extension Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/StructureDefinition/Satisfies"
       }
     },
     {
@@ -1297,7 +1780,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGActivityDefinition",
       "dcterms:title": "SMART Guidelines ActivityDefinition",
-      "dcterms:description": "The minimum expectations for ActivityDefinition resources used in SMART Guidelines",
+      "dcterms:description": "Defines the minimum expectations for ActivityDefinition resources used in SMART Guidelines",
       "dcterms:type": "Conformance",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGActivityDefinition"
@@ -1307,8 +1790,8 @@
       "@id": "StructureDefinition-SGActor.jsonld",
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGActor",
-      "dcterms:title": "SMART Guidelines Actor",
-      "dcterms:description": "Structure and constraints for ActorDefinition resources used in SMART Guidelines",
+      "dcterms:title": "SGActor",
+      "dcterms:description": "Smart Guidelines Actor",
       "dcterms:type": "Conformance",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGActor"
@@ -1319,7 +1802,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGBusinessProcess",
       "dcterms:title": "SMART Guidelines Business Process",
-      "dcterms:description": "Structure and constraints for Business Processes represented in SMART Guidelines",
+      "dcterms:description": "Defines the minimum expectations for Business Processes represented in SMART Guidelines",
       "dcterms:type": "Conformance",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGBusinessProcess"
@@ -1351,8 +1834,8 @@
       "@id": "StructureDefinition-SGGraphDefinition.jsonld",
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGGraphDefinition",
-      "dcterms:title": "SMART Guidelines GraphDefinition",
-      "dcterms:description": "The minimum expectations for GraphDefinition resources used in SMART Guidelines",
+      "dcterms:title": "SGGraphDefinition",
+      "dcterms:description": "SMART Guidelines Transaction Definition",
       "dcterms:type": "Conformance",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGGraphDefinition"
@@ -1362,8 +1845,8 @@
       "@id": "StructureDefinition-SGGroupDefinition.jsonld",
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGGroupDefinition",
-      "dcterms:title": "SMART Guidelines Group Definition",
-      "dcterms:description": "Structure and constraints for Group Definitions represented in SMART Guidelines",
+      "dcterms:title": "WHO SMART Guidelines Group Definition",
+      "dcterms:description": "WHO SMART Guidelines Group Definition",
       "dcterms:type": "Conformance",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGGroupDefinition"
@@ -1461,8 +1944,8 @@
       "@id": "StructureDefinition-SGTransaction.jsonld",
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGTransaction",
-      "dcterms:title": "SMART Guidelines Transaction",
-      "dcterms:description": "Structure and constraints for TransactionDefinition resources used in SMART Guidelines",
+      "dcterms:title": "SGTransaction",
+      "dcterms:description": "SMART Guidelines Transaction Definition",
       "dcterms:type": "Conformance",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGTransaction"
@@ -1495,7 +1978,7 @@
       "@type": "fhir:StructureDefinition",
       "dcterms:identifier": "StructureDefinition/SGDecisionTable",
       "dcterms:title": "SMART Guidelines Decision Table",
-      "dcterms:description": "Defines the minimum expectations for PlanDefinition resources used in SMART Guidelines which are derived from DAK Decision Tables",
+      "dcterms:description": "Defines the minimum expectations for PlanDefinition resources used in SMART Guidelines which are derived from DAK Decision Tables ",
       "dcterms:type": "Structures: Resource Profiles",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/StructureDefinition/SGDecisionTable"
@@ -1744,6 +2227,259 @@
       }
     },
     {
+      "@id": "ValueSet-KGCertaintyVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGCertaintyVS",
+      "dcterms:title": "Knowledge graph L1: certainty",
+      "dcterms:description": "All codes of KGCertainty.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGCertaintyVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGChangeStatusVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGChangeStatusVS",
+      "dcterms:title": "Knowledge graph L1: change status",
+      "dcterms:description": "All codes of KGChangeStatus.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGChangeStatusVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGCitationKindVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGCitationKindVS",
+      "dcterms:title": "Knowledge graph L1: citation kind",
+      "dcterms:description": "All codes of KGCitationKind.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGCitationKindVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGDerivationVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGDerivationVS",
+      "dcterms:title": "Knowledge graph: derivation",
+      "dcterms:description": "All codes of KGDerivation.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGDerivationVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGElementTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGElementTypeVS",
+      "dcterms:title": "Knowledge graph L1: element type",
+      "dcterms:description": "All codes of KGElementType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGElementTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGEvidenceTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGEvidenceTypeVS",
+      "dcterms:title": "Knowledge graph L1: evidence type",
+      "dcterms:description": "All codes of KGEvidenceType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGEvidenceTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGGrcStatusVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGGrcStatusVS",
+      "dcterms:title": "Knowledge graph L1: grc status",
+      "dcterms:description": "All codes of KGGrcStatus.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGGrcStatusVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGIdentifierTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGIdentifierTypeVS",
+      "dcterms:title": "Knowledge graph L1: identifier type",
+      "dcterms:description": "All codes of KGIdentifierType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGIdentifierTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGInterventionTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGInterventionTypeVS",
+      "dcterms:title": "Knowledge graph L1: intervention type",
+      "dcterms:description": "All codes of KGInterventionType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGInterventionTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGL1ClassesVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGL1ClassesVS",
+      "dcterms:title": "Knowledge graph L1: classes",
+      "dcterms:description": "All codes of KGL1Classes.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGL1ClassesVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGL1LibraryClassesVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGL1LibraryClassesVS",
+      "dcterms:title": "Knowledge graph L1Library: classes",
+      "dcterms:description": "All codes of KGL1LibraryClasses.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGL1LibraryClassesVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGL1LibraryPredicatesVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGL1LibraryPredicatesVS",
+      "dcterms:title": "Knowledge graph L1Library: predicates",
+      "dcterms:description": "All codes of KGL1LibraryPredicates.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGL1LibraryPredicatesVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGL1PredicatesVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGL1PredicatesVS",
+      "dcterms:title": "Knowledge graph L1: predicates",
+      "dcterms:description": "All codes of KGL1Predicates.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGL1PredicatesVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGOutcomeImportanceVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGOutcomeImportanceVS",
+      "dcterms:title": "Knowledge graph L1: outcome importance",
+      "dcterms:description": "All codes of KGOutcomeImportance.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGOutcomeImportanceVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGPublicationTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGPublicationTypeVS",
+      "dcterms:title": "Knowledge graph L1: publication type",
+      "dcterms:description": "All codes of KGPublicationType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGPublicationTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGRecommendationDirectionVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGRecommendationDirectionVS",
+      "dcterms:title": "Knowledge graph L1: recommendation direction",
+      "dcterms:description": "All codes of KGRecommendationDirection.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGRecommendationDirectionVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGRecommendationKindVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGRecommendationKindVS",
+      "dcterms:title": "Knowledge graph L1: recommendation kind",
+      "dcterms:description": "All codes of KGRecommendationKind.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGRecommendationKindVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGRecommendationStatusVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGRecommendationStatusVS",
+      "dcterms:title": "Knowledge graph L1: recommendation status",
+      "dcterms:description": "All codes of KGRecommendationStatus.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGRecommendationStatusVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGRecommendationStrengthVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGRecommendationStrengthVS",
+      "dcterms:title": "Knowledge graph L1: recommendation strength",
+      "dcterms:description": "All codes of KGRecommendationStrength.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGRecommendationStrengthVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGRemarkTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGRemarkTypeVS",
+      "dcterms:title": "Knowledge graph L1: remark type",
+      "dcterms:description": "All codes of KGRemarkType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGRemarkTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGResolutionStatusVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGResolutionStatusVS",
+      "dcterms:title": "Knowledge graph L1: resolution status",
+      "dcterms:description": "All codes of KGResolutionStatus.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGResolutionStatusVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGRowTypeVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGRowTypeVS",
+      "dcterms:title": "Knowledge graph L1: row type",
+      "dcterms:description": "All codes of KGRowType.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGRowTypeVS"
+      }
+    },
+    {
+      "@id": "ValueSet-KGTerminologySystemVS.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/KGTerminologySystemVS",
+      "dcterms:title": "Knowledge graph L1: terminology system",
+      "dcterms:description": "All codes of KGTerminologySystem.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/base/ValueSet/KGTerminologySystemVS"
+      }
+    },
+    {
       "@id": "ValueSet-SGAuthoringPersonaTypesVS.jsonld",
       "@type": "fhir:ValueSet",
       "dcterms:identifier": "ValueSet/SGAuthoringPersonaTypesVS",
@@ -1777,397 +2513,11 @@
       }
     },
     {
-      "@id": "ActivityDefinition-SGDecisionTableGuidance.jsonld",
-      "@type": "fhir:ActivityDefinition",
-      "dcterms:identifier": "ActivityDefinition/SGDecisionTableGuidance",
-      "dcterms:title": "SGDecisionTableGuidance",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/base/ActivityDefinition/SGDecisionTableGuidance"
-      }
-    },
-    {
-      "@id": "Basic-DAK.Persona.CommunityHealthWorker.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.CommunityHealthWorker",
-      "dcterms:title": "DAK.Persona.CommunityHealthWorker"
-    },
-    {
-      "@id": "Basic-DAK.Persona.DataManager.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.DataManager",
-      "dcterms:title": "DAK.Persona.DataManager"
-    },
-    {
-      "@id": "Basic-DAK.Persona.HealthcareProvider.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.HealthcareProvider",
-      "dcterms:title": "DAK.Persona.HealthcareProvider"
-    },
-    {
-      "@id": "Basic-DAK.Persona.HealthSystemManager.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.HealthSystemManager",
-      "dcterms:title": "DAK.Persona.HealthSystemManager"
-    },
-    {
-      "@id": "Basic-DAK.Persona.Person.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.Person",
-      "dcterms:title": "DAK.Persona.Person"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.ClientRegistry.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.ClientRegistry",
-      "dcterms:title": "DAK.Persona.System.ClientRegistry"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.EMR.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.EMR",
-      "dcterms:title": "DAK.Persona.System.EMR"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.HMIS.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.HMIS",
-      "dcterms:title": "DAK.Persona.System.HMIS"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.InteropPlatform.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.InteropPlatform",
-      "dcterms:title": "DAK.Persona.System.InteropPlatform"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.LIS.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.LIS",
-      "dcterms:title": "DAK.Persona.System.LIS"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.LMIS.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.LMIS",
-      "dcterms:title": "DAK.Persona.System.LMIS"
-    },
-    {
-      "@id": "Basic-DAK.Persona.System.SurveillanceSystem.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/DAK.Persona.System.SurveillanceSystem",
-      "dcterms:title": "DAK.Persona.System.SurveillanceSystem"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.BusinessAnalyst.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.BusinessAnalyst",
-      "dcterms:title": "SGAuthoring.Persona.BusinessAnalyst"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.ClinicalSME.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.ClinicalSME",
-      "dcterms:title": "SGAuthoring.Persona.ClinicalSME"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.ContentReviewer.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.ContentReviewer",
-      "dcterms:title": "SGAuthoring.Persona.ContentReviewer"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.FHIRModeller.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.FHIRModeller",
-      "dcterms:title": "SGAuthoring.Persona.FHIRModeller"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.ProgrammeManager.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.ProgrammeManager",
-      "dcterms:title": "SGAuthoring.Persona.ProgrammeManager"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.PublicationManager.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.PublicationManager",
-      "dcterms:title": "SGAuthoring.Persona.PublicationManager"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.QCReviewer.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.QCReviewer",
-      "dcterms:title": "SGAuthoring.Persona.QCReviewer"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.TechnicalOfficer.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.TechnicalOfficer",
-      "dcterms:title": "SGAuthoring.Persona.TechnicalOfficer"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.Terminologist.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.Terminologist",
-      "dcterms:title": "SGAuthoring.Persona.Terminologist"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Persona.Translator.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Persona.Translator",
-      "dcterms:title": "SGAuthoring.Persona.Translator"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorActorDefinitions.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorActorDefinitions",
-      "dcterms:title": "SGAuthoring.Skills.AuthorActorDefinitions"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorBusinessProcesses.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorBusinessProcesses",
-      "dcterms:title": "SGAuthoring.Skills.AuthorBusinessProcesses"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorCodeSystems.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorCodeSystems",
-      "dcterms:title": "SGAuthoring.Skills.AuthorCodeSystems"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorConceptMaps.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorConceptMaps",
-      "dcterms:title": "SGAuthoring.Skills.AuthorConceptMaps"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorCQL.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorCQL",
-      "dcterms:title": "SGAuthoring.Skills.AuthorCQL"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorDataDictionary.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorDataDictionary",
-      "dcterms:title": "SGAuthoring.Skills.AuthorDataDictionary"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorDecisionLogic.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorDecisionLogic",
-      "dcterms:title": "SGAuthoring.Skills.AuthorDecisionLogic"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorExampleScenarios.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorExampleScenarios",
-      "dcterms:title": "SGAuthoring.Skills.AuthorExampleScenarios"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorFHIRProfiles.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorFHIRProfiles",
-      "dcterms:title": "SGAuthoring.Skills.AuthorFHIRProfiles"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorFHIRRequirements.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorFHIRRequirements",
-      "dcterms:title": "SGAuthoring.Skills.AuthorFHIRRequirements"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorFunctionalRequirements.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorFunctionalRequirements",
-      "dcterms:title": "SGAuthoring.Skills.AuthorFunctionalRequirements"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorIndicators.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorIndicators",
-      "dcterms:title": "SGAuthoring.Skills.AuthorIndicators"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorLogicalModels.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorLogicalModels",
-      "dcterms:title": "SGAuthoring.Skills.AuthorLogicalModels"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorMeasures.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorMeasures",
-      "dcterms:title": "SGAuthoring.Skills.AuthorMeasures"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorPersonas.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorPersonas",
-      "dcterms:title": "SGAuthoring.Skills.AuthorPersonas"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorPlanDefinitions.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorPlanDefinitions",
-      "dcterms:title": "SGAuthoring.Skills.AuthorPlanDefinitions"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorQuestionnaires.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorQuestionnaires",
-      "dcterms:title": "SGAuthoring.Skills.AuthorQuestionnaires"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorSchedulingLogic.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorSchedulingLogic",
-      "dcterms:title": "SGAuthoring.Skills.AuthorSchedulingLogic"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorStructureMaps.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorStructureMaps",
-      "dcterms:title": "SGAuthoring.Skills.AuthorStructureMaps"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorTestCases.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorTestCases",
-      "dcterms:title": "SGAuthoring.Skills.AuthorTestCases"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorUserScenarios.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorUserScenarios",
-      "dcterms:title": "SGAuthoring.Skills.AuthorUserScenarios"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.AuthorValueSets.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.AuthorValueSets",
-      "dcterms:title": "SGAuthoring.Skills.AuthorValueSets"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.BuildIG.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.BuildIG",
-      "dcterms:title": "SGAuthoring.Skills.BuildIG"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ConfigureIG.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ConfigureIG",
-      "dcterms:title": "SGAuthoring.Skills.ConfigureIG"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.InterpretClinicalRecommendations.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.InterpretClinicalRecommendations",
-      "dcterms:title": "SGAuthoring.Skills.InterpretClinicalRecommendations"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ManageGovernance.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ManageGovernance",
-      "dcterms:title": "SGAuthoring.Skills.ManageGovernance"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ManageReleases.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ManageReleases",
-      "dcterms:title": "SGAuthoring.Skills.ManageReleases"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ManageStakeholders.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ManageStakeholders",
-      "dcterms:title": "SGAuthoring.Skills.ManageStakeholders"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.MapConcepts.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.MapConcepts",
-      "dcterms:title": "SGAuthoring.Skills.MapConcepts"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.PlanIterations.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.PlanIterations",
-      "dcterms:title": "SGAuthoring.Skills.PlanIterations"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ReviewAndApproveContent.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ReviewAndApproveContent",
-      "dcterms:title": "SGAuthoring.Skills.ReviewAndApproveContent"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ReviewChecklist.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ReviewChecklist",
-      "dcterms:title": "SGAuthoring.Skills.ReviewChecklist"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ReviewL1Guidelines.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ReviewL1Guidelines",
-      "dcterms:title": "SGAuthoring.Skills.ReviewL1Guidelines"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ReviewTerminology.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ReviewTerminology",
-      "dcterms:title": "SGAuthoring.Skills.ReviewTerminology"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ReviewTranslations.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ReviewTranslations",
-      "dcterms:title": "SGAuthoring.Skills.ReviewTranslations"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.RunQAChecks.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.RunQAChecks",
-      "dcterms:title": "SGAuthoring.Skills.RunQAChecks"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ScopeDAK.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ScopeDAK",
-      "dcterms:title": "SGAuthoring.Skills.ScopeDAK"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.TranslateContent.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.TranslateContent",
-      "dcterms:title": "SGAuthoring.Skills.TranslateContent"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ValidateArtifactConformance.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ValidateArtifactConformance",
-      "dcterms:title": "SGAuthoring.Skills.ValidateArtifactConformance"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ValidateDAKContent.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ValidateDAKContent",
-      "dcterms:title": "SGAuthoring.Skills.ValidateDAKContent"
-    },
-    {
-      "@id": "Basic-SGAuthoring.Skills.ValidateL3Functionality.jsonld",
-      "@type": "fhir:Basic",
-      "dcterms:identifier": "Basic/SGAuthoring.Skills.ValidateL3Functionality",
-      "dcterms:title": "SGAuthoring.Skills.ValidateL3Functionality"
-    },
-    {
       "@id": "ImplementationGuide-smart.who.int.base.jsonld",
       "@type": "fhir:ImplementationGuide",
       "dcterms:identifier": "ImplementationGuide/smart.who.int.base",
-      "dcterms:title": "Base",
+      "dcterms:title": "SMART Base",
+      "dcterms:description": "Base SMART Guidelines implementation guide to be used as the base dependency for all SMART Guidelines IGs",
       "schema:sameAs": {
         "@id": "http://smart.who.int/base/ImplementationGuide/smart.who.int.base"
       }

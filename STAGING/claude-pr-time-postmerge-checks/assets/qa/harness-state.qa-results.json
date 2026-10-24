@@ -21,25 +21,8 @@
     },
     "health-result-is-from-the-current-producer": {
       "summary": "A committed health result was written by a version of its producer that no longer exists, so the remedies it states are the old code's remedies — which is how a reader is told to do something the repository has since established cannot work (bean `7umv`). Examined 4.",
-      "count": 4,
-      "entries": [
-        {
-          "where": "cat-harness-tools/health/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
-        },
-        {
-          "where": "folio-assistant-core/test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
-        },
-        {
-          "where": "test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
-        },
-        {
-          "where": "who-iris/test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "interaction-profile-is-read": {
       "summary": "A profile declared in the interaction graph that nothing in the corpus names. The person has stated an accommodation and no skill or script will honour it — `dh4f` at the subject where it costs the most, because it fails silently and at one person. Examined 1.",
@@ -72,5 +55,5 @@
       "entries": []
     }
   },
-  "total": 4
+  "total": 0
 }

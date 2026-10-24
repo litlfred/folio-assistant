@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGLibraryNode.schema.json",
+  "title": "Knowledge graph L1-LIBRARY: Library node",
+  "description": "A node in the ingested library L1 is read from: a source document, a section or a block, addressed by the library's own IRI. Opaque, as L1 asserts nothing about the library's internal model; the library is upstream, so pointing at it keeps the layering rule. Class IRI: http://smart.who.int/kg/library-node.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGLibraryNode",
+      "description": "Resource type identifier for KGLibraryNode logical model"
+    },
+    "iri": {
+      "type": "string",
+      "format": "uri",
+      "description": "The library node's own IRI."
+    },
+    "libraryClass": {
+      "type": "string",
+      "format": "uri",
+      "description": "The library class it is an instance of (cat-harness:SourceDocument, doco:Section, cat-harness:Block, …)."
+    },
+    "entry": {
+      "type": "string",
+      "description": "The library entry it belongs to (e.g. 9789240016514-eng)."
+    },
+    "pageRange": {
+      "type": "string",
+      "description": "Physical pages it covers, where it is a section or block."
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGLibraryNode"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        }
+      }
+    }
+  ]
+}

@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/DAK.Persona.System.EMR",
   "schema:name": "ElectronicMedicalRecord",
   "dcterms:title": "Electronic Medical Record (EMR) System",
-  "dcterms:description": "A secure, digital system that holds information about people's health and clinical care managed by healthcare providers. Also referred to as an Electronic Health Record (EHR). The EMR system supports DHIs including: Longitudinal tracking of person's health status and services (2.2.1) Management of structured clinical records (2.2.2) Management of unstructured clinical records such as notes and images (2.2.3) Clinical decision support prompts and checklists (2.3) Person identification and registration (2.1) Prescription and medication management (2.9) Laboratory results reception (2.10.1) Routine health indicator data collection (2.2.4) Services and Application Type : A5 — Electronic medical record systems Functional areas : Clinical decision support, record management, person registration, appointment scheduling, referral tracking.",
+  "dcterms:description": "A secure, digital system that holds information about people's health and\nclinical care managed by healthcare providers. Also referred to as an\nElectronic Health Record (EHR).\n\nThe EMR system supports DHIs including:\n- Longitudinal tracking of person's health status and services (2.2.1)\n- Management of structured clinical records (2.2.2)\n- Management of unstructured clinical records such as notes and images (2.2.3)\n- Clinical decision support prompts and checklists (2.3)\n- Person identification and registration (2.1)\n- Prescription and medication management (2.9)\n- Laboratory results reception (2.10.1)\n- Routine health indicator data collection (2.2.4)\n\n**Services and Application Type**: A5 — Electronic medical record systems\n\n**Functional areas**: Clinical decision support, record management,\nperson registration, appointment scheduling, referral tracking.",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.EMR"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.EMR.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.EMR.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

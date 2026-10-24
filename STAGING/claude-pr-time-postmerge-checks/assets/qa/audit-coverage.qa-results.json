@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 83 of 83 declared kind(s), 270 gate(s), 88 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 83 of 83 declared kind(s), 271 gate(s), 88 criteria.",
       "count": 83,
       "entries": [
         {
@@ -506,6 +506,7 @@
             "cat-harness/docs",
             "cat-harness/docs/source",
             "cat-harness/site-chrome",
+            "fhir-harness/docs",
             "folio-assistant-core/docs",
             "folio-assistant-core/docs/source",
             "folio-assistant-sci/docs",
@@ -624,6 +625,7 @@
           "subjectKinds": [],
           "gates": [
             "bun run cat check:artifact-index",
+            "bun run cat ig-index:build",
             "bun run cat p2:refusals:check",
             "bun run cat smart:pages",
             "bun run smart:pages"
@@ -1867,7 +1869,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 270 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 271 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },

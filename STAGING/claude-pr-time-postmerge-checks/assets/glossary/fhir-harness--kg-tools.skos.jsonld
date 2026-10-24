@@ -254,6 +254,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/0.1.0/ns#glossary/kg-tools/ig-ast-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the IG AST viewer: a page per instance holding `ig-ast` directories, and a hub"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every visualiser an instance declares `renderedBy: ig-ast-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `ig-ast` directory, at `…/<instance>/`. Each lists the ASTs the directory holds: the IG's package id, resources in total and by type, dependency edges (resolved inside the IG, by origin, by kind), the rebuild plan when one is recorded, and what stays provisional. A declared directory not on disk — a branch-family member not restored, which is the normal case — is reported UNKNOWN with the family it would be restored from, never as zero ASTs. Not `ig-ast-list` extended: that Tool summarises ONE AST it is handed, and a site build has no AST path to hand it."
+        }
+      ],
+      "skos:notation": "ig-ast-pages",
+      "dcterms:source": "fhir-harness/tools/ig-ast-pages/ig-ast-pages.ts#ig-ast-pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/0.1.0/ns#glossary/kg-tools/ig-ast-plan",
       "@type": "skos:Concept",
       "skos:inScheme": {

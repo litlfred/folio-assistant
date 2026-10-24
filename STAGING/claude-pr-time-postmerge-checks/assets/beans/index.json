@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 132,
+      "count": 134,
       "unit": "open beans"
     }
   },
@@ -4791,7 +4791,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-23T18:30:00Z",
+      "updatedAt": "2026-10-24T01:00:00Z",
       "preview": "> **Taking this over? Start at §\"HANDOVER — start here (2026-10-01)\" at the end of this bean.** Earlier sections are history; the order list in §\"Prepared for the agent with network\" is superseded.\n\nRequirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than ",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -13854,6 +13854,34 @@
       "file": "beans/defs/folio-assistant-w6fu--visualiser-follow-ups-disabled-kg-viewer-language.md"
     },
     {
+      "id": "folio-assistant-w7r3",
+      "title": "CONNECTED AGENT: W7 round 3, the incremental rebuild after the temporary-IG fixes, and W8, on smart-immunizations with tx.fhir.org",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T20:40:00Z",
+      "updatedAt": "2026-10-23T22:57:00Z",
+      "preview": "Follows bean `folio-assistant-wv7r`. That round got further than any before it. The base was\nclean, the plan was `incremental`, and the temporary IG's Publisher run reached Jekyll. Two\nthings then failed:\n- Jekyll stopped: `Could not locate the included file 'menu.xml'`;\n- the script exited before W8.\n\nThe fork fixes them:\n- `e3c7119`: the temporary IG gets `input/includes/` and `fsh-generated/inc",
+      "file": "beans/defs/folio-assistant-w7r3--connected-agent-w7-round-3-incremental-rebuild-after-the-temp-ig-fixes.md"
+    },
+    {
+      "id": "folio-assistant-w7r4",
+      "title": "CONNECTED AGENT: W7 round 4, after the cone and link fixes from the W8 review, and W8, on smart-immunizations with tx.fhir.org",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-24T01:00:00Z",
+      "updatedAt": "2026-10-24T08:46:00Z",
+      "preview": "Follows bean `folio-assistant-w7r3`, whose incremental build converged in 1 round for both\nprobes. The W8 review (bean `w8rv`) found two kinds of difference from the full build, both fixed\non the fork:\n- `72b2ba9`: an unresolved CQL library edge cut the cone, and 39 Measures were rebuilt\n  without their library, so they lost their effective data requirements. Edges are now\n  bound by name, and eac",
+      "file": "beans/defs/folio-assistant-w7r4--connected-agent-w7-round-4-after-the-cone-and-link-fixes.md"
+    },
+    {
       "id": "folio-assistant-w82m",
       "title": "TEST COST: kg-export 'a preview says so' builds the export twice and sits at bun's 5 s timeout (fails alone, locally, on main too)",
       "status": "completed",
@@ -13894,6 +13922,20 @@
       "updatedAt": "2026-10-22T16:45:00Z",
       "preview": "Child (a) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §5.1–5.3.\n\nThe gate: any PR whose commits carry agent provenance (a `Co-Authored-By: Claude …` or `Claude-Session:` trailer, a `claude/` head branch, or a bot author) gets a **full adversarial code review by an agent that did not author it**. That review writes a committed verdict, and a required status",
       "file": "beans/defs/folio-assistant-w8jq--merge-gate-a-adversarial-agentic-code-review-is-a.md"
+    },
+    {
+      "id": "folio-assistant-w8rv",
+      "title": "W8 review of the w7r3 round, then the open provenance criteria (page fragments, dependency closure, terminology)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-24T00:30:00Z",
+      "updatedAt": "2026-10-24T00:30:00Z",
+      "preview": "What a9tx still needs, now that its four connected-agent runs (qzex, fpmn, wv7r, w7r3) are\ndone. The cloud thread \"Publisher AST\" holds it.\n\n## 1. W8: diff the w7r3 incremental AST against the full build\n\nResults: `ast-results/2026-10-23-w7r3` @ `539c086`. W7 converged in 1 round for both\nprobes. Run `ig-ast.ts diff` for each probe, W7 against W8, and run the\n`ig-ast-delta-review.bpmn` review. The",
+      "file": "beans/defs/folio-assistant-w8rv--w8-review-of-w7r3-and-the-open-provenance-criteria.md"
     },
     {
       "id": "folio-assistant-w91p",
@@ -15990,14 +16032,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 310,
-        "closed": 257,
-        "open": 53,
-        "inProgress": 24,
+        "total": 313,
+        "closed": 258,
+        "open": 55,
+        "inProgress": 26,
         "todo": 29,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8290322580645161
+        "share": 0.8242811501597445
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16061,8 +16103,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 132,
-    "coveredOpen": 124,
+    "openTotal": 134,
+    "coveredOpen": 126,
     "duplicateIds": 0
   }
 }

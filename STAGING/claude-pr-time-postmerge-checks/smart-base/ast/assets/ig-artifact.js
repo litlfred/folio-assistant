@@ -155,7 +155,7 @@
     var reps = el("span");
     (node["schema:encoding"] || []).forEach(function (e, i) {
       var url = e["schema:contentUrl"] && e["schema:contentUrl"]["@id"];
-      var fmt = String(e["schema:encodingFormat"] || "").replace(/^application\/fhir\+/, "").replace(/^text\/turtle$/, "ttl");
+      var fmt = String(e["schema:encodingFormat"] || "").replace(/^application\/fhir\+/, "");
       var local = e["dcterms:source"] === "local";
       if (i) reps.append(" · ");
       reps.append(link(local ? fetchable(url, node["@id"], nodeUrl) : url, local ? fmt : fmt + " (upstream)", !local));

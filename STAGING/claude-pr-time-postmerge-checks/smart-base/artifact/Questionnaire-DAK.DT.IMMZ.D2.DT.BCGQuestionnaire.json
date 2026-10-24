@@ -10,14 +10,14 @@
   "@type": "fhir:Questionnaire",
   "dcterms:identifier": "Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire",
   "schema:name": "DAK.DT.IMMZ.D2.DT.BCGQuestionnaire",
-  "dcterms:title": "Questionnaire for IMMZ.D2 Determine required vaccination(s) if any",
-  "dcterms:description": "Auto-generated questionnaire for decision table DAK.DT.IMMZ.D2.DT.BCG",
+  "dcterms:title": "IMMZ.D2 Determine required vaccination(s) if any",
+  "dcterms:description": "This questionnaire supports the decision logic for: IMMZ.D2 Determine required vaccination(s) if any",
   "schema:version": "0.3.0",
   "dcterms:type": "Structures: Questionnaires",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -26,24 +26,13 @@
       },
       "schema:encodingFormat": "application/fhir+json",
       "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/Questionnaire-DAK.DT.IMMZ.D2.DT.BCGQuestionnaire.xml"
-      },
-      "schema:encodingFormat": "application/fhir+xml",
-      "dcterms:source": "upstream"
-    },
-    {
-      "@type": "schema:MediaObject",
-      "schema:contentUrl": {
-        "@id": "https://worldhealthorganization.github.io/smart-base/Questionnaire-DAK.DT.IMMZ.D2.DT.BCGQuestionnaire.ttl"
-      },
-      "schema:encodingFormat": "text/turtle",
-      "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

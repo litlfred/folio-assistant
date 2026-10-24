@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-KGIdentifierTypeVS.schema.json",
+  "title": "Knowledge graph L1: identifier type Schema",
+  "description": "JSON Schema for Knowledge graph L1: identifier type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/base/CodeSystem/KGIdentifierType"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "isbn",
+        "iris-handle",
+        "doi",
+        "issn",
+        "url",
+        "other"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the Knowledge graph L1: identifier type ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-KGIdentifierTypeVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/base/ValueSet-KGIdentifierTypeVS.displays.json",
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/KGIdentifierTypeVS",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:30+00:00"
+}
