@@ -2,11 +2,11 @@
 # folio-assistant-pomp
 $schema: bean/1.0.0
 title: A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T06:43:56Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-24T07:47:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -70,7 +70,7 @@ checked against whatever the checker happens to have.
       occurrences and the two distinct guards, and `issue-working` §"Before
       you publish that something does not exist" carries the short form,
       because an issue comment is where one of the two was published
-- [ ] a ruling on whether this ALSO wants a tool — see below
+- [x] a ruling on whether this ALSO wants a tool — see below
 - [ ] if a tool: something that answers "does `<path>` exist anywhere reachable
       — this branch, `origin/main`, or an open PR's head" in one call, since
       the third case is the one neither guard above catches
@@ -128,3 +128,7 @@ _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note
 Asked whether to build the "exists on main or any open PR head" tool now, the
 owner answered *"wait"* — build only after a second session hits case 3, as
 recommended above. Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
+
+## Closed 2026-10-24 (owner choice B)
+
+Ruling: no tool. The owner closed this bean on 2026-10-24 rather than build an "exists on main or any open PR head" checker, so the "if a tool" item does not apply. The two occurrences stay recorded in this bean.
