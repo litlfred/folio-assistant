@@ -2,11 +2,11 @@
 # folio-assistant-rq8s
 $schema: bean/1.0.0
 title: 'A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-10-22T14:07:00Z
+updated_at: 2026-10-24T07:25:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -216,7 +216,7 @@ stdin, and hung. Fixed, with the reason at the call site.
 - [x] The session-start sweep runs it, which needs the agent-side fetch wired
       in — `session-start-coord-sweep.sh` calls scripts, and this one needs a
       listing piped to it
-- [ ] The owner's four `qou` items are theirs: **this session works
+- [x] The owner's four `qou` items are theirs: **this session works
       folio-assistant only, on their instruction, and has no `qou` access**,
       so no bean could be left there. Recorded here instead
 
@@ -291,7 +291,7 @@ decision — **put to the owner rather than invented here.**
       is `unknown` rather than none. It asks for the input rather than fetching
       it, and the 401/403 probe is quoted in place so the next reader does not
       "fix" that by wiring a fetch in.
-- [ ] The owner's `qou` items are theirs: this session works folio-assistant
+- [x] The owner's `qou` items are theirs: this session works folio-assistant
       only and has no `qou` access. Four fresh unread failures (7–7.9 days)
       surfaced on #956 2026-09-22.
 - [x] **Owner decision:** whether the skip should leave a durable trace, which
@@ -342,3 +342,7 @@ whose sweep writes a mark reds every PR again.
 _2026-10-20T18:20:00Z_ — The judge is up: litlfred/cat-harness-tools#492 adds `sweep:mark:check` (`sweep-mark.ts --check`, `@covers sweep-marks`). A mark must parse, name its file's check, and not be dated in the future. Locally, with the gate line added to `code-quality-gates.yml` and a mark on disk, `audit:coverage:require-all` reports 0 new findings. Remaining: merge #492, re-pin cat-harness-tools here, and add the gate line (patch prepared). Only then may sweeps write marks again.
 
 _2026-10-21T17:50:00Z_ — The judge is live. folio-assistant#2610 merged, so `gates-unrun` now runs `sweep:mark:check` (from cat-harness-tools#492, pinned by #2611). A sweep mark no longer reads as a typed-only finding, so marks may be written again. cat-harness-tools#538 drops the temporary script exemption (merged and re-pinned onto `folio-assistant` `main` in `#2614` at `8e465bea76f7`). Only the owner's `qou` box remains open.
+
+## Closed 2026-10-24 (owner choice A)
+
+Owner closed it by card on 2026-10-24 07:22Z ("A. Close both"), session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx. Every built box stands: `check:session-staleness`, the session-start sweep, and the last-checked mark. The one open box, the owner's `qou` sessions, stays with the owner. This project has no `qou` access, so it is recorded here and not done here.
