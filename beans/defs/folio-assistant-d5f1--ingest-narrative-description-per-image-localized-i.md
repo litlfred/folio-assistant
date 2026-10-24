@@ -320,3 +320,5 @@ _2026-10-24T14:18:00Z_ — litlfred/cat-harness#584 merged (9487253c): fr/es/ar/
 _2026-10-24T14:25Z_ — cat-harness#583 merged (c448735d). Batch C opened as cat-harness#586: 32 figures in gurel-tat-2017-swot-analysis, arxiv-2505.10399v1, nist-sp-800-207.
 
 _2026-10-24T14:36Z_ — cat-harness#586 merged (batch C, 32 figures).
+
+_2026-10-24T14:50Z_ — batch D opened as cat-harness#588: 13 figures in omg-2024-spdx-3-0.
