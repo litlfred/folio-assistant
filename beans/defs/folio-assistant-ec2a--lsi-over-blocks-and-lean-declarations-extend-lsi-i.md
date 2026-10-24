@@ -2,11 +2,11 @@
 # folio-assistant-ec2a
 $schema: bean/1.0.0
 title: 'LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph kinds and a cross-graph query'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:08Z
-updated_at: 2026-10-24T09:50:00Z
+updated_at: 2026-10-24T11:32:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -31,3 +31,9 @@ This thread is drafting step 3, the cross-graph `lsi:near`, as a design proposal
 ## Design draft 2026-10-24
 
 Step 3 design: `litlfred/cat-harness#527` (issue #526), with no code. It recommends per-graph lists first, then a joint index measured on recall@5 against explicit references, with providers declared per instance. It waits on the owner.
+
+Step 3 is done (2026-10-24). `lsi:near` now searches each declared graph on its own and prints one list per graph (owner decision A):
+- cat-harness#533: the `lsiUnitProviders` declaration field.
+- cat-harness-tools#726: `pipeline/lsi-near-across.ts`, which `lsi-epics --near` calls after the bean list.
+- folio-assistant-core#211: the `blocks` provider.
+- folio-assistant-sci#74: the `lean-decl` provider (needs `--root lean-decl=<dir>`).
