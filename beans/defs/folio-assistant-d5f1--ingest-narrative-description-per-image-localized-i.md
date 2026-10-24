@@ -330,3 +330,5 @@ _2026-10-24T14:52Z_ — batch E opened as cat-harness#590: 14 figures in arxiv-2
 _2026-10-24T15:02Z_ — cat-harness#590 merged (batch E, 14 figures of arxiv-2607.14456v1).
 
 _2026-10-24T15:18Z_ — cat-harness#592 merged (batch F, 17 figures of arxiv-2607.20636v1).
+
+_2026-10-24T15:35Z_ — cat-harness#595 merged (batch G, 19 figures of arxiv-2505.06046v4).
