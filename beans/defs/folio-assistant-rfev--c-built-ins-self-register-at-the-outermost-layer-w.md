@@ -2,11 +2,11 @@
 # folio-assistant-rfev
 $schema: bean/1.0.0
 title: 'C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-10-23T16:42:00Z
+updated_at: 2026-10-24T07:46:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -289,3 +289,7 @@ On the residue (core holds `glossary/generated/smart-base/`, a generated glossar
 ## 2026-10-23 — moved `glossary/generated/smart-base/` to `smart-base` (`litlfred/smart-base#137`, `litlfred/folio-assistant-core#187`)
 - `litlfred/smart-base#137` (`c2b47fd5`): declared `glossary/` (`id: "glossary"`, `graphTypologies: ["glossary"]`) in `smart-base.json` and moved `glossary/generated/smart-base/{kg-bpmn-activities,kg-schema-fields,kg-skills,kg-tools}.glossary.json` into `smart-base/glossary/generated/smart-base/`.
 - `litlfred/folio-assistant-core#187` (`25b1e26d`): removed `glossary/generated/smart-base/` from `folio-assistant-core` and updated `scripts/glossary-page.ts` (`generatedDirFor`, `allGeneratedDirs`) to write and prune each instance's extracted glossary under its own `glossary/generated/` directory when declared, leaving 0 references to `smart-base` or `folio-assistant-sci` in `folio-assistant-core`.
+
+## 2026-10-24 — completed (drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Both PRs merged green on the owner's tap: `litlfred/smart-base#137` (merge `5229b261`) and `litlfred/folio-assistant-core#187` (merge `f51954e1`). All three boxes ticked. Left for other beans, not this one: `render-latex.ts` in cat-harness-tools/pipeline waits on the wholesale sci move (`saqd`), and `script-sweep.ts`'s `SCRIPT_CHECKERS` table is guarded by the cascade throw.
