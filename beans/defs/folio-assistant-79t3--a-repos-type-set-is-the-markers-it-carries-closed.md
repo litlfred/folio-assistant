@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T21:28:21Z
-updated_at: 2026-09-23T06:15:45Z
+updated_at: 2026-10-24T08:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -238,3 +238,7 @@ formalised types. The skills say so and the existing repos are migrated.
 ## Related, 2026-09-23
 
 Bean a1lq (multiple inheritance) states the owner's rule for resolving a dependency tree: fully resolve, then walk deepest-first from bootstrap/, with one resolver for instances AND node kinds. This bean's type set is closed under the same tree, so it should use that resolver, not a third one.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured: the marker set ships (`content-type.ts`, `content-types-base.ts` registering `harness` and `folio`; smart-base's `dak-content-type.ts` registering `dak` and `sushi`), and `describeRepositoryClosure` is in `harness-config.ts`. Still open per Done when: `ig` registered nowhere (deliberately, per `content-types-base.ts`), sushi has no facts (YAML). Asked the owner whether to close.

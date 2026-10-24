@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-21T17:10:00Z
+updated_at: 2026-10-24T08:05:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -26,3 +26,7 @@ Seeding has landed for every instance, by a different route than this story plan
 Closes when `w1gy` does. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-21T17:10Z_ — Block lifted (`folio-assistant-ybsz` completed) and `smbc` marked satisfied (`scrapped`, superseded by `iai8` per owner ruling 2026-10-16 item 8b). Remaining item: `w1gy` fresh-clone QA.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured: unchanged. Only box left is `w1gy` (fresh-clone QA); closes with it.

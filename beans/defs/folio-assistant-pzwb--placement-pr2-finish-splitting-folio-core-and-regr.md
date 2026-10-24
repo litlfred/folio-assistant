@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-21T17:24:00Z
+updated_at: 2026-10-24T08:05:00Z
 parent: folio-assistant-9umr
 ---
 
@@ -26,3 +26,7 @@ Waits on PR1 (`ybwt`, not yet on main — link when it lands).
 
 ## State 2026-10-09 — still open after the cutover
 measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness mounted at bd72c68, cat-harness-tools at 3ce5100): `cat-harness/skills/folio-core/` still exists, holding `covered-is-not-reachable`, `mcp-assembly`, `mcp-contract`, `mcp-projection`, `skills-and-tools`, `tool-authoring` (+ package-manifest). Box 1 not met; the rest not re-measured. This is now a PR to litlfred/cat-harness (and to core/sci for the editorial skills that move up). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured by file name: 14 of 28 rows are in their target, 14 still in cat-harness.

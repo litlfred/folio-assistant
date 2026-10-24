@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-15T16:49:44Z
+updated_at: 2026-10-24T08:05:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -40,3 +40,7 @@ Box 2 started: the one-line cat-harness fixes are litlfred/cat-harness#382 (url-
 ## OWNER, 2026-10-20 (owner, structured question, 2026-10-20 ~18:00Z; session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) — the release finding
 
 On cat-harness's `release-npm.yml` failing because `@litlfred/bootstrap-tools` is on no registry: **"Publish bootstrap-tools"** to GitHub Packages like the other layers, then regenerate cat-harness's lockfile in the sibling layout.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-checked the 2026-10-20 findings against cat-harness main `e4238567`: F3 (dead `check:adversarial-review` script), F8 (two wrong-direction comments) and F13 (`url-space.ts` @graphNode) are fixed. Still open: F1 (bun.lock nested bootstrap-tools workspace), F5 (`test/README.md` still has 81 links to moved e2e files), F10 (NOTICE still headed folio-assistant and lists sci's claude-scientific-skills; package.json has no `license`). Also found: folio-assistant-sci has no LICENSE or NOTICE although it carries those MIT skills; asked the owner.

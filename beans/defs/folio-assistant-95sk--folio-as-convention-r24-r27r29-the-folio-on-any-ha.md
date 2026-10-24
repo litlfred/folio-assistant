@@ -5,7 +5,7 @@ title: 'FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, material
 status: todo
 type: task
 created_at: 2026-09-23T17:59:01Z
-updated_at: 2026-09-23T17:59:01Z
+updated_at: 2026-10-24T08:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -30,3 +30,7 @@ They are declarations and paths that only mean something once the repo is split 
 - [ ] R27: a materialised asset is written under `folio/`, and the glass reads it from there
 - [ ] R28: creating or linking a document writes it under `folio/`
 - [ ] R29: a todo or sticky can carry a reference into another instance's KG, and the reference resolves
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured: unblocked (the split is done) but none of R24, R27, R28, R29 is started. Feature work, not a move.

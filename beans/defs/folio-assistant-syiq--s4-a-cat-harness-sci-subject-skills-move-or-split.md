@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-15T16:49:44Z
+updated_at: 2026-10-24T08:05:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -19,3 +19,7 @@ Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.jso
 Re-derived from `cat-harness/docs/proposals/placement-audit-2026-10-01.json` against the post-split mount (cat-harness bd72c68): of the **48** cat-harness rows marked `unplanned` with a folio-assistant-sci target, **47** are still at their original path. Not started. Now a pair of cross-repository PRs (litlfred/cat-harness → litlfred/folio-assistant-sci), one at a time per `rfuq`. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured against cat-harness main: 34 of the 48 rows are still at their original path (was 47 on 2026-10-09). Only 2 are plain MOVEs (`authoring-core/editor.md`, `graph-management/edge-kinds-and-blast-radius.md`); 22 are SPLITs and 10 AMBIGUOUS, each needing a per-file edit.
