@@ -312,3 +312,5 @@ _2026-10-24T10:56:06Z_ — Re-claimed by the cloud drain thread "Drain content m
 _2026-10-24T11:34:43Z_ — ar, ru and zh merged, litlfred/folio-assistant-core#212 (557117e8). arxiv-2510.21603v1 now has drafts in all six languages (en, fr, es, ar, ru, zh) for its 50 figures. Still open: the other library entries (~880 English figure drafts) and human confirmation.
 
 _2026-10-24T13:40:00Z_ — litlfred/cat-harness#556 merged (aa48c7a1): fr/es/ar/ru/zh draft narratives for 22 figures in 11 cat-harness entries are on main and wait for a person. Claim released.
+
+_2026-10-24T13:42:00Z_ — Re-claimed by the cloud drain thread "Drain content model and ingest beans" (owner window to ~16:48Z; session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU).
