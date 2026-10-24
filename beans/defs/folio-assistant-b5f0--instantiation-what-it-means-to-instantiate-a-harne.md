@@ -2,13 +2,13 @@
 # folio-assistant-b5f0
 $schema: bean/1.0.0
 title: 'INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-10-21T19:38:00Z
+updated_at: 2026-10-24T09:31:00Z
 parent: folio-assistant-zzmr
 ---
 

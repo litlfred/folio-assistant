@@ -2,11 +2,11 @@
 # folio-assistant-c4rz
 $schema: bean/1.0.0
 title: Migrate the feedback store into the declared todos/ graph
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T23:02:16Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-24T09:31:00Z
 parent: folio-assistant-8jt6
 ---
 

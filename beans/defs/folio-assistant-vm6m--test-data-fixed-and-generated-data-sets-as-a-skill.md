@@ -2,11 +2,11 @@
 # folio-assistant-vm6m
 $schema: bean/1.0.0
 title: 'TEST DATA: fixed and generated data sets as a skill family, specialised per content type'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-01T08:00:56Z
+updated_at: 2026-10-24T09:31:00Z
 parent: folio-assistant-5a3l
 ---
 

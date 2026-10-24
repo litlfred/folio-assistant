@@ -2,11 +2,11 @@
 # folio-assistant-vljz
 $schema: bean/1.0.0
 title: 'QA: test data for SME review of decision support and indicator definitions'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
+updated_at: 2026-10-24T09:31:00Z
 parent: folio-assistant-5a3l
 ---
 
