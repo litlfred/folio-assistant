@@ -2,10 +2,10 @@
 # folio-assistant-supn
 $schema: bean/1.0.0
 title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendation from initialisation state, and health badges'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-10-24T14:20:00Z
+updated_at: 2026-10-24T14:50:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -135,3 +135,5 @@ The owner tapped option A, "Boxes 1-2 now, box 3 paused", at 14:04Z (card in the
 Boxes 1 (setup position per harness) and 2 (per-harness health) may be worked now.
 Box 3 (the card as a todo sticky) waits until the owner unpauses todos and stickies (95sk R29).
 That thread takes boxes 1 and 2 after 0exf.
+
+_2026-10-24T14:50:00Z_ — Boxes 1 and 2 claimed by the "Drain folio-assistant-core beans" thread (https://claude.ai/code/session_01MK9nZ3Gmon4cDBRLSURizU), per the owner ruling above. Box 3 stays paused.
