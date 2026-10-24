@@ -184,8 +184,11 @@ declares <code class="language-plaintext highlighter-rouge">remedies</code> per 
 host it finds unreachable. For packages.fhir.org it is
 <code class="language-plaintext highlighter-rouge">fhir-cache-seed-npm --sushi-config sushi-config.yaml</code>, and for versions npm
 does not carry, <code class="language-plaintext highlighter-rouge">--mirror</code> from a repository that <code class="language-plaintext highlighter-rouge">fhir-package-mirror</code>
-filled on a machine that reaches the host. A GitHub Actions runner is such a
-machine, and a cloud session can drive it alone: push a <code class="language-plaintext highlighter-rouge">claude/mirror-*</code>
+filled on a machine that reaches the host. Pin that repository with
+<code class="language-plaintext highlighter-rouge">--mirror-commit &lt;full 40-character SHA&gt;</code>: git cannot fetch an abbreviated
+SHA from a remote, and the seeder refuses one by name (2026-10-23, a short
+<code class="language-plaintext highlighter-rouge">c344c47</code> dropped the mirror and reported its 3 packages missing).</p><p>A GitHub Actions runner reaches the host, and a cloud session can drive it
+alone to fill the mirror: push a <code class="language-plaintext highlighter-rouge">claude/mirror-*</code>
 branch that edits <code class="language-plaintext highlighter-rouge">packages.txt</code> in the mirror repository, wait for its
 <code class="language-plaintext highlighter-rouge">mirror.yml</code> run, merge, re-seed. No person’s device is needed (2026-10-23,
 bean <code class="language-plaintext highlighter-rouge">53rv</code>).</p><p>SUSHI also adds packages that <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> does not list, such as

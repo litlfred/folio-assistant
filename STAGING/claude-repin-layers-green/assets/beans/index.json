@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 134,
+      "count": 127,
       "unit": "open beans"
     }
   },
@@ -523,6 +523,20 @@
       "updatedAt": "2026-10-06T06:09:21Z",
       "preview": "Arc `3fva`, proposal §2.2–2.4 and §4 Phase 2. Blocked on the SPIKE bean. Serial, one agent: everything else depends on this.\n\n- `qa-store` module:\n  - `readQa(ref, path)` returns hit / miss / corrupt / unknown, and a miss is never read as clean;\n  - `publishQa(ref)` follows the lake-cache write path, with fetch → rebuild-on-tip → push, 3 attempts and `backoff-sleep.ts`, and never `-f`.\n- `bun run ",
       "file": "beans/defs/folio-assistant-16ei--qa-store-one-readwrite-api-for-qa-results-qafetch.md"
+    },
+    {
+      "id": "folio-assistant-17iw",
+      "title": "MIGRATION: public-health and health-system process catalogues move from smart-base to WHO/who-iris once it is live",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-24T07:25:00Z",
+      "updatedAt": "2026-10-24T07:25:00Z",
+      "preview": "Owner, 2026-10-24 (bean `2ipj`): *\"eventually we will have WHO/who-iris. leave in smart-base for now, but bean up migration once WHO/who-iris is live\"*.\n\n## What moves\nThe public-health and health-system process catalogues (BusinessProcessWorkflow + BPMN, with persona ActorDefinitions), drawn from the DTH handbooks ingested in smart-base's library. The clinical catalogue is not in scope: it goes t",
+      "file": "beans/defs/folio-assistant-17iw--migration-public-health-and-health-system-process.md"
     },
     {
       "id": "folio-assistant-18p1",
@@ -1102,21 +1116,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T04:51:47Z",
-      "updatedAt": "2026-10-02T08:01:23Z",
+      "updatedAt": "2026-10-24T07:50:00Z",
       "preview": "Under `5yhm`. **Two disagreements, not one**, and only the second is already\nsolved here.\n\n1. **The extractor and the terminology disagree.** The corpus uses a word the\n   authorised vocabulary spells differently, or does not carry at all. A\n   *content* decision — change the prose, author a local term with its reason,\n   or record that the vocabulary is wrong for this domain. Nothing covers this.",
       "file": "beans/defs/folio-assistant-2i5f--terminology-adjudication-the-extractor-vs-the-term.md"
     },
     {
       "id": "folio-assistant-2ipj",
       "title": "PROCESS CATALOGUES: clinical (smart-base-clinical holds none yet), public health and health system (from the DTH documents)",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:06:52Z",
-      "updatedAt": "2026-10-20T18:19:02Z",
+      "updatedAt": "2026-10-24T07:25:00Z",
       "preview": "Owner, 2026-10-10: *\"there is a WHO/smart-base-clinical ... which will be the catalog of clinical processes/encoutners. Assume that such analouges will exist for public health and health systems (these will come fromt he already ingested Digiatl Transformation Handbooks (for supply chain architecture, product catalogu,,,) and more are coming).\"*\n\n## Measured 2026-10-10\nWorldHealthOrganization/smar",
       "file": "beans/defs/folio-assistant-2ipj--process-catalogues-clinical-smart-base-clinical-ho.md"
     },
@@ -1410,7 +1424,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T18:07:50Z",
-      "updatedAt": "2026-10-22T14:20:00Z",
+      "updatedAt": "2026-10-24T07:40:00Z",
       "preview": "Owner, 2026-10-02, verbatim: \"need to prefix 'special' branches with cat-, cat-qa-reports, cat-fhir-ast, cat-lean-cacje (or whatever), not sure if any more. gh-pages stays as is\" — and later: \"(need to /coordinate and rename active branches)\".\n\nParent: fs43, not 7x5n — fs43 is the arc whose subject is the special branches (its P7, rva2, declares every special branch with one field); 7x5n is the se",
       "file": "beans/defs/folio-assistant-32f6--prefix-the-harnesss-special-branches-with-cat-qa-r.md"
     },
@@ -1466,7 +1480,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:06:52Z",
-      "updatedAt": "2026-10-23T16:42:00Z",
+      "updatedAt": "2026-10-24T07:50:00Z",
       "preview": "Owner, 2026-10-10: *\"these will all need to be a part of a SMART Guideline at some point and are one of clinical health, public health, or health system strengthening guidlines ... In any case these all will be be in the Glossary and can be sorted out later.\"*\n\n**Measured.** No code exists for this anywhere. The closest is smart-base `KGInterventionType` (DRAFT: `#public-health`, `#health-system`,",
       "file": "beans/defs/folio-assistant-398x--guideline-domain-clinical-public-health-health-sys.md"
     },
@@ -2693,7 +2707,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T04:51:06Z",
-      "updatedAt": "2026-10-02T08:01:23Z",
+      "updatedAt": "2026-10-24T07:50:00Z",
       "preview": "Owner, 2026-09-25: *\"extracting exsiting glossary needs compaision to existing\ntermonology/coding. there needs to be a whole set of skills on terminiology\nindetificatio. mapping. ajdudication. bean up as todo. we will integrate, for\nexample, OCL at some point as a Tool\"*.\n\n## RE-SCOPED 2026-09-29 against what has since landed on `main`\n\nThis bean was written when the glossary only extracted. Three",
       "file": "beans/defs/folio-assistant-5yhm--terminology-identification-mapping-and-adjudicatio.md"
     },
@@ -3031,7 +3045,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:59:52Z",
-      "updatedAt": "2026-10-03T07:43:33Z",
+      "updatedAt": "2026-10-24T07:40:00Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
@@ -4791,7 +4805,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-24T01:00:00Z",
+      "updatedAt": "2026-10-24T07:45:00Z",
       "preview": "> **Taking this over? Start at §\"HANDOVER — start here (2026-10-01)\" at the end of this bean.** Earlier sections are history; the order list in §\"Prepared for the agent with network\" is superseded.\n\nRequirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than ",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -5012,14 +5026,14 @@
     {
       "id": "folio-assistant-b5f0",
       "title": "INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:23:54Z",
-      "updatedAt": "2026-10-21T19:38:00Z",
+      "updatedAt": "2026-10-24T09:31:00Z",
       "preview": "Owner, 2026-09-20, across three messages:\n\n> \"migration to cat-harness.config.json as an instance declaration in root.\n> also need bootstrap.config.json to declare its instance data upon\n> initialization. this should be part of ALL harness initializations. (not\n> dependency, but initiation = create UI/start workflow beans todos, install\n> directories etc. to a working state). this is a 'Working KG",
       "file": "beans/defs/folio-assistant-b5f0--instantiation-what-it-means-to-instantiate-a-harne.md"
     },
@@ -5506,14 +5520,14 @@
     {
       "id": "folio-assistant-c4rz",
       "title": "Migrate the feedback store into the declared todos/ graph",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T23:02:16Z",
-      "updatedAt": "2026-09-29T20:52:42Z",
+      "updatedAt": "2026-10-24T09:31:00Z",
       "preview": "## What landed already (2026-09-18, `claude/festive-galileo-s7ibx0`)\n\nThe author's correction: *\"TodoItem = Todo is a human actor state management.\nit is content. should be moved into KG with declared dir like todos/\"*, then\n*\"should be tagged by Roles, processes, tasks, user identification (e.g. as\ntool github user)\"*.\n\nDone: three graph kinds (`todos`, `todo-items`, `todo-feedback`),\n`schemas/to",
       "file": "beans/defs/folio-assistant-c4rz--migrate-the-feedback-store-into-the-declared-todos.md"
     },
@@ -5760,14 +5774,14 @@
     {
       "id": "folio-assistant-ckej",
       "title": "CONJECTURE REGISTER: a register node per open problem, and a formal|identification field on conjecture() (folio-assistant-sci)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:08Z",
-      "updatedAt": "2026-10-04T15:10:08Z",
+      "updatedAt": "2026-10-24T09:31:00Z",
       "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. ConjectureBlock carries only an optional lean field. Proposed: a conjectures graph kind (holds: state) under the paper adapter, status lifecycle as DMN, source block, Lean stub, critical-path theorems that assume it (lean-formal-grap",
       "file": "beans/defs/folio-assistant-ckej--conjecture-register-a-register-node-per-open-probl.md"
     },
@@ -5944,14 +5958,14 @@
     {
       "id": "folio-assistant-cydz",
       "title": "IG personas cross-link to BPMN swimlanes, with a lane/persona QA check",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T16:13:16Z",
-      "updatedAt": "2026-10-10T16:47:37Z",
+      "updatedAt": "2026-10-24T07:20:00Z",
       "preview": "Owner 2026-10-10: personas/roles should cross-link to the swimlanes in the processes, following cat-harness's role=swimlane QA (related: sqtq, u5va).\n\nMeasured on smart-immunizations main (86898e6):\n- 8 personas live only as rows of an HTML table on personas.md. There are NO ActorDefinitions.\n- The lanes exist only inside 10 Visio SVGs, as v:val of visHeadingText.\n- Match: HW is inside 'Vaccinatio",
       "file": "beans/defs/folio-assistant-cydz--ig-personas-cross-link-to-bpmn-swimlanes-with-a-la.md"
     },
@@ -7752,7 +7766,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:08Z",
-      "updatedAt": "2026-10-23T08:00:00Z",
+      "updatedAt": "2026-10-24T07:40:00Z",
       "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. milestone-status.ts rolls up milestones; nothing draws an epic over time or chapter x {proved, sorry, axiom, conjecture open, active bean, verdict}. Depends on WORK TRACEABILITY and CONJECTURE REGISTER. Must follow board-diagram-inte",
       "file": "beans/defs/folio-assistant-hf2q--programme-progress-an-epic-burn-down-and-a-math-pr.md"
     },
@@ -8888,14 +8902,14 @@
     {
       "id": "folio-assistant-kpcl",
       "title": "STREAM 4/4: trust the instruments — the stale-claim sweep, CI that does not fire, and the QA record (1xhc + 1swy + ahvw, 43 open beans)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:29:28Z",
-      "updatedAt": "2026-10-21T17:15:00Z",
+      "updatedAt": "2026-10-24T07:25:00Z",
       "preview": "## What this is\n\nStream 4 of 4 in the 2026-09-22 consolidation, added by the owner after the\nfirst three were launched. It owns **the mechanism that produced the stall**,\nnot a feature area: `1xhc` (CI reliability, 11 open), `1swy` (QA, 17 open) and\n`ahvw` (process, 15 open) — **43 beans** — plus the stale-claim sweep itself.\n\nThe other three streams make the goals move. This one makes the instrum",
       "file": "beans/defs/folio-assistant-kpcl--stream-44-trust-the-instruments-the-stale-claim-sw.md"
     },
@@ -9880,14 +9894,14 @@
     {
       "id": "folio-assistant-mwzd",
       "title": "INGEST trust + origin sources (#1614 item 4): WHO SMART Trust IG, C2PA spec, DSpace 7 REST contract",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-scfh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:42:36Z",
-      "updatedAt": "2026-10-21T17:56:00Z",
+      "updatedAt": "2026-10-24T07:20:00Z",
       "preview": "Issue #1614 item 4, slides 2 of the KG/folio-asst deck: signed assets and the trust network; IRIS (DSpace) as the L1 origin.\n\n## Done when\n\n- [x] WHO SMART Trust IG narrative pages held as an L1 entry under the smart-trust instance, IG version recorded from sushi-config.yaml\n- [x] C2PA Technical Specification (latest released version) held or referenced per its licence, version recorded (`folio-as",
       "file": "beans/defs/folio-assistant-mwzd--ingest-trust-origin-sources-1614-item-4-who-smart.md"
     },
@@ -10611,7 +10625,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T18:10:08Z",
-      "updatedAt": "2026-10-22T14:20:00Z",
+      "updatedAt": "2026-10-24T07:40:00Z",
       "preview": "Follow-up to folio-assistant-32f6. During the cat- rename every reader and writer resolves the new name first, then the legacy name (`cat-harness/scripts/special-branches.json`). This bean removes that fallback.\n\n## When\nNot before ALL of:\n1. the owner has renamed every legacy branch through the rename API — in this repository (`qa-reports`, `state`) AND in each folio repository carrying a `lake-c",
       "file": "beans/defs/folio-assistant-oycs--remove-the-legacy-special-branch-names-qa-reports.md"
     },
@@ -11218,14 +11232,14 @@
     {
       "id": "folio-assistant-qh1s",
       "title": "LIT SEARCH: a process and methodologies for organising requirements as they are filed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:34:01Z",
-      "updatedAt": "2026-10-23T20:50:00Z",
+      "updatedAt": "2026-10-24T07:12:56Z",
       "preview": "Issue #1164. Owner, 2026-09-23, on filing a shipped feature's proposal into docs/requirements/: 'make sure no name collision, need to organize things when filing. need process to do so and methodologies. (we dont have yet... bean up for lit search)'.\n\nWhat exists: one page per shipped feature, id = file name, check:requirements refuses a slug used twice. Nothing says how requirements are GROUPED, ",
       "file": "beans/defs/folio-assistant-qh1s--lit-search-a-process-and-methodologies-for-organis.md"
     },
@@ -11838,14 +11852,14 @@
     {
       "id": "folio-assistant-rq8s",
       "title": "A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-10-22T14:07:00Z",
+      "updatedAt": "2026-10-24T07:25:00Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -12076,14 +12090,14 @@
     {
       "id": "folio-assistant-scfh",
       "title": "INGEST SLIDES: pptx+odp rung, a11y probe, KG/folio-asst deck into library, methodology gaps, docs (#1614)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:32:51Z",
-      "updatedAt": "2026-10-21T17:56:00Z",
+      "updatedAt": "2026-10-24T07:50:00Z",
       "preview": "Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run cat ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.\n\n## Done when\n- [x] slides-structure.py rung + ingest-document.ts routing + tests\n- [x] library-ingestion skill updated\n- [x] deck ingested to a library with",
       "file": "beans/defs/folio-assistant-scfh--ingest-slides-pptxodp-rung-a11y-probe-kgfolio-asst.md"
     },
@@ -12626,14 +12640,14 @@
     {
       "id": "folio-assistant-tdir",
       "title": "TOOL FOLDERS: one Tool per `tools/<id>/<id>.ts`, its own published JSON-LD and IRI, its I/O types as their own JSON Schema files, and a QA report per Tool — migrate every litlfred instance",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T18:05:00Z",
-      "updatedAt": "2026-10-21T18:58:00Z",
+      "updatedAt": "2026-10-24T07:40:00Z",
       "preview": "## The ask, owner 2026-10-15 — verbatim\n\nQuoted rather than paraphrased; it arrived in four messages in session\n`session_01XZ5H7vswrTg7r3Kv2k2EhZ` (folio-assistant#2559, Uganda adaptation):\n\n| smart-base/tools/index.ts has lots of defined tools. why are they not each\n| in their own folder like smart-base/tools/extract-dak (should be bean about\n| Tools getting their own folders and having a QA repo",
       "file": "beans/defs/folio-assistant-tdir--tools-get-their-own-folders-one-tool-per-tools-id.md"
     },
@@ -13544,28 +13558,28 @@
     {
       "id": "folio-assistant-vljz",
       "title": "QA: test data for SME review of decision support and indicator definitions",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T08:55:36Z",
-      "updatedAt": "2026-09-19T08:55:36Z",
+      "updatedAt": "2026-10-24T09:31:00Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"QA review as\npart of test process recorded in KG. also test data used for SME review of\ndecision support, and indicator defintion.\"\n\n## What is distinct about this from ordinary QA\n\nOrdinary QA here is mechanical or agentic: a criterion runs over a block and\nwrites a verdict. This is neither. A subject-matter expert reads a **wo",
       "file": "beans/defs/folio-assistant-vljz--qa-test-data-for-sme-review-of-decision-support-an.md"
     },
     {
       "id": "folio-assistant-vm6m",
       "title": "TEST DATA: fixed and generated data sets as a skill family, specialised per content type",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T08:55:36Z",
-      "updatedAt": "2026-10-01T08:00:56Z",
+      "updatedAt": "2026-10-24T09:31:00Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"need fixed\nand generated data sets skills\" and \"need generate data sets (e.g. fhir data\ntemplating system, etc) so need egneral processes and specialization for content\nttype, subprocess etc.\"\n\n## Two kinds, and they are not degrees of the same thing\n\n**Fixed** data is committed, reviewed, and cited. It is evidence: an SME looke",
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
     },
@@ -13870,16 +13884,30 @@
     {
       "id": "folio-assistant-w7r4",
       "title": "CONNECTED AGENT: W7 round 4, after the cone and link fixes from the W8 review, and W8, on smart-immunizations with tx.fhir.org",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-a9tx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T01:00:00Z",
-      "updatedAt": "2026-10-24T01:00:00Z",
+      "updatedAt": "2026-10-24T09:12:00Z",
       "preview": "Follows bean `folio-assistant-w7r3`, whose incremental build converged in 1 round for both\nprobes. The W8 review (bean `w8rv`) found two kinds of difference from the full build, both fixed\non the fork:\n- `72b2ba9`: an unresolved CQL library edge cut the cone, and 39 Measures were rebuilt\n  without their library, so they lost their effective data requirements. Edges are now\n  bound by name, and eac",
       "file": "beans/defs/folio-assistant-w7r4--connected-agent-w7-round-4-after-the-cone-and-link-fixes.md"
+    },
+    {
+      "id": "folio-assistant-w7r5",
+      "title": "CONNECTED AGENT: W7 round 5, after the narrative link fixes, and W8, on smart-immunizations with tx.fhir.org",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-24T07:45:00Z",
+      "updatedAt": "2026-10-24T07:45:00Z",
+      "preview": "Follows bean `folio-assistant-w7r4`. Its incremental AST matched the full build in content and\nedges: 0 edge changes, and the Measures kept their data requirements. The only differences left\nwere links in narratives to cached resources, fixed on the fork in `6abb8a5`:\n- the href read `/ValueSet-X.html` instead of `ValueSet-X.html`;\n- the link text showed the canonical instead of the resource's nam",
+      "file": "beans/defs/folio-assistant-w7r5--connected-agent-w7-round-5-after-the-narrative-link-fixes.md"
     },
     {
       "id": "folio-assistant-w82m",
@@ -14347,7 +14375,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-10-16T10:30:00Z",
+      "updatedAt": "2026-10-24T07:50:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
@@ -16032,14 +16060,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 313,
-        "closed": 258,
-        "open": 55,
+        "total": 315,
+        "closed": 262,
+        "open": 53,
         "inProgress": 25,
-        "todo": 30,
+        "todo": 28,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8242811501597445
+        "share": 0.8317460317460318
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16078,13 +16106,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 631,
-        "closed": 573,
-        "open": 58,
-        "inProgress": 24,
-        "todo": 33,
+        "closed": 576,
+        "open": 55,
+        "inProgress": 25,
+        "todo": 29,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.9080824088748018
+        "share": 0.9128367670364501
       },
       {
         "id": "folio-assistant-npuo",
@@ -16093,18 +16121,18 @@
         "status": "in-progress",
         "epics": 2,
         "total": 74,
-        "closed": 61,
-        "open": 13,
-        "inProgress": 7,
-        "todo": 6,
+        "closed": 63,
+        "open": 11,
+        "inProgress": 6,
+        "todo": 5,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8243243243243243
+        "share": 0.8513513513513513
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 134,
-    "coveredOpen": 126,
+    "openTotal": 127,
+    "coveredOpen": 119,
     "duplicateIds": 0
   }
 }

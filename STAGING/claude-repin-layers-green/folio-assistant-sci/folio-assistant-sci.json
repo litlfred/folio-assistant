@@ -374,10 +374,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T02:12:48.163Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
-  "sourceCommitSha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
-  "sourceCommitAt": "2026-10-24T01:51:24Z",
+  "generatedAt": "2026-10-24T07:50:18.870Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a919d957575998f9320a3aea72eb7e4245340868",
+  "sourceCommitSha": "a919d957575998f9320a3aea72eb7e4245340868",
+  "sourceCommitAt": "2026-10-24T07:31:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -387,9 +387,9 @@
     "SequenceFlow": 25,
     "Lane": 9,
     "ProcessNode": 26,
-    "GraphTypology": 21,
+    "GraphTypology": 22,
     "Role": 3,
-    "Subgraph": 22,
+    "Subgraph": 23,
     "Asset": 3,
     "Tool": 8
   },
@@ -2181,6 +2181,13 @@
       "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
     },
     {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "scenarios",
+      "renderable": false,
+      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/methodology",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "methodology",
@@ -2700,6 +2707,23 @@
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+      ],
+      "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, and the actors in `actors/`. The compute-authoring-agent, lean-authoring-agent and proof-review-agent roles moved here from cat-harness in M4 (cat-harness#443), and this layer's `address-*` voices point at them. The files arrived without this declaration, so `check:voices` found no role graph here.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/qa",
@@ -4281,6 +4305,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#directory/scenarios",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/scenarios",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/scenarios"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#directory/qa",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/qa",
@@ -4313,8 +4343,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
+    "sha": "a919d957575998f9320a3aea72eb7e4245340868",
     "pr": "2681/merge",
-    "run": "40051669660"
+    "run": "40074474685"
   }
 }

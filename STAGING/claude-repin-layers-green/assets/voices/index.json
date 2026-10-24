@@ -2,7 +2,7 @@
   "$schema": "folio-voices-index/v1",
   "tile": {
     "voices": {
-      "count": 46,
+      "count": 49,
       "unit": "voices"
     }
   },
@@ -63,6 +63,9 @@
       "dir": "folio-assistant-sci/skills/voices",
       "present": true,
       "voices": [
+        "address-compute-authoring-agent",
+        "address-lean-authoring-agent",
+        "address-proof-review-agent",
         "milnor"
       ]
     },
@@ -315,6 +318,39 @@
           "cites": "scenarios/roles.json",
           "citesInstance": "litlfred/cat-harness",
           "quote": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
+        }
+      ]
+    },
+    {
+      "id": "address-compute-authoring-agent",
+      "title": "Addressing the Compute authoring agent",
+      "description": "How to write for a reader acting as Compute authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/address-compute-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-compute-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `compute-authoring-agent` — its persona, in the folio-assistant-sci role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-compute-authoring-agent-register",
+          "title": "Numeric and traceable",
+          "description": "Numeric and traceable. Every value names the computation that produced it and the commit it was produced at.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "litlfred/folio-assistant-sci",
+          "quote": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
         }
       ]
     },
@@ -616,6 +652,39 @@
       ]
     },
     {
+      "id": "address-lean-authoring-agent",
+      "title": "Addressing the Lean authoring agent",
+      "description": "How to write for a reader acting as Lean authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/address-lean-authoring-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-lean-authoring-agent",
+      "sources": [
+        {
+          "title": "Role `lean-authoring-agent` — its persona, in the folio-assistant-sci role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-lean-authoring-agent-register",
+          "title": "Mechanical and exact",
+          "description": "Mechanical and exact. Name the declaration, the error, and the tactic. A proof either elaborates or it does not.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "litlfred/folio-assistant-sci",
+          "quote": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
+        }
+      ]
+    },
+    {
       "id": "address-librarian",
       "title": "Addressing the Librarian",
       "description": "How to write for a reader acting as Librarian. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
@@ -777,6 +846,39 @@
           "cites": "scenarios/roles.json",
           "citesInstance": "litlfred/cat-harness",
           "quote": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank."
+        }
+      ]
+    },
+    {
+      "id": "address-proof-review-agent",
+      "title": "Addressing the Proof review agent",
+      "description": "How to write for a reader acting as Proof review agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/address-proof-review-agent",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-proof-review-agent",
+      "sources": [
+        {
+          "title": "Role `proof-review-agent` — its persona, in the folio-assistant-sci role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-proof-review-agent-register",
+          "title": "Adversarial but specific",
+          "description": "Adversarial but specific. State the step that does not follow, or the hypothesis that makes the statement vacuous.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "litlfred/folio-assistant-sci",
+          "quote": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
         }
       ]
     },
@@ -4084,10 +4186,10 @@
     }
   ],
   "totals": {
-    "voices": 46,
-    "rules": 177,
+    "voices": 49,
+    "rules": 180,
     "citingLibrary": 138,
-    "citingKgNode": 39,
+    "citingKgNode": 42,
     "mechanical": 35
   }
 }
