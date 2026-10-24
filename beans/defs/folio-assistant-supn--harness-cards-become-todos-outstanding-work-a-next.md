@@ -5,7 +5,7 @@ title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendati
 status: todo
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-10-24T08:58:00Z
+updated_at: 2026-10-24T14:20:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -127,3 +127,11 @@ _2026-10-24T08:58:00Z_ — Re-measured, not claimed (https://claude.ai/code/sess
 - **Box 2 still unmet.** No health check is per-instance.
 - **Box 3 now collides with an owner pause.** On 2026-10-24 the owner paused todos and sticky notes, saying "they should be the same thing, that's part of the problem" (bean `95sk`, R29). This box makes the harness card a todo sticky, so it waits on that merge too.
 Left `todo`.
+
+## 2026-10-24 — owner ruling: boxes 1 and 2 now, box 3 paused
+
+The owner tapped option A, "Boxes 1-2 now, box 3 paused", at 14:04Z (card in the
+"Drain folio-assistant-core beans" thread, https://claude.ai/code/session_01MK9nZ3Gmon4cDBRLSURizU).
+Boxes 1 (setup position per harness) and 2 (per-harness health) may be worked now.
+Box 3 (the card as a todo sticky) waits until the owner unpauses todos and stickies (95sk R29).
+That thread takes boxes 1 and 2 after 0exf.
