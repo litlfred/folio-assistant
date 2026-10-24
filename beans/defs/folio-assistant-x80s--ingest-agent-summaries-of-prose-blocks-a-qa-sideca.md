@@ -94,3 +94,5 @@ _2026-10-24T14:53Z_ — cat-harness#589 merged (batch 6, 25 blocks).
 _2026-10-24T14:56Z_ — batch 7 opened as cat-harness#591: 35 blocks in arxiv-2605.03537v1, arxiv-2505.10399v1.
 
 _2026-10-24T15:10Z_ — cat-harness#591 merged (batch 7, 35 blocks of arxiv-2605.03537v1 and arxiv-2505.10399v1).
+
+_2026-10-24T15:22Z_ — cat-harness#593 merged (batch 8, 19 blocks of arxiv-2504.07199v3).
