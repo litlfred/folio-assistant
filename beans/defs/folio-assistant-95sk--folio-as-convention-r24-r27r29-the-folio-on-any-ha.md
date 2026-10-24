@@ -5,7 +5,7 @@ title: 'FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, material
 status: in-progress
 type: task
 created_at: 2026-09-23T17:59:01Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-24T08:50:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -36,3 +36,9 @@ They are declarations and paths that only mean something once the repo is split 
 Re-measured: unblocked (the split is done) but none of R24, R27, R28, R29 is started. Feature work, not a move.
 
 _2026-10-24T08:16:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx (bean drain, stalled-triage thread).
+
+## 2026-10-24 — measured per requirement (https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx)
+
+- **R24: open, and measured.** The glass lives in `cat-harness/site-chrome/assets/js/docs-ui.js` (12.5k lines). It is meant for replica pages: line 973 says "a page with no sidebar (a replica, the harness page) has a glass". On `folio-assistant` gh-pages, the root `index.html` loads `docs-ui.js` and carries `fa-glass-strip`. `who-iris/index.html` and `smart-base/index.html` load neither. What both of them DO load is `navbar-row.js` and `page-layout.js`, so a harness-owned loader there is the route that needs no code of the instance's own.
+- **R27: already met by the owner's ruling, so the box above is worded against it.** `folio-board-requirements.md` §"R27 and question 1" records the owner's choice that the folio is the reader's REPOSITORY, of which `library/` and `uploads/` are declared parts. Writing bytes under `folio/` was the literal reading, which was rejected: `corpus-grep` reads `library/` only, and `folio/` is renderable. The doc says "R27 is therefore already satisfied, and already gated" (`check-catalogue.ts`).
+- **R28, R29: not started.** No writer puts a created or linked document under `folio/`. No todo or sticky schema carries a cross-instance reference.
