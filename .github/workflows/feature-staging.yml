@@ -1280,6 +1280,16 @@ jobs:
             fi
           fi
 
+          # Where this build's CI results will appear. The preview renders in
+          # parallel with CI and never waits for it (owner, 2026-10-23), so the
+          # banner links to the results instead of stating them. A pin of
+          # staging-banner.ts without `--checks-url` ignores the flag.
+          if [ "$PR" != "n/a" ]; then
+            CHECKS_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}/checks"
+          else
+            CHECKS_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}/checks"
+          fi
+
           # shellcheck disable=SC2086  # MAIN_PAGES_ARG is a deliberate two-token flag or empty
           bun run cat-harness-tools/scripts/staging-banner.ts \
             --site ./_site \
@@ -1292,6 +1302,7 @@ jobs:
             --issues-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues" \
             ${ISSUE:+--issue "$ISSUE"} \
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --checks-url "$CHECKS_URL" \
             --main-site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
             $MAIN_PAGES_ARG
 
@@ -1725,6 +1736,9 @@ jobs:
             await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
             let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // CI runs beside the preview, not before it: link where its
+            // results appear rather than waiting for them (owner, 2026-10-23).
+            body += `\n\n**CI results:** https://github.com/${owner}/${repo}/pull/${context.issue.number}/checks — the preview does not wait for them.\n`;
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
@@ -1985,6 +1999,9 @@ jobs:
             await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
             let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // CI runs beside the preview, not before it: link where its
+            // results appear rather than waiting for them (owner, 2026-10-23).
+            body += `\n\n**CI results:** https://github.com/${owner}/${repo}/pull/${context.issue.number}/checks — the preview does not wait for them.\n`;
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
