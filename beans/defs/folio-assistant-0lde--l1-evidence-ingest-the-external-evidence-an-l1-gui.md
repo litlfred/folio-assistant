@@ -5,7 +5,7 @@ title: 'L1 EVIDENCE: ingest the external evidence an L1 guideline computes from 
 status: todo
 type: task
 created_at: 2026-10-04T10:13:24Z
-updated_at: 2026-10-04T10:13:24Z
+updated_at: 2026-10-24T08:14:59Z
 parent: folio-assistant-qvxh
 ---
 
@@ -18,3 +18,7 @@ Four l1-guideline sections (key-questions, evidence-retrieval-and-synthesis, cer
 - [ ] a declared graph holds them (no empty declaration: dh4f)
 - [ ] the four sections name it in computedFrom, and check:document-kind-sources passes
 - [ ] needs network: WHO IRIS / Cochrane Library are unreachable from the cloud container (2026-10-04)
+
+## Claimed 2026-10-24 (FHIR beans thread, session_01Bye99WLJxQpyCxh2eMgW19)
+
+Measured: none of the 12 documents in `smart-base/library/` is a clinical guideline with GRADE or evidence-to-decision tables (all are digital-health handbooks). iris.who.int, cochranelibrary.com and ncbi.nlm.nih.gov are refused by the container proxy. Asked the owner: allow iris.who.int and ingest WHO ANC 2016, or ingest an uploaded PDF, or leave open.

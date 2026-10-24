@@ -2,11 +2,11 @@
 # folio-assistant-cz17
 $schema: bean/1.0.0
 title: 'Migrate dak.json in: the DAK type is ours, and its Logical Model is pending upstream'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:36:56Z
-updated_at: 2026-10-06T06:33:19Z
+updated_at: 2026-10-24T08:14:59Z
 parent: folio-assistant-0lmb
 ---
 
@@ -100,3 +100,7 @@ WORTH LIFTING WHENEVER THIS IS PICKED UP, independent of the IRI decision: input
 ## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
 
 Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Claimed 2026-10-24 (FHIR beans thread, session_01Bye99WLJxQpyCxh2eMgW19)
+
+Re-measured: `DAK.fsh` and every `<Name>Source` in `DAKComponentSources.fsh` are `#active` on litlfred/smart-base main. Item 1 drafted as smart-base#151 (issue #150): the url / canonical / instance wrapper is typed, and the inline instance stays `unknown`. Scope (wrapper only, all nine models, or keep blocked) is on the owner's decision card.
