@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T10:20:00Z
+updated_at: 2026-10-24T10:45:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -113,7 +113,7 @@ Work plan, each step small and upstreamable:
 - [x] **W1** criteria 7, 1, 6 (round 2 of qzex measured them; see the criteria above): flag, `AstExporter`, per-resource dump, toolchain are BUILT; the byte-identical check and a real-IG run are **not yet measured** (both need the package registry)
 - [x] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count. That gives Library 279 = 279 `.cql` files in fsh-cone (2026-10-23), PlanDefinition 138, Measure 41. `ig-ast.ts validity` returns `valid` on both IGs (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 - [~] **W3** criteria 4, 5. BUILT in fork `2924904` (70 tests): the manifest carries `packages` (the pinned closure) and `terminology` (the server, and each expansion's source parameters). The real-build check is bean `w3r1`.
-- [ ] **W4** criterion 3. Scoped 2026-10-24 and put to the owner: A, fragment level (page → fragments → resource → source, from the Publisher's own fragments, no core fork), B, element level (needs a core fork), or C, defer. Recommended: A.
+- [~] **W4** criterion 3, at fragment level (owner, 2026-10-24, option A). BUILT in fork `0c3b0ca` (72 tests): `pages.json` records source → fragment (from `FetchedFile.getOutputNames()`) and page → fragment (from literal include tags). Element level is out of scope. The real-build check is bean `w3r1`.
 
 Not started: this session has read access only, and Maven/JDK availability is
 unchecked. The owner chose to record the plan first (2026-09-30).

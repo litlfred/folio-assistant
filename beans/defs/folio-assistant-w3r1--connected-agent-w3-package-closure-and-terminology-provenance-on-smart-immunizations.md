@@ -1,12 +1,12 @@
 ---
 # folio-assistant-w3r1
 $schema: bean/1.0.0
-title: 'CONNECTED AGENT: W3, the package closure and terminology provenance, on smart-immunizations'
+title: 'CONNECTED AGENT: W3 and W4, package, terminology and page-fragment provenance, on smart-immunizations'
 status: todo
 type: task
 priority: high
 created_at: 2026-10-24T10:20:00Z
-updated_at: 2026-10-24T10:20:00Z
+updated_at: 2026-10-24T10:45:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -15,7 +15,10 @@ W7 and W8 passed in bean `folio-assistant-w7r6`, and the owner lifted the increm
 - `packages`, the pinned package closure;
 - `terminology`, the tx server and what each ValueSet expansion was built from.
 
-This round checks that both are filled on a real build, and that an incremental round carries
+Fork `0c3b0ca` adds W4 at fragment level (owner, option A). `pages.json`, beside the manifest,
+records which source produced which page fragment, and which page includes which fragment.
+
+This round checks that all three are filled on a real build, and that an incremental round carries
 them the same as a full build does.
 
 The rules are as in w7r6:
@@ -36,13 +39,13 @@ Set `status: in-progress` and add a Log line. Commit and push.
 
 ```sh
 cd ~/space_cats/fhir-ig-publisher && git switch claude/ast-export && git pull --ff-only
-git rev-parse --short HEAD    # must be 2924904 or later; record it
-cd ast-export && mvn -q compile && mvn -q test    # 70 tests, all must pass
+git rev-parse --short HEAD    # must be 0c3b0ca or later; record it
+cd ast-export && mvn -q compile && mvn -q test    # 72 tests, all must pass
 ```
 
 ## 2. Rebuild the base
 
-The old base has no `packages` or `terminology`, so rebuild it.
+The old base has no `packages`, `terminology` or `pages.json`, so rebuild it.
 
 ```sh
 W=~/space_cats/ast-real-igs; I=$W/smart-immunizations
@@ -88,6 +91,21 @@ b = {x["valueSet"]: x for x in full.get("terminology", {}).get("expansions", [])
 print("expansions only in incremental:", len(set(a) - set(b)), "only in full:", len(set(b) - set(a)),
       "different:", sum(1 for k in set(a) & set(b) if a[k] != b[k]))
 for k in sorted(set(a) ^ set(b))[:5]: print("   ", k)
+for name, d in [("base", "smart-immunizations/output-ast"), ("incremental", "w7/ast"), ("full", "w8-cql/ast")]:
+    pg = load(d + "/pages.json"); print("== pages.json", name, pg.get("_error", ""), pg.get("unknown", ""))
+    fr, pa = pg.get("fragments", {}), pg.get("pages", {})
+    print("  fragments:", len(fr), " pages:", len(pa), " with a source:", sum(1 for v in pa.values() if "source" in v),
+          " unresolvedIncludes:", pg.get("unresolvedIncludes"))
+    print("  pages with no fragments:", sum(1 for v in pa.values() if not v.get("fragments")))
+    for k in ("Library-IMMZAgeConcepts.html", "index.html"):
+        if k in pa: print("   ", k, json.dumps(pa[k])[:300])
+    for k in list(fr)[:2]: print("   ", k, json.dumps(fr[k])[:200])
+pi, pf = load("w7/ast/pages.json"), load("w8-cql/ast/pages.json")
+for sec in ("fragments", "pages"):
+    x, y = pi.get(sec, {}), pf.get(sec, {})
+    print("pages.json", sec, "only in incremental:", len(set(x) - set(y)), "only in full:", len(set(y) - set(x)),
+          "different:", sum(1 for k in set(x) & set(y) if x[k] != y[k]))
+    for k in sorted(set(x) ^ set(y))[:5]: print("   ", k)
 PY
 ```
 
@@ -95,11 +113,11 @@ Also give `incremental exit N`, `w8 cql exit N`, and the `Converged` line from `
 build fails, give the first `Exception` with its 10 lines before.
 
 ```sh
-cd $W && tar czf w3r1.tgz w3r1-*.txt base-w3.log w8-cql.log smart-immunizations/output-ast/manifest.json \
-  $(ls w7/plan.json w7/work/plan.json w7/ast/manifest.json w8-cql/ast/manifest.json 2>/dev/null)
+cd $W && tar czf w3r1.tgz w3r1-*.txt base-w3.log w8-cql.log smart-immunizations/output-ast/manifest.json smart-immunizations/output-ast/pages.json \
+  $(ls w7/plan.json w7/work/plan.json w7/ast/manifest.json w7/ast/pages.json w8-cql/ast/manifest.json w8-cql/ast/pages.json 2>/dev/null)
 cd ~/space_cats/fhir-ig-publisher && git switch -c ast-results/$(date +%F)-w3r1 origin/claude/ast-export \
   && mkdir -p ast-results && cp $W/w3r1.tgz ast-results/ && git add ast-results \
-  && git commit -m "ast-results: W3 on smart-immunizations (bean w3r1)" \
+  && git commit -m "ast-results: W3 and W4 on smart-immunizations (bean w3r1)" \
   && git push -u origin HEAD
 ```
 
