@@ -5,7 +5,7 @@ title: 'L1 EVIDENCE: ingest the external evidence an L1 guideline computes from 
 status: todo
 type: task
 created_at: 2026-10-04T10:13:24Z
-updated_at: 2026-10-24T08:14:59Z
+updated_at: 2026-10-24T08:24:20Z
 parent: folio-assistant-qvxh
 ---
 
@@ -22,3 +22,5 @@ Four l1-guideline sections (key-questions, evidence-retrieval-and-synthesis, cer
 ## Claimed 2026-10-24 (FHIR beans thread, session_01Bye99WLJxQpyCxh2eMgW19)
 
 Measured: none of the 12 documents in `smart-base/library/` is a clinical guideline with GRADE or evidence-to-decision tables (all are digital-health handbooks). iris.who.int, cochranelibrary.com and ncbi.nlm.nih.gov are refused by the container proxy. Asked the owner: allow iris.who.int and ingest WHO ANC 2016, or ingest an uploaded PDF, or leave open.
+
+_2026-10-24T08:24:20Z_ — Owner chose option A (WHO ANC 2016 from IRIS) and asked for a connected-agent bean for the download: **folio-assistant-d08l**. After it lands: section it into `smart-base/library/`, declare the graph, and point the four sections' `computedFrom` at it.
