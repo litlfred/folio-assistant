@@ -2,10 +2,10 @@
 # folio-assistant-v49e
 $schema: bean/1.0.0
 title: 'WORKFLOW VIEW: cat-harness folio shows where todos and beans sit in the BPMN/DMN, and where a process is breaking down'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-20T14:01:05Z
-updated_at: 2026-09-20T14:01:05Z
+updated_at: 2026-10-24T08:20:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -116,3 +116,5 @@ one that draws an empty lane is the failure this repository keeps paying for.
 *"Where a process is breaking down"* is also now askable: both instances are
 `running` and one has not moved since 06:14, which is exactly the
 looks-like-nothing state this bean names.
+
+_2026-10-24T08:20:00Z_ — **Claimed** (owner said "start v49e", 2026-10-24). PR 1: cat-harness-tools#684 (per-instance view, stuck states, processes links) and cat-harness#510 (home-page link). Item 3 (memory/logs by dependency tree) follows. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
