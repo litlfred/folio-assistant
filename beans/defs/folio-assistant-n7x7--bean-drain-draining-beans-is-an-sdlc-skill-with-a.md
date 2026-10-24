@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-24T08:30:00Z
-updated_at: 2026-10-24T08:30:00Z
+updated_at: 2026-10-24T08:45:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -30,3 +30,5 @@ into the knowledge graph here.
 Related: pomp (the open-PR lookup, reopened today), bssi (the drain as a BPMN process).
 
 _2026-10-24T08:30:00Z_ — Claimed by this session (https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg), with a plain commit on both copies.
+
+_2026-10-24T08:45:00Z_ — PRs litlfred/cat-harness#520 (skill, schemas, Tool definitions) and litlfred/cat-harness-tools#706 (implementations). Issue litlfred/cat-harness#515. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.

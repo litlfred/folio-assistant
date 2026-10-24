@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T06:43:56Z
-updated_at: 2026-10-24T08:30:00Z
+updated_at: 2026-10-24T08:45:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -159,3 +159,5 @@ or a bean id appear on main or on any open PR head, and where?* (bean n7x7 uses 
 the claim check's last step).
 
 _2026-10-24T08:30:00Z_ — Reopened and claimed by https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg, plain commit on both copies.
+
+_2026-10-24T08:45:00Z_ — The lookup is the open-work-lookup Tool: definition in litlfred/cat-harness#520, implementation in litlfred/cat-harness-tools#706. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.
