@@ -82,3 +82,5 @@ _2026-10-24T13:42:00Z_ — Re-claimed by the cloud drain thread "Drain content m
 _2026-10-24T14:14:00Z_ — litlfred/folio-assistant-core#217 merged (231045cd): 22 English drafts for Doc-Researcher (arxiv-2510.21603v1, every prose block) are on main and wait for a person.
 
 _2026-10-24T14:27Z_ — cat-harness#585 merged (summaries batch).
+
+_2026-10-24T14:45Z_ — batch 5 opened as cat-harness#587: 18 blocks in arxiv-2504.21474v1, sammut-bonnici-galea-2015-swot-analysis.
