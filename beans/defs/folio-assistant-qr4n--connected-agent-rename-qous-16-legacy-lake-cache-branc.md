@@ -2,11 +2,11 @@
 # folio-assistant-qr4n
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: rename qou''s 16 legacy lake-cache/* branches to cat/folio-assistant-sci/lake-cache/* with the GitHub rename API'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T07:58:00Z
-updated_at: 2026-10-24T07:58:00Z
+updated_at: 2026-10-24T09:59:15Z
 parent: folio-assistant-fs43
 ---
 
@@ -59,3 +59,4 @@ should answer with the new name.
 - [ ] Log line with the time; status `completed`
 
 ## Log
+- 2026-10-24T09:59:15+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Running Steps 1–3 in background subagent.
