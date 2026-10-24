@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-21T19:42:00Z
+updated_at: 2026-10-24T08:16:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -300,3 +300,5 @@ Asked in the `cat-harness-tools` drain session: when a slot holds several langua
   2. **2A**: `superseded` history in block summaries requires `lang` too (0 entries exist today),
   3. **3A**: `FigureSchema.narrative` on authored paper figure blocks becomes a `NarrativeSlotSchema` slot like every other (0 authored figure blocks carry a narrative today).
 - [ ] Draft localized narratives for each configured non-English language and queue each draft for human confirmation.
+
+_2026-10-24T08:16:00Z_ — Claimed by the cloud drain thread "Drain content model and ingest beans" (session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU). Open work: French pilot in litlfred/folio-assistant-core#202, then the other locales.
