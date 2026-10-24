@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-24T13:02:20Z
+updated_at: 2026-10-24T15:04:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -23,11 +23,11 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md`, Option 
 ## Done when
 - [x] G1: Tool nodes exported as a named subgraph with `index.jsonld` + `index.hydrated.jsonld` (`subgraph:jsonld:check`)
 - [x] G2: a mount entry or override can ask for `hydrated: true` — the named subgraph's `index.hydrated.jsonld` at the pin, no files
-- [ ] G3: `overrides.<instance>.directories` and `kg:materialize` accept NESTED subgraph ids and NODE ids, resolved through `resolveDirectories` / the hydrated index; code nodes bring their import closure (`check:tools-closure`)
+- [x] G3: `overrides.<instance>.directories` and `kg:materialize` accept NESTED subgraph ids and NODE ids, resolved through `resolveDirectories` / the hydrated index; code nodes bring their import closure (`check:tools-closure`)
 - [ ] concern names: `"sdlc"` at the top level expands to its kind-first members (`docs/sdlc`, `skills/sdlc`, `processes/sdlc`, `scripts/sdlc`), derived from the `concern-groups/v1` declarations, checked by `check:concern-groups`
 - [ ] the CHOICE made in review is written back to the mount entry (the choice, never the state), so a fresh clone replays it; `index.lock.json` records what it resolved to
 - [x] package exports derived from declared `code` subgraphs, checked (owner 2026-10-14, option 1) — litlfred/cat-harness-tools#198 (`scripts/package-exports.ts`; also declares `tools/`)
-- [ ] end to end: "load tools metadata, review, materialize three Tools" from a downstream checkout
+- [x] end to end: "load tools metadata, review, materialize three Tools" from a downstream checkout
 
 Related: `whlc` (KG publication, named subgraphs), `fnx4` (subscriptions), `9umr` (concern groups).
 
@@ -53,3 +53,5 @@ _2026-10-24T10:10:27Z_: G2 built: litlfred/cat-harness#537 (source kind `hydrate
 _2026-10-24T12:19:07Z_: G2 done: cat-harness#537 (fb7e393) and cat-harness-tools#725 (040799e) add the hydrated source and mount mode. Per-pin index package (owner option A, then one prerelease per pin): cat-harness#542 (e5794f4) and cat-harness-tools#736 (c810edd). A mount reads the pin's git tree first, then the subgraph-index-<sha> prerelease, checked by sha256, the manifest, the schema and the IRI. Follow-ups: only cat-harness has the publish caller workflow; kg:materialize --nodes (core) still reads the git tree only; G3 needs 2j2r in remote-mount's two planners.
 
 _2026-10-24T13:02:20Z_: G3, nested-subgraph half done: cat-harness-tools#743 (ee46bf6, both remote-mount planners resolve nested ids via instanceDirectories), cat-harness#568 (88106da, skill + Tool text), folio-assistant-core#214 (1d644b6, kg:materialize --nodes uses publishedSubgraphDir and falls back to the per-pin package). planHydrated ignores mountDefaults.directories on purpose (hydrated is the step before choosing). Left: node ids (single Tools) with import closure, and kg:materialize byte mode by nested id — cat-harness-tools#744, waiting on four owner decisions (what a Tool brings, one closure walker, granularity, nested-id choice in byte mode). Note: check:tools-closure is an allowlist gate, not a closure computer.
+
+_2026-10-24T15:04:00Z_: G3 done and end-to-end shown (owner chose all four recommendations, 2026-10-24 card): bootstrap-tools#43 (1584c10, one closure walker importClosure), cat-harness#581 (8747b00, overrides.<instance>.tools), cat-harness-tools#751 (46c1625, tool-closure.ts; T1 = hydrated metadata, three Tools by id, each with definition + implementation + closure, all modules load), folio-assistant-core#216 (f53b0d0, nested subgraph by parent id, materialised by path). Pending owner pick: should a Tool closure narrow OTHER mount entries it touches (A as built / B recommended / C opt-in field). Left: concern names (sdlc expansion) and writing the review choice back to the mount entry.
