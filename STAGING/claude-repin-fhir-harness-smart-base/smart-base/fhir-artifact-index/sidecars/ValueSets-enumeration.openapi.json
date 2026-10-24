@@ -1,0 +1,845 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ValueSets Enumeration API",
+    "description": "API endpoint providing an enumeration of all available ValueSet schemas",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSets.schema.json": {
+      "get": {
+        "summary": "Get enumeration of all ValueSet schemas",
+        "description": "Returns a list of all available ValueSet schemas with metadata",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved valueset enumeration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnumerationResponse"
+                },
+                "example": {
+                  "type": "valueset",
+                  "count": 46,
+                  "schemas": [
+                    {
+                      "filename": "ValueSet-CDHIv1.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv1.schema.json",
+                      "title": "Classification of Digital Health Interventions v1 Schema",
+                      "description": "JSON Schema for Classification of Digital Health Interventions v1 ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv1.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv1.3.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv1.3.schema.json",
+                      "title": "Digital Health Interventions for Health System Managers Schema",
+                      "description": "JSON Schema for Digital Health Interventions for Health System Managers ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv1.3.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.3"
+                    },
+                    {
+                      "filename": "ValueSet-KGResolutionStatusVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGResolutionStatusVS.schema.json",
+                      "title": "Knowledge graph L1: resolution status Schema",
+                      "description": "JSON Schema for Knowledge graph L1: resolution status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGResolutionStatusVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGResolutionStatusVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGEvidenceTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGEvidenceTypeVS.schema.json",
+                      "title": "Knowledge graph L1: evidence type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: evidence type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGEvidenceTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGEvidenceTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGRecommendationStatusVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGRecommendationStatusVS.schema.json",
+                      "title": "Knowledge graph L1: recommendation status Schema",
+                      "description": "JSON Schema for Knowledge graph L1: recommendation status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGRecommendationStatusVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationStatusVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv1.2.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv1.2.schema.json",
+                      "title": "Digital Health Interventions for Health Workers Schema",
+                      "description": "JSON Schema for Digital Health Interventions for Health Workers ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv1.2.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.2"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv2.A.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv2.A.schema.json",
+                      "title": "Services and Application Types: Point of Service Schema",
+                      "description": "JSON Schema for Services and Application Types: Point of Service ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv2.A.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.A"
+                    },
+                    {
+                      "filename": "ValueSet-SGAuthoringSkillsVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-SGAuthoringSkillsVS.schema.json",
+                      "title": "SMART Guidelines Authoring Skills ValueSet Schema",
+                      "description": "JSON Schema for SMART Guidelines Authoring Skills ValueSet ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-SGAuthoringSkillsVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/SGAuthoringSkillsVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv2.2.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv2.2.schema.json",
+                      "title": "Digital Health Interventions for Healthcare Providers Schema",
+                      "description": "JSON Schema for Digital Health Interventions for Healthcare Providers ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv2.2.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.2"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv1.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv1.schema.json",
+                      "title": "Health System Challenges Schema",
+                      "description": "JSON Schema for Health System Challenges ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv1.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv1"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv2.B.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv2.B.schema.json",
+                      "title": "Services and Application Types: Health System/Provider Administration Schema",
+                      "description": "JSON Schema for Services and Application Types: Health System/Provider Administration ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv2.B.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.B"
+                    },
+                    {
+                      "filename": "ValueSet-KGOutcomeImportanceVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGOutcomeImportanceVS.schema.json",
+                      "title": "Knowledge graph L1: outcome importance Schema",
+                      "description": "JSON Schema for Knowledge graph L1: outcome importance ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGOutcomeImportanceVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGOutcomeImportanceVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGIdentifierTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGIdentifierTypeVS.schema.json",
+                      "title": "Knowledge graph L1: identifier type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: identifier type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGIdentifierTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGIdentifierTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGL1ClassesVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGL1ClassesVS.schema.json",
+                      "title": "Knowledge graph L1: classes Schema",
+                      "description": "JSON Schema for Knowledge graph L1: classes ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGL1ClassesVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1ClassesVS"
+                    },
+                    {
+                      "filename": "ValueSet-CoreDataElementTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.schema.json",
+                      "title": "Core Data Element Type Value Set Schema",
+                      "description": "JSON Schema for Core Data Element Type Value Set ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CoreDataElementTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CoreDataElementTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGElementTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGElementTypeVS.schema.json",
+                      "title": "Knowledge graph L1: element type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: element type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGElementTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGElementTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGRowTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGRowTypeVS.schema.json",
+                      "title": "Knowledge graph L1: row type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: row type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGRowTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRowTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv2.C.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv2.C.schema.json",
+                      "title": "Services and Application Types: Registries and Directories Schema",
+                      "description": "JSON Schema for Services and Application Types: Registries and Directories ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv2.C.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.C"
+                    },
+                    {
+                      "filename": "ValueSet-KGChangeStatusVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGChangeStatusVS.schema.json",
+                      "title": "Knowledge graph L1: change status Schema",
+                      "description": "JSON Schema for Knowledge graph L1: change status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGChangeStatusVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGChangeStatusVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGL1LibraryPredicatesVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGL1LibraryPredicatesVS.schema.json",
+                      "title": "Knowledge graph L1Library: predicates Schema",
+                      "description": "JSON Schema for Knowledge graph L1Library: predicates ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGL1LibraryPredicatesVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1LibraryPredicatesVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGPublicationTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGPublicationTypeVS.schema.json",
+                      "title": "Knowledge graph L1: publication type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: publication type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGPublicationTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGPublicationTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGRecommendationStrengthVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGRecommendationStrengthVS.schema.json",
+                      "title": "Knowledge graph L1: recommendation strength Schema",
+                      "description": "JSON Schema for Knowledge graph L1: recommendation strength ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGRecommendationStrengthVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationStrengthVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv2.1.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv2.1.schema.json",
+                      "title": "Digital Health Interventions for Persons Schema",
+                      "description": "JSON Schema for Digital Health Interventions for Persons ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv2.1.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.1"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv1.4.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv1.4.schema.json",
+                      "title": "Digital Health Interventions: Data Services Schema",
+                      "description": "JSON Schema for Digital Health Interventions: Data Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv1.4.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.4"
+                    },
+                    {
+                      "filename": "ValueSet-KGCertaintyVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGCertaintyVS.schema.json",
+                      "title": "Knowledge graph L1: certainty Schema",
+                      "description": "JSON Schema for Knowledge graph L1: certainty ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGCertaintyVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGCertaintyVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGL1LibraryClassesVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGL1LibraryClassesVS.schema.json",
+                      "title": "Knowledge graph L1Library: classes Schema",
+                      "description": "JSON Schema for Knowledge graph L1Library: classes ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGL1LibraryClassesVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1LibraryClassesVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv2.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv2.schema.json",
+                      "title": "Services and Application Types Schema",
+                      "description": "JSON Schema for Services and Application Types ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv2.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2"
+                    },
+                    {
+                      "filename": "ValueSet-KGDerivationVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGDerivationVS.schema.json",
+                      "title": "Knowledge graph: derivation Schema",
+                      "description": "JSON Schema for Knowledge graph: derivation ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGDerivationVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGDerivationVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv1.1.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv1.1.schema.json",
+                      "title": "Digital Health Interventions for Clients Schema",
+                      "description": "JSON Schema for Digital Health Interventions for Clients ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv1.1.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.1"
+                    },
+                    {
+                      "filename": "ValueSet-KGInterventionTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGInterventionTypeVS.schema.json",
+                      "title": "Knowledge graph L1: intervention type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: intervention type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGInterventionTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGInterventionTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGRemarkTypeVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGRemarkTypeVS.schema.json",
+                      "title": "Knowledge graph L1: remark type Schema",
+                      "description": "JSON Schema for Knowledge graph L1: remark type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGRemarkTypeVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRemarkTypeVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGGrcStatusVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGGrcStatusVS.schema.json",
+                      "title": "Knowledge graph L1: grc status Schema",
+                      "description": "JSON Schema for Knowledge graph L1: grc status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGGrcStatusVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGGrcStatusVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv2.E.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv2.E.schema.json",
+                      "title": "Services and Application Types: Surveillance and Response Schema",
+                      "description": "JSON Schema for Services and Application Types: Surveillance and Response ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv2.E.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.E"
+                    },
+                    {
+                      "filename": "ValueSet-CDSCv2.D.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDSCv2.D.schema.json",
+                      "title": "Services and Application Types: Data Management Services Schema",
+                      "description": "JSON Schema for Services and Application Types: Data Management Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDSCv2.D.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.D"
+                    },
+                    {
+                      "filename": "ValueSet-KGL1PredicatesVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.schema.json",
+                      "title": "Knowledge graph L1: predicates Schema",
+                      "description": "JSON Schema for Knowledge graph L1: predicates ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGL1PredicatesVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1PredicatesVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv2.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv2.schema.json",
+                      "title": "Classification of Digital Health Interventions v2 Schema",
+                      "description": "JSON Schema for Classification of Digital Health Interventions v2 ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv2.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv2.4.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv2.4.schema.json",
+                      "title": "Digital Health Interventions: Data Services Schema",
+                      "description": "JSON Schema for Digital Health Interventions: Data Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv2.4.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.4"
+                    },
+                    {
+                      "filename": "ValueSet-KGTerminologySystemVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGTerminologySystemVS.schema.json",
+                      "title": "Knowledge graph L1: terminology system Schema",
+                      "description": "JSON Schema for Knowledge graph L1: terminology system ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGTerminologySystemVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGTerminologySystemVS"
+                    },
+                    {
+                      "filename": "ValueSet-DecisionTableActions.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-DecisionTableActions.schema.json",
+                      "title": "Smart Guidelines Decision Table Actions Schema",
+                      "description": "JSON Schema for Smart Guidelines Decision Table Actions ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-DecisionTableActions.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/DecisionTableActions"
+                    },
+                    {
+                      "filename": "ValueSet-KGRecommendationKindVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGRecommendationKindVS.schema.json",
+                      "title": "Knowledge graph L1: recommendation kind Schema",
+                      "description": "JSON Schema for Knowledge graph L1: recommendation kind ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGRecommendationKindVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationKindVS"
+                    },
+                    {
+                      "filename": "ValueSet-CDHIv2.3.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-CDHIv2.3.schema.json",
+                      "title": "Digital Health Interventions for Health Management and Support Personnel Schema",
+                      "description": "JSON Schema for Digital Health Interventions for Health Management and Support Personnel ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-CDHIv2.3.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.3"
+                    },
+                    {
+                      "filename": "ValueSet-KGCitationKindVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGCitationKindVS.schema.json",
+                      "title": "Knowledge graph L1: citation kind Schema",
+                      "description": "JSON Schema for Knowledge graph L1: citation kind ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGCitationKindVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGCitationKindVS"
+                    },
+                    {
+                      "filename": "ValueSet-SGPersonaTypesVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-SGPersonaTypesVS.schema.json",
+                      "title": "Smart Guidelines Persona Types Value Set Schema",
+                      "description": "JSON Schema for Smart Guidelines Persona Types Value Set ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-SGPersonaTypesVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/SGPersonaTypesVS"
+                    },
+                    {
+                      "filename": "ValueSet-KGRecommendationDirectionVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-KGRecommendationDirectionVS.schema.json",
+                      "title": "Knowledge graph L1: recommendation direction Schema",
+                      "description": "JSON Schema for Knowledge graph L1: recommendation direction ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-KGRecommendationDirectionVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationDirectionVS"
+                    },
+                    {
+                      "filename": "ValueSet-ISCO08ValueSet.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.schema.json",
+                      "title": "ISCO-08 Value Set Schema",
+                      "description": "JSON Schema for ISCO-08 Value Set ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-ISCO08ValueSet.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/ISCO08ValueSet"
+                    },
+                    {
+                      "filename": "ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+                      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+                      "title": "SMART Guidelines Authoring Persona Types ValueSet Schema",
+                      "description": "JSON Schema for SMART Guidelines Authoring Persona Types ValueSet ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+                      "url": "./ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+                      "valueSetUrl": "http://smart.who.int/base/ValueSet/SGAuthoringPersonaTypesVS"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EnumerationResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "#/ValueSets.schema.json",
+        "title": "ValueSet Enumeration Schema",
+        "description": "JSON Schema defining the structure of the ValueSet enumeration endpoint response",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "valueset",
+            "description": "The type of schemas enumerated (valueset)"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Total number of schemas available"
+          },
+          "schemas": {
+            "type": "array",
+            "description": "Array of available schemas",
+            "items": {
+              "type": "object",
+              "properties": {
+                "filename": {
+                  "type": "string",
+                  "description": "Schema filename"
+                },
+                "id": {
+                  "type": "string",
+                  "description": "Schema $id"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Schema title"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Schema description"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Relative URL to the schema file"
+                },
+                "valueSetUrl": {
+                  "type": "string",
+                  "description": "FHIR canonical URL of the ValueSet"
+                },
+                "codeCount": {
+                  "type": "integer",
+                  "description": "Number of codes in the ValueSet"
+                }
+              },
+              "required": [
+                "filename",
+                "title",
+                "url"
+              ]
+            }
+          }
+        },
+        "required": [
+          "type",
+          "count",
+          "schemas"
+        ],
+        "example": {
+          "type": "valueset",
+          "count": 46,
+          "schemas": [
+            {
+              "filename": "ValueSet-CDHIv1.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv1.schema.json",
+              "title": "Classification of Digital Health Interventions v1 Schema",
+              "description": "JSON Schema for Classification of Digital Health Interventions v1 ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv1.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1"
+            },
+            {
+              "filename": "ValueSet-CDHIv1.3.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv1.3.schema.json",
+              "title": "Digital Health Interventions for Health System Managers Schema",
+              "description": "JSON Schema for Digital Health Interventions for Health System Managers ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv1.3.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.3"
+            },
+            {
+              "filename": "ValueSet-KGResolutionStatusVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGResolutionStatusVS.schema.json",
+              "title": "Knowledge graph L1: resolution status Schema",
+              "description": "JSON Schema for Knowledge graph L1: resolution status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGResolutionStatusVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGResolutionStatusVS"
+            },
+            {
+              "filename": "ValueSet-KGEvidenceTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGEvidenceTypeVS.schema.json",
+              "title": "Knowledge graph L1: evidence type Schema",
+              "description": "JSON Schema for Knowledge graph L1: evidence type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGEvidenceTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGEvidenceTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGRecommendationStatusVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGRecommendationStatusVS.schema.json",
+              "title": "Knowledge graph L1: recommendation status Schema",
+              "description": "JSON Schema for Knowledge graph L1: recommendation status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGRecommendationStatusVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationStatusVS"
+            },
+            {
+              "filename": "ValueSet-CDHIv1.2.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv1.2.schema.json",
+              "title": "Digital Health Interventions for Health Workers Schema",
+              "description": "JSON Schema for Digital Health Interventions for Health Workers ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv1.2.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.2"
+            },
+            {
+              "filename": "ValueSet-CDSCv2.A.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv2.A.schema.json",
+              "title": "Services and Application Types: Point of Service Schema",
+              "description": "JSON Schema for Services and Application Types: Point of Service ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv2.A.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.A"
+            },
+            {
+              "filename": "ValueSet-SGAuthoringSkillsVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-SGAuthoringSkillsVS.schema.json",
+              "title": "SMART Guidelines Authoring Skills ValueSet Schema",
+              "description": "JSON Schema for SMART Guidelines Authoring Skills ValueSet ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-SGAuthoringSkillsVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/SGAuthoringSkillsVS"
+            },
+            {
+              "filename": "ValueSet-CDHIv2.2.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv2.2.schema.json",
+              "title": "Digital Health Interventions for Healthcare Providers Schema",
+              "description": "JSON Schema for Digital Health Interventions for Healthcare Providers ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv2.2.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.2"
+            },
+            {
+              "filename": "ValueSet-CDSCv1.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv1.schema.json",
+              "title": "Health System Challenges Schema",
+              "description": "JSON Schema for Health System Challenges ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv1.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv1"
+            },
+            {
+              "filename": "ValueSet-CDSCv2.B.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv2.B.schema.json",
+              "title": "Services and Application Types: Health System/Provider Administration Schema",
+              "description": "JSON Schema for Services and Application Types: Health System/Provider Administration ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv2.B.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.B"
+            },
+            {
+              "filename": "ValueSet-KGOutcomeImportanceVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGOutcomeImportanceVS.schema.json",
+              "title": "Knowledge graph L1: outcome importance Schema",
+              "description": "JSON Schema for Knowledge graph L1: outcome importance ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGOutcomeImportanceVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGOutcomeImportanceVS"
+            },
+            {
+              "filename": "ValueSet-KGIdentifierTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGIdentifierTypeVS.schema.json",
+              "title": "Knowledge graph L1: identifier type Schema",
+              "description": "JSON Schema for Knowledge graph L1: identifier type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGIdentifierTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGIdentifierTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGL1ClassesVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGL1ClassesVS.schema.json",
+              "title": "Knowledge graph L1: classes Schema",
+              "description": "JSON Schema for Knowledge graph L1: classes ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGL1ClassesVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1ClassesVS"
+            },
+            {
+              "filename": "ValueSet-CoreDataElementTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.schema.json",
+              "title": "Core Data Element Type Value Set Schema",
+              "description": "JSON Schema for Core Data Element Type Value Set ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CoreDataElementTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CoreDataElementTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGElementTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGElementTypeVS.schema.json",
+              "title": "Knowledge graph L1: element type Schema",
+              "description": "JSON Schema for Knowledge graph L1: element type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGElementTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGElementTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGRowTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGRowTypeVS.schema.json",
+              "title": "Knowledge graph L1: row type Schema",
+              "description": "JSON Schema for Knowledge graph L1: row type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGRowTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRowTypeVS"
+            },
+            {
+              "filename": "ValueSet-CDSCv2.C.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv2.C.schema.json",
+              "title": "Services and Application Types: Registries and Directories Schema",
+              "description": "JSON Schema for Services and Application Types: Registries and Directories ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv2.C.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.C"
+            },
+            {
+              "filename": "ValueSet-KGChangeStatusVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGChangeStatusVS.schema.json",
+              "title": "Knowledge graph L1: change status Schema",
+              "description": "JSON Schema for Knowledge graph L1: change status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGChangeStatusVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGChangeStatusVS"
+            },
+            {
+              "filename": "ValueSet-KGL1LibraryPredicatesVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGL1LibraryPredicatesVS.schema.json",
+              "title": "Knowledge graph L1Library: predicates Schema",
+              "description": "JSON Schema for Knowledge graph L1Library: predicates ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGL1LibraryPredicatesVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1LibraryPredicatesVS"
+            },
+            {
+              "filename": "ValueSet-KGPublicationTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGPublicationTypeVS.schema.json",
+              "title": "Knowledge graph L1: publication type Schema",
+              "description": "JSON Schema for Knowledge graph L1: publication type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGPublicationTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGPublicationTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGRecommendationStrengthVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGRecommendationStrengthVS.schema.json",
+              "title": "Knowledge graph L1: recommendation strength Schema",
+              "description": "JSON Schema for Knowledge graph L1: recommendation strength ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGRecommendationStrengthVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationStrengthVS"
+            },
+            {
+              "filename": "ValueSet-CDHIv2.1.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv2.1.schema.json",
+              "title": "Digital Health Interventions for Persons Schema",
+              "description": "JSON Schema for Digital Health Interventions for Persons ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv2.1.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.1"
+            },
+            {
+              "filename": "ValueSet-CDHIv1.4.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv1.4.schema.json",
+              "title": "Digital Health Interventions: Data Services Schema",
+              "description": "JSON Schema for Digital Health Interventions: Data Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv1.4.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.4"
+            },
+            {
+              "filename": "ValueSet-KGCertaintyVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGCertaintyVS.schema.json",
+              "title": "Knowledge graph L1: certainty Schema",
+              "description": "JSON Schema for Knowledge graph L1: certainty ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGCertaintyVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGCertaintyVS"
+            },
+            {
+              "filename": "ValueSet-KGL1LibraryClassesVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGL1LibraryClassesVS.schema.json",
+              "title": "Knowledge graph L1Library: classes Schema",
+              "description": "JSON Schema for Knowledge graph L1Library: classes ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGL1LibraryClassesVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1LibraryClassesVS"
+            },
+            {
+              "filename": "ValueSet-CDSCv2.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv2.schema.json",
+              "title": "Services and Application Types Schema",
+              "description": "JSON Schema for Services and Application Types ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv2.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2"
+            },
+            {
+              "filename": "ValueSet-KGDerivationVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGDerivationVS.schema.json",
+              "title": "Knowledge graph: derivation Schema",
+              "description": "JSON Schema for Knowledge graph: derivation ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGDerivationVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGDerivationVS"
+            },
+            {
+              "filename": "ValueSet-CDHIv1.1.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv1.1.schema.json",
+              "title": "Digital Health Interventions for Clients Schema",
+              "description": "JSON Schema for Digital Health Interventions for Clients ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv1.1.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv1.1"
+            },
+            {
+              "filename": "ValueSet-KGInterventionTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGInterventionTypeVS.schema.json",
+              "title": "Knowledge graph L1: intervention type Schema",
+              "description": "JSON Schema for Knowledge graph L1: intervention type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGInterventionTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGInterventionTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGRemarkTypeVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGRemarkTypeVS.schema.json",
+              "title": "Knowledge graph L1: remark type Schema",
+              "description": "JSON Schema for Knowledge graph L1: remark type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGRemarkTypeVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRemarkTypeVS"
+            },
+            {
+              "filename": "ValueSet-KGGrcStatusVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGGrcStatusVS.schema.json",
+              "title": "Knowledge graph L1: grc status Schema",
+              "description": "JSON Schema for Knowledge graph L1: grc status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGGrcStatusVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGGrcStatusVS"
+            },
+            {
+              "filename": "ValueSet-CDSCv2.E.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv2.E.schema.json",
+              "title": "Services and Application Types: Surveillance and Response Schema",
+              "description": "JSON Schema for Services and Application Types: Surveillance and Response ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv2.E.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.E"
+            },
+            {
+              "filename": "ValueSet-CDSCv2.D.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDSCv2.D.schema.json",
+              "title": "Services and Application Types: Data Management Services Schema",
+              "description": "JSON Schema for Services and Application Types: Data Management Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDSCv2.D.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDSCv2.D"
+            },
+            {
+              "filename": "ValueSet-KGL1PredicatesVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.schema.json",
+              "title": "Knowledge graph L1: predicates Schema",
+              "description": "JSON Schema for Knowledge graph L1: predicates ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGL1PredicatesVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGL1PredicatesVS"
+            },
+            {
+              "filename": "ValueSet-CDHIv2.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv2.schema.json",
+              "title": "Classification of Digital Health Interventions v2 Schema",
+              "description": "JSON Schema for Classification of Digital Health Interventions v2 ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv2.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2"
+            },
+            {
+              "filename": "ValueSet-CDHIv2.4.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv2.4.schema.json",
+              "title": "Digital Health Interventions: Data Services Schema",
+              "description": "JSON Schema for Digital Health Interventions: Data Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv2.4.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.4"
+            },
+            {
+              "filename": "ValueSet-KGTerminologySystemVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGTerminologySystemVS.schema.json",
+              "title": "Knowledge graph L1: terminology system Schema",
+              "description": "JSON Schema for Knowledge graph L1: terminology system ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGTerminologySystemVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGTerminologySystemVS"
+            },
+            {
+              "filename": "ValueSet-DecisionTableActions.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-DecisionTableActions.schema.json",
+              "title": "Smart Guidelines Decision Table Actions Schema",
+              "description": "JSON Schema for Smart Guidelines Decision Table Actions ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-DecisionTableActions.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/DecisionTableActions"
+            },
+            {
+              "filename": "ValueSet-KGRecommendationKindVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGRecommendationKindVS.schema.json",
+              "title": "Knowledge graph L1: recommendation kind Schema",
+              "description": "JSON Schema for Knowledge graph L1: recommendation kind ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGRecommendationKindVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationKindVS"
+            },
+            {
+              "filename": "ValueSet-CDHIv2.3.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-CDHIv2.3.schema.json",
+              "title": "Digital Health Interventions for Health Management and Support Personnel Schema",
+              "description": "JSON Schema for Digital Health Interventions for Health Management and Support Personnel ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-CDHIv2.3.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/CDHIv2.3"
+            },
+            {
+              "filename": "ValueSet-KGCitationKindVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGCitationKindVS.schema.json",
+              "title": "Knowledge graph L1: citation kind Schema",
+              "description": "JSON Schema for Knowledge graph L1: citation kind ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGCitationKindVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGCitationKindVS"
+            },
+            {
+              "filename": "ValueSet-SGPersonaTypesVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-SGPersonaTypesVS.schema.json",
+              "title": "Smart Guidelines Persona Types Value Set Schema",
+              "description": "JSON Schema for Smart Guidelines Persona Types Value Set ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-SGPersonaTypesVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/SGPersonaTypesVS"
+            },
+            {
+              "filename": "ValueSet-KGRecommendationDirectionVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-KGRecommendationDirectionVS.schema.json",
+              "title": "Knowledge graph L1: recommendation direction Schema",
+              "description": "JSON Schema for Knowledge graph L1: recommendation direction ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-KGRecommendationDirectionVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/KGRecommendationDirectionVS"
+            },
+            {
+              "filename": "ValueSet-ISCO08ValueSet.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.schema.json",
+              "title": "ISCO-08 Value Set Schema",
+              "description": "JSON Schema for ISCO-08 Value Set ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-ISCO08ValueSet.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/ISCO08ValueSet"
+            },
+            {
+              "filename": "ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+              "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+              "title": "SMART Guidelines Authoring Persona Types ValueSet Schema",
+              "description": "JSON Schema for SMART Guidelines Authoring Persona Types ValueSet ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+              "url": "./ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+              "valueSetUrl": "http://smart.who.int/base/ValueSet/SGAuthoringPersonaTypesVS"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

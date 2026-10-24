@@ -2,13 +2,13 @@
   "$schema": "folio-ig-menu/v1",
   "id": "smart.who.int.trust",
   "canonical": "http://smart.who.int/trust",
-  "version": "1.8.0",
+  "version": "1.7.5",
   "source": {
     "kind": "sushi-config",
     "of": "https://github.com/litlfred/smart-trust",
-    "ref": "25771f6a8d81e0ecd646167fa2ff98882ffbe8e7",
+    "ref": "26b07ca7f88e13bba9c64432735c69aa68b9e58b",
     "path": "sushi-config.yaml",
-    "readAt": "2026-10-01"
+    "readAt": "2026-10-24"
   },
   "groups": [
     {
@@ -31,6 +31,11 @@
           "href": "faq.html"
         }
       ]
+    },
+    {
+      "label": "GDHCN Administrative and Operational Framework",
+      "href": "GDHCN_Administrative_and_Operational_Framework.pdf",
+      "items": []
     },
     {
       "label": "Business Requirements",
@@ -91,6 +96,10 @@
         {
           "label": "HCERT Specification",
           "href": "hcert_spec.html"
+        },
+        {
+          "label": "QR Code Generation",
+          "href": "qr_code_generation.html"
         }
       ]
     },

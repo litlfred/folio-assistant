@@ -12,12 +12,12 @@
   "schema:name": "ConnectionTypes",
   "dcterms:title": "WHO GDHCN Connection Types",
   "dcterms:description": "CodeSystem for GDHCN connection types",
-  "schema:version": "1.8.0",
+  "schema:version": "1.7.5",
   "dcterms:type": "Terminology: Code Systems",
   "schema:sameAs": {
     "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,10 +28,15 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "48540010fe4ca0c25d580dfd0bbb202de23359a0"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.trust",
-    "schema:version": "1.8.0",
+    "schema:version": "1.7.5",
     "schema:sameAs": {
       "@id": "http://smart.who.int/trust"
     }

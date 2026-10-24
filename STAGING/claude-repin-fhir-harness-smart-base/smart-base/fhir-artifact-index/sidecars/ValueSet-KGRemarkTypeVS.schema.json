@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-KGRemarkTypeVS.schema.json",
+  "title": "Knowledge graph L1: remark type Schema",
+  "description": "JSON Schema for Knowledge graph L1: remark type ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/base/CodeSystem/KGRemarkType"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "definition",
+        "implementation",
+        "precaution",
+        "contraindication",
+        "subgroup",
+        "research-gap",
+        "training"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the Knowledge graph L1: remark type ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-KGRemarkTypeVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/base/ValueSet-KGRemarkTypeVS.displays.json",
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/KGRemarkTypeVS",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:31+00:00"
+}

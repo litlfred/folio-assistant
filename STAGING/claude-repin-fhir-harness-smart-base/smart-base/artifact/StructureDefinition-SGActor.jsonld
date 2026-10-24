@@ -10,14 +10,14 @@
   "@type": "fhir:StructureDefinition",
   "dcterms:identifier": "StructureDefinition/SGActor",
   "schema:name": "SGActor",
-  "dcterms:title": "SMART Guidelines Actor",
-  "dcterms:description": "Structure and constraints for ActorDefinition resources used in SMART Guidelines",
+  "dcterms:title": "SGActor",
+  "dcterms:description": "Smart Guidelines Actor",
   "schema:version": "0.3.0",
   "dcterms:type": "Conformance",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/StructureDefinition/SGActor"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

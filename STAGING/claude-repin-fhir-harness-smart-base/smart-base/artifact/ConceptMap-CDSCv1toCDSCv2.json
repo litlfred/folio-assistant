@@ -11,13 +11,13 @@
   "dcterms:identifier": "ConceptMap/CDSCv1toCDSCv2",
   "schema:name": "CDSCv1toCDSCv2",
   "dcterms:title": "Mapping from CDSC v1 to Services and Application Types v2",
-  "dcterms:description": "Mapping from the Classification of Digital Health System Categories v1 (CDSCv1, 2018) to the Classification of Digital Health Services and Application Types v2 (CDSCv2, 2023). The v1 used 25 single-letter codes (A–Y). The v2 completely restructured this into 5 representations within the digital health enterprise architecture, each with alphanumeric codes (A1–A9, B1–B8, C1–C11, D1–D8, E1–E2). Several new v2 categories have no v1 equivalent: A3 (Decision support), A4 (Diagnostics), B1 (Blood bank), B3 (Health program monitoring), B7 (Patient administration), C4 (Facility registries), C5 (Health worker registry), C7 (Immunisation information), C8 (Master patient index), C9 (Product catalogues), C10 (Public Key directories), D1 (Analytics), D3 (Data warehouses).",
+  "dcterms:description": "Mapping from the Classification of Digital Health System Categories v1 (CDSCv1, 2018)\nto the Classification of Digital Health Services and Application Types v2 (CDSCv2, 2023).\n\nThe v1 used 25 single-letter codes (A–Y). The v2 completely restructured this into\n5 representations within the digital health enterprise architecture, each with\nalphanumeric codes (A1–A9, B1–B8, C1–C11, D1–D8, E1–E2).\n\nSeveral new v2 categories have no v1 equivalent:\nA3 (Decision support), A4 (Diagnostics), B1 (Blood bank), B3 (Health program monitoring),\nB7 (Patient administration), C4 (Facility registries), C5 (Health worker registry),\nC7 (Immunisation information), C8 (Master patient index), C9 (Product catalogues),\nC10 (Public Key directories), D1 (Analytics), D3 (Data warehouses).",
   "schema:version": "0.3.0",
   "dcterms:type": "Terminology: Concept Maps",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ConceptMap/CDSCv1toCDSCv2"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

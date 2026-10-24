@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.BusinessAnalyst",
   "schema:name": "BusinessAnalyst",
   "dcterms:title": "Business Analyst",
-  "dcterms:description": "A digital health informatician specializing in business analysis who authors L2 DAK components. Business analysts translate clinical guidelines and normative products into structured DAK artifacts including business processes, data dictionaries, decision-support logic, and requirements. Key activities: Review L1 source documents and extract structured content Author generic personas based on task-shifting guidelines Create user scenario narratives Design BPMN 2.0 business process diagrams Define core data elements and data dictionary Develop decision-support logic tables (DMN standard) Develop scheduling logic tables Define indicators and performance metrics Capture functional and non-functional requirements Streamline content across DAK components for consistency Source : IG Starter Kit, L2 DAK Authoring, Section 2.1 \"Fill in DAK components\"; Community of Practice page",
+  "dcterms:description": "A digital health informatician specializing in business analysis who authors\nL2 DAK components. Business analysts translate clinical guidelines and\nnormative products into structured DAK artifacts including business processes,\ndata dictionaries, decision-support logic, and requirements.\n\nKey activities:\n- Review L1 source documents and extract structured content\n- Author generic personas based on task-shifting guidelines\n- Create user scenario narratives\n- Design BPMN 2.0 business process diagrams\n- Define core data elements and data dictionary\n- Develop decision-support logic tables (DMN standard)\n- Develop scheduling logic tables\n- Define indicators and performance metrics\n- Capture functional and non-functional requirements\n- Streamline content across DAK components for consistency\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Section 2.1 \"Fill in DAK components\";\nCommunity of Practice page",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.BusinessAnalyst"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",
