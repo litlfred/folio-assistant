@@ -2,11 +2,11 @@
 # folio-assistant-saqd
 $schema: bean/1.0.0
 title: 'S5-a: maths code out of cat-harness into folio-assistant-sci''s code (#223 partition; 49 MOVE + 10 split)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T11:05:00Z
+updated_at: 2026-10-24T10:10:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -22,3 +22,5 @@ _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured by file name across cat-harness, cat-harness-tools, core and sci: of 73 rows, 49 MOVE and all 10 AMBIGUOUS are still in the harness layers; 7 are in their target, 7 are found nowhere (renamed or deleted). Still the 39-module sci cluster `rfev` describes; not started.
+
+_2026-10-24T10:10Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e) after agy released it at 09:06Z. Moves only, in groups, no maths content changed; anything touching proofs or qou goes to the owner first.
