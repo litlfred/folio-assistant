@@ -78,3 +78,5 @@ _2026-10-24T10:56:06Z_ — Re-claimed by the cloud drain thread "Drain content m
 _2026-10-24T13:37:00Z_ — litlfred/cat-harness#543 merged (e8e4cb0f): 15 English drafts for Halko–Martinsson–Tropp (arxiv-0909.4061v2, pages 1–15) are on main and wait for a person. Claim released; later batches are open to anyone.
 
 _2026-10-24T13:42:00Z_ — Re-claimed by the cloud drain thread "Drain content model and ingest beans" (owner window to ~16:48Z; session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU).
+
+_2026-10-24T14:14:00Z_ — litlfred/folio-assistant-core#217 merged (231045cd): 22 English drafts for Doc-Researcher (arxiv-2510.21603v1, every prose block) are on main and wait for a person.
