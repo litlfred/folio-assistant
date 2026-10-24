@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T07:35:41Z
-updated_at: 2026-10-23T09:16:30Z
+updated_at: 2026-10-24T08:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -141,3 +141,5 @@ _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note
 **First question settled: a per-activity op** (`<cat-harness.processes:bean op="archive"/>`), not a call into `Process_BeanLifecycle`. The sweep (`beans archive`) stays the floor, and the op is the exception, as `todo-manager` § Archiving already argues.
 
 Progress: `cat-harness-tools#449` (superseded by `#562`) adds the op. It moves a completed or scrapped bean into `defs/archive/` with the reason once its process has finished, and notes why otherwise (`e8m3`, `check:bean-archive`). The same PR fixes `bean-link` looking in a flat `beans/` and so missing the `beans/defs/` store, which meant every engine claim, note and resolve recorded nothing. `cat-harness#416` (superseding `#366`) adds the archive step at the end of `crdm-close.bpmn` and `code-change-review.bpmn` and updates `todo-manager`. Still open: whether `Process_BeanLifecycle` is called or retired. Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
+
+_2026-10-24T08:15:00Z_ — **Owner ruled: call it, and consolidate (option A).** Measured on main: 19 `claim` ops in 18 diagrams, 13 `resolve` in 11, 3 `archive` in 3 — 7 processes open a bean they never close and 8 close one without archiving. Ruling: split `Process_BeanLifecycle` into a reusable OPEN (check, create, whose, claim / leave alone) and CLOSE (outcome: complete + archive / scrap with reasons / record blocker), called by every bean-touching process at its start and end; the per-diagram claim/resolve/archive ops are removed (the 109 `note` ops stay where the work happens); `Process_BeanLifecycle` becomes OPEN → work → CLOSE; a check flags a diagram that touches a bean without calling both. Archive stays an activity op (the 2026-10-20 ruling), on one shared activity inside CLOSE. No engine change. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
