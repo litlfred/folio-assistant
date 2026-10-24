@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-24T10:14:00Z
+updated_at: 2026-10-24T10:25:30Z
 parent: folio-assistant-q4jm
 ---
 
@@ -39,8 +39,8 @@ shown as "orphaned", never dropped.
 
 ## Done when
 - [x] the owner has chosen the write path, recorded here with the reasons against the others (ruling below)
-- [ ] comments are stored as Findings and survive a block move (test)
-- [ ] the review page lists, filters and resolves comments, and resolution records a Decision
+- [x] comments are stored as Findings and survive a block move (test) (`folio-review-comment/v1` `TodoNodeSchema` subtype with `9gyz` `Decision` link + `reanchorToBlocks` survival test in `folio-assistant-core#205` @ `f6701737`)
+- [x] the review page lists, filters and resolves comments, and resolution records a Decision (`cat-harness-tools#697` @ `9d5d6b18`, `folio-assistant-core#205` @ `f6701737`)
 
 
 ## Roast correction 2026-09-22 (epic q4jm, R2, R4)
@@ -248,3 +248,7 @@ A `site.build` folio (dth-hrh) is staged by `stage-local.ts`, not by the workflo
 **Still left here:** resolving a comment from the page (the second Done-when). It needs a write path from a static page, which is the owner's decision; the ruled channel for writing is a tagged PR conversation comment, so the natural candidate is a tagged comment that names the comment and the decision, turned into a committed `transition()` by the review process's task.
 
 _2026-10-21T17:10Z_ — Block lifted: `folio-assistant-a1lq` is completed and archived (`beans/defs/archive/folio-assistant-a1lq--multiple-inheritance-one-resolve-then-walk-rule-fo.md`).
+
+## Progress 2026-10-24: cat-harness-tools#697 + folio-assistant-core#205
+- `litlfred/cat-harness-tools#697` (`9d5d6b18`): Added `<select id="comment-filter">` (`Show comments`) and `matchesCommentFilter(status, kind, filter)` in `scripts/gen-review-page.ts` so the review page filters comments by status (`open-addressed`, `open`, `addressed`, `resolved`, `adjudicated`, `withdrawn`) or kind (`defect`, `question`, `suggestion`, `editorial`), and displays the recorded `review.decision` link/id on resolved and adjudicated comments.
+- `litlfred/folio-assistant-core#205` (`f6701737`): Added end-to-end block-move (`reanchorToBlocks`) + `applyDecisions` (`resolve: <id>` + `decision: ...`) unit test in `schemas/review-comment.test.ts` and updated `skills/content/content-lifecycle-ext/review-comments.md`.
