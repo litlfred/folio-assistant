@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-23T16:16:24Z
+updated_at: 2026-10-24T17:40:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -61,3 +61,15 @@ _2026-10-23T08:35Z_: re-parented from `hfag`, which was completed on 2026-10-22,
 This is the follow-up named in the classification table. It is `litlfred/cat-harness-tools#614` (draft; issue `#613`). `post-merge:regen` now watches each writer run. When a writer changed only paths its instance declares `builtAtPublish` (checked with `isBuiltAtPublish`), its check goes in `builtAtPublishChecks` rather than being listed stale or repaired, and it stays out of the repair PR. A writer that also changes a committed file is still a stale check. Tests: `scripts/tests/post-merge-regen.test.ts` (15 pass); the new stale-vs-built-at-publish test fails without the fix.
 
 Cited run: cat-harness `39786173033` (stale `library:viz`, `uploads:viz`, `voices:viz`, `document-kinds:viz`, `slice:sqlite`, with `changedFiles: []`). Later runs (`39935673805`, `39968341288`) could not be re-read: Actions job logs are blocked from this session, and the jobs publish no check-run summary. The README step was already made advisory in `#590` and is unchanged.
+
+## 2026-10-24T17:40:00Z — connected-agent audit of `cat-harness` `post-merge-regen` run `40083008400` (`job 120840228113`) and PRs (`cat-harness-tools#771`, `cat-harness#606`)
+
+Read the full job log of `litlfred/cat-harness` `post-merge-regen.yml` run `40083008400` (`job 120840228113`, `2026-10-24T09:42:19Z`, `head_sha: 2e668b2db1`) and the automated repair commit `554488c62ca9` (`automation/post-merge-regen-2e668b2db1`, 30 files):
+- **Why `job 120840228113` exited `CODE: 1` (`status: "unrepaired"`)**:
+  1. `unrepairedChecks` (2): `qa:attestations:migrate:check` (exited `3` on `smart-base@574df772`'s `a-mock-session.attestations.json` whose directory moved before `smart-base#107` updated `subject.path`) and `external-schemas:check` (`cat-harness-tools/package.json` ran `external-schemas.ts` without `--write`, and `cat-harness/external-schemas/omg-bpmn-2.0.json` lacked `omg:formalExpression`).
+  2. Cross-layer moves counted as caller `committed` moves (`glossary:pot:check`, `agent-memory:check`, `ig-ast:schema:check`, `gen:jsonld:check`): `treeMoveTracker` in `post-merge-regen.ts` was not scoped to `INSTANCE`, so writes into mounted sibling layers (`folio-assistant-core`, root `.agents/rules/agent-memory.md`) were counted as `cat-harness` committed moves.
+  3. `publish-check.ts`-routed checks (`check:glossary`, `node-kind:pages:check`, `subgraph:jsonld:check`, `slice:sqlite:check`), dependent `builtAtPublish` checks (`check:navbar-consistency:check`), and `COVERED`-folded checks (`skill:register:check`) wrote during Step 1 and saw `0` writer runs in Step 2.
+  4. 23 files in `554488c62ca9` under `docs/en/cat-harness/{bean,software-library,attestations/folio-assistant-core,attestations/smart-base}/` were publish-time outputs not yet listed in `cat-harness.json` `builtAtPublish` (`because: "checkout"`).
+- **Opened PRs**:
+  - [`litlfred/cat-harness-tools#771`](https://github.com/litlfred/cat-harness-tools/pull/771): scopes `treeMoveTracker` to `opts.instance` (`process.env.INSTANCE`), watches `publish-check.ts`-routed checks on their check invocation, classifies Step-1-failed / Step-2-current / 0-caller-committed-move checks (including `COVERED`-folded checks) as `builtAtPublishChecks`, adds `--write` to `"external-schemas"`, repairs stale `subject.path` in `migrate-qa-attestations.ts`, and accepts string `scheme` in `check-term-mapping.ts` `termState`.
+  - [`litlfred/cat-harness#606`](https://github.com/litlfred/cat-harness/pull/606): declares `docs/en/cat-harness/{bean,software-library,attestations/folio-assistant-core,attestations/smart-base}/` in `cat-harness.json` `builtAtPublish` (`because: "checkout"`), untracks `docs/en/cat-harness/bean/index.html`, handles move-in-flight role extensions (`lean-toolchain`) in `schemas/scenario-overlay.ts`, and refreshes the 7 stale committed artefacts (`external-schemas/omg-bpmn-2.0.json`, `docs/assets/folio/index.json`, `docs/assets/prov/merge-train--train-6.prov.jsonld`, and 6 `docs/assets/glossary/*.skos.jsonld` files).
