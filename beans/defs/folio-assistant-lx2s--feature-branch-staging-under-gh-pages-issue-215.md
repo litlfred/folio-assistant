@@ -245,3 +245,14 @@ Walked on litlfred/smart-immunizations-uganda#12, a draft that never merges. The
 | 6 | IG previews get `staging.json`, the banner, a ChangeSet and `review/` | fhir-harness#158; cat-harness-tools#709 (review links name the IG page) |
 
 Breaks 4 and 5 are verified on the hosted preview of #12 (both the PlanDefinition and `schedule.html` say 9 years). Break 6 is verified on a local build; on the hosted preview it needs #158 and #709 merged and Uganda's `index.lock.json` repinned. Then re-walk #12.
+
+### Re-walk on the hosted preview passed (2026-10-24)
+
+All 4 breaks are merged, and the hosted preview of smart-immunizations-uganda#12 (commit b903659, site-publish run 40096121778) was walked end to end. Getting it to publish also needed cat-harness-tools#738 (same-kind route collision), #741 (dead `ui/` script tags), fhir-harness#163 (exclusions test fixture), and a repin of Uganda's layers to main (smart-immunizations-uganda#15, still open on upstream gates).
+
+- Banner on all 819 pages; `staging.json` written.
+- `review/` lists main → branch as 9 changed, 60 unchanged. That matches the branch's 9 changed files.
+- The word diff shows 10 struck and 9 inserted.
+- `logic` refuses the change, as break 3's fix intends.
+
+Gaps left, none blocking: the banner says "PR #n/a" on a manually dispatched build, and the IG build publishes no `outline.json` or `rendered-impact.json`. Results and screenshots: folio-assistant#215 (comment 6384579655), smart-immunizations-uganda#12.

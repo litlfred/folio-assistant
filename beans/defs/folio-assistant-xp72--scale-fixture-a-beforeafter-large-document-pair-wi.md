@@ -32,7 +32,7 @@ measured, not a fact.
 ## Done when
 - [x] the fixture is committed, with its expected ChangeSet as a golden file (`folio-assistant-core/scripts/test-fixtures/scale-pair.ts` + `scale-pair.changeset.json` + `schemas/changeset-scale.test.ts`)
 - [x] the budget is measured and recorded, then enforced in the browser gate (`cat-harness-tools#104`, `test/review-budget.e2e.ts` + `gen-review-page.ts` `content-visibility: auto`)
-- [ ] the lx2s committee scenario has been walked through the review page, with screenshots on the PR
+- [x] the lx2s committee scenario has been walked through the review page, with screenshots on the PR (smart-immunizations-uganda#12, 2026-10-24; see lx2s)
 
 
 ## Roast correction 2026-09-22 (epic q4jm, R7)
