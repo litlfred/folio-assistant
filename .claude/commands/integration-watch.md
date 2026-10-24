@@ -1,5 +1,5 @@
 ---
-description: "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (proof, canonical, compute, detangler, one-voice, consolidation, bibliogra..."
+description: "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (canonical, one-voice, consolidation, bibliography, devils-advocate, and t..."
 argument-hint: "[what to run it on]"
 generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
