@@ -108,3 +108,5 @@ _2026-10-24T16:00Z_ — cat-harness#600 merged (batch 12, 32 blocks of arxiv-240
 _2026-10-24T16:03Z_ — cat-harness#601 merged (batch 13, 31 blocks of arxiv-2507.23348v1).
 
 _2026-10-24T16:03Z_ — cat-harness#602 merged (batch 14, 31 blocks of arxiv-2402.02172v5).
+
+_2026-10-24T16:13Z_ — cat-harness#603 merged (batch 15, 20 blocks of arxiv-2508.21620v2).
