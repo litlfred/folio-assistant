@@ -2,11 +2,11 @@
 # folio-assistant-2i5f
 $schema: bean/1.0.0
 title: 'TERMINOLOGY / adjudication: the extractor vs the terminology, and judge vs judge — call the existing process, restate nothing'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T04:51:47Z
-updated_at: 2026-10-24T07:50:00Z
+updated_at: 2026-10-24T08:35:00Z
 parent: folio-assistant-5yhm
 ---
 
@@ -151,3 +151,7 @@ which waits on its entry condition: non-zero `mapped` on either target, and
 both were 0 when measured on 2026-10-02.
 
 _2026-10-24T07:50:00Z_ — Re-measured: `check:term-mapping` reports 3751 candidates, 0 mapped on `skos` and `fhir`. Leg 2's entry condition (non-zero mapped) is still unmet, so it keeps waiting. Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
+
+## OWNER, 2026-10-24: split leg 2 out, close this for what is built (structured question Q7, 08:29Z: "A + B")
+
+Leg 1 (the extractor and the terminology disagree) is built and stays here, with its outcome set and skill (#1846). Leg 2 (two judges disagree about a mapping) moves to bean `nvhg`, with this bean's two open boxes: case 2 CALLS `adjudication` and `untainted-verification`, and whether a mapping keeps its dissent. It waits on its entry condition: non-zero `mapped` on either target (0 of 3,751 on 2026-10-24). The connected agent's OCL run, bean `q7ds`, is the first thing that could make it non-zero. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.

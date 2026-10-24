@@ -1,0 +1,22 @@
+---
+# folio-assistant-nvhg
+$schema: bean/1.0.0
+title: 'TERMINOLOGY / adjudication leg 2: two judges disagree about a mapping (from 2i5f)'
+status: todo
+type: task
+priority: normal
+created_at: 2026-10-24T08:35:00Z
+updated_at: 2026-10-24T08:35:00Z
+parent: folio-assistant-0lmb
+---
+
+Split out of `2i5f` on the owner's 2026-10-24 ruling (Q7, "A + B"). Leg 1 of `2i5f` is built (#1846). This is leg 2: two judges (for example an automated matcher and a person, or two terminologies) disagree about whether a candidate term maps to a concept.
+
+## Waits on
+Non-zero `mapped` on either target of `bun run cat check:term-mapping`. On 2026-10-24 it reported 3,751 candidates, with 0 mapped on `skos` and `fhir`. A disagreement about a mapping needs a mapping. Bean `q7ds` (the connected agent runs the FHIR target against OCL) is the first thing that could produce one.
+
+## Done when
+- [ ] case 2 CALLS `adjudication` and `untainted-verification`, restating neither (from `2i5f`)
+- [ ] the owner rules whether a term mapping keeps its dissent or collapses (from `2i5f`)
+
+Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.

@@ -2,11 +2,11 @@
 # folio-assistant-5yhm
 $schema: bean/1.0.0
 title: 'TERMINOLOGY: identification, mapping and adjudication — a glossary term is CHECKED against an existing terminology, never only minted'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-25T04:51:06Z
-updated_at: 2026-10-24T07:50:00Z
+updated_at: 2026-10-24T08:35:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -139,3 +139,12 @@ Claimed by claude/terminology-followups (session https://claude.ai/code/session_
 
 ## 2026-10-24 — re-measured
 `bun run cat check:term-mapping` at the folio-assistant lock: 3751 candidates, **0 mapped** on both `skos` and `fhir`, 0 adjudication files. So `2i5f` leg 2's entry condition is still unmet. The open slices are unchanged: key the record by instance as well as scheme id (buildable now), and 7wou's FHIR collections (needs OCL). Session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU.
+
+## OWNER, 2026-10-24: close for what is built (structured question Q7, 08:29Z: "A + B")
+
+Identification, vocabulary authority, mapping (`7wou`), leg 1 of adjudication and publishing automated matches into SKOS are built. The open slices move out:
+- `2i5f` leg 2 goes to `nvhg` (waits on non-zero `mapped`).
+- `7wou`'s last item, FHIR collections in scope once OCL is reachable, goes to `q7ds`. The connected agent runs the FHIR target against OCL with ordinary internet, because cloud sessions are refused `api.openconceptlab.org`.
+- Keying the per-scheme record by instance as well as scheme id goes to `wvzp`. It isn't blocked.
+
+Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
