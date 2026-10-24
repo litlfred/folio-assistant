@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:08Z
-updated_at: 2026-10-24T07:40:00Z
+updated_at: 2026-10-24T14:06:00Z
 parent: folio-assistant-6lb8
 ---
 
@@ -18,3 +18,5 @@ Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/
 - [ ] Chapter × `{proved, sorry, axiom, conjecture open, active bean, verdict}` math-progress heat map and board feed (awaits WORK TRACEABILITY `f227` and CONJECTURE REGISTER `ckej`).
 
 _2026-10-24T07:40:00Z_ — Re-measured: WORK TRACEABILITY `f227` is completed; CONJECTURE REGISTER `ckej` is still `todo`, so the heat map (box 2) still waits on `ckej`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
+
+Handed over 2026-10-24: the "Drain cat-harness-tools beans" thread owns this as cat-harness-tools bean `cat-tools-tk99`, its rehomed copy, and has put the board-feed question to the owner. ckej is closed (folio-assistant-sci#66), so the heat-map box is no longer blocked.
