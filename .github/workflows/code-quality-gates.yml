@@ -680,7 +680,9 @@ jobs:
         # reader jobs as the `ig-indexes` artifact, which they download before
         # their own `smart:pages` (owner, 2026-10-23: "Publish + staging,
         # gates use cache"). Until the IG instances stop committing their
-        # copies, this replaces those copies in the checkout only.
+        # copies, this replaces those copies in the checkout only. The bun
+        # test shards do not download it: their tests still assert facts of
+        # the committed copies, and move with step 3 (fhir-harness#124).
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bun run cat ig-index:build
@@ -975,14 +977,6 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
-
-      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
-        # Built once by `qa-working-copy` (`ig-index:build`); without them
-        # `smart:pages` would read the IG instances' committed copies.
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          name: ig-indexes
-          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS

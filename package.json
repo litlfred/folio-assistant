@@ -30,6 +30,8 @@
     "cat": "bun cat-harness-tools/scripts/run-script.ts",
     "p2:refusals": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base",
     "p2:refusals:check": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base --check",
+    "ingest:ig-menu:check": "bun run fhir-harness/scripts/ingest-ig-menu.ts --out smart-trust/fhir-artifact-index --check",
+    "ingest:ig:check": "bun run fhir-harness/scripts/ingest-ig-artifacts.ts --out smart-trust --materialize-sidecars --sidecar-dir dak --api-hub-page dak-api.html --api-hub-markers DAK_API_HUB_START,DAK_API_HUB_END --api-placeholder DAK_API_CONTENT --materialize-package --check",
     "smart-trust:openapi": "bun run cat-harness-tools/openapi/scripts/ingest-openapi.ts --instance smart-trust",
     "smart-trust:openapi:check": "bun run cat-harness-tools/openapi/scripts/ingest-openapi.ts --instance smart-trust --check",
     "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base",
