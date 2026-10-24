@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-24T11:55:00Z
+updated_at: 2026-10-24T12:40:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -42,3 +42,4 @@ Still to show: the first stale-cache refresh on a runner, and the first release 
 ## Log
 - 2026-10-24 11:55Z: claimed by the "Publisher AST" thread; fhir-harness#161 opened.
 
+- 2026-10-24 12:40Z: fhir-harness#161 merged (`ae07c25`), inside the owner's merge window. CI is green after `fb77e45` regenerated the stale ig-ast schemas. Open: the first stale-cache refresh on a runner, once an IG repins fhir-harness.
