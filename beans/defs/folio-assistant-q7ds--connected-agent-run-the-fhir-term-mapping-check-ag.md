@@ -2,11 +2,11 @@
 # folio-assistant-q7ds
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: run the FHIR term-mapping check against OCL (cloud sessions are refused api.openconceptlab.org)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:35:00Z
-updated_at: 2026-10-24T08:35:00Z
+updated_at: 2026-10-24T10:43:15Z
 parent: folio-assistant-0lmb
 ---
 
