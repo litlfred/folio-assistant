@@ -2,11 +2,11 @@
 # folio-assistant-bssi
 $schema: bean/1.0.0
 title: 'BEAN DRAIN as a BPMN process: Process_BeanDrain calls the shared OPEN and CLOSE'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T08:30:00Z
-updated_at: 2026-10-24T08:52:00Z
+updated_at: 2026-10-24T10:20:00Z
 parent: folio-assistant-ahvw
 blocked_by:
     - folio-assistant-m8gz
@@ -34,3 +34,5 @@ children (yex5 among them) to `Process_BeanDrain` so they stop showing as unlink
 Waits on m8gz (BPMN thread). Do not start before OPEN and CLOSE have process ids on main.
 
 _2026-10-24T08:52:00Z_ — **Held by the BPMN thread** (coordinator handoff). Status stays `todo` while blocked on m8gz; it starts stacked on the m8gz cat-harness branch as soon as OPEN and CLOSE have process ids there. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+_2026-10-24T10:20:00Z_ — **In progress.** `processes/sdlc/bean-drain.bpmn` (Process_BeanDrain): cat-harness#539 (stacks on #528), walk test cat-harness-tools#731 (stacks on #723), issue cat-harness#538. Open: the `drain-queue` and `bean-claim-check` Tools and the `bean-drain` skill exist only in cat-harness#520 / tools#706, so steps bind to skills for now; name the Tools and link the skill once those land. After #539 merges, link ml9h children (yex5; fz79, g3h7, kpci, mm4u, ndp0, np6o, t1vl, zckw) to Process_BeanDrain. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
