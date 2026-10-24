@@ -26,3 +26,7 @@ _2026-10-24T14:10:00Z_ — Claimed by the "Drain cat-harness-tools beans" thread
 _2026-10-24T14:45:00Z_ — Slice 2 (the heat map, box 2) is up as draft litlfred/cat-harness-tools#755: `bun run cat math:heat`. The board feed, slice 3, waits on the owner's answer to the history question. Session https://claude.ai/code/session_01RzLVMhhApyXYiw4bb9RwG8.
 
 _2026-10-24T15:25:00Z_ — The owner chose option C: the board's history is read at publish from the bean store's git history. Slice 3 is up as draft litlfred/cat-harness-tools#768. It adds `gen-docs-pages.ts --burndown-history`, which writes `assets/beans/burndown.json` with one series per open milestone and epic. Still to do: a one-line folio-assistant `docs-site.yml` change to pass the flag, and slice 4, the board drawing the series. Session https://claude.ai/code/session_01RzLVMhhApyXYiw4bb9RwG8.
+
+## 2026-10-24 19:21Z
+
+The docs-site flag landed: folio-assistant#2686 (277511f). It takes effect once cat-harness-tools is repinned past af98510 (#768). Next: slice 4, where the board draws the series.
