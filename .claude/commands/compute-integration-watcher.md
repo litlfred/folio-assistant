@@ -6,7 +6,7 @@ generated: cat-harness-tools/scripts/gen-skill-commands.ts
 
 # /compute-integration-watcher
 
-Run the `compute-integration-watcher` skill. Read [`cat-harness/skills/authoring/authoring-core/compute-integration-watcher.md`](../../cat-harness/skills/authoring/authoring-core/compute-integration-watcher.md) and follow it.
+Run the `compute-integration-watcher` skill. Read [`folio-assistant-sci/skills/content/folio-paper-adapter/compute-integration-watcher.md`](../../folio-assistant-sci/skills/content/folio-paper-adapter/compute-integration-watcher.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the
