@@ -320,6 +320,14 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes (fhir-harness#124)
+        # Each IG instance's fhir-artifact-index/ (index, menu, releases),
+        # written from the IG's cached AST and its sushi-config.yaml by
+        # `ig-index:build` (fhir-harness), before any page step reads it.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
       - name: Generate the mounted SMART IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS of
         # their forks (folio-assistant.json `remoteMounts`, laid down by the
