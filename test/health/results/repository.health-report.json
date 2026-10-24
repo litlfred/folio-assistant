@@ -8,12 +8,12 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-10-23T21:48:14.608Z",
-  "verdict": "unknown",
+  "updated_at": "2026-10-24T07:00:08.601Z",
+  "verdict": "findings",
   "checks": [
     {
       "id": "staging-preview-size",
-      "state": "finding",
+      "state": "ok",
       "summary": "How much of the publish branch the review previews occupy, against the owner's budget for them. It MEASURES and makes no claim about publishing: whether the served site is accepted by GitHub is `pages-publish-health`'s subject, and bean `qj9a` is why the two are apart.",
       "thresholds": [
         {
@@ -27,25 +27,18 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 3221278778,
+          "value": 2907994236,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 9,
+          "value": 8,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
-      "findings": [
-        {
-          "summary": "9 staging preview(s) total 3.00 GB, over the 3.00 GB budget the deploy rotation enforces.",
-          "metric": "staging-total-bytes",
-          "severity": "major",
-          "action": "The rotation in `feature-staging.yml`'s stage job should have held this, so first read its last run's `staging-rotate` output: a single preview larger than the budget is kept on its own (and says so in a warning), anything else is the rotation failing. Then report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "special-branch-size",
@@ -91,13 +84,13 @@
       "measurements": [
         {
           "metric": "special-branch-bytes:qa-reports",
-          "value": 8470840494,
+          "value": 8499791309,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch"
         },
         {
           "metric": "special-branch-bytes:beans",
-          "value": 11318020,
+          "value": 11326884,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch"
         },
@@ -128,7 +121,7 @@
       ],
       "findings": [
         {
-          "summary": "`cat/cat-harness/qa-reports` is 7.89 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
+          "summary": "`cat/cat-harness/qa-reports` is 7.92 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
           "metric": "special-branch-bytes:qa-reports",
           "severity": "major",
           "action": "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or whether the budget should change. Nothing here removes anything; the budget is the owner's."
@@ -137,7 +130,7 @@
     },
     {
       "id": "pages-publish-health",
-      "state": "unknown",
+      "state": "ok",
       "summary": "What the published site served, as the CI pages-serving observation recorded it — read offline from `qa-reports`, so the sweep never reaches the network itself.",
       "thresholds": [
         {
@@ -162,9 +155,33 @@
           "severity": "major"
         }
       ],
-      "measurements": [],
-      "findings": [],
-      "reason": "no pages-serving observation could be read: qa-reports:main/43d639e4ead7f890e72c3790f2811601ae2e5e43 — miss: main/43d639e4ead7f890e72c3790f2811601ae2e5e43 has nothing under health"
+      "measurements": [
+        {
+          "metric": "pages-serving-instruments",
+          "value": 1,
+          "unit": "count",
+          "command": "qa:fetch main/b5a65aa423dec3753677a4abfd807af02727a83e health/pages-serving.json"
+        },
+        {
+          "metric": "pages-serving-observation-age-days",
+          "value": 0,
+          "unit": "days",
+          "command": "qa:fetch main/b5a65aa423dec3753677a4abfd807af02727a83e health/pages-serving.json"
+        },
+        {
+          "metric": "pages-serving-urls",
+          "value": 36,
+          "unit": "count",
+          "command": "qa:fetch main/b5a65aa423dec3753677a4abfd807af02727a83e health/pages-serving.json"
+        },
+        {
+          "metric": "pages-serving-failing",
+          "value": 0,
+          "unit": "count",
+          "command": "qa:fetch main/b5a65aa423dec3753677a4abfd807af02727a83e health/pages-serving.json"
+        }
+      ],
+      "findings": []
     },
     {
       "id": "staging-preview-orphans",
@@ -188,20 +205,20 @@
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 308865,
+          "value": 312512,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 8,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
       "findings": [
         {
-          "summary": "`STAGING/_retired` (301.6 kB, 346 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "summary": "`STAGING/_retired` (305.2 kB, 350 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `_retired` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: _retired` and `cleanup_confirm: _retired`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         }
@@ -257,13 +274,13 @@
       ],
       "findings": [
         {
-          "summary": "Declared needs: could not determine for litlfred/folio-assistant, litlfred/who-iris, litlfred/folio-assistant-sci, litlfred/fhir-harness, litlfred/cat-harness, litlfred/cat-harness-tools, litlfred/bootstrap-tools, litlfred/folio-assistant-core, litlfred/bootstrap — no credentials/needs.json, so used-vs-declared is not judged.",
+          "summary": "Declared needs: could not determine for litlfred/folio-assistant, litlfred/folio-assistant-sci, litlfred/cat-harness-tools, litlfred/bootstrap, litlfred/fhir-harness, litlfred/folio-assistant-core, litlfred/cat-harness, litlfred/bootstrap-tools, litlfred/who-iris — no credentials/needs.json, so used-vs-declared is not judged.",
           "metric": "secret-needs-undetermined",
           "severity": "major",
           "action": "Author `credentials/needs.json` per the credentials proposal §2.3 (bean 9hxd); until then this is not clean."
         },
         {
-          "summary": "Expiry: no credentials/registry.json records dates for litlfred/folio-assistant, litlfred/cat-harness, litlfred/cat-harness-tools, litlfred/folio-assistant-core, so no expiry can be warned of.",
+          "summary": "Expiry: no credentials/registry.json records dates for litlfred/folio-assistant, litlfred/cat-harness-tools, litlfred/folio-assistant-core, litlfred/cat-harness, so no expiry can be warned of.",
           "metric": "secret-expiry-days",
           "severity": "minor",
           "action": "Record issue and expiry dates as credentials are added or rotated (credentials proposal §2.3, registry.json)."
@@ -307,19 +324,19 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 104773271,
+          "value": 104778064,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1086134750,
+          "value": 1091745063,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 799446016,
+          "value": 808471552,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
@@ -331,14 +348,14 @@
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 10.37,
+          "value": 10.42,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 1.01 GB against 99.9 MB of tracked content — 10.4x, in 3 pack(s).",
+          "summary": "`.git` is 1.02 GB against 99.9 MB of tracked content — 10.4x, in 3 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -410,13 +427,13 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 1094,
+          "value": 1096,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 131,
+          "value": 133,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -452,7 +469,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 61,
+          "value": 63,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -488,7 +505,7 @@
         },
         {
           "metric": "bean-claimed-with-criteria",
-          "value": 61,
+          "value": 63,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
@@ -525,7 +542,7 @@
       ],
       "findings": [
         {
-          "summary": "`folio-assistant-1swy` has been `in-progress` for 19 days (\"QA: verdicts, sidecars and the audited review record\").",
+          "summary": "`folio-assistant-fnx4` has been `in-progress` for 21 days (\"KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer\").",
           "metric": "bean-stale-in-progress",
           "severity": "minor",
           "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
@@ -537,13 +554,67 @@
           "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
         },
         {
-          "summary": "`folio-assistant-fnx4` has been `in-progress` for 20 days (\"KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer\").",
+          "summary": "`folio-assistant-2i5f` has been `in-progress` for 21 days (\"TERMINOLOGY / adjudication: the extractor vs the terminology, and judge vs judge — call the existing process, restate nothing\").",
           "metric": "bean-stale-in-progress",
           "severity": "minor",
           "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
         },
         {
-          "summary": "`folio-assistant-rwmf` has been `in-progress` for 18 days (\"GOAL 4 / PLATFORM: the harness''s own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on\").",
+          "summary": "`folio-assistant-zzmr` has been `in-progress` for 19 days (\"KG: the knowledge graph''s own structure, declaration and publication\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-8jt6` has been `in-progress` for 19 days (\"MEMORY & TODOS: notes an agent or a person carries, attached to the graph\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-0lmb` has been `in-progress` for 19 days (\"CONTENT MODEL: block kinds, adapters and the authoring surface\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-rwmf` has been `in-progress` for 19 days (\"GOAL 4 / PLATFORM: the harness''s own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-0uu2` has been `in-progress` for 30 days (\"DECLARATION GAP: every top-level directory is a declared subgraph — the split, and the headline count was wrong three ways\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-1swy` has been `in-progress` for 19 days (\"QA: verdicts, sidecars and the audited review record\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-6lb8` has been `in-progress` for 19 days (\"FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-qvxh` has been `in-progress` for 19 days (\"SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-5yhm` has been `in-progress` for 21 days (\"TERMINOLOGY: identification, mapping and adjudication — a glossary term is CHECKED against an existing terminology, never only minted\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-5a3l` has been `in-progress` for 19 days (\"DEPLOYMENT: topologies and operating modes are two axes, not one list of modes\").",
           "metric": "bean-stale-in-progress",
           "severity": "minor",
           "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
@@ -561,85 +632,31 @@
           "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
         },
         {
-          "summary": "`folio-assistant-5yhm` has been `in-progress` for 21 days (\"TERMINOLOGY: identification, mapping and adjudication — a glossary term is CHECKED against an existing terminology, never only minted\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-0uu2` has been `in-progress` for 29 days (\"DECLARATION GAP: every top-level directory is a declared subgraph — the split, and the headline count was wrong three ways\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-zzmr` has been `in-progress` for 19 days (\"KG: the knowledge graph''s own structure, declaration and publication\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-0lmb` has been `in-progress` for 19 days (\"CONTENT MODEL: block kinds, adapters and the authoring surface\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-8jt6` has been `in-progress` for 18 days (\"MEMORY & TODOS: notes an agent or a person carries, attached to the graph\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-5a3l` has been `in-progress` for 19 days (\"DEPLOYMENT: topologies and operating modes are two axes, not one list of modes\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-qvxh` has been `in-progress` for 19 days (\"SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-6lb8` has been `in-progress` for 18 days (\"FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-2i5f` has been `in-progress` for 21 days (\"TERMINOLOGY / adjudication: the extractor vs the terminology, and judge vs judge — call the existing process, restate nothing\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "`folio-assistant-p9bu` has been `in-progress` with no change for 183 hours (\"Placement PR9: harness docs pages follow their subject to the owning instance\") — 5 of 61 claims are quiet.",
+          "summary": "`folio-assistant-ec2a` has been `in-progress` with no change for 278 hours (\"LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph kinds and a cross-graph query\") — 5 of 63 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-10uc` has been `in-progress` with no change for 179 hours (\"RENDERED SURFACE: navbar, visualisers, stickies — GOAL 2''s stream, moved under GOAL 4 at GOAL 2''s sign-off\") — 5 of 61 claims are quiet.",
+          "summary": "`folio-assistant-iirv` has been `in-progress` with no change for 349 hours (\"cat-harness / cat-harness-tools separation\") — 5 of 63 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-ec2a` has been `in-progress` with no change for 269 hours (\"LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph kinds and a cross-graph query\") — 5 of 61 claims are quiet.",
+          "summary": "`folio-assistant-npuo` has been `in-progress` with no change for 188 hours (\"GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it\") — 5 of 63 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-iirv` has been `in-progress` with no change for 340 hours (\"cat-harness / cat-harness-tools separation\") — 5 of 61 claims are quiet.",
+          "summary": "`folio-assistant-10uc` has been `in-progress` with no change for 188 hours (\"RENDERED SURFACE: navbar, visualisers, stickies — GOAL 2''s stream, moved under GOAL 4 at GOAL 2''s sign-off\") — 5 of 63 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-npuo` has been `in-progress` with no change for 179 hours (\"GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it\") — 5 of 61 claims are quiet.",
+          "summary": "`folio-assistant-p9bu` has been `in-progress` with no change for 192 hours (\"Placement PR9: harness docs pages follow their subject to the owning instance\") — 5 of 63 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
