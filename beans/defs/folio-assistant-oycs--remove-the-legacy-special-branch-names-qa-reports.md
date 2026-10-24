@@ -2,10 +2,10 @@
 # folio-assistant-oycs
 $schema: bean/1.0.0
 title: Remove the legacy special-branch names (qa-reports, lake-cache/, fhir-ast/, state) once every remote is renamed to cat-
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-02T18:10:08Z
-updated_at: 2026-10-24T07:40:00Z
+updated_at: 2026-10-24T08:12:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -39,3 +39,5 @@ were NOT checked, so precondition 3 is half-met and the fallback stays. Session
 https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
 
 _2026-10-24T07:40:00Z_ — Precondition 3 re-measured on litlfred/qou (`git ls-remote --heads`): **16** `lake-cache/*` heads remain, **0** `cat-lake-cache/*` and **0** `cat/folio-assistant-sci/lake-cache/*`, although `9io2` (the declaration and mirrors) is completed. The qou branches themselves were never renamed. The fallback stays until they are; renaming them is a change to qou and goes to the owner first. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
+
+_2026-10-24T08:12:00Z_ — Preconditions 1 and 3 are now met. qou's 16 `lake-cache/*` heads were renamed (bean `qr4n`), and `git ls-remote --heads` shows no legacy name on qou, smart-trust, smart-base, folio-assistant-sci, fhir-harness, smart-immunizations, folio-assistant, cat-harness or cat-harness-tools. Precondition 2 (one full `lake-cache-refresh` cycle after the rename) is being checked next. Claimed by the "Drain KG tools beans" thread. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

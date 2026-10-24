@@ -2,11 +2,11 @@
 # folio-assistant-32f6
 $schema: bean/1.0.0
 title: Prefix the harness's special branches with cat- (qa-reports, lake-cache/*, state); gh-pages unchanged
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T18:07:50Z
-updated_at: 2026-10-24T07:40:00Z
+updated_at: 2026-10-24T08:12:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -19,7 +19,7 @@ Parent: fs43, not 7x5n — fs43 is the arc whose subject is the special branches
 - [x] One declared source of truth for the names (`cat-harness/scripts/special-branches.json`) with a test that every copy agrees
 - [x] Readers and writers resolve new-then-legacy name, so nothing breaks across the rename
 - [x] Collision review recorded: #1764/#1801 (qa-reports), #1816 (fhir-ast), state branch session
-- [ ] Owner approves the renames; renames done through the rename API (keeps a redirect), never delete
+- [x] Owner approves the renames; renames done through the rename API (keeps a redirect), never delete
 - [x] Follow-up bean (folio-assistant-oycs) for removing the legacy fallback
 
 ## Collision review (coordinate §"Before a platform refactor"), 2026-10-02, before the first edit
@@ -158,3 +158,7 @@ so they reach the session that owns the work.
 - On `litlfred/folio-assistant`, `refs/heads/cat/cat-harness/qa-reports`, `refs/heads/cat/cat-harness/state`, `refs/heads/cat/cat-harness/beans`, `refs/heads/cat/cat-harness/todos`, `refs/heads/cat/cat-harness/issue-marks`, `refs/heads/cat/cat-harness/fsh-guts`, and `refs/heads/cat/cat-harness/merge-reviews` exist and legacy `qa-reports` / `state` are absent; on `litlfred/qou`, 15 `refs/heads/lake-cache/*` branches remain (`0` `refs/heads/cat/folio-assistant-sci/lake-cache/*`).
 
 _2026-10-24T07:40:00Z_ — Re-measured. folio-assistant has only the `cat/cat-harness/*` names. litlfred/qou still has **16** legacy `lake-cache/*` heads and none under a new name. GitHub's branch rename API (`POST /repos/{owner}/{repo}/branches/{branch}/rename`) keeps a redirect and deletes nothing, so it is the route this bean's box 5 names. Doing it on qou needs the owner's OK, asked in the drain thread. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
+
+## Closed 2026-10-24 — box 5 met
+
+The last legacy family was renamed through the rename API on 2026-10-24 (bean `qr4n`). The owner ran it, with 16 of 16 renamed and 0 failures, and I verified it: qou has 0 `lake-cache/*` and 16 `cat/folio-assistant-sci/lake-cache/*` heads, and the old name redirects. `git ls-remote --heads` on smart-trust, smart-base, folio-assistant-sci, fhir-harness, smart-immunizations, folio-assistant, cat-harness and cat-harness-tools shows no legacy name. The fallback removal continues in `oycs`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

@@ -86,3 +86,4 @@ cat/folio-assistant-sci/lake-cache/qou-v4-24-0
 ## Log
 - 2026-10-24T09:59:15+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Running Steps 1–3 in background subagent.
 - 2026-10-24T10:03:45+02:00 — Renamed all 16 `lake-cache/*` branches on `litlfred/qou` to `cat/folio-assistant-sci/lake-cache/*` via the GitHub rename API (`POST /repos/litlfred/qou/branches/{branch}/rename`), verified 16 heads under `cat/folio-assistant-sci/lake-cache/` and 0 under `lake-cache/`, and verified redirect (`lake-cache%2Fqou-v4-24-0` -> `cat/folio-assistant-sci/lake-cache/qou-v4-24-0`). Marked `status: completed`.
+- 2026-10-24T08:12Z — Cross-checked from the cloud: `git ls-remote` on litlfred/qou shows 16 `cat/folio-assistant-sci/lake-cache/*` and 0 `lake-cache/*` heads; the redirect answers the new name. Closes the way for `32f6` (closed) and `oycs`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
