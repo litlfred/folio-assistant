@@ -28,6 +28,7 @@
       "description": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Seed the work plan",
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
       "sourcePath": "processes/global-tasks.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/global-tasks.bpmn",
       "summary": "The plan becomes beans, so a resumed session or a sibling agent can pick it up."
@@ -313,6 +314,8 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Intent",
           "@type": "bootstrap:ProcessNode",
           "bpmnType": "bpmn:ExclusiveGateway",
+          "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/folio-intent/Decision_FolioIntent",
+          "decisionRef": "decisions/folio-intent.dmn#Decision_FolioIntent",
           "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_3",
@@ -327,13 +330,15 @@
           ],
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
-          "relaxable": true,
+          "relaxable": false,
           "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Live",
           "@type": "bootstrap:ProcessNode",
           "bpmnType": "bpmn:ExclusiveGateway",
+          "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/pages-live-gate/Decision_PagesLive",
+          "decisionRef": "decisions/pages-live-gate.dmn#Decision_PagesLive",
           "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_probe",
@@ -377,6 +382,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/interaction-modality",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -391,7 +400,11 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_confirm",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dispatch-agent"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -407,6 +420,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
           "touchesWorkPlan": false
         },
         {
@@ -422,6 +436,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/interaction-modality",
           "touchesWorkPlan": false
         },
         {
@@ -437,6 +452,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -455,6 +471,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -472,7 +489,8 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_3",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -488,6 +506,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -503,6 +522,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -518,6 +538,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -537,6 +558,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
           "touchesWorkPlan": false
         },
         {
@@ -552,6 +574,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -567,7 +593,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         }
       ],
       "hasSubgraph": [
@@ -1085,6 +1113,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/adjudication",
           "touchesWorkPlan": false
         },
         {
@@ -1115,6 +1144,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -1227,6 +1260,8 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/GW_Covered",
           "@type": "bootstrap:ProcessNode",
           "bpmnType": "bpmn:ExclusiveGateway",
+          "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/review-coverage-gate/Decision_ReviewCoverageGate",
+          "decisionRef": "decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate",
           "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Coordinator",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "incoming": [
@@ -1376,6 +1411,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/decision-audit",
           "touchesWorkPlan": false
         },
         {
@@ -1391,6 +1427,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-graph",
           "touchesWorkPlan": false
         },
         {
@@ -1406,6 +1443,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/feature-staging",
           "touchesWorkPlan": false
         },
         {
@@ -1421,6 +1459,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/feature-staging",
           "touchesWorkPlan": false
         },
         {
@@ -1436,6 +1475,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/feature-staging",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/rendered-impact"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -1451,6 +1494,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/prepare-merge-auto",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/before-after-preview"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -1466,6 +1513,11 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/visual-diff",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/rendered-impact"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -1481,6 +1533,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/feature-staging",
           "touchesWorkPlan": false
         },
         {
@@ -1496,6 +1549,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/feature-staging",
           "touchesWorkPlan": false
         },
         {
@@ -1541,6 +1595,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
           "touchesWorkPlan": false
         },
         {
@@ -1556,6 +1611,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
           "touchesWorkPlan": false
         },
         {
@@ -1571,6 +1627,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/review-coordinator",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
           "touchesWorkPlan": false
         },
         {
@@ -1592,6 +1649,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/before-after-preview"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -1610,6 +1671,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/prepare-merge",
           "touchesWorkPlan": false
         },
         {
@@ -1625,6 +1687,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
           "touchesWorkPlan": false
         },
         {
@@ -1640,6 +1703,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
           "touchesWorkPlan": false
         },
         {
@@ -1655,6 +1719,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
           "touchesWorkPlan": false
         },
         {
@@ -1670,6 +1735,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
           "touchesWorkPlan": false
         },
         {
@@ -1685,6 +1751,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
           "touchesWorkPlan": false
         },
         {
@@ -1700,6 +1767,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/uses-editorial-review",
           "touchesWorkPlan": false
         },
         {
@@ -1718,6 +1786,11 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/review-coordinator",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-heatmap",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/rendered-impact"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -1736,6 +1809,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
           "touchesWorkPlan": false
         },
         {
@@ -1751,7 +1825,12 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/watch",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager"
+          ],
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_WatchMainCI",
@@ -1766,7 +1845,12 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/watch",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager"
+          ],
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_WithdrawComment",
@@ -1781,13 +1865,14 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
           "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "@type": "bootstrap:Process",
           "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end. folio-assistant — authoring a document end to end (no Lean, no required TeX).\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run cat render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 14,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Authoring a document",
@@ -2034,6 +2119,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-authoring",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -2049,6 +2138,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-plan",
           "touchesWorkPlan": false
         },
         {
@@ -2064,6 +2154,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate",
           "touchesWorkPlan": false
         },
         {
@@ -2079,6 +2170,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
           "touchesWorkPlan": false
         },
         {
@@ -2094,6 +2186,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing",
           "touchesWorkPlan": false
         },
         {
@@ -2109,6 +2202,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -2124,6 +2221,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-structure",
           "touchesWorkPlan": false
         },
         {
@@ -2140,7 +2238,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
@@ -2155,6 +2255,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate",
           "touchesWorkPlan": false
         },
         {
@@ -2550,7 +2651,7 @@
           ],
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
-          "relaxable": true,
+          "relaxable": false,
           "touchesWorkPlan": false
         },
         {
@@ -2674,6 +2775,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
           "touchesWorkPlan": false
         },
         {
@@ -2689,6 +2791,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/validation-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-test",
           "touchesWorkPlan": false
         },
         {
@@ -2704,7 +2807,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_CollateFindings",
@@ -2719,6 +2824,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/validation-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate",
           "touchesWorkPlan": false
         },
         {
@@ -2733,7 +2839,8 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_26",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/corpus-commit-contract",
           "touchesWorkPlan": false
         },
         {
@@ -2764,6 +2871,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/before-after-preview"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -2779,7 +2890,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_RecordDecision",
@@ -2793,7 +2906,8 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_21b",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/decision-audit",
           "touchesWorkPlan": false
         },
         {
@@ -2809,7 +2923,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "resolve"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ReviewFindings",
@@ -2823,7 +2939,8 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_21",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/decision-audit",
           "touchesWorkPlan": false
         },
         {
@@ -2839,6 +2956,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/before-after-preview"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -2854,6 +2975,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/validation-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate",
           "touchesWorkPlan": false
         },
         {
@@ -2869,6 +2991,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
           "touchesWorkPlan": false
         },
         {
@@ -2884,6 +3007,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/validation-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate",
           "touchesWorkPlan": false
         },
         {
@@ -3220,6 +3344,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/evidence-appraisal",
           "touchesWorkPlan": false
         },
         {
@@ -3235,6 +3360,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
           "touchesWorkPlan": false
         },
         {
@@ -3250,6 +3376,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -3265,6 +3392,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
           "touchesWorkPlan": false
         },
         {
@@ -3280,6 +3408,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -3295,6 +3424,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -3310,7 +3440,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordUnverified",
@@ -3325,7 +3457,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
@@ -3340,6 +3474,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
           "touchesWorkPlan": false
         },
         {
@@ -3355,6 +3490,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/external-registry",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/registry-authority-contract",
           "touchesWorkPlan": false
         },
         {
@@ -3526,6 +3662,11 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -3542,6 +3683,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publication-manager",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -3603,6 +3748,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-feedback",
           "touchesWorkPlan": false
         },
         {
@@ -3618,7 +3764,12 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-feedback"
+          ],
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_Plan",
@@ -3633,6 +3784,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/programme-manager",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-plan",
           "touchesWorkPlan": false
         },
         {
@@ -3648,6 +3800,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/programme-manager",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-retire",
           "touchesWorkPlan": false
         },
         {
@@ -3664,7 +3817,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_Test",
@@ -3679,6 +3834,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/validation-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-test",
           "touchesWorkPlan": false
         },
         {
@@ -3926,6 +4082,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
           "touchesWorkPlan": false
         },
         {
@@ -4033,6 +4190,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/feedback-provider",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-actions",
           "touchesWorkPlan": false
         },
         {
@@ -4076,6 +4234,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/review-coordinator",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4091,6 +4250,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4106,6 +4266,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4124,6 +4285,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4139,6 +4301,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4154,6 +4317,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4172,6 +4336,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4187,6 +4352,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4202,6 +4368,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/review-coordinator",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4217,6 +4384,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/feedback-provider",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4502,6 +4670,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-validate"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -4518,6 +4690,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/review-coordinator",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
           "touchesWorkPlan": false
         },
         {
@@ -4556,6 +4729,8 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Gateway_QaGreen",
           "@type": "bootstrap:ProcessNode",
           "bpmnType": "bpmn:ExclusiveGateway",
+          "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/draft-qa-gate/Decision_DraftQaGate",
+          "decisionRef": "decisions/draft-qa-gate.dmn#Decision_DraftQaGate",
           "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/G05",
@@ -4653,7 +4828,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "archive"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_AuthorizeRelease",
@@ -4667,7 +4844,8 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/G18",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/programme-manager",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
           "touchesWorkPlan": false
         },
         {
@@ -4683,6 +4861,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
           "touchesWorkPlan": false
         },
         {
@@ -4698,6 +4877,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publication-manager",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -4713,7 +4896,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "resolve"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenChangeBeans",
@@ -4728,7 +4913,12 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-feedback"
+          ],
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenReleaseBean",
@@ -4743,7 +4933,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublicationQa",
@@ -4758,6 +4950,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-test",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/quality-control"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -4772,7 +4968,11 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/G19",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publication-manager",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/render-kg-to-cdn"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -4788,6 +4988,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -4803,6 +5007,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/clinical-sme",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review"
+          ],
           "touchesWorkPlan": false
         }
       ],
@@ -4849,7 +5057,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "@type": "bootstrap:Process",
           "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 6,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Ingestion subprocess — build the L1 knowledge graph",
@@ -4964,6 +5172,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -4979,6 +5188,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -4994,6 +5204,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5009,6 +5220,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5024,13 +5236,14 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
           "@type": "bootstrap:Process",
           "description": "Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping on a stated condition.\n\nIt begins after `library-ingestion` has filed the sources, `ingest-*` has derived their structure, and the L1 completeness gate has said they are fit to use. Nothing here acquires or parses anything: a question about a document nobody ingested is not answered by this process, it is refused by it.\n\nADVISORY at the process level. The judgement it contains is which granularity fits a question and whether the evidence so far is sufficient, and neither is gateable — the whole reason the loop carries an iteration cap is that sufficiency may never arrive.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 10,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Deep document research",
@@ -5149,6 +5362,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
           "touchesWorkPlan": false
         },
         {
@@ -5164,6 +5378,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
           "touchesWorkPlan": false
         },
         {
@@ -5181,7 +5396,8 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch#flow/F_5",
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
-          "relaxable": true,
+          "relaxable": false,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
           "touchesWorkPlan": false
         },
         {
@@ -5197,6 +5413,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
           "touchesWorkPlan": false
         },
         {
@@ -5282,7 +5499,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "@type": "bootstrap:Process",
           "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 13,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Ingestion subprocess — derive content from the assets",
@@ -5487,6 +5704,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5502,6 +5720,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5517,6 +5736,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5532,6 +5752,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5547,6 +5768,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5562,13 +5784,14 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "@type": "bootstrap:Process",
           "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 8,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Ingestion subprocess — extract structure",
@@ -5711,6 +5934,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5726,6 +5950,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5741,6 +5966,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5759,6 +5985,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -5774,13 +6001,14 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "@type": "bootstrap:Process",
           "description": "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nCARRIES THE BODY `document-ingestion.bpmn` HAD until placement PR6 (bean `apcg`; owner ruling 3, 2026-09-30: \"only basic doc ingestion high level workflow in cat-harness … more detailed doc ingestion/cataloguing methodologies in folio-asst-core\"). Every activity id is unchanged, so a reference to `Task_Detect` or `CallActivity_Extract` means what it meant.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 17,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "L1 document ingestion — a document to the L1 source knowledge graph",
@@ -5967,6 +6195,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/library-ingestion",
           "touchesWorkPlan": false
         },
         {
@@ -5986,6 +6215,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6005,6 +6235,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6021,6 +6252,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6037,6 +6269,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
           "touchesWorkPlan": false
         },
         {
@@ -6052,6 +6285,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/theme-art-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6131,6 +6365,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6146,6 +6381,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6161,6 +6397,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6176,7 +6413,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+          "touchesWorkPlan": true,
+          "workPlanOp": "claim"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote",
@@ -6191,6 +6430,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6206,13 +6446,14 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
           "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
           "@type": "bootstrap:Process",
           "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 10,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Ingestion subprocess — the L1 completeness gate",
@@ -6401,6 +6642,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
           "touchesWorkPlan": false
         },
         {
@@ -6416,6 +6658,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/adjudication"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -6431,6 +6677,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/translation-manager",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/untainted-verification"
+          ],
           "touchesWorkPlan": false
         },
         {
@@ -6451,7 +6701,9 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         }
       ],
       "holdsGraph": [
@@ -6468,7 +6720,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "@type": "bootstrap:Process",
           "description": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.\n\nYou are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts. Conflating them is how a board starts changing under somebody who did not touch it.\n\nThe rule the diagram exists to hold is the one about the way back: an action whose inverse is not reachable is not a toggle, and a window that cannot be closed is a navigation dead end wearing a control's clothes.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 13,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Board: open and close content",
@@ -6616,6 +6868,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6631,6 +6884,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6646,6 +6900,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6664,6 +6919,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6682,6 +6938,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6697,6 +6954,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6712,6 +6970,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -6773,7 +7032,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
           "@type": "bootstrap:Process",
           "description": "Putting a note at a spot on a board: write the note into the folio, record where it was drawn on THIS board, and sweep any position whose note has gone.\n\nYou are in this process whenever a note is to appear somewhere. The first gateway exists because the note may already be there — placing is not the same as creating, and a process that conflated them would duplicate content every time somebody moved something.\n\nThe rule the diagram holds is in the first activity's own wording: the note goes into the folio WITH NO COORDINATE. A folio is complete with no board, so a coordinate on a note would make the content depend on a drawing of it. The x,y belongs to the layer, keyed to one board, and an orphaned position is swept from the LAYER rather than being allowed to keep a note alive.",
-          "enforcement": "strict",
+          "enforcement": "advisory",
           "flowCount": 6,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
           "name": "Board: place a note",
@@ -6862,6 +7121,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
           "touchesWorkPlan": false
         },
         {
@@ -6880,6 +7140,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
           "touchesWorkPlan": false
         },
         {
@@ -6895,6 +7156,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
           "touchesWorkPlan": false
         },
         {
@@ -7052,6 +7314,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deletion-requires-confirmation",
           "touchesWorkPlan": false
         },
         {
@@ -7067,6 +7330,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
           "touchesWorkPlan": false
         },
         {
@@ -7082,6 +7346,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
           "touchesWorkPlan": false
         },
         {
@@ -7097,6 +7362,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deletion-requires-confirmation",
           "touchesWorkPlan": false
         },
         {
@@ -7112,6 +7378,7 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
           "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
           "touchesWorkPlan": false
         },
         {

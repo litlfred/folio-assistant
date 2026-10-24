@@ -58,7 +58,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_ReviewStaging",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -106,7 +111,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_RequestRevision",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -154,7 +164,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_SubmitForReview",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -418,7 +433,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_CreateBranch",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -634,7 +654,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_EditContent",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -850,7 +875,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_EditLogic",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1066,7 +1096,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_AssessImpact",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-graph",
+     "href": "../../../reference/skill-instructions/content-graph.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1503,7 +1538,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_CommitPush",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "prepare-merge-auto",
+     "href": "../../../reference/skill-instructions/prepare-merge-auto.html"
+    },
+    {
+     "name": "before-after-preview",
+     "href": "../../../reference/skill-instructions/before-after-preview.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1719,7 +1763,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_Iterate",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    },
+    {
+     "name": "before-after-preview",
+     "href": "../../../reference/skill-instructions/before-after-preview.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1935,7 +1988,20 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_CompareBeforeAfter",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    },
+    {
+     "name": "visual-diff",
+     "href": "../../../reference/skill-instructions/visual-diff.html"
+    },
+    {
+     "name": "rendered-impact",
+     "href": "../../../reference/skill-instructions/rendered-impact.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -1995,7 +2061,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_IngestComments",
    "lane": "Review Coordinator",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Coordinator",
-   "skills": [],
+   "skills": [
+    {
+     "name": "review-comments",
+     "href": "../../../reference/skill-instructions/review-comments.html"
+    }
+   ],
    "role": {
     "name": "review-coordinator",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
@@ -2027,7 +2098,20 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_SliceAndAssign",
    "lane": "Review Coordinator",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Coordinator",
-   "skills": [],
+   "skills": [
+    {
+     "name": "review-heatmap",
+     "href": "../../../reference/skill-instructions/review-heatmap.html"
+    },
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    },
+    {
+     "name": "rendered-impact",
+     "href": "../../../reference/skill-instructions/rendered-impact.html"
+    }
+   ],
    "role": {
     "name": "review-coordinator",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
@@ -2059,7 +2143,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_ReviewSlices",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "review-comments",
+     "href": "../../../reference/skill-instructions/review-comments.html"
+    }
+   ],
    "calls": {
     "name": "Review task",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
@@ -2124,7 +2217,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_WithdrawComment",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "review-comments",
+     "href": "../../../reference/skill-instructions/review-comments.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -2184,7 +2282,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_Adjudication",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "adjudication",
+     "href": "../../../reference/skill-instructions/adjudication.html"
+    }
+   ],
    "calls": {
     "name": "Adjudication",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
@@ -2249,7 +2352,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_ReviewUses",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "uses-editorial-review",
+     "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -2309,7 +2417,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_ReviewImpact",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -2369,7 +2482,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_RequestChanges",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -2429,7 +2551,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_Approve",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "decision-audit",
+     "href": "../../../reference/skill-instructions/decision-audit.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -2489,7 +2616,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_Merge",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "prepare-merge",
+     "href": "../../../reference/skill-instructions/prepare-merge.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -2549,7 +2681,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_BuildStaging",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -2645,7 +2782,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_DeployStaging",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -2741,7 +2883,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_CommentPR",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    },
+    {
+     "name": "rendered-impact",
+     "href": "../../../reference/skill-instructions/rendered-impact.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -2837,7 +2988,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_WatchBranchCI",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "watch",
+     "href": "../../../reference/skill-instructions/watch.html"
+    },
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -2933,7 +3093,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_CleanupStaging",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -3029,7 +3194,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_RebuildMain",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -3125,7 +3295,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_WatchMainCI",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "watch",
+     "href": "../../../reference/skill-instructions/watch.html"
+    },
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",

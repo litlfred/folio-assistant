@@ -10,7 +10,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
    "lane": "Intake agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -58,7 +63,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Triage",
    "lane": "Review coordinator",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Coordinator",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "review-coordinator",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
@@ -90,7 +100,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets",
    "lane": "Intake agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -138,7 +153,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
    "lane": "Review committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -198,7 +218,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Assign",
    "lane": "Review coordinator",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Coordinator",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "review-coordinator",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
@@ -230,7 +255,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_CommitteeRecommends",
    "lane": "Review committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -290,7 +320,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_EditorDecides",
    "lane": "Editor",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "editor",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
@@ -348,7 +383,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
    "lane": "Author (human or agentic)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -396,7 +436,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
    "lane": "Change set — feature branch and staging",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "calls": {
     "name": "Content Change and Review",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
@@ -497,7 +542,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
    "lane": "Change set — feature branch and staging",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -593,7 +643,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Withdraw",
    "lane": "Public commenter",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Commenter",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "role": {
     "name": "feedback-provider",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",

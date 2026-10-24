@@ -8,7 +8,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "@type": "bootstrap:Process",
       "description": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.\n\nYou are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts. Conflating them is how a board starts changing under somebody who did not touch it.\n\nThe rule the diagram exists to hold is the one about the way back: an action whose inverse is not reachable is not a toggle, and a window that cannot be closed is a navigation dead end wearing a control's clothes.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Board: open and close content",
@@ -156,6 +156,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -171,6 +172,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -186,6 +188,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -204,6 +207,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -222,6 +226,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -237,6 +242,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -252,6 +258,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -313,7 +320,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
       "@type": "bootstrap:Process",
       "description": "Putting a note at a spot on a board: write the note into the folio, record where it was drawn on THIS board, and sweep any position whose note has gone.\n\nYou are in this process whenever a note is to appear somewhere. The first gateway exists because the note may already be there — placing is not the same as creating, and a process that conflated them would duplicate content every time somebody moved something.\n\nThe rule the diagram holds is in the first activity's own wording: the note goes into the folio WITH NO COORDINATE. A folio is complete with no board, so a coordinate on a note would make the content depend on a drawing of it. The x,y belongs to the layer, keyed to one board, and an orphaned position is swept from the LAYER rather than being allowed to keep a note alive.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Board: place a note",
@@ -402,6 +409,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -420,6 +428,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -435,6 +444,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -592,6 +602,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deletion-requires-confirmation",
       "touchesWorkPlan": false
     },
     {
@@ -607,6 +618,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -622,6 +634,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -637,6 +650,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deletion-requires-confirmation",
       "touchesWorkPlan": false
     },
     {
@@ -652,6 +666,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {

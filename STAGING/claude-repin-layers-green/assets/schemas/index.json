@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 289,
+      "count": 290,
       "unit": "modules"
     }
   },
@@ -1197,6 +1197,14 @@
       "graphNode": "schema",
       "summary": "MOUNT TRUST — what must be true before a remote knowledge graph is mounted.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/namespaces-legacy.test.ts",
+      "instance": "cat-harness",
+      "name": "namespaces-legacy.test",
+      "graphNode": "undeclared",
+      "summary": "The reader's TRANSITION tolerance for legacy exact-semver extension",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/namespaces.ts",

@@ -161,8 +161,9 @@ exporter does not run this phase, so smart-base supplies it as an
   the manifest's `preExport`. So the cache verifies on any clean checkout, and
   a merge that changes no input does not make it stale.
 - **The counterpart** after the export is not the Publisher's `output/` any
-  more. It is `dak-ast-sidecars.ts`, which runs the post-processing schema and
-  vocabulary generators over the AST ([`dak-postprocessing`](dak-postprocessing.md)).
+  more. It is fhir-harness's `ig-api-gen.ts`, the generic port of the
+  post-processing schema and vocabulary generators, run over the AST by
+  `ig-site:sidecars` ([`dak-postprocessing`](dak-postprocessing.md)).
 
 `ghbuild.yml` is WHO's inherited build and keeps its own copy of these steps
 for downstream repositories. It is not how smart-base's cache is written.

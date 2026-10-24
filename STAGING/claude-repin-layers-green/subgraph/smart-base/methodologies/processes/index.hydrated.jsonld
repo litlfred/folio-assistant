@@ -25,7 +25,7 @@
       "@id": "http://smart.who.int/base/process/Process_DIIG",
       "@type": "bootstrap:Process",
       "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `smart-base/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 14,
       "inSubgraph": "http://smart.who.int/base/directory/processes",
       "name": "DIIG — from a health system bottleneck to a costed implementation plan",
@@ -154,6 +154,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/business-analyst",
       "inSubgraph": "http://smart.who.int/base/directory/processes",
       "name": "Business analyst",
       "partOf": "http://smart.who.int/base/process/Process_DIIG"
@@ -161,6 +162,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/processes",
       "name": "Programme manager",
       "partOf": "http://smart.who.int/base/process/Process_DIIG"
@@ -176,8 +178,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_05",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_DevelopBudget",
@@ -190,8 +195,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_10",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam",
@@ -204,8 +212,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_02",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
@@ -218,8 +229,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_09",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_MapCurrentState",
@@ -235,8 +249,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_03",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_MonitorAndUseData",
@@ -252,8 +269,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_11",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_PlanImplementation",
@@ -266,8 +286,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_08",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_PrioritizeBottlenecks",
@@ -280,8 +303,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_04",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_ValueProposition",
@@ -294,8 +320,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_14",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG",
@@ -307,6 +336,7 @@
       "name": "Costed implementation plan, and its case",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -324,6 +354,7 @@
         "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_07"
       ],
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -341,6 +372,7 @@
         "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_13"
       ],
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -354,6 +386,7 @@
       "nodeKind": "start",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     }

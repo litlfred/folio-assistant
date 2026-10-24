@@ -10,7 +10,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_CheckDerived",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    }
+   ],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -58,7 +63,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_RoundTrip",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
-   "skills": [],
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../reference/skill-instructions/translation-manager.html"
+    },
+    {
+     "name": "untainted-verification",
+     "href": "../../../reference/skill-instructions/untainted-verification.html"
+    }
+   ],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -106,7 +120,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_FlagDrift",
    "lane": "Reviewer (SME or editor)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_1",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    },
+    {
+     "name": "adjudication",
+     "href": "../../../reference/skill-instructions/adjudication.html"
+    }
+   ],
    "calls": {
     "name": "Adjudication",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
@@ -171,7 +194,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_Verdict",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    }
+   ],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",

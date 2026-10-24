@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
     "pr": "2681/merge",
-    "run": "40047569127"
+    "run": "40051669660"
   },
   "@graph": [
     {
@@ -16,8 +16,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Reviewer",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-review"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [

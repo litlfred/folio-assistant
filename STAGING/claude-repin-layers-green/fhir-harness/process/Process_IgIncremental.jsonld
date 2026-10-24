@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
     "pr": "2681/merge",
-    "run": "40047569127"
+    "run": "40051669660"
   },
   "@graph": [
     {
@@ -15,7 +15,7 @@
       "name": "Incremental IG build",
       "summary": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy.",
       "description": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build\nproposed in issue #199: restore the derived state, compute\nthe change's dependency cone, compile and validate only the cone against the\nwarm validator, re-render the cone's records, rebuild the meta-index, assemble\nthe site, gate on QA, then deploy — and, on main or a release only, seed the\ncache from the green build. A cache miss or a moved toolchain falls back to\ntoday's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the\npackage that owns the content owns what adequate means.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "sourcePath": "processes/content/ig-incremental-build.bpmn",
       "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-incremental-build.svg",

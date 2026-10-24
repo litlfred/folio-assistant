@@ -10,7 +10,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Plan",
    "lane": "Author (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-plan",
+     "href": "../../../reference/skill-instructions/content-plan.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -58,7 +63,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_SeedPlan",
    "lane": "Work plan — beans (shared by humans and agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "shared": {
     "id": "GT_SeedWorkPlan",
     "type": "bpmn:GlobalTask"
@@ -86,7 +96,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Scaffold",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-structure",
+     "href": "../../../reference/skill-instructions/document-structure.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -302,7 +317,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_AuthorBlocks",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-authoring",
+     "href": "../../../reference/skill-instructions/document-authoring.html"
+    },
+    {
+     "name": "normative-statements",
+     "href": "../../../reference/skill-instructions/normative-statements.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -518,7 +542,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_ProfileCheck",
    "lane": "Build pipeline — validate · render · publish",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-validate",
+     "href": "../../../reference/skill-instructions/content-validate.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -614,7 +643,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
    "lane": "Build pipeline — validate · render · publish",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-validate",
+     "href": "../../../reference/skill-instructions/content-validate.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -710,7 +744,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
    "lane": "Build pipeline — validate · render · publish",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-publishing",
+     "href": "../../../reference/skill-instructions/document-publishing.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -806,7 +845,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Review",
    "lane": "Reviewer / subject-matter expert",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Reviewer",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -866,7 +914,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Publish",
    "lane": "Build pipeline — validate · render · publish",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",

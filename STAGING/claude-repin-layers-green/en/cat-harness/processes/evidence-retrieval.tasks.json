@@ -10,7 +10,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
    "lane": "Author / guideline developer (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -58,7 +63,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_FramePico",
    "lane": "Author / guideline developer (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -106,7 +116,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L1Sources",
    "lane": "Evidence agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    }
+   ],
    "role": {
     "name": "evidence-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
@@ -126,7 +141,20 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
    "lane": "Evidence agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    }
+   ],
    "role": {
     "name": "evidence-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
@@ -146,7 +174,20 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_DataRepos",
    "lane": "Evidence agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    }
+   ],
    "role": {
     "name": "evidence-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
@@ -166,7 +207,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
    "lane": "Trusted registries and observatories (external)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Trusted",
-   "skills": [],
+   "skills": [
+    {
+     "name": "registry-authority-contract",
+     "href": "../../../reference/skill-instructions/registry-authority-contract.html"
+    }
+   ],
    "role": {
     "name": "external-registry",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
@@ -186,7 +232,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordUnverified",
    "lane": "Work plan — beans (shared)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -210,7 +261,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AppraiseGrade",
    "lane": "Author / guideline developer (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "evidence-appraisal",
+     "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -258,7 +314,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap",
    "lane": "Work plan — beans (shared)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -282,7 +343,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AttachEvidence",
    "lane": "Author / guideline developer (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    }
+   ],
    "role": {
     "name": "author",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",

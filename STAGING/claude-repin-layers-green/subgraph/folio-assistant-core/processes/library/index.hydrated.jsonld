@@ -8,7 +8,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "@type": "bootstrap:Process",
       "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — build the L1 knowledge graph",
@@ -123,6 +123,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -138,6 +139,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -153,6 +155,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -168,6 +171,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -183,13 +187,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
       "@type": "bootstrap:Process",
       "description": "Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping on a stated condition.\n\nIt begins after `library-ingestion` has filed the sources, `ingest-*` has derived their structure, and the L1 completeness gate has said they are fit to use. Nothing here acquires or parses anything: a question about a document nobody ingested is not answered by this process, it is refused by it.\n\nADVISORY at the process level. The judgement it contains is which granularity fits a question and whether the evidence so far is sufficient, and neither is gateable — the whole reason the loop carries an iteration cap is that sufficiency may never arrive.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Deep document research",
@@ -308,6 +313,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
       "touchesWorkPlan": false
     },
     {
@@ -323,6 +329,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
       "touchesWorkPlan": false
     },
     {
@@ -340,7 +347,8 @@
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch#flow/F_5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
-      "relaxable": true,
+      "relaxable": false,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
       "touchesWorkPlan": false
     },
     {
@@ -356,6 +364,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research",
       "touchesWorkPlan": false
     },
     {
@@ -441,7 +450,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "@type": "bootstrap:Process",
       "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — derive content from the assets",
@@ -646,6 +655,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -661,6 +671,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -676,6 +687,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -691,6 +703,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -706,6 +719,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -721,13 +735,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "@type": "bootstrap:Process",
       "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 8,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — extract structure",
@@ -870,6 +885,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -885,6 +901,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -900,6 +917,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -918,6 +936,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -933,13 +952,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "@type": "bootstrap:Process",
       "description": "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nCARRIES THE BODY `document-ingestion.bpmn` HAD until placement PR6 (bean `apcg`; owner ruling 3, 2026-09-30: \"only basic doc ingestion high level workflow in cat-harness … more detailed doc ingestion/cataloguing methodologies in folio-asst-core\"). Every activity id is unchanged, so a reference to `Task_Detect` or `CallActivity_Extract` means what it meant.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "L1 document ingestion — a document to the L1 source knowledge graph",
@@ -1126,6 +1146,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/library-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -1145,6 +1166,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1164,6 +1186,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1180,6 +1203,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1196,6 +1220,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -1211,6 +1236,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/theme-art-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1290,6 +1316,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1305,6 +1332,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1320,6 +1348,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1335,7 +1364,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote",
@@ -1350,6 +1381,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1365,13 +1397,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "@type": "bootstrap:Process",
       "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — the L1 completeness gate",
@@ -1560,6 +1593,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1575,6 +1609,10 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/adjudication"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1590,6 +1628,10 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/untainted-verification"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1610,7 +1652,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
     }
   ],
   "holdsGraph": [

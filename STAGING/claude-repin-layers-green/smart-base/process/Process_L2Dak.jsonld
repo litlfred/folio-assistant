@@ -4,9 +4,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
     "pr": "2681/merge",
-    "run": "40047569127"
+    "run": "40051669660"
   },
   "@graph": [
     {
@@ -15,7 +15,7 @@
       "name": "L2 DAK authoring",
       "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\nEach of the six authoring tracks is a call into l2-component-edit-review.bpmn\n(Process_L2ComponentEditReview): the agent edits the component, checks, renders and stages it, and hands it on, while a\nperson in the component's reviewing role reviews it alongside, never as a gate. The track's renderer, checker and reviewer\nare tabled in the skill l2-component-edit-review.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "sourcePath": "processes/content/l2-dak-authoring.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",

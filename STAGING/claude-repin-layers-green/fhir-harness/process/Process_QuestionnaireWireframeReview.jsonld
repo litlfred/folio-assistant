@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
     "pr": "2681/merge",
-    "run": "40047569127"
+    "run": "40051669660"
   },
   "@graph": [
     {
@@ -15,7 +15,7 @@
       "name": "Questionnaire wireframe review",
       "summary": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep li…",
       "description": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep links, and changed through requests that say which side was edited. Operating skill: fhir-questionnaire-wireframe. Owner decisions, 2026-10-14: LHC-Forms, vendored; the checker lives in this layer; either the Questionnaire or the wireframe may be the source of a change, and the request says which.\n\nWHERE IT SITS. After SUSHI has compiled the Questionnaire to JSON (l3-fhir-pipeline, Task_Sushi), and wherever a layer above reviews a Questionnaire's fidelity to its wireframe. It reads JSON only, so it can run on any IG that produces a Questionnaire.\n\nWHAT IT DOES NOT CLAIM. A faithful Questionnaire is not therefore a good form, and an accepted form is not therefore conformant: wireframe-design-review judges the first and fhir-validation the second.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "sourcePath": "processes/content/questionnaire-wireframe-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/questionnaire-wireframe-review.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/questionnaire-wireframe-review.svg",

@@ -117,6 +117,13 @@
      "href": "../../../reference/skill-instructions/ci-health.html"
     }
    ],
+   "shared": {
+    "id": "GT_EnsureTrackingLabel",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "label": "ci-health"
+    }
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -218,6 +225,13 @@
      "href": "../../../reference/skill-instructions/ci-health.html"
     }
    ],
+   "shared": {
+    "id": "GT_CloseTrackingIssue",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "label": "ci-health"
+    }
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -319,6 +333,13 @@
      "href": "../../../reference/skill-instructions/ci-health.html"
     }
    ],
+   "shared": {
+    "id": "GT_TrackIssue",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "label": "ci-health"
+    }
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",

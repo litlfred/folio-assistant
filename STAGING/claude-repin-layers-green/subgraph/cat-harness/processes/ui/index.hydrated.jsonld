@@ -456,7 +456,8 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_LogRetained",
       "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:ServiceTask",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_LogRetained",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/lane/Lane_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_6",

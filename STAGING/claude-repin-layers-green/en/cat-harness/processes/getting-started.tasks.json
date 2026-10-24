@@ -10,7 +10,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_DetectModality",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "interaction-modality",
+     "href": "../../../reference/skill-instructions/interaction-modality.html"
+    }
+   ],
    "role": {
     "name": "onboarding-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
@@ -292,7 +297,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReadFacts",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "onboarding-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
@@ -574,7 +584,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent",
    "lane": "User (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
-   "skills": [],
+   "skills": [
+    {
+     "name": "interaction-modality",
+     "href": "../../../reference/skill-instructions/interaction-modality.html"
+    },
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "user",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
@@ -626,7 +645,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ScanRepo",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "repo-conversion",
+     "href": "../../../reference/skill-instructions/repo-conversion.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../reference/skill-instructions/document-intake.html"
+    }
+   ],
    "role": {
     "name": "onboarding-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
@@ -908,7 +936,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ConfirmImport",
    "lane": "User (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
-   "skills": [],
+   "skills": [
+    {
+     "name": "repo-conversion",
+     "href": "../../../reference/skill-instructions/repo-conversion.html"
+    },
+    {
+     "name": "dispatch-agent",
+     "href": "../../../reference/skill-instructions/dispatch-agent.html"
+    }
+   ],
    "role": {
     "name": "user",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
@@ -960,7 +997,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_CreateRepo",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "repo-conversion",
+     "href": "../../../reference/skill-instructions/repo-conversion.html"
+    }
+   ],
    "role": {
     "name": "onboarding-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
@@ -1242,7 +1284,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_Scaffold",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "onboarding-agent",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
@@ -1524,7 +1571,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_SeedPlan",
    "lane": "Work plan (beans)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -1548,7 +1600,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ProvisionGhPages",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "publish-target",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
@@ -1568,7 +1625,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_PagesBootstrap",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "publish-target",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
@@ -1588,7 +1650,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUrl",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "publish-target",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
@@ -1608,7 +1675,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportPending",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "publish-target",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
@@ -1628,7 +1700,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUnknown",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
-   "skills": [],
+   "skills": [
+    {
+     "name": "getting-started",
+     "href": "../../../reference/skill-instructions/getting-started.html"
+    }
+   ],
    "role": {
     "name": "publish-target",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",

@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-24T01:18:11.276Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
-  "sourceCommitSha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
-  "sourceCommitAt": "2026-10-24T00:58:06Z",
+  "generatedAt": "2026-10-24T02:12:33.066Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
+  "sourceCommitSha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
+  "sourceCommitAt": "2026-10-24T01:51:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -382,6 +382,7 @@
     "Capability": 27,
     "SkillPackage": 18,
     "Decision": 10,
+    "Task": 8,
     "Process": 68,
     "SequenceFlow": 900,
     "Lane": 156,
@@ -6319,6 +6320,126 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/test-certification/Decision_TestCertification"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_EnsureTrackingLabel",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Ensure the tracking label exists",
+      "summary": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet.",
+      "description": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ci-health"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_EnsureTrackingLabel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_TrackIssue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Open or EDIT the one tracking issue",
+      "summary": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body.",
+      "description": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ci-health"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_TrackIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_CloseTrackingIssue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Close the tracking issue",
+      "summary": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean.",
+      "description": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ci-health"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_CloseTrackingIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_RecordSignoff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Record the sign-off as a requirement-signoff attestation",
+      "summary": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry).",
+      "description": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012.\n\nGW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.",
+      "bpmnType": "bpmn:GlobalScriptTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/adjudication"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_RecordSignoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_BriefAndClaim",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Brief, and claim the bean",
+      "summary": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach.",
+      "description": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/opening-brief"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_BriefAndClaim"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_Drain",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Drain: land, close or re-target the open PRs",
+      "summary": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight.",
+      "description": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/kg-separation"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_Drain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_ReportWhatMoves",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Report what would move — sizes, and what breaks",
+      "summary": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback.",
+      "description": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/deletion-requires-confirmation"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_ReportWhatMoves"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_LogRetained",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Append `retained` with the reason",
+      "summary": "The entry that makes the log worth reading.",
+      "description": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one.",
+      "bpmnType": "bpmn:GlobalScriptTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/render-logging"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_LogRetained"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "CRDM requirements",
@@ -7387,6 +7508,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": false,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_RecordSignoff",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM_Close#flow/SF_Process_CRDM_Close_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Missing"
@@ -7684,7 +7806,10 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/decision-comparison"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -7705,7 +7830,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -7726,7 +7853,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -7747,7 +7876,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/user",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson/lane/Lane_Person",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/interaction-modality"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -7790,7 +7921,10 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/symbiotic-interaction"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -7811,7 +7945,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/ask-the-person"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -11327,6 +11463,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": false,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_RecordSignoff",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM_Signoff#flow/SF_Process_CRDM_Signoff_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM_Signoff#flow/SF_Signoff_Missing"
@@ -13358,6 +13495,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "claim",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_BriefAndClaim",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_KgSeparation#flow/F0"
       ],
@@ -13683,6 +13821,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "note",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_ReportWhatMoves",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_KgSeparation#flow/F17"
       ],
@@ -13800,6 +13939,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "note",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_Drain",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_KgSeparation#flow/F27"
       ],
@@ -14951,6 +15091,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_ReportWhatMoves",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_GraphDetanglement#flow/G12"
       ],
@@ -15455,6 +15596,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "claim",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_BriefAndClaim",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SubKgLifecycle#flow/F0"
       ],
@@ -15826,6 +15968,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "note",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_Drain",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SubKgLifecycle#flow/F18"
       ],
@@ -18509,7 +18652,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
       "name": "Append `retained` with the reason",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RenderLog",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RenderLog/lane/Lane_Pipeline",
@@ -18518,6 +18661,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_LogRetained",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_6"
       ],
@@ -23519,7 +23663,8 @@
       "flowCount": 9,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth"
@@ -23715,6 +23860,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_EnsureTrackingLabel",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RepoHealth#flow/Flow_3"
       ],
@@ -23760,6 +23906,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_CloseTrackingIssue",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RepoHealth#flow/Flow_5"
       ],
@@ -23802,6 +23949,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_TrackIssue",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RepoHealth#flow/Flow_7"
       ],
@@ -26820,6 +26968,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_LogRetained",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_FeatureStaging#flow/Flow_9"
       ],
@@ -33209,7 +33358,8 @@
       "flowCount": 10,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent"
@@ -33414,6 +33564,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_EnsureTrackingLabel",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_PrChecksPresent#flow/Flow_3"
       ],
@@ -33459,6 +33610,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_CloseTrackingIssue",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
       ],
@@ -33501,6 +33653,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_TrackIssue",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_PrChecksPresent#flow/Flow_7"
       ],
@@ -34274,7 +34427,8 @@
       "flowCount": 9,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth"
@@ -34470,6 +34624,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_EnsureTrackingLabel",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CiHealth#flow/Flow_3"
       ],
@@ -34515,6 +34670,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_CloseTrackingIssue",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CiHealth#flow/Flow_5"
       ],
@@ -34557,6 +34713,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_TrackIssue",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CiHealth#flow/Flow_7"
       ],
@@ -49078,7 +49235,8 @@
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dmn-1.3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dmn-1.3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "validatorNotApplicable": "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` grade them instead."
     },
@@ -60597,6 +60755,54 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/decision/test-certification/Decision_TestCertification",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/decision/test-certification/Decision_TestCertification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_EnsureTrackingLabel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_EnsureTrackingLabel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_EnsureTrackingLabel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_TrackIssue",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_TrackIssue",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_TrackIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_CloseTrackingIssue",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_CloseTrackingIssue",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_CloseTrackingIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_RecordSignoff",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_RecordSignoff",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_RecordSignoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_BriefAndClaim",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_BriefAndClaim",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_BriefAndClaim"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_Drain",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_Drain",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_Drain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_ReportWhatMoves",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_ReportWhatMoves",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_ReportWhatMoves"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#globalTask/GT_LogRetained",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_LogRetained",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/globalTask/GT_LogRetained"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_CRDM",
@@ -75349,8 +75555,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
     "pr": "2681/merge",
-    "run": "40047569127"
+    "run": "40051669660"
   }
 }

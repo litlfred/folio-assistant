@@ -7,85 +7,557 @@
    "name": "Read the built Questionnaire JSON",
    "type": "bpmn:Task",
    "lane": "FHIR modeller",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
   },
   "Task_Render": {
    "id": "Task_Render",
    "name": "Render the wireframe and the LHC-Forms view",
    "type": "bpmn:Task",
    "lane": "FHIR modeller",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
   },
   "Task_Screens": {
    "id": "Task_Screens",
    "name": "Screenshots, web and mobile",
    "type": "bpmn:ServiceTask",
    "lane": "Build pipeline — rendering, screenshots, fidelity",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "wireframe-design-review",
+     "href": "../../../reference/skill-instructions/wireframe-design-review.html",
+     "methodologies": [
+      {
+       "name": "wiregen",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/wiregen/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "ig-ast-delta",
+      "href": "../../../reference/skill-instructions/ig-ast-delta.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
   },
   "Task_Fidelity": {
    "id": "Task_Fidelity",
    "name": "Check field for field",
    "type": "bpmn:ServiceTask",
    "lane": "Build pipeline — rendering, screenshots, fidelity",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "ig-ast-delta",
+      "href": "../../../reference/skill-instructions/ig-ast-delta.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
   },
   "Call_Review": {
    "id": "Call_Review",
    "name": "Design review",
    "type": "bpmn:CallActivity",
    "lane": "Business analyst — design review",
-   "skills": [],
+   "skills": [
+    {
+     "name": "wireframe-design-review",
+     "href": "../../../reference/skill-instructions/wireframe-design-review.html",
+     "methodologies": [
+      {
+       "name": "wiregen",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/wiregen/"
+      }
+     ]
+    }
+   ],
    "calls": {
     "name": "Wireframe design review",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
     "diagram": "wireframe-design-review.html"
    },
-   "binding": "unbound"
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../reference/skill-instructions/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../reference/skill-instructions/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../reference/skill-instructions/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../reference/skill-instructions/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../reference/skill-instructions/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     }
+    ]
+   }
   },
   "Task_Stage": {
    "id": "Task_Stage",
    "name": "Stage the renderings",
    "type": "bpmn:ServiceTask",
    "lane": "Build pipeline — rendering, screenshots, fidelity",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "ig-ast-delta",
+      "href": "../../../reference/skill-instructions/ig-ast-delta.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
   },
   "Task_AskReview": {
    "id": "Task_AskReview",
    "name": "Ask for review with deep links",
    "type": "bpmn:Task",
    "lane": "FHIR modeller",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
   },
   "Task_ReviewStaged": {
    "id": "Task_ReviewStaged",
    "name": "Review the staged form and wireframe",
    "type": "bpmn:UserTask",
    "lane": "Clinical reviewer — the staged form",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "clinical-sme",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
+    "title": "Clinical / scientific SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
   },
   "Task_Triage": {
    "id": "Task_Triage",
    "name": "Triage the change request",
    "type": "bpmn:Task",
    "lane": "FHIR modeller",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "content-feedback",
+     "href": "../../../reference/skill-instructions/content-feedback.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
   },
   "Task_Apply": {
    "id": "Task_Apply",
    "name": "Apply it, bring the other side in line",
    "type": "bpmn:UserTask",
    "lane": "FHIR modeller",
-   "skills": [],
-   "binding": "unbound"
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
   }
  }
 }

@@ -374,10 +374,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T01:18:22.704Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
-  "sourceCommitSha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
-  "sourceCommitAt": "2026-10-24T00:58:06Z",
+  "generatedAt": "2026-10-24T02:12:48.163Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
+  "sourceCommitSha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
+  "sourceCommitAt": "2026-10-24T01:51:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1247,6 +1247,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "CI/CD Pipeline",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci"
     },
@@ -1257,6 +1258,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1275,6 +1277,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1295,6 +1298,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1316,6 +1320,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1334,6 +1339,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1435,6 +1441,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Lean toolchain",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean"
     },
@@ -1443,6 +1450,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "CI/CD Pipeline",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build"
     },
@@ -1453,6 +1461,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1471,8 +1480,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-html-docs"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1491,6 +1503,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1512,6 +1525,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1530,8 +1544,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-html-docs"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1550,6 +1567,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1571,6 +1589,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1589,6 +1608,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1606,7 +1626,7 @@
       "name": "Authoring a paper",
       "summary": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting.",
       "description": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting. folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "sourcePath": "processes/content/authoring-a-paper.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/assets/img/workflows/authoring-a-paper.svg",
@@ -1753,6 +1773,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Author (person)",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/author",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author"
     },
@@ -1761,6 +1782,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Work plan — beans (shared by humans and agents)",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan"
     },
@@ -1769,6 +1791,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Authoring agent (system)",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/authoring-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent"
     },
@@ -1777,6 +1800,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Lean toolchain (lean-mcp)",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean"
     },
@@ -1785,6 +1809,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Build pipeline — validate · render · publish",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build"
     },
@@ -1793,6 +1818,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
       "name": "Reviewer / SME",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Reviewer"
     },
@@ -1803,6 +1829,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/author",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1821,8 +1848,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/author",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-plan"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1841,9 +1871,13 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
-      "requires": [],
-      "touchesWorkPlan": false,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
@@ -1861,8 +1895,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-plan"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1881,8 +1918,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-author"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1902,8 +1942,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-formalization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-verification"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1923,10 +1967,13 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "decisionRef": "decisions/lean-build-gate.dmn#Decision_LeanBuildGate",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/decision/lean-build-gate/Decision_LeanBuildGate",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A06"
       ],
@@ -1944,8 +1991,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-validate"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1964,8 +2014,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-authoring"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1984,8 +2037,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Reviewer",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-review"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2004,6 +2060,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Reviewer",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2025,8 +2082,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
-      "requires": [],
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-publish"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2045,6 +2105,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4252,8 +4313,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "5c36ecfe60a39955d0e4dfb2bf17bd86e243cffa",
+    "sha": "9debf3c24cfe0c28d4732b04f0ce431ef5f3c7c3",
     "pr": "2681/merge",
-    "run": "40047569127"
+    "run": "40051669660"
   }
 }

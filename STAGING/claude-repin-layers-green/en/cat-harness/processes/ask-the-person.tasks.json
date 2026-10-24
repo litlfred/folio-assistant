@@ -10,7 +10,16 @@
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_Compose",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "ask-the-person",
+     "href": "../../../reference/skill-instructions/ask-the-person.html"
+    },
+    {
+     "name": "decision-comparison",
+     "href": "../../../reference/skill-instructions/decision-comparison.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -226,7 +235,12 @@
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_WriteInChat",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "ask-the-person",
+     "href": "../../../reference/skill-instructions/ask-the-person.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -442,7 +456,12 @@
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_OfferCard",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "ask-the-person",
+     "href": "../../../reference/skill-instructions/ask-the-person.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -658,7 +677,12 @@
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/U_Choose",
    "lane": "Person",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/lane/Lane_Person",
-   "skills": [],
+   "skills": [
+    {
+     "name": "interaction-modality",
+     "href": "../../../reference/skill-instructions/interaction-modality.html"
+    }
+   ],
    "role": {
     "name": "user",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
@@ -710,7 +734,16 @@
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_Record",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "ask-the-person",
+     "href": "../../../reference/skill-instructions/ask-the-person.html"
+    },
+    {
+     "name": "symbiotic-interaction",
+     "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -926,7 +959,12 @@
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_ProceedOnDefault",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/lane/Lane_Agent",
-   "skills": [],
+   "skills": [
+    {
+     "name": "ask-the-person",
+     "href": "../../../reference/skill-instructions/ask-the-person.html"
+    }
+   ],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",

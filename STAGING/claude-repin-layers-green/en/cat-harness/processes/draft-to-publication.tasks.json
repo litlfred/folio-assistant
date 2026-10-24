@@ -10,7 +10,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenReleaseBean",
    "lane": "Work plan — beans (shared by humans and agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -34,7 +39,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_BuildDraft",
    "lane": "Corpus + build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -130,7 +140,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublicationQa",
    "lane": "Corpus + build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-test",
+     "href": "../../../reference/skill-instructions/content-test.html"
+    },
+    {
+     "name": "quality-control",
+     "href": "../../../reference/skill-instructions/quality-control.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -226,7 +245,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_Editing",
    "lane": "Editors + authoring agents",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Editors",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    },
+    {
+     "name": "content-validate",
+     "href": "../../../reference/skill-instructions/content-validate.html"
+    }
+   ],
    "calls": {
     "name": "Editing and HCI validation",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
@@ -289,7 +317,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_CirculateDraft",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "publication-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
@@ -341,7 +378,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_PublicComment",
    "lane": "Public review (commenters, review committee, editor)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PublicReview",
-   "skills": [],
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
    "calls": {
     "name": "Public comment on a review draft",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
@@ -378,7 +420,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ReviewDraft",
    "lane": "Review team (content · QC · technical officer)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_ReviewTeam",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -438,7 +489,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_SmeSignoff",
    "lane": "Clinical / scientific SMEs",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Sme",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
    "role": {
     "name": "clinical-sme",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
@@ -509,7 +569,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenChangeBeans",
    "lane": "Work plan — beans (shared by humans and agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    },
+    {
+     "name": "content-feedback",
+     "href": "../../../reference/skill-instructions/content-feedback.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -533,7 +602,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_AuthorizeRelease",
    "lane": "Programme manager (release authority)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_ProgMgr",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
    "role": {
     "name": "programme-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
@@ -581,7 +655,16 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublishRelease",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [],
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    },
+    {
+     "name": "render-kg-to-cdn",
+     "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+    }
+   ],
    "role": {
     "name": "publication-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
@@ -633,7 +716,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_CloseReleaseBeans",
    "lane": "Work plan — beans (shared by humans and agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -657,7 +745,12 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ArchiveReleaseBean",
    "lane": "Work plan — beans (shared by humans and agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_WorkPlan",
-   "skills": [],
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
    "role": {
     "name": "work-plan",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",

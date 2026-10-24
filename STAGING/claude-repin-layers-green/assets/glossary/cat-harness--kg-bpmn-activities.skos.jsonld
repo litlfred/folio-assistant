@@ -14,6 +14,166 @@
       "dcterms:source": "BPMN activities of cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_briefandclaim",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Brief, and claim the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work."
+        }
+      ],
+      "skos:notation": "GT_BriefAndClaim",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_BriefAndClaim",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_closetrackingissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the tracking issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean."
+        }
+      ],
+      "skos:notation": "GT_CloseTrackingIssue",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_CloseTrackingIssue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_drain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Drain: land, close or re-target the open PRs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks."
+        }
+      ],
+      "skos:notation": "GT_Drain",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_Drain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_ensuretrackinglabel",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ensure the tracking label exists"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
+        }
+      ],
+      "skos:notation": "GT_EnsureTrackingLabel",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_EnsureTrackingLabel",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_logretained",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Append `retained` with the reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
+        }
+      ],
+      "skos:notation": "GT_LogRetained",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_LogRetained",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_recordsignoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the sign-off as a requirement-signoff attestation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+        }
+      ],
+      "skos:notation": "GT_RecordSignoff",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_RecordSignoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_reportwhatmoves",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report what would move — sizes, and what breaks"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative."
+        }
+      ],
+      "skos:notation": "GT_ReportWhatMoves",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_ReportWhatMoves",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/globaltask.gt_trackissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open or EDIT the one tracking issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed."
+        }
+      ],
+      "skos:notation": "GT_TrackIssue",
+      "dcterms:source": "cat-harness/processes/global-tasks.bpmn#GT_TrackIssue",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_activitylog.a_dowork",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -666,7 +826,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean."
+          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. Clean here means main is clean."
         }
       ],
       "skos:notation": "Task_Close",
@@ -686,7 +846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Create the ci-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
+          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
         }
       ],
       "skos:notation": "Task_Label",
@@ -706,7 +866,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed."
+          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed."
         }
       ],
       "skos:notation": "Task_Track",
@@ -2806,7 +2966,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The event that makes the log worth reading. A removal was CONSIDERED and refused; without an entry that leaves no trace on the branch at all, and the next person asking *\"why is this preview still up\"* has only a comment on a pull request that may itself be closed."
+          "@value": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
         }
       ],
       "skos:notation": "Task_LogRetained",
@@ -3086,7 +3246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative."
+          "@value": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative."
         }
       ],
       "skos:notation": "Task_Propose",
@@ -3646,7 +3806,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What is separating and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work."
+          "@value": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work. Here the work is a separation: what is separating, and why."
         }
       ],
       "skos:notation": "Task_Brief",
@@ -3886,7 +4046,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The agent reports and waits: what moves, how large, what in the parent breaks, and the rollback. It never relocates a durable artefact on its own initiative."
+          "@value": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative."
         }
       ],
       "skos:notation": "Task_Propose",
@@ -6261,7 +6421,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean."
+          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. Clean here means every open pull request's head now has a CI run."
         }
       ],
       "skos:notation": "Task_Close",
@@ -6301,7 +6461,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Create the pr-no-checks label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
+          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
         }
       ],
       "skos:notation": "Task_Label",
@@ -6341,7 +6501,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed."
+          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body is the sweep's report."
         }
       ],
       "skos:notation": "Task_Track",
@@ -7096,7 +7256,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE ENTRY THAT MAKES THE LOG WORTH READING. A preview still standing because a signal fired leaves no trace otherwise, and the next person asking \"why is this still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
+          "@value": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
         }
       ],
       "skos:notation": "A_LogRetained",
@@ -7176,7 +7336,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean."
+          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. Clean here means every check ran and none had anything to report."
         }
       ],
       "skos:notation": "Task_Close",
@@ -7196,7 +7356,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
+          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
         }
       ],
       "skos:notation": "Task_Label",
@@ -7216,7 +7376,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on."
+          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on."
         }
       ],
       "skos:notation": "Task_Track",
@@ -8031,7 +8191,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the sub-KG is and why it is staged here rather than in a repository of its own, what is already measured, and what would falsify the plan. Claim the bean so a sibling session sees the work."
+          "@value": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work. Here the work is a sub-KG: what it is, and why it is staged here rather than in a repository of its own."
         }
       ],
       "skos:notation": "Task_Brief",
@@ -8171,7 +8331,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Work the pull requests seed:ready named until the source settles, then ask again."
+          "@value": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks."
         }
       ],
       "skos:notation": "Task_Drain",

@@ -1045,7 +1045,8 @@
       "@type": "bootstrap:Process",
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ci-health-watch.svg",
       "description": "Is CI actually working on the default branch: record each workflow's state on one tracking issue, and fail the job only when the state could not be determined. A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow here fired on every push to `main` and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.\n\nWEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is \"nobody noticed for two months\", not \"nobody noticed for a day\", and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.\n\n`Could we tell?` IS NOT SIMPLY THE EXIT CODE, and that is the subtlety worth drawing. `bun` exits 1 on an uncaught exception as well as on a live failure, so exit 1 alone does not separate \"found something red\" from \"crashed\". The REPORT FILE separates them: `--out` writes it before any exit path, so a genuine red always has one and a crash before that point does not. Exit 1 with no report is reclassified as `unknown`. Without that, a crash would open a tracking issue quoting a stale file.\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.",
@@ -1255,6 +1256,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Close",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_CloseTrackingIssue",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_5",
@@ -1271,6 +1273,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Label",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_EnsureTrackingLabel",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_3",
@@ -1287,6 +1290,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Track",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_TrackIssue",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_7",
@@ -3349,6 +3353,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_LogRetained",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ServiceTask",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_LogRetained",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging#flow/Flow_9",
@@ -6529,7 +6534,8 @@
       "@type": "bootstrap:Process",
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/pr-checks-present.svg",
       "description": "Find the open pull requests whose head has no CI run, past an age gate, and say so on one tracking issue and once per head on the pull request. A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING. Bean `3pqn`. `check:head-has-run` answers this for one commit when somebody remembers to ask; this is the half that asks when nobody does, which is the only placement that addresses the defect rather than the symptom.\n\nMEASURED 2026-09-20 over the six open pull requests here: TWO had no run of any kind on their head, both updated minutes earlier. A third of the open set, with nothing to merge on.\n\nTHE 15-MINUTE AGE GATE IS THE DIFFERENCE BETWEEN USEFUL AND IGNORED. A head pushed thirty seconds ago legitimately has no run yet, and a sweep that reports those is one nobody reads — this bean's own failure, reproduced by its fix. A younger head is NOT JUDGED rather than called clean, which is the third state again.\n\nONLY `unknown` FAILS THE JOB. A finding records itself and the workflow stays GREEN, the same inversion as `ci-health`: the repository speaks through the tracking issue, while a sweep that could not look turns red. And a sweep blind on one pull request has not cleared the others, so ONE unreadable answer makes the whole run unknown — never a partial clean.\n\nTWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The tracking issue is EDITED IN PLACE, never appended to. The per-PR comment is posted ONCE PER (PULL REQUEST, HEAD SHA), keyed by a marker in the body: hourly comments without that key would put twenty-four notifications a day on one unchanged pull request, which is how a warning gets muted.",
@@ -6731,6 +6737,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Close",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_CloseTrackingIssue",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_5",
@@ -6763,6 +6770,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Label",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_EnsureTrackingLabel",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_3",
@@ -6795,6 +6803,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Track",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_TrackIssue",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_7",
@@ -8119,7 +8128,8 @@
       "@type": "bootstrap:Process",
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/repository-health-watch.svg",
       "description": "Is the repository itself healthy — what the review previews cost the publish branch, what a clone costs, whether the work plan holds duplicates or unhonoured claims — reported in one tracking issue and never acted on. THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY — how much of `gh-pages` the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.\n\nIT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding's action names something a PERSON does. That is `deletion-requires-confirmation` applied to the tool that most wants to break it: the skill's own worked example is bean `plj1`, a workflow whose shape deleted every open PR's preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.\n\nTHE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (`if: always()`), which is why `Run the health checks` says \"keeping the report either way\". A sweep whose output survives only on success cannot be used to investigate the run that failed.\n\nThe daily cron is at 06:41, OFF THE HOUR deliberately: GitHub's scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.",
@@ -8329,6 +8339,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Close",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_CloseTrackingIssue",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_5",
@@ -8345,6 +8356,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Label",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_EnsureTrackingLabel",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_3",
@@ -8361,6 +8373,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Track",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_TrackIssue",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_7",

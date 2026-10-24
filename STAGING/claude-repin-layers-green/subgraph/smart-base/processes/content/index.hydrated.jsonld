@@ -8,7 +8,7 @@
       "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
       "@type": "bootstrap:Process",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source model. Split out of fhir-harness's l3-fhir-pipeline.bpmn on 2026-10-09 (owner, bean veiu item 4): that layer may not know about DAKs, so the WHO L2 → L3 ordering lives here and the generic pipeline is CALLED, not copied. folio-assistant — a WHO SMART Guidelines L2 DAK to its published L3 FHIR IG.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 3,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "L2 DAK to L3 FHIR IG",
@@ -45,6 +45,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/fhir-modeller",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "FHIR modeller",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig"
@@ -60,7 +61,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l3-fhir-authoring",
       "touchesWorkPlan": false
     },
     {
@@ -73,6 +76,7 @@
       "name": "FHIR IG published",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -86,6 +90,7 @@
       "nodeKind": "start",
       "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -100,14 +105,19 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l3-fhir-authoring",
+        "http://smart.who.int/base/skill/l2-dak-authoring"
+      ],
       "touchesWorkPlan": false
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
       "@type": "bootstrap:Process",
       "description": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside that hand-on and never holds it up, because adjudication is QA, not a gate. That is the owner's ruling of 2026-10-14. Called by each authoring track of l2-dak-authoring.bpmn (Process_L2Dak), one call per component pass.\n\nThe call's inputs, which are the only things that differ between components (skill l2-component-edit-review, \"The inputs, per component\"):\n- component: personas and user scenarios (C2, C3), business processes (C4), core data elements and glossary (C5) with their terminology bindings, decision-support and scheduling logic (C6, C7), indicators and requirements (C8, C9);\n- authoring skill: l2-dak-authoring, bpmn-authoring, dmn-authoring or terminology-management, named on the calling activity, so it joins this process's skills along the call path (review-task.bpmn's scoped composition);\n- renderer and diff: what the reviewer looks at, before and after;\n- checker: the mechanical checks the agent runs before asking anyone;\n- reviewing role: the person who takes on this process's reviewer lane for the call.\n\nOne process rather than one per component because nothing but those inputs differs: DMN's test cases are its checker, BPMN's picture is its renderer, the glossary's term diff (dak-data-dictionary-diff.ts) is its diff and its binding check its checker, and traceability to L1 is the checker of personas, scenarios and requirements.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 13,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "L2 component edit and review",
@@ -227,6 +237,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Authoring agent",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview"
@@ -234,6 +245,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/reviewer",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Component reviewer (person)",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview"
@@ -249,7 +261,13 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R09",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/visual-diff",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -262,6 +280,7 @@
       "name": "Component approved",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -275,6 +294,7 @@
       "name": "Handed on, adjudication pending",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -288,6 +308,7 @@
       "name": "Upstream stage reopened",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -305,6 +326,7 @@
         "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R07"
       ],
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -322,6 +344,7 @@
       "nodeKind": "exclusive",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R02",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -340,6 +363,7 @@
         "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R12"
       ],
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -353,6 +377,7 @@
       "nodeKind": "start",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R01",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -367,7 +392,13 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R04",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-validate",
+        "http://smart.who.int/base/skill/content-test",
+        "http://smart.who.int/base/skill/artefact-reachability"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -381,7 +412,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R03",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l2-component-edit-review",
       "touchesWorkPlan": false
     },
     {
@@ -395,7 +428,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R05",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/before-after-preview",
+        "http://smart.who.int/base/skill/feature-staging"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -409,7 +447,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R13",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -423,14 +466,19 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R08",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/interaction-modality"
+      ],
       "touchesWorkPlan": false
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak",
       "@type": "bootstrap:Process",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\nEach of the six authoring tracks is a call into l2-component-edit-review.bpmn\n(Process_L2ComponentEditReview): the agent edits the component, checks, renders and stages it, and hands it on, while a\nperson in the component's reviewing role reviews it alongside, never as a gate. The track's renderer, checker and reviewer\nare tabled in the skill l2-component-edit-review.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 24,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "L2 DAK authoring",
@@ -637,6 +685,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/business-analyst",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Business analyst",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak"
@@ -644,6 +693,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Programme",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Programme manager / technical officer",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak"
@@ -651,6 +701,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/clinical-sme",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Clinical SME",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak"
@@ -658,6 +709,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Terminologist",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/terminologist",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Terminologist",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak"
@@ -665,6 +717,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/work-plan",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Work plan — beans (shared by humans and agents)",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak"
@@ -679,6 +732,7 @@
       "name": "L2 DAK ready for L3",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -692,6 +746,7 @@
       "name": "Clinically validated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/clinical-sme",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -709,6 +764,7 @@
         "http://smart.who.int/base/process/Process_L2Dak#flow/B20"
       ],
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/clinical-sme",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -730,6 +786,7 @@
         "http://smart.who.int/base/process/Process_L2Dak#flow/B07"
       ],
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -751,6 +808,7 @@
       "nodeKind": "parallel",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B17",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -768,6 +826,7 @@
       "nodeKind": "exclusive",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B04",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -785,6 +844,7 @@
         "http://smart.who.int/base/process/Process_L2Dak#flow/B24"
       ],
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -798,6 +858,7 @@
       "nodeKind": "start",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B01",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -812,7 +873,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B21",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/content-validate",
       "touchesWorkPlan": false
     },
     {
@@ -827,7 +890,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B12",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/bpmn-authoring",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -842,7 +910,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B14",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -857,7 +930,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B13",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/dmn-authoring",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -872,7 +950,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B15",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -886,7 +969,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/dak-l1-library",
       "touchesWorkPlan": false
     },
     {
@@ -901,7 +986,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B11",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -915,7 +1005,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B02",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/content-plan",
       "touchesWorkPlan": false
     },
     {
@@ -929,8 +1021,11 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B03",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/work-plan",
       "relaxable": true,
-      "touchesWorkPlan": false
+      "requires": "http://smart.who.int/base/skill/todo-manager",
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SmeValidate",
@@ -943,7 +1038,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B18",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/clinical-sme",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/content-review",
       "touchesWorkPlan": false
     },
     {
@@ -958,7 +1055,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B16",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/terminology-management",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1042,6 +1144,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Programme Manager",
       "partOf": "http://smart.who.int/base/process/Process_Planning"
@@ -1056,6 +1159,7 @@
       "name": "Planning Complete",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1069,6 +1173,7 @@
       "nodeKind": "start",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1083,7 +1188,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/todo-manager",
       "touchesWorkPlan": false
     },
     {
@@ -1097,7 +1204,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P4",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/methodology-adoption",
       "touchesWorkPlan": false
     },
     {
@@ -1111,7 +1220,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P3",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/raci",
       "touchesWorkPlan": false
     },
     {
@@ -1125,7 +1236,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P5",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/dak-l1-library",
       "touchesWorkPlan": false
     },
     {
@@ -1139,7 +1252,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/content-plan",
       "touchesWorkPlan": false
     },
     {
@@ -1153,7 +1268,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P6",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/release-epic-planning",
       "touchesWorkPlan": false
     },
     {
@@ -1167,14 +1284,16 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P2",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/content-plan",
       "touchesWorkPlan": false
     },
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd",
       "@type": "bootstrap:Process",
       "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming application the requester describes. Adjudication follows every stage as QA, not as a gate (owner, 2026-10-14: \"once agent produces L2 it can produce L3\"), but the order is a rule (owner, 2026-10-15: \"order strict, sign-off QA\"): no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested (Gateway_L3Ready). Each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. Each stage runs one named skill with its own input and output contract, named in brackets on the task (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6), and each stage's output is the next stage's input; the smart-guideline-end-to-end skill is the orchestrator that says so, and who adjudicates each.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 38,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "SMART Guideline end to end",
@@ -1495,6 +1614,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/reviewer",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Human adjudicators",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd"
@@ -1502,6 +1622,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Authoring agent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd"
@@ -1509,6 +1630,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
       "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/user",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Requester (country team / implementer)",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd"
@@ -1523,6 +1645,7 @@
       "name": "L4 application built",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1536,6 +1659,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1549,6 +1673,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1562,6 +1687,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1575,6 +1701,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1588,6 +1715,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1601,6 +1729,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1614,6 +1743,7 @@
       "name": "Adjudicated",
       "nodeKind": "end",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1631,6 +1761,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E28"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1648,6 +1779,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E14"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1665,6 +1797,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E20"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1682,6 +1815,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E10"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1699,6 +1833,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E05"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1716,6 +1851,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E17"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1733,6 +1869,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E23"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1750,6 +1887,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E07"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1767,6 +1905,7 @@
       "nodeKind": "exclusive",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E11",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1784,6 +1923,7 @@
         "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E37"
       ],
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1797,6 +1937,7 @@
       "nodeKind": "start",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E01",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1811,7 +1952,13 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E35",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/wireframe-design-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1825,7 +1972,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E31",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/decision-audit"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1839,7 +1991,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E33",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/decision-audit"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1853,7 +2010,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E30",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/recommendation-extraction"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1867,7 +2029,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E29",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/content-review",
       "touchesWorkPlan": false
     },
     {
@@ -1881,7 +2045,14 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E32",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/visual-diff",
+        "http://smart.who.int/base/skill/wireframe-design-review"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1895,7 +2066,15 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E34",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/ig-ast-delta",
+        "http://smart.who.int/base/skill/wireframe-design-review",
+        "http://smart.who.int/base/skill/fhir-questionnaire-wireframe"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1909,7 +2088,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E26",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l4-application-build",
       "touchesWorkPlan": false
     },
     {
@@ -1923,7 +2104,13 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E12",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dependency-choice",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "http://smart.who.int/base/skill/decision-comparison"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1937,7 +2124,14 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E18",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l3-dependency-choice",
+        "http://smart.who.int/base/skill/ig-artifact-ingestion",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "http://smart.who.int/base/skill/decision-comparison"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1951,7 +2145,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E24",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/user",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l4-application-brief",
       "touchesWorkPlan": false
     },
     {
@@ -1965,7 +2161,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E02",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/user",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/guideline-use-case",
       "touchesWorkPlan": false
     },
     {
@@ -1979,7 +2177,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E03",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/dak-l1-library",
       "touchesWorkPlan": false
     },
     {
@@ -1993,7 +2193,12 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E08",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/recommendation-extraction",
+        "http://smart.who.int/base/skill/dak-l1-library"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -2010,7 +2215,16 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E15",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "http://smart.who.int/base/skill/dak-preprocessing",
+        "http://smart.who.int/base/skill/dak-postprocessing",
+        "http://smart.who.int/base/skill/wireframe-design-review",
+        "http://smart.who.int/base/skill/feature-staging"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -2024,7 +2238,14 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E21",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l3-fhir-authoring",
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "http://smart.who.int/base/skill/feature-staging"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -2038,7 +2259,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E38",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l3-readiness",
       "touchesWorkPlan": false
     },
     {
@@ -2052,7 +2275,9 @@
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E25",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/wireframe-design-review",
       "touchesWorkPlan": false
     }
   ],
