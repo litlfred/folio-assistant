@@ -5,7 +5,7 @@ title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendati
 status: in-progress
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-10-24T14:50:00Z
+updated_at: 2026-10-24T14:35:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -137,3 +137,7 @@ Box 3 (the card as a todo sticky) waits until the owner unpauses todos and stick
 That thread takes boxes 1 and 2 after 0exf.
 
 _2026-10-24T14:50:00Z_ — Boxes 1 and 2 claimed by the "Drain folio-assistant-core beans" thread (https://claude.ai/code/session_01MK9nZ3Gmon4cDBRLSURizU), per the owner ruling above. Box 3 stays paused.
+
+## 2026-10-24 — owner ruling: work it out at publish time (boxes 1 and 2)
+
+The owner tapped "A. Work out at publish time" at 14:31Z (card in the "Drain folio-assistant-core beans" thread, https://claude.ai/code/session_01MK9nZ3Gmon4cDBRLSURizU). A Tool runs bootstrap-tools' read-only setup check (`init.ts --dry-run --offline`) on every mounted harness at site build, and publishes one state file per harness: its setup steps, the next step to take, and health badges (setup steps done of the total, plus that harness's own `health --instance` verdict). Nothing is committed, so nothing goes stale or drifts between bean copies.
