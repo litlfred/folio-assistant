@@ -2,11 +2,11 @@
 # folio-assistant-423d
 $schema: bean/1.0.0
 title: 'REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-21T17:10:00Z
+updated_at: 2026-10-24T10:14:00Z
 parent: folio-assistant-q4jm
 ---
 
