@@ -2,11 +2,11 @@
 # folio-assistant-mo75
 $schema: bean/1.0.0
 title: 'NAMED SUBGRAPH MOUNTS: hydrated metadata first, then a chosen set (nested ids, node sets, concern names) — the nn8e follow-up'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-21T17:56:00Z
+updated_at: 2026-10-24T08:53:04Z
 parent: folio-assistant-fnx4
 ---
 
@@ -43,3 +43,5 @@ Related: `whlc` (KG publication, named subgraphs), `fnx4` (subscriptions), `9umr
 Where a folder sits decides how it is declared: under the harness root in `<harness>.json`; inside a declared folder from within; a one-node folder (one Tool, one voice) not at all. One folder per Tool (`tools/<stub>/`, re-exported by `tools/index.ts`) is the recommended layout for a multi-file Tool. Guidance: litlfred/cat-harness#198. G3 still needs 2j2r: `remote-mount` reads top-level ids only.
 
 _2026-10-16T10:50:00Z_ — Re-parented `0mpw` → `fnx4` (KG SUBSCRIPTIONS, `0mpw`'s own epic): a feature may not sit under another feature (milestone → epic → feature → task/bug), and this failed the parent check (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+_2026-10-24T08:53:04Z_: Claimed by the README regen thread (https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5). Starting with G1, after re-measuring the 2026-10-09 notes against current main.
