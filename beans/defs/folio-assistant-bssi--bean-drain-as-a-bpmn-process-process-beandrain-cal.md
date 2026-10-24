@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-24T08:30:00Z
-updated_at: 2026-10-24T08:30:00Z
+updated_at: 2026-10-24T08:40:00Z
 parent: folio-assistant-ahvw
 blocked_by:
     - folio-assistant-m8gz
@@ -26,5 +26,9 @@ CLOSE is where a drained bean ends.
 - [ ] OPEN's check activity names the `bean-claim-check` Tool; the queue step names `drain-queue`
 - [ ] the `bean-drain` skill links the process
 - [ ] the m8gz check (a diagram touching a bean calls both OPEN and CLOSE) passes on it
+
+Precedent: epic ml9h, the 2026-10-10 three-lane drain, which the BPMN thread's unlinked-beans
+report (cat-harness-tools#703) found with no process. When the diagram lands, link ml9h and its
+children (yex5 among them) to `Process_BeanDrain` so they stop showing as unlinked.
 
 Waits on m8gz (BPMN thread). Do not start before OPEN and CLOSE have process ids on main.
