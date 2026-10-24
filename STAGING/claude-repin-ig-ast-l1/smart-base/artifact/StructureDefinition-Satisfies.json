@@ -11,13 +11,13 @@
   "dcterms:identifier": "StructureDefinition/Satisfies",
   "schema:name": "Satisfies",
   "dcterms:title": "Satisfies",
-  "dcterms:description": "Indicates that if the conditions for this requirement are satisified, then that it should be viewed as satisifying the referenced requirement.",
+  "dcterms:description": "Indicates that if the conditions for this requirement are satisified, then that it should be viewed as satisifying  the referenced requirement.",
   "schema:version": "0.3.0",
   "dcterms:type": "Structures: Extension Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/StructureDefinition/Satisfies"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

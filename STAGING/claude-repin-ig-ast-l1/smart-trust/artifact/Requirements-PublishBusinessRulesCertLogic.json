@@ -12,12 +12,12 @@
   "schema:name": "Publish CertLogic Business Rules",
   "dcterms:title": "Publish Cert Logic business rules",
   "dcterms:description": "Publish Cert Logic business rules to a Trust Anchor",
-  "schema:version": "1.8.0",
+  "schema:version": "1.7.5",
   "dcterms:type": "Requirements: Formal Requirements",
   "schema:sameAs": {
     "@id": "http://smart.who.int/trust/Requirements/PublishBusinessRulesCertLogic"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,10 +28,15 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "48540010fe4ca0c25d580dfd0bbb202de23359a0"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.trust",
-    "schema:version": "1.8.0",
+    "schema:version": "1.7.5",
     "schema:sameAs": {
       "@id": "http://smart.who.int/trust"
     }

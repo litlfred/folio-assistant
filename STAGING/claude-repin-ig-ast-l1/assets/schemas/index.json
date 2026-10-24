@@ -10585,7 +10585,7 @@
       "name": "MathBlockKind",
       "module": "cat-harness/schemas/block-kinds.ts",
       "kind": "type-alias",
-      "doc": "A math kind. A string, not a {@link BlockKind}: the math kinds are typed by",
+      "doc": "A math kind. The split is DATA (each node's `profile`), so the type cannot narrow below {@link BlockKind}.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -16440,6 +16440,46 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/constraints.ts#ConjectureSchema",
+      "name": "ConjectureSchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"conjecture\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"conjecture\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRefSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+        "cat-harness/schemas/constraints.ts#LeanRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/constraints.ts#ConstraintContext",
       "name": "ConstraintContext",
       "module": "cat-harness/schemas/constraints.ts",
@@ -16550,6 +16590,85 @@
       ],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/constraints.ts#CorollarySchema",
+      "name": "CorollarySchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"corollary\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"corollary\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ProvableBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/constraints.ts#DefinitionSchema",
+      "name": "DefinitionSchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"definition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"definition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "examples",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+        "cat-harness/schemas/constraints.ts#LeanRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -16938,6 +17057,39 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/constraints.ts#LemmaSchema",
+      "name": "LemmaSchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"lemma\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"lemma\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ProvableBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/constraints.ts#PaperMacroSchema",
       "name": "PaperMacroSchema",
       "module": "cat-harness/schemas/constraints.ts",
@@ -17080,6 +17232,92 @@
       ],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/constraints.ts#ProofSchema",
+      "name": "ProofSchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"proof\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"proof\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRefSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "computation",
+          "type": "ComputationSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+        "cat-harness/schemas/constraints.ts#ComputationSchema",
+        "cat-harness/schemas/constraints.ts#LeanRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/constraints.ts#PropositionSchema",
+      "name": "PropositionSchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"proposition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"proposition\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ProvableBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
         "z"
       ],
       "exported": true
@@ -17507,6 +17745,39 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/constraints.ts#BlockBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/constraints.ts#TheoremSchema",
+      "name": "TheoremSchema",
+      "module": "cat-harness/schemas/constraints.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"theorem\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"theorem\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ProvableBaseSchema"
       ],
       "unresolved": [],
       "external": [
@@ -56692,7 +56963,6 @@
       "name": "Block",
       "module": "cat-harness/schemas/types.ts",
       "kind": "type-alias",
-      "doc": "The kinds cat-harness's own code types. A layer above types its own kinds in",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -57257,6 +57527,104 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/types.ts#ConjectureBlock",
+      "name": "ConjectureBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Conjecture — an unproven statement. Lean stub optional.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"conjecture\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRef",
+          "optional": true,
+          "array": false,
+          "doc": "Optional Lean stub for the conjecture statement."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#BlockBase",
+        "cat-harness/schemas/types.ts#LeanRef"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/types.ts#CorollaryBlock",
+      "name": "CorollaryBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Corollary — a consequence of a theorem or proposition.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"corollary\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#ProvableBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/types.ts#DefinitionBlock",
+      "name": "DefinitionBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Definition — MUST have a Lean declaration.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"definition\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRef",
+          "optional": false,
+          "array": false,
+          "doc": "Required: every definition must be formalized."
+        },
+        {
+          "name": "examples",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Labels of example blocks illustrating this definition."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#BlockBase",
+        "cat-harness/schemas/types.ts#LeanRef"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/types.ts#DiagramBlock",
       "name": "DiagramBlock",
       "module": "cat-harness/schemas/types.ts",
@@ -57353,7 +57721,7 @@
       "name": "EnvironmentBlock",
       "module": "cat-harness/schemas/types.ts",
       "kind": "type-alias",
-      "doc": "Blocks that represent theorem-like environments (the science layer's add its own).",
+      "doc": "Blocks that represent theorem-like environments.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -57573,6 +57941,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/types.ts#FormalizableBlock",
+      "name": "FormalizableBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "type-alias",
+      "doc": "Blocks that can (or must) have Lean declarations.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/types.ts#FormalizationStatus",
       "name": "FormalizationStatus",
       "module": "cat-harness/schemas/types.ts",
@@ -57670,6 +58052,31 @@
         "axioms_only"
       ],
       "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/types.ts#LemmaBlock",
+      "name": "LemmaBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Lemma — auxiliary result supporting a theorem.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"lemma\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#ProvableBase"
+      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -57886,6 +58293,79 @@
         "compact"
       ],
       "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/types.ts#ProofBlock",
+      "name": "ProofBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Proof — a standalone proof of a theorem/lemma/proposition/corollary.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"proof\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Label of the provable block this proof establishes (reverse link of"
+        },
+        {
+          "name": "lean",
+          "type": "LeanRef",
+          "optional": true,
+          "array": false,
+          "doc": "Optional Lean formalization of the proof."
+        },
+        {
+          "name": "computation",
+          "type": "Computation",
+          "optional": true,
+          "array": false,
+          "doc": "Optional computational verification (Python/SnapPea/sympy/etc.)."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#BlockBase",
+        "cat-harness/schemas/types.ts#Computation",
+        "cat-harness/schemas/types.ts#LeanRef"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/types.ts#PropositionBlock",
+      "name": "PropositionBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Proposition — a result of moderate significance.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"proposition\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#ProvableBase"
+      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -58363,6 +58843,31 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/types.ts#OptionalLabelBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/types.ts#TheoremBlock",
+      "name": "TheoremBlock",
+      "module": "cat-harness/schemas/types.ts",
+      "kind": "interface",
+      "doc": "Theorem — a major result. Lean expected; proof may be inline or in .lean.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"theorem\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/types.ts#ProvableBase"
       ],
       "unresolved": [],
       "external": [],
@@ -62340,7 +62845,7 @@
         },
         {
           "name": "igApiHub",
-          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional()",
+          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional(), label: z.string().min(1).optional() }).optiona…",
           "optional": true,
           "array": false,
           "doc": "The IG API hub: the region of the IG's hub page between the two markers"
@@ -73646,6 +74151,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/constraints.ts#ConjectureSchema",
+      "to": "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#ConjectureSchema",
+      "to": "cat-harness/schemas/constraints.ts#LeanRefSchema",
+      "via": "lean",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/constraints.ts#ConstraintRule",
       "to": "cat-harness/schemas/constraints.ts#ConstraintContext",
       "via": "check",
@@ -73657,6 +74178,30 @@
       "from": "cat-harness/schemas/constraints.ts#ConstraintRule",
       "to": "cat-harness/schemas/types.ts#Block",
       "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#CorollarySchema",
+      "to": "cat-harness/schemas/constraints.ts#ProvableBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#DefinitionSchema",
+      "to": "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#DefinitionSchema",
+      "to": "cat-harness/schemas/constraints.ts#LeanRefSchema",
+      "via": "lean",
       "kind": "field",
       "optional": false,
       "array": false
@@ -73742,6 +74287,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/constraints.ts#LemmaSchema",
+      "to": "cat-harness/schemas/constraints.ts#ProvableBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/constraints.ts#PaperSchema",
       "to": "cat-harness/schemas/constraints.ts#ChapterRefSchema",
       "via": "chapters",
@@ -73755,6 +74308,38 @@
       "via": "macros",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#ProofSchema",
+      "to": "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#ProofSchema",
+      "to": "cat-harness/schemas/constraints.ts#ComputationSchema",
+      "via": "computation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#ProofSchema",
+      "to": "cat-harness/schemas/constraints.ts#LeanRefSchema",
+      "via": "lean",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#PropositionSchema",
+      "to": "cat-harness/schemas/constraints.ts#ProvableBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
       "array": false
     },
     {
@@ -73840,6 +74425,14 @@
     {
       "from": "cat-harness/schemas/constraints.ts#TableSchema",
       "to": "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/constraints.ts#TheoremSchema",
+      "to": "cat-harness/schemas/constraints.ts#ProvableBaseSchema",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -79782,6 +80375,46 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/types.ts#ConjectureBlock",
+      "to": "cat-harness/schemas/types.ts#BlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#ConjectureBlock",
+      "to": "cat-harness/schemas/types.ts#LeanRef",
+      "via": "lean",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#CorollaryBlock",
+      "to": "cat-harness/schemas/types.ts#ProvableBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#DefinitionBlock",
+      "to": "cat-harness/schemas/types.ts#BlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#DefinitionBlock",
+      "to": "cat-harness/schemas/types.ts#LeanRef",
+      "via": "lean",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/types.ts#DiagramBlock",
       "to": "cat-harness/schemas/types.ts#OptionalLabelBlockBase",
       "via": "",
@@ -79862,6 +80495,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/types.ts#LemmaBlock",
+      "to": "cat-harness/schemas/types.ts#ProvableBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/types.ts#Paper",
       "to": "cat-harness/schemas/types.ts#ChapterRef",
       "via": "chapters",
@@ -79875,6 +80516,38 @@
       "via": "macros",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#ProofBlock",
+      "to": "cat-harness/schemas/types.ts#BlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#ProofBlock",
+      "to": "cat-harness/schemas/types.ts#Computation",
+      "via": "computation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#ProofBlock",
+      "to": "cat-harness/schemas/types.ts#LeanRef",
+      "via": "lean",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#PropositionBlock",
+      "to": "cat-harness/schemas/types.ts#ProvableBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
       "array": false
     },
     {
@@ -79984,6 +80657,14 @@
     {
       "from": "cat-harness/schemas/types.ts#TableBlock",
       "to": "cat-harness/schemas/types.ts#OptionalLabelBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/types.ts#TheoremBlock",
+      "to": "cat-harness/schemas/types.ts#ProvableBase",
       "via": "",
       "kind": "extends",
       "optional": false,

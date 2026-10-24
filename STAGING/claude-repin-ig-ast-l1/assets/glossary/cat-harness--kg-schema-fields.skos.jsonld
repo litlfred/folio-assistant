@@ -36494,6 +36494,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.conjectureblock.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConjectureBlock.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional Lean stub for the conjecture statement."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#ConjectureBlock.lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.definitionblock.examples",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DefinitionBlock.examples"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Labels of example blocks illustrating this definition."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#DefinitionBlock.examples",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.definitionblock.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DefinitionBlock.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Required: every definition must be formalized."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#DefinitionBlock.lean",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.diagramblock.caption",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -37137,6 +37194,63 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/types.ts#PaperRef.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.proofblock.computation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProofBlock.computation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional computational verification (Python/SnapPea/sympy/etc.)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#ProofBlock.computation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.proofblock.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProofBlock.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional Lean formalization of the proof."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#ProofBlock.lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.proofblock.of",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProofBlock.of"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Label of the provable block this proof establishes (reverse link of `ProvableBase.proofs[]`). Canonical field name — use in preference to `proves`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#ProofBlock.of",
       "skos:note": "candidate"
     },
     {

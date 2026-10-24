@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/DAK.Persona.System.LIS",
   "schema:name": "LaboratoryInformationSystem",
   "dcterms:title": "Laboratory Information System (LIS)",
-  "dcterms:description": "A digital system that manages the complete lifecycle of laboratory test orders, specimen tracking, result production, and result reporting to healthcare providers and persons. The LIS supports DHIs including: Transmit and track diagnostic orders (2.10.2) Capture diagnostic results from digital devices (2.10.3) Transmit person's diagnostic result to healthcare provider (2.10.1) Transmit diagnostics result or availability of result to person(s) (1.1.4) Track biological specimens (2.10.4) Services and Application Type : A6 — Laboratory information systems Functional areas : Lab requests/test ordering, sample tracking, sample processing, results reporting.",
+  "dcterms:description": "A digital system that manages the complete lifecycle of laboratory test orders,\nspecimen tracking, result production, and result reporting to healthcare providers\nand persons.\n\nThe LIS supports DHIs including:\n- Transmit and track diagnostic orders (2.10.2)\n- Capture diagnostic results from digital devices (2.10.3)\n- Transmit person's diagnostic result to healthcare provider (2.10.1)\n- Transmit diagnostics result or availability of result to person(s) (1.1.4)\n- Track biological specimens (2.10.4)\n\n**Services and Application Type**: A6 — Laboratory information systems\n\n**Functional areas**: Lab requests/test ordering, sample tracking, sample\nprocessing, results reporting.",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.LIS"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

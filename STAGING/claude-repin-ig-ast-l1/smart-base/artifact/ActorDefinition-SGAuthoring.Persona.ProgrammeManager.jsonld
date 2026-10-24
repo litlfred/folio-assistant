@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.ProgrammeManager",
   "schema:name": "ProgrammeManager",
   "dcterms:title": "Programme Manager",
-  "dcterms:description": "A programme manager responsible for the overall coordination and management of the Digital Adaptation Kit (DAK) development process. Programme managers lead scoping, resource allocation, timeline planning, and stakeholder engagement. The DAK development team should be small (<10 people) and nimble. The Programme Manager ensures the team is empowered to self-organize and manage DAK-related work including collaboration with stakeholders, content development, validation, and publication. Key activities: Define DAK scope and purpose Form and coordinate the DAK development team Establish development process and governance Define RASCI matrix for roles and responsibilities Plan sprint iterations and maintain the DAK backlog Coordinate SME consultations (workshops, country visits) Draft project roadmap with milestone dates Assess and secure resources and budget Source : IG Starter Kit, L2 DAK Authoring, Section 1 \"Plan\"",
+  "dcterms:description": "A programme manager responsible for the overall coordination and management\nof the Digital Adaptation Kit (DAK) development process. Programme managers\nlead scoping, resource allocation, timeline planning, and stakeholder engagement.\n\nThe DAK development team should be small (<10 people) and nimble. The Programme\nManager ensures the team is empowered to self-organize and manage DAK-related\nwork including collaboration with stakeholders, content development, validation,\nand publication.\n\nKey activities:\n- Define DAK scope and purpose\n- Form and coordinate the DAK development team\n- Establish development process and governance\n- Define RASCI matrix for roles and responsibilities\n- Plan sprint iterations and maintain the DAK backlog\n- Coordinate SME consultations (workshops, country visits)\n- Draft project roadmap with milestone dates\n- Assess and secure resources and budget\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Section 1 \"Plan\"",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.ProgrammeManager"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

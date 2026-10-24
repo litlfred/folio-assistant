@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-23T22:35:40.204Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6cf53d4a8cda2529e5cb085bb668c741f8cb7183",
-  "sourceCommitSha": "6cf53d4a8cda2529e5cb085bb668c741f8cb7183",
-  "sourceCommitAt": "2026-10-23T22:07:14Z",
+  "generatedAt": "2026-10-24T07:15:50.010Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9b5fe42b745db36ff3e2a30af7ad381c751e2ded",
+  "sourceCommitSha": "9b5fe42b745db36ff3e2a30af7ad381c751e2ded",
+  "sourceCommitAt": "2026-10-24T06:56:29Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -446,7 +446,7 @@
       "name": "fhir-validation",
       "title": "fhir-validation",
       "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
-      "instructionLines": 96,
+      "instructionLines": 110,
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
@@ -526,7 +526,7 @@
       "title": "ig-publisher-fork",
       "description": "Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete.",
       "instructionsPath": "skills/fhir-ig-base/ig-publisher-fork.md",
-      "instructionLines": 216,
+      "instructionLines": 261,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4709,13 +4709,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_jsonld_vocabularies.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -4729,7 +4730,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -4747,14 +4748,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_logical_model_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The Publisher's `output/`.",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -4768,7 +4769,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -5109,13 +5110,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_valueset_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -5129,7 +5131,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -5140,8 +5142,8 @@
   ],
   "staging": {
     "branch": "claude/repin-ig-ast-l1",
-    "sha": "6cf53d4a8cda2529e5cb085bb668c741f8cb7183",
+    "sha": "9b5fe42b745db36ff3e2a30af7ad381c751e2ded",
     "pr": "2638/merge",
-    "run": "40031522464"
+    "run": "40072175986"
   }
 }

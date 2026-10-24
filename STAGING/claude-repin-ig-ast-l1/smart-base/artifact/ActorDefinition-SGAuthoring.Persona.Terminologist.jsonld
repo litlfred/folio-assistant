@@ -11,13 +11,13 @@
   "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.Terminologist",
   "schema:name": "Terminologist",
   "dcterms:title": "Terminologist",
-  "dcterms:description": "A specialist responsible for ensuring semantic interoperability of SMART Guidelines through proper terminology management. Terminologists manage the WHO Commons dictionary, concept mappings, and ensure every data element is mapped to approved standard terminologies. Key activities: Map data elements to WHO Commons dictionary concepts Create and maintain CodeSystem resources Create and maintain ValueSet resources Create ConceptMap resources for cross-terminology mappings Map to ICD-11, SNOMED CT, LOINC, IPS, and WHO FIC Onboard new concepts into the Commons dictionary Verify no duplicate or overlapping concept definitions Review terminology bindings in logical models and profiles Flag unapproved concepts as QA issues before publication Source : IG Starter Kit, Governance Concepts page; L3 authoring pages for CodeSystems, ValueSets, ConceptMaps",
+  "dcterms:description": "A specialist responsible for ensuring semantic interoperability of SMART\nGuidelines through proper terminology management. Terminologists manage\nthe WHO Commons dictionary, concept mappings, and ensure every data element\nis mapped to approved standard terminologies.\n\nKey activities:\n- Map data elements to WHO Commons dictionary concepts\n- Create and maintain CodeSystem resources\n- Create and maintain ValueSet resources\n- Create ConceptMap resources for cross-terminology mappings\n- Map to ICD-11, SNOMED CT, LOINC, IPS, and WHO FIC\n- Onboard new concepts into the Commons dictionary\n- Verify no duplicate or overlapping concept definitions\n- Review terminology bindings in logical models and profiles\n- Flag unapproved concepts as QA issues before publication\n\n**Source**: IG Starter Kit, Governance Concepts page;\nL3 authoring pages for CodeSystems, ValueSets, ConceptMaps",
   "schema:version": "0.3.0",
   "dcterms:type": "Requirements: Actor Definitions",
   "schema:sameAs": {
     "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.Terminologist"
   },
-  "schema:creativeWorkStatus": "referenced",
+  "schema:creativeWorkStatus": "materialized",
   "schema:encoding": [
     {
       "@type": "schema:MediaObject",
@@ -28,6 +28,11 @@
       "dcterms:source": "upstream"
     }
   ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.base",

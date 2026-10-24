@@ -137,109 +137,6 @@
       "name": "Audit the graph [kg:audit]"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson",
-      "@type": "bootstrap:Process",
-      "name": "Ask the person"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_1",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_4",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_5",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_6",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_7",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_8",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_9",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Agent",
-      "@type": "cat-harness:Lane",
-      "name": "Agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/lane/Lane_Person",
-      "@type": "cat-harness:Lane",
-      "name": "Person"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Compose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Compose the full question"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_OfferCard",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Offer the same options as a tappable card"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_ProceedOnDefault",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Proceed on the stated default, question left open"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_Record",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Record the answer"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Write it in the chat"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Answered",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Answer returned to the caller"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_Default",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Default taken, question still open"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Answered",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Answered?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/Start_Process_AskThePerson",
-      "@type": "bootstrap:ProcessNode",
-      "name": "A question is due"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/U_Choose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Choose an option"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM",
       "@type": "bootstrap:Process",
       "name": "CRDM requirements"
@@ -375,10 +272,6 @@
       "name": "CRDM close-out"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Archive",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Gate",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -431,11 +324,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Stakeholders",
       "@type": "cat-harness:Lane",
       "name": "Stakeholders"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_ArchiveBean",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Archive the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close",
