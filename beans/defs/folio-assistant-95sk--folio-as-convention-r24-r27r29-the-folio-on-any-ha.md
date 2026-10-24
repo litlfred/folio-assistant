@@ -50,3 +50,13 @@ _2026-10-24T08:16:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGST
 The owner chose to keep R24, R27, R28 and R29 in this bean and work them in order. Then, the same morning: *"R29. dont do stickies. pause that for now."* and *"pause todos too"*. **R29 is paused in full, for both todos and stickies.** Its box stays unticked and is not worked until the owner unpauses it.
 
 The owner, right after: *"(they should be the same thing, that's part of the problem)"*. Todos and sticky notes are meant to be **one** kind of thing, and having two is part of why R29 is paused. Whoever unpauses R29 starts from one merged kind, not two.
+
+## 2026-10-24 — R28 ruled (owner's Q5 choice A, then refined)
+
+The owner chose A ("read it like R27"), then refined it at 09:01:
+
+> a document someone creates goes into folio. can be of mutliple kinds - any that hey have KG to decribe/loaded in dep chain … /mounted
+
+So, for R28:
+- A document a reader **creates** goes in `folio/`. It may be of **any kind that some knowledge graph in the instance's dependency chain describes**, including the mounted layers. So the set of creatable kinds is whatever the loaded graphs declare, not a list fixed here.
+- A document a reader **links to** becomes a `referenced` node in `library/` (catalogue by reference, through `ingest-document.ts`'s referenced rung), as option A said.
