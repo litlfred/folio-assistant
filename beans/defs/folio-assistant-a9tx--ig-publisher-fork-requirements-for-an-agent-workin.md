@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T10:45:00Z
+updated_at: 2026-10-24T11:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -42,9 +42,9 @@ the logic layer**. Re-derive these before quoting them.
 
 - [x] per-resource structured dump, keyed by canonical URL and version. smart-immunizations has 748 resources and 748 unique keys; the 36 examples without a canonical are keyed `Type/id` (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 - [x] **dependency edges among Library / PlanDefinition / Measure** — the gap above. 458 of 458 have a logic edge in either direction (owner's reading, 2026-10-23) (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
-- [ ] page-fragment provenance: which source produced which output fragment
-- [ ] the resolved dependency closure with pinned versions
-- [ ] terminology expansion provenance — which server, which version
+- [x] page-fragment provenance: which source produced which output fragment. At fragment level (owner, option A): `pages.json` holds 12931 fragments and 5691 pages, 5029 of them written by a source. The 660 pages with no fragments are the self-contained `comparison-v1.0.0/` pages. 106 includes built from a variable are counted, not resolved (measured: bean w3r2, `ast-results/2026-10-24-w3r2` @ `d646b97`, fork `ce950d2`)
+- [x] the resolved dependency closure with pinned versions: manifest `packages`, 17 packages, the same in the incremental and full builds (measured: bean w3r2, `ast-results/2026-10-24-w3r2` @ `d646b97`, fork `ce950d2`)
+- [x] terminology expansion provenance — which server, which version: manifest `terminology`, tx.fhir.org/r4 0.17.0 and 192 expansions. 2 carry `used-codesystem`, and 190 list `codeSystems` from their codes. The same in the incremental and full builds (measured: bean w3r2, `ast-results/2026-10-24-w3r2` @ `d646b97`, fork `ce950d2`)
 - [x] a `toolchain` object: publisher version, core version, SUSHI version. Recorded as publisher 3.0.0, core 7.0.1, SUSHI 3.20.1, java 21.0.3 (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 - [x] emitted behind a flag; default behaviour byte-identical without it. Met by construction, since a separate launcher changes no Publisher code. Its output vs stock smart-trust: 4080 files differ, every one being XML/Turtle (excised), a timestamp, a per-run UUID, timing, the working-directory path, or the entry-point frame in 5 stack traces. **0 semantic differences** (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 
@@ -112,8 +112,8 @@ Work plan, each step small and upstreamable:
 
 - [x] **W1** criteria 7, 1, 6 (round 2 of qzex measured them; see the criteria above): flag, `AstExporter`, per-resource dump, toolchain are BUILT; the byte-identical check and a real-IG run are **not yet measured** (both need the package registry)
 - [x] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count. That gives Library 279 = 279 `.cql` files in fsh-cone (2026-10-23), PlanDefinition 138, Measure 41. `ig-ast.ts validity` returns `valid` on both IGs (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
-- [~] **W3** criteria 4, 5. BUILT in fork `2924904` (70 tests): the manifest carries `packages` (the pinned closure) and `terminology` (the server, and each expansion's source parameters). The real-build check is bean `w3r1`.
-- [~] **W4** criterion 3, at fragment level (owner, 2026-10-24, option A). BUILT in fork `0c3b0ca` (72 tests): `pages.json` records source → fragment (from `FetchedFile.getOutputNames()`) and page → fragment (from literal include tags). Element level is out of scope. The real-build check is bean `w3r1`.
+- [x] **W3** criteria 4, 5. PASSED in bean `w3r2` (fork `ce950d2`): `packages` and `terminology` are filled, and the incremental and full builds match.
+- [x] **W4** criterion 3, at fragment level (owner, 2026-10-24, option A). PASSED in bean `w3r2`: `pages.json` is filled in the base, incremental and full builds, and the incremental and full builds match (0 differences). Element level is out of scope.
 
 Not started: this session has read access only, and Maven/JDK availability is
 unchecked. The owner chose to record the plan first (2026-09-30).
@@ -501,4 +501,13 @@ Fork `0c3b0ca`. The base, the incremental build and W8 all exit 0, and the incre
 - `pages.json` failed in both full builds (`MalformedInputException`: one page is not UTF-8). The incremental round's own pages.json had 1103 fragments and 588 pages, with 0 unresolved includes.
 
 Fixed in `ce950d2`: pages are read byte for byte, package ids drop the npm scope, and each expansion lists its `codeSystems`. Round 2 is bean `w3r2`.
+
+## W3/W4 round 2: pass (bean w3r2, 2026-10-24, `ast-results/2026-10-24-w3r2` @ `d646b97`)
+
+Fork `ce950d2`, 72 tests. Base, incremental (1 round) and W8 all exit 0. I checked the tarball myself:
+- `packages`: the incremental and full builds are equal, 17 packages.
+- `terminology`: equal.
+- `pages.json`: equal, in both its fragments and its pages.
+
+The 660 pages with no fragments are all under `comparison-v1.0.0/`, the self-contained version-comparison pages. W3 and W4 pass, so every acceptance criterion above is now met.
 
