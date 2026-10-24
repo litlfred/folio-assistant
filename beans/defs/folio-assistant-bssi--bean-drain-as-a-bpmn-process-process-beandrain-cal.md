@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-24T08:30:00Z
-updated_at: 2026-10-24T08:40:00Z
+updated_at: 2026-10-24T08:52:00Z
 parent: folio-assistant-ahvw
 blocked_by:
     - folio-assistant-m8gz
@@ -32,3 +32,5 @@ report (cat-harness-tools#703) found with no process. When the diagram lands, li
 children (yex5 among them) to `Process_BeanDrain` so they stop showing as unlinked.
 
 Waits on m8gz (BPMN thread). Do not start before OPEN and CLOSE have process ids on main.
+
+_2026-10-24T08:52:00Z_ — **Held by the BPMN thread** (coordinator handoff). Status stays `todo` while blocked on m8gz; it starts stacked on the m8gz cat-harness branch as soon as OPEN and CLOSE have process ids there. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
