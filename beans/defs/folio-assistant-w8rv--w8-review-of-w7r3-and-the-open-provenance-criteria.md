@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-24T00:30:00Z
-updated_at: 2026-10-24T09:25:00Z
+updated_at: 2026-10-24T10:20:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -30,8 +30,8 @@ fork). Each needs a scope and the owner's go-ahead before any build.
 
 ## Done when
 - [x] W8 diff and review recorded in a9tx, and W7/W8 ticked or reasons given (both ticked after round 6, `w7r6`)
-- [ ] W3 scoped and put to the owner
-- [ ] W4 scoped and put to the owner
+- [x] W3 scoped and put to the owner (built in `2924904`; real-build check is bean `w3r1`)
+- [x] W4 scoped and put to the owner (decision card 2026-10-24: A fragment level, B element level, C defer)
 
 ## Log
 - 2026-10-24 00:30Z: claimed by the "Publisher AST" thread. Opened at the CI speed thread's request, because a9tx had no open child and that turned `check:bean-rollup` red.
@@ -39,3 +39,4 @@ fork). Each needs a scope and the owner's go-ahead before any build.
 - 2026-10-24 07:45Z: W8 review of w7r4 done (see a9tx). Content and edges match; narrative link fix in `6abb8a5`. Round 5 is bean `w7r5`.
 - 2026-10-24 08:40Z: w7r5 crashed in `checkDependencies` (context refuses to list ValueSets). Fixed in `cf45726` and `8c2d917`. Round 6 is bean `w7r6`.
 - 2026-10-24 09:25Z: w7r6 diffs noise-only on both probes (649 date/temp-file changes, 0 edges). W7 and W8 ticked in a9tx. W3/W4 scoping next.
+- 2026-10-24 10:20Z: guard lifted (`1fffc3e`); W3 built (`2924904`), check is bean `w3r1`; W4 put to the owner.
