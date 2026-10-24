@@ -1151,8 +1151,11 @@ jobs:
           REUSED_RUN: ${{ needs.verdict-reuse.outputs.run_id }}
           # A draft PR runs the fast tier only (bean `dft1`, see `on:`): every
           # part is skipped by design, and the full tier runs when it is
-          # marked ready for review.
-          DRAFT: ${{ github.event.pull_request.draft == true }}
+          # marked ready for review. Every other event (push, merge_group,
+          # workflow_dispatch) carries no pull_request payload and is never a
+          # draft, which the expression states rather than leaves to how
+          # `null == true` evaluates.
+          DRAFT: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft == true }}
         # No `gate-shell.sh` here: this job never checks out, so the wrapper
         # does not exist for it. It needs none — the diagnosis is already in
         # the env vars, so it writes its own summary and WHICH part failed
