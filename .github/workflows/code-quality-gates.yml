@@ -493,6 +493,16 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
         # (the state:mount step above lays them down). Their docs/ pages are
@@ -679,10 +689,8 @@ jobs:
         # (`ig-index:build`, fhir-harness), once per run, and shared with the
         # reader jobs as the `ig-indexes` artifact, which they download before
         # their own `smart:pages` (owner, 2026-10-23: "Publish + staging,
-        # gates use cache"). Until the IG instances stop committing their
-        # copies, this replaces those copies in the checkout only. The bun
-        # test shards do not download it: their tests still assert facts of
-        # the committed copies, and move with step 3 (fhir-harness#124).
+        # gates use cache"). The IG instances commit no copy (step 3). Jobs
+        # that run before this one is done build their own, the same way.
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bun run cat ig-index:build
@@ -977,6 +985,16 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -2957,6 +2975,16 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
         # (the state:mount step above lays them down). Their docs/ pages are
@@ -4164,6 +4192,16 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
