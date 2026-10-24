@@ -2,10 +2,10 @@
 # folio-assistant-ffv7
 $schema: bean/1.0.0
 title: 'ASK DOWNSTREAM: would a kg-to-portal consumer read SPDX (SBOM or licence ids)? D1 of the SPDX proposal waits on it'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-03T10:44:28Z
-updated_at: 2026-10-03T10:44:28Z
+updated_at: 2026-10-24T08:25:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -70,3 +70,7 @@ contacts them.
 - [ ] the owner has sent the question to at least one downstream party
 - [ ] an answer (or a recorded non-answer after a stated wait) is appended here
 - [ ] proposal D1 updated with the answer, and `sd5v` notified
+
+## OWNER, 2026-10-24: do not ask (structured question Q2, 08:19Z)
+
+**"B": skip the downstream ask.** The signed digest manifest is enough, so proposal D1 is answered **no SBOM**: no release SBOM and no SPDX `kg-to-portal` manifest are built. The licence-id validation that already went ahead is unaffected. The Done-when boxes are superseded by this ruling. If a downstream party ever asks for an SBOM, open a new bean. `sd5v`: D1 = no. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.

@@ -2,10 +2,10 @@
 # folio-assistant-l9v6
 $schema: bean/1.0.0
 title: 'DECISION (proposed): which CDN layer, if any, in front of the WHO L1 corpus (slide 2, #1614)'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-30T17:47:45Z
-updated_at: 2026-09-30T17:47:45Z
+updated_at: 2026-10-24T08:25:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -72,3 +72,7 @@ Whatever is chosen, and stated now so the choice cannot hide them:
 - [ ] the corpus size a folio would actually publish is measured, not quoted from the slide
 - [ ] the signature envelope is shown to survive the candidate layer(s)
 - [ ] the owner records an outcome here, and the status moves to Accepted, or this is superseded
+
+## OWNER, 2026-10-24: outcome (structured question Q1, 08:19Z)
+
+**GitHub Pages alone for now; Cloudflare R2 + CDN in future.** Status: Accepted for the present topology. `publication.host` stays `github-pages`, and no CDN layer is added. Revisit when a published site nears GitHub Pages' published limits (1 GB per site, 100 GB a month soft bandwidth). The future Cloudflare R2 + CDN layer is tracked as bean `fvec`, so this record closes. The first two Done-when boxes move to `fvec`, where they become its preconditions. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.

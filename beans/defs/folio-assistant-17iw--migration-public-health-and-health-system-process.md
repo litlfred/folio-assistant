@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-24T07:25:00Z
-updated_at: 2026-10-24T07:25:00Z
+updated_at: 2026-10-24T08:25:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -23,3 +23,5 @@ The public-health and health-system process catalogues (BusinessProcessWorkflow 
 - [ ] pins and `index.config.json` name who-iris where the catalogues are read
 
 Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+_2026-10-24T08:25:00Z_ — Owner re-asked (structured question Q3, 08:19Z): **"A": keep waiting** until WHO/who-iris is live. Not in any drain queue until then. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
