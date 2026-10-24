@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-24T12:19:07Z
+updated_at: 2026-10-24T13:02:20Z
 parent: folio-assistant-fnx4
 ---
 
@@ -51,3 +51,5 @@ _2026-10-24T09:30:02Z_: G1 done: litlfred/cat-harness-tools#716 merged as 5b3658
 _2026-10-24T10:10:27Z_: G2 built: litlfred/cat-harness#537 (source kind `hydrated`), then litlfred/cat-harness-tools#725 (mount:remote hydrated mode). Gap: no harness commits docs/subgraph/ (builtAtPublish), so a hydrated mount of a real pin finds nothing. Owner chose 2026-10-24 (card, option A): publish the index files per pin in a package, fetched by the Tool the source names. Not B (commit them) nor C (generate at mount time).
 
 _2026-10-24T12:19:07Z_: G2 done: cat-harness#537 (fb7e393) and cat-harness-tools#725 (040799e) add the hydrated source and mount mode. Per-pin index package (owner option A, then one prerelease per pin): cat-harness#542 (e5794f4) and cat-harness-tools#736 (c810edd). A mount reads the pin's git tree first, then the subgraph-index-<sha> prerelease, checked by sha256, the manifest, the schema and the IRI. Follow-ups: only cat-harness has the publish caller workflow; kg:materialize --nodes (core) still reads the git tree only; G3 needs 2j2r in remote-mount's two planners.
+
+_2026-10-24T13:02:20Z_: G3, nested-subgraph half done: cat-harness-tools#743 (ee46bf6, both remote-mount planners resolve nested ids via instanceDirectories), cat-harness#568 (88106da, skill + Tool text), folio-assistant-core#214 (1d644b6, kg:materialize --nodes uses publishedSubgraphDir and falls back to the per-pin package). planHydrated ignores mountDefaults.directories on purpose (hydrated is the step before choosing). Left: node ids (single Tools) with import closure, and kg:materialize byte mode by nested id — cat-harness-tools#744, waiting on four owner decisions (what a Tool brings, one closure walker, granularity, nested-id choice in byte mode). Note: check:tools-closure is an allowlist gate, not a closure computer.
