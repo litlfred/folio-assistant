@@ -2,11 +2,11 @@
 # folio-assistant-w7r5
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: W7 round 5, after the narrative link fixes, and W8, on smart-immunizations with tx.fhir.org'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-24T07:45:00Z
-updated_at: 2026-10-24T07:45:00Z
+updated_at: 2026-10-24T09:56:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -104,3 +104,4 @@ Leave out `w7*/work/r*` and `w7*/pkg-cache`. If the tarball is over 90 MB, push 
 - [ ] issue #222 comment posted
 
 ## Log
+- 2026-10-24T09:56:00+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Starting Step 1–4 in background subagent.
