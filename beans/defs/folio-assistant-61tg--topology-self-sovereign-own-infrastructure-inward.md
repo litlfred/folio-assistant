@@ -80,3 +80,20 @@ owed, and is not superseded by this.
 _2026-10-24T08:20:00Z_ — Claimed by the Claude drain thread (smart-trust-demo session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). Other agents: please skip this bean until this claim is released.
 
 _2026-10-24T08:45:00Z_ — Moved under o1by (deployment descriptions), as the owner chose ("A. Proposal first"). Analysis: https://claude.ai/artifact/TauEHEAz5d2wgFinqZEqb8.
+
+## Offline run, 2026-10-24 (Claude drain thread)
+
+The run: a fresh clone of smart-trust-demo with all seven layers mounted from `index.lock.json`. Commands ran inside `unshare -rn`, with no network and loopback up. Logs were kept in the session; the analysis is https://claude.ai/artifact/TauEHEAz5d2wgFinqZEqb8 (section "Offline run").
+
+- **Nothing failed for lack of network:**
+  - `bun install --frozen-lockfile`, `mount:remote:check`, `check-deps` and `beans:fallback` worked.
+  - `auth:login --all` worked and noted that GitHub was unreachable.
+  - The session-start sweep worked and said "origin/main fetch failed (offline?)".
+  - `serve:rendering` served on 127.0.0.1:4000.
+- **Content findings, with the network on too:** `check:tools` (18 satisfies naming no skill, 2 missing paths), `check:reference-direction`, `render:bpmn:check` (missing SVGs), `index:render:check` (stale AGENTS.md/README.md/CLAUDE.md, no GEMINI.md) and `gates:list` (no QA working copy).
+- **Defect found:** commands named as checks WRITE into the mounted layers.
+  - `render:bpmn:check` wrote 109 files: 104 under `cat-harness/docs/assets`, plus 5 bootstrap SVGs.
+  - `gates:list` wrote `test/results/` in five layers: 549 files in cat-harness, 69 in cat-harness-tools, 22 in smart-trust-tools, 3 in fhir-harness and 1 in folio-assistant-core.
+  - Afterwards `mount:remote:check` reports five layers missing as "modified". On self-sovereign or air-gapped infrastructure, where a layer cannot be re-cloned, that breaks the mount until it is re-laid from a local copy.
+
+Still owed: the same run with the network on, in the same clean layout, for a line-by-line comparison. The first pass at 08:25Z showed the same content failures online.
