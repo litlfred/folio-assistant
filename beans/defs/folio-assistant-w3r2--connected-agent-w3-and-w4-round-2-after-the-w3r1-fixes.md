@@ -2,11 +2,11 @@
 # folio-assistant-w3r2
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: W3 and W4 round 2, after the w3r2 fixes, on smart-immunizations'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-24T10:45:00Z
-updated_at: 2026-10-24T10:45:00Z
+updated_at: 2026-10-24T12:49:00+02:00
 parent: folio-assistant-a9tx
 ---
 
@@ -136,3 +136,4 @@ cd ~/space_cats/fhir-ig-publisher && git switch -c ast-results/$(date +%F)-w3r2 
 
 
 ## Log
+- 2026-10-24T12:49:00+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Running Steps 1–4 in background subagent.
