@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-24T10:55:14Z
+updated_at: 2026-10-24T10:56:06Z
 parent: folio-assistant-slw1
 ---
 
@@ -306,3 +306,5 @@ _2026-10-24T08:16:00Z_ — Claimed by the cloud drain thread "Drain content mode
 _2026-10-24T09:27:19Z_ — French pilot merged, litlfred/folio-assistant-core#202 (39eb6940): `lang: "fr"` drafts for the 46 arxiv-2510.21603v1 figures. Still open: the other figures and ar, es, ru, zh.
 
 _2026-10-24T10:55:14Z_ — Spanish merged, litlfred/folio-assistant-core#210 (fca35a3f): `lang: "es"` drafts for the same 50 arxiv-2510.21603v1 figures, all 96 slots valid. Still open: ar, ru, zh here, and every locale for the other library entries. Claim released; the next thread can pick it up.
+
+_2026-10-24T10:56:06Z_ — Re-claimed by the cloud drain thread "Drain content model and ingest beans" (owner extended the window to ~13:48Z; session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU).
