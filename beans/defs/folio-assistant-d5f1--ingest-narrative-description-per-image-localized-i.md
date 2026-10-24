@@ -326,3 +326,5 @@ _2026-10-24T14:50Z_ — batch D opened as cat-harness#588: 13 figures in omg-202
 _2026-10-24T14:48Z_ — cat-harness#588 merged (batch D, 13 SPDX figures).
 
 _2026-10-24T14:52Z_ — batch E opened as cat-harness#590: 14 figures in arxiv-2607.14456v1.
+
+_2026-10-24T15:02Z_ — cat-harness#590 merged (batch E, 14 figures of arxiv-2607.14456v1).
