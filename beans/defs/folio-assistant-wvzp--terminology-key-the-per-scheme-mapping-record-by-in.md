@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-24T08:35:00Z
-updated_at: 2026-10-24T08:33:00Z
+updated_at: 2026-10-24T09:50:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -23,3 +23,5 @@ Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
 _2026-10-24T08:33:00Z_ — Claimed by the cloud drain thread "Drain content model and ingest beans" (session https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU).
 
 _2026-10-24T08:55:00Z_ — Owner ruling B (08:41Z): key by the scheme file as a clean break; the proper key is bean q3n9 under GOAL 1. PRs: `litlfred/cat-harness#524`, `litlfred/cat-harness-tools#708`, `litlfred/folio-assistant-core#206`.
+
+_2026-10-24T09:50Z_ — Handed over to the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e) by the content drain thread. Done together with q3n9 box 2: the three PRs move from the file key to (instance, scheme), owner ruling A on q3n9.
