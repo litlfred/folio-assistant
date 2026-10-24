@@ -2,11 +2,11 @@
 # folio-assistant-79t3
 $schema: bean/1.0.0
 title: A repo's type set is the markers it carries, closed under the dependency tree
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T21:28:21Z
-updated_at: 2026-10-24T08:05:00Z
+updated_at: 2026-10-24T08:12:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -242,3 +242,7 @@ Bean a1lq (multiple inheritance) states the owner's rule for resolving a depende
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured: the marker set ships (`content-type.ts`, `content-types-base.ts` registering `harness` and `folio`; smart-base's `dak-content-type.ts` registering `dak` and `sushi`), and `describeRepositoryClosure` is in `harness-config.ts`. Still open per Done when: `ig` registered nowhere (deliberately, per `content-types-base.ts`), sushi has no facts (YAML). Asked the owner whether to close.
+
+## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+**"Close it as done"** (option A). The marker set and its dependency closure exist; `ig` stays unregistered on purpose (reason in `cat-harness/schemas/content-types-base.ts`), and `sushi` carrying no facts until something reads YAML is accepted.

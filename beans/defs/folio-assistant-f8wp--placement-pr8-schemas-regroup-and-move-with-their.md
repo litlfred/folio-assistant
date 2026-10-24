@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-24T08:05:00Z
+updated_at: 2026-10-24T08:12:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -33,3 +33,7 @@ _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured: not started. `cat-harness/schemas/` is flat (287 `.ts` files; only `skills/` and `block-qa-schema/` subfolders). Of the 19 audit rows, 4 are in their target.
+
+## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Same ruling as `8fq9`: **do it now, one concern group per PR** to keep churn down.

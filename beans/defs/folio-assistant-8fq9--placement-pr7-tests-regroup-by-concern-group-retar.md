@@ -5,7 +5,7 @@ title: 'Placement PR7: tests regroup by concern group, retargeted to cat-harness
 status: todo
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-24T08:05:00Z
+updated_at: 2026-10-24T08:12:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -24,3 +24,7 @@ _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured: not started. `cat-harness-tools/scripts/tests/` is flat (773 files, no concern-group folders) and `cat-harness-tools/test/` is flat too.
+
+## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+**"Do them now, one at a time ... in groups so not so much churn"** (option A). One PR per concern group (sdlc, ui, kg, process, library, tools, conduct, content, above-harness), each its own merge, rather than one ~770-file move.
