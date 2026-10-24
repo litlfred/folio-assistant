@@ -2,10 +2,10 @@
 # folio-assistant-502c
 $schema: bean/1.0.0
 title: 'EXPERIMENT: forced along a BPMN vs managing it — do outcomes change, at what compute?'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-09-19T17:04:01Z
+updated_at: 2026-10-24T13:37:30+02:00
 parent: folio-assistant-ahvw
 ---
 
