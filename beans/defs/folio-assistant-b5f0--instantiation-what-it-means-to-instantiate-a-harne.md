@@ -8,7 +8,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-10-24T09:31:00Z
+updated_at: 2026-10-24T09:52:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -450,12 +450,12 @@ that, however it first arrived on disk.
 
 ## Done when — added by this ruling
 
-- [ ] The create-or-repair rule is written into the skill that owns the
+- [x] The create-or-repair rule is written into the skill that owns the
       `holds` axis (`content-context-and-state-graphs`), not only here — a
-      rule that lives in one bean is a rule with no home
-- [ ] `ensure-landing-sticky`'s write is documented AS a repair at its call
+      rule that lives in one bean is a rule with no home (`litlfred/cat-harness#501` @ `9be87b05`)
+- [x] `ensure-landing-sticky`'s write is documented AS a repair at its call
       site, so a later reader does not take it for maintenance and reclassify
-      the file
+      the file (`litlfred/cat-harness-tools#687` @ `320cfee8`)
 
 ## §1 REVERSED, owner, 2026-09-21 — the OTHER option, `<name>.json` + `<name>.config.json`
 
@@ -542,5 +542,11 @@ The two modes, both buildable after `mftp` (#2194):
 | **put a harness on** the remote KG, which has none, and build THERE | the remote repository's own CI | `stage-ig-sites --only <instance> --source .` |
 
 ## Done when (added)
-- [ ] the initiation process ASKS which mode, with materialize-or-reference as its own question — never inferred from having push access to the remote
-- [ ] instantiating on a remote repository writes nothing there without the user's explicit permission for that repository
+- [x] the initiation process ASKS which mode, with materialize-or-reference as its own question — never inferred from having push access to the remote (`litlfred/bootstrap#29` @ `39477d48`, `litlfred/cat-harness#501` @ `9be87b05`)
+- [x] instantiating on a remote repository writes nothing there without the user's explicit permission for that repository (`litlfred/bootstrap#29` @ `39477d48`, `litlfred/cat-harness#501` @ `9be87b05`)
+
+## Progress 2026-10-24
+- `litlfred/cat-harness#501` (`9be87b05`): Wrote the create-or-repair rule (`"A process may CREATE or REPAIR the declaration (<name>.json) or config (<name>.config.json). It never maintains it."`) into `skills/kg/kg-core/content-context-and-state-graphs.md`, and updated `skills/conduct/conduct-core/getting-started.md` with the remote mode question (`materialize-or-reference` locally vs `put a harness on` the remote) and explicit remote write permission rule.
+- `litlfred/cat-harness-tools#687` (`320cfee8`): Documented `ensure-landing-sticky.ts`'s write at its call site as a one-time repair (`!already`), never ongoing state maintenance.
+- `litlfred/bootstrap#29` (`39477d48`): Updated `skills/confirm-harness.md` and `skills/discussion.md` so remote repositories are assumed read-only (`read-from`), asking which mode (`read-from` locally with materialize-or-reference as its own question vs `written-to` putting a harness on the remote) and requiring explicit user permission before writing to any remote repository.
+- Note on §4 (`initialize-harness.bpmn` `<folio:bean>`): Later owner rulings (`iwtn` 2026-09-23, `12s9` 2026-09-24, `bpmn-processes.md` 2026-09-26) and `bootstrap-tools/schemas/graph.test.ts` enforce that `bootstrap/` is self-definitional and carries no work-plan (`<bean>`) or `Tool` elements (`initialize-harness.bpmn:18` states this directly, while `folio-assistant-core/processes/conduct/getting-started.bpmn` carries `<cat-harness.processes:bean op="claim" />` on `Task_SeedPlan`).

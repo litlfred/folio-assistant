@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T18:50:25Z
-updated_at: 2026-10-21T17:56:00Z
+updated_at: 2026-10-24T09:52:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -17,8 +17,8 @@ What landed (bean ar1s P1, this session): interaction preferences are keyed by G
 ## Gaps outside GitHub
 - [x] Local CLI with no GH token: no handle — today falls to 'could not determine' + strictest profile.
 - [x] Other forges (GitLab, Gitea, Bitbucket) and no forge at all: the identity key is GitHub-specific; needs a provider-neutral identity (provider + handle) with the GitHub resolver as one provider.
-- [ ] Other agent hosts (Gemini CLI, Antigravity, Copilot, Codex, Cursor): what login/identity each exposes to a session-start hook, if any; whether they even run the sweep.
-- [ ] Several people on one machine/session; a person with several accounts per provider.
+- [x] Other agent hosts (Gemini CLI, Antigravity, Copilot, Codex, Cursor): what login/identity each exposes to a session-start hook, if any; whether they even run the sweep.
+- [x] Several people on one machine/session; a person with several accounts per provider.
 - [x] Privacy: aliases are published in the repo; per-person preferences that must NOT be committed need a non-repo store (user-level config), read through the same resolver.
 - [x] Authorization tie-in: the same resolved identity should feed auth_whoami/ODRL decisions, so 'who is typing' has one answer for both preferences and permissions.
 - [x] Skill: put the identity-resolution steps in the user authentication/authorization skills (task-authorization, deployment-auth) and the interaction-modality skill, not only in the sweep script.
@@ -44,3 +44,11 @@ Still open: identity on other agent hosts, several people per session, wiring th
 Still open: identity on other agent hosts (Gemini CLI, Antigravity, Copilot, Codex, Cursor), several people per machine or session, and wiring `resolveIdentities` into `auth_whoami` output.
 - The authorization tie-in box is done: cat-harness-tools#163 (cfb7474, merged) has `auth_whoami` list every other identity under "Also seen (for preferences only, never for permissions)", while the permission answer still reads only what GitHub vouched for.
 Remaining: identity on other agent hosts, and several people per machine or session.
+
+## Progress 2026-10-24: cat-harness-tools#686 + cat-harness#502
+- `litlfred/cat-harness-tools#686` (`20386350`):
+  - Added non-Claude agent host identity signals to `resolveIdentities()` (`GEMINI_USER_EMAIL` / `GOOGLE_CLOUD_ACCOUNT` -> `gemini`, `ANTIGRAVITY_USER_EMAIL` / `ANTIGRAVITY_USER` -> `antigravity`, `COPILOT_USER` and `GITHUB_USER` outside Actions -> `copilot`, `CODEX_USER_EMAIL` / `OPENAI_USER_EMAIL` -> `codex`, `CURSOR_USER_EMAIL` -> `cursor`, and `CAT_HARNESS_IDENTITY` as the host-neutral `<provider>:<handle>` override), all marked `vouched: false` (used for preferences only, never for permissions).
+  - Added multi-account per provider support (`identities` accepting `string | string[]` or `Array<{ provider, handle, active? }>` in `identity.json`).
+  - Added multi-person machine/session support (`profiles` map in `identity.json`, explicit `CAT_HARNESS_PROFILE` / `CAT_HARNESS_USER` / `activeProfile` selection, and `ambiguous-multi-user` detection when multiple profiles exist with no disambiguator, falling back to the strictest profile on record via `resolveActiveInteraction()`).
+- `litlfred/cat-harness#502` (`c5546d4b`):
+  - Updated `skills/conduct/conduct-core/interaction-modality.md` §3.1 with the agent host identity & `SessionStart` hook table, multi-account provider configuration, and multi-person session disambiguation (`ambiguous-multi-user` fallback to the strictest profile).
