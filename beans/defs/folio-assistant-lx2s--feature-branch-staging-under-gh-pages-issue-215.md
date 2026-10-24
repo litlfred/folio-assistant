@@ -2,11 +2,11 @@
 # folio-assistant-lx2s
 $schema: bean/1.0.0
 title: 'Feature-branch staging under gh-pages (issue #215)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-17T22:29:53Z
-updated_at: 2026-10-24T08:35:00Z
+updated_at: 2026-10-24T09:00:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -211,3 +211,5 @@ Revisit B (a per-path manifest) when bean `fwtz`'s cone deploy is switched on, b
 Remaining: walk issue #215's immunization-schedule scenario end to end. Closing #215 is the owner's.
 
 _2026-10-24T08:35:00Z_ — **Owner, 2026-10-24 (structured question Q8, 08:29Z): "A".** Walk issue #215's scenario on **litlfred/smart-immunizations-uganda**. One small sample schedule change (for example the HPV single-dose age) goes on a branch. Its preview at `STAGING/<branch>/` (`site-publish.yml`) is compared with main, and the walk records where it breaks. The branch is never merged. `xp72`'s Done-when 3 is walked on the same branch. Closing #215 stays the owner's. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
+
+_2026-10-24T09:00:00Z_ — Claimed by the Preview storage thread for the #215 walk on a never-merged smart-immunizations-uganda branch (owner Q8 "A"). No agy claim found. Session https://claude.ai/code/session_01GQmP3RJREp5xXnAFSYYMi9.
