@@ -235,3 +235,13 @@ Walked on litlfred/smart-immunizations-uganda#12, a draft that never merges. The
 - **3:** a check that each CQL due-date constant matches its workbook row, and an evidence check that an L2 `change:` does not contradict its cited L1 rows.
 
 #215 should stay open: steps 3 to 6 break.
+
+### Owner chose C, "fix all 4 now" (2026-10-24)
+
+| Break | Fix | State |
+|---|---|---|
+| 3 | `logic:check-cql` and `l2:evidence` in the Uganda `logic` gate | smart-immunizations-uganda#14, merged |
+| 4, 5 | a preview builds from its own branch's AST; the stamp records the AST verdict | smart-immunizations-uganda#13 merged; fhir-harness#156 |
+| 6 | IG previews get `staging.json`, the banner, a ChangeSet and `review/` | fhir-harness#158; cat-harness-tools#709 (review links name the IG page) |
+
+Breaks 4 and 5 are verified on the hosted preview of #12 (both the PlanDefinition and `schedule.html` say 9 years). Break 6 is verified on a local build; on the hosted preview it needs #158 and #709 merged and Uganda's `index.lock.json` repinned. Then re-walk #12.
