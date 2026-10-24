@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-23T22:58:39Z
-updated_at: 2026-09-24T06:22:01Z
+updated_at: 2026-10-24T08:15:05Z
 parent: folio-assistant-zzmr
 ---
 
@@ -56,3 +56,5 @@ string a consumer **WRITES**. That is the finding under the finding.
 - [ ] the 4 declare + 1 fold picked and implemented
 - [ ] cat-harness/viewer/ decided
 - [ ] the pass-through <instance>/skills/ parents: model question answered
+
+_2026-10-24T08:15:05Z_: Claimed by the README regen thread (session https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5). The owner picked option A on 2026-10-24 at 07:21Z: declare ui/, ns/ and viewer/ (renamed off qou). A second pick at 07:53Z keeps and declares types/. Work is in cat-harness-tools#681 and cat-harness#495.

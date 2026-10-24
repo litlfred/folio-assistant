@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-24T08:15:06Z
 parent: folio-assistant-iirv
 ---
 
@@ -33,3 +33,5 @@ _2026-10-16T06:30:00Z_ — Blocks lifted: `63wl`, `apcg` are completed in every 
 ## 2026-10-16 — not complete (investigated, Owner ruling 2026-10-16, item 2)
 
 PR litlfred/folio-assistant#2260 merged 2026-10-08 (826dc237), but its only change is this bean file: it recorded the claim and the design finding, and its own status list leaves every move unticked. On cat-harness main on 2026-10-16 the pages are still there: `docs/concepts/content-types.md`, `docs/fhir/ig-publisher.md`, `docs/fhir/fhir-content.md`, `docs/guides/document-ingestion.md`. Neither box can be ticked: `docs:pages:check`/`translated-links:check` green and an unchanged page count are only evidence once the pages have moved. Still open: the multi-root `gen-docs-pages` change, the owner's redirects-or-clean-break question, the move, and then both boxes. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-24T08:15:06Z_: Claimed by the README regen thread (session https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5). Six of the nine pages already moved in M6–M8 (cat-harness#445). The last two, ig-publisher and fhir-content, move in fhir-harness#148, smart-base#149, cat-harness#498 and cat-harness-tools#683, with a clean break as in M6–M8.
