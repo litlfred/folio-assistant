@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-24T07:45:00Z
+updated_at: 2026-10-24T08:40:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -478,4 +478,10 @@ What still differs:
   Fixed in `6abb8a5`, with 67 tests passing. `AstPublisher.checkDependencies` drops the leading `/` from cached web paths before rendering, and `AstPublisher.resolve` adds the cached content, so the name shows.
 
 Round 5 (bean `w7r5`) checks that fix. If round 5 shows nothing but noise, W7 and W8 pass.
+
+## Round 5 (bean w7r5, 2026-10-24, `ast-results/2026-10-24-w7r5` @ `a759fd9`)
+
+Both incremental builds crashed in `AstPublisher.checkDependencies`: `fetchResourcesByType(Resource.class)` refuses to list ValueSets (`java.lang.Error`). The two W8 full builds passed. The plans were as before: cql rebuilds 84 and loads 56 from cache, fml rebuilds 2 and loads 5.
+
+Fixed in `cf45726` and `8c2d917`, with 67 tests passing. The step fetches each cached canonical on its own, and nothing it throws can fail the build. Round 6 is bean `w7r6`.
 
