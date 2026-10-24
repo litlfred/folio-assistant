@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-24T08:53:04Z
+updated_at: 2026-10-24T09:30:02Z
 parent: folio-assistant-fnx4
 ---
 
@@ -21,7 +21,7 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md`, Option 
 - `tools/` has no hydrated index: `gen-subgraph-jsonld` exports `kgDirectories(instance)` only (skills, scenarios, processes).
 
 ## Done when
-- [ ] G1: Tool nodes exported as a named subgraph with `index.jsonld` + `index.hydrated.jsonld` (`subgraph:jsonld:check`)
+- [x] G1: Tool nodes exported as a named subgraph with `index.jsonld` + `index.hydrated.jsonld` (`subgraph:jsonld:check`)
 - [ ] G2: a mount entry or override can ask for `hydrated: true` — the named subgraph's `index.hydrated.jsonld` at the pin, no files
 - [ ] G3: `overrides.<instance>.directories` and `kg:materialize` accept NESTED subgraph ids and NODE ids, resolved through `resolveDirectories` / the hydrated index; code nodes bring their import closure (`check:tools-closure`)
 - [ ] concern names: `"sdlc"` at the top level expands to its kind-first members (`docs/sdlc`, `skills/sdlc`, `processes/sdlc`, `scripts/sdlc`), derived from the `concern-groups/v1` declarations, checked by `check:concern-groups`
@@ -45,3 +45,5 @@ Where a folder sits decides how it is declared: under the harness root in `<harn
 _2026-10-16T10:50:00Z_ — Re-parented `0mpw` → `fnx4` (KG SUBSCRIPTIONS, `0mpw`'s own epic): a feature may not sit under another feature (milestone → epic → feature → task/bug), and this failed the parent check (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
 
 _2026-10-24T08:53:04Z_: Claimed by the README regen thread (https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5). Starting with G1, after re-measuring the 2026-10-09 notes against current main.
+
+_2026-10-24T09:30:02Z_: G1 done: litlfred/cat-harness-tools#716 merged as 5b36582. Every Tool gets its own tools/<id>/ subgraph with index.jsonld and index.hydrated.jsonld (243 Tools; 176 in cat-harness). For G3: cat-harness-tools' own tools/ holds implementation code, and Tool nodes carry no source path, so a code closure must come from the folder convention or maintainsFrom. kg:materialize --nodes lives in folio-assistant-core/scripts/kg-materialize.ts.
