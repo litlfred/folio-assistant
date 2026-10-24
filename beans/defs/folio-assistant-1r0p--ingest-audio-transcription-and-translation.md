@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-24T10:17:00Z
+updated_at: 2026-10-24T10:30:15Z
 parent: folio-assistant-slw1
 ---
 
@@ -195,3 +195,30 @@ Then commit `output.whisper-base.json` to smart-ra `uploads/`, noting the tool,
 model and the WAV's SHA-256. The comparison with the Teams `.vtt` (agreement,
 plus a name and term list) needs no network, and any session can do it from
 there.
+
+## 2026-10-24: `whisper.cpp` (`ggml-base.bin`) run on `smart-ra/uploads/output.mp4` + comparison (`litlfred/smart-ra#91`)
+
+Executed the commands above on the connected machine and opened [`litlfred/smart-ra#91`](https://github.com/litlfred/smart-ra/pull/91) (`052cb21fc04b0f057047c5405e3aebef9da7f44d`) committing `uploads/output.whisper-base.json` and `uploads/README.md`:
+
+### Provenance & SHA-256 Digests
+| Artefact | SHA-256 | Details |
+|---|---|---|
+| `uploads/output.mp4` | `5cdd6c09ef690a0f516f4277fefdb000fee849292ff04ca6ef7d8c85116cabb3` | 24,776,789 bytes (17:09, AAC mono 16 kHz) |
+| `output.wav` | `e63fba5ee95c5c2e973ed8cc1739bb409978713c6f883c2cc374132fe49fef01` | 32,927,822 bytes (`ffmpeg -i uploads/output.mp4 -vn -ac 1 -ar 16000 -c:a pcm_s16le output.wav`, FFmpeg 9.0.2 / `Lavf63.1.102`, 1,028.992 s) |
+| `ggml-org/whisper.cpp` (`./build/bin/whisper-cli`) | commit `231638a0717b7822784297e5980965ffcec05810` | Tool node `transcribe-whisper-cpp` |
+| `models/ggml-base.bin` | `60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe` | 147,951,465 bytes (`base`, multilingual) |
+| `uploads/output.whisper-base.json` | `d72b592bd85f9e1b4e5ffb674b692f2517c47e989154dffe05a52cdd26e6bd2c` | 35,950 bytes (139 timed segments, 2,395 words) |
+
+### Word-Level Agreement (`difflib.SequenceMatcher` + word edit distance)
+| Pair | Words (A vs B) | Matched words | Word similarity (`SequenceMatcher`) | Word edits (S / D / I) | Edit rate vs A (WER-style) |
+|---|---:|---:|---:|---:|---:|
+| Teams `.vtt` vs `output.whisper-base.json` | 2,474 vs 2,395 | 2,269 | **0.932** (`0.9320`, 93.2%) | 66 / 139 / 60 | **10.71%** (89.29% exact word match) |
+| Teams `.docx` vs `output.whisper-base.json` | 2,469 vs 2,395 | 2,250 | **0.925** (`0.9252`, 92.5%) | 76 / 143 / 69 | **11.66%** (88.34% exact word match) |
+| Teams `.vtt` vs Teams `.docx` (same recogniser) | 2,474 vs 2,469 | 2,421 | **0.980** (`0.9796`, 98.0%) | 5 / 48 / 43 | **3.88%** |
+| Teams `.vtt` vs Vosk `small-en` (`uphx`) | 2,474 vs 2,610 | — | **0.802** (80.2%) | — | — |
+
+### Key Domain Terms, Names & Recovered Utterance
+- **Recovered 12-second utterance (`9:56–10:08`):** Teams omitted 12 seconds of speech in both `.vtt` and `.docx` right before `10:11`; `whisper.cpp` captured: *"So, for example, we have the GDHP comments. Actually, to share the couple of ones that went into the reference architecture, I think it went to the reference architecture. Sorry, it went to the smart email mailbox."*
+- **Agreed terms:** `CRDM` (`0:12`), `change sets` (`2:21`, `2:26`), `CS-001` / `CS-164` (`2:28`, `3:34`), `Saroop` (`3:45`), `Copilot` (`4:18`), `reviewed by the editorial team in terms of WHO` (`7:53`), `WHO` / `WHO IRIS` (`15:43`, `16:28`).
+- **Corrections by `whisper.cpp`:** `"filters"` (`14:14`, where Teams wrote `"philtres"`), plus final 5.3 seconds (`17:03–17:09`).
+- **Names needing glossary/prompting:** `Carl Leitner` (both `"Carl Lightner"` at `0:05`), `Chinni Eyetan` (`"Chinni Eyetan"` / `"Tini"` / `"Jiun"` in Teams vs `"Ginny Aie turn"` / `"Ginny"` in `whisper.cpp`), `DPI-F` (`"DPIF"` vs `"DPI F"` at `2:45`), `Swarupu` / `Saroop` (`14:49`).
