@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-10T16:13:16Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-24T08:34:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -27,3 +27,5 @@ Visible on the site once the fork's platform pin passes ea1ecd6 (48a6 / folio-as
 _2026-10-20_ — (lane S, session_016heucWhrncLm4uy52csBcz, relayed by the drain coordinator session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) The work is BUILT (fhir-harness#33, smart-base#36, smart-immunizations#18); what remains is the platform pin passing fhir-harness ea1ecd6 and regenerating `fhir-artifact-index/README.md`. Close once a re-pin shows the annex on the site; not closed here because the smart-immunizations half was on a seed branch and could not be confirmed from this checkout's mounts.
 
 _2026-10-24_ — CLAIMED by the library viewers thread (session https://claude.ai/code/session_01LM4btvYuBEuq57QqgwCrtu). The seed-branch annex never reached smart-immunizations main, and `fhir-artifact-index/` no longer fits an IG repo (fhir-harness AGENTS.md, #124). The owner was asked to choose A (exception), B (own declared `annexes/` dir, generic fhir-harness hook) or C (built at publish). Draft PRs for B are in progress.
+
+_2026-10-24 08:32Z_ — OWNER CHOSE: annexes go in their own declared directory (B, 08:27Z), and that is generalised to L1 and L2 by widening smart-base `dak-annex` into one `web-annex` kind (A, 08:32Z). Each annex names its document-kind section (e.g. `dak#core-data-elements`, `l1#annexes`). The generic page hook is fhir-harness#152 (issue #151). smart-base and smart-immunizations PRs follow.
