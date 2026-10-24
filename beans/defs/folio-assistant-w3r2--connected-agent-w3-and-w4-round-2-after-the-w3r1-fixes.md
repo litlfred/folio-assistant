@@ -2,11 +2,11 @@
 # folio-assistant-w3r2
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: W3 and W4 round 2, after the w3r2 fixes, on smart-immunizations'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-24T10:45:00Z
-updated_at: 2026-10-24T12:49:00+02:00
+updated_at: 2026-10-24T13:12:35+02:00
 parent: folio-assistant-a9tx
 ---
 
@@ -129,11 +129,85 @@ cd ~/space_cats/fhir-ig-publisher && git switch -c ast-results/$(date +%F)-w3r2 
    `w3r2 done, results on branch ast-results/<date>-w3r2`
 
 ## Done when
-- [ ] base rebuilt clean
-- [ ] CQL probe run (plan, incremental, W8) and the provenance output recorded
-- [ ] results pushed to an `ast-results/<date>-w3r2` branch
-- [ ] issue #222 comment posted
+- [x] base rebuilt clean
+- [x] CQL probe run (plan, incremental, W8) and the provenance output recorded
+- [x] results pushed to an `ast-results/<date>-w3r2` branch
+- [x] issue #222 comment posted
 
+## Results 2026-10-24
+
+- **Fork HEAD (`claude/ast-export`):** `ce950d28` (72 tests, 0 failures)
+- **Base rebuild (`AstExportCli -ig .`):** `base exit 0`
+- **`grep -c "WARNING: .*differ from the committed revision" $W/base-w3.log`:** `0`
+- **CQL probe (`bash scripts/w7-round.sh $W cql`):**
+  - `incremental exit 0`
+  - `Converged after 1 round(s): 748 resources in /Users/litlfred/space_cats/ast-real-igs/w7/ast`
+  - `w8 cql exit 0`
+- **Results branch on `litlfred/fhir-ig-publisher`:** `ast-results/2026-10-24-w3r2` (`d646b977`)
+- **Issue #222 comment:** https://github.com/litlfred/folio-assistant/issues/222#issuecomment-6383508471
+
+```text
+== base smart-immunizations/output-ast/manifest.json 
+  packages: 17
+     fhir.cqf.common 4.0.1 deps 2
+     hl7.fhir.r4.core 4.0.1 deps 0
+     hl7.fhir.us.cqfmeasures 5.0.0 deps 5
+  server: {'address': 'https://tx.fhir.org/r4', 'version': '0.17.0'}
+  expansions: 192
+  with used-codesystem: 2
+  with codeSystems: 190
+     {"valueSet": "http://smart.who.int/immunizations/ValueSet/IMMZ.C.DE5|0.2.0", "builtFrom": {}, "codeSystems": ["http://smart.who.int/immunizations/CodeSystem/IMMZ.C"]}
+     {"valueSet": "http://smart.who.int/immunizations/ValueSet/IMMZ.D.DE107|0.2.0", "builtFrom": {}, "codeSystems": ["http://smart.who.int/immunizations/CodeSystem/IMMZ.D"]}
+== incremental w7/ast/manifest.json 
+  packages: 17
+     fhir.cqf.common 4.0.1 deps 2
+     hl7.fhir.r4.core 4.0.1 deps 0
+     hl7.fhir.us.cqfmeasures 5.0.0 deps 5
+  server: {'address': 'https://tx.fhir.org/r4', 'version': '0.17.0'}
+  expansions: 192
+  with used-codesystem: 2
+  with codeSystems: 190
+     {"valueSet": "http://smart.who.int/immunizations/ValueSet/IMMZ.C.DE5|0.2.0", "builtFrom": {}, "codeSystems": ["http://smart.who.int/immunizations/CodeSystem/IMMZ.C"]}
+     {"valueSet": "http://smart.who.int/immunizations/ValueSet/IMMZ.D.DE107|0.2.0", "builtFrom": {}, "codeSystems": ["http://smart.who.int/immunizations/CodeSystem/IMMZ.D"]}
+== full w8-cql/ast/manifest.json 
+  packages: 17
+     fhir.cqf.common 4.0.1 deps 2
+     hl7.fhir.r4.core 4.0.1 deps 0
+     hl7.fhir.us.cqfmeasures 5.0.0 deps 5
+  server: {'address': 'https://tx.fhir.org/r4', 'version': '0.17.0'}
+  expansions: 192
+  with used-codesystem: 2
+  with codeSystems: 190
+     {"valueSet": "http://smart.who.int/immunizations/ValueSet/IMMZ.C.DE5|0.2.0", "builtFrom": {}, "codeSystems": ["http://smart.who.int/immunizations/CodeSystem/IMMZ.C"]}
+     {"valueSet": "http://smart.who.int/immunizations/ValueSet/IMMZ.D.DE107|0.2.0", "builtFrom": {}, "codeSystems": ["http://smart.who.int/immunizations/CodeSystem/IMMZ.D"]}
+incremental == full for packages : True
+incremental == full for terminology : True
+expansions only in incremental: 0 only in full: 0 different: 0
+== pages.json base  
+  fragments: 12931  pages: 5691  with a source: 5029  unresolvedIncludes: 106
+  pages with no fragments: 661
+    Library-IMMZAgeConcepts.html {"source": "fsh-generated/resources/Library-IMMZAgeConcepts.json", "resources": ["http://smart.who.int/immunizations/Library/IMMZAgeConcepts|0.2.0"], "fragments": ["Library-IMMZAgeConcepts-history.xhtml", "Library-IMMZAgeConcepts-html.xhtml", "menu.xml"]}
+    index.html {"source": "input/pagecontent/index.md", "resources": [], "fragments": ["menu.xml"]}
+    ActivityDefinition-IMMZD2DTCR-contained-index.xhtml {"source": "fsh-generated/resources/ActivityDefinition-IMMZD2DTCR.json", "resources": ["http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR|0.2.0"]}
+    ActivityDefinition-IMMZD2DTCR-history.xhtml {"source": "fsh-generated/resources/ActivityDefinition-IMMZD2DTCR.json", "resources": ["http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR|0.2.0"]}
+== pages.json incremental  
+  fragments: 12931  pages: 5691  with a source: 5029  unresolvedIncludes: 106
+  pages with no fragments: 661
+    Library-IMMZAgeConcepts.html {"source": "fsh-generated/resources/Library-IMMZAgeConcepts.json", "resources": ["http://smart.who.int/immunizations/Library/IMMZAgeConcepts|0.2.0"], "fragments": ["Library-IMMZAgeConcepts-history.xhtml", "Library-IMMZAgeConcepts-html.xhtml", "menu.xml"]}
+    index.html {"source": "input/pagecontent/index.md", "resources": [], "fragments": ["menu.xml"]}
+    ActivityDefinition-IMMZD2DTCR-contained-index.xhtml {"source": "fsh-generated/resources/ActivityDefinition-IMMZD2DTCR.json", "resources": ["http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR|0.2.0"]}
+    ActivityDefinition-IMMZD2DTCR-history.xhtml {"source": "fsh-generated/resources/ActivityDefinition-IMMZD2DTCR.json", "resources": ["http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR|0.2.0"]}
+== pages.json full  
+  fragments: 12931  pages: 5691  with a source: 5029  unresolvedIncludes: 106
+  pages with no fragments: 661
+    Library-IMMZAgeConcepts.html {"source": "fsh-generated/resources/Library-IMMZAgeConcepts.json", "resources": ["http://smart.who.int/immunizations/Library/IMMZAgeConcepts|0.2.0"], "fragments": ["Library-IMMZAgeConcepts-history.xhtml", "Library-IMMZAgeConcepts-html.xhtml", "menu.xml"]}
+    index.html {"source": "input/pagecontent/index.md", "resources": [], "fragments": ["menu.xml"]}
+    ActivityDefinition-IMMZD2DTCR-contained-index.xhtml {"source": "fsh-generated/resources/ActivityDefinition-IMMZD2DTCR.json", "resources": ["http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR|0.2.0"]}
+    ActivityDefinition-IMMZD2DTCR-history.xhtml {"source": "fsh-generated/resources/ActivityDefinition-IMMZD2DTCR.json", "resources": ["http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR|0.2.0"]}
+pages.json fragments only in incremental: 0 only in full: 0 different: 0
+pages.json pages only in incremental: 0 only in full: 0 different: 0
+```
 
 ## Log
 - 2026-10-24T12:49:00+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Running Steps 1–4 in background subagent.
+- 2026-10-24T13:12:35+02:00 — Completed (`status: completed`): W3 (`packages` and `terminology`) and W4 (`pages.json`) match 100% between incremental and full builds (`0` differences across 17 packages, 192 expansions, 12,931 fragments, and 5,691 pages). Pushed `ast-results/2026-10-24-w3r2` (`d646b977`) on `litlfred/fhir-ig-publisher` and commented on `litlfred/folio-assistant#222` (`#issuecomment-6383508471`).
