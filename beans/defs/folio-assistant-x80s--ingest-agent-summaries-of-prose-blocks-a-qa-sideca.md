@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-26T14:03:00Z
+updated_at: 2026-10-26T14:37:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -122,3 +122,5 @@ _2026-10-26T10:43Z_ — batch 18 opened as litlfred/cat-harness#617: 43 English 
 _2026-10-26T10:57Z_ — cat-harness#617 merged (a0802db6, batch 18, 43 blocks); the drafts wait for a person. Not claimed; later batches are open to anyone.
 
 _2026-10-26T14:03:00Z_ — batch 19 opened as `litlfred/cat-harness#621` (`2962f3a5`): 25 English draft summaries across `arxiv-2607.14456v1` (all 24 prose blocks) and `strauch-carbno-2025-spdx-3-1-supply-chain` (all 1 prose block); `drafted_by.model` is `not-disclosed` with session `conversation://4b870190-b691-495d-b192-749a1f7716b4`. Backlog in `cat-harness/library/` 1152 → 1127 of 1591 prose blocks (464 drafts await human confirmation).
+
+_2026-10-26T14:37:00Z_ — batch 20 opened as `litlfred/cat-harness#624` (`00f84c34`): 26 English draft summaries across `w3c-2013-prov-o` (all 26 non-empty prose blocks); `drafted_by.model` is `not-disclosed` with session `conversation://9d378f5b-95ff-4698-940b-031bda9dd228`. Backlog in `cat-harness/library/` 1127 → 1101 of 1591 prose blocks (when combined with `#621`; 1152 → 1126 against `main` alone; 490 drafts await human confirmation).
