@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-24T10:30:15Z
+updated_at: 2026-10-26T10:23:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -222,3 +222,5 @@ Executed the commands above on the connected machine and opened [`litlfred/smart
 - **Agreed terms:** `CRDM` (`0:12`), `change sets` (`2:21`, `2:26`), `CS-001` / `CS-164` (`2:28`, `3:34`), `Saroop` (`3:45`), `Copilot` (`4:18`), `reviewed by the editorial team in terms of WHO` (`7:53`), `WHO` / `WHO IRIS` (`15:43`, `16:28`).
 - **Corrections by `whisper.cpp`:** `"filters"` (`14:14`, where Teams wrote `"philtres"`), plus final 5.3 seconds (`17:03–17:09`).
 - **Names needing glossary/prompting:** `Carl Leitner` (both `"Carl Lightner"` at `0:05`), `Chinni Eyetan` (`"Chinni Eyetan"` / `"Tini"` / `"Jiun"` in Teams vs `"Ginny Aie turn"` / `"Ginny"` in `whisper.cpp`), `DPI-F` (`"DPIF"` vs `"DPI F"` at `2:45`), `Swarupu` / `Saroop` (`14:49`).
+
+_2026-10-26T10:23:00Z_ — [`litlfred/smart-ra#91`](https://github.com/litlfred/smart-ra/pull/91) (`052cb21f`, `uploads/output.whisper-base.json` + `uploads/README.md`) merged on `smart-ra` `main`.

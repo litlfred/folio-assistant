@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-14T17:45:00Z
-updated_at: 2026-10-24T14:50:30+02:00
+updated_at: 2026-10-26T10:23:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -123,3 +123,5 @@ _2026-10-20T09:40:00Z_: Audited the open boxes against the index pins of folio-a
 _2026-10-23T20:44:00Z_: Completed `genReferenceJsonLd` (`references/<key>.jsonld`), `libraryItemToReference` (`manifest.jsonld` + `structure.json` `authors_raw`), per-asset route (`…/bibliography/<sub-graph>/<asset>/`) and Dublin Core XML export (`references.dc.xml`) in `litlfred/folio-assistant-core#189` (`051f788`), plus de-hardcoding `"Quantum Observable Universe"` in `export-bibtex.ts` (`folioBibtexTitle`) and `cites-resolve` / `validate-references` reading Reference nodes alongside the registry in `litlfred/cat-harness-tools#641` (`1129e80`). Only `qou#7798` (HELD by owner) and `Later: add a reference from the viewer` remain.
 
 _2026-10-24T14:50:30+02:00_: Completed the standalone reference form/editor in the bibliography viewer (`buildStandaloneReference`, `parseBibtexOrCsl`, `jsonLdToReferenceNode`, `newReferenceUrl` in `folio-assistant-core/schemas/reference.ts` and `addReferenceHtml` / `#fa-bib-add-form` in `folio-assistant-core/scripts/bibliography-page.ts`, 41/41 tests passing) in [`litlfred/folio-assistant-core#189`](https://github.com/litlfred/folio-assistant-core/pull/189) (`5c95e11`) and [`litlfred/cat-harness-tools#641`](https://github.com/litlfred/cat-harness-tools/pull/641) (`3abda72`). All 9 `## Todo` boxes are now ticked (only HELD `qou#7798` / `qou-l7pj` in `## Progress` remains).
+
+_2026-10-26T10:23:00Z_: Both [`litlfred/folio-assistant-core#189`](https://github.com/litlfred/folio-assistant-core/pull/189) and [`litlfred/cat-harness-tools#641`](https://github.com/litlfred/cat-harness-tools/pull/641) merged on `main`. All 9 `## Todo` items are merged on `main`; only the held `qou#7798` (`qou-l7pj`) box in `## Progress` remains.

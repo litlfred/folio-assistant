@@ -2,11 +2,11 @@
 # folio-assistant-vm6m
 $schema: bean/1.0.0
 title: 'TEST DATA: fixed and generated data sets as a skill family, specialised per content type'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-24T09:55:00Z
+updated_at: 2026-10-26T10:23:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -58,3 +58,5 @@ gives the same bytes, so the hashing story constrains the generator's design.
 _2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`).
 
 _2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `FixedTestDataSetSchema` (`test-data-fixed/1.0.0`, `testDataFixed` typology) and `GeneratedTestDataSetSchema` (`test-data-generated/1.0.0`, `testDataGenerated` typology) in `cat-harness/schemas/test-data.schema.ts`, BPMN process `cat-harness/processes/curate-test-data.bpmn` with `callActivity` `specialize-for-content-type`, and the `test-data-curation` skill family (`test-data-curation.md` + `fhir-data-templating.md`).
+
+_2026-10-26T10:23:00Z_ — Completed: [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) merged on `cat-harness` `main`.

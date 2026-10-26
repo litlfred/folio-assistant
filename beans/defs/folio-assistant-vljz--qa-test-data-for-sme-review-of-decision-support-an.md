@@ -2,11 +2,11 @@
 # folio-assistant-vljz
 $schema: bean/1.0.0
 title: 'QA: test data for SME review of decision support and indicator definitions'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-24T09:55:00Z
+updated_at: 2026-10-26T10:23:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -59,3 +59,5 @@ state both halves; the contrast is the point.
 **fixed** set, and their value comes from being unchanged after review.
 
 _2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `SmeReviewCaseVerdictSchema` (`sme-review-case-verdict/1.0.0`, `smeReviewCases` typology) with discriminated union on `subject` (`decision-support` case vs `indicator-definition` cohort + expected value) and required `reviewer` + `reviewedAt`, BPMN process `cat-harness/processes/sme-test-data-review.bpmn` with `lane_sme` (`actor:sme-reviewer`), role `cat-harness/roles/sme-reviewer.json` (`judgementOnly: true`), and skill `cat-harness/skills/qa/qa-core/sme-test-data-review.md`.
+
+_2026-10-26T10:23:00Z_ — Completed: [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) merged on `cat-harness` `main`.
