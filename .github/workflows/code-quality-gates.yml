@@ -3947,8 +3947,8 @@ jobs:
 
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. smart-base's DAK annex records resolve and validate.
-      - name: DAK annexes resolve
-        run: bun run cat check:dak-annexes
+      - name: web annexes resolve
+        run: bun run cat check:web-annexes
 
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. folio-assistant-sci's extracted reference lists
