@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-24T08:26:00Z
+updated_at: 2026-10-26T14:22:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -46,3 +46,5 @@ _2026-10-24_ — CLAIMED by the library viewers thread (session https://claude.a
 _2026-10-24 08:25Z_ — OWNER CHOSE D ("Shared core"), after asking to merge A and B. One core schema (name, version, SPDX licence, digest, source) is shared by `tool-release` (rules unchanged: sha256 and entry still required) and a new `library` kind (core plus range, dev, used-by and type shim). Library nodes are generated from each layer's bun.lock by `libraries:derive` and gated by `libraries:check`; a library digest may be sha512. Proposal: /mnt/project-files/library-nodes/jbvi-proposal.md. Building in the library viewers thread.
 
 _2026-10-24 12:35Z_ — BUILT AND MERGED. cat-harness#523 (3941401): shared core `schemas/outside-software.ts`, `tool-release` extends it unchanged, new kind `software-library` (tag `software-library/1.0.0`). cat-harness-tools#714 (51b9583): `libraries:derive` and `libraries:check`, 44 nodes under `cat-harness-tools/libraries/`. Remaining as follow-ups: re-pin folio-assistant and name `libraries:check` in `code-quality-gates.yml` (then drop the tools `OWN_SCRIPT_EXEMPTIONS` entry); generate `libraries/` in cat-harness, bootstrap-tools, fhir-harness, folio-assistant-sci, folio-assistant-core and who-iris (the last two need a bun.lock first).
+
+_2026-10-26T14:22:00Z_ — Progress update: `litlfred/cat-harness#609` (`6c5ff04`, `software-library/1.1.0` vendored bundle schema), `litlfred/cat-harness-tools#773` (`e3bb65e`, `libraries:derive` / `libraries:check` vendored bundle support), and `litlfred/folio-assistant-sci#93` (`8d6daa5`, `folio-assistant-sci/libraries/` 17 nodes) merged on `main`.

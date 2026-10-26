@@ -2,10 +2,10 @@
 # folio-assistant-0lde
 $schema: bean/1.0.0
 title: 'L1 EVIDENCE: ingest the external evidence an L1 guideline computes from (PICO question sets, Cochrane/WHO systematic reviews, GRADE profiles)'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-04T10:13:24Z
-updated_at: 2026-10-26T13:09:00Z
+updated_at: 2026-10-26T14:22:00Z
 parent: folio-assistant-qvxh
 ---
 
@@ -60,7 +60,7 @@ The three d08l PDFs are ingested into smart-base/library as `9789241549912-eng`,
 - [x] evidence sources chosen and named
 - [x] a declared graph holds them (library)
 - [x] the four sections name it in computedFrom; check:document-kind-sources passes
-- [ ] #164 merged
+- [x] #161 merged (`5e63aab5`, 2026-10-26T11:18:30Z)
 
 ## 2026-10-26T13:09:00Z — Parallel connected-agent ingestion (`litlfred/smart-base#165`)
 
@@ -80,4 +80,8 @@ The three d08l PDFs are ingested into smart-base/library as `9789241549912-eng`,
   - `bun run cat-harness-tools/scripts/library-keywords.ts --check` — `95 keywords.json file(s) current`
   - `bun run cat-harness-tools/scripts/library-readmes.ts --check` — `100 library item README(s); 0 stale.`
   - `bun test smart-base/scripts/gen-document-kinds.test.ts cat-harness-tools/scripts/tests/check-document-kind-sources.test.ts` — `23 pass, 0 fail`
-- **Status:** `in-progress` until `#164` or `#165` merges to `main`.
+- **Status:** **Completed** — [`litlfred/smart-base#161`](https://github.com/litlfred/smart-base/pull/161) (`5e63aab5`, `2026-10-26T11:18:30Z`) merged on `smart-base` `main`, ingesting the three WHO ANC 2016 entries into `smart-base/library/` and wiring `computedFrom: ["library"]` across all four L1 evidence sections in `smart-base/document-kinds/l1-guideline.json`.
+
+## Summary of Changes
+
+Completed via [`litlfred/smart-base#161`](https://github.com/litlfred/smart-base/pull/161) (`5e63aab5`, merged `2026-10-26T11:18:30Z`): ingested the WHO 2016 antenatal care guideline (`9789241549912-eng`, `9789241549912-webannexes-eng`, `9789241549912-websupplement-eng`) into `smart-base/library/` and wired `computedFrom: ["library"]` with exact section citations for `key-questions`, `evidence-retrieval-and-synthesis`, `certainty-of-evidence`, and `evidence-to-decision` in `smart-base/document-kinds/l1-guideline.json`.
