@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-23T18:30:00Z
-updated_at: 2026-10-23T18:42:00Z
+updated_at: 2026-10-26T10:32:00Z
 parent: folio-assistant-n3h9
 ---
 
@@ -34,4 +34,4 @@ Owner chose "A. Port to fhir-harness", 2026-10-23.
 
 - [x] `ig-api-gen.ts`: TypeScript port of the four generators, read from the AST (fhir-harness#141). Parity over smart-trust, smart-base and smart-immunizations: all 1,132 JSON files have the same content as the Python output.
 - [x] smart-base `ig-site:sidecars` runs it; `dak-ast-sidecars.ts` retired (smart-base#139)
-- [ ] merge order: fhir-harness#127 → #138 → #140 → #141, re-pin, then smart-base#139
+- [x] merge order: fhir-harness#127 (`8fed2e873b`) → #138 (`c9da7dc805`) → #140 (`bd698b2b7b`) → #141 (`7f75360f07`), re-pin, then smart-base#139 (`e31d4b2307`, merged 2026-10-23T23:57:08Z)
