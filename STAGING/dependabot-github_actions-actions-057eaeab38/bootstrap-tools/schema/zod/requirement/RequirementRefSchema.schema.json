@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementRef",
+  "definitions": {
+    "RequirementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*(\\/[A-Za-z0-9][A-Za-z0-9_.-]*)?)?$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-057eaeab38/bootstrap-tools/schema/zod/requirement/RequirementRefSchema.schema.json",
+  "title": "RequirementRefSchema",
+  "description": "Generated from `RequirementRefSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-057eaeab38",
+    "sha": "87edd3a7908b5cf4aebf659a0bf4c749dcfdfa0c",
+    "pr": "2687/merge",
+    "run": "40333062331"
+  }
+}

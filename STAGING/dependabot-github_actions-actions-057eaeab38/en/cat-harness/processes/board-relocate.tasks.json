@@ -1,0 +1,216 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_BoardRelocate",
+ "tasks": {
+  "A_AskConfirm": {
+   "id": "A_AskConfirm",
+   "name": "Name what will move, and where it lands",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "deletion-requires-confirmation"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_Cancel": {
+   "id": "A_Cancel",
+   "name": "Leave the content exactly where it is",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_MoveContent": {
+   "id": "A_MoveContent",
+   "name": "Relocate the content to the trashcan",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-diagram-interchange"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_UpdateLayer": {
+   "id": "A_UpdateLayer",
+   "name": "Drop its positions and sweep orphans",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-diagram-interchange"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_ReportMove": {
+   "id": "A_ReportMove",
+   "name": "Say what moved and where it went",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "deletion-requires-confirmation"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  }
+ }
+}

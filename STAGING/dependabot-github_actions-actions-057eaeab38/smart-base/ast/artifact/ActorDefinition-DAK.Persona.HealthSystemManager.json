@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.HealthSystemManager.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.HealthSystemManager",
+  "schema:name": "HealthSystemManager",
+  "dcterms:title": "Health System Manager",
+  "dcterms:description": "A professional involved in the administration and oversight of health systems.\n\nHealth system managers use DHIs to:\n- Manage health workforce information, performance, and certification (3.1)\n- Oversee supply chain, inventory, cold chain, and procurement (3.2)\n- Receive notifications of public health events (3.3)\n- Register and certify vital events — births and deaths (3.4)\n- Administer health coverage schemes, billing, payroll, and budgets (3.5)\n- Monitor and track health equipment and assets (3.6)\n- Manage health facility information and conduct assessments (3.7)\n- Manage person-centred health certificate information (3.8)\n\n**ISCO-08**: 1342 (Health services managers), 2446 (Social work professionals\nn.e.c.), 3354 (Government social benefits officials), 4311 (Accounting and\nbookkeeping clerks).\n\n**Examples**: District health officer, programme manager, supply chain officer,\nHMIS coordinator, hospital administrator, vital registration officer,\nhealth insurance administrator.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.HealthSystemManager"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/DAK.Persona.HealthSystemManager--282b1dbd.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

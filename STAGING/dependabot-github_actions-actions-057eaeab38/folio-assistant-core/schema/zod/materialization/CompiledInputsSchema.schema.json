@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/CompiledInputs",
+  "definitions": {
+    "CompiledInputs": {
+      "type": "object",
+      "properties": {
+        "toolchain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "toolchain",
+        "sourceRevision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-057eaeab38/folio-assistant-core/schema/zod/materialization/CompiledInputsSchema.schema.json",
+  "title": "CompiledInputsSchema",
+  "description": "Generated from `CompiledInputsSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-057eaeab38",
+    "sha": "87edd3a7908b5cf4aebf659a0bf4c749dcfdfa0c",
+    "pr": "2687/merge",
+    "run": "40333062331"
+  }
+}

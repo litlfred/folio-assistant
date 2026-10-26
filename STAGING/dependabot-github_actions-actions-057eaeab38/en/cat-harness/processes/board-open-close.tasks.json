@@ -1,0 +1,300 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_BoardOpenClose",
+ "tasks": {
+  "A_RenderAvatars": {
+   "id": "A_RenderAvatars",
+   "name": "Render every card as its avatar",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_Open": {
+   "id": "A_Open",
+   "name": "Project a window onto the board",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_Raise": {
+   "id": "A_Raise",
+   "name": "Raise the window the reader selected",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_Close": {
+   "id": "A_Close",
+   "name": "Close the window back to its avatar",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_OfferWayBack": {
+   "id": "A_OfferWayBack",
+   "name": "Leave a reachable way back",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_ResolveThreshold": {
+   "id": "A_ResolveThreshold",
+   "name": "Resolve the kind's zoom threshold",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  },
+  "A_SwapToAvatar": {
+   "id": "A_SwapToAvatar",
+   "name": "Swap cards below the threshold; leave open windows alone",
+   "type": "bpmn:Task",
+   "lane": "Board renderer",
+   "skills": [
+    {
+     "name": "board-windows"
+    }
+   ],
+   "role": {
+    "name": "board-renderer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "title": "Board renderer",
+    "skills": [
+     {
+      "name": "board-diagram-interchange"
+     },
+     {
+      "name": "board-windows"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "harness-tiles"
+     },
+     {
+      "name": "incremental-render"
+     },
+     {
+      "name": "liquid-templates"
+     },
+     {
+      "name": "pdf-inline-viewer"
+     },
+     {
+      "name": "visualizer-loading"
+     }
+    ]
+   }
+  }
+ }
+}

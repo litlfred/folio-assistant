@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/Reviewer",
+  "definitions": {
+    "Reviewer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "acknowledge": {
+          "type": "boolean"
+        },
+        "github": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-057eaeab38/folio-assistant-core/schema/zod/public-comment/ReviewerSchema.schema.json",
+  "title": "ReviewerSchema",
+  "description": "Generated from `ReviewerSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-057eaeab38",
+    "sha": "87edd3a7908b5cf4aebf659a0bf4c749dcfdfa0c",
+    "pr": "2687/merge",
+    "run": "40333062331"
+  }
+}
