@@ -2,11 +2,11 @@
 # folio-assistant-whlc
 $schema: bean/1.0.0
 title: 'KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payload split, late client-side materialization'
-status: completed
+status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-16T10:10:00Z
+updated_at: 2026-10-26T15:45:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -31,3 +31,5 @@ _2026-10-16T07:57:30Z_ — All 20 child beans (`c1m4`, `1br0`, `lrzn`, `mm2n`, `
 - [ ] every child below is completed or scrapped with reasons
 
 _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+**Re-opened 2026-10-26.** Its child `0exf` (shrink the whole-repo KG slice back toward 5 MB) is still open, so this container is live work again (check:bean-rollup).
