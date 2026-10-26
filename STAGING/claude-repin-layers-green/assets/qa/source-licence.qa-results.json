@@ -167,7 +167,7 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 27,
+      "count": 29,
       "entries": [
         {
           "entry": "cat-harness/library/arxiv-2505.10399v1",
@@ -270,6 +270,16 @@
           "basis": "The PDF's imprint page (p. 3): '© World Health Organization 2025. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
         },
         {
+          "entry": "smart-base/library/9789241549912-eng",
+          "id": "LicenseRef-WHO-All-Rights-Reserved",
+          "basis": "The PDF's imprint page (PDF p. 4): '© World Health Organization 2016 All rights reserved. Publications of the World Health Organization are available on the WHO website (http://www.who.int) or can be purchased from WHO Press, World Health Organization, 20 Avenue Appia, 1211 Geneva 27, Switzerland (tel.: +41 22 791 3264; fax: +41 22 791 4857; email: bookorders@who.int). Requests for permission to reproduce or translate WHO publications – whether for sale or for non-commercial distribution – should be addressed to WHO Press', read 2026-10-26"
+        },
+        {
+          "entry": "smart-base/library/9789241549912-webannexes-eng",
+          "id": "LicenseRef-WHO-All-Rights-Reserved",
+          "basis": "The PDF's imprint page (PDF p. 2): '© World Health Organization 2016 All rights reserved. Publications of the World Health Organization are available on the WHO website (http://www.who.int) or can be purchased from WHO Press, World Health Organization, 20 Avenue Appia, 1211 Geneva 27, Switzerland (tel.: +41 22 791 3264; fax: +41 22 791 4857; email: bookorders@who.int). Requests for permission to reproduce or translate WHO publications – whether for sale or for non-commercial distribution – should be addressed to WHO Press', read 2026-10-26"
+        },
+        {
           "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
           "id": "CC-BY-3.0-IGO",
           "basis": "The article's own footer, p. e215: \"Copyright © 2021 World Health Organization; licensee Elsevier. This is an Open Access article published under the CC BY 3.0 IGO license.\""
@@ -308,7 +318,7 @@
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
-      "count": 25,
+      "count": 26,
       "entries": [
         {
           "entry": "cat-harness/library/arxiv-2203.02010v1",
@@ -406,6 +416,11 @@
           "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
         },
         {
+          "entry": "smart-base/library/9789241549912-websupplement-eng",
+          "searched": 2,
+          "note": "The d08l provenance sidecar in litlfred/folio-assistant fsh-guts/uploads/ (commit cf2b8bd) records the licence as 'CC BY-NC-SA 3.0 IGO (WHO IRIS open-access policy)'. The PDF itself does not state that licence; its imprint states 'All rights reserved'. iris.who.int is refused by the cloud container's proxy, so the IRIS record's rights field was not re-read here. Recorded as the PDF states it; the owner decides which governs."
+        },
+        {
           "entry": "smart-base/library/smart-trust",
           "searched": 3,
           "note": "Not determined from this repository's records of the IG, and not guessed. Nothing of the IG is copied into this entry, so no licence condition is exercised by it; the IG's own licence is to be read off the published IG (http://smart.who.int/trust) when it is recorded."
@@ -438,5 +453,5 @@
       ]
     }
   },
-  "total": 97
+  "total": 100
 }

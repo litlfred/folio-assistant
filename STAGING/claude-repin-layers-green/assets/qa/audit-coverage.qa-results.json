@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/audit-coverage.ts",
-    "script_hash": "f5f17b1512b5"
+    "script_hash": "d4cdaa0758c7"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -718,13 +718,15 @@
         },
         {
           "kind": "ig-annex",
-          "state": "typed-only",
+          "state": "covered",
           "directories": [
             "smart-immunizations/annexes"
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run cat check:artifact-index"
+          ],
           "typed": true,
           "adversarial": "never",
           "hasFiles": true
@@ -1958,15 +1960,8 @@
     },
     "kinds-typed-only": {
       "summary": "A declared kind whose nodes a declared validator TYPES and no criterion or gate JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, and still a finding — `--strict` fails on it. Typing is not judging: a kind can parse perfectly against its schema while nothing has an opinion about what it says.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "ig-annex",
-          "directories": [
-            "smart-immunizations/annexes"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-unaudited": {
       "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 270 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
@@ -1979,5 +1974,5 @@
       "entries": []
     }
   },
-  "total": 108
+  "total": 107
 }

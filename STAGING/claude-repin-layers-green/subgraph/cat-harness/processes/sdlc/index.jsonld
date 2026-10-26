@@ -3812,6 +3812,24 @@
       "name": "yes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent"
@@ -3820,6 +3838,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
       "@type": "cat-harness:Lane",
       "name": "Tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_ContentTypeSpecialisation",
@@ -3832,9 +3860,19 @@
       "name": "SME review of cases or cohorts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_Curated",
       "@type": "bootstrap:ProcessNode",
       "name": "Test data set curated and bound into plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_JoinFixed",

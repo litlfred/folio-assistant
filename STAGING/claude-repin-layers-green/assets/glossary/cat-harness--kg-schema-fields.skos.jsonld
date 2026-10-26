@@ -12687,6 +12687,272 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.deploymentreport.undetermined",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeploymentReport.undetermined"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tasks whose only possible runners wait on a fact no placement declares. Kept apart from `unrunnable`: could not determine is neither yes nor no."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport.undetermined",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.deploymentreport.unrunnable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeploymentReport.unrunnable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The report's own headline: tasks no placement can run. Reported, never a failure."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport.unrunnable",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.placementverdict.judgement",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementVerdict.judgement"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Needed skills no Tool satisfies: the actor exercises them, so they hold nothing up."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.judgement",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.placementverdict.placement",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementVerdict.placement"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Index into the description's `placements`, since one actor may be placed twice."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.placement",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.placementverdict.runnable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementVerdict.runnable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every needed skill that has Tools has one that works here."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.runnable",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.placementverdict.skills",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementVerdict.skills"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One entry per needed skill that has Tools, with each Tool satisfying it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.skills",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.placementverdict.undetermined",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementVerdict.undetermined"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Not runnable, but every failing skill has a Tool whose fit could not be determined. So it is not known to be blocked either."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.undetermined",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.resolvertask.kinds",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ResolverTask.kinds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Kinds that may fulfil it (`fulfilmentKindsForBpmnType`). Absent is unconstrained."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ResolverTask.kinds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.resolvertask.role",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ResolverTask.role"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The lane's role id. Absent means the lane names no role."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ResolverTask.role",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.resolvertask.skills",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ResolverTask.skills"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Skills the task needs. Empty or absent: no Tool is needed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ResolverTask.skills",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.taskverdict.candidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskVerdict.candidates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Placements whose actor may take the lane's role and is of an allowed kind."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict.candidates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.taskverdict.undetermined",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskVerdict.undetermined"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "No candidate is known to run it, and at least one might: an OS or runtime nobody declared."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict.undetermined",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.taskverdict.unrunnable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskVerdict.unrunnable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "No candidate can run it: no one may take the role, or no Tool works for any who may."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict.unrunnable",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/deployment-resolver.toolverdict.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolVerdict.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why, when it is not `works`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict.reason",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/detangle-sidecar.detanglesidecar.cohesion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -17893,6 +18159,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.shownonpublishedpages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyNodeSchema.shownOnPublishedPages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its markdown is shown on a published page (an IG annex appended to its page), so its links address that page."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.shownOnPublishedPages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.skillbearing",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18270,6 +18555,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.shownonpublishedpages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyDef.shownOnPublishedPages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Is a graph of this kind's markdown SHOWN ON a published page, though the kind is not renderable itself?"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.shownOnPublishedPages",
       "skos:note": "candidate"
     },
     {

@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "63ee1d6799daab58bc33aa6a75cd6e49bcfb4823",
+    "sha": "0332401889dd102c5b0eda2d7d3c9002d939a2ee",
     "pr": "2681/merge",
-    "run": "40330487241"
+    "run": "40340052257"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "SME Review of Decision Support and Indicator Test Data",
-      "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions — bean `folio-assistant-vljz`, companion `folio-assistant-vm6m`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.",
-      "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions — bean `folio-assistant-vljz`, companion `folio-assistant-vm6m`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
+      "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions.",
+      "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions. It runs on its caller's bean (Process_TestDataCuration calls it), so it opens and closes none: every step that touches the plan notes on it.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/sme-test-data-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/sme-test-data-review.bpmn",

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "63ee1d6799daab58bc33aa6a75cd6e49bcfb4823",
+    "sha": "0332401889dd102c5b0eda2d7d3c9002d939a2ee",
     "pr": "2681/merge",
-    "run": "40330487241"
+    "run": "40340052257"
   },
   "@graph": [
     {
@@ -19,7 +19,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/clinical-sme",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview/lane/Lane_SME",
       "requires": [],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview#flow/Flow_4"

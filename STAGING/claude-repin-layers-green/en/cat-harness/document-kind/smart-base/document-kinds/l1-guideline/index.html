@@ -81,7 +81,7 @@
   --link-color: #00477d;
   --border-color: #eeeeee;
   }
-</style><link rel="stylesheet" href="../../../../../../assets/css/navbar.css"><script src="../../../../../../assets/navbar/rail-bpk4xbblqw.js" defer></script><script src="../../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../../../.." data-fa-to-root="../../../../../..">{"data":"rail-bpk4xbblqw","here":"/en/cat-harness/document-kind/smart-base/document-kinds/l1-guideline/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../../../../../assets/css/navbar.css"><script src="../../../../../../assets/navbar/rail-zv84ri1cac.js" defer></script><script src="../../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../../../.." data-fa-to-root="../../../../../..">{"data":"rail-zv84ri1cac","here":"/en/cat-harness/document-kind/smart-base/document-kinds/l1-guideline/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -285,7 +285,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     &quot;id&quot;: &quot;key-questions&quot;,
     &quot;title&quot;: &quot;Key questions (PICO) and outcomes&quot;,
     &quot;required&quot;: false,
-    &quot;description&quot;: &quot;The foreground questions in population-intervention-comparator-outcome form, the outcomes rated important or critical, and optionally an analytic framework. The PICO question sets themselves come from the guideline development group&#39;s scoping and the systematic reviews behind it, which smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.&quot;,
+    &quot;description&quot;: &quot;The foreground questions in population-intervention-comparator-outcome form, the outcomes rated important or critical, and optionally an analytic framework. The PICO question sets come from the guideline development group&#39;s scoping and the systematic reviews behind it, so this section is computed from `library` where that guideline&#39;s evidence base is ingested: for WHO&#39;s 2016 antenatal care guideline, Web annex 1 of `9789241549912-webannexes-eng` lists its priority questions in PICO form with their priority outcomes. A guideline whose evidence base is not in `library` cannot yet compute this section; WHO&#39;s 2016 antenatal care guideline (ISBN 9789241549912) is the first whose evidence base is held, as three entries ingested for bean folio-assistant-0lde.&quot;,
+    &quot;computedFrom&quot;: [
+      &quot;library&quot;
+    ],
     &quot;modelledBy&quot;: [
       &quot;sgkg-l1#population&quot;,
       &quot;sgkg-l1#intervention&quot;,
@@ -307,6 +310,21 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         &quot;ref&quot;: &quot;who-iris/library/9789241548960-eng&quot;,
         &quot;locator&quot;: &quot;§4.5 Table 4.1, PDF pp.53-55; sections/sec-075-44-when-should-the-planning-proposal-be-develope.md&quot;,
         &quot;note&quot;: &quot;10.2 Foreground (key/PICO) questions&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-webannexes-eng&quot;,
+        &quot;locator&quot;: &quot;Web annex 1, PDF p.4; sections/page-004.md&quot;,
+        &quot;note&quot;: &quot;Web annex 1: Priority questions and outcomes for the antenatal care (ANC) interventions identified for this guideline&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-webannexes-eng&quot;,
+        &quot;locator&quot;: &quot;Web annex 1, PDF p.4; sections/page-004.md&quot;,
+        &quot;note&quot;: &quot;P=Population; I=Intervention; C=Comparator; O=Outcomes&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-eng&quot;,
+        &quot;locator&quot;: &quot;§2.1 WHO Steering Group, PDF p.22; sections/sec-004-2-methods.md&quot;,
+        &quot;note&quot;: &quot;The Steering Group drafted the initial scope of the guideline and drafted the key recommendation questions in PICO format (population, intervention, comparator, outcome)&quot;
       }
     ]
   },
@@ -314,7 +332,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     &quot;id&quot;: &quot;evidence-retrieval-and-synthesis&quot;,
     &quot;title&quot;: &quot;Evidence retrieval and synthesis&quot;,
     &quot;required&quot;: false,
-    &quot;description&quot;: &quot;Search strategy, study selection and synthesis of the systematic reviews informing each key question; full reviews may sit in annexes. The systematic reviews it summarises (for WHO guidelines, typically Cochrane or WHO-commissioned reviews) are external evidence that smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.&quot;,
+    &quot;description&quot;: &quot;Search strategy, study selection and synthesis of the systematic reviews informing each key question; full reviews may sit in annexes. The systematic reviews it summarises (for WHO guidelines, typically Cochrane or WHO-commissioned reviews) are external evidence, so this section is computed from `library` where that guideline&#39;s evidence base is ingested: for WHO&#39;s 2016 antenatal care guideline, §2.9 of `9789241549912-eng` describes how its evidence was identified and retrieved, and the web supplement `9789241549912-websupplement-eng` holds its search strategies and evidence tables, each naming the review it is drawn from. A guideline whose evidence base is not in `library` cannot yet compute this section; WHO&#39;s 2016 antenatal care guideline (ISBN 9789241549912) is the first whose evidence base is held, as three entries ingested for bean folio-assistant-0lde.&quot;,
+    &quot;computedFrom&quot;: [
+      &quot;library&quot;
+    ],
     &quot;modelledBy&quot;: [
       &quot;sgkg-l1#evidence&quot;
     ],
@@ -328,6 +349,21 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         &quot;ref&quot;: &quot;who-iris/library/9789241548960-eng&quot;,
         &quot;locator&quot;: &quot;§8.3 Step 2 Identify information sources, PDF pp.111-113; sections/sec-140-step-2-identify-information-sources-and-search-f.md&quot;,
         &quot;note&quot;: &quot;The development and finalization of the strategies for searching for evidence that meets the established inclusion criteria is a fundamental step&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-eng&quot;,
+        &quot;locator&quot;: &quot;§2.9 Evidence identification and retrieval, PDF p.25; sections/sec-004-2-methods.md&quot;,
+        &quot;note&quot;: &quot;Evidence on effectiveness was mostly derived from Cochrane reviews of randomized controlled trials (RCTs).&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-websupplement-eng&quot;,
+        &quot;locator&quot;: &quot;Search strategies for the evidence base, PDF pp.121-128; sections/sec-114-search-strategies-for-the-evidence-base.md&quot;,
+        &quot;note&quot;: &quot;Search strategies for the evidence base&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-websupplement-eng&quot;,
+        &quot;locator&quot;: &quot;EB Table A.1.1, PDF p.9; sections/sec-002-eb-table-a11-all-diet-andor-physical-activityexe.md&quot;,
+        &quot;note&quot;: &quot;Source: Muktabhant B, Lawrie TA, Lumbiganon P, Laopaiboon M. Diet or exercise, or both, for preventing excessive weight gain in pregnancy. Cochrane Database Syst Rev. 2015;(6):CD007145.&quot;
       }
     ]
   },
@@ -335,7 +371,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     &quot;id&quot;: &quot;certainty-of-evidence&quot;,
     &quot;title&quot;: &quot;Certainty of the evidence (GRADE)&quot;,
     &quot;required&quot;: false,
-    &quot;description&quot;: &quot;GRADE assessment of the body of evidence per outcome and key question, summarised in evidence profiles. The GRADE evidence profiles it summarises are built from external systematic reviews (typically Cochrane) that smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.&quot;,
+    &quot;description&quot;: &quot;GRADE assessment of the body of evidence per outcome and key question, summarised in evidence profiles. The GRADE evidence profiles it summarises are built from external systematic reviews (typically Cochrane), so this section is computed from `library` where that guideline&#39;s evidence base is ingested: for WHO&#39;s 2016 antenatal care guideline, §2.10 of `9789241549912-eng` describes its grading, and the web supplement `9789241549912-websupplement-eng` holds its evidence base (EB) tables, each with the GRADE quality-assessment columns and a certainty rating per outcome. A guideline whose evidence base is not in `library` cannot yet compute this section; WHO&#39;s 2016 antenatal care guideline (ISBN 9789241549912) is the first whose evidence base is held, as three entries ingested for bean folio-assistant-0lde.&quot;,
+    &quot;computedFrom&quot;: [
+      &quot;library&quot;
+    ],
     &quot;modelledBy&quot;: [
       &quot;sgkg-l1#evidence&quot;
     ],
@@ -349,6 +388,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         &quot;ref&quot;: &quot;who-iris/library/9789241548960-eng&quot;,
         &quot;locator&quot;: &quot;§12.1 Guideline format, PDF p.169; sections/sec-225-121-guideline-format.md&quot;,
         &quot;note&quot;: &quot;GRADE evidence profiles, evidence-to-decision frameworks and tables, and any other relevant documentation can be supplied in appendices&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-eng&quot;,
+        &quot;locator&quot;: &quot;§2.10 Quality assessment and grading of the evidence, PDF p.26; sections/sec-004-2-methods.md&quot;,
+        &quot;note&quot;: &quot;The GRADE approach (15) to appraising the quality of quantitative evidence was used for all the critical outcomes identified in the PICOs, and a GRADE profile was prepared for each quantitative outcome within each PICO.&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-websupplement-eng&quot;,
+        &quot;locator&quot;: &quot;EB Table A.1.1, PDF p.9; sections/sec-002-eb-table-a11-all-diet-andor-physical-activityexe.md&quot;,
+        &quot;note&quot;: &quot;EB Table A.1.1: All diet and/or physical activity/exercise interventions versus control (standard or other care)&quot;
       }
     ]
   },
@@ -356,7 +405,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     &quot;id&quot;: &quot;evidence-to-decision&quot;,
     &quot;title&quot;: &quot;Evidence to decision&quot;,
     &quot;required&quot;: false,
-    &quot;description&quot;: &quot;Records the judgements on benefits and harms, values and preferences, resources, equity, acceptability and feasibility that shaped each recommendation&#39;s direction and strength. Its judgements rest on the GRADE evidence profiles and the systematic reviews behind them, which smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.&quot;,
+    &quot;description&quot;: &quot;Records the judgements on benefits and harms, values and preferences, resources, equity, acceptability and feasibility that shaped each recommendation&#39;s direction and strength. Its judgements rest on the GRADE evidence profiles and the systematic reviews behind them, so this section is computed from `library` where that guideline&#39;s evidence base is ingested: for WHO&#39;s 2016 antenatal care guideline, §2.11 of `9789241549912-eng` describes the DECIDE framework it used, and Web annex 3 of `9789241549912-webannexes-eng` tabulates the GDG&#39;s judgements for each recommendation. A guideline whose evidence base is not in `library` cannot yet compute this section; WHO&#39;s 2016 antenatal care guideline (ISBN 9789241549912) is the first whose evidence base is held, as three entries ingested for bean folio-assistant-0lde.&quot;,
+    &quot;computedFrom&quot;: [
+      &quot;library&quot;
+    ],
     &quot;sources&quot;: [
       {
         &quot;ref&quot;: &quot;who-iris/library/9789241548960-eng&quot;,
@@ -367,6 +419,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         &quot;ref&quot;: &quot;who-iris/library/9789241548960-eng&quot;,
         &quot;locator&quot;: &quot;§10.3, PDF p.140; sections/sec-174-103-evidence-to-recommendation-tables.md&quot;,
         &quot;note&quot;: &quot;the GDG should, at a minimum, document its judgements on the four main factors.&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-eng&quot;,
+        &quot;locator&quot;: &quot;§2.11 Formulation of the recommendations, PDF p.27; sections/sec-004-2-methods.md&quot;,
+        &quot;note&quot;: &quot;DECIDE is an evidence-to-decision (EtD) tool that includes explicit and systematic consideration of evidence on interventions in terms of six domains: effects, values, resources, equity, acceptability and feasibility.&quot;
+      },
+      {
+        &quot;ref&quot;: &quot;smart-base/library/9789241549912-webannexes-eng&quot;,
+        &quot;locator&quot;: &quot;Web annex 3, PDF pp.13-23; sections/page-013.md&quot;,
+        &quot;note&quot;: &quot;Web annex 3: Guideline Development Group (GDG) judgements related to the recommendations&quot;
       }
     ]
   },

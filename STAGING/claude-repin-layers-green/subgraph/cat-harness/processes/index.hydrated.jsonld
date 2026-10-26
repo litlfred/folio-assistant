@@ -24269,7 +24269,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
           ],
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/sme-test-data-review.svg",
-          "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions — bean `folio-assistant-vljz`, companion `folio-assistant-vm6m`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
+          "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions. It runs on its caller's bean (Process_TestDataCuration calls it), so it opens and closes none: every step that touches the plan notes on it.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
           "enforcement": "strict",
           "flowCount": 10,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
@@ -24278,7 +24278,7 @@
           "sourcePath": "processes/sdlc/sme-test-data-review.bpmn",
           "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/sme-test-data-review.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Start_SmeReview",
-          "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions — bean `folio-assistant-vljz`, companion `folio-assistant-vm6m`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2."
+          "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions."
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_1",
@@ -24498,7 +24498,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareWorkedCase",
@@ -24514,7 +24515,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict",
@@ -24530,7 +24532,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
@@ -24545,7 +24548,8 @@
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
           "relaxable": true,
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
@@ -24778,16 +24782,16 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
           ],
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/test-data-curation.svg",
-          "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets — bean `folio-assistant-vm6m`, companion `folio-assistant-vljz`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
+          "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets. It opens its bean with Process_BeanOpen before any work and closes it with Process_BeanClose before it ends; the steps between note on it.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
           "enforcement": "strict",
-          "flowCount": 13,
+          "flowCount": 17,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
           "name": "Test Data Curation — Fixed Sets and Generated Recipes",
-          "nodeCount": 12,
+          "nodeCount": 16,
           "sourcePath": "processes/sdlc/test-data-curation.bpmn",
           "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/test-data-curation.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Start_Curation",
-          "summary": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets — bean `folio-assistant-vm6m`, companion `folio-assistant-vljz`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`…"
+          "summary": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets."
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_1",
@@ -24795,7 +24799,7 @@
           "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Start_Curation",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
-          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_ClassifySet"
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_2",
@@ -24859,7 +24863,7 @@
           "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
-          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_Curated"
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_Fixed",
@@ -24898,6 +24902,40 @@
           "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_SmeReview"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "claimed",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_ClassifySet"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "not yours",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_Curated"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
           "@type": "cat-harness:Lane",
           "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -24914,6 +24952,40 @@
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_9",
+          "name": "Close the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_1",
+          "name": "Open the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+          "touchesWorkPlan": false
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_ContentTypeSpecialisation",
           "@type": "bootstrap:ProcessNode",
           "bpmnType": "bpmn:CallActivity",
@@ -24927,7 +24999,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_SmeReview",
@@ -24944,6 +25017,21 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3",
+          "name": "Not yours — left alone",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
           "touchesWorkPlan": false
         },
         {
@@ -24952,11 +25040,29 @@
           "bpmnType": "bpmn:EndEvent",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
-          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_9",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4",
           "name": "Test data set curated and bound into plan",
           "nodeKind": "end",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2",
+          "name": "Bean claimed?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "touchesWorkPlan": false
         },
@@ -25052,7 +25158,7 @@
           "bpmnType": "bpmn:Task",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
-          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_1",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
           "name": "Classify data set: fixed (curated) or generated (recipe)",
           "nodeKind": "activity",
           "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_2",
@@ -25060,7 +25166,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_CurateFixed",
@@ -25076,7 +25183,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying",
@@ -25092,7 +25200,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_WriteRecipe",
@@ -25108,7 +25217,8 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
           "relaxable": true,
           "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
-          "touchesWorkPlan": false
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",

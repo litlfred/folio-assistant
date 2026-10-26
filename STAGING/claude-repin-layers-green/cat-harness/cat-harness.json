@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-26T13:53:12.615Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63ee1d6799daab58bc33aa6a75cd6e49bcfb4823",
-  "sourceCommitSha": "63ee1d6799daab58bc33aa6a75cd6e49bcfb4823",
-  "sourceCommitAt": "2026-10-26T13:25:45Z",
+  "generatedAt": "2026-10-26T14:56:04.478Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0332401889dd102c5b0eda2d7d3c9002d939a2ee",
+  "sourceCommitSha": "0332401889dd102c5b0eda2d7d3c9002d939a2ee",
+  "sourceCommitAt": "2026-10-26T14:29:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -384,11 +384,11 @@
     "Decision": 10,
     "Task": 8,
     "Process": 74,
-    "SequenceFlow": 1018,
+    "SequenceFlow": 1022,
     "Lane": 169,
-    "ProcessNode": 987,
+    "ProcessNode": 991,
     "Tool": 167,
-    "Schema": 178,
+    "Schema": 179,
     "ExternalSchema": 28,
     "GraphTypology": 51,
     "Role": 46,
@@ -35696,8 +35696,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "SME Review of Decision Support and Indicator Test Data",
-      "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions — bean `folio-assistant-vljz`, companion `folio-assistant-vm6m`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.",
-      "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions — bean `folio-assistant-vljz`, companion `folio-assistant-vm6m`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
+      "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions.",
+      "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions. It runs on its caller's bean (Process_TestDataCuration calls it), so it opens and closes none: every step that touches the plan notes on it.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/sme-test-data-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/sme-test-data-review.bpmn",
@@ -35888,7 +35888,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview#flow/Flow_DecisionSupport"
@@ -35911,7 +35912,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview#flow/Flow_Indicator"
@@ -35954,7 +35956,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/clinical-sme",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview/lane/Lane_SME",
       "requires": [],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview#flow/Flow_4"
@@ -35977,7 +35980,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview#flow/Flow_5"
@@ -37554,8 +37558,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Test Data Curation — Fixed Sets and Generated Recipes",
-      "summary": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets — bean `folio-assistant-vm6m`, companion `folio-assistant-vljz`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`…",
-      "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets — bean `folio-assistant-vm6m`, companion `folio-assistant-vljz`, proposal `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §3.2.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
+      "summary": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets.",
+      "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets. It opens its bean with Process_BeanOpen before any work and closes it with Process_BeanClose before it ends; the steps between note on it.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/test-data-curation.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/test-data-curation.bpmn",
@@ -37563,8 +37567,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Start_Curation"
       ],
-      "nodeCount": 12,
-      "flowCount": 13,
+      "nodeCount": 16,
+      "flowCount": 17,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0"
@@ -37577,9 +37581,38 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Start_Curation",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Task_ClassifySet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Task_ClassifySet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_2",
@@ -37689,9 +37722,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_Curated",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_Curated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
@@ -37742,10 +37784,11 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_2"
@@ -37787,7 +37830,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_Fixed"
@@ -37832,7 +37876,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview",
       "incoming": [
@@ -37878,7 +37923,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_Generated"
@@ -37901,7 +37947,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_6"
@@ -37946,7 +37993,8 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/test-data-sets"
       ],
-      "touchesWorkPlan": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_8"
@@ -37970,11 +38018,100 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_Curated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanOpen",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanClose",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_JsonLdDrift",
@@ -50899,6 +51036,16 @@
       "module": "schemas/deployment-description.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/deployment-resolver",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "deployment-resolver",
+      "title": "deployment-resolver",
+      "summary": "**The deployment resolver**: for each task of a process, who may run it in",
+      "module": "schemas/deployment-resolver.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/detangle-sidecar",
@@ -77283,6 +77430,24 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_1"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/flow/SF_Bean_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/flow/SF_Bean_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/flow/SF_Bean_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_3"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/flow/Flow_2",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_2",
@@ -77353,6 +77518,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_9",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/flow/SF_Bean_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration#flow/SF_Bean_4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/lane/Lane_Author",
@@ -77437,6 +77608,30 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_Curated",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_Curated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/node/Call_BeanOpen",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/node/GW_BeanYours",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/GW_BeanYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/node/End_BeanNotYours",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/End_BeanNotYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_TestDataCuration/node/Call_BeanClose",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#process/Process_JsonLdDrift",
@@ -79809,6 +80004,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/deployment-description"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#schema/deployment-resolver",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/deployment-resolver",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/deployment-resolver"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness.jsonld#schema/detangle-sidecar",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/detangle-sidecar",
@@ -81359,8 +81560,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "63ee1d6799daab58bc33aa6a75cd6e49bcfb4823",
+    "sha": "0332401889dd102c5b0eda2d7d3c9002d939a2ee",
     "pr": "2681/merge",
-    "run": "40330487241"
+    "run": "40340052257"
   }
 }

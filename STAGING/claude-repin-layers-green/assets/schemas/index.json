@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 302,
+      "count": 305,
       "unit": "modules"
     }
   },
@@ -672,6 +672,30 @@
       "name": "deployment-description",
       "graphNode": "schema",
       "summary": "**Deployment descriptions**: which declared actors run where, in one",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/deployment-examples.test.ts",
+      "instance": "cat-harness",
+      "name": "deployment-examples.test",
+      "graphNode": "undeclared",
+      "summary": "The example deployment descriptions (bean `jog4`) in",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/deployment-resolver.test.ts",
+      "instance": "cat-harness",
+      "name": "deployment-resolver.test",
+      "graphNode": "undeclared",
+      "summary": "The deployment resolver (bean `v3zw`): who may run a task, with which Tool,",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "instance": "cat-harness",
+      "name": "deployment-resolver",
+      "graphNode": "schema",
+      "summary": "**The deployment resolver**: for each task of a process, who may run it in",
       "isTest": false
     },
     {
@@ -20156,6 +20180,352 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport",
+      "name": "DeploymentReport",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "deployment",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tasks",
+          "type": "TaskVerdict[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unrunnable",
+          "type": "{ process: string; task: string; why: string }[]",
+          "optional": false,
+          "array": true,
+          "doc": "The report's own headline: tasks no placement can run. Reported, never a failure."
+        },
+        {
+          "name": "undetermined",
+          "type": "{ process: string; task: string; why: string }[]",
+          "optional": false,
+          "array": true,
+          "doc": "Tasks whose only possible runners wait on a fact no placement declares."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/deployment-resolver.ts#TaskVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
+      "name": "PlacementVerdict",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "placement",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Index into the description's `placements`, since one actor may be placed twice."
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "host",
+          "type": "Placement[\"host\"]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "EffectiveReach",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skills",
+          "type": "{ skill: string; tools: ToolVerdict[] }[]",
+          "optional": false,
+          "array": true,
+          "doc": "One entry per needed skill that has Tools, with each Tool satisfying it."
+        },
+        {
+          "name": "judgement",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Needed skills no Tool satisfies: the actor exercises them, so they hold nothing up."
+        },
+        {
+          "name": "runnable",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Every needed skill that has Tools has one that works here."
+        },
+        {
+          "name": "undetermined",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Not runnable, but every failing skill has a Tool whose fit could not be"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/actor-reach.ts#EffectiveReach",
+        "cat-harness/schemas/deployment-description.ts#Placement",
+        "cat-harness/schemas/deployment-resolver.ts#ToolVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#ResolverActor",
+      "name": "ResolverActor",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "doc": "The actor facts the resolver reads. `roles` empty or absent is unconstrained.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "ActorKind",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "roles",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "DeploymentDescription[\"topology\"][\"network\"]",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
+        "cat-harness/schemas/skill-package.ts#ActorKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#ResolverTask",
+      "name": "ResolverTask",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "doc": "One task of a process, as a caller reads it from the BPMN.",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The lane's role id. Absent means the lane names no role."
+        },
+        {
+          "name": "kinds",
+          "type": "readonly ActorKind[]",
+          "optional": true,
+          "array": false,
+          "doc": "Kinds that may fulfil it (`fulfilmentKindsForBpmnType`). Absent is unconstrained."
+        },
+        {
+          "name": "skills",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "Skills the task needs. Empty or absent: no Tool is needed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/skill-package.ts#ActorKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#ResolverTool",
+      "name": "ResolverTool",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "doc": "The Tool facts the resolver reads.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "satisfies",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requires",
+          "type": "{ os?: readonly string[]; runtime?: readonly string[]; network?: boolean }",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict",
+      "name": "TaskVerdict",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "candidates",
+          "type": "PlacementVerdict[]",
+          "optional": false,
+          "array": true,
+          "doc": "Placements whose actor may take the lane's role and is of an allowed kind."
+        },
+        {
+          "name": "unrunnable",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "No candidate can run it: no one may take the role, or no Tool works for any who may."
+        },
+        {
+          "name": "undetermined",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "No candidate is known to run it, and at least one might: an OS or runtime nobody declared."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#ToolFit",
+      "name": "ToolFit",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "type-alias",
+      "doc": "Whether one Tool works for one placement.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "works",
+        "needs-network",
+        "could-not-determine"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict",
+      "name": "ToolVerdict",
+      "module": "cat-harness/schemas/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "tool",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fit",
+          "type": "ToolFit",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why, when it is not `works`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/deployment-resolver.ts#ToolFit"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar",
       "name": "DetangleSidecar",
       "module": "cat-harness/schemas/detangle-sidecar.ts",
@@ -25200,6 +25570,13 @@
           "array": false
         },
         {
+          "name": "shownOnPublishedPages",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its markdown is shown on a published page (an IG annex appended to its page), so its links address that page."
+        },
+        {
           "name": "recordsWork",
           "type": "z.boolean().optional()",
           "optional": true,
@@ -25502,6 +25879,13 @@
           "optional": false,
           "array": false,
           "doc": "Is a graph of this kind expected to render as a website?"
+        },
+        {
+          "name": "shownOnPublishedPages",
+          "type": "true",
+          "optional": true,
+          "array": false,
+          "doc": "Is a graph of this kind's markdown SHOWN ON a published page, though the"
         },
         {
           "name": "recordsWork",
@@ -77248,6 +77632,78 @@
       "via": "credentials",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport",
+      "to": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict",
+      "via": "tasks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
+      "to": "cat-harness/schemas/actor-reach.ts#EffectiveReach",
+      "via": "reach",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
+      "to": "cat-harness/schemas/deployment-description.ts#Placement",
+      "via": "host",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
+      "to": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict",
+      "via": "skills",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#ResolverActor",
+      "to": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
+      "via": "reach",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#ResolverActor",
+      "to": "cat-harness/schemas/skill-package.ts#ActorKind",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#ResolverTask",
+      "to": "cat-harness/schemas/skill-package.ts#ActorKind",
+      "via": "kinds",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict",
+      "to": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
+      "via": "candidates",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict",
+      "to": "cat-harness/schemas/deployment-resolver.ts#ToolFit",
+      "via": "fit",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

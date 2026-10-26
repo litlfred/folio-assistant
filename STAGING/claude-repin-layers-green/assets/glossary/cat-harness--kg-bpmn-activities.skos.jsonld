@@ -8916,7 +8916,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Performed by the human SME in `Lane_SME` (`clinical-sme`, `judgementOnly: true`). The SME inspects the worked case (for decision support) or the cohort and expected vs computed value (for an indicator definition) and renders a domain verdict (`pass`, `fail`, or `needs-revision`) with rationale. Deliberately carries no skill reference: no procedure yields the answer, which is the whole reason a person is in this lane (`bean vljz`)."
+          "@value": "Performed by the human SME in `Lane_SME` (`clinical-sme`, `judgementOnly: true`). The SME inspects the worked case (for decision support) or the cohort and expected vs computed value (for an indicator definition) and renders a domain verdict (`pass`, `fail`, or `needs-revision`) with rationale. Deliberately carries no skill reference: no procedure yields the answer, which is the whole reason a person is in this lane."
         }
       ],
       "skos:notation": "Task_SmeJudge",
@@ -9936,6 +9936,46 @@
       ],
       "skos:notation": "A_ScanInternal",
       "dcterms:source": "cat-harness/processes/process/swot-analysis.bpmn#A_ScanInternal",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_testdatacuration.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "cat-harness/processes/sdlc/test-data-curation.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_testdatacuration.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "cat-harness/processes/sdlc/test-data-curation.bpmn#Call_BeanOpen",
       "skos:note": "candidate"
     },
     {
