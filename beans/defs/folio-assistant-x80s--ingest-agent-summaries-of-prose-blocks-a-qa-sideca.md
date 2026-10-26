@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-26T15:23:00Z
+updated_at: 2026-10-26T15:36:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -136,3 +136,5 @@ _2026-10-26T15:21:00Z_ — batch 24 opened as `litlfred/cat-harness#631` (`58fff
 _2026-10-26T15:23:00Z_ — batch 25 opened as `litlfred/cat-harness#632` (`16641dc3`): 57 English draft summaries across `w3c-2018-odrl-model-2-2` (all 57 prose blocks); `drafted_by.model` is `not-disclosed` with session `conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5`. Backlog in `cat-harness/library/` 950 → 893 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, and `#631`; 1152 → 1095 against `main` alone; 698 drafts await human confirmation).
 
 _2026-10-26T15:33:00Z_ — batch 26 opened as `litlfred/cat-harness#633` (`85a2fe68`): 71 English draft summaries across `w3c-2024-prov-jsonld` (all 71 prose blocks); `drafted_by.model` is `not-disclosed` with session `conversation://6224d9d6-5943-496b-a0a9-31a95705f4aa`. Backlog in `cat-harness/library/` 893 → 822 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, and `#632`; 1152 → 1081 against `main` alone; 769 drafts await human confirmation).
+
+_2026-10-26T15:36:00Z_ — batch 27 opened as `litlfred/cat-harness#634` (`80d6b7b5`): 50 English draft summaries across `w3c-2020-json-ld-1-1` (first 50 of 139 prose blocks, `prose-sec-000` through `prose-sec-056`); `drafted_by.model` is `not-disclosed` with session `conversation://06bea140-d38a-452e-ad75-a5e8e9f8af00`. Backlog in `cat-harness/library/` 822 → 772 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, and `#633`; 1152 → 1102 against `main` alone; 819 drafts await human confirmation).
