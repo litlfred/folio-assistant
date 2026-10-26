@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-26T14:46:00Z
+updated_at: 2026-10-26T14:55:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -344,3 +344,5 @@ _2026-10-26T14:19:00Z_ — Batch J opened as [`litlfred/cat-harness#622`](https:
 _2026-10-26T14:35:00Z_ — Batch K opened as [`litlfred/cat-harness#623`](https://github.com/litlfred/cat-harness/pull/623) (`50f5a55`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 37 images (and 24 figure blocks) in `strauch-carbno-2025-spdx-3-1-supply-chain`. Remaining in `cat-harness/library/`: `arxiv-2507.23348v1` (115), `arxiv-2402.02172v5` (135).
 
 _2026-10-26T14:46:00Z_ — Batch L opened as [`litlfred/cat-harness#626`](https://github.com/litlfred/cat-harness/pull/626) (`0775906a`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the first 25 images (`img-p003-1` through `img-p003-46`) in `arxiv-2507.23348v1` (no `blocks/figure-*.jsonld` present). Remaining in `cat-harness/library/`: `arxiv-2507.23348v1` (90), `arxiv-2402.02172v5` (135).
+
+_2026-10-26T14:55:00Z_ — Batch M opened as [`litlfred/cat-harness#627`](https://github.com/litlfred/cat-harness/pull/627) (`d961c06a`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the first 25 images (`img-p001-1` through `img-p004-19`) in `arxiv-2402.02172v5` (no matching `blocks/figure-*.jsonld`). Remaining in `cat-harness/library/`: `arxiv-2507.23348v1` (90), `arxiv-2402.02172v5` (110).
