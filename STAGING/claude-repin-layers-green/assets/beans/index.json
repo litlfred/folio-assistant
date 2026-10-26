@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 95,
+      "count": 96,
       "unit": "open beans"
     }
   },
@@ -6162,7 +6162,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-26T14:19:00Z",
+      "updatedAt": "2026-10-26T14:55:00Z",
       "preview": "## What\n\nGenerate a narrative description for every image, localized to the folio's\nlanguages.\n\n## The half that is easy to miss\n\n**This applies to an image EXTRACTED FROM A PDF, not only to an uploaded one.**\nMost images in this corpus arrive inside a paper, and a figure nobody has\ndescribed is a figure no grep and no agent can reach.\n\n## Provenance is not optional\n\nEvery description carries its ",
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
@@ -14375,14 +14375,14 @@
     {
       "id": "folio-assistant-whlc",
       "title": "KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payload split, late client-side materialization",
-      "status": "completed",
+      "status": "in-progress",
       "type": "epic",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T20:42:54Z",
-      "updatedAt": "2026-10-16T10:10:00Z",
+      "updatedAt": "2026-10-26T15:45:00Z",
       "preview": "Owner, 2026-10-02 (lead session, verbatim excerpts):\n- \"what we need is providing both dereferenced (inline, fully hydrated objects) and referenced (URI pointers) versions in subgraphs\"\n- \"harness instance is implicitly a named subgraph (w/ its own rules for determining whats in it) of the whole repo's KG. Harness and (Sub)Graph share common type?\"\n- \"maybe we can have a common base like <BASE_URL",
       "file": "beans/defs/folio-assistant-whlc--kg-publication-named-subgraphs-referenced-hydrated.md"
     },
@@ -14696,7 +14696,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-10-26T14:03:00Z",
+      "updatedAt": "2026-10-26T15:45:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
@@ -16382,13 +16382,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 324,
-        "closed": 285,
-        "open": 39,
-        "inProgress": 29,
+        "closed": 284,
+        "open": 40,
+        "inProgress": 30,
         "todo": 10,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8796296296296297
+        "share": 0.8765432098765432
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16452,8 +16452,8 @@
       }
     ],
     "orphanOpen": 3,
-    "openTotal": 95,
-    "coveredOpen": 89,
+    "openTotal": 96,
+    "coveredOpen": 90,
     "duplicateIds": 0
   }
 }
