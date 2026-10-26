@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-24T11:34:43Z
+updated_at: 2026-10-26T14:19:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -338,3 +338,5 @@ _2026-10-24T15:38Z_ — cat-harness#597 merged (batch H, 28 figures of arxiv-231
 _2026-10-24T15:51Z_ — cat-harness#599 merged (batch I, fr/es/ar/ru/zh narratives for 32 figures of arxiv-2404.04834v4).
 
 _2026-10-24T16:24Z_ — Window wrap-up: last d5f1 batch was cat-harness#599 (merged). Claim released.
+
+_2026-10-26T14:19:00Z_ — Batch J opened as [`litlfred/cat-harness#622`](https://github.com/litlfred/cat-harness/pull/622) (`5bf8d01`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 37 figures across `kg-folio-asst-2026-09-30` (33 images + 23 figure blocks) and `w3c-2018-odrl-model-2-2` (4 ODRL 2.2 UML class diagrams + 4 figure blocks). Remaining in `cat-harness/library/`: `strauch-carbno-2025-spdx-3-1-supply-chain` (37), `arxiv-2507.23348v1` (115), `arxiv-2402.02172v5` (135).
