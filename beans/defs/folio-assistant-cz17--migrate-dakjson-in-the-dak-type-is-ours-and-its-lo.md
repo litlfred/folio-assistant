@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:36:56Z
-updated_at: 2026-10-24T08:30:35Z
+updated_at: 2026-10-26T14:03:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -106,3 +106,5 @@ Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vX
 Re-measured: `DAK.fsh` and every `<Name>Source` in `DAKComponentSources.fsh` are `#active` on litlfred/smart-base main. Item 1 drafted as smart-base#151 (issue #150): the url / canonical / instance wrapper is typed, and the inline instance stays `unknown`. Scope (wrapper only, all nine models, or keep blocked) is on the owner's decision card.
 
 _2026-10-24T08:30:35Z_ — Owner chose **A** (type the source wrapper only; card, 08:27Z) and OK'd the merge (08:30Z). smart-base#151 merged as eb3f9b5: each of the nine formalized components takes WHO's url / canonical / instance wrapper, exactly one; the inline instance stays `unknown` by that choice. Item 1 is done to the agreed scope. Still open: items 2 to 4 (type registry, the `sushi`/`ig` content types, migrating the real repos).
+
+_2026-10-26T10:39:18Z_ — `litlfred/cat-harness#521` merged (`65e1673b`: `index.config.json` content-type sections as markers and `directory-conventions.md` updated for `contentTypes.dak`); `litlfred/smart-base#156` ("Move the DAK declaration into index.config.json (contentTypes.dak)") is open.

@@ -2,11 +2,11 @@
 # folio-assistant-423d
 $schema: bean/1.0.0
 title: 'REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-24T10:25:30Z
+updated_at: 2026-10-26T14:03:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -250,5 +250,5 @@ A `site.build` folio (dth-hrh) is staged by `stage-local.ts`, not by the workflo
 _2026-10-21T17:10Z_ — Block lifted: `folio-assistant-a1lq` is completed and archived (`beans/defs/archive/folio-assistant-a1lq--multiple-inheritance-one-resolve-then-walk-rule-fo.md`).
 
 ## Progress 2026-10-24: cat-harness-tools#697 + folio-assistant-core#205
-- `litlfred/cat-harness-tools#697` (`9d5d6b18`): Added `<select id="comment-filter">` (`Show comments`) and `matchesCommentFilter(status, kind, filter)` in `scripts/gen-review-page.ts` so the review page filters comments by status (`open-addressed`, `open`, `addressed`, `resolved`, `adjudicated`, `withdrawn`) or kind (`defect`, `question`, `suggestion`, `editorial`), and displays the recorded `review.decision` link/id on resolved and adjudicated comments.
-- `litlfred/folio-assistant-core#205` (`f6701737`): Added end-to-end block-move (`reanchorToBlocks`) + `applyDecisions` (`resolve: <id>` + `decision: ...`) unit test in `schemas/review-comment.test.ts` and updated `skills/content/content-lifecycle-ext/review-comments.md`.
+- `litlfred/cat-harness-tools#697` (`9d5d6b18`, merged `90b0e201`): Added `<select id="comment-filter">` (`Show comments`) and `matchesCommentFilter(status, kind, filter)` in `scripts/gen-review-page.ts` so the review page filters comments by status (`open-addressed`, `open`, `addressed`, `resolved`, `adjudicated`, `withdrawn`) or kind (`defect`, `question`, `suggestion`, `editorial`), and displays the recorded `review.decision` link/id on resolved and adjudicated comments.
+- `litlfred/folio-assistant-core#205` (`f6701737`, merged `5d698b8f`): Added end-to-end block-move (`reanchorToBlocks`) + `applyDecisions` (`resolve: <id>` + `decision: ...`) unit test in `schemas/review-comment.test.ts` and updated `skills/content/content-lifecycle-ext/review-comments.md`.

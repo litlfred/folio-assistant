@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-23T16:20:00Z
+updated_at: 2026-10-26T14:03:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -131,4 +131,4 @@ Measured on folio-assistant gh-pages `1ad53fa` (STAGING excluded): 351 MiB, 4,60
 - The tiles meta is now `content=""` with `data-fa-src="harness-data"`; `harness-data.js` fills it.
 - **Done criterion "sampled IG page ≤ 20 KB": met** (smart-trust narrative median 16.9 KB, artefact pages ~5 KB).
 - **Option A (owner's pick, 2026-10-23): the IG menu moves into the shared rail file.** litlfred/cat-harness#468 (regenerated `navbar.js`, which reads `page.documentIndex ?? shared.documentIndex`) merges first; litlfred/cat-harness-tools#644 then stops writing a declared menu into each page's `#fa-rail`. That is about 4 KB more off every IG narrative page. #644's one red check (`navbar-assets.test.ts`) clears once #468 is on main.
-- **Still open:** merging #468 then #644 (waiting on the owner's OK, since the merge window ended); `shareNavbarRow` on all railed pages once g196 gives the row file a constant path; g196 drops `?v` from the `harness-data.js` tag.
+- **Still open:** ~~merging #468 then #644~~ (both merged: `litlfred/cat-harness#468` @ `c3330bae`, `litlfred/cat-harness-tools#644` @ `f0460409`); `shareNavbarRow` on all railed pages once g196 gives the row file a constant path; g196 drops `?v` from the `harness-data.js` tag.

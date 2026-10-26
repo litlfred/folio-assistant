@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T10:02:53Z
-updated_at: 2026-10-23T20:32:00Z
+updated_at: 2026-10-26T14:03:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -189,8 +189,8 @@ cross-reference in the corpus. The declaration is four lines.
 - [x] a ratchet — `scripts/tests/folio-root-is-asked.test.ts` — falsified both
       ways, and already clean against 37 commits of concurrent work
 - [x] 27 identifiers renamed off `CONTENT_*`
-- [x] qou declares its folio at `content/` (litlfred/qou#7445, OPEN)
-- [x] the eight vendored workflows' `cd content` — after the folios move (`litlfred/folio-assistant#2650` @ `aee46850`)
+- [x] qou declares its folio at `content/` (litlfred/qou#7445, merged `0e1b226d`)
+- [x] the eight vendored workflows' `cd content` — after the folios move (`litlfred/folio-assistant#2650` @ `aee46850`, open)
 
 
 ## RE-MEASURED 2026-09-22 on `main` at `b7f8945b` — every count in this bean is stale, and one is off by 20×

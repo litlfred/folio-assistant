@@ -2,11 +2,11 @@
 # folio-assistant-q4jm
 $schema: bean/1.0.0
 title: 'LARGE-DOCUMENT REVIEW: a review/ visualiser for a folio''s diff from main — pluggable renderers, heat maps, navigation and review comments, keyed on folio/ block ids'
-status: todo
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-22T21:02:29Z
-updated_at: 2026-10-05T04:57:14Z
+updated_at: 2026-10-26T14:03:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -179,3 +179,5 @@ Asked which goal this epic joins (p5wm, yg29, a new one), the owner answered *"i
 ## Tracking issue
 
 https://github.com/litlfred/folio-assistant/issues/971 (#971). Round summaries go there.
+
+_2026-10-26T14:03:00Z_ — All 34 child beans completed (with `423d` closed after `litlfred/cat-harness-tools#697` @ `90b0e201` and `litlfred/folio-assistant-core#205` @ `5d698b8f` merged on `main`, and `87ln` scrapped). Epic completed.
