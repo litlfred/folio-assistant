@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-26T13:10:00Z
+updated_at: 2026-10-26T14:16:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -145,3 +145,9 @@ Re-measured sequentially in an isolated checkout at latest `main` of `folio-assi
 | also | `check:published-instance-exports` | 0 | sidecar reader | `? UNKNOWN — cat-harness/test/results is not in this checkout; not gated (bean id4s, proposal §2.3).` |
 
 **Verdict:** All 16 gates + 2 sidecar readers have been migrated to compute-and-judge with `--against main` (or `publish-check.ts` / `builtAtPublish` / `UNKNOWN`-not-gated), and **zero** fail because `test/results/` is absent. Box 1 stays unticked only until `folio-assistant` repins `cat-harness` and `cat-harness-tools` (clearing the 14 attestation files, the `software-library` coverage row, and the 14 `wrong-direction` references) and `readme:subgraphs:check` drops its `requireCurrentWorkingCopy` call under `--check`.
+
+## 2026-10-26: batch 3 (`litlfred/cat-harness-tools#787`)
+
+Opened `litlfred/cat-harness-tools#787` (`fix/oqe3-subgraph-readmes-and-library-coverage`) to clear the two `cat-harness-tools` defects uncovered in the 2026-10-26 measurement above:
+1. **`scripts/subgraph-readmes.ts` (`readme:subgraphs:check`):** removed the dead `requireCurrentWorkingCopy(REPO, GATE)` call. Since `f3bh`, `harnessInstances()` skips every stored (`qa`) directory (`!isStored(d) && !contentIsOffCheckout(d)`), so `readme:subgraphs` and `readme:subgraphs:check` never read `test/results/` and no longer trigger `qa:refresh` when `test/results/` is absent.
+2. **`scripts/audit-coverage.ts` (`audit:coverage:require-all` / `strict`):** taught `scriptsFor()` to follow `run-script.ts <name>` hops (used by `run-gates.py`), taught `gateCoverage()` to resolve `cat-harness-tools/` script paths against `TOOLS_ROOT` and merge `checkoutScripts`, and included `SCRIPT_EXEMPTIONS` entries with `kind === "covered-by"` and `reason.startsWith("RUN BY THE LAYER CHECKS:")` (`libraries:check`, `@covers software-library`) on non-content roots so `software-library` is reported as `covered` rather than a false `kinds-typed-only` finding.
