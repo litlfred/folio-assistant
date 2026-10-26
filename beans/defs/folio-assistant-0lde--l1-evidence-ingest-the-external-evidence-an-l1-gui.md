@@ -2,10 +2,10 @@
 # folio-assistant-0lde
 $schema: bean/1.0.0
 title: 'L1 EVIDENCE: ingest the external evidence an L1 guideline computes from (PICO question sets, Cochrane/WHO systematic reviews, GRADE profiles)'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-04T10:13:24Z
-updated_at: 2026-10-24T08:24:20Z
+updated_at: 2026-10-26T11:20:00Z
 parent: folio-assistant-qvxh
 ---
 
@@ -52,3 +52,12 @@ Committed all three English PDFs from WHO IRIS handle **`10665/250796`** (`https
 4. **`evidence-to-decision`:**
    - **Primary tabular GDG EtD judgements — `9789241549912-webannexes-eng.pdf`:** **Web annex 3** (*Guideline Development Group (GDG) judgements related to the recommendations*, printed pp. 10–20 / PDF pp. 13–23): DECIDE EtD judgement tables for all recommendations (`A.1.1`–`E.7`) across *Certainty of the evidence*, *Effects*, *Women's values*, *Resource use*, *Equity*, *Acceptability*, *Feasibility*, *Balance of benefits versus disadvantages*, and *GDG decision*.
    - **Primary narrative EtD domain summaries & methods — `9789241549912-eng.pdf`:** Chapter 2 §§2.11–2.12 (printed pp. 9–10 / PDF pp. 27–28) and the per-recommendation narrative DECIDE subsections (*Women's values*, *Values*, *Resources*, *Equity*, *Acceptability*, *Feasibility*, *Additional considerations*) across Chapter 3 (printed pp. 14–104 / PDF pp. 32–122).
+
+## 2026-10-26 (FHIR beans thread, session_01Bye99WLJxQpyCxh2eMgW19): ingested, PR open
+
+The three d08l PDFs are ingested into smart-base/library as `9789241549912-eng`, `-webannexes-eng` and `-websupplement-eng` (sha256 values match). The four l1-guideline evidence sections now name `computedFrom: ["library"]`, with sources citing web annexes 1-3, the supplement's EB tables and search strategies, and the methods chapter. check:document-kind-sources passes. Licence: the PDFs say "(c) WHO 2016 All rights reserved", which is recorded; the d08l note's CC BY-NC-SA 3.0 IGO is not stated in the PDFs. PR litlfred/smart-base#164 (issue #163).
+
+- [x] evidence sources chosen and named
+- [x] a declared graph holds them (library)
+- [x] the four sections name it in computedFrom; check:document-kind-sources passes
+- [ ] #164 merged
