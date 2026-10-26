@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-23T17:05:00Z
+updated_at: 2026-10-26T13:10:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -118,3 +118,30 @@ Measured locally:
 - reference-direction: 0 (UNKNOWN) → 1, with 83 new pairs against `main/0907d88`. They are probably an artefact of my local composition. CI already runs this command.
 
 The owner kept the `-merge` marking in `gitattributes.test.ts`. Still remaining: everything after batch 2 in the list above.
+
+## 2026-10-26: re-measured all 16 gates + 2 sidecar readers at latest `main` (`test/results/` absent)
+
+Re-measured sequentially in an isolated checkout at latest `main` of `folio-assistant` (`277511ffb6`), `cat-harness` (`89f2d426b2`), `cat-harness-tools` (`f902005584`), `bootstrap` (`02dfd19f6c`), `bootstrap-tools` (`1584c10dd0`) and `folio-assistant-sci` (`8d6daa52b3`), with state branches mounted and `rm -rf test/results cat-harness/test/results` before each gate:
+
+| family | gate | exit | judge / `--against main` status | output / why |
+|---|---|---|---|---|
+| 3.1a | `kg:audit:check` | 1 | compute+judge (`--against main`) | `advisory: 556 derived sidecar(s) differ (not gated)`. Exits 1 on 14 out-of-date committed attestation files under `test/attestations/kg-qa/` (un-repinned `cat-harness` `89f2d426b2` vs `index.lock.json` `a196134bed`). |
+| 3.1a | `kg:audit:all:check` | 0 | compute+judge (`--against main`) | `0 instance(s) audited (--check: nothing written) — 0 clean, 0 failing, 0 produced no report.` |
+| 3.1a | `audit:coverage:require-all` / `strict` | 1 | compute+judge (`--against main`) | 1 new finding in `kinds-typed-only` (`software-library`: 45 files under `cat-harness-tools/libraries`) + 2 UNKNOWN kinds (`auto-docs`, `ig-pages` builtAtPublish dirs absent). |
+| 3.1a | `check:harness-state:check` | 0 | compute+judge (`--against main`) | `9 famil(ies): 0 finding(s), 0 famil(ies) could not be determined; advisory: the committed harness-state.qa-results.json is UNKNOWN against this run. Not gated.` |
+| 3.1b | `lsi:skills:check` | 0 | compute+judge (`--against main`) | `pass cat-harness/skills fresh — recomputed in this run (259 units); no index in the checkout to be stale.` |
+| 3.1b | `lsi:viz:check` | 0 | `builtAtPublish` | `lsi viewer: cat-harness/docs/en/cat-harness/lsi/index.md is built at publish (builtAtPublish), not committed — nothing to compare.` |
+| 3.1b | `kg:detangle:check` | 0 | compute+judge (`--against main`) | Recomputes and judges; missing/orphaned derived `.detangle.json` sidecars are advisory. |
+| 3.1b | `translation:block-qa:check` | 0 | compute+judge (`--against main`) | `baseline (qa-reports:main/277511ffb6): 0 NEW finding(s), 6 inherited, 0 resolved — OK (40 sidecar(s) computed).` |
+| 3.1c | `skill:register:check` | 1 | `declarations-only` = 0; chain = 1 | Declarations audit passes (`381 skill(s) across 34 package(s): every one declared`). Chain steps `skill:commands:check`, `skills:docs:check`, `auto:docs:check`, `lsi:skills:check`, `lsi:viz:check`, `kg:detangle:check` all exit 0; fails only on non-`test/results/` steps (`check:glossary` 1.0 MB budget on `bpmn-activities/index.md`, `uml:overview:check` missing builtAtPublish glossary page, `subgraph:jsonld:check` un-repinned `v1.jsonld`, `kg:audit:check` 14 attestations). |
+| 3.1c | `readme:subgraphs:check` | 0 | compute+judge (`--against main`) | `0 directory README(s); 0 stale. baseline (qa-reports:main/277511ffb6): 0 NEW finding(s) — OK` (with `QA_WORKING_COPY_BUILDING=1`; without it, `requireCurrentWorkingCopy` runs `qa:refresh`). |
+| 3.1c | `root-scan-census:check` | 0 | compute+judge (`--against main`) | `106 enumerating script(s), 28 ask git; baseline: 0 NEW finding(s) — OK.` |
+| 3.1c | `check:term-mapping` | 0 | compute+judge (`--against main`) | `3751 candidate(s); baseline: 0 NEW finding(s) — OK.` |
+| 3.1c | `check:viewer-nav` | 0 | compute+judge (`--against main`) | `0 railed, 0 declined, 0 linked, 0 missing, of 0 generated viewer page(s) — OK.` |
+| 3.1c | `check:prov-qaqc` | 0 | not a `test/results/` reader | `✓ PROV-O QA/QC report current: 12 instance(s), 149 step(s), 149 activities.` |
+| 3.1c | `check:reference-direction:check` | 1 | compute+judge (`--against main`) | Judges against `qa-reports:main/277511ffb6`; reports 14 new `wrong-direction` findings introduced between the index lock (`a196134bed` / `5cc9b5e4ac`) and latest layer `main` (`89f2d426b2` / `f902005584`). |
+| 3.1c | `docs:pages:check` | 0 | `publish-check.ts docs:pages` | `? assets/qa/index.json — UNKNOWN: the derived QA corpus is not in this build; no count published. ✓ publish:check docs:pages: ran, its --check passes on its own output.` |
+| also | `check:version-bump` | 0 | sidecar reader | `11 publishable instance(s): 0 ok, 0 under, 11 unreleased, 0 undetermined.` |
+| also | `check:published-instance-exports` | 0 | sidecar reader | `? UNKNOWN — cat-harness/test/results is not in this checkout; not gated (bean id4s, proposal §2.3).` |
+
+**Verdict:** All 16 gates + 2 sidecar readers have been migrated to compute-and-judge with `--against main` (or `publish-check.ts` / `builtAtPublish` / `UNKNOWN`-not-gated), and **zero** fail because `test/results/` is absent. Box 1 stays unticked only until `folio-assistant` repins `cat-harness` and `cat-harness-tools` (clearing the 14 attestation files, the `software-library` coverage row, and the 14 `wrong-direction` references) and `readme:subgraphs:check` drops its `requireCurrentWorkingCopy` call under `--check`.
