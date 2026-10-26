@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-26T15:10:00Z
+updated_at: 2026-10-26T15:21:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -130,3 +130,5 @@ _2026-10-26T14:59:00Z_ — batch 21 opened as `litlfred/cat-harness#628` (`ac9d8
 _2026-10-26T15:06:00Z_ — batch 22 opened as `litlfred/cat-harness#629` (`2c5e5f59`): 37 English draft summaries across `arxiv-2608.18294v2` (all 37 prose blocks); `drafted_by.model` is `not-disclosed` with session `conversation://9687caef-53f8-45ea-ad49-8d32f4f32eba`. Backlog in `cat-harness/library/` 1067 → 1030 of 1591 prose blocks (when combined with `#621`, `#624`, and `#628`; 1152 → 1115 against `main` alone; 561 drafts await human confirmation).
 
 _2026-10-26T15:10:00Z_ — batch 23 opened as `litlfred/cat-harness#630` (`9f81da25`): 39 English draft summaries across `wang-rangaiah-2026-mcdm-aggregation` (all 39 prose blocks); `drafted_by.model` is `not-disclosed` with session `conversation://9985fca2-19f0-4684-87bd-b3dc84e07c72`. Backlog in `cat-harness/library/` 1030 → 991 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, and `#629`; 1152 → 1113 against `main` alone; 600 drafts await human confirmation).
+
+_2026-10-26T15:21:00Z_ — batch 24 opened as `litlfred/cat-harness#631` (`58fff929`): 41 English draft summaries across `landauer-foltz-laham-1998-intro-lsa` (all 41 prose blocks); `drafted_by.model` is `not-disclosed` with session `conversation://7272f3f0-deb8-4fe4-8e47-2ce5b9ae3bc3`. Backlog in `cat-harness/library/` 991 → 950 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, and `#630`; 1152 → 1111 against `main` alone; 641 drafts await human confirmation).
