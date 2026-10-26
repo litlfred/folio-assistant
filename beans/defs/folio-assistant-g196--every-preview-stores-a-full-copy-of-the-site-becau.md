@@ -2,11 +2,11 @@
 # folio-assistant-g196
 $schema: bean/1.0.0
 title: Every preview stores a full copy of the site because per-preview facts are baked into every page
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T12:53:43Z
-updated_at: 2026-10-26T10:40:00Z
+updated_at: 2026-10-26T11:05:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -652,3 +652,19 @@ stay per-branch.
 
 
 _2026-10-26T10:40:00Z_ — Claimed by the cloud thread "Drain beans and open issues across repos" (session https://claude.ai/code/session_01MuDtPYhiVLUpaCdbvwQVL9). Taking the fhir-harness half: `stage-ig-sites.ts` writes a literal baseurl into the IG nav JSON and ig-topbar.
+
+## 2026-10-26: re-measured on the four deployed previews; the fix is written, the pin is not (session https://claude.ai/code/session_01MuDtPYhiVLUpaCdbvwQVL9)
+
+The fhir-harness half named on 10-23 (IG nav JSON and top bar) was already fixed that day: `liquidSiteBase` in `build-ig-site.ts` (fhir-harness 73de11f) hands the staged layout back to the host as `{{ site.baseurl }}`. Nothing more to write there.
+
+Compared the four previews on gh-pages (blob ids from the git tree API):
+
+| pair | HTML pages in both | byte-identical |
+|---|---|---|
+| pages-checks-after-deploy / pages-independent-of-ci | 5,481 | 2,349 |
+| either of those / workflow-steps-accounted | 5,481 | 2,212 |
+| repin-layers-green / any other | 5,414-6,096 | 1 |
+
+Every differing page sampled (smart-trust/artifact 1,466, en/cat-harness 925, uml/overview 244, smart-base 146, proposals) differs only by `/folio-assistant/STAGING/<slug>/` in `relative_url` output: stylesheet and script links, the IG top bar. That is what `site-chrome/_plugins/fa-root-relative.rb` (cat-harness#439) removes. It is not in these builds: folio-assistant main pins cat-harness at a196134 (2026-10-23 19:45), which has no `site-chrome/_plugins/`; #439 merged at 21:36. The previews were built on that pin.
+
+So the next step is the cat-harness re-pin in folio-assistant#2681 (CI speed thread's), then two previews from the new pin and the same comparison. Back to `todo`: nothing here to build until that pin lands.
