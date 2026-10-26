@@ -118,3 +118,5 @@ _2026-10-24T16:24Z_ — cat-harness#604 merged (batch 16, 21 blocks of arxiv-240
 _2026-10-24T16:24Z_ — Window wrap-up: cat-harness#583 and #585–#605 merged; all drafts are on main and wait for a person. Claim released; later batches are open to anyone.
 
 _2026-10-26T10:43Z_ — batch 18 opened as litlfred/cat-harness#617: 43 English drafts, every prose block of arxiv-2607.00053v1 (22) and qi-hessen-vanderheijden-2023-ca-vs-lsa (21); `drafted_by.model` is `claude-opus-5-5`. Backlog 1195 → 1152 of 1591. Session https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS.
+
+_2026-10-26T10:57Z_ — cat-harness#617 merged (a0802db6, batch 18, 43 blocks); the drafts wait for a person. Not claimed; later batches are open to anyone.
