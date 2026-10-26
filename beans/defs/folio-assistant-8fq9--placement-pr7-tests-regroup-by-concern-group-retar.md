@@ -5,7 +5,7 @@ title: 'Placement PR7: tests regroup by concern group, retargeted to cat-harness
 status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -30,3 +30,5 @@ Re-measured: not started. `cat-harness-tools/scripts/tests/` is flat (773 files,
 **"Do them now, one at a time ... in groups so not so much churn"** (option A). One PR per concern group (sdlc, ui, kg, process, library, tools, conduct, content, above-harness), each its own merge, rather than one ~770-file move.
 
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/cat-harness-tools#694 (group 1, content), tracking litlfred/cat-harness-tools#693.
+
+_2026-10-26T13:20:00Z_ — Progress update: groups 1–8 of 9 in `scripts/tests/` have merged on `litlfred/cat-harness-tools` `main`: `#694` (1/9 content, `2026-10-24T09:09:18Z`), `#696` (2/9 tools, `2026-10-24T11:38:40Z`), `#702` (3/9 process, `2026-10-24T11:43:13Z`), `#704` (4/9 library, `2026-10-24T11:07:55Z`), `#707` (5/9 conduct, `2026-10-24T09:26:42Z`), `#712` (6/9 kg, `2026-10-24T11:40:49Z`), `#717` (7/9 ui, `2026-10-24T12:47:20Z`), `#718` (8/9 sdlc, `2026-10-24T12:15:16Z`), plus `#719` (`CI compare: a test that only moved is the same test`, `2026-10-24T10:25:49Z`) and `#748` (`Fix libraries:check and check:anchor-names after the tests regroup`, `2026-10-24T13:44:55Z`). Remaining: group 9/9 (`above-harness`) and `test/<group>/`.

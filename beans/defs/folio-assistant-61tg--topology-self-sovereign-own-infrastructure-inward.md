@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-10-24T08:45:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-o1by
 ---
 
@@ -97,3 +97,5 @@ The run: a fresh clone of smart-trust-demo with all seven layers mounted from `i
   - Afterwards `mount:remote:check` reports five layers missing as "modified". On self-sovereign or air-gapped infrastructure, where a layer cannot be re-cloned, that breaks the mount until it is re-laid from a local copy.
 
 Still owed: the same run with the network on, in the same clean layout, for a line-by-line comparison. The first pass at 08:25Z showed the same content failures online.
+
+_2026-10-26T13:20:00Z_ — The air-gapped deployment description (`scenarios/deployments/self-sovereign.json` with `liveData: "may-hold-credentials"`, verified by `schemas/deployment-examples.test.ts` including the `attestation-service` reach refusal) merged in `litlfred/cat-harness#547` (`0a2a4c0f`, `2026-10-26T11:23:55Z`).

@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-21T17:24:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -40,3 +40,5 @@ Post-merge (main c7505917, #1776): reference-direction 1697 -> 1670 wrong-direct
 - `2j2r` is completed (box 2 can be checked against it). large-datasets / agent-skills folding not re-measured. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-26T13:20:00Z_ — Progress update: Placement PR9 (`p9bu`) is now `completed` (`2026-10-24T08:52:36Z`; `cat-harness-tools#683`, `cat-harness#498`, `fhir-harness#148`, `smart-base#149`). PR2 (`pzwb`), PR7 (`8fq9`, 8/9 test groups merged), and PR8 (`f8wp`) are `in-progress`; PR4 (`4fv8`) remains `todo` (blocked by `pzwb`).

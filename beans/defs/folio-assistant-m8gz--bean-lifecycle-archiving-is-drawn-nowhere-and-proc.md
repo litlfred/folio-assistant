@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T07:35:41Z
-updated_at: 2026-10-24T08:15:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -118,12 +118,12 @@ by default.
       periodic sweep? It is plausibly the latter — nothing in any process
       naturally owns "and now tidy the store" — in which case the answer is a
       scheduled process, not a fourth op. Everything else follows from this.
-- [ ] `Process_BeanLifecycle` is either called by something or retired. A
-      diagram nobody calls looks like coverage; that is the `dh4f` family.
+- [x] `Process_BeanLifecycle` is either called by something or retired. A
+      diagram nobody calls looks like coverage; that is the `dh4f` family. — **split into reusable `Process_BeanOpen` and `Process_BeanClose` called across all four content layers (`litlfred/cat-harness#528` @ `56f051cc`, `litlfred/folio-assistant-core#207`, `litlfred/smart-base#154` @ `9118518c`, `litlfred/folio-assistant-sci#73`, all merged 2026-10-24); companion check `check:bean-calls` in `litlfred/cat-harness-tools#723` is in review.**
 - [x] `action=` on `<folio:bean>` is REFUSED at load rather than ignored — and
       turning it on found 19 live `store="beans/"` instances across 11 diagrams
 - [x] `todo-manager` says when a bean is archived; it currently stops at
-      `scrapped`. — **in open PR `litlfred/cat-harness#416` (`skills/sdlc/sdlc-core/todo-manager.md`, plus `crdm-close.bpmn` and `code-change-review.bpmn` archive steps); `litlfred/folio-assistant-core#149` (`draft-to-publication.bpmn` archive step) and `litlfred/cat-harness-tools#562` (`op="archive"`) merged.**
+      `scrapped`. — **merged in `litlfred/cat-harness#416` (`2026-10-23T20:16:02Z`), `litlfred/folio-assistant-core#149` (`2026-10-23T13:25:50Z`), and `litlfred/cat-harness-tools#562` (`2026-10-23T08:15:39Z`).**
 
 ## Not doing / not claiming
 
@@ -143,3 +143,5 @@ _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note
 Progress: `cat-harness-tools#449` (superseded by `#562`) adds the op. It moves a completed or scrapped bean into `defs/archive/` with the reason once its process has finished, and notes why otherwise (`e8m3`, `check:bean-archive`). The same PR fixes `bean-link` looking in a flat `beans/` and so missing the `beans/defs/` store, which meant every engine claim, note and resolve recorded nothing. `cat-harness#416` (superseding `#366`) adds the archive step at the end of `crdm-close.bpmn` and `code-change-review.bpmn` and updates `todo-manager`. Still open: whether `Process_BeanLifecycle` is called or retired. Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
 
 _2026-10-24T08:15:00Z_ — **Owner ruled: call it, and consolidate (option A).** Measured on main: 19 `claim` ops in 18 diagrams, 13 `resolve` in 11, 3 `archive` in 3 — 7 processes open a bean they never close and 8 close one without archiving. Ruling: split `Process_BeanLifecycle` into a reusable OPEN (check, create, whose, claim / leave alone) and CLOSE (outcome: complete + archive / scrap with reasons / record blocker), called by every bean-touching process at its start and end; the per-diagram claim/resolve/archive ops are removed (the 109 `note` ops stay where the work happens); `Process_BeanLifecycle` becomes OPEN → work → CLOSE; a check flags a diagram that touches a bean without calling both. Archive stays an activity op (the 2026-10-20 ruling), on one shared activity inside CLOSE. No engine change. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+_2026-10-26T13:20:00Z_ — Progress update: `litlfred/cat-harness#416` (`2026-10-23T20:16:02Z`), `litlfred/cat-harness#528` (`56f051cc`, `2026-10-24T11:49:57Z`), `litlfred/smart-base#154` (`9118518c`, `2026-10-24T11:50:00Z`), `litlfred/folio-assistant-core#207` (`2026-10-24T12:30:00Z`), and `litlfred/folio-assistant-sci#73` (`2026-10-24T12:43:05Z`) have all merged on `main`. Only companion PR `litlfred/cat-harness-tools#723` (`check:bean-calls` and engine walk test) remains open before closing.

@@ -2,11 +2,11 @@
 # folio-assistant-4y2i
 $schema: bean/1.0.0
 title: 'TOPOLOGY: sovereign cloud — hosted forge, jurisdiction-defined URLs, L4-L5 data stores'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-10-24T08:45:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-o1by
 ---
 
@@ -78,3 +78,5 @@ sovereign cloud.
 _2026-10-24T08:20:00Z_ — Claimed by the Claude drain thread (smart-trust-demo session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). Other agents: please skip this bean until this claim is released.
 
 _2026-10-24T08:45:00Z_ — Moved under o1by (deployment descriptions), as the owner chose ("A. Proposal first"). Analysis: https://claude.ai/artifact/TauEHEAz5d2wgFinqZEqb8.
+
+_2026-10-26T13:20:00Z_ — **Completed**: per `docs/proposals/deployment-descriptions.md` §6 (`4y2i`: "sovereign cloud: the jurisdiction fields and the artefacts-only example"), `JurisdictionSchema` (`publicationBase`, `audience`, `retention`, `residency`) and `liveData: "artefacts-only"` landed in `litlfred/cat-harness#546` (`5a9e8de`, `2026-10-26T11:06:18Z`), and `scenarios/deployments/sovereign-cloud.json` (checked by `schemas/deployment-examples.test.ts`) landed in `litlfred/cat-harness#547` (`0a2a4c0f`, `2026-10-26T11:23:55Z`).

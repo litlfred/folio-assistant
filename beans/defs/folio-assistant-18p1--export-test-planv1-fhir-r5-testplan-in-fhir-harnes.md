@@ -6,10 +6,8 @@ status: draft
 type: feature
 priority: normal
 created_at: 2026-10-01T09:12:25Z
-updated_at: 2026-10-01T09:12:25Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-ygzh
 ---
 
 Owner, 2026-10-01: *"https://www.hl7.org/fhir/testplan.html is a downstream target in fhir context … we should be able to map to fhir test plan when we have full smart guidelines IG content."*
@@ -36,3 +34,5 @@ Draft until a SMART Guidelines IG has complete L2/L3 test content. smart-immuniz
 - [ ] fhir-harness exports its test plans as TestPlan resources that validate with the FHIR validator / IG Publisher
 - [ ] a round-trip test: the exported TestPlan carries every case and assertion id of its source plan
 - [ ] `check:reference-direction` confirms that no platform module imports the export
+
+_2026-10-26T13:20:00Z_ — Block lifted: `folio-assistant-ygzh` is completed (`2026-10-01T09:30:19Z`). Remains `draft` awaiting an IG with complete DAK L2/L3 test content.

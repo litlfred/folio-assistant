@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T08:16:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -24,3 +24,5 @@ _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-
 Re-measured against main: 20 of 23 tool rows still declared in `cat-harness/tools/` (lean-cache and glossary-build moved; fsh-cone and valueset-schemas are declared nowhere now). Slice 1 opened: litlfred/cat-harness#508 + litlfred/folio-assistant-sci#67 move 11 Tools whose skills already live in sci (latex-preflight, latex-overfull, tex-snippet-validate, tex-source-audit, lean-coverage, lean-audit, content-manifest-validate, paper-latex-build, proof-dependency-graph, proof-objects-extract, proof-status-update); merge #508 first. Tracking issue litlfred/cat-harness#507. Left: lean-build + lean-toolchain-setup (tied to the harness's `lean-toolchain-contract` skill and test), paper-preferences / paper-preview / check-dependencies (MCP-served), headless-render-qc (harness skill), folio-block-qa-summary / folio-block-screenshots (to core).
 
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/cat-harness#508, litlfred/folio-assistant-sci#67, litlfred/folio-assistant-core#203.
+
+_2026-10-26T13:20:00Z_ — Progress update: Slice 1 has merged across all three repositories (`litlfred/cat-harness#508` @ `2026-10-24T10:43:50Z`, `litlfred/folio-assistant-sci#67` @ `2026-10-24T13:17:53Z` receiving the 11 Lean/LaTeX/proof Tools, and `litlfred/folio-assistant-core#203` @ `2026-10-24T13:17:57Z` receiving `folio-block-qa-summary` and `folio-block-screenshots`). Remaining tools tracked in `litlfred/cat-harness#507`.

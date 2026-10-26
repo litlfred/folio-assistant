@@ -2,10 +2,10 @@
 # folio-assistant-31ni
 $schema: bean/1.0.0
 title: 'Agent memory for every vendor: one memory source, one assembler, per-vendor agent files'
-status: in-progress
+status: completed
 type: feature
 created_at: 2026-10-06T18:31:42Z
-updated_at: 2026-10-24T08:25:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -16,7 +16,7 @@ One source (the declared memory directories, after the ar1s split), one assemble
 
 ## Todo
 - [x] Assembler reads every declared memory directory (prerequisite, done in ar1s P1).
-- [ ] Target: Claude (existing), Gemini, Copilot, Codex agent files; Cursor after verification (Gemini `4682`, Codex `5zs1`, Cursor `uvfs`, Copilot `xxh4` ruled `"Keep parked"` by owner 2026-10-20).
+- [x] Target: Claude (existing), Gemini (`4682`), Copilot (`xxh4`), Codex (`5zs1`), Cursor (`uvfs`) agent files (`litlfred/cat-harness-tools#690` @ `2026-10-24T09:48:36Z`, `litlfred/cat-harness#506` @ `2026-10-24T11:25:32Z`).
 - [x] Repo-wide AGENTS.md section from agent-less nodes (`litlfred/cat-harness-tools#639` @ `3e8259f`).
 - [x] Budgets + --check gate per target; skill page on the mapping (`litlfred/cat-harness-tools#639` @ `3e8259f`, `litlfred/cat-harness#459` @ `47d08c723`).
 
@@ -28,3 +28,5 @@ _2026-10-21T19:15:00Z_ — Progress update: ticked `Assembler reads every declar
 _2026-10-23T20:40:00Z_ — Ticked repo-wide `AGENTS.md` section from agent-less nodes and per-target budgets + `--check` gate + skill page on the mapping (`litlfred/cat-harness-tools#639`, `litlfred/cat-harness#459`). The 4 vendor per-agent definition targets (`4682`, `5zs1`, `uvfs`, `xxh4`) remain parked per owner ruling 2026-10-20.
 
 _2026-10-24T08:25:00Z_ — `litlfred/cat-harness-tools#639` merged as `86817af` (CI green; one standalone test fixed in `bd2ae42`), and `litlfred/cat-harness#459` merged as `1433cfc`, both inside the owner's merge-when-green window. The owner lifted the hold on the four vendor targets (`4682`, `5zs1`, `uvfs`, `xxh4`) on 2026-10-24 07:47Z, and the "Drain open beans across idle threads" thread is building them. This bean closes when they land. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
+
+_2026-10-26T13:20:00Z_ — **Completed**: all five child vendor targets (`fkqa`, `4682`, `5zs1`, `uvfs`, `xxh4`) are completed (`litlfred/cat-harness-tools#690` merged `2026-10-24T09:48:36Z`, `litlfred/cat-harness#506` merged `2026-10-24T11:25:32Z`).

@@ -8,11 +8,10 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-09T17:42:07Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-y9r6
-    - folio-assistant-p9bu
 ---
 
 Stage 1d of the split plan: `cat-harness` is self-contained.
@@ -36,3 +35,5 @@ measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness
 - `check:reference-direction -- --findings` → 4559 wrong-direction occurrences in 519 files; 4229 of them have cat-harness as the source (largest: → cat-harness-tools 1074, → core 818, → sci 761). Box 1 (0 links leaving) not met.
 - Blocker `p9bu` still in-progress; `y9r6` completed.
 Remaining: all three boxes, now as PRs to litlfred/cat-harness (generators learn a per-instance output root; the higher instances host their own outputs in their own repositories). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+_2026-10-26T13:20:00Z_ — Block lifted on `folio-assistant-p9bu` (completed `2026-10-24T08:52:36Z`); `folio-assistant-y9r6` remains in `blocked_by`.

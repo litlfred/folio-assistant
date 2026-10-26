@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T08:45:00Z
-updated_at: 2026-10-24T11:20:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -17,3 +17,5 @@ Children: 23a3 (schema), v3zw (resolver), jog4 (examples), 4y2i (sovereign cloud
 _2026-10-24T08:45:00Z_ — Claimed by the Claude drain thread (session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R).
 
 _2026-10-24T11:20:00Z_ — Proposal merged: litlfred/cat-harness#514 (d747cdd). The owner extended the merge window at 10:48Z. Next is 23a3 (schema), then v3zw and jog4.
+
+_2026-10-26T13:20:00Z_ — Progress update: `23a3` (`litlfred/cat-harness#546`), `jog4` (`litlfred/cat-harness#547`), `4y2i` (`litlfred/cat-harness#546` + `#547`), and the `v3zw` schema resolver (`litlfred/cat-harness#549`) have merged on `main`; `litlfred/cat-harness-tools#780` (`v3zw` corpus command) is open and `61tg`'s online comparison run remains.

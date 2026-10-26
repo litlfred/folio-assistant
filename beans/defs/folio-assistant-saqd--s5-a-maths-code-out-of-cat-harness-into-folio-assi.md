@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-24T10:25:00Z
+updated_at: 2026-10-26T13:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -26,3 +26,5 @@ Re-measured by file name across cat-harness, cat-harness-tools, core and sci: of
 _2026-10-24T10:10Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e) after agy released it at 09:06Z. Moves only, in groups, no maths content changed; anything touching proofs or qou goes to the owner first.
 
 _2026-10-24T10:25Z_ — Group 1 up: 13 pipeline leaves (no harness importers) move tools → sci, folio-assistant-sci#76 then cat-harness-tools#732; issue folio-assistant-sci#75 lists the later groups. Most rows are now in `cat-harness-tools/pipeline/` (moved there by 70lx), not `cat-harness/content/pipeline/`.
+
+_2026-10-26T13:20:00Z_ — Progress update: Group 1 (`litlfred/cat-harness-tools#732` @ `2026-10-24T11:38:42Z` and `litlfred/folio-assistant-sci#76` @ `2026-10-24T13:18:00Z` — 13 maths pipeline leaves) has merged on `main`. Later groups tracked in `litlfred/folio-assistant-sci#75`.
