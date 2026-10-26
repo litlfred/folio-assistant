@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/software-library.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+    "pr": "2681/merge",
+    "run": "40313808069"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/schema/software-library",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "software-library",
+      "title": "software-library",
+      "summary": "Software libraries — one outside library a layer's code IMPORTS, at the",
+      "module": "schemas/software-library.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library"
+    }
+  ]
+}

@@ -5,8 +5,8 @@
  "tasks": {
   "Task_ClaimBean": {
    "id": "Task_ClaimBean",
-   "name": "Claim the work item",
-   "type": "bpmn:Task",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ClaimBean",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
@@ -16,6 +16,11 @@
      "href": "../../../reference/skill-instructions/bean-coordination.html"
     }
    ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -106,8 +111,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -128,6 +141,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -192,6 +209,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -327,8 +348,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -349,6 +378,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -413,6 +446,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -548,8 +585,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -570,6 +615,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -634,6 +683,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -769,8 +822,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -791,6 +852,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -855,6 +920,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -998,8 +1067,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1020,6 +1097,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1084,6 +1165,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1219,8 +1304,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1241,6 +1334,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1305,6 +1402,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1440,8 +1541,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1462,6 +1571,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1526,6 +1639,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1666,8 +1783,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1688,6 +1813,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1754,6 +1883,10 @@
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
      },
      {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
+     },
+     {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
@@ -1786,7 +1919,7 @@
   },
   "Task_CloseBean": {
    "id": "Task_CloseBean",
-   "name": "Record what was done, and close",
+   "name": "Record what was done",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CloseBean",
    "lane": "Authoring agent",
@@ -1887,8 +2020,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1909,6 +2050,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1975,6 +2120,10 @@
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
      },
      {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
+     },
+     {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
@@ -2007,8 +2156,8 @@
   },
   "Task_ArchiveBean": {
    "id": "Task_ArchiveBean",
-   "name": "Archive the bean",
-   "type": "bpmn:Task",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ArchiveBean",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
@@ -2018,6 +2167,11 @@
      "href": "../../../reference/skill-instructions/todo-manager.html"
     }
    ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -2108,8 +2262,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -2130,6 +2292,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -2194,6 +2360,10 @@
      {
       "name": "symbiotic-interaction",
       "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",

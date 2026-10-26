@@ -452,6 +452,24 @@
       "name": "yes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
       "@type": "cat-harness:Lane",
       "name": "Ingestion Engine (agent, runs unattended)"
@@ -497,9 +515,29 @@
       "name": "Ingest the theme"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/EndEvent_Ingested",
       "@type": "bootstrap:ProcessNode",
       "name": "Ingested"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Gateway_Complete",

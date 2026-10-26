@@ -114,6 +114,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/bean-claim-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check a bean is free, then claim it on every copy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For one bean: fetch every bean copy, read the last three commits on its file, skip it if another agent committed within the window or its last note is a claim, look for an open PR naming it in every listed repository, and only then set it in-progress with a dated claim note as a plain commit on every copy. A rejected push is fetched, rebased and re-checked, never forced."
+        }
+      ],
+      "skos:notation": "bean-claim-check",
+      "dcterms:source": "cat-harness/tools/bean-claim-check/bean-claim-check.ts#bean-claim-check",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/bean-query",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -414,26 +434,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/content-manifest-validate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Content manifest validation"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while."
-        }
-      ],
-      "skos:notation": "content-manifest-validate",
-      "dcterms:source": "cat-harness/tools/content-manifest-validate/content-manifest-validate.ts#content-manifest-validate",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/context-prefixes",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -534,6 +534,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/drain-queue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build a bean drain queue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every bean copy, keep the drainable open beans (task, bug, feature in todo or in-progress, not blocked, not owner-held), group them by the owner already working in that area, mark the ones another agent touched within the window as skip, and list everything left out with its reason and every bean whose copies disagree. The newest updated_at wins where copies disagree."
+        }
+      ],
+      "skos:notation": "drain-queue",
+      "dcterms:source": "cat-harness/tools/drain-queue/drain-queue.ts#drain-queue",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/external-schemas-viewer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -571,46 +591,6 @@
       ],
       "skos:notation": "feature-staging",
       "dcterms:source": "cat-harness/tools/feature-staging/feature-staging.ts#feature-staging",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/folio-block-qa-summary",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Folio block QA summary"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict."
-        }
-      ],
-      "skos:notation": "folio-block-qa-summary",
-      "dcterms:source": "cat-harness/tools/folio-block-qa-summary/folio-block-qa-summary.ts#folio-block-qa-summary",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/folio-block-screenshots",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Folio block screenshots"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver."
-        }
-      ],
-      "skos:notation": "folio-block-screenshots",
-      "dcterms:source": "cat-harness/tools/folio-block-screenshots/folio-block-screenshots.ts#folio-block-screenshots",
       "skos:note": "candidate"
     },
     {
@@ -954,6 +934,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/gitlab-mr-files",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "List a merge request's changed files (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the paths one merge request changes."
+        }
+      ],
+      "skos:notation": "gitlab-mr-files",
+      "dcterms:source": "cat-harness/tools/gitlab-mr-files/gitlab-mr-files.ts#gitlab-mr-files",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/gitlab-mr-list",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -971,6 +971,26 @@
       ],
       "skos:notation": "gitlab-mr-list",
       "dcterms:source": "cat-harness/tools/gitlab-mr-list/gitlab-mr-list.ts#gitlab-mr-list",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/gitlab-mr-request-review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Request review on a merge request (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ask one or more users to review a merge request. Adds to the reviewers already requested."
+        }
+      ],
+      "skos:notation": "gitlab-mr-request-review",
+      "dcterms:source": "cat-harness/tools/gitlab-mr-request-review/gitlab-mr-request-review.ts#gitlab-mr-request-review",
       "skos:note": "candidate"
     },
     {
@@ -1274,46 +1294,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/latex-overfull",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "LaTeX overfull-box report"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones."
-        }
-      ],
-      "skos:notation": "latex-overfull",
-      "dcterms:source": "cat-harness/tools/latex-overfull/latex-overfull.ts#latex-overfull",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/latex-preflight",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "LaTeX preflight"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build."
-        }
-      ],
-      "skos:notation": "latex-preflight",
-      "dcterms:source": "cat-harness/tools/latex-preflight/latex-preflight.ts#latex-preflight",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/latexmk-compile",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1331,86 +1311,6 @@
       ],
       "skos:notation": "latexmk-compile",
       "dcterms:source": "cat-harness/tools/latexmk-compile/latexmk-compile.ts#latexmk-compile",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/lean-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lean vacuity audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise."
-        }
-      ],
-      "skos:notation": "lean-audit",
-      "dcterms:source": "cat-harness/tools/lean-audit/lean-audit.ts#lean-audit",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/lean-build",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lean build"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run."
-        }
-      ],
-      "skos:notation": "lean-build",
-      "dcterms:source": "cat-harness/tools/lean-build/lean-build.ts#lean-build",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/lean-coverage",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lean coverage"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap."
-        }
-      ],
-      "skos:notation": "lean-coverage",
-      "dcterms:source": "cat-harness/tools/lean-coverage/lean-coverage.ts#lean-coverage",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/lean-toolchain-setup",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lean toolchain install"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading."
-        }
-      ],
-      "skos:notation": "lean-toolchain-setup",
-      "dcterms:source": "cat-harness/tools/lean-toolchain-setup/lean-toolchain-setup.ts#lean-toolchain-setup",
       "skos:note": "candidate"
     },
     {
@@ -1754,6 +1654,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/open-work-lookup",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Does a path or bean exist on main or any open PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Answer whether a path, a path prefix or a bean id appears on a repository's default branch or on the head of any of its open pull requests, and where: the PR number, head branch, first commit author and creation time. A path or prefix matches files at the default branch and files each open PR changes; a bean id matches PR titles, bodies and head branch names. Repositories or PRs that could not be read are listed, so an empty answer is never mistaken for absence."
+        }
+      ],
+      "skos:notation": "open-work-lookup",
+      "dcterms:source": "cat-harness/tools/open-work-lookup/open-work-lookup.ts#open-work-lookup",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/openapi-ingest-rendered",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1934,26 +1854,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/paper-latex-build",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Paper build to LaTeX chapters"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none."
-        }
-      ],
-      "skos:notation": "paper-latex-build",
-      "dcterms:source": "cat-harness/tools/paper-latex-build/paper-latex-build.ts#paper-latex-build",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/paper-preferences",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2114,66 +2014,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/proof-dependency-graph",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Proof dependency graph"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF."
-        }
-      ],
-      "skos:notation": "proof-dependency-graph",
-      "dcterms:source": "cat-harness/tools/proof-dependency-graph/proof-dependency-graph.ts#proof-dependency-graph",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/proof-objects-extract",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Proof-object extraction"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read."
-        }
-      ],
-      "skos:notation": "proof-objects-extract",
-      "dcterms:source": "cat-harness/tools/proof-objects-extract/proof-objects-extract.ts#proof-objects-extract",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/proof-status-update",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Proof status from a Lean build"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status."
-        }
-      ],
-      "skos:notation": "proof-status-update",
-      "dcterms:source": "cat-harness/tools/proof-status-update/proof-status-update.ts#proof-status-update",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/qa-sweep",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2286,7 +2126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out."
+          "@value": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. A directory id an override or `mountDefaults` names may be one the instance declares in its `<name>.json` or one it declares FROM WITHIN a declared directory (`skills/skills.json` naming `voices`), resolved at the pin through `instanceDirectories` (bean `mo75` G3); an id in neither is refused at plan time. `tools` on an override names Tools by id and mounts each one runnable (bean `mo75` G3; owner, 2026-10-24): its definition (`<tools dir>/<id>/<id>.ts`), its implementation (the `inProcess.module`, or the script its `bun run cat <key>` resolves to) and their import closure, walked by bootstrap-tools' `importClosure` (the one closure walker), as every declared directory that closure touches — the lock still records directories only. A `hydrated` mount (bean `mo75`) lays each chosen directory down as its published `index.hydrated.jsonld` only: read from the pin's git tree when a commit carries it, otherwise fetched from the pin's subgraph index package (the `subgraph-index-<sha>` release asset `subgraph-index-package` publishes), its tarball checked against its `folio-binary-release/v1` record, its manifest against the repository, pin and harness asked for, and each file against its sha256, `SubgraphHydratedSchema` and the subgraph IRI; the lock records the package's URL and sha256 so a replay fetches the same bytes. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out."
         }
       ],
       "skos:notation": "remote-mount",
@@ -2794,6 +2634,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/subgraph-index-package",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Package one pin's subgraph index files for a hydrated mount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Pack every built `index.jsonld` and `index.hydrated.jsonld` under an instance's `<docs>/subgraph/<harness>/` into ONE npm package for one pin — `<harness>-subgraph-index@0.0.0-pin.<sha>`, with a `folio-subgraph-index/v1` manifest giving each file's sha256 — through `pack-tarball` (`bun pm pack`), which also writes the tarball's `folio-binary-release/v1` record. The reusable workflow `layer-publish-subgraph-index.yml` attaches both to the GitHub release `subgraph-index-<sha>`, where `remote-mount` finds them for a `hydrated` source whose pin's git tree holds no index file (they are `builtAtPublish`, so none does). It builds nothing: run `subgraph:jsonld` first. No subgraph files under the instance is a refusal, never an empty package."
+        }
+      ],
+      "skos:notation": "subgraph-index-package",
+      "dcterms:source": "cat-harness/tools/subgraph-index-package/subgraph-index-package.ts#subgraph-index-package",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/subgraph-readmes",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2831,46 +2691,6 @@
       ],
       "skos:notation": "subgraph-resolve",
       "dcterms:source": "cat-harness/tools/subgraph-resolve/subgraph-resolve.ts#subgraph-resolve",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/tex-snippet-validate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TeX snippet validation (AST)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one."
-        }
-      ],
-      "skos:notation": "tex-snippet-validate",
-      "dcterms:source": "cat-harness/tools/tex-snippet-validate/tex-snippet-validate.ts#tex-snippet-validate",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/tex-source-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TeX-source hazard audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion."
-        }
-      ],
-      "skos:notation": "tex-source-audit",
-      "dcterms:source": "cat-harness/tools/tex-source-audit/tex-source-audit.ts#tex-source-audit",
       "skos:note": "candidate"
     },
     {

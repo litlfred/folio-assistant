@@ -251,13 +251,24 @@
       "definition": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
       "altLabel": [
         "Copier's own folio/",
-        "Downstream author"
+        "Downstream author",
+        "Folio author"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/author",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CopyIntoFolio",
+      "label": "Folio author",
+      "scopeNote": "The person adapting an upstream knowledge-graph asset in their own folio. Chooses which asset to copy and where it belongs, receives the read-only inspection when the session has no write capability, and edits, comments on or raises todos against the copy once it is stamped and verified.",
+      "source": "cat-harness/processes/kg/copy-into-folio.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
@@ -463,8 +474,20 @@
       "prefLabel": "Clinical / scientific SME",
       "title": "Clinical / scientific SME",
       "notation": "clinical-sme",
-      "definition": "Reviewer whose judgement is about the subject matter rather than the artefact.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld"
+      "definition": "Reviewer whose judgement is about the subject matter rather than the artefact. Acts by domain judgement (`judgementOnly`: no procedure yields the answer, which is why a person is in the lane; bean `vljz`).",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/clinical-sme",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview",
+      "label": "Clinical / scientific SME",
+      "scopeNote": "Human subject-matter expert (`clinical-sme`, `judgementOnly: true`). Judges whether the decision-support output on a worked case or the indicator value on a cohort is clinically/scientifically right. No procedure yields the answer, which is why a person is in this lane.",
+      "source": "cat-harness/processes/sdlc/sme-test-data-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/administrator",
@@ -967,6 +990,7 @@
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller",
@@ -985,17 +1009,30 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CopyIntoFolio",
+      "label": "Authoring agent",
+      "scopeNote": "Probes whether a write capability (`git-push`, `github-api`, or `github-connector`) is available before touching disk or remote refs, writes the copied bytes and the `assets[]` entry into the target folio, and stamps `KgAsset.source` (`{ instance, path, ref }`) in the same change.",
+      "source": "cat-harness/processes/kg/copy-into-folio.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
@@ -1160,13 +1197,31 @@
       "source": "cat-harness/processes/sdlc/activity-log.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanClose",
+      "label": "Agent (this session)",
+      "scopeNote": "Closes only the bean its caller opened and claimed — Process_BeanOpen already sent someone else's to its sibling — and picks one of three recorded endings for it.",
+      "source": "cat-harness/processes/sdlc/bean-close.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanLifecycle",
       "label": "Agent (this session)",
-      "scopeNote": "Owns every transition on a bean it holds — check, create, claim, work, and the three-way outcome at the end — but GW_Owner is the one branch this lane cannot complete itself: the moment a bean turns out to be someone else's, the only correct move is to leave the whole lifecycle to Lane_Sibling rather than resolve, scrap or edit it from here.",
+      "scopeNote": "Owns every transition on a bean it holds. Whether the bean is its own at all is decided inside Process_BeanOpen, whose sibling lane takes someone else's bean; this lane only reads the answer at GW_Yours and stops when it is not.",
       "source": "cat-harness/processes/sdlc/bean-lifecycle.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanOpen",
+      "label": "Agent (this session)",
+      "scopeNote": "Checks, creates and claims a bean it may hold. Open_Owner is the one branch this lane cannot finish itself: a bean that turns out to be someone else's goes to Lane_Sibling, and nothing on it is resolved, scrapped or edited from here.",
+      "source": "cat-harness/processes/sdlc/bean-open.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
@@ -1214,6 +1269,15 @@
       "source": "cat-harness/processes/sdlc/requirements-filing.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview",
+      "label": "Authoring agent",
+      "scopeNote": "Prepares the review package from the fixed test data set (`test-data-fixed/1.0.0`): either a worked case with system output for decision support, or a cohort with computed and expected values for an indicator definition.",
+      "source": "cat-harness/processes/sdlc/sme-test-data-review.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
@@ -1221,6 +1285,15 @@
       "label": "Triage agent",
       "scopeNote": "Reads the footprint the stalled agents left, collects or reconstructs a handover report per agent, groups the work into 2-4 themes, and recommends. It never finishes, closes or deletes another agent's work.",
       "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "label": "Authoring agent",
+      "scopeNote": "Authors or curates the test data set: classifies whether the case requires a fixed curated set or a deterministic generated recipe, invokes the content-type specialisation subprocess on the generated branch or SME review on the fixed branch, and writes the self-identifying node into its declared graph directory.",
+      "source": "cat-harness/processes/sdlc/test-data-curation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
@@ -1359,26 +1432,26 @@
       "prefLabel": "Sibling session",
       "title": "Sibling session",
       "notation": "sibling-session",
-      "definition": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
+      "definition": "Another agent or human working the same store. Present in bean-open (Process_BeanOpen) precisely to mark what is NOT yours to close.",
       "altLabel": [
         "Owning session",
         "Sibling session or human (not yours to close)"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Sibling",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Sibling",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/sibling-session",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanLifecycle",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanOpen",
       "label": "Sibling session or human (not yours to close)",
-      "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
-      "source": "cat-harness/processes/sdlc/bean-lifecycle.bpmn"
+      "scopeNote": "The only task here with no `cat-harness.processes:bean` op: its whole job is to write nothing to a bean it does not own, ending at Open_NotYours so the caller stops rather than works.",
+      "source": "cat-harness/processes/sdlc/bean-open.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
@@ -1754,9 +1827,19 @@
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/validation-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CopyIntoFolio",
+      "label": "Validation pipeline",
+      "scopeNote": "Verifies that the target folio's newly declared `KgAsset` resolves on disk (`check:declaration-resolution` / `check:declared-assets`), carries a well-formed `KgAsset.source` (`{ instance, path, ref }`), and left the source graph untouched.",
+      "source": "cat-harness/processes/kg/copy-into-folio.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
@@ -1796,15 +1879,6 @@
       "label": "Publish target",
       "scopeNote": "The one lane whose action makes a URL live, which is exactly why a CDN in front of it is not drawn as a second lane — folding the cache in as a participant would make its URL look like the published one, and the canonical URL is this lane's promise to keep, not the cache's. Uploading and exposing stay two separate moments here rather than one, so a bad layout is still catchable before a reader can reach it.",
       "source": "cat-harness/processes/kg/kg-to-portal.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/lean-toolchain",
-      "@type": "skos:Concept",
-      "prefLabel": "Lean toolchain",
-      "title": "Lean toolchain",
-      "notation": "lean-toolchain",
-      "definition": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/ig-publisher-service",
@@ -1879,16 +1953,27 @@
       "altLabel": [
         "Corpus — L1 source knowledge graph",
         "Corpus — the subscriber's declaration",
-        "Source graph — read-only"
+        "Source graph — read-only",
+        "Source knowledge graph — read-only"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SubscribeKg/Lane_2"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/corpus",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CopyIntoFolio",
+      "label": "Source knowledge graph — read-only",
+      "scopeNote": "Holds the upstream asset. Exactly one task sits in this lane and it writes nothing: the arrow runs out of the source graph and never back.",
+      "source": "cat-harness/processes/kg/copy-into-folio.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
@@ -2125,8 +2210,28 @@
       "definition": "Runs a `test-plan/v1` against a system under test: resolves the plan, binds its test data (fixed and reviewed, or generated from template + params + seed, per `vm6m`), executes every case or skips it with a reason, and writes the `folio-test-run/v1` and the `test-report/v1`. UNTAINTED from the system under test — never the same actor — and it does not certify: the rollup it writes is what the certifier decides ON. Bean `3o5b`.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/tester",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_SmeTestDataReview",
+      "label": "Tester",
+      "scopeNote": "Records the SME's judgement as a validated `sme-case-verdict/1.0.0` node with attributable human `reviewer` identity and `reviewedAt` date, and updates the fixed data set's `review` status when passed.",
+      "source": "cat-harness/processes/sdlc/sme-test-data-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/tester",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestDataCuration",
+      "label": "Tester",
+      "scopeNote": "Verifies that the curated fixed set or generated recipe self-identifies from its file content (`discriminateTestDataSet`) rather than from its directory path, verifies the canonical SHA-256 digest, and binds the `TestDataRef` into the `test-plan/v1` test case.",
+      "source": "cat-harness/processes/sdlc/test-data-curation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
@@ -2234,12 +2339,21 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/lean-toolchain",
+      "@type": "skos:Concept",
+      "prefLabel": "Lean toolchain",
+      "title": "Lean toolchain",
+      "notation": "lean-toolchain",
+      "definition": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/l1-extraction-reviewer",
       "@type": "skos:Concept",
       "prefLabel": "L1 extraction reviewer",
       "title": "L1 extraction reviewer",
       "notation": "l1-extraction-reviewer",
-      "definition": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer; the ontologist/terminologist skills, methodologies and processes that will equip it are bean 4nfs.",
+      "definition": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer and performs exclusion sign-off in `classify-and-code-content.bpmn` (bean 4nfs).",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness-glossary.jsonld"
     }
   ]

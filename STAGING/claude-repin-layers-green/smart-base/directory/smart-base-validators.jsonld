@@ -4,9 +4,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators"
       ],
-      "description": "The validators smart-base's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks, as fhir-harness's validators/ do (bean riit). Today the two families of the `dak-annex` kind (typologies/dak-annex.json): dak-data-dictionary/v1 and dak-swimlanes/v1 (schemas/dak-annexes.ts), unmapped until 2026-10-11 (check:kind-validators:require-all).",
+      "description": "The validators smart-base's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks, as fhir-harness's validators/ do (bean riit). Today the two families of the `web-annex` kind (typologies/web-annex.json; `dak-annex` until 2026-10-24): dak-data-dictionary/v1 and dak-swimlanes/v1 (schemas/dak-annexes.ts), unmapped until 2026-10-11 (check:kind-validators:require-all).",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-validators"
     }

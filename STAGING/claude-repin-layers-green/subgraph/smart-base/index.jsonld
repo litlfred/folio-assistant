@@ -20,9 +20,9 @@
       "@type": "bootstrap:Asset",
       "name": "checkout-scripts",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/87d0fced478e488594e9746013f645770cf8131d72f51d692f491f735cccd676",
-        "bytes": 3997,
-        "sha256": "87d0fced478e488594e9746013f645770cf8131d72f51d692f491f735cccd676"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0b12731f6d6da8f1a1906df91a36582841bcc7f049615329c80d0cdb84f852cc",
+        "bytes": 4162,
+        "sha256": "0b12731f6d6da8f1a1906df91a36582841bcc7f049615329c80d0cdb84f852cc"
       },
       "title": "package.json — smart-base"
     },
@@ -36,6 +36,11 @@
         "sha256": "8bc49dcc13bc1b2a2bcfefb34b8ee3c0805e4202d70bdbd758de9ec5cc74a026"
       },
       "title": "smart-base"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/glossary",
+      "@type": "bootstrap:Subgraph",
+      "name": "glossary"
     },
     {
       "@id": "http://smart.who.int/base/directory/library",
@@ -148,86 +153,9 @@
       "name": "smart-base-validators"
     },
     {
-      "@id": "http://smart.who.int/base/directory/tools",
-      "@type": "bootstrap:Subgraph",
-      "name": "tools"
-    },
-    {
       "@id": "http://smart.who.int/base/role/l1-extraction-reviewer",
       "@type": "bootstrap:Role",
       "title": "L1 extraction reviewer"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/bpmn-to-fsh.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "bpmn-to-fsh",
-      "title": "BPMN → FHIR Shorthand"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/dak-api-hub.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "dak-api-hub",
-      "title": "DAK API hub"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/dak-config-from-sushi.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "dak-config-from-sushi",
-      "title": "sushi-config.yaml → dak.config.json"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/dmn-to-html.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "dmn-to-html",
-      "title": "DMN → HTML"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/dmn-to-questionnaire.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "dmn-to-questionnaire",
-      "title": "DMN → FHIR Questionnaire"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/extract-dak.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "extract-dak",
-      "title": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/l1-extraction-pages.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "l1-extraction-pages",
-      "title": "Write the L1 extraction viewer: a page per instance holding `l1-extraction` directories, and a hub"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "l1-recommendation-candidates",
-      "title": "L1 guideline → recommendation candidates (L1 3.0)"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/l1-recommendation-scenarios.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "l1-recommendation-scenarios",
-      "title": "L1 recommendations → L2 user-scenario candidates"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/l1-transcription-verbatim.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "l1-transcription-verbatim",
-      "title": "Authored L1 → verbatim against transcriptions and image narratives"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/smart-fhir-cache-seed.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "smart-fhir-cache-seed",
-      "title": "Seed the FHIR package cache, with WHO's published site as a source"
-    },
-    {
-      "@id": "http://smart.who.int/base/tools/smart-liquid-variables.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "smart-liquid-variables",
-      "title": "IG metadata → Liquid variables"
     },
     {
       "@id": "cat-harness:graphTypology/document-kinds",
@@ -259,12 +187,14 @@
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/methodologies/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/",
-    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/"
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/"
   ],
   "holdsGraph": [
     "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/scenarios",
-    "bootstrap:graphTypology/skills"
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
   ],
   "name": "smart-base",
   "path": "./",

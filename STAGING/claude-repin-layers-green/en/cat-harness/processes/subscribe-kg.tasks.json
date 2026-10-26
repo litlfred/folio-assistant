@@ -34,12 +34,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -132,6 +140,10 @@
     "title": "Corpus",
     "skills": [
      {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"
      },
@@ -160,6 +172,10 @@
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"
@@ -248,6 +264,10 @@
     "title": "Corpus",
     "skills": [
      {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"
      },
@@ -289,12 +309,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -346,12 +374,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -505,6 +541,156 @@
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen",
+   "lane": "Subscriber (the folio's owner)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "dispatch-agent",
+      "href": "../../../reference/skill-instructions/dispatch-agent.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html"
+     },
+     {
+      "name": "interaction-modality",
+      "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "repo-conversion",
+      "href": "../../../reference/skill-instructions/repo-conversion.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
+   "lane": "Corpus — the subscriber's declaration",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose_2": {
+   "id": "Call_BeanClose_2",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose_2",
+   "lane": "Corpus — the subscriber's declaration",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"

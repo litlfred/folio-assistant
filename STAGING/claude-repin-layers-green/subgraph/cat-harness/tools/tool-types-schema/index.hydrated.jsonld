@@ -1,0 +1,47 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/tool-types-schema/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/tool-types-schema.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schemas those IRIs name: one document per type, `tool-types/<Name>.schema.json`, plus the combined `tool-types.schema.json`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat kg:schema"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--base-url"
+            },
+            "name": "baseUrl",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "schema",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "maintains": "https://litlfred.github.io/folio-assistant/tool-types.schema.json",
+      "maintainsFrom": "schemas/tool-types.ts",
+      "name": "tool-types-schema",
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
+      "title": "Tool I/O type vocabulary"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/tool-types-schema",
+  "path": "tools/tool-types-schema/"
+}

@@ -1,0 +1,70 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-inject/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-inject.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        },
+        "mcp": {
+          "tool": "translation_inject"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "name": "source",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "positional": 1
+            },
+            "name": "po_file",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--locale"
+            },
+            "name": "locale",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Locale"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The translated copy written.",
+            "name": "translated",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "translation-inject",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+      "title": "Inject translations"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/translation-inject",
+  "path": "tools/translation-inject/"
+}

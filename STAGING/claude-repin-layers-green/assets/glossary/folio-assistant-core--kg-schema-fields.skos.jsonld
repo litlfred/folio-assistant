@@ -2484,6 +2484,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-schema-fields/reference.standalonereferenceinput.raw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandaloneReferenceInput.raw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional raw BibTeX or CSL-JSON / JSON-LD text to parse before applying explicit fields."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#StandaloneReferenceInput.raw",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-schema-fields/review-comment.blockanchor.section",
       "@type": "skos:Concept",
       "skos:inScheme": {

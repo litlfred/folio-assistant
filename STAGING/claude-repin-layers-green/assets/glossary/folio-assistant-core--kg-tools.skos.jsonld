@@ -74,6 +74,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/folio-block-qa-summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Folio block QA summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict."
+        }
+      ],
+      "skos:notation": "folio-block-qa-summary",
+      "dcterms:source": "folio-assistant-core/tools/folio-block-qa-summary/folio-block-qa-summary.ts#folio-block-qa-summary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/folio-block-screenshots",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Folio block screenshots"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver."
+        }
+      ],
+      "skos:notation": "folio-block-screenshots",
+      "dcterms:source": "folio-assistant-core/tools/folio-block-screenshots/folio-block-screenshots.ts#folio-block-screenshots",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/folio-changeset",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/StartEvent_Initiative"
       ],
-      "nodeCount": 11,
-      "flowCount": 11,
+      "nodeCount": 15,
+      "flowCount": 15,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle"
     },
@@ -41,7 +41,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Task_Plan",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Task_SeedBeans",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/H02"
     },
@@ -124,9 +124,47 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Task_Retire",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/EndEvent_Retired",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/H11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Task_SeedBeans",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/End_BeanNotYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Lifecycle/node/EndEvent_Retired",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_4"
     }
   ]
 }

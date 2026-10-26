@@ -4,9 +4,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline"
       ],
-      "nodeCount": 19,
-      "flowCount": 24,
+      "nodeCount": 24,
+      "flowCount": 29,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -47,7 +47,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
-      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -209,7 +209,7 @@
       "name": "validated",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
-      "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -217,7 +217,49 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_AssembleDak",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     }
   ]

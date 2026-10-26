@@ -92,11 +92,6 @@
       "name": "who-iris-themes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-tools",
-      "@type": "bootstrap:Subgraph",
-      "name": "who-iris-tools"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-translations",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-translations"
@@ -105,19 +100,15 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-uploads",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-uploads"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/iris-pages.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "iris-pages",
-      "title": "IRIS replica and catalogue pages"
     }
   ],
   "hasSubgraph": [
-    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/"
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/"
   ],
   "holdsGraph": [
-    "bootstrap:graphTypology/skills"
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
   ],
   "name": "who-iris",
   "path": "./",

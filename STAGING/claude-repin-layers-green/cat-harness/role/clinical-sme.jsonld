@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -15,11 +15,12 @@
       "prefLabel": "Clinical / scientific SME",
       "title": "Clinical / scientific SME",
       "notation": "clinical-sme",
-      "description": "Reviewer whose judgement is about the subject matter rather than the artefact.",
+      "description": "Reviewer whose judgement is about the subject matter rather than the artefact. Acts by domain judgement (`judgementOnly`: no procedure yields the answer, which is why a person is in the lane; bean `vljz`).",
       "sourceKind": "role-registry",
       "actorKinds": [
         "person"
       ],
+      "judgementOnly": true,
       "hasSkill": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme"
     }

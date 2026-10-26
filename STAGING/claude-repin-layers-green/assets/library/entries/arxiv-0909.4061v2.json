@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title page and opening of Halko, Martinsson and Tropp's survey \"Finding structure with randomness\". The abstract says randomized algorithms compute partial matrix decompositions by using random sampling to find a subspace that captures most of a matrix's action, compressing the matrix to that subspace, and factorizing the reduced matrix deterministically. It gives the costs for the k dominant SVD components of an m × n matrix: O(mn log(k)) flops for a dense matrix against O(mnk) classically; a flop count matching Krylov methods for a sparse matrix, with more robustness; and a constant number of passes, against O(k), for a matrix that does not fit in fast memory. Section 1 opens with Stewart's view that matrix factorizations are computational platforms.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains why classical factorization algorithms are often inadequate today: matrices are enormous, data are missing or inaccurate, data transfer dominates cost, and processor architectures keep changing. The paper argues that randomized algorithms are a simple, effective and often more robust tool for approximate matrix factorization, accurate to any tolerance above machine precision. Remark 1.1 separates these methods from classical Monte Carlo: they are relatively insensitive to the quality of the randomness, and their failure probability is a user-set parameter that can be made negligible (say, below 10^-15). Section 1.1 begins on truncated factorizations as low-rank approximations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduces the low-rank factorization A ≈ BC, with the inner dimension k as the numerical rank. It lists where numerically low-rank matrices arise: PCA, low-dimensional embedding, least-squares fitting, fast PDE solvers and potential evaluation (the fast multipole method, H-matrices), and model reduction for multiscale PDEs. Section 1.2 splits the computation into two stages. Stage A finds a matrix Q with orthonormal columns such that A ≈ QQ*A (1.2), with as few columns as possible but accuracy first. Stage B uses Q to compute a standard factorization (QR, SVD, etc.) of A.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Stage A is done by random sampling, the paper's main subject, and Stage B by established deterministic methods. Given Q, an approximate SVD follows in three steps: form B = Q*A, compute the SVD of the small matrix B = ŨΣV*, and set U = QŨ. Sometimes A need not be revisited, which allows single-pass algorithms. Section 1.3.1 states the fixed-precision problem: find Q with k(ε) orthonormal columns such that ‖A − QQ*A‖ ≤ ε in the spectral norm. The SVD solves it optimally, since min over rank(X) ≤ j of ‖A − X‖ equals σ_{j+1} (1.4), so the minimal k is the number of singular values above ε. It then turns to the fixed-rank problem, with a target rank and an oversampling parameter.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "States the fixed-rank problem: given k and an oversampling parameter p, find Q with k + p orthonormal columns whose error ‖A − QQ*A‖ is close to the best rank-k error (1.5). The extra columns are what make the methods effective, and the fixed-precision problem reduces to this one by building Q incrementally while estimating the residual (§4.4). Section 1.3.2 gives the intuition. For A of exact rank k, k random samples y = Aω are almost surely linearly independent and span the range of A. For A = B + E with a small perturbation E, k + p samples are much more likely to cover the range of B. The failure probability falls superexponentially in p, and p = 5 or 10 often gives superb results.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents the Proto-Algorithm for the fixed-rank problem: draw a random n × (k + p) test matrix Ω, form Y = AΩ, and take Q as an orthonormal basis for the range of Y. It is essentially the first step of subspace iteration from a random start. The novelty is to oversample the subspace dimension, which often makes further iteration unnecessary. The text lists the questions the rest of the paper answers: which random matrix and how much oversampling, how to orthonormalize an ill-conditioned Y, the costs, the fixed-precision case, other factorizations, practical performance, and error bounds with their probabilities. Section 1.4 begins comparing randomized and traditional methods. In Stage A the bottleneck is usually the product AΩ.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Compares costs in three settings. For a dense matrix in fast memory, rank-revealing QR costs O(kmn) flops, while randomized schemes with a structured Ω (for example, a randomized subsampled Fourier transform) need O(mn log(k) + (m + n)k²). For a matrix with fast matrix–vector products, Krylov methods (Lanczos, Arnoldi) cost about k·T_mult + (m + n)k², the same as randomized methods with a Gaussian Ω. Krylov methods are sometimes more accurate for the same budget, but the randomized schemes are inherently stable, have guarantees that do not depend on subtle spectral properties, and parallelize their products. For a matrix in slow memory or streamed, classical methods need O(k) passes, while the proto-algorithm needs one pass for Stage A.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "For slowly decaying spectra, 2 to 4 extra passes suffice, and the two-stage scheme can be revised to make a single pass (§5.5). Section 1.5 previews the analysis with Theorem 1.1, a simplified Theorem 10.6. For a real m × n matrix, with k ≥ 2, p ≥ 2 and k + p ≤ min{m, n}, the proto-algorithm with a standard Gaussian test matrix satisfies E‖A − QQ*A‖ ≤ (1 + 4√(k+p)/(p−1) · √min{m,n}) σ_{k+1} (1.8). That is within a small polynomial factor of the optimal σ_{k+1}. By measure concentration, the bound (1 + 11√(k+p) · √min{m,n}) σ_{k+1} (1.9) holds with probability at least 1 − 6·p^{−p}, which justifies p = 5. When the singular values decay, the error stops depending on the dimensions, and a power iteration shrinks the bracket.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Boxes the Prototype for Randomized SVD. Stage A draws an n × 2k Gaussian Ω, forms Y = (AA*)^q AΩ by alternating applications of A and A*, and orthonormalizes Y. Stage B forms B = Q*A, takes its SVD and sets U = QŨ. A note warns that Y is vulnerable to round-off, so high accuracy needs orthonormalization between applications (Algorithm 4.4). The page adds that related bounds hold for structured random matrices and that cheap a posteriori error estimates exist. Section 1.6 motivates the q power-iteration steps (q = 1 or 2 usually suffices) for slowly decaying spectra. The method takes 2(q + 1) passes and (2q + 2)k·T_mult + O(k²(m + n)) flops. Theorem 1.2 begins, a consequence of Corollary 10.10.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes Theorem 1.2. The randomized SVD gives a rank-2k factorization with E‖A − UΣV*‖ ≤ [1 + 4√(2 min{m,n}/(k−1))]^{1/(2q+1)} σ_{k+1} (1.10). The power iteration drives the leading constant to one exponentially fast in q, so 2k approximate singular vectors capture as much as the first k exact ones. Truncating to rank k adds at most σ_{k+1} (1.11), a bound the authors' numerical experience suggests is pessimistic. Section 1.7 outlines the paper in three parts: introduction (§§1–3), algorithms (§§4–7) and theory (§§8–11). Section 2 opens the history: random matrix theory reached classical factorization only recently, by way of computer science and geometric analysis. Section 2.1 begins with randomized matrix approximation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gives the common pattern of randomized approximation methods: preprocess to get sampling probabilities, take random samples (linear functions of the matrix), and postprocess them with classical numerical linear algebra. Sparsification (§2.1.1) replaces the matrix by a sparser random surrogate whose expectation is the original. It goes back to Achlioptas and McSherry, building on Karger, with a different method by Arora, Hazan and Kale. Column selection (§2.1.2) rests on the existence of k columns C with ‖A − CC†A‖ ≤ √(1 + k(n−k)) ‖A − A_(k)‖ (2.1). Optimizing natural objectives for column selection is NP-hard, but rank-revealing QR nearly achieves the bound. Randomized variants sample columns by squared norms or leverage scores, starting with Frieze, Kannan and Vempala (1998).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continues column sampling. Sampling ℓ(k, ε) columns gives a rank-k B with ‖A − B‖_F ≤ ‖A − A_(k)‖_F + ε‖A‖_F (2.2), in a constant number of passes. Rudelson and Vershynin extended this to spectral-norm bounds. Deshpande et al. reached (1 + ε) relative Frobenius error (2.3) with adaptive volume sampling in k passes, as did Har-Peled independently. Drineas, Boutsidis and colleagues used leverage-score sampling and rank-revealing QR postprocessing for column subset selection, and the argument in [17] separates the linear algebra from the random matrix theory, much as this paper's analysis does. Dimension reduction (§2.1.3) embeds the rows by a random linear map. The proto-algorithm is its dual description, an idea traced to Papadimitriou et al. (1998) for latent semantic indexing.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Traces dimension reduction further. Sarlós used the Ailon–Chazelle structured maps for least squares, matrix multiplication and low-rank approximation. Woolfe et al. improved the asymptotic cost. Martinsson, Rokhlin and Tygert analysed Gaussian maps, stressed oversampling, and derived interpolative decompositions. Rokhlin, Szlam and Tygert added power iteration, which gives efficient large-scale PCA. Clarkson and Woodruff gave one-pass algorithms with near-optimal lower bounds. Approximation by submatrices (§2.1.4) covers interpolative, CUR (A ≈ CUR with a small linkage matrix U) and skeleton decompositions, with randomized CUR algorithms for absolute and relative error by Drineas et al. Section 2.1.5 begins a list of other randomized numerical problems.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Lists other randomized methods: tensor skeletons, matrix multiplication, randomized Kaczmarz for overdetermined systems, fast dimension reduction for least squares and nonnegative least squares, randomized preconditioning, ℓ1 and ℓp regression, and Fermat–Weber facility location. Section 2.1.6 contrasts compressive sampling. That field rests on compressibility and reconstructs an object from few nonadaptive random samples, often by convex optimization, as in Candès–Romberg–Tao and Donoho (2004), Recht–Fazel–Parrilo for rank-deficient matrices, and matrix completion by Candès–Recht and Candès–Tao. It assumes limited access to the data. Matrix approximation instead has the whole matrix, may revisit it, and aims for a simpler representation computed as cheaply as possible.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Concludes that randomized matrix approximation needs fewer samples and less computation than compressive-sampling reconstruction. Section 2.2 traces the origins. Under random embeddings, Johnson and Lindenstrauss (1984) showed that N points keep their pairwise distances under a random map to dimension O(log N), and Bourgain did the same for ℓ1. Theoretical computer science used this for nearest-neighbour search, and [57, 104] first applied it to linear algebra. Later work simplified the maps: Achlioptas's discrete matrices, and the Ailon–Chazelle fast Johnson–Lindenstrauss transform, which Sarlós brought to numerical linear algebra. Under data streams, massive data motivate pass-efficient methods and sketches (small summaries, often random projections, traced to Alon et al.). Section 2.2.3 begins on numerical linear algebra.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {

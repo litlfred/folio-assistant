@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Author, abstract and the opening of Chapter 1. The monograph by Agustinus Kristiadi (Western University and Vector Institute) aims to give an accessible, self-contained introduction to the theoretical analysis of probabilistic decision-making algorithms (bandits, Bayesian optimization and tree search), which adaptively gather information and so suit costly experimentation such as materials and drug discovery; it assumes only basic probability, statistics and some Gaussian process background. Chapter 1, opening with an epigraph from Hacking on frequentist and Bayesian probability, sets up decision theory: data D and a latent parameter f with an unknown joint distribution, a set of actions A, and a utility u(f, a), illustrated by symptoms, a disease and candidate drugs. It takes both Bayesian and frequentist views as valid for different purposes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The first half of the title, \"Introduction to the Analysis of Probabilistic\", split from the rest by the extraction (the title continues \"Decision-Making\" in the next block).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Bayesian decision theory. Probabilities represent beliefs; f is unknown and D observed, and the best action maximises expected utility under the posterior, a* = argmax over a of E over f ~ p(f | D) of u(f, a) (Eq. 1.1). A footnote notes the frequentist convention of a loss, taken as −u. Examples: a doctor prescribing the drug with highest expected utility under their posterior belief, the utility encoding their risk attitude; and Pascal's Wager, where infinite utilities for belief if God exists make believing optimal however small the posterior probability, with the remark that different utilities give different optimal actions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Frequentist decision theory and the start of Chapter 2. Probabilities are long-run relative frequencies; f is fixed but unknown and D ~ p(D | f) is random, so one seeks a decision rule δ mapping data to actions that maximises expected utility, or minimises expected loss ℓ = −u (Eqs. 1.2 and 1.3). Because this depends on the unknown f, the risk R(f, δ) = E over D of ℓ(f, δ(D)) is defined and the minimax rule minimises the worst-case risk over f (Eq. 1.4), illustrated by a public-health treatment guideline that must work for cold, malaria or COVID-19 without being best for each. Remark 1.6 answers \"Bayesian or frequentist?\" with both, as tools for different goals.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Concentration inequalities (Chapter 2). Probability is used here as long-run relative frequency, distinct from Bayesian belief, and the standard results are stated without proof and illustrated with student grades. Markov's inequality bounds P(X ≥ a) by E(X)/a for nonnegative X; Chebyshev's bounds deviations from the mean by Var(X)/a²; the Chernoff bound for sums of independent Bernoulli variables gives exp(−E(X)δ²/3) and exp(−E(X)δ²/2) for upper and lower deviations, and its general form uses the moment-generating function; Hoeffding's inequality bounds the deviation of a sample mean of bounded i.i.d. variables by 2 exp(−2na²/(h − l)²). Example 2.9 compares them on n fair coin tosses and the event of at least 3n/4 heads: Markov gives the constant 2/3, Chebyshev 4/n, and Chernoff exp(−n/24).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gaussian tail bounds. For a Gaussian variable with mean μ and variance σ², P(|X − μ| ≥ βσ) ≤ exp(−β²/2) for any β > 0 (Theorem 2.12, after Srinivas et al.). For a Gaussian with nonpositive mean, E(X·I(X ≥ 0)) = σ/√(2π) · exp(−μ²/(2σ²)) (Theorem 2.13), the expectation of X restricted to its nonnegative values.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Other useful inequalities, and the start of Chapter 3. The union bound states that the probability of a union of events is at most the sum of their probabilities, illustrated by a class of 50 students each with at most a 0.001 chance of a perfect grade, giving at most 5% that some student gets one. Jensen's inequality gives f(E(X)) ≤ E(f(X)) for convex f and the reverse for concave f, and also holds for empirical means.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Frequentist bandits (Chapter 3). In the K-armed bandit problem an action from {1, …, K} is chosen at each step t = 1, …, T and yields a reward in [0, 1] from an unknown distribution with mean μ(a); a* is the action with the highest mean. The regret R_T sums r(a*) − r(a_t) over the run, and since it is random, its expectation E(R_T) = Tμ(a*) − Σ μ(a_t) is studied. An algorithm has no regret if E(R_T)/T → 0; the goal is algorithms using frequentist estimates, such as sample means, that achieve this.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explore-then-exploit (Algorithm 1). Each of the K actions is tried N times, the action with the highest sample-mean reward is then chosen for the remaining rounds. Theorem 3.1 states that with N = (T/K)^(2/3)(log T)^(1/3) the expected regret is O((KT² log T)^(1/3)) with probability at least 1 − 2K/T⁴, so the algorithm has no regret with high probability. The proof defines the event E that every sample mean is within ε = √(2 log T / N) of its true mean, shows that under E each exploitation step costs at most 2ε and exploration at most NK, substitutes N, and bounds P(E) with Hoeffding's inequality and a union bound over actions. Remark 3.2 summarises the proof pattern: define a \"nice\" event, bound per-step regret under it, sum, and show the event has high probability, choosing N to tighten the bound or merely make it sublinear in T.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Upper Confidence Bound (Algorithm 2, after Auer 2002). At each step the action maximising the empirical mean plus the bonus √(2 log T / N_t(a)) is chosen, where N_t(a) counts past selections; the bonus is an error bar that encourages exploration of uncertain actions and shrinks as counts grow, leading to exploitation. Theorem 3.3 states an expected regret of O(√(Kt log T)) at each round t with probability at least 1 − 2K/T³, hence no regret with high probability. The proof shows that under the event that all estimates lie within their bonus, each gap μ(a*) − μ(a_t) is at most twice the bonus, decomposes the regret over actions, bounds the sum of √N_t(a) by √(Kt) with Jensen's inequality, and bounds the event's failure probability with Hoeffding's inequality and a union bound over actions and times.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gaussian processes (Chapter 4). A GP is a probability distribution over functions f: X → R such that the values at any finite set of points are jointly Gaussian; it is determined by a mean function and a covariance function given by a symmetric positive-definite kernel, equivalently one whose Gram matrix K is positive semi-definite for every finite set of points. Examples are the Matérn kernel with smoothness ν, which the text says induces a GP over functions up to k-times differentiable for k < ν (twice for ν = 5/2), and the RBF or squared-exponential kernel, the ν → ∞ limit, which induces a GP on C^∞.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Posterior inference. With data D of n points, a zero-mean GP prior and Gaussian observation noise of variance σ_n², the posterior mean is μ(x | D) = k(x, X)(k(X, X) + σ_n² I)⁻¹ Y and the posterior covariance is k(x, x) − k(x, X)(k(X, X) + σ_n² I)⁻¹ k(X, x) (Eqs. 4.2 and 4.3); a footnote notes that in practice the prior mean is often set to zero.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Reproducing kernel Hilbert space. The posterior means of GP(0, k) over all possible datasets are the functions x ↦ Σ α_i k(x_i, x), with α = (k(X, X) + σ_n² I)⁻¹ Y, so the kernel sections k(x_i, ·) act as a basis. The RKHS H_k is defined as the completion of this space, with inner product Σ_i Σ_j α_i α'_j k(x_i, x'_j); its norm measures a function's \"complexity\", and the RKHS ball of radius b contains the posterior means of complexity at most b.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Information capacity. The information about f carried by noisy observations is the mutual information MI(Y, f) = ½ log det(I + σ_n⁻² K(X, X)) (Eq. 4.7), and the information capacity γ_T is its supremum over datasets of size T (Eq. 4.8). Following Srinivas et al., for compact X ⊂ R^d, γ_T is O(T^α (log T)^(1−α)) with α = d/(2ν + d) for the Matérn kernel and O((log T)^(d+1)) for the RBF kernel; smoother functions carry less \"surprise\". By the chain rule the mutual information equals ½ Σ log(1 + σ_t²(x_t)/σ_n²) (Eq. 4.9), and Theorem 4.1 states that if k(x, x) ≤ m then the sum of predictive variances is at most 2m / log(1 + σ_n⁻² m) · γ_T, a result used in the later chapters.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The Borell-TIS inequality (Theorem 4.2): for a centred GP on a topological space whose sample paths have finite supremum, P(sup |f(x)| ≥ λ) ≤ 2 exp(−λ² / (8 E sup |f(x)|²)) for every λ > 0, used to bound the supremum of GP sample paths.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -303,7 +423,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Discrete Bayesian optimization (Chapter 5). The search space X is finite, as in drug and materials discovery, and the goal is to maximise an unknown function that is costly to evaluate. With a GP prior, each iteration picks the point maximising an acquisition function, the posterior expected utility, and evaluates f there (Algorithm 3, whose listing as printed repeats the bandit UCB steps). Instantaneous regret is f(x*) − f(x_t), cumulative regret R_T is their sum, and no regret means R_T/T → 0; Bayesian expected regret E(R_T) is distinguished from high-probability bounds on R_T, which the text calls stronger. The regularity assumptions are that f is a sample from GP(0, k), that the kernel's marginal variance is bounded (written k(x, x) ≥ 1 here, while the later proofs use σ_t(x) ≤ √k(x, x) ≤ 1), and homoskedastic noise.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -322,7 +450,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "GP-UCB with a high-probability regret bound (after Srinivas et al., 2010). The policy picks x_t maximising μ_t(x) + β_t σ_t(x). Theorem 5.1: on a finite X, with β_t² = 2 log(t² π² |X| / 6δ), GP-UCB has regret R_T = O*(√(T γ_T log |X|)) with probability at least 1 − δ. The proof assumes the event E that f(x) lies in every confidence interval [μ_t ± β_t σ_t], bounds each instantaneous regret by 2β_t σ_t(x_t), bounds the sum of squared regrets by O(β_T² γ_T) with Theorem 4.1, and applies Cauchy-Schwarz to get R_T ≤ O(√(T β_T² γ_T)). P(E) ≥ 1 − δ follows from the Gaussian tail bound, a union bound over X, and a union bound over t using Σ 1/t² = π²/6.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -341,7 +477,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "GP Thompson sampling with an expected regret bound (adapted from Russo and Van Roy, 2014). Thompson sampling picks the maximiser of a posterior sample, so x_t has the same posterior distribution as x*; the text notes that bounds in expectation are weaker than high-probability ones. Theorem 5.2: on a finite X, GP-TS has E(R_T) ≤ O*(√(T γ_T log |X|)). The proof adds and subtracts an arbitrary upper confidence bound U_t, whose conditional expectations at x_t and x* agree, splitting the regret into two sums. The first, with β_t = √(2 log((t² + 1)|X| / √(2π))), is bounded by a constant C ≤ 1 using the nonpositive-mean Gaussian tail result (Theorem 2.13) and the bound σ_t ≤ 1; the second by β_T √(T · O(γ_T)) using Cauchy-Schwarz and Theorem 4.1.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -360,7 +504,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuous Bayesian optimization (Chapter 6). X is a compact convex subset of [0, m]^d, and the strategy is to discretise X at each step and use Lipschitz continuity of GP sample paths to transfer the discrete bound. Proposition 6.1, based on Borell-TIS, states that for a centred GP with continuously differentiable sample paths the largest partial derivative L satisfies P(L > λ) ≤ d·a·exp(−λ²/b²) for constants a, b > 0. Theorem 6.2: if f is L-Lipschitz and a GP sample path with k(x, x) ≤ 1, then with β_t² = 2 log(2πt²(Lmdt²)^d / 6δ), GP-UCB has regret O*(√(T γ_T d)) with probability at least 1 − δ. The proof uses a grid of (Lmdt²)^d points so that discretisation error is at most 1/t², bounds each regret by 2β_t σ_t(x_t) + 1/t² under confidence events E1 (on the chosen points) and E2 (on the grid), and shows each fails with probability at most δ/2.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -379,7 +531,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Acknowledgments and references. The author thanks Gustavo Sutter and Tristan Cinquin for feedback and for taking part in a reading group based on the monograph. The references are Auer (2002) on confidence bounds, Hacking (2006), Lattimore and Szepesvári's Bandit Algorithms, Russo and Van Roy (2014) on posterior sampling, Srinivas et al. (2010) on GP optimization, van der Vaart and Wellner on empirical processes, Wald (1949), and Williams and Rasmussen's Gaussian Processes for Machine Learning.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     }
   ]

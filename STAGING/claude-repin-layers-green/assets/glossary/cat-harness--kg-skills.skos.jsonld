@@ -329,6 +329,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/bean-drain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bean-drain"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drain open beans (stories, bugs, features) with several agents at once, as part of the SDLC: build the queue, group it by owner, check and claim each bean on every bean copy before any work, open the PR at the first commit, ask the owner through ask-the-person, close, and refill. Use when a thread or agent is asked to drain beans, when a coordinator spawns drain threads, or when an idle agent pulls from a shared queue next to other agents."
+        }
+      ],
+      "skos:notation": "bean-drain",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/bean-drain.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/before-after-preview",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -724,26 +744,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/compute-integration-watcher",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "compute-integration-watcher"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring)."
-        }
-      ],
-      "skos:notation": "compute-integration-watcher",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-core/compute-integration-watcher.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/confirmation-waiver",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1060,7 +1060,7 @@
         }
       ],
       "skos:notation": "covered-is-not-reachable",
-      "dcterms:source": "cat-harness/skills/folio-core/covered-is-not-reachable.md",
+      "dcterms:source": "cat-harness/skills/tools/folio-core/covered-is-not-reachable.md",
       "skos:note": "candidate"
     },
     {
@@ -1371,26 +1371,6 @@
       ],
       "skos:notation": "deployment-awareness",
       "dcterms:source": "cat-harness/skills/ui/ui-core/deployment-awareness.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/detangler-integration-watcher",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "detangler-integration-watcher"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `local/integration-watcher`."
-        }
-      ],
-      "skos:notation": "detangler-integration-watcher",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-core/detangler-integration-watcher.md",
       "skos:note": "candidate"
     },
     {
@@ -1714,6 +1694,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/folio-init",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-init"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Scaffold a new folio instance from the harness — the instantiate affordance of the knowledge graph. Covers when to run folio-init vs remote-mount, what the scaffold writes, the builder shim, state branch seeding, write capability requirements, and --dry-run degradation. Bean dp1j."
+        }
+      ],
+      "skos:notation": "folio-init",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/folio-init.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/gate-tree-mutation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1846,7 +1846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them."
+          "@value": "Draw any graph in a harness (schemas, processes, a folio's block graph and any formal relation its content type adds, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them."
         }
       ],
       "skos:notation": "graph-rendering",
@@ -2141,7 +2141,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (proof, canonical, compute, detangler, one-voice, consolidation, bibliography, devils-advocate, …). With no argument, lists the available watchers and asks the user which to invoke. With arguments, dispatches the named watchers in parallel (each gets its own Monitor, queue, ledger, and PR-subscription set)."
+          "@value": "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (canonical, one-voice, consolidation, bibliography, devils-advocate, and those a content type's layer adds, …). With no argument, lists the available watchers and asks the user which to invoke. With arguments, dispatches the named watchers in parallel (each gets its own Monitor, queue, ledger, and PR-subscription set)."
         }
       ],
       "skos:notation": "integration-watch",
@@ -2206,6 +2206,26 @@
       ],
       "skos:notation": "issue-working",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/kg-affordances",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "kg-affordances"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The four affordances of a conformant knowledge graph — browse, materialise, instantiate and copy-into-folio — which capabilities each requires, how each writing verb degrades cleanly when no write capability is available, and how copying an asset stamps KgAsset.source provenance. Bean dp1j."
+        }
+      ],
+      "skos:notation": "kg-affordances",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/kg-affordances.md",
       "skos:note": "candidate"
     },
     {
@@ -2369,26 +2389,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/lean-toolchain-contract",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-toolchain-contract"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read."
-        }
-      ],
-      "skos:notation": "lean-toolchain-contract",
-      "dcterms:source": "cat-harness/skills/authoring/content-lifecycle/lean-toolchain-contract.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/library-ingestion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2540,7 +2540,7 @@
         }
       ],
       "skos:notation": "mcp-assembly",
-      "dcterms:source": "cat-harness/skills/folio-core/mcp-assembly.md",
+      "dcterms:source": "cat-harness/skills/tools/folio-core/mcp-assembly.md",
       "skos:note": "candidate"
     },
     {
@@ -2560,7 +2560,7 @@
         }
       ],
       "skos:notation": "mcp-contract",
-      "dcterms:source": "cat-harness/skills/folio-core/mcp-contract.md",
+      "dcterms:source": "cat-harness/skills/tools/folio-core/mcp-contract.md",
       "skos:note": "candidate"
     },
     {
@@ -2580,7 +2580,7 @@
         }
       ],
       "skos:notation": "mcp-projection",
-      "dcterms:source": "cat-harness/skills/folio-core/mcp-projection.md",
+      "dcterms:source": "cat-harness/skills/tools/folio-core/mcp-projection.md",
       "skos:note": "candidate"
     },
     {
@@ -2676,26 +2676,6 @@
       ],
       "skos:notation": "methodology-adoption",
       "dcterms:source": "cat-harness/skills/process/process-core/methodology-adoption.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/milnor-exposition-standard",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "milnor-exposition-standard"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so."
-        }
-      ],
-      "skos:notation": "milnor-exposition-standard",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md",
       "skos:note": "candidate"
     },
     {
@@ -3785,7 +3765,7 @@
         }
       ],
       "skos:notation": "skills-and-tools",
-      "dcterms:source": "cat-harness/skills/folio-core/skills-and-tools.md",
+      "dcterms:source": "cat-harness/skills/tools/folio-core/skills-and-tools.md",
       "skos:note": "candidate"
     },
     {
@@ -4084,6 +4064,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/test-data-sets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "test-data-sets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Curating fixed (committed, cited, SME-reviewed) and generated (template + params + seed recipe, never stored materialised) test data sets in separately declared graph directories, with per-content-type specialisation as a called subprocess and attributable SME review of decision support and indicator definitions."
+        }
+      ],
+      "skos:notation": "test-data-sets",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/test-data-sets.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-skills/test-engineer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4315,7 +4315,7 @@
         }
       ],
       "skos:notation": "tool-authoring",
-      "dcterms:source": "cat-harness/skills/folio-core/tool-authoring.md",
+      "dcterms:source": "cat-harness/skills/tools/folio-core/tool-authoring.md",
       "skos:note": "candidate"
     },
     {

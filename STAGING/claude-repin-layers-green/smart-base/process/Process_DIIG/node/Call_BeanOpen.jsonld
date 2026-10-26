@@ -1,0 +1,35 @@
+{
+  "@context": "http://smart.who.int/base/smart-base.context.jsonld",
+  "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen.jsonld",
+  "partOf": "http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+    "pr": "2681/merge",
+    "run": "40313808069"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [
+        "http://smart.who.int/base/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    }
+  ]
+}

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -16,7 +16,7 @@
       "title": "/q-usage-watcher",
       "description": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `local/integration-watcher`.",
       "instructionsPath": "skills/content/folio-paper-adapter/q-usage-watcher.md",
-      "instructionLines": 334,
+      "instructionLines": 342,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

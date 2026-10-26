@@ -2844,10 +2844,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/subscribe-kg.svg",
       "description": "Subscribe a folio or harness to an external knowledge graph pinned to a full commit SHA, then take each chosen part from referenced to materialized through `materialize-remote` and instantiate each chosen harness once its needs are held. Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8.\n\nA SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time.\n\nA SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository.\n\nWHERE IT LIVES: cat-harness/processes/, beside Process_MaterializeRemote and Process_RefreshMaterialized, which it calls, and naming the kg-subscription and materialize-remote skills in cat-harness/skills/library/large-datasets/. It was written in large-datasets (proposal decision #3), because those subprocesses and skills lived there and a diagram in cat-harness would have run every edge against the dependency arrow (bean cjvs). The owner's 2026-10-01 ruling dissolved large-datasets into cat-harness's concern groups (bean j7ql), so the callees came with it: the calls are siblings again and every ref stays inside the harness.\n\nSTRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned.",
       "enforcement": "strict",
-      "flowCount": 24,
+      "flowCount": 29,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "name": "Subscribe to an external knowledge graph",
-      "nodeCount": 20,
+      "nodeCount": 25,
       "sourcePath": "processes/library/subscribe-kg.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/subscribe-kg.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/StartEvent_Wanted",
@@ -2859,7 +2859,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/StartEvent_Wanted",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Pin"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_10",
@@ -2995,7 +2995,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Summarise",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Done"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_3",
@@ -3029,7 +3029,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Refuse",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose_2"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_7",
@@ -3058,6 +3058,48 @@
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Review"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Pin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/End_BeanNotYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose_2",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
@@ -3080,6 +3122,57 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "name": "Corpus — the subscriber's declaration",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_24",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_4",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose_2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_6",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_1",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_2",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+      "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_Materialize",
@@ -3121,7 +3214,7 @@
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_24",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_4",
       "name": "Subscribed, every part in a recorded state",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
@@ -3135,11 +3228,43 @@
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_6",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5",
       "name": "Not subscribed, and the record says why",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_3",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_2",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_1",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_3"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -3319,7 +3444,7 @@
       "bpmnType": "bpmn:UserTask",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_1",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_1",
       "name": "Name the substrate, pin a full commit SHA",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_2",
@@ -3327,8 +3452,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": false,
       "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-subscription",
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim"
+      "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_RePin",

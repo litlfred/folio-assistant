@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Abstract. Agent-based issue resolution such as SWE-agent relies on agents exploring independently, which often get stuck in local solutions and miss issue patterns spanning different parts of a codebase. SWE-Debate is a competitive multi-agent debate framework: it builds several fault propagation traces as localization proposals by traversing a code dependency graph, runs a three-round debate among specialised agents along those traces to converge on a consolidated fix plan, and hands the plan to an MCTS-based code modification agent for patch generation. On SWE-bench the authors report new state-of-the-art results among open-source agent frameworks.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction. Fault localization, linking an issue's natural-language description to the code that triggers it, is the key challenge in repository-level issue resolution. Agent-based methods explore independently and suffer from what the authors call limited observation scope: when several locations look relevant they lack the diverse perspectives to compare them and fall back on trial and error. SWE-Debate works in three stages: build a static dependency graph (calls, inheritance, imports, variable references), pick issue-relevant entry entities by LLM semantic matching and traverse from them to get candidate localization chains; run a debate in which agents rank chains, propose modification plans from different perspectives, critique each other and let a discriminator pick a plan; then seed Monte Carlo Tree Search with that plan to generate a patch. The contributions listed are the multi-trace generation method, the debate framework, and experiments the authors summarise as 6.7% better issue resolution and 5.1% better fault localization; ablations attribute the largest share of the gain to multiple chain generation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title and authors: \"SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution\" by Han Li and Yuling Shi (equal contribution), Shaoxin Lin, Xiaodong Gu (corresponding author), Heng Lian, Xin Wang, Yantao Jia, Tao Huang and Qianxiang Wang, of Shanghai Jiao Tong University, Huawei and Xidian University.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Motivation, through the Django-11999 issue, where users cannot override get_FOO_display() since Django 2.2. A single exploring agent searches for \"get_FOO_display impl\", fixes on Model._get_FIELD_display in django/db/models/base.py, and cannot step back to ask whether the fault lies there or in field registration, nor weigh runtime workarounds against structural fixes. The correct cause is in Field.contribute_to_class, which unconditionally overwrites user-defined methods while the class is built. In a debate, one agent argues for changing _get_FIELD_display and another for Field.contribute_to_class, forcing a comparison of runtime flexibility against prevention at the source, and the agents come to favour the contribute_to_class fix; the block ends mid-sentence as its advantages are listed.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The end of the motivating example, with Figure 1. The contribute_to_class fix prevents the overwrite at its source with a minimal existence check, if not hasattr(cls, method_name), at lines 765-767 of django/db/models/fields/__init__.py, keeping backward compatibility. Figure 1 contrasts the individual-exploration plan, which edits the wrong place in base.py, with the debate's plan targeting contribute_to_class, alongside the issue text and the golden patch. The authors present this tension, with agents defending their approaches against alternatives, as turning issue resolution into multi-perspective reasoning.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A section heading only: the start of the Methodology section (3.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Problem formulation. Given an issue description and code entities V, an agent must find the subset to modify through a sequence of actions and observations. Current approaches explore inefficiently, ignoring structural relations between entities, and struggle to disambiguate between several plausible modification sites. SWE-Debate reasons over a dependency graph G = (V, E), builds localization chains of entities tracing fault propagation, and uses a multi-agent debate to choose the fix plan (Figure 2): Section 3.2 covers trace proposal by graph traversal, Section 3.3 the debate over chains and modifications, and Section 3.4 MCTS-based patch generation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Fault propagation trace proposal and the multi-agent debate (with Figure 2, the framework overview). A static dependency graph of code entities with call, inheritance, import and reference edges is built; an LLM then extracts the top-K entities named explicitly in the issue text as entry points, restricted to direct textual matches. From each, a breadth-first step picks the top-W issue-relevant neighbours, using code snippets fed to the LLM to widen the candidates, and a depth-limited search (maximum depth L) follows the best-scoring next entity by semantic and structural relevance, giving K × W chains. For the debate, the longest chain and the m − 1 most distinct (by embeddings) are ranked by several agents, and the top-voted chain is kept. N agents each turn it into a structured JSON modification plan (targets, modification type, priority, reasoning), then review and critique each other's plans and refine their own, and a discriminator agent synthesises a single prioritised plan.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Patch generation. The debate's modification plan seeds a Monte Carlo Tree Search, as in SWE-Search, whose nodes are codebase states and whose actions are Search, Plan and Edit; the initial branches come from the plan's steps rather than arbitrary exploration. Actions are chosen by a modified UCT criterion, and a value function, first informed by the plan's rationale, scores each outcome with a numerical value and a written explanation; after edits the agent can run and write tests, and the feedback is propagated back up the tree until the issue is resolved or the maximum depth is reached.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A section heading only: the start of the Experimental Setup (4.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The research questions: how effective SWE-Debate is at repository-level issue resolution (RQ1), how each component contributes (RQ2), and how it performs at fault localization (RQ3, cut off mid-sentence).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The last research question, under a heading the extraction misplaced: how the depth of chains in the debate affects performance (RQ4).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Datasets and baselines. Evaluation uses SWE-Bench-Verified (500 verified issues) and SWE-bench-Lite (300 tasks). Issue-resolution baselines are Agentless, AutoCodeRover, SWE-Agent, SWE-Search, SWESynInfer and OpenHands; fault-localization baselines are CodeActAgent, LocAgent and KGCompass.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Metrics: Pass@1, the share of issues resolved on the first attempt, and Acc@1 (File), file-level localization accuracy where a prediction counts only if all required modification points fall within the top-1 predicted locations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Implementation details. SWE-Debate extends the SWE-Search framework, but its testbed was not used because it could not be set up. The dependency graph comes from static analysis with Python's ast module, and the debate uses DeepSeek-V3-0324 with different system prompts to simulate perspectives. Parameters are K = 5 entry points, W = 4 expansion width, L = 5 maximum chain length, m = 6 chains for ranking and N = 5 agents, set on a held-out part of the full SWE-Bench; baseline numbers come from their papers or repositories (block cut off).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -303,7 +423,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The end of the implementation details and the opening of the Results: for DeepSeek-V3-0324, representative baselines were reproduced from their official repositories, and the results are then presented by research question.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -322,7 +450,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "RQ1, effectiveness (Table 1). On SWE-Bench-Verified SWE-Debate resolves 207 of 500 issues, a 41.4% Pass@1. With the same DeepSeek-V3-0324 model it improves on SWE-Search (35.4%) by 6.0 points and on SWE-Agent and OpenHands (both 38.8%) by 2.6 points; other baselines in Table 1, on GPT-4o, Claude-3.5 Sonnet or Lingma SWE-GPT, range from 23.0% to 38.4%. The authors read this as a benefit beyond model choice alone (Finding 1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -341,7 +477,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "RQ2, ablation (Table 2). Removing multiple chain generation drops Pass@1 from 41.4% to 31.4% (−10.0 points), removing the edit plan to 35.4% (−6.0) and removing the multi-agent debate to 37.2% (−4.2). The authors attribute these to single-path exploration missing cross-file dependencies, the MCTS editor lacking direction without a plan, and lone agents getting stuck when many candidate locations exist (Finding 2).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -360,7 +504,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "RQ3, localization (Table 3, SWE-Bench-Lite, baseline numbers taken from LocAgent). SWE-Debate reaches 81.67% file-level Acc@1, against 67.00% for SWE-Agent with the same DeepSeek-V3-0324 model and 77.74% for the strongest baseline, LocAgent with Claude-3.5 Sonnet, a gain of 3.93 points. The authors credit the graph-guided multiple traces, which raise the chance that one contains the correct location, and argue that the gains over identical-model baselines show they stem from the reasoning framework rather than the model (Finding 3).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -379,7 +531,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "RQ4, chain depth (Figure 3), on SWE-Bench-Verified-S, a 75-instance set of the 50 in SWE-Bench-verified-mini plus 25 random SWE-Bench-Verified instances. File-level Acc@1 rises with depth from 70.7% at depth 1 and 72.0% at depth 3 to a peak of 86.7% at depth 5, then falls to 82.7% at depth 7; the authors attribute the drop to longer chains bringing in unrelated information that distracts the debate (Finding 4).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -398,7 +558,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Case study: SymPy issue 13974, where powers of TensorProduct expressions, such as TensorProduct(1, Pauli(3)) squared, are not simplified by expand(tensorproduct=True) or tensor_product_simp. Among the candidate chains, Chain 2 captured the modules involved (tensor_product_simp_Mul, tensor_product_simp and TensorProduct._eval_expand_tensorproduct). The debate produced a four-step plan, modifying tensor_product_simp, updating tensor_product_simp_Mul for powers, extending _eval_expand_tensorproduct and adding a TensorProduct._eval_power method, and the resulting edit distributes the exponent over the tensor product's arguments; every modified function was covered by the selected chain.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -417,7 +585,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A section heading only: the start of the Discussion (6.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -436,7 +612,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Strengths (with Figure 4, the SymPy-13974 case study showing five candidate chains, the four-stage plan and the patch). The authors name three: graph-based localization reaches 81.67% file-level accuracy, 14.67 points above SWE-Agent with DeepSeek-V3-0324 and 8.31 above SWE-Search with GPT-4o, which they link to the 41.4% Pass@1 against baselines of 23.0% to 38.8%; the debate resolves modification ambiguity, its removal costing 4.2 points; and the framework can plug into the localization stage of systems such as SWE-Search and Agentless without major changes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -455,7 +639,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Limitations and future work. Graph construction can be costly on large codebases; static analysis misses dynamic and runtime relationships; the debate uses one model with different prompts, so heterogeneous models or domain knowledge could add diversity; and batch processing limits integration with real-time development workflows.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -474,7 +666,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Threats to validity. Internally, DeepSeek-V3-0324's pre-training may include SWE-Bench repositories; the authors argue that gains over identical-model baselines point to reasoning rather than memorisation, and plan contamination-free evaluation. Time and budget limited the study to one model and, in the authors' words, a subset of SWE-Bench-Verified. Externally, the benchmark is Python-only; the components are designed to be language-agnostic, and Multi-SWE-Bench is planned.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -493,7 +693,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A section heading only: the start of Related Work (8.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -512,7 +720,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The opening of the related work on fault localization, cut off mid-sentence: traditional spectrum-based, mutation-based and learning-based techniques rely on test execution data and program analysis, and face fundamental limitations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -531,7 +747,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work on fault localization and repository-level issue resolution. Traditional techniques need comprehensive tests, struggle with cross-file dependencies and cannot bridge issue text and code. LLM-based localizers (RCAgent, AgentFL, LocAgent, OrcaLoca, CoSIL) improve navigation but remain single-perspective. Issue-resolution systems are either agent-based (SWE-Agent, AutoCodeRover, SWE-Search with MCTS, CodeR with multi-agent task graphs) or pipeline-based (Agentless, CodeMonkeys), with further work on long-context prompting, fine-tuning and repository knowledge graphs; the authors argue all share the limited observation scope that SWE-Debate's competitive analysis targets, and that it can integrate with these systems.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -550,7 +774,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work on LLM multi-agent systems. Multi-agent systems have helped with code generation, testing and debugging, mostly through collaborative, consensus-seeking designs scaled by stronger agents or larger collectives. Existing debate frameworks are also collaborative and suffer from thought degeneration and agents clinging to incorrect stances; role assignment and agreement modulation help but keep the consensus paradigm. SWE-Debate instead makes the debate competitive, forcing agents to defend localization hypotheses, combined with graph-based dependency analysis.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -569,7 +801,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion and acknowledgment. SWE-Debate tackles agents' limited observation scope by combining graph-based fault propagation traces with structured competitive debate, and the authors report a 6.7% improvement in issue resolution rate over state-of-the-art baselines and 5.1% in fault localization accuracy on SWE-Bench-Verified (the results section's same-model margins are 2.6 and, on SWE-Bench-Lite, 3.93 points). Funding came from the National Key R&D Program of China and the Natural Science Foundation of Shanghai.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -588,7 +828,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "References and appendices. The references cover issue-resolution agents and pipelines, LLM fault localization, multi-agent debate and collaboration, and the SWE-bench datasets. Appendix A defines SWE-Bench-Verified-S, the 50 SWE-Bench-verified-mini instances plus 25 more, listed in Table 4 (Django, SymPy and Sphinx issues); Appendix B gives the MCTS hyperparameters in Table 5 (for example UCT exploration 1.41, 20 iterations, maximum depth 20, 5 discriminator agents over 3 debate rounds). Appendix C lists the eight prompts: initial entity extraction, code-snippet entity extraction, neighbour prefiltering, node selection, chain voting, round 1 modification locations, round 2 refined modification, and the final discriminator, which must give only concrete modification actions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     }
   ]

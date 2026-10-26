@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Start_BA"
       ],
-      "nodeCount": 13,
-      "flowCount": 12,
+      "nodeCount": 17,
+      "flowCount": 16,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0"
@@ -74,7 +74,7 @@
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/GW_Feature",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_Issue",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_BeanOpen",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_5"
     },
@@ -137,9 +137,47 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_Close",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/End_CRDM",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_BeanClose",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_Issue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/End_BeanNotYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CRDM/node/End_CRDM",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_4"
     }
   ]
 }

@@ -129,7 +129,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 168,
-      "summary": null,
+      "summary": {
+        "text": "Title, authors and abstract of \"Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging\" by Bayrami Asl Tekanlou, Razmara, Sanaei, Rahgouy and Babaei Giglou (University of Tabriz, Auburn University, TIB Hannover). The Homa system assigns subject labels from the Gemeinsame Normdatei (GND) taxonomy to technical records from TIBKAT. It uses OntoAligner, a modular ontology-alignment toolkit, with retrieval-augmented generation (RAG), treating subject tagging as an alignment task in which records are matched to GND categories by semantic similarity. The authors evaluate how well OntoAligner adapts to subject indexing and multilingual records, and report both strengths and limitations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "subject tagging",
@@ -173,7 +176,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 446,
-      "summary": null,
+      "summary": {
+        "text": "Introduction. Libraries need technology to handle growing digital collections, and large language models (LLMs) can help with subject tagging, metadata enrichment and semantic search, and with interoperability with controlled vocabularies such as the GND, though interpretability, tagging bias and multilingual processing remain challenges. LLMs4Subjects, the SemEval-2025 shared task, asks for LLM-based subject tagging of bilingual technical records from Leibniz University's Technical Library (TIBKAT) using the GND taxonomy, in two tasks: learning the GND taxonomy (Task 1) and recommending GND subjects for a record from its title and abstract (Task 2). The authors adapt OntoAligner, a Python ontology-alignment toolkit, to the task; the block ends mid-sentence and also carries the arXiv identifier (cs.CL, 30 April 2025).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "gnd taxonomy",
@@ -221,7 +227,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 59,
-      "summary": null,
+      "summary": {
+        "text": "End of the introduction: the authors feed the records into OntoAligner's input structure and use its RAG technique to test the toolkit on subject tagging. They present the experiments as a case study of how flexible and accurate OntoAligner is for subject indexing and where its bottlenecks lie. The block is headed \"Dataset\" but holds only this paragraph.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ontoaligner",
@@ -249,7 +258,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 207,
-      "summary": null,
+      "summary": {
+        "text": "Related work on subject indexing in library systems. Controlled vocabularies such as the Library of Congress Subject Headings (LCSH) give structured access but take much effort to keep consistent and are criticised for outdated terms and rigidity. Social tagging from Web 2.0 lets users add metadata and helps browsing, but its value in libraries is inconclusive and tags lack the specificity of controlled vocabularies. Ontology-based indexing links text to semantic concepts and improves retrieval over keyword indexing. Hybrid models in which tags supplement subject headings, as in BiblioCommons, are increasingly advocated, though catalogue interfaces still struggle to support tag-based search.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "controlled vocabularies",
@@ -297,7 +309,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 88,
-      "summary": null,
+      "summary": {
+        "text": "Start of the methodology. The authors use the OntoAligner library as a RAG pipeline to align TIBKAT technical records with subjects, generating subject suggestions that reflect a record's content. The pipeline is meant to handle multilingual, hierarchical data while preserving metadata and semantic relationships. The block ends as it begins listing the method's two main components.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "giglou",
@@ -325,7 +340,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 596,
-      "summary": null,
+      "summary": {
+        "text": "Section 3.1, the OntoAligner pipeline, and the start of Section 3.2 on fine-tuning. Records can be represented by title alone, with added context (abstracts, descriptions), or with parent-level metadata. The retrieval module embeds records and subjects with a Nomic-AI embedding model and retrieves the top 30 subjects per record by cosine similarity; the LLM module, Qwen2.5-0.5B, then judges whether each candidate subject matches. After trials on the development set, the authors chose title-only input. To fine-tune the retriever they built a semantic-textual-similarity dataset of 32,952 sentence pairs, pairing titles with true subjects (score 1) and random other subjects (score 0), with at most 600 pairs per record (Table 1 gives examples), and fine-tuned nomic-embed-text-v1 with Multiple Negatives Ranking Loss for 3 epochs at batch size 32.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ontoaligner",
@@ -373,7 +391,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 928,
-      "summary": null,
+      "summary": {
+        "text": "Rest of fine-tuning, the dataset and the quantitative results, with the text layers of Table 2 and Figures 1–3. The LLM was fine-tuned on 12,348 samples (at most 200 pairs per record) with QLoRA, as a match/no-match classifier, for 10 epochs at batch size 8 with 8-bit Paged AdamW. The TIB-Core-Subjects dataset has 15,263 records in five types (article, book, conference, report, thesis) in English and German, split 7,632 / 3,728 / 3,948 for training, test and development. Table 2 gives average precision, recall and F1 of 2.84, 20.30 and 4.66 on TIB-Core, and 22.99, 27.20, 23.54 (Case 1) and 14.02, 23.39, 16.33 (Case 2) for the qualitative cases. Recall rises with k, with a jump beyond k = 15; English beats German in precision and recall; F1 peaks around k = 15–20; articles and books score higher than conference papers and reports; and lower k favours precision while higher k favours recall.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "higher precision",
@@ -421,7 +442,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 412,
-      "summary": null,
+      "summary": {
+        "text": "End of the quantitative results and the qualitative results. Most records have between 0 and 20 subjects, with an upper quartile of 5 (Figure 3), which the authors use to explain how recall@k varies. Compared with other teams (Figure 2), precision differences are marginal; most teams have high recall@5 but low precision@5, which the authors read as ranking quality mattering more than the LLM module. In the two qualitative case studies, the text gives recall 24.26% and F1 20.06% for Case 1 and recall 19.55% and F1 13.63% for Case 2, figures that differ from the Table 2 averages. By subject class (Figure 4), recall is highest for informatics (about 50%) and technology (45.5% in Case 1, 34.7% in Case 2), and lowest for physics (13.4%, Case 2) and mathematics (20.8%); the text gives both informatics figures as Case 1, apparently meaning one for each case.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "highest recall",
@@ -469,7 +493,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 877,
-      "summary": null,
+      "summary": {
+        "text": "Limitations and conclusion, acknowledgments and references. Despite what the authors call a strong average recall of 20.30%, precision is low: the system retrieves many candidate subjects that are not relevant, which they attribute to the small fine-tuning dataset. They credit OntoAligner with handling embedding storage, retrieval and alignment so that users can concentrate on the LLM and retriever models, and conclude that it is effective with minimal fine-tuning but needs more data and compute to improve precision. The last author is supported by TIB and the BMBF-funded SCINEXT project (grant 01lS22070). The reference list covers LLMs4OM and OntoAligner, the LLMs4Subjects task papers, QLoRA, Sentence-BERT, Nomic Embed, Qwen2.5 and the library-tagging literature.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "arxiv preprint",

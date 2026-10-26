@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Start_Request"
       ],
-      "nodeCount": 16,
-      "flowCount": 15,
+      "nodeCount": 22,
+      "flowCount": 21,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/externalSchema/omg-dd-1.0"
@@ -36,7 +36,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Start_Request",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/A_Request",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanOpen",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F01"
     },
@@ -138,7 +138,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/A_RecordRefusal",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_Refused",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose_2",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F09"
     },
@@ -147,7 +147,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/A_RecordUndetermined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_Undetermined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose_3",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F10"
     },
@@ -165,9 +165,65 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/A_FileCertification",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_Certified",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/A_Request",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_BeanNotYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_Certified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose_2",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose_3",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_TestPlanExecution/node/End_Undetermined",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_6"
     }
   ]
 }

@@ -374,24 +374,24 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T09:25:00.798Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitAt": "2026-10-24T08:39:51Z",
+  "generatedAt": "2026-10-26T11:41:40.680Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitSha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitAt": "2026-10-26T11:16:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 56,
+    "Skill": 68,
     "Decision": 1,
     "Process": 3,
-    "SequenceFlow": 25,
+    "SequenceFlow": 29,
     "Lane": 9,
-    "ProcessNode": 26,
-    "GraphTypology": 22,
-    "Role": 3,
-    "Subgraph": 23,
+    "ProcessNode": 30,
+    "GraphTypology": 23,
+    "Role": 4,
+    "Subgraph": 24,
     "Asset": 3,
-    "Tool": 8
+    "Tool": 21
   },
   "@graph": [
     {
@@ -410,6 +410,34 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formalization"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/milnor-exposition-standard",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "milnor-exposition-standard",
+      "title": "The Milnor exposition standard",
+      "description": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so.",
+      "instructionsPath": "skills/content/authoring-math/milnor-exposition-standard.md",
+      "instructionLines": 133,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/milnor-exposition-standard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/formal-layer-editing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "formal-layer-editing",
+      "title": "Formal-layer editing",
+      "description": "The formal-layer half of the harness's editor: the heavy-proof discipline, the routing rows for formal requests, the proof-block workflow and the pre-merge formal audits, for a paper folio with a Lean layer.",
+      "instructionsPath": "skills/content/authoring-math/formal-layer-editing.md",
+      "instructionLines": 84,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-layer-editing"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-verification",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "proof-verification",
@@ -425,6 +453,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/formal-accuracy",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "formal-accuracy",
+      "title": "Formal accuracy",
+      "description": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple.",
+      "instructionsPath": "skills/content/authoring-math/formal-accuracy.md",
+      "instructionLines": 64,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-accuracy"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-authoring",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "latex-authoring",
@@ -438,6 +480,48 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-md-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "math-md-authoring",
+      "title": "Math markdown authoring",
+      "description": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks.",
+      "instructionsPath": "skills/content/authoring-math/math-md-authoring.md",
+      "instructionLines": 129,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-md-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-readability-editing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "math-readability-editing",
+      "title": "Math readability editing",
+      "description": "The math half of the harness's readability-editing: math-specific style checks, the blueprint and formal-proof index cross-checks, and the mandatory TeX snippet validation after editing a paper folio's blocks.",
+      "instructionsPath": "skills/content/authoring-math/math-readability-editing.md",
+      "instructionLines": 68,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-readability-editing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-toolchain-contract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "lean-toolchain-contract",
+      "title": "Lean toolchain — the role's contract",
+      "description": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "instructionsPath": "skills/content/authoring-math/lean-toolchain-contract.md",
+      "instructionLines": 49,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-toolchain-contract"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-substantive-pass",
@@ -488,7 +572,7 @@
       "title": "Proof Simplifier",
       "description": "Analyse small clusters (2–4) of connected proofs to find simplifications: shared lemmas, redundant constructions, factored abstractions, or shorter proof paths through the dependency graph.",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-simplifier.md",
-      "instructionLines": 242,
+      "instructionLines": 250,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -502,12 +586,26 @@
       "title": "Proof Conciseness",
       "description": "Tighten narrative (human-readable) proofs without changing mathematical content. Targets verbose prose patterns in `.md` proof files — padding phrases, re-explained elementary steps, redundant restatement, long case analyses that collapse into tables. Complements proof-simplifier (Lean tactics) and readability-editing (chapter prose); this skill operates on the proof block's `.md` specifically and preserves every logical step.",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-conciseness.md",
-      "instructionLines": 277,
+      "instructionLines": 285,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-conciseness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-content-test",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "lean-content-test",
+      "title": "Lean content test",
+      "description": "The paper-folio half of the harness's content-test: run Lean proof verification and LaTeX compilation, dispatch the repo's Lean CI, and check how much of the corpus a Lake build reaches before reading its numbers.",
+      "instructionsPath": "skills/content/folio-paper-adapter/lean-content-test.md",
+      "instructionLines": 54,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-content-test"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-cache-restore",
@@ -572,7 +670,7 @@
       "title": "Critical Path Analysis & Context Review",
       "description": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups.  Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions.",
       "instructionsPath": "skills/content/folio-paper-adapter/critical-path-analysis.md",
-      "instructionLines": 157,
+      "instructionLines": 166,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -586,7 +684,7 @@
       "title": "Proof Gap Audit",
       "description": "Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together).",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-gap-audit.md",
-      "instructionLines": 391,
+      "instructionLines": 416,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -600,7 +698,7 @@
       "title": "Proof Triage & Resolution",
       "description": "Systematically triages and resolves `sorry` stubs across the Lean codebase. Inventories all sorry sites, orders them by dependency, attempts proofs using mathlib/library search, and escalates to a proof writer with similar-lemma suggestions when stuck.",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-triage.md",
-      "instructionLines": 386,
+      "instructionLines": 395,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -628,7 +726,7 @@
       "title": "/q-usage-watcher",
       "description": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `local/integration-watcher`.",
       "instructionsPath": "skills/content/folio-paper-adapter/q-usage-watcher.md",
-      "instructionLines": 334,
+      "instructionLines": 342,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -684,7 +782,7 @@
       "title": "Rendering Auditor",
       "description": "Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports.",
       "instructionsPath": "skills/content/folio-paper-adapter/rendering-auditor.md",
-      "instructionLines": 418,
+      "instructionLines": 426,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -712,7 +810,7 @@
       "title": "Compute-author skill — read before writing compute code",
       "description": "Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to `compute-audit` (post-hoc); this skill is pre-work.",
       "instructionsPath": "skills/content/folio-paper-adapter/compute-author.md",
-      "instructionLines": 267,
+      "instructionLines": 275,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -738,7 +836,7 @@
       "name": "content-validation",
       "title": "Content Validation Skill",
       "instructionsPath": "skills/content/folio-paper-adapter/content-validation.md",
-      "instructionLines": 296,
+      "instructionLines": 305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -752,7 +850,7 @@
       "title": "Lean 4 Formalizer (Narrative to Proof)",
       "description": "Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks.  Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile.",
       "instructionsPath": "skills/content/folio-paper-adapter/formalizer.md",
-      "instructionLines": 231,
+      "instructionLines": 238,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -772,6 +870,20 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-proof-vacuity-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/detangler-integration-watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "detangler-integration-watcher",
+      "title": "/detangler-integration-watcher",
+      "description": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `local/integration-watcher`.",
+      "instructionsPath": "skills/content/folio-paper-adapter/detangler-integration-watcher.md",
+      "instructionLines": 354,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/detangler-integration-watcher"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/verify-local-substrate",
@@ -808,12 +920,26 @@
       "title": "Compute Audit Skill",
       "description": "Audit compute scripts for a catalogue of correctness and performance antipatterns extracted from a long review of the project's compute history. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines.",
       "instructionsPath": "skills/content/folio-paper-adapter/compute-audit.md",
-      "instructionLines": 183,
+      "instructionLines": 193,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/compute-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/uses-formal-comparison",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "uses-formal-comparison",
+      "title": "`uses[]` against the formal graph",
+      "description": "How a paper folio's formal dependency graph (from Lean) relates to the editorial `uses[]` relation the harness's uses-editorial-review audits: why they diverge, why `uses[]` is never populated from Lean, and how to read the advisory `uses-formal-coverage` finding.",
+      "instructionsPath": "skills/content/folio-paper-adapter/uses-formal-comparison.md",
+      "instructionLines": 70,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/uses-formal-comparison"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-formal-graph",
@@ -822,7 +948,7 @@
       "title": "Lean formal dependency graph",
       "description": "Build and query the FORMAL dependency graph — what a proof actually invokes, derived from `lean.ref`. Distinct from `uses[]`, which is editorial. Use for impact analysis, exposition gaps, and declaration ownership.",
       "instructionsPath": "skills/content/folio-paper-adapter/lean-formal-graph.md",
-      "instructionLines": 109,
+      "instructionLines": 128,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -863,7 +989,7 @@
       "title": "Semantic review scoping",
       "description": "Decide what to review FIRST. Computes which blocks' semantic correctness can actually affect a target theorem, so agent-adjudicated criteria are spent where they matter instead of swept in file order.",
       "instructionsPath": "skills/content/folio-paper-adapter/semantic-review-scoping.md",
-      "instructionLines": 85,
+      "instructionLines": 93,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -891,12 +1017,26 @@
       "title": "Remark Audit Skill",
       "description": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization.",
       "instructionsPath": "skills/content/folio-paper-adapter/remark-audit.md",
-      "instructionLines": 177,
+      "instructionLines": 185,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/remark-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/devils-advocate-paper",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "devils-advocate-paper",
+      "title": "Devil's advocate on a paper folio",
+      "description": "What the harness's devils-advocate-watcher means for a paper folio: its claim-bearing kinds and formal tree, the Lean vacuity shapes the Formalist lens looks for, and the paper watchers the adversary sits beside.",
+      "instructionsPath": "skills/content/folio-paper-adapter/devils-advocate-paper.md",
+      "instructionLines": 60,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/devils-advocate-paper"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-integration-watcher",
@@ -905,7 +1045,7 @@
       "title": "/proof-integration-watcher",
       "description": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `local/integration-watcher`.",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-integration-watcher.md",
-      "instructionLines": 450,
+      "instructionLines": 458,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -933,7 +1073,7 @@
       "title": "Proof Editor (Coordinator)",
       "description": "Coordinator skill for proof review and repair. Runs the full proof skill suite (gap audit, lean review, completeness, simplifier, triage), deduplicates findings across reviewers, ranks by severity and dependency order, and delivers a single author-ready action plan with concrete suggested edits (never applying them without author approval).",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-editor.md",
-      "instructionLines": 247,
+      "instructionLines": 255,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -961,7 +1101,7 @@
       "title": "Proof Status Tracking",
       "description": "Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages.  Generate status dashboards and enforce review policies.",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-status-tracking.md",
-      "instructionLines": 217,
+      "instructionLines": 225,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1017,7 +1157,7 @@
       "title": "/proposition-consolidation-audit",
       "description": "Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit \"specialisation of\"/\"case of\"/\"corollary of\" wording in `.md`, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases.",
       "instructionsPath": "skills/content/folio-paper-adapter/proposition-consolidation-audit.md",
-      "instructionLines": 313,
+      "instructionLines": 322,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1039,17 +1179,45 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/ffi-roundtrip-audit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/compute-integration-watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "compute-integration-watcher",
+      "title": "Compute Integration Watcher",
+      "description": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
+      "instructionsPath": "skills/content/folio-paper-adapter/compute-integration-watcher.md",
+      "instructionLines": 230,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/compute-integration-watcher"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/witnessed-values",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "witnessed-values",
       "title": "Witnessed Values Skill",
       "instructionsPath": "skills/content/folio-paper-adapter/witnessed-values.md",
-      "instructionLines": 266,
+      "instructionLines": 274,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/witnessed-values"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-render-check",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "math-render-check",
+      "title": "Math render check",
+      "description": "The math half of the harness's markdown-render-check: grep checks for display math, KaTeX and LaTeX patterns that GitHub's renderer breaks, and the fix recipe for multi-line display equations.",
+      "instructionsPath": "skills/content/folio-paper-adapter/math-render-check.md",
+      "instructionLines": 99,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-render-check"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-build-cache",
@@ -1072,7 +1240,7 @@
       "title": "Lean Completeness Audit Skill",
       "description": "Audit Lean formalization completeness across all papers: verify Lake project setup, check import coverage, identify missing .lean files for content blocks that require them, report formalization gaps, and detect stale witnesses.",
       "instructionsPath": "skills/content/folio-paper-adapter/lean-completeness-audit.md",
-      "instructionLines": 332,
+      "instructionLines": 340,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1086,7 +1254,7 @@
       "title": "Content Block Review",
       "description": "Reviews existing content blocks for adherence to all requirements — structural integrity, Lean proof rules, cross-reference consistency, status accuracy, and naming conventions. Flags violations with actionable diagnostics.",
       "instructionsPath": "skills/content/folio-paper-adapter/content-block-review.md",
-      "instructionLines": 169,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1633,8 +1801,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/StartEvent_NewPaper"
       ],
-      "nodeCount": 13,
-      "flowCount": 14,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring"
     },
@@ -1652,7 +1820,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_SeedPlan",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
     },
@@ -1764,9 +1932,47 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Publish",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_SeedPlan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
@@ -1877,10 +2083,10 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
-      "workPlanOp": "claim",
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A03"
@@ -2111,11 +2317,98 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/typologies",
@@ -2237,6 +2530,13 @@
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/software-library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "software-library",
+      "renderable": false,
+      "summary": "Outside libraries a layer imports or vendors -- one generated `software-library` node per library per layer, with the version and sha512 its `bun.lock` pins, its SPDX licence, its range, whether it is a dev dependency, the files that import it and the shim that types it. Shares its core with `tool-release`."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/voices",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "voices",
@@ -2350,6 +2650,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/proof-review-agent"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Lean toolchain",
+      "title": "Lean toolchain",
+      "notation": "lean-toolchain",
+      "description": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-toolchain-contract",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-formalization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-verification"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/folio-assistant-sci-docs",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
       "name": "folio-assistant-sci-docs",
@@ -2414,7 +2732,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators"
       ],
-      "description": "The validators this instance's code provides, one folio-validator/v1 node each, naming the graph typology and $schema family it checks and the Zod export that checks it (bean riit). Today it holds one node: editor-checker, for folio-editor-checker/v1.",
+      "description": "The validators this instance's code provides, one folio-validator/v1 node each, naming the graph typology and $schema family it checks and the Zod export that checks it (bean riit): `conjecture-register` for `folio-conjecture-register/v1` and `editor-checker` for `folio-editor-checker/v1`.",
       "readmePath": "validators/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/folio-assistant-sci-validators",
@@ -2619,6 +2937,25 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-scripts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/folio-assistant-sci-libraries",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "folio-assistant-sci-libraries",
+      "path": "libraries/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/software-library"
+      ],
+      "title": "Software libraries",
+      "description": "The outside libraries this layer's code imports: one `software-library/1.0.0` node per dependency in `package.json`, with the version and sha512 that `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, the files that import it (`usedBy`) and the `types/*.d.ts` shim that types it. GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, and a shim no node names. The kind is cat-harness's (bean `jbvi`, option D: one outside-software core shared with `tool-release`), and the writer and the gate are cat-harness-tools' (`scripts/libraries.ts`); this layer keeps its own nodes because it pins its own versions.",
+      "readmePath": "libraries/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/folio-assistant-sci-libraries",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-libraries"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-lean",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
       "name": "sci-lean",
@@ -2794,6 +3131,59 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/asset/checkout-scripts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/content-manifest-validate.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "content-manifest-validate",
+      "title": "Content manifest validation",
+      "description": "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat content:validate"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A paper or chapter directory; absent, every paper the folio declares.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Treat warnings as errors.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "issues",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/content-manifest-validate.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/latex-image.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "latex-image",
@@ -2835,6 +3225,266 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-build-cache"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/latex-overfull.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "latex-overfull",
+      "title": "LaTeX overfull-box report",
+      "description": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat latex:overfull"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "log",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The pdflatex log to read. Nothing to read means no answer, not a pass.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "min",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Dpi",
+            "description": "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest.",
+            "required": false,
+            "arg": {
+              "flag": "--min"
+            }
+          },
+          {
+            "name": "max",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Dpi",
+            "description": "Fail above this count, for use as a gate.",
+            "required": false,
+            "arg": {
+              "flag": "--max"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Located overfull boxes. Requires a build log: with no log there is nothing to read, which is could-not-determine rather than clean."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-overfull.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/latex-preflight.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "latex-preflight",
+      "title": "LaTeX preflight",
+      "description": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat latex:preflight"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "warn",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Report without failing — for a corpus not yet clean.",
+            "required": false,
+            "arg": {
+              "flag": "--warn"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-preflight.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/lean-audit.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "lean-audit",
+      "title": "Lean vacuity audit",
+      "description": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat lean:audit"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "chapter",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "One chapter instead of the whole corpus.",
+            "required": false,
+            "arg": {
+              "flag": "--chapter"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          },
+          {
+            "name": "checkAxioms",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Axiom-cleanliness is a separate question from vacuity: a proof can be axiom-clean and still assume its conclusion.",
+            "required": false,
+            "arg": {
+              "flag": "--check-axioms"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Sorry inventory and trivial-truth detections. Sibling of `lean-coverage`, not an alternative to it: that one COUNTS what is proved, this one asks whether a proof says anything."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-proof-vacuity-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-audit.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/lean-build.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "lean-build",
+      "title": "Lean build",
+      "description": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat lean:build-all"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "Build one paper instead of all of them.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "cache",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Fetch the Mathlib cache first. A from-source Mathlib build is 30–60 minutes against ~2 for a restore.",
+            "required": false,
+            "arg": {
+              "flag": "--cache"
+            }
+          },
+          {
+            "name": "update",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Run `lake update` before building.",
+            "required": false,
+            "arg": {
+              "flag": "--update"
+            }
+          },
+          {
+            "name": "logDir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where logs and the status sidecar go.",
+            "required": false,
+            "arg": {
+              "flag": "--log-dir"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`lean-build-status.json` — committable, so a green build is distinguishable from one nobody ran."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "lean",
+          "lake"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-build-fix"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-build.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/lean-cache.jsonld",
@@ -2897,6 +3547,74 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-cache-restore"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/lean-coverage.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "lean-coverage",
+      "title": "Lean coverage",
+      "description": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat lean:coverage"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "One paper instead of all.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "contentRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where content blocks live. NOT a Lean project root — see the note above this node.",
+            "required": false,
+            "arg": {
+              "flag": "--content-root"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "coverage",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Provable blocks, and how many are sorry-free. A count, not a verdict: a sorry-free proof can still be vacuous, which is the sibling node's question."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-completeness-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-coverage.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/lean-formal-edges.jsonld",
@@ -3322,6 +4040,41 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-render-publish.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/lean-toolchain-setup.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "lean-toolchain-setup",
+      "title": "Lean toolchain install",
+      "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+      "install": {
+        "cli": "scripts/setup-lean-toolchain.sh"
+      },
+      "invoke": {
+        "shell": "bun run cat lean:setup-toolchain"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "toolchain",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "The linked toolchain name, and the per-repo override that selects it."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "curl",
+          "elan"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-environment-setup"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-toolchain-setup.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/paper-feature-build.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "paper-feature-build",
@@ -3412,6 +4165,224 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/paper-latex-build.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "paper-latex-build",
+      "title": "Paper build to LaTeX chapters",
+      "description": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat content:build"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paperManifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The paper's `<paper>.ts` manifest; absent, the folio's single paper.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outDir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the chapters; absent, `chapters/` at the content root.",
+            "required": false,
+            "arg": {
+              "flag": "--out-dir"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "chapters",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One `.tex` per chapter under the output directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/content-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-latex-build.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/proof-dependency-graph.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "proof-dependency-graph",
+      "title": "Proof dependency graph",
+      "description": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/generate_dependency_graph.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The proof-objects.json to read.",
+            "required": false,
+            "arg": {
+              "flag": "--manifest"
+            }
+          },
+          {
+            "name": "output",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the SVG.",
+            "required": false,
+            "arg": {
+              "flag": "--output"
+            }
+          },
+          {
+            "name": "pdfBaseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Url",
+            "description": "The published PDF, for the anchor links.",
+            "required": false,
+            "arg": {
+              "flag": "--pdf-base-url"
+            }
+          },
+          {
+            "name": "dotOnly",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Write DOT source instead of rendering.",
+            "required": false,
+            "arg": {
+              "flag": "--dot-only"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The SVG, or DOT with `--dot-only`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-status-tracking"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-dependency-graph.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/proof-objects-extract.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "proof-objects-extract",
+      "title": "Proof-object extraction",
+      "description": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/extract_proof_objects.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "output",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write proof-objects.json.",
+            "required": false,
+            "arg": {
+              "flag": "--output"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-status-tracking"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-objects-extract.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/proof-status-update.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "proof-status-update",
+      "title": "Proof status from a Lean build",
+      "description": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/update_proof_status.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The proof-objects.json to update.",
+            "required": false,
+            "arg": {
+              "flag": "--manifest"
+            }
+          },
+          {
+            "name": "buildLog",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The Lean build log; stdin when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--build-log"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json with statuses updated in place."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-status-tracking"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-status-update.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/tex-install.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "tex-install",
@@ -3447,10 +4418,143 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/tex-snippet-validate.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "tex-snippet-validate",
+      "title": "TeX snippet validation (AST)",
+      "description": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat latex:validate"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "One folio by slug. Absent, every folio the content root holds.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A single `.md` block, for the narrow case.",
+            "required": false,
+            "arg": {
+              "flag": "--file"
+            }
+          },
+          {
+            "name": "compile",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim.",
+            "required": false,
+            "arg": {
+              "flag": "--compile"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "warningsLog",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write a QA-compatible log to this path.",
+            "required": false,
+            "arg": {
+              "flag": "--warnings-log"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 2 — could-not-determine (this repository carries no folio, so there was nothing to scan). Read the scanned count before reading the verdict."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-snippet-validate.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/tools/tex-source-audit.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "tex-source-audit",
+      "title": "TeX-source hazard audit",
+      "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat latex:audit-source"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Exit 1 on any finding, for use as a gate.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Hazards with file and line, plus a committed sidecar. Run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` and exits 2 (could-not-determine)."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-source-audit.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formalization",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-formalization",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-formalization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/milnor-exposition-standard",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/milnor-exposition-standard",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/milnor-exposition-standard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/formal-layer-editing",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/formal-layer-editing",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/formal-layer-editing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-verification",
@@ -3459,10 +4563,34 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-verification"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/formal-accuracy",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/formal-accuracy",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/formal-accuracy"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-authoring",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-authoring",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/latex-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/math-md-authoring",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-md-authoring",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-md-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/math-readability-editing",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-readability-editing",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-readability-editing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-toolchain-contract",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-toolchain-contract",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-toolchain-contract"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-substantive-pass",
@@ -3493,6 +4621,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-conciseness",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/proof-conciseness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-content-test",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-content-test",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-content-test"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore",
@@ -3609,6 +4743,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/lean-proof-vacuity-audit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/detangler-integration-watcher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/detangler-integration-watcher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/detangler-integration-watcher"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/verify-local-substrate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/verify-local-substrate",
@@ -3625,6 +4765,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/compute-audit",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/compute-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/uses-formal-comparison",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/uses-formal-comparison",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/uses-formal-comparison"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formal-graph",
@@ -3661,6 +4807,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/remark-audit",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/remark-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/devils-advocate-paper",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/devils-advocate-paper",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/devils-advocate-paper"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-integration-watcher",
@@ -3723,10 +4875,22 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/ffi-roundtrip-audit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/compute-integration-watcher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/compute-integration-watcher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/compute-integration-watcher"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/witnessed-values",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/witnessed-values",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/witnessed-values"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/math-render-check",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-render-check",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/skill/math-render-check"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache",
@@ -4053,6 +5217,30 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/flow/SF_Bean_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/flow/SF_Bean_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/flow/SF_Bean_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/flow/SF_Bean_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Author",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
@@ -4167,6 +5355,30 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Call_BeanOpen",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/GW_BeanYours",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/End_BeanNotYours",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Call_BeanClose",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-authoring-agent",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-authoring-agent",
@@ -4183,6 +5395,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/proof-review-agent",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/proof-review-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/lean-toolchain"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-docs",
@@ -4275,6 +5493,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-scripts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-libraries",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/folio-assistant-sci-libraries",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/folio-assistant-sci-libraries"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-lean",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-lean",
@@ -4343,8 +5567,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

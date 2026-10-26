@@ -17,8 +17,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/lean-toolchain-contract"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract"
       ],
       "description": "General content development lifecycle skills: plan, author, validate, review, test, publish, feedback, retire",
       "hasManifest": true,
@@ -159,14 +158,14 @@
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/input.schema.json",
-      "instructionLines": 110,
+      "instructionLines": 99,
       "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
       "name": "content-test",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/65b9093d20739d6694237f4fcdac9c8471dff97e9424bc39b30ea9b8cb593670",
-        "bytes": 4673,
-        "sha256": "65b9093d20739d6694237f4fcdac9c8471dff97e9424bc39b30ea9b8cb593670"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/840105474396b85e6473479dd1726bfd290bc9d47440be802a8d4746d0cd2812",
+        "bytes": 4195,
+        "sha256": "840105474396b85e6473479dd1726bfd290bc9d47440be802a8d4746d0cd2812"
       },
       "title": "Content Testing"
     },
@@ -226,25 +225,6 @@
         "sha256": "3ed1927338167a85c1ee91684f87cc87130bcc5105db9475be5c7f84ee543308"
       },
       "title": "IG publisher + validator — the role's contract"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lean-toolchain-contract",
-      "@type": "bootstrap:Skill",
-      "ambiguous": false,
-      "description": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
-      "hasIOContract": false,
-      "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-      "instructionLines": 49,
-      "instructionsPath": "skills/authoring/content-lifecycle/lean-toolchain-contract.md",
-      "name": "lean-toolchain-contract",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9869043816a2f2c2d68c6ff70815bbde131f62b6cc0d6e47e9a82fec3038278c",
-        "bytes": 2387,
-        "sha256": "9869043816a2f2c2d68c6ff70815bbde131f62b6cc0d6e47e9a82fec3038278c"
-      },
-      "title": "Lean toolchain — the role's contract"
     }
   ],
   "holdsGraph": [

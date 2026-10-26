@@ -1,0 +1,55 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/avatars-css/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/avatars-css.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat avatars:css"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Compare against the committed copy and fail if stale, instead of writing.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The generated stylesheet. Never hand-edited.",
+            "name": "stylesheet",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "maintains": "https://litlfred.github.io/folio-assistant/assets/css/avatars.css",
+      "maintainsFrom": "schemas/avatars.ts",
+      "name": "avatars-css",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
+      "title": "Avatar stylesheet"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/avatars-css",
+  "path": "tools/avatars-css/"
+}

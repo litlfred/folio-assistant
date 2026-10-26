@@ -1,0 +1,87 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/readme-sync/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/readme-sync.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/readme-sync.ts"
+        },
+        "mcp": {
+          "tool": "readme_sync"
+        },
+        "shell": "bun run cat readme:sync"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Fail if any section is stale; write nothing.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--only"
+            },
+            "description": "Restrict to these sections. Repeated: the flag is emitted once per section.",
+            "name": "only",
+            "repeated": true,
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ReadmeSection"
+          },
+          {
+            "arg": {
+              "flag": "--link-style"
+            },
+            "name": "link_style",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LinkStyle"
+          },
+          {
+            "arg": {
+              "flag": "--fetch"
+            },
+            "name": "fetch",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "name": "dir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Per section: written, unchanged, or skipped because it could not be determined.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "readme-sync",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+      "title": "Sync generated README sections"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/readme-sync",
+  "path": "tools/readme-sync/"
+}

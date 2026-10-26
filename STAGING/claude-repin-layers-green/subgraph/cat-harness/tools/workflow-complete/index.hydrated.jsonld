@@ -1,0 +1,101 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/workflow-complete/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-complete.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        },
+        "mcp": {
+          "tool": "workflow_complete"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+          },
+          {
+            "arg": {
+              "positional": 1
+            },
+            "name": "node",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+          },
+          {
+            "arg": {
+              "flag": "--outcome"
+            },
+            "description": "Which branch a plain gateway takes. Refused at a gateway backed by a decision table — asserting the answer would defeat the table.",
+            "name": "outcome",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+          },
+          {
+            "description": "Facts a DMN table is evaluated against. Structured, so it is never a command-line word.",
+            "name": "facts",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DecisionFacts"
+          },
+          {
+            "description": "Who you say performed the step, written to the history. Authorization is decided on the principal GitHub vouches for, in strict mode (issue #1207).",
+            "name": "actor",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The content the step acted on, for the access check.",
+            "name": "target",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "arg": {
+              "stdin": true
+            },
+            "description": "Appended to the instance's bean.",
+            "name": "note",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The instance's new position, and what is enabled next.",
+            "name": "position",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "workflow-complete",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/process-state",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination"
+      ],
+      "title": "Complete a step"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/workflow-complete",
+  "path": "tools/workflow-complete/"
+}

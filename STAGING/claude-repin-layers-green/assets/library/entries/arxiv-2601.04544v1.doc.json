@@ -228,7 +228,10 @@
       "labelStart": "1",
       "labelEnd": "1",
       "words": 268,
-      "summary": null,
+      "summary": {
+        "text": "Title, authors and abstract of \"TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration\" by Jiuzhou Zhao and eight co-authors at Tencent Cloud Andon. In a multi-agent system the router decides which expert agents handle a query. The abstract argues that task routing (sending queries to domain experts) suits enterprise use, but static single-label routers struggle to add new agents and cannot handle conflicts where agents' capabilities overlap. TCAR, the proposed router, accepts new agents dynamically, writes a natural-language reasoning chain before predicting a set of candidate agents, and passes their independent answers to a Refining Agent that merges them. The model is released on Hugging Face.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "TCAndon-Router TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration Jiuzhou Zhao∗, Chunrong Chen∗, Chenqi Qiao∗, Lebin Zheng∗, Minqi Han∗, Yanchi Liu∗Yongzhou Xu∗Xiaochuan Xu∗Min Zhang∗ ∗Tencent Cloud Andon {joskazhao, charentchen, chenqiqiao, lebinzheng}@tencent.com {minqihan, yanncyliu, alanxu, xxcxu, alexzmzhang}@tencent.com Abstract Multi-Agent Systems(MAS) have become a powerful paradigm for",
       "extractCut": true
@@ -243,7 +246,10 @@
       "labelStart": "1",
       "labelEnd": "2",
       "words": 680,
-      "summary": null,
+      "summary": {
+        "text": "Introduction. Multi-agent systems split problems across specialised expert agents, and the router that picks the agent sets a floor on the whole system's performance. Routing is either performance-based (choosing model sizes to trade cost against accuracy, Figure 1a) or task-based (choosing domain experts, Figure 1b), and task-based routing, the enterprise backbone, suffers from agent conflicts: queries such as \"website latency\" in cloud computing may belong to several agents at once, yet single-label routers must pick one, and static routers cannot adapt as categories change. TCAR instead writes a reasoning chain and names every relevant agent, and a Refining Agent reconciles the selected agents' answers. The claimed contributions are a reasoning-centric router that outputs rationales and selects several agents (described as the first of its kind), the generate-then-refine pipeline for conflicts, and an open-source release; evaluation uses CLINC150, HWU64, MINDS14, SGD and a private cloud-computing dataset.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "As large language models (LLMs) continue to improve in agent-based scenarios, multi-agent systems (MAS) have become increasingly mature. Their core idea is to decompose complex problems into smaller sub-tasks, each of which is handled by a specialized expert agent [1]. Representative applications include Vibe Coding [2] and Deep Research [3].Today, large-scale enterprise systems—such as those in finance, healthcare,",
       "extractCut": true
@@ -258,7 +264,10 @@
       "labelStart": "2",
       "labelEnd": "2",
       "words": 77,
-      "summary": null,
+      "summary": {
+        "text": "The opening of Related Work, cut off by the extraction. Performance-based routing chooses among model sizes for cost and latency: Hybrid LLM uses a BERT-style model to judge query difficulty, and Self-REF has an LLM output a confidence score, sending high-confidence queries to a small model. The block ends as the paragraph on task-based routing begins; its continuation is in the next block.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Performance based routing selects among models of different sizes to balance cost and latency. Hybrid LLM[18] proposes a model based on the BERT architecture to assess the diﬀiculty of a query and make routing decisions. Self-REF[19] uses an LLM to output a confidence score, For low confidence, it uses an LLM or rejects the answer, while for high confidence, it uses an SLM. Task based routing assigns queries to",
       "extractCut": true
@@ -273,7 +282,10 @@
       "labelStart": "2",
       "labelEnd": "3",
       "words": 313,
-      "summary": null,
+      "summary": {
+        "text": "The rest of Related Work, followed by the one-line opening of the Method section. Task routing moved from BERT-style single-label classifiers over a fixed intent space, to similarity and dual-tower or cross-encoder scoring that lets new agents be added without retraining, to LLM-based routers (ArchRouter, AgentRouter's knowledge-graph edge prediction, a confidence-driven router). The authors' criticism is that all still pick a single agent and give no structured explanation. Multi-agent frameworks such as AutoGen, CAMEL and CrewAI focus on how agents collaborate rather than which should take part, and pay little attention to merging several agents' outputs.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "2 TCAndon-Router directions. Early approaches largely employed BERT-style encoders [20], formulating routing as a fixed single-label classification problem grounded in a predefined intent space and model structure. To support adding new agents without retraining, some studies shifted toward KNN-based methods, such as com- puting similarity between query and agent representations[21], or using query–agent dual-tower",
       "extractCut": true
@@ -288,7 +300,10 @@
       "labelStart": "3",
       "labelEnd": "3",
       "words": 176,
-      "summary": null,
+      "summary": {
+        "text": "Problem formulation. The system has expert agents A = {a1, …, aN}, each exposed to the router only through a natural-language description di = g(ai). The router's prompt concatenates its instruction, the user query q and all descriptions, Prompt(q, A) = Φ(ins, q, D), and the router maps it to a reasoning text Cq and a selected agent set Aq.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "A multi-agent system consists of a set of expert agents with different domain specializations. Let A = {a1, a2, ..., aN} denote the set of all available expert agents. In real systems, each expert agent is not hard- coded into the router through a fixed identifier; instead, it exposes its capabilities and responsibilities to the routing model through a natural-language description. We denote this description as di,",
       "extractCut": true
@@ -303,7 +318,10 @@
       "labelStart": "3",
       "labelEnd": "3",
       "words": 92,
-      "summary": null,
+      "summary": {
+        "text": "Dynamic agent addition. Because agents enter the router only through their descriptions, adding an agent means appending its description, D′ = D ∪ {dnew}; the router itself is neither modified nor retrained, which the authors present as the practical advantage over routers bound to a fixed agent set.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Traditional methods typically bind a router R to a fixed agent set A, when A changes R must be retrained. In TCAR, adding a new agent requires only appending anew to the existing set, yielding A′ = A ∪{anew} which produces a new description set D′ = D ∪{dnew}, The routing process then becomes (Cq, Aq) = R(Prompt(q, D′)), Aq ⊆A, meaning that the router R itself does not need to be modified or retrained to support",
       "extractCut": true
@@ -318,7 +336,10 @@
       "labelStart": "3",
       "labelEnd": "4",
       "words": 581,
-      "summary": null,
+      "summary": {
+        "text": "How TCAR handles agent conflicts, in three parts. First, routing is redefined from picking one agent to selecting a subset Aq ⊆ A with |Aq| ≥ 1, a conflict being the case |Aq| > 1. Second, the router reasons before it selects, analysing the query's likely causes, the technical stack and each agent's responsibilities; the stated benefits are more stable selection under overlap or ambiguity, and reasoning that engineers can inspect to fix routing errors or agent descriptions. Third, all selected agents answer in parallel and a Refining Agent filters and fuses their answers into one, yq = F({rij}), so that conflicts become multi-perspective evidence rather than a forced single choice.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Selecting Multiple Agents. Traditional task routing typically formulates routing as a single-label classification problem:R(Prompt(q, A)) = ai ∈A meaning that each query can only be assigned to a sin- gle agent. This formulation implicitly assumes strict and mutually exclusive domain boundaries, as well 3 TCAndon-Router as a clearly defined intent space—assumptions that rarely hold in real enterprise environments.",
       "extractCut": true
@@ -333,7 +354,10 @@
       "labelStart": "4",
       "labelEnd": "6",
       "words": 657,
-      "summary": null,
+      "summary": {
+        "text": "Training TCAR in two stages. Supervised fine-tuning with the standard autoregressive loss teaches the reason-then-select output, using a dedicated <reason> tag rather than <think>. Reinforcement learning with DAPO then improves selection. The reward applies to the agent set only and combines a precision-like term R1 = |Aq ∩ A∗| / max(1, |Aq|), a coverage term R2 = |Aq ∩ A∗| / max(1, |A∗|), and a length penalty β·max(|Aq| − |A∗|, 0) against listing too many agents, weighted by α and β. The prose describes R2 as all-or-nothing (paid only when Aq contains the whole gold set), but the formula given is the fractional recall. Figure 2 contrasts a solo agent with the Refining Agent pipeline.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "To endow the router R with both multi-agent selection capabilities and interpretable reasoning, we adopt a two-stage[28] training strategy. We first apply supervised fine-tuning (SFT)[29] to teach the model the basic “reason–then–select” pattern. We then further enhance the quality of agent selection and the stability of reasoning through reward-based reinforcement learning using DAPO [30]. Supervised Fine-Tuning.",
       "extractCut": true
@@ -348,7 +372,10 @@
       "labelStart": "6",
       "labelEnd": "6",
       "words": 8,
-      "summary": null,
+      "summary": {
+        "text": "A one-line heading paragraph opening the Experiments section.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "We present the experimental results and analyses. 4.1",
       "extractCut": false
@@ -363,7 +390,10 @@
       "labelStart": "6",
       "labelEnd": "7",
       "words": 559,
-      "summary": null,
+      "summary": {
+        "text": "Experimental setup. Datasets: CLINC150 (150 intents, long agent descriptions), HWU64 (64 intents, cross-domain ambiguity), MINDS14 (multilingual, 14 domains), SGD (multi-turn dialogue), and QCloud, an internal Tencent Cloud dataset with stronger domain coupling and more agent conflicts. Metrics are accuracy on single-agent datasets, F1 on multi-agent ones, and an end-to-end task success rate after refinement. Baselines are dynamic routers: GPT-5.1, Claude-4.5, DeepSeek-v3.1, ArcRouter and the Qwen3 family. The released model is Qwen3-4B-Instruct-2507, fully fine-tuned with ms-swift on 8 GPUs for one epoch; for RL, samples whose 8 rollouts agree above τ = 0.6 are dropped as already learned, and initialisation from a Slerp-merged model was also tried.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "This section introduces the datasets, baselines, evaluation metrics, and implementation details used to evaluate TCAR. All experiments focus on the core task of multi-agent domain routing, aiming to thor- oughly assess TCAR’s effectiveness under domain conflicts, ambiguous intents, and real-world enterprise scenarios. Datasets. We conduct evaluations on four public intent-classification datasets and one internal",
       "extractCut": true
@@ -378,7 +408,10 @@
       "labelStart": "7",
       "labelEnd": "7",
       "words": 280,
-      "summary": null,
+      "summary": {
+        "text": "Main results (Table 1, Figure 3). The large general LLMs beat most small open models, but the 4B TCAR reports the best score on every dataset except CLINC150, whose 150 intents make prompts average 18k tokens: 91.63 on HWU64, 96.70 on MINDS14, 91.58 on SGD and 93.98 F1 on QCloud, against GPT-5.1, Claude-Sonnet-4.5 and DeepSeek-v3.1-terminus. In a human-preference comparison on QCloud, the Refining Agent (built on DeepSeek-v3.1) wins human-preference comparisons against a single randomly chosen agent, most clearly on troubleshooting queries; for consultation queries one agent is usually enough. The figure's extracted labels give win rates of 27.0% and 63.0%, which by the caption are consultation and troubleshooting respectively.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Table 1 presents the performance of all models across the five datasets (CLINC150, HWU64, MINDS14, SGD, QCloud). Overall, general-purpose LLMs such as GPT-5.1 and DeepSeek-v3.1 outperform most small-scale open-source models by a considerable margin. Despite having only 4B parameters, our TCAR achieves state-of-the-art performance on all datasets except CLINC150. CLINC150 contains 150 intent categories, resulting in",
       "extractCut": true
@@ -393,7 +426,10 @@
       "labelStart": "7",
       "labelEnd": "9",
       "words": 686,
-      "summary": null,
+      "summary": {
+        "text": "Ablation studies on three factors. Reasoning: TCAR with a reasoning chain scores higher than without on all five datasets (Table 2), the largest gap on SGD, 91.58 against 84.96, which the authors read as better generalisation. RL: SFT followed by RL beats SFT alone on four datasets (Table 3), most on SGD, and raises recall on QCloud, curing SFT's tendency to output a single agent, though on CLINC150 it is marginally lower (91.25 against 91.32). Initialisation: RL started from a Slerp merge of five SFT models gives no clear gain in final scores (Table 4) but, in Figure 4, keeps higher entropy at similar reward, which the authors take as broader exploration. The block ends at the heading of the ablation summary.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "To systematically analyze the contribution of each component in TCAR, we conduct ablation studies along three dimensions: reasoning capability, training strategy, and the source of RL initialization. Effect of Reasoning This experiment evaluates the impact of explicit reasoning chains[10] on routing performance. • Without reasoning: The model performs direct classification prediction and outputs only Aq. • With",
       "extractCut": true
@@ -408,7 +444,10 @@
       "labelStart": "9",
       "labelEnd": "9",
       "words": 51,
-      "summary": null,
+      "summary": {
+        "text": "Despite its title, this block holds the three-bullet summary of the ablation findings: reasoning is key to routing interpretability and robustness; RL raises recall while keeping precision high; and the RL initialisation point matters, Slerp-merged models generalising better and resisting entropy collapse.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "• Reasoning capability is a key factor for improving routing interpretability and robustness. • RL is an essential training stage that enhances recall while maintaining high precision. • The choice of RL initialization point is crucial; Slerp-based models offer stronger generalization and are less prone to entropy collapse during RL. 5",
       "extractCut": false
@@ -423,7 +462,10 @@
       "labelStart": "9",
       "labelEnd": "9",
       "words": 53,
-      "summary": null,
+      "summary": {
+        "text": "The opening of the Analysis section, cut off mid-sentence: it announces an examination of error types, reasoning quality, multi-agent collaboration effects and system efficiency.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "After validating the overall effectiveness of TCAR through the main results and ablation studies, we further analyze its behavioral characteristics and internal mechanisms from multiple perspectives. This section provides an in-depth examination of error types, reasoning quality, multi-agent collaboration effects, and system eﬀiciency, offering a more comprehensive understanding of the model’s strengths and",
       "extractCut": false
@@ -438,7 +480,10 @@
       "labelStart": "9",
       "labelEnd": "9",
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "An empty block: it holds only the subsection number \"5.1\", the extraction having placed the Limitations heading here while its text sits in a later block.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "5.1",
       "extractCut": false
@@ -453,7 +498,10 @@
       "labelStart": "9",
       "labelEnd": "10",
       "words": 138,
-      "summary": null,
+      "summary": {
+        "text": "Error analysis. TCAR's routing errors fall into three types: incomplete queries lacking key context (such as \"What should I do if my webpage loads slowly?\"); misunderstanding of highly domain-specific Tencent Cloud terminology; and reasoning that is sound but disagrees with the agents finally output, which the authors leave as an open problem. Examples are in Appendix B.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "To systematically understand the major sources of routing errors, we categorize the mistakes and observe that TCAR’s errors primarily fall into three types: (1) Incomplete problem descriptions. User queries may lack key information. For example, in “What should I do if my webpage loads slowly?”, although TCAR’s reasoning often infers that multiple agents are needed, the lack of essential context may still lead to",
       "extractCut": true
@@ -468,7 +516,10 @@
       "labelStart": "10",
       "labelEnd": "15",
       "words": 1776,
-      "summary": null,
+      "summary": {
+        "text": "The rest of the paper's body, followed by its references. Collaboration analysis: in troubleshooting, several agents are often needed, and the Refining Agent, with RAG over a knowledge base, reconciles conflicting answers. Efficiency: the average number of routed agents is only 1.37, the reasoning averages under 100 tokens with under one second of GPU latency, and collaboration adds on average 0.37 extra agent calls. Limitations: performance depends on hand-written agent descriptions, and rare or highly specialised cases and heavily changed instructions remain unstable. The conclusion restates the contributions and plans structured reasoning constraints, more efficient collaboration protocols and cheaper expansion to new domains. The references cover multi-agent surveys, routing work, the evaluation datasets, and the training methods and models used.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Multi-agent collaboration effectively supplements information from different perspectives. In Tencent Cloud troubleshooting scenarios, multiple agents are often required to jointly diagnose and resolve issues, as a single agent is typically insuﬀicient. Moreover, the Refining Agent demonstrates strong capability in reconciling conflicting responses. With RAG support, the Refining Agent compares and filters multiple",
       "extractCut": true
@@ -483,7 +534,10 @@
       "labelStart": "15",
       "labelEnd": "15",
       "words": 295,
-      "summary": null,
+      "summary": {
+        "text": "Appendix A: the two prompts. The router prompt tells the model to pick up to 3 agents from the agent list whose descriptions clearly cover the user's problem, output \"oos\" if none can, and answer in XML with a <Reason> and one <ID> per agent. The Refining Agent prompt asks it to compare and merge the agents' answers into one final answer, avoiding repetition, stating any conflicts between answers explicitly, and politely refusing if no answer is useful.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "TCAR Prompt: You are a Router Agent. Your job is to determine which Agents should handle the user’s issue based on the chat history.Your goal is to select the appropriate Agents to ensure the problem can be solved eﬀiciently and accurately. You may select up to 3 Agents. # Agent List {agents} # Notes + The Description is each Agent’s capability description. When selecting an Agent, you must ensure that its",
       "extractCut": true
@@ -498,7 +552,10 @@
       "labelStart": "15",
       "labelEnd": "16",
       "words": 177,
-      "summary": null,
+      "summary": {
+        "text": "Appendix B: two failure cases. For the incomplete query \"What should I do if a webpage loads very slowly?\", TCAR reasons that diagnosis spans the network path and acceleration layers and routes to the network, CDN and EdgeOne agents. In the domain-specific case, a query about a CKafka configuration change is routed to the RocketMQ agent, because its description mentions configuration changes, rather than to the CKafka agent.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Incomplete problem descriptions Input Query: What should I do if a webpage loads very slowly? TCAR Output: <Reason> The user reports that “the webpage loads very slowly,” which requires diagnosis from both the network path and acceleration layers. The Network Agent can analyze public/private network latency, packet loss, jitter, and path quality. The CDN Agent can examine CDN access latency, origin fetch behavior,",
       "extractCut": true

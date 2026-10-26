@@ -4,31 +4,30 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Editing/node/Task_ClaimBean",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Claim or open the bean",
+      "name": "Open the bean",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Editing",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Editing/lane/Lane_WorkPlan",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/skill/bean-coordination"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim",
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Editing#flow/Flow_02"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Editing#flow/Flow_03"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/process/Process_Editing#flow/SF_Bean_1"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ClaimBean"

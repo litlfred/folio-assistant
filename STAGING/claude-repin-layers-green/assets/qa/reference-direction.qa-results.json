@@ -35,11 +35,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5777,
+          "occurrences": 5855,
           "allowed": 0,
-          "wrongDirection": 5,
-          "wrongDirectionFiles": 4,
-          "exempt": 5772,
+          "wrongDirection": 29,
+          "wrongDirectionFiles": 20,
+          "exempt": 5826,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -49,19 +49,83 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 4,
+      "count": 20,
       "entries": [
+        {
+          "file": "bootstrap-tools/scripts/check-closure.ts",
+          "target": "cat-harness-tools"
+        },
         {
           "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
           "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/cat-harness-tools.json",
+          "target": "folio-assistant-core"
         },
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
           "target": "smart-base"
         },
         {
+          "file": "cat-harness-tools/scripts/gen-review-page.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/scripts/headless-render-qc.ts",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/actor-capabilities.ts",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/scheme-owner.ts",
+          "target": "folio-assistant-core"
+        },
+        {
           "file": "cat-harness/cat-harness.json",
           "target": "who-iris"
+        },
+        {
+          "file": "cat-harness/schemas/deployment-description.ts",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/schemas/remote-mount.ts",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/schemas/software-library.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/directory-conventions.md",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/kg-affordances.md",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/kg-export.md",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/remote-mount.md",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/skills/library/large-datasets/kg-subscription.md",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/bean-drain.md",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/tools/bean-claim-check/bean-claim-check.ts",
+          "target": "cat-harness-tools"
         },
         {
           "file": "fhir-harness/processes/content/ig-incremental-build.checklist.md",
@@ -70,5 +134,5 @@
       ]
     }
   },
-  "total": 5
+  "total": 21
 }

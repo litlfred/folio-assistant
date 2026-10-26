@@ -1,0 +1,438 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2505.10399v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluating Model Explanations",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-2-evaluating-model-explanations.md",
+      "narrative": null,
+      "content": "Kaivalya Rawal\nkaivalyarawal45@gmail.com\nOxford Internet Institute\nOxford, Oxfordshire, UK\nZihao Fu\nzihao.fu@oii.ox.ac.uk\nOxford Internet Institute\nOxford, Oxfordshire, UK\nEoin Delaney\neoin.delaney@tcd.ie\nTrinity College Dublin\nDublin, Ireland\nChris Russell\nchris.russell@oii.ox.ac.uk\nOxford Internet Institute\nOxford, Oxfordshire, UK",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Author block of the paper: Kaivalya Rawal, Zihao Fu and Chris Russell (Oxford Internet Institute) and Eoin Delaney (Trinity College Dublin), with their e-mail addresses. The block is headed \"Evaluating Model Explanations\" but holds only the authors.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-abstract.md",
+      "narrative": null,
+      "content": "There can be many competing and contradictory explanations for\na single model prediction, making it difficult to select which one\nto use. Current explanation evaluation frameworks measure qual-\nity by comparing against ideal “ground-truth” explanations, or by\nverifying model sensitivity to important inputs. We outline the\nlimitations of these approaches, and propose three desirable princi-\nples to ground the future development of explanation evaluation\nstrategies for local feature importance explanations. We propose\na ground-truth Agnostic eXplanation Evaluation framework\n(AXE) for evaluating",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Abstract and publication details of \"Evaluating Model Explanations without Ground Truth\" (FAccT '25, Athens, June 2025). A single prediction can have many contradictory explanations, and current evaluation frameworks either compare against ideal ground-truth explanations or test model sensitivity to inputs. The authors set out the limitations of both, propose three principles for evaluating local feature-importance explanations, and present AXE, a ground-truth Agnostic eXplanation Evaluation framework that needs neither ground truth nor sensitivity analysis. They compare it with baselines and show it can detect explanation fairwashing; code is on GitHub.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-1-introduction.md",
+      "narrative": null,
+      "content": "As artificial intelligence (AI) systems are increasingly used in critical\ndecision-making processes, knowing which model explanation to\ntrust has emerged as a fundamental challenge. Model explanations\noften disagree with each other (see figure 1), and the selection\nThis work is licensed under a Creative Commons Attribution 4.0 International License.\nFAccT ’25, Athens, Greece\n© 2025 Copyright held by the owner/author(s).\nACM ISBN 979-8-4007-1482-5/2025/06\nhttps://doi.org/10.1145/3715275.3732219\nof incorrect or intentionally misleading explanations can have far-\nreaching consequences – from misi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Introduction, with Figures 1 and 2. Explanations often disagree, and choosing a wrong or deliberately misleading one matters in healthcare, credit and criminal justice. Of about 300 papers proposing explainers, one in seven ran user studies and one in three evaluated only anecdotally. The paper focuses on post-hoc, model-agnostic local feature-importance explanations (such as LIME and SHAP) for tabular models. Figure 1 shows four explainers (Gradients, SHAP, LIME, Integrated Gradients) giving different signed feature importances for one diabetic prediction on the Pima Indians dataset. The authors propose three principles (local contextualisation, model relativism, on-manifold evaluation) and AXE, which judges an explanation good if its important features are most predictive of the model's output, following user research that useful explanations help users predict model behaviour. Disagreement also enables fairwashing, where an explainer hides that protected attributes drove a prediction. Figure 2 contrasts explanation generation with AXE's evaluation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "arXiv:2505.10399v1  [cs.AI]  15 May 2025",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Only the arXiv identifier: arXiv:2505.10399v1, cs.AI, 15 May 2025.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Our Notation",
+      "pageStart": 2,
+      "pageEnd": 4,
+      "target": "../sections/sec-003-21-our-notation.md",
+      "narrative": null,
+      "content": "We specify our notation from figure 2: input vector x, model 𝑚,\nand explanation e. We use these to define an explanation “quality”\nmetric 𝑞and an evaluation framework 𝑄here, and in algorithm 1\nwe implement such a framework using AXE.\n(1) Input Vector: The input feature vector for any arbitrary dat-\napoint is defined as: x = [𝑥1,𝑥2, . . . ,𝑥𝑁] ∈R𝑁, where 𝑁is\nthe number of features, and each 𝑥𝑖is a real-valued feature.\nEvaluating Model Explanations without Ground Truth\nFAccT ’25, June 23–26, 2025, Athens, Greece\n(2) Model and Prediction: The model 𝑚is a mapping from the\nfeature space",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Sections 2.1 and 2.2 and Table 1. Notation: an input x in R^N, a binary classifier m, an explanation e = E(x, m) in R^N of signed importances, a quality metric q in [0, 1] (higher is better), and an aggregate score Q as the average of q over a dataset X. The three principles: local contextualisation (when the datapoint changes, the metric should not always prefer an unchanged explanation), model relativism (likewise when the model changes), and on-manifold evaluation (the score should not change when only off-manifold model predictions change, since many explainers are themselves sensitivity analyses). Ground-truth comparisons violate these: one ground truth per datapoint ignores the model, and one per model ignores the datapoint. Table 1 defines the ground-truth metrics FA, RA, SA, SRA, RC and PRA (which fail the first two principles), the sensitivity metrics PGI and PGU (which fail on-manifold evaluation), and AXE, which the authors mark as satisfying all three.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prior Approaches",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-004-23-prior-approaches.md",
+      "narrative": null,
+      "content": "Explanations can be evaluated using any of the evaluation metrics\ndefined in table 1. Broadly, these fall into two categories:\n(1) ground-truth based metrics compare the generated explana-\ntions e with ground-truth annotations e∗, either collected by\nhumans or inferred using a different proxy [20, 21, 44, 51].\nThese include Feature Agreement (FA), Sign Agreement (SA),\nRank Agreement (RA), Signed Rank Agreement (SRA), Rank\nCorrelation (RC) and Pairwise Rank Agreement (PRA) [31].\n(2) sensitivity based metrics verify model sensitivity to the in-\nputs declared important by an explanation [17, 30,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Sections 2.3 and 2.4, prior approaches and the invariance of ground-truth metrics, with Figure 3. Metrics are either ground-truth based (FA, SA, RA, SRA, RC, PRA) or sensitivity based (PGI, PGU); explainers include LIME and SHAP (fitting linear models to synthetic neighbours) and gradient methods (Grad, SmoothGrad, Integrated Gradients, Input × Grad), and the experiments use the OpenXAI benchmark. User studies show useful explanations help predict model behaviour, but few metrics implement this. For linear models the coefficients are often taken as ground truth for every datapoint; with a two-feature model y = β0 + β1X1 + β2X2 and (β1, β2) = (0.7, 0.3), Figure 3 shows large regions of explanations receiving identical scores, violating local contextualisation. Because the metrics are symmetric, the plots are unchanged for any model with β1 > β2 > 0, such as (0.99, 0.01), (0.99, 0.98) or (0.02, 0.01), violating model relativism.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Inherent biases in sensitivity Metrics",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-005-25-inherent-biases-in-sensitivity-metrics.md",
+      "narrative": null,
+      "content": "Sensitivity based explainers E like LIME are highly sensitive to\nhyperparameters. This facilitates adversarial fairwashing attacks\n(section 4.1) [54] and can cause feature importances to switch arbi-\ntrarily from highly positive to highly negative [40, 49]. Sensitivity\nanalysis based evaluation metrics 𝑞suffer similar problems.\nMetrics like PGI and PGU may simply encode a preference for\nparticular explainers. We formalize this in the context of synthetic\ndata. Consider a wide range of explainability measures that measure\nsome loss, ℓ, defined in terms of the fidelity 𝐹to classifier responses",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 2.5, biases in sensitivity metrics. Sensitivity-based explainers such as LIME are highly sensitive to hyperparameters, enabling fairwashing and sign flips. The authors define a general fidelity loss over synthetic neighbourhoods around each datapoint (Eq. 1) and note that the per-point minimiser of that loss (Eq. 2) is an explainer that scores best by construction: with squared loss and Gaussian neighbourhoods it is LIME, as the variance tends to zero it is the gradient, and with cube-vertex sampling it is SHAP. PGI uses L1 loss with Gaussian neighbourhoods, so it is otherwise interchangeable with LIME and favours explainers built on the same notion of fidelity, violating on-manifold evaluation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-006-3-methodology.md",
+      "narrative": null,
+      "content": "Inspired by previous work (section 2.3) and desiderata from user\nstudies [4, 7, 9, 12, 25, 45], we consider a simple alternative to\nsensitivity-driven methods of XAI evaluation: the important fea-\ntures in any explanation should be more predictive of the model\noutput than the unimportant features. AXE adopts classifier ac-\ncuracy [28] to measure the predictiveness of the top-n important\nfeatures. This “top-n” style formulation, just like prior metrics from\ntable 1, is considered intuitive for practitioners [2].\nFor datapoint x and explanation e, the top-n most important\nfeatures are the import",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Opening of Section 3, methodology. The authors' alternative: the important features of an explanation should be more predictive of the model's output than the unimportant ones. AXE measures this as the accuracy of a k-nearest-neighbours model in recovering the model's prediction m(x) from only the top-n features by absolute importance, a top-n formulation that practitioners find intuitive. The choice of k-NN is motivated by feature separability in Section 3.2.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The AXE Framework",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-007-31-the-axe-framework.md",
+      "narrative": null,
+      "content": "Algorithm 1 Evaluating Explanation Quality with AXE𝒌𝒏\nRequire: Number of Features 𝑛, Number of Neighbors 𝑘\nDataset X = {x𝑖}𝜈\n𝑖=1, Predictions 𝑌preds = {𝑦𝑖}𝜈\n𝑖=1, and Expla-\nnations 𝐸= {e𝑖}𝜈\n𝑖=1\n1: Initialize an empty list: ˆ𝑌←[]\n2: for each datapoint x𝑖and explanation e𝑖in (X, 𝐸) do\n3:\nFind 𝑛most important features: 𝑓imp ←ImpFeatures(e𝑖,𝑛)\n4:\nCreate X𝑓with subset of features 𝑓𝑖𝑚𝑝from X\n5:\nTrain K-NN model 𝑀𝑘\n𝑖with inputs X𝑓and target 𝑌preds\n6:\nObtain prediction ˆ𝑦𝑖from 𝑀𝑘\n𝑖for datapoint x𝑖\n7:\nAppend ˆ𝑦𝑖to ˆ𝑌\n8: end for\n9: Return performance measure: A",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 3.1, the AXE framework and Algorithm 1. For each datapoint and its explanation, AXE takes the n most important features, trains a k-NN on the dataset restricted to those features with the model's predictions (not the true labels) as target, predicts for that datapoint, and finally reports accuracy against the model's predictions. Using a separate k-NN per datapoint gives local contextualisation, predicting the model's outputs gives model relativism, and using only existing data gives on-manifold evaluation. The k-NN models can be cached (at most N-choose-n distinct ones), other performance measures can replace accuracy, and an area under the curve over all n gives a single score sensitive to the whole importance order. Applied to Figure 1 with k = 5 and n = 4, AXE scores Gradients 0.4, SHAP 1.0, LIME 0.6 and Integrated Gradients 0.8, so SHAP is judged most useful.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Illustrative Example",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-008-32-illustrative-example.md",
+      "narrative": null,
+      "content": "Intuitively, AXE uses k-NN models because we want important\nfeatures to be those that separate model predictions in feature\nspace. Conversely, unimportant inputs should be unable to separate\nthe model predictions from each other. To illustrate the intuition\nbehind the choice of k-NN models in AXE , we present a motivating\nexample. Consider a dataset consisting of input features 𝑋1 and 𝑋2,\nsampled from 4 Normal distributions illustrated in figure 4.\nThe data (5000 points each) is sampled from 4 Normal distri-\nbutions N𝑄, N𝑅, N𝑆, and N𝑇, with varying covariances, respec-\ntively centered at",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 3.2, an illustrative example, with Figures 4 and 5. Data are 5,000 points from each of four Gaussians centred at Q = (2, 2), R = (−2, 2), S = (−2, −2) and T = (2, −2), and the model predicts 1 exactly when X1 > 0, so for point Q an explanation favouring X1 (e_a) should beat one favouring X2 (e_b). With n = 1, AXE's neighbours along X2 mix both classes (score about 0.5) while those along X1 are all positive (score 1.0), so AXE ranks e_a above e_b for every k (Figure 5a). PGI perturbing X2 gives a zero prediction gap, and perturbing X1 also gives zero until the perturbation width is large enough to cross the decision boundary, at which point the perturbed points are mostly off manifold and PGI is unstable (Figure 5b). The authors conclude that k-NN avoids off-manifold predictions and ground truth and captures the idea that important features separate classes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-009-4-experiments.md",
+      "narrative": null,
+      "content": "In sections 2.4, 2.5, and 3.2 we used synthetic examples demonstrat-\ning the ineffectiveness of prior explanation evaluation metrics. We\nnow compare AXE with existing baselines on real-world datasets.\n4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Opening of Section 4, experiments: the earlier synthetic examples showed prior metrics failing, and the section now compares AXE with baselines on real-world datasets.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Detecting Explanation Fairwashing",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-010-41-detecting-explanation-fairwashing.md",
+      "narrative": null,
+      "content": "We simulate a state-of-the-art adversarial attack [54] on explana-\ntions in a real-world setting where ground-truths remain unknown.\nThe attack modifies a model 𝑚, known to be discriminatory, creat-\ning new models 𝑚𝑆or 𝑚𝐿that respectively fool SHAP and LIME\ninto generating explanations e that show the discriminatory feature\nas unimportant. A good explanation evaluation metric 𝑞should\nidentify manipulated explanations by scoring them poorly.\nThis attack fairwashes model explanations by hiding discrimi-\nnatory model behavior. Imagine explanations for the diabetes pre-\ndiction model figure",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 4.1, detecting fairwashing, with Table 2. The authors replicate the Slack and colleagues attack that modifies a discriminatory model so that SHAP or LIME ranks spurious foil features above the protected one, on German Credit (favouring men) and COMPAS and Communities and Crime (favouring white people). They build explanation sets where the protected feature, a foil, or another feature is most important, and require a good metric to score the protected-feature set higher than each foil set. Over ten model and dataset settings, AXE (n = 1) always passes, with protected-set scores of about 0.96–1.00 against 0.68–0.77 for foils; PGU fails 7 of 10 and PGI 3 of 10, a combined failure rate of 50% against 0% for AXE. The authors read this as experimental confirmation that PGI and PGU share LIME's and SHAP's objectives and violate on-manifold evaluation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparing AXE with Baselines",
+      "pageStart": 8,
+      "pageEnd": 10,
+      "target": "../sections/sec-011-42-comparing-axe-with-baselines.md",
+      "narrative": null,
+      "content": "We performed computational experiments comparing AXE with\nprior baselines across four datasets, two models, seven explain-\ners, and all eight prior evaluation metrics from table 1, adopting\nthe standard OpenXAI benchmark [2], with results presented in\nfigures 6 and 7. Like OpenXAI, we use the German Credit [27],\nCOMPAS [32], Adult Income [6], and Home Equity Line of Credit\n(HELOC) [18] datasets (X), and run experiments with both linear\nregression and neural network models (𝑚). We try the SHAP and\nLIME (perturbation based); SmoothGrad, Grad, Input × Grad and\nIntegrated Gradients (gradient base",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 4.2, comparison with baselines, with Figures 6 and 7. Using OpenXAI, the authors test four datasets (German Credit, COMPAS, Adult Income, HELOC), logistic regression and neural networks, seven explainers (SHAP, LIME, SmoothGrad, Grad, Input × Grad, Integrated Gradients, Random) and all eight prior metrics, using the AUC over n, reporting AXE for k = 1, 3, 5 and 9, inverting PGU, and z-scoring results per metric. Ground-truth metrics are available only for logistic regression, using its coefficients; neural networks get only PGI and PGU. The AXE variants broadly agree with each other, while the ground-truth metrics disagree among themselves. No prior metric clearly separates the Random explainer from the others, and PGI and PGU rank it particularly well, which the authors link to PGI's dependence on perturbation width.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-012-5-conclusion.md",
+      "narrative": null,
+      "content": "The ability to measure explanation quality is integral to developing\nbetter explanations, and to engender trust in existing XAI methods.\nIn section 2.2 we introduced three principles to guide the evalua-\ntion of explainers and local feature-importance model explanations:\nlocal contextualization, model relativism, and on-manifold\nevaluation, reflecting that explanations should be dependent on\ninput datapoints, dependent on models, and independent of off-\nmanifold behavior respectively. We constructed simple examples in\nsections 2.4 and 2.5 showcasing the violations of these principles\nby prior",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Conclusion. The authors restate the three principles (explanations should depend on the datapoint and the model and not on off-manifold behaviour), the synthetic examples showing prior metrics violating them, AXE as an operationalisation of the user-research finding that useful explanations help predict model behaviour, the k-NN illustration, the fairwashing experiment (which they believe makes AXE the first metric to detect it perfectly), and the baseline comparison. They argue that lacking a way to choose between explanations undermines trust in XAI and hinders its adoption, and hope the principles and AXE give local explanations a firmer foundation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Acknowledgments",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-013-acknowledgments.md",
+      "narrative": null,
+      "content": "This work has been supported through research funding provided\nby the Wellcome Trust (grant no. 223765/Z/21/Z), Sloan Foundation\n(grant no. G-2021-16779), Department of Health and Social Care,\nEPSRC (grant no. EP/Y019393/1), and Luminate Group. Their fund-\ning supports the Trustworthiness Auditing for AI project and the\nGovernance of Emerging Technologies research programme at the\nOxford Internet Institute, University of Oxford. The donors had no\nrole in the decision to publish or the preparation of this paper.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Acknowledgments: funding from the Wellcome Trust (223765/Z/21/Z), the Sloan Foundation (G-2021-16779), the Department of Health and Social Care, EPSRC (EP/Y019393/1) and Luminate Group, supporting the Trustworthiness Auditing for AI project and the Governance of Emerging Technologies programme at the Oxford Internet Institute; the funders had no role in the paper.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2505.10399v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 11,
+      "pageEnd": 12,
+      "target": "../sections/sec-014-references.md",
+      "narrative": null,
+      "content": "[1] Julius Adebayo, Justin Gilmer, Michael Muelly, Ian Goodfellow, Moritz Hardt,\nand Been Kim. 2018. Sanity checks for saliency maps. In Proceedings of the 32nd\nInternational Conference on Neural Information Processing Systems (Montréal,\nCanada) (NIPS’18). Curran Associates Inc., Red Hook, NY, USA, 9525–9536.\n[2] Chirag Agarwal, Satyapriya Krishna, Eshika Saxena, Martin Pawelczyk, Nari\nJohnson, Isha Puri, Marinka Zitnik, and Himabindu Lakkaraju. 2024. OpenXAI:\ntowards a transparent evaluation of post hoc model explanations. In Proceedings\nof the 36th International Conference on Neural Informat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The reference list, 58 entries, covering saliency-map sanity checks, the OpenXAI benchmark, fairwashing, user studies of explanation usefulness, the disagreement problem, the tabular datasets used (Adult, German Credit, COMPAS, HELOC, Communities and Crime, Pima diabetes), nearest-neighbour classification, explanation methods (LIME, SHAP, gradients, SmoothGrad, Integrated Gradients, Grad-CAM, RISE, XRAI), evaluation surveys and benchmarks, and the adversarial attack on LIME and SHAP by Slack and colleagues.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    }
+  ]
+}

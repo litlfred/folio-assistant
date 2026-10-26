@@ -14,6 +14,106 @@
       "dcterms:source": "BPMN activities of smart-base"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_classifyandcodecontent.task_identifyslots",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Identify slots and proposed exclusions [classify-and-code-content · recommendation-extraction]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Enumerate the classifiable slots in the L1 statements or L2 component (condition, intervention, persona, medicine, domain, business-process, recommendation-strength, recommendation-direction, evidence-certainty) and any proposed L1 coverage exclusions in exclusions.proposed.json naming l1-extraction-reviewer as signerRole."
+        }
+      ],
+      "skos:notation": "Task_IdentifySlots",
+      "dcterms:source": "smart-base/processes/content/classify-and-code-content.bpmn#Task_IdentifySlots",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_classifyandcodecontent.task_lookupandcode",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run reuse-first lookup and record candidates [classify-and-code-content · recommendation-scenarios · glossary-terms]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run the terminology-lookup Tool across the four reuse-first rungs of the terminology-coding methodology: (1) target guide vocabulary, (2) smart-base generic personas, GRADE code lists and guideline-domain glossary, (3) external WHO-FIC/ILO standards (ICD-11, ICHI/CDHIv2, ISCO-08, ATC), and (4) local glossary candidate (status: candidate, source: extracted) or could-not-determine for business-process with its WARNING line."
+        }
+      ],
+      "skos:notation": "Task_LookupAndCode",
+      "dcterms:source": "smart-base/processes/content/classify-and-code-content.bpmn#Task_LookupAndCode",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_classifyandcodecontent.task_reviewcodings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Adjudicate slot codings and glossary candidates [classify-and-code-content · ontologist · glossary-terms · terminology-management · content-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Review each slot's classification and code against the terminology-coding methodology: verify that the authoritative scheme for the slot was used, confirm reuse-first rung selection, check skos:exactMatch vs skos:closeMatch precision (ontologist), and adjudicate any Rung 4 glossary candidates (promoting valid entries from candidate to authored per glossary-terms, or replacing them with an existing code)."
+        }
+      ],
+      "skos:notation": "Task_ReviewCodings",
+      "dcterms:source": "smart-base/processes/content/classify-and-code-content.bpmn#Task_ReviewCodings",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_classifyandcodecontent.task_reviewexclusions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read proposed exclusions against page and sign [classify-and-code-content · recommendation-extraction · content-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open library/<doc_id>/sections/page-NNN.md beside exclusions.proposed.json. Read each candidate sentence in place on the printed page, check whether the proposed exclusion reason (background-fact, manufacturer-statement, editorial, research-question, duplicate-of) holds without dropping normative guidance, and either sign the exclusion (signedOffBy) or reject it with a reason."
+        }
+      ],
+      "skos:notation": "Task_ReviewExclusions",
+      "dcterms:source": "smart-base/processes/content/classify-and-code-content.bpmn#Task_ReviewExclusions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_classifyandcodecontent.task_stageforreview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stage codings, warnings and exclusions for review [staging-review · interaction-modality]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the candidate codings, provenance bases, warnings report, and any unsigned exclusions.proposed.json entries, and request human review with deep links to the staged extraction or component pages and the printed page sections."
+        }
+      ],
+      "skos:notation": "Task_StageForReview",
+      "dcterms:source": "smart-base/processes/content/classify-and-code-content.bpmn#Task_StageForReview",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_dakl3ig.callactivity_l3fhir",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -234,6 +334,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_diig.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "smart-base/methodologies/processes/diig-investment-path.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_diig.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "smart-base/methodologies/processes/diig-investment-path.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_l2componenteditreview.call_review",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -351,6 +491,66 @@
       ],
       "skos:notation": "Task_RequestReview",
       "dcterms:source": "smart-base/processes/content/l2-component-edit-review.bpmn#Task_RequestReview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_l2dak.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "smart-base/processes/content/l2-dak-authoring.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_l2dak.call_beanclose_2",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose_2",
+      "dcterms:source": "smart-base/processes/content/l2-dak-authoring.bpmn#Call_BeanClose_2",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities/process_l2dak.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "smart-base/processes/content/l2-dak-authoring.bpmn#Call_BeanOpen",
       "skos:note": "candidate"
     },
     {

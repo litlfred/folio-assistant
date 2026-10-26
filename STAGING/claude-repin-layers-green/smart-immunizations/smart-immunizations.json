@@ -374,15 +374,15 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T09:25:07.061Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitAt": "2026-10-24T08:39:51Z",
+  "generatedAt": "2026-10-26T11:41:46.434Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitSha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitAt": "2026-10-26T11:16:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 4,
-    "Subgraph": 4,
+    "GraphTypology": 6,
+    "Subgraph": 6,
     "Asset": 2
   },
   "@graph": [
@@ -408,11 +408,25 @@
       "summary": "Document kinds — named structures of sections (fixed or semi-fixed) that a document authored with a harness follows, one `document-kind/1.0.0` JSON each, plus computed `document-kind-coverage/1.0.0` reports of how a subject realises one. Every kind and section names its sources; `computedFrom` names the declared graphs a section derives from."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/ig-annex",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "ig-annex",
+      "renderable": false,
+      "summary": "Annexes an IG's narrative pages load on demand: an `annexes.json` (`ig-annexes/v1`) naming, for each annex, the page it belongs on, the file beside the declaration that holds it, and the columns its table shows before a row is opened. The IG site build (`stage-ig-sites.ts`, and `ig-repo-site.ts compose` for an IG repository's own site) copies each file to `assets/annex/` and mounts `ig-annex.js` on the page."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/l1-extraction",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "l1-extraction",
       "renderable": false,
       "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/web-annex",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "web-annex",
+      "renderable": false,
+      "summary": "A WHO publication's web annexes, L1 or L2, held as data in the knowledge graph rather than as the files WHO attaches to the publication: a DAK's core data dictionary workbook as JSON (`dak-data-dictionary/v1`, loaded on demand by the IG site's annex view), and the declared mapping from its generic personas to the swimlanes of its business-process figures (`dak-swimlanes/v1`). Every node says which publication it is an annex of (`annexOf`: a library entry when one is held, else the parent's IRIS handle), what the publication calls it (`label`, e.g. \"Web Annex A\"), its own IRIS handle only when WHO gave it a record (`iris`), and the document-kind section it serves (`section`, e.g. `dak#core-data-elements` or `l1#annexes`)."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/library",
@@ -467,6 +481,42 @@
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-document-kinds",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-document-kinds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-annexes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-immunizations-annexes",
+      "path": "annexes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/ig-annex"
+      ],
+      "description": "The web annexes this IG's pages load on demand (bean folio-assistant-fm9n; owner, 2026-10-10, option 2a: the data dictionary in the knowledge graph, loaded dynamically, not the full workbook). `annexes.json` (`ig-annexes/v1`) puts `../web-annexes/dak-data-dictionary.json` on `dictionary.md`, showing six columns and opening the rest per row. fhir-harness's IG site build finds it through this `ig-annex` declaration, both `stage-ig-sites` for an index and `ig-repo-site.ts compose` for this repository's own site. It is a directory of its own, not `fhir-artifact-index/`, because an IG repository commits no artefact index (fhir-harness#124; owner, 2026-10-24, option B).",
+      "readmePath": "annexes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-annexes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-annexes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-web-annexes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-immunizations-web-annexes",
+      "path": "web-annexes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/web-annex"
+      ],
+      "description": "The annex files themselves, as smart-base's `web-annex` kind (a WHO publication's web annexes, L1 or L2; owner, 2026-10-24, option A), which types them and judges them (`check:web-annexes`). `dak-data-dictionary.json` is Web Annex A of the IMMZ DAK (`annexOf` `smart-immunizations/library/9789240099456-eng`, the held library entry of the DAK `dictionary.md` links to, IRIS 10665/380303; `section` `dak#core-data-elements`; no `iris` of its own, since none could be verified): the core data dictionary workbook (`input/L2/IMMZ DAK_core data dictionary.xlsx`) as `dak-data-dictionary/v1`, written by smart-base's `dak-data-dictionary.ts` (`--annex-of smart-immunizations/library/9789240099456-eng --label \"Web Annex A\" --section dak#core-data-elements`). It records the workbook's sha256: regenerate it, never edit it. It is a sibling of `annexes/` rather than sharing that directory, because each kind owns the `$schema` families of its own directory, and not nested inside it, because a declared directory inside another declared one fails `check:layout-norms` (no typology here declares `within`).",
+      "readmePath": "web-annexes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-web-annexes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-web-annexes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/qa",
@@ -527,6 +577,18 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-document-kinds"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/smart-immunizations.jsonld#directory/smart-immunizations-annexes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-annexes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-annexes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/smart-immunizations.jsonld#directory/smart-immunizations-web-annexes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-web-annexes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/smart-immunizations-web-annexes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/smart-immunizations.jsonld#directory/qa",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/smart-immunizations/directory/qa",
@@ -547,8 +609,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

@@ -4,9 +4,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG"
       ],
-      "nodeCount": 13,
-      "flowCount": 14,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -31,7 +31,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
       "from": "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG",
-      "to": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -139,6 +139,40 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
       "from": "http://smart.who.int/base/process/Process_DIIG/node/A_ValueProposition",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
       "to": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG",
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     }

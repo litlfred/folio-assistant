@@ -370,15 +370,15 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T09:24:50.466Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitAt": "2026-10-24T08:39:51Z",
+  "generatedAt": "2026-10-26T11:41:30.673Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitSha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitAt": "2026-10-26T11:16:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "GraphTypology": 8,
-    "Subgraph": 15,
+    "GraphTypology": 9,
+    "Subgraph": 19,
     "Asset": 3,
     "Tool": 1
   },
@@ -440,6 +440,13 @@
       "summary": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/software-library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "software-library",
+      "renderable": false,
+      "summary": "Outside libraries a layer imports or vendors -- one generated `software-library` node per library per layer, with the version and sha512 its `bun.lock` pins, its SPDX licence, its range, whether it is a dev dependency, the files that import it and the shim that types it. Shares its core with `tool-release`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-adapters",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
       "name": "cat-harness-tools-adapters",
@@ -455,6 +462,38 @@
       "readmePath": "adapters/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-ui",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "cat-harness-tools-ui",
+      "path": "ui/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The standalone tool pages the MCP server serves at `/ui/` (`adapters/mcp-server/server.ts`): the bibliography QA, glossary curator and source-relevance pages, their index and shared stylesheet. Static HTML with no build step. Declared 2026-10-24 under bean `0uu2` (owner, card \"A. Declare and keep\"): every top-level directory is a declared subgraph, and before this nothing named it, so a consumer scanning the declaration could not see it.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-ui"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-viewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "cat-harness-tools-viewer",
+      "path": "viewer/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The content viewer the MCP server serves at `/viewer/` (`adapters/mcp-server/server.ts`, `VIEWER_DIR`): one HTML page carrying the whole single-page app, which reads `/api/folio` and opens the first paper the folio lists. A platform viewer, not folio content: it names no folio, and `test/test-server.e2e.ts` and `scripts/tests/ui/viewer-script.test.ts` assert it. Declared 2026-10-24 under bean `0uu2` (owner, card \"A. Declare and keep\"), when its last hardcoded folio name (`quantum-observable-universe`, the `qou-viewer` package name, now `folio-content-viewer`, because `folio-viewer` is already the folio graph's registered viewer Tool) was removed.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-viewer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
@@ -542,6 +581,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-src"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-types",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "cat-harness-tools-types",
+      "path": "types/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "Ambient type declarations for untyped dependencies: `bpmn-moddle.d.ts` and `dmn-moddle.d.ts`. This layer's `tsconfig.json` includes `types/**/*.d.ts`, and so does folio-assistant-core's (`../cat-harness-tools/types/**/*.d.ts`), so the path is a contract with a layer above and stays where it is. Declared 2026-10-24 under bean `0uu2`, where the owner ruled to keep it in place and declare it rather than fold it into `src/`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-types"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-tools",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
       "name": "cat-harness-tools-tools",
@@ -574,6 +629,24 @@
       "readmePath": "python/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-python"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-libraries",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "cat-harness-tools-libraries",
+      "path": "libraries/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/software-library"
+      ],
+      "title": "Software libraries",
+      "description": "The outside libraries this layer's code imports: one `software-library/1.0.0` node per dependency in `package.json`, with the version and sha512 that `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, the files that import it (`usedBy`) and the `types/*.d.ts` shim that types it (bpmn-moddle, dmn-moddle). GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, and a shim no node names. The kind is cat-harness's (bean `jbvi`, option D: one outside-software core shared with `tool-release`); this layer keeps its own nodes because it pins its own versions.",
+      "readmePath": "libraries/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-libraries"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/beans",
@@ -778,6 +851,18 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-adapters"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-ui",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-ui",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-ui"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-viewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-viewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-viewer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-schemas",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
@@ -808,6 +893,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-src"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-types",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-types",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-types"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-tools",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-tools",
@@ -818,6 +909,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-python",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-python"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-libraries",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-libraries",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-libraries"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/beans",
@@ -882,8 +979,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

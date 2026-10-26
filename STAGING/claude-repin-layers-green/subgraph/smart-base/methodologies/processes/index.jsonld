@@ -15,6 +15,24 @@
       "name": "DIIG — from a health system bottleneck to a costed implementation plan"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -130,9 +148,29 @@
       "name": "Make the value proposition and set next steps"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG",
       "@type": "bootstrap:ProcessNode",
       "name": "Costed implementation plan, and its case"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/GW_ProgressCheck4",

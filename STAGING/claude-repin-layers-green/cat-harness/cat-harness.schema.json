@@ -665,6 +665,43 @@
                       "version"
                     ],
                     "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "hydrated"
+                      },
+                      "repository": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                      },
+                      "ref": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{40}$"
+                      },
+                      "harness": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9][a-z0-9-]*$"
+                      },
+                      "subgraph": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                      },
+                      "tool": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9][a-z0-9-]*$"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "repository",
+                      "ref",
+                      "harness",
+                      "subgraph"
+                    ],
+                    "additionalProperties": false
                   }
                 ]
               },
@@ -1388,7 +1425,19 @@
                       "type": "boolean",
                       "const": true
                     },
+                    "tools": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^[a-z][a-z0-9-]*$"
+                      }
+                    },
                     "whole": {
+                      "type": "boolean"
+                    },
+                    "hydrated": {
                       "type": "boolean"
                     },
                     "trust": {
@@ -1509,6 +1558,10 @@
                   },
                   "additionalProperties": false
                 }
+              },
+              "hydrated": {
+                "type": "boolean",
+                "const": true
               },
               "note": {
                 "type": "string",
@@ -2043,6 +2096,32 @@
             "additionalProperties": false
           }
         },
+        "lsiUnitProviders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "graphKind": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "export": {
+                "type": "string",
+                "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$"
+              }
+            },
+            "required": [
+              "graphKind",
+              "module",
+              "export"
+            ],
+            "additionalProperties": false
+          }
+        },
         "contentTranslations": {
           "type": "array",
           "items": {
@@ -2154,8 +2233,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

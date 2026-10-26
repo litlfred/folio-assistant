@@ -572,6 +572,118 @@
      }
     ]
    }
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "lane": "Programme manager",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-retire",
+      "href": "../../../reference/skill-instructions/content-retire.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../reference/skill-instructions/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../reference/skill-instructions/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "lane": "Programme manager",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-retire",
+      "href": "../../../reference/skill-instructions/content-retire.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../reference/skill-instructions/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../reference/skill-instructions/release-lifecycle.html"
+     }
+    ]
+   }
   }
  }
 }

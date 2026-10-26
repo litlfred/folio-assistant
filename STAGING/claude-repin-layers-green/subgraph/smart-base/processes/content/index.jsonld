@@ -5,6 +5,139 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "@type": "bootstrap:Process",
+      "name": "Classify and code content"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "reject-exclusion"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "signed"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "request-changes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "approve"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring agent"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "@type": "cat-harness:Lane",
+      "name": "L1 extraction reviewer (person)"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "@type": "cat-harness:Lane",
+      "name": "Terminologist / ontologist reviewer (person)"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Content classified, coded and signed off"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Exclusions signed?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Proposed exclusions?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Coding verdict?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L1 extraction or L2 component ready to classify and code"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Identify slots and proposed exclusions [classify-and-code-content · recommendation-extraction]"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run reuse-first lookup and record candidates [classify-and-code-content · recommendation-scenarios · glossary-terms]"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicate slot codings and glossary candidates [classify-and-code-content · ontologist · glossary-terms · terminology-management · content-review]"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Read proposed exclusions against page and sign [classify-and-code-content · recommendation-extraction · content-review]"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Stage codings, warnings and exclusions for review [staging-review · interaction-modality]"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
       "@type": "bootstrap:Process",
       "name": "L2 DAK to L3 FHIR IG"
@@ -285,6 +418,28 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "@type": "cat-harness:Lane",
       "name": "Business analyst"
@@ -310,6 +465,21 @@
       "name": "Work plan — beans (shared by humans and agents)"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",
       "@type": "bootstrap:ProcessNode",
       "name": "L2 DAK ready for L3"
@@ -318,6 +488,16 @@
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",
       "@type": "bootstrap:ProcessNode",
       "name": "Clinically validated"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",

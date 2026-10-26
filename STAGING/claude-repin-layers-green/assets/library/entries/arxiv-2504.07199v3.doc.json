@@ -217,7 +217,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 110,
-      "summary": null,
+      "summary": {
+        "text": "Title, authors and abstract of \"SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library's Open-Access Catalog\" by Jennifer D'Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin and Diana Slawig (TIB Leibniz Information Centre for Science and Technology, Hannover). The shared task asked participants to build LLM-based systems that recommend the top-k subjects from the GND taxonomy for English and German scientific and technical records. Systems were scored with precision, recall and F1, and also assessed by subject specialists; the abstract names LLM ensembles, synthetic data generation and multilingual processing as what worked.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "semeval",
@@ -253,7 +256,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 733,
-      "summary": null,
+      "summary": {
+        "text": "Introduction. Automated subject classification of scientific texts is well established (the CSO classifier, citation metadata, topic modelling, embeddings, deep learning), and open toolkits such as ANNIF from the National Library of Finland are used by several European national libraries, but using LLMs for the task is largely unexplored. The authors therefore organised SemEval 2025 Task 5, LLMs4Subjects, on the open-access subset (about 100,000 records) of TIBKAT, the 5.7-million-record catalogue of Germany's national library for science and technology, where every record is annotated with GND subject terms whatever its language. Four research questions drove it: multilingual against monolingual models (RQ1), the size and diversity of training data (RQ2), retrieval-augmented generation against fine-tuning (RQ3), and small against large models (RQ4). The organisers report that whether LLMs beat traditional machine learning for subject indexing remains debatable, and announce a second edition focused on energy- and compute-efficient LLMs.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "subject tagging",
@@ -301,7 +307,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 238,
-      "summary": null,
+      "summary": {
+        "text": "Background on the three resources. TIB is Germany's national library for science and technology and promotes open access to knowledge and data. A subset of its holdings (TIBKAT catalogue data, metadata of free electronic collections, and AV-Portal metadata) is released under CC0 1.0. The GND (Gemeinsame Normdatei, \"integrated authority file\") is an international authority file used mainly by German-speaking libraries, also downloadable under CC0; the task uses only its subject-heading (Sachbegriff) records, and the organisers wrote a how-to guide for downloading it.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "authority file",
@@ -349,7 +358,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 141,
-      "summary": null,
+      "summary": {
+        "text": "How the source dataset was built. A reproducible TIBKAT query for records with abstracts and GND subject indexing returned 189,665 records across nine media types, led by Book (136,434) and Thesis (31,859), and the langdetect library found 48 languages, led by German (108,637) and English (76,735). The official corpus keeps only German and English records and drops the four least represented media types, giving 123,589 records; the excluded data is released as supplementary data and the final dataset is on GitHub.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "dataset",
@@ -385,7 +397,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 252,
-      "summary": null,
+      "summary": {
+        "text": "How subject annotations are made. A team of 17 subject specialists covering 28 disciplines assigns GND keywords to each record from its title, abstract and full text, as part of subject cataloguing shared across German library networks. TIB adds about 15,000 new titles a month, so the work is labour-intensive, and the authors argue that LLM-based tools could partly automate it while keeping quality. Table 1, placed here, gives per-language record and subject counts for the training data of both collections.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "subject cataloging",
@@ -433,7 +448,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 66,
-      "summary": null,
+      "summary": {
+        "text": "Task description. Given a TIB technical record's title and abstract, a system had to return a ranked top-k list of relevant GND subjects, with k customisable. Because the records are in English and German, systems had to handle both languages.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "gnd",
@@ -461,7 +479,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 194,
-      "summary": null,
+      "summary": {
+        "text": "The two dataset collections. all-subjects is the full TIBKAT open collection, split into 81,937 training and 13,666 development records, released with a GND taxonomy of 204,739 subjects. tib-core is a smaller subset of records carrying at least one subject from 14 TIB core domains (from Architecture to Traffic Engineering), with 41,902 training and 6,980 development records and a reduced taxonomy of 79,427 subjects. Teams could take either collection or both.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "dataset",
@@ -505,7 +526,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 90,
-      "summary": null,
+      "summary": {
+        "text": "Dataset format. Both collections are JSON-LD with title, type, abstract and authors; the GND subjects assigned to each record are in dcterms:subject. Table 1 gives the breakdown: books are the most common record type in both languages, and records carry on average 3 to 7 subjects.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "main shared-task-datasets",
@@ -537,7 +561,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 87,
-      "summary": null,
+      "summary": {
+        "text": "Task setup. The organisers (two computer scientists and three TIB subject specialists) supported participants through a website, a Google Group and email over four months, October 2024 to January 2025. Of 33 teams that declared interest, 14 submitted system outputs and 12 also wrote system description papers.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "task",
@@ -565,7 +592,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 2215,
-      "summary": null,
+      "summary": {
+        "text": "The participant systems, in alphabetical order, each described by its key steps, with Table 2 giving every team's method, models and rankings. Annif combined traditional extreme multi-label classifiers in ensembles with LLM translation and LLM-generated synthetic records; DNB-AI-Project used few-shot prompting of an ensemble of off-the-shelf LLMs, mapping free keywords to GND terms by embedding search and re-ranking with an LLM, without fine-tuning; DUTIR831 used Qwen2.5-72B-Instruct for synthetic data, GND knowledge distillation, LoRA fine-tuning with DPO, and re-ranking. The others (Homa, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, YNU-HPCC) are retrieval-based: embeddings, BERT ensembles, cross-encoder re-ranking or contrastive fine-tuning. The authors conclude that the leading teams relied on model ensembles, synthetic training data and multilingual models, and that only DUTIR831 and RUC Team used very large LLMs (72B and 130B) while the rest used 8B or fewer. Table 3, the quantitative leaderboard, and Figures 1 and 2 (recall and precision at 5 by record type and by language) are placed after this section.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "cross-encoder re-ranking",
@@ -613,7 +643,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 249,
-      "summary": null,
+      "summary": {
+        "text": "The two leaderboards. Quantitatively, systems were scored by average precision, recall and F1 at k = 5, 10, …, 50, treating subjects as a bag of words, and broken down by language, by record type and by both; the evaluation script is public. Qualitatively, over three weeks TIB subject specialists reviewed the top 20 GND codes each team gave for 122 test records shared by both collections, labelling each Y (correct), I (irrelevant but technically correct) or N/blank (incorrect). Case 1 counts Y and I as correct, case 2 counts only Y.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "shared task",
@@ -661,7 +694,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 304,
-      "summary": null,
+      "summary": {
+        "text": "Quantitative results (Table 3). The ranking is by recall averaged over k = 5 to 50, though for subject specialists useful predictions sit at k between 5 and 10, at most 20; the top teams recovered over half the gold subjects. Precision is reported but, as a footnote explains, cannot reach 1 at large k because records have about 5 true subjects. The top three were Annif, DUTIR831 and RUC Team on all-subjects, and RUC Team, Annif and LA²I²F on tib-core, LA²I²F's rise owing to its high precision on articles. By record type, articles scored best and theses worst; by language, there was no significant difference between German and English.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ruc team",
@@ -709,7 +745,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 824,
-      "summary": null,
+      "summary": {
+        "text": "Qualitative results (Table 4, Figures 3 and 4). The top four teams ranked the same in both cases; the authors focus on case 2 (only Y counts), since case 1 rewards predicting several near-identical subjects. DNB-AI-Project was the best system qualitatively, followed by the quantitative leaders DUTIR831, RUC Team and Annif, and the authors read its purely prompted LLM ensemble, with no fine-tuning, as support for the task's premise that LLMs can generalise against heavily fine-tuned traditional methods. Across the 14 domains, Computer Science had the highest recall, most teams struggled with Engineering and Traffic Engineering, and DNB-AI-Project and RUC Team were consistent across all domains; precision did not always follow recall.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "qualitative",
@@ -757,7 +796,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 259,
-      "summary": null,
+      "summary": {
+        "text": "The organisers' baseline. They built a reference system with GPT-4o through OpenAI's Assistant API: two assistants, one per collection, each holding its GND taxonomy in a vector store, retrieve 50 subjects per record and are prompted to return exactly 50 valid subject tags as JSON. The API proved unreliable (output that broke the schema or malformed GND codes, needing repeated runs), and the baseline ranked below the participant systems. The authors conclude that a general-purpose LLM with retrieval and prompting is fine for quick prototypes, but effective subject tagging needs more specialised approaches.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "assistant api",
@@ -805,7 +847,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1679,
-      "summary": null,
+      "summary": {
+        "text": "Conclusion, acknowledgments and references. The task is presented as the first evaluation of LLMs for GND subject indexing of bilingual German/English technical records, combining metrics with expert assessment. Its takeaways: multilingual models and training data beat monolingual ones (RQ1, RQ2); synthetic data and retrieval-augmented pipelines improved results (RQ3); and smaller, well-engineered systems often rivalled large instruction-tuned LLMs (RQ4). All data, code and evaluation resources are on GitHub, and a second edition on energy- and compute-efficient systems is planned. Funding came from TIB, the BMBF SCINEXT project and the DFG NFDI4DataScience initiative. The references cover the participant system papers, prior subject-classification work (CSO classifier, topic models, Annif) and the models and methods used (Llama 3, Qwen2.5, BGE-M3, LoRA, DPO, Sentence-BERT, RAG).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "arxiv preprint",
@@ -853,7 +898,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 148,
-      "summary": null,
+      "summary": {
+        "text": "Appendix A: definitions of the nine TIBKAT media types (Book, Thesis, Conference, Report, Article, Collection, AudioVisualDocument, Periodical and Chapter).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "media",
@@ -889,7 +937,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 123,
-      "summary": null,
+      "summary": {
+        "text": "Appendix B: the language distribution of TIBKAT records with abstracts, 48 languages in all, led by German (108,637) and English (76,735), then French (1,741), Indonesian (945) and Spanish (311), down to one record each in Korean and Russian.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "tibkat",
@@ -917,7 +968,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 278,
-      "summary": null,
+      "summary": {
+        "text": "Appendix C: how TIB uses the GND. Subject specialists search it through GND-Explorer or OGND, restricted to the topical-term class (saz) used for subject indexing; new terms join through a cooperative review process, and full dumps are published regularly. GND terms are usually German and describe every TIB record whatever its language, with English preferred names in some cases. Synonyms matter for indexing, though they are not always strict synonyms, because term meanings shift as the GND grows and large corrections are rare.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "gnd",
@@ -965,7 +1019,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 305,
-      "summary": null,
+      "summary": {
+        "text": "Appendix D: the pilot task. Since early 2024 TIB has used ANNIF in production to assign records in its portal to one or more of its 28 subject facets, the machine-learning stage applying when nothing more salient is available; TIB moved to it from a commercial algorithm for customisation and community development. Trained on catalogue metadata using only titles and publishers, ANNIF reached an overall F1 of about 0.65 on the 14 subjects trained so far, with little difference between German and English. The authors see LLMs as a complementary next step.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "tib portal",

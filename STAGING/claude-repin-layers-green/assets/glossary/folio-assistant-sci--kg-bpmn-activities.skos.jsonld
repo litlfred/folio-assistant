@@ -74,6 +74,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-bpmn-activities/process_paperauthoring.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-bpmn-activities/process_paperauthoring.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-bpmn-activities/process_paperauthoring.task_authorblocks",
       "@type": "skos:Concept",
       "skos:inScheme": {

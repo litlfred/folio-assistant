@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -16,7 +16,7 @@
       "title": "/proof-integration-watcher",
       "description": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `local/integration-watcher`.",
       "instructionsPath": "skills/content/folio-paper-adapter/proof-integration-watcher.md",
-      "instructionLines": 450,
+      "instructionLines": 458,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

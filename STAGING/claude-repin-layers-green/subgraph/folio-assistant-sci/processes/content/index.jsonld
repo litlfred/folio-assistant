@@ -210,6 +210,24 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent (system)"
@@ -240,9 +258,29 @@
       "name": "Work plan — beans (shared by humans and agents)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published",
       "@type": "bootstrap:ProcessNode",
       "name": "Paper published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Gateway_LeanGreen",

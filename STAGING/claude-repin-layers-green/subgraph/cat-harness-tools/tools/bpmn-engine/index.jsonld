@@ -1,0 +1,20 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/tools/bpmn-engine/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/tools/bpmn-engine.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "bpmn-engine",
+      "title": "BPMN workflow engine"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/code",
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/bpmn-engine",
+  "path": "tools/bpmn-engine/"
+}

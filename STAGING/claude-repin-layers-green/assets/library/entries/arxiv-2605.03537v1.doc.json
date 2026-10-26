@@ -217,7 +217,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 202,
-      "summary": null,
+      "summary": {
+        "text": "Title, author and abstract of Eric H. C. Chow (School of Humanities, University of Hong Kong), \"A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing\". Subject indexing, analysing what a work is about, choosing controlled-vocabulary terms and encoding them as MARC 21 subject fields, is among the most time-consuming parts of cataloguing. The system splits it into four agent skills run in sequence (conceptual analysis, quantitative filtering, authority validation, MARC field synthesis), each encoding rules from the Library of Congress Subject Headings Manual (SHM) and subject-analysis theory. It was evaluated on ten titles whose existing headings were taken from the Harvard Library bibliographic dataset. The author reports strong conceptual alignment with professional practice, with differences in specificity, subdivision practice, and the agent's adherence to the 2026 LC policy replacing form subdivisions ($v) with LCGFT 655 fields.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "congress subject",
@@ -265,7 +268,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 169,
-      "summary": null,
+      "summary": {
+        "text": "Introduction. Subject indexing with the Library of Congress Subject Headings (LCSH) requires knowledge of a vocabulary of over a million authorised headings, fluency in the Subject Headings Manual, and judgment about specificity and depth. Catalogers need years of training to build complex subject strings independently, and often get none, relying on existing records as examples (Chow and colleagues, 2024). The resulting bottleneck has produced cataloguing backlogs worldwide, leaving new materials undiscoverable (Tang and Jiang, 2025).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "subject headings",
@@ -305,7 +311,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Only the section number 1.1.1 (the start of the literature review), with no other text.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "1.1.1",
       "extractCut": false
@@ -320,7 +329,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 330,
-      "summary": null,
+      "summary": {
+        "text": "Literature review, traditional machine-learning approaches. National libraries have treated subject indexing as extreme multi-label text classification (XMTC) over vocabularies of tens or hundreds of thousands of terms. Estonia's Kratt used page-level logistic regression and indexed a book in about a minute, 10–15 times faster than catalogers, but professionals rated its subjects unsatisfactory, and its training labels were very sparse (median label frequency 2). Finland's Annif toolkit combines XMTC algorithms (Omikuji/Bonsai, MLLM lexical matching, XTransformer) into ensembles and is used by several European national libraries. The TIB-SID corpus of 136,000 records with GND subjects shows the structural problem: vocabularies have extreme long-tail distributions because headings are designed to be specific. The block also carries the arXiv identifier (cs.DL, 5 May 2026).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "national library",
@@ -368,7 +380,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 553,
-      "summary": null,
+      "summary": {
+        "text": "LLMs for subject indexing. Brzustowicz (2023) found ChatGPT could produce MARC records comparable to professionals' for basic fields but diverged on subject access points. Chow and colleagues (2024) had ChatGPT assign LCSH to 30 theses: only about half the headings were valid and specific enough, with invented or colloquial terms, though the run cost about $0.25 and three minutes, and refining an AI suggestion was seen as easier than starting from scratch. Tang and Jiang (2025) report 26–35% alignment with human LCSH in one evaluation and propose validating AI candidates against the LC Linked Data Service through MCP. In the SemEval-2025 LLMs4Subjects task (14 teams, GND subjects, bilingual TIB records, quantitative scores plus review by 17 specialists in 28 disciplines), the top all-subjects system was Annif, which used LLMs only for translation and synthetic data, and the organisers judged the advantage of LLMs over traditional methods debatable.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "subject indexing",
@@ -416,7 +431,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 520,
-      "summary": null,
+      "summary": {
+        "text": "Present contribution. The author argues that prior LLM failures are failures of rule application, not topic identification: unauthorised forms, missing subdivisions, deprecated subfield practice and no authority checks. Every earlier LLM study treated subject assignment as a single step, without chain-of-thought or staged reasoning, whereas catalogers move through distinct stages (aboutness, choosing topics, authority checking, building strings). The paper therefore splits the workflow into agent skills that pass structured, inspectable outputs between stages, described as externalised chain-of-thought. Unlike XMTC it needs no training data; unlike single-prompt approaches it encodes SHM rules at each stage; unlike validation-only approaches it covers the whole workflow. The system was built with Claude Code and its agent-skill framework; four skills were written from eleven LC policy documents and one review article and tested on ten books across the humanities, social sciences, sciences and fiction.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "tang jiang",
@@ -464,7 +482,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Only the section number 2.1 (the start of the methodology), with no other text.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "2.1",
       "extractCut": false
@@ -479,7 +500,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 199,
-      "summary": null,
+      "summary": {
+        "text": "Section 2.1, source material and skill construction. The four skills were built by close reading of eleven Library of Congress policy documents (listed in Table 1) and, for conceptual analysis, Holley and Joudrey's (2021) review, which supplies Wilson's four methods of subject determination, Langridge's three questions and the Joudrey–Taylor concept-identification framework. Each document's rules, exceptions, criteria and examples were translated into a SKILL.md file with terminology, decision steps, output formats and validation checks. The SKILL.md files and the Python authority-validation scripts are published on GitHub (choweric/subject-indexing-skills).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "skill",
@@ -523,7 +547,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 716,
-      "summary": null,
+      "summary": {
+        "text": "Section 2.2, the four-skill pipeline, with Figure 1 and Table 1. Skill 1 (conceptual analysis) takes title, abstract and table of contents and applies Wilson's methods and Langridge's questions to over-generate candidate concepts with an aboutness statement. Skill 2 (quantitative filtering) applies SHM H 180: the 20% rule, the rule of three (four or more subtopics get only the broader heading), specificity, depth of indexing and ordering by predominance (H 80), and routes form concepts to LCGFT 655 fields under the 2026 policy. Skill 3 (authority validation) checks LCSH and LCGFT candidates against a local TF-IDF index built from id.loc.gov files (about 1.01 million subject headings and 8,600 genre/form terms) and names against the LC suggest2 API, avoiding the 44 GB LCNAF file of over 12 million records; it suggests authorised forms for variants and checks geographic subdivision under H 830. Skill 4 (MARC 6xx synthesis) builds fields in the H 1075 subdivision order ($a, $z, $x, $y), applies indirect geographic subdivision, drops $v, and applies H 405 and H 430 to name headings. Table 1 maps the eleven documents (H 80 to J 110 and the January 2026 LC memo) to skills.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "marc synthesis",
@@ -571,7 +598,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 145,
-      "summary": null,
+      "summary": {
+        "text": "Section 2.3, test corpus. Ten titles from varied disciplines and indexing challenges (Table 2) were sampled from the Harvard Library Bibliographic Dataset, an open collection of over 12.7 million MARC XML records exported from Harvard's Alma system under its Open Metadata Policy. The existing LCSH in each record's 6XX fields serve as the human baseline, giving ten paired comparisons. The titles' metadata (title, abstract, table of contents, ISBN, publisher) is published as a spreadsheet in the project repository with the skill files and pipeline transcripts.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "harvard library",
@@ -607,7 +637,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 108,
-      "summary": null,
+      "summary": {
+        "text": "Section 2.4, evaluation method. For each title the pipeline's MARC output was compared with the Harvard/LC headings on conceptual recall, heading precision (correct authorised form), subdivision accuracy ($x, $z, $y) and genre/form treatment (LCGFT 655). Because the baseline records may reflect decisions made years earlier under different LC policies, differences are not automatically errors, and the comparison is interpretive rather than strictly quantitative.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "heading",
@@ -639,7 +672,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Only the section number 3.1 (the start of the results), with no other text.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "3.1",
       "extractCut": false
@@ -654,7 +690,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1413,
-      "summary": null,
+      "summary": {
+        "text": "Section 3.1, the heading-by-heading comparison, with Tables 2 and 3. The ten titles range from Renaissance poetry, emergency-medicine fiction, race at Ford, Yunus's Banker to the Poor and currency economics to respiratory virology, artificial black holes, Richard Baxter's theology, American stand-up comedy and Andean ritual in Bolivia. Highlights: Title 1 matched the first heading exactly but assigned 3 headings against 6; Title 2 applied the 2026 policy (LCGFT Short stories and Medical fiction) where the baseline appended \"Fiction\"; Title 3 used broader Race discrimination and country-level geography but added Ford Motor Company and Fordism; Title 5 was the closest match; Title 6 was far more specific than the baseline's Medicine and Immunology; Title 7 missed the baseline's Mathematical models subdivision; Title 8 produced a 600 name-title heading for Baxter's Methodus theologiae; Title 10 added a chronological 651 heading (Bolivia, Politics and government, 2006-) but stopped at country level where the baseline subdivided to Toracari, and used one population group where the baseline used two.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "bolivia toracari",
@@ -702,7 +741,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 422,
-      "summary": null,
+      "summary": {
+        "text": "Section 3.2, patterns observed. In seven of ten titles the agent was as specific as or more specific than the baseline, most strikingly for virology; the baseline was clearly more specific for the Ford and black-holes titles, and Bolivia was mixed. The agent assigned 600 or 610 name headings in four titles, while the baseline records had none. It consistently applied the February 2026 LCGFT policy, which the author calls the largest systematic difference and a matter of policy change rather than error. Baseline records carry more subdivisions, especially geographic, and the author suggests the synthesis skill needs guidance on subdividing below country level. Several differences (Race discrimination against Racism in the workplace, Poverty against Rural poor) are normal inter-cataloger variation, and the Bolivia title suggests the conceptual-analysis skill should look for overlapping population groups.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "baseline record",
@@ -750,7 +792,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Only the section number 4.1 (the start of the discussion), with no other text.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "4.1",
       "extractCut": false
@@ -765,7 +810,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 177,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.1, strengths of the agent-skill approach. Separation of concerns makes each stage auditable, so a reviewer can see where a questionable heading came from. Policy changes can be made by editing the relevant skills: the 2026 LCGFT transition touched two of the four. Each skill outputs its justifications (20% calculations, authority match scores, subdivision checks), making the reasoning inspectable. SHM rules are encoded explicitly at section level rather than learned, so every heading decision can be traced to a policy document.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "skill",
@@ -805,7 +853,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 292,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.2, limitations. The agent under-applied geographic and chronological subdivisions, which stronger guidance in the synthesis skill could fix. Among overlapping authorised headings it sometimes chose the broader term, which better broader/narrower navigation in the validation skill could address. It works from title page and abstract without consulting existing records in shared catalogues such as WorldCat, and an ISBN lookup step could improve consistency. Ten comparisons are too few for statistical generalisation, with one or two titles per discipline; the author proposes a larger stratified sample from the Harvard dataset and inter-cataloger agreement baselines.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "subject indexing",
@@ -853,7 +904,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 69,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.3, the baseline. Headings in a production catalogue may reflect full, core or minimal cataloguing, copy cataloguing from varied sources, legacy headings predating current SHM rules, or automated enrichment, so the Harvard headings are one professional interpretation rather than a gold standard.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "baseline",
@@ -881,7 +935,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 641,
-      "summary": null,
+      "summary": {
+        "text": "Conclusion and references. The author concludes that the modular pipeline produces LCSH assignments conceptually aligned with professional practice, strong on specificity, named entities and current LC policy, weaker on subdivision completeness and synonym choice. It covers only subject indexing (MARC 6XX), not descriptive cataloguing, classification or name authority control. Two uses are proposed, enriching records with missing or minimal headings and clearing backlogs, always as drafts for a cataloger to review. The structural finding, that decomposition into policy-grounded skills is a viable way to apply LLMs to complex knowledge work, is given most weight; against the 26–35% alignment of single-prompt approaches, the pipeline showed conceptual overlap on over half of heading comparisons. Future work: a larger corpus, copy-cataloguing consultation, and other vocabularies (MeSH, AAT, FAST). The nine references cover Kratt, Brzustowicz, Chow and colleagues, the Harvard dataset, Holley and Joudrey, the two D'Souza papers, Annif and Tang and Jiang.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "arxiv preprint",

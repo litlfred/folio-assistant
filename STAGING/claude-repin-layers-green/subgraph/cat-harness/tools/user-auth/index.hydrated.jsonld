@@ -1,0 +1,85 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/user-auth/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/user-auth.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/auth.ts"
+        },
+        "mcp": {
+          "tool": "auth_whoami"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "A declared actor the caller is acting as.",
+            "name": "actor",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "An ODRL action to ask about, e.g. content-authoring.",
+            "name": "action",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Process id, to scope the question or check a task.",
+            "name": "process",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Node id; with process, runs the task-authorization check.",
+            "name": "task",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The role the lane binds.",
+            "name": "role",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The content acted on.",
+            "name": "target",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Identity, GitHub role, ODRL grants and decisions, and what GitHub's grain cannot express.",
+            "name": "answer",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "user-auth",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-auth"
+      ],
+      "title": "Who is asking, and what may they do"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/user-auth",
+  "path": "tools/user-auth/"
+}

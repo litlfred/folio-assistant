@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T09:24:53.234Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitAt": "2026-10-24T08:39:51Z",
+  "generatedAt": "2026-10-26T11:41:33.415Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitSha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitAt": "2026-10-26T11:16:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -491,7 +491,7 @@
       "title": "ig-publisher-reduction",
       "description": "The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest. Read before starting any phase, and before claiming one is done.",
       "instructionsPath": "skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 280,
+      "instructionLines": 285,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -569,7 +569,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 551,
+      "instructionLines": 601,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3315,7 +3315,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs"
       ],
-      "description": "This layer's own documentation. Today only `wireframes/`: the wireframe of each visualiser this layer declares (`ig-ast`), with its intent, checks and an `index.json` of the route keys it covers, which `check:wireframes` reads from every declared `docs` directory. Kept beside the viewer it draws so the two land in one pull request, rather than in the platform's docs where a ref to this layer's route would name a layer above the platform. Declared WITH its files in one commit, per bean `dh4f`.",
+      "description": "This layer's own documentation, composed THROUGH just-the-docs like the content core's docs directory, so its pages land in the platform's site under `/fhir-harness/` with the sidebar, search and layout. It holds the landing page (`index.md`), the FHIR pages (`fhir/`: the IG Publisher and FHIR content), their source (`source/`, declared as a `docs-source` by `docs.json` and rendered by the platform's one docs-page run, owner ruling A1 of 2026-10-23), and `wireframes/`: the wireframe of each visualiser this layer declares (`ig-ast`), with its intent, checks and an `index.json` of the route keys it covers, which `check:wireframes` reads from every declared `docs` directory. The FHIR pages moved here from the harness below on 2026-10-24 (bean p9bu: docs pages follow their subject). Declared WITH its files, per bean `dh4f`.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs"
     },
@@ -6382,8 +6382,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

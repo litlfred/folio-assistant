@@ -26,14 +26,48 @@
       "@type": "bootstrap:Process",
       "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `smart-base/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
       "enforcement": "advisory",
-      "flowCount": 14,
+      "flowCount": 18,
       "inSubgraph": "http://smart.who.int/base/directory/processes",
       "name": "DIIG — from a health system bottleneck to a costed implementation plan",
-      "nodeCount": 13,
+      "nodeCount": 17,
       "sourcePath": "methodologies/processes/diig-investment-path.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn",
       "startNode": "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG",
       "summary": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it."
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "name": "claimed",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "name": "not yours",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01",
@@ -41,7 +75,7 @@
       "from": "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG",
       "inSubgraph": "http://smart.who.int/base/directory/processes",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "to": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam"
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_02",
@@ -149,7 +183,7 @@
       "from": "http://smart.who.int/base/process/Process_DIIG/node/A_ValueProposition",
       "inSubgraph": "http://smart.who.int/base/directory/processes",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "to": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG"
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
@@ -207,7 +241,7 @@
       "bpmnType": "bpmn:Task",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "inSubgraph": "http://smart.who.int/base/directory/processes",
-      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01",
+      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
       "name": "Form the team and establish goals",
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_02",
@@ -215,8 +249,7 @@
       "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "requires": "http://smart.who.int/base/skill/methodology-adoption",
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim"
+      "touchesWorkPlan": false
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
@@ -323,8 +356,53 @@
       "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,
       "requires": "http://smart.who.int/base/skill/methodology-adoption",
-      "touchesWorkPlan": true,
-      "workPlanOp": "resolve"
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_14",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/todo-manager",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/bean-coordination",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG",
@@ -332,9 +410,27 @@
       "bpmnType": "bpmn:EndEvent",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "inSubgraph": "http://smart.who.int/base/directory/processes",
-      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_14",
+      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
       "name": "Costed implementation plan, and its case",
       "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "inSubgraph": "http://smart.who.int/base/directory/processes",
+      "incoming": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3"
+      ],
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
       "performedBy": "http://smart.who.int/base/role/programme-manager",
       "relaxable": true,

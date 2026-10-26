@@ -4,15 +4,15 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_UpstreamPinWatch/node/A_PickUp",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Pick up the stale pin claim a bean",
+      "name": "Pick up the stale pin",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_UpstreamPinWatch",
@@ -21,11 +21,10 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/upstream-version-adoption"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim",
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_UpstreamPinWatch#flow/SF_Bean_1"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_10"

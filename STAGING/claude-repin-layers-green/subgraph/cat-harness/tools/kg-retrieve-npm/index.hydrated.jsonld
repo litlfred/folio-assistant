@@ -1,0 +1,85 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/kg-retrieve-npm/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/kg-retrieve-npm.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Retrieve and inspect a remote Knowledge Graph packaged as an npm package or tarball (.tgz), supporting both unhydrated source graph views (authored declarations, skills, schemas) and hydrated materialized graph views (subgraph JSON-LD, metadata indexes, dereferenced graph projections).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat kg:retrieve:npm"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "Package name, npm tarball (.tgz) path, or URL.",
+            "name": "package",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "arg": {
+              "flag": "--destination"
+            },
+            "description": "Directory to unpack or install into.",
+            "name": "destination",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--view"
+            },
+            "description": "Graph view to inspect/retrieve: 'unhydrated' (source graph), 'hydrated' (materialized JSON-LD/indexes), or 'both'.",
+            "name": "view",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--release"
+            },
+            "description": "Optional `folio-binary-release/v1` record to verify digest and size against.",
+            "name": "release",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Retrieval status: 'retrieved', 'verified', or 'could-not-determine'.",
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Summary of retrieved graphs, nodes, and assets.",
+            "name": "summary",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "kg-retrieve-npm",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount"
+      ],
+      "title": "Retrieve a remote Knowledge Graph via npm package or tarball"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/kg-retrieve-npm",
+  "path": "tools/kg-retrieve-npm/"
+}

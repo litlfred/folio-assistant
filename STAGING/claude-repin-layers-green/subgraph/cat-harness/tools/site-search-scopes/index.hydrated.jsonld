@@ -1,0 +1,50 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/site-search-scopes/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/site-search-scopes.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat search:split --dir _site"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it.",
+            "name": "index",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope.",
+            "name": "scopes",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "site-search-scopes",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+      "title": "Site search scopes"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/site-search-scopes",
+  "path": "tools/site-search-scopes/"
+}

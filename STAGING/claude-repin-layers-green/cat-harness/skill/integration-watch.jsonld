@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "integration-watch",
       "title": "/integration-watch — dispatcher for the integration watchers",
-      "description": "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (proof, canonical, compute, detangler, one-voice, consolidation, bibliography, devils-advocate, …). With no argument, lists the available watchers and asks the user which to invoke. With arguments, dispatches the named watchers in parallel (each gets its own Monitor, queue, ledger, and PR-subscription set).",
+      "description": "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (canonical, one-voice, consolidation, bibliography, devils-advocate, and those a content type's layer adds, …). With no argument, lists the available watchers and asks the user which to invoke. With arguments, dispatches the named watchers in parallel (each gets its own Monitor, queue, ledger, and PR-subscription set).",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/integration-watch.md",
-      "instructionLines": 175,
+      "instructionLines": 164,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

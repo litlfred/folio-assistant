@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+    "pr": "2681/merge",
+    "run": "40313808069"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours"
+    }
+  ]
+}

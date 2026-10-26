@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2504.21474v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging",
+      "dcterms:creator": [
+        "Tekanlou1, Hadi Bayrami Asl",
+        "Razmara1, Jafar",
+        "Sanaei1, Mahsa"
+      ],
+      "dcterms:issued": "D:20250501",
+      "dcterms:identifier": "https://arxiv.org/abs/2504.21474",
+      "dcterms:abstract": "This paper presents our system, Homa, for SemEval-2025 Task 5: Subject Tagging, which focuses on automatically assigning subject la- bels to technical records from TIBKAT us- ing the Gemeinsame Normdatei (GND) tax- onomy. We leverage OntoAligner, a modu- lar ontology alignment toolkit, to address this task by integrating retrieval-augmented genera- tion (RAG) techniques. Our approach formu- lates the subject tagging problem as an align- ment task, where records are matched to GND categories based on semantic similarity. We evaluate OntoAligner’s adaptability for sub- ject indexing and analyze its effectiveness in handling multilingual records. Experimental results demonstrate the strengths and limita- tions of this method, highlighting the potential of alignment techniques for improving subject tagging in digital libraries.",
+      "dcterms:source": "cat-harness/library/arxiv-2504.21474v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504.21474v1"
+    }
+  ]
+}

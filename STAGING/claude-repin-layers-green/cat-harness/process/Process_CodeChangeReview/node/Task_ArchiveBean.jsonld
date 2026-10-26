@@ -4,26 +4,26 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CodeChangeReview/node/Task_ArchiveBean",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Archive the bean",
+      "name": "Close the bean",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CodeChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/skill/todo-manager"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "archive",
+      "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_BeanClose",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_CodeChangeReview#flow/f17"
       ],

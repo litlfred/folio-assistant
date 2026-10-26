@@ -18,7 +18,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 237,
-      "summary": null,
+      "summary": {
+        "text": "Title slide for WHO SMART Guidelines: WHO's aim that everyone benefits fully and immediately from clinical, public health and data-use recommendations, and SMART Guidelines as the way to apply them consistently in the digital age. Lays out the five content levels (L1 narrative, L2 operational, L3 machine readable, L4 executable, L5 dynamic) against what each yields, from a knowledge graph of literature and data sources up to analytics for precision health, and frames the human and agentic actors around content, apps, tooling and test data with two questions: how is an asset verifiable, and how can authoring, review and adjudication go faster.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "alt",
@@ -66,7 +69,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 270,
-      "summary": null,
+      "summary": {
+        "text": "States the problem of serving the WHO L1 corpus: IRIS (DSpace) literature and World Health Data Hub indicators are being unified into one knowledge graph that may grow to about 10 TB. Names three risks: cloud egress fees, load on internal systems during emergencies, and proving the provenance of every published asset. Proposes origin isolation with folio-assistant: internal systems are cut off from public traffic, a nightly job aggregates IRIS and the Data Hub into a JSON-LD knowledge graph, pushes it as a static package to Cloudflare R2, and signs every file and metadata node when it is generated.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "world health",
@@ -114,7 +120,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 102,
-      "summary": null,
+      "summary": {
+        "text": "Shows the components of an L2 Digital Adaptation Kit (DAK), with testing, test data and a test harness among them. The speaker notes say a DAK has eight components, each feeding design features of a person-centred point-of-service tool that health workers in primary care use, here for vaccination services.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "adaptation kit",
@@ -142,7 +151,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 24,
-      "summary": null,
+      "summary": {
+        "text": "Points to the existing L1, L2 and L3 schemas, published through the SMART Base DAK API page (https://smart.who.int/base/dak-api.html).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "https://smart.who.int/base/dak-api.html Existing L1/L2/L3 schemas ## Images - `image16.png` — alt: (none) [missing] - `image20.png` — alt: (none) [missing] - `image35.png` — alt: (none) [missing]",
       "extractCut": false
@@ -157,7 +169,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 26,
-      "summary": null,
+      "summary": {
+        "text": "States that the existing L1, L2 and L3 data models need to be tied into the larger knowledge graph, pointing to the DAK StructureDefinition in SMART Base (https://smart.who.int/base/StructureDefinition-DAK.html).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "https://smart.who.int/base/StructureDefinition-DAK.html Need to tie existing L1/L2/L3 data models in to larger KG ## Images - `image38.png` — alt: (none) [missing] - `image39.png` — alt: (none) [missing]",
       "extractCut": false
@@ -172,7 +187,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 162,
-      "summary": null,
+      "summary": {
+        "text": "Defines the operating vocabulary: a role is played by a human, agentic or mechanical actor and is a BPMN swimlane; a task is a step (node) in a process; a skill is a gated capability with schema-defined inputs and outputs; a test compares models or supports author review. An agent uses skills to run tasks in a process, with static context (skills, user stories) and dynamic context, and tools may be attached to a skill along an agentic-to-deterministic spectrum. Agents track state with beans; humans get todos attached to process steps or knowledge assets.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "alt",
@@ -212,7 +230,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 153,
-      "summary": null,
+      "summary": {
+        "text": "Places BPMN execution on a spectrum from deterministic to agentic. At one end an open-source BPMN engine strictly enforces state and swimlanes; in the middle a managed agent runs a single task, or a BPMN execution skill uses a process, context, state and role to pick skills for a task; at the other end an agent swarm with ungoverned state relaxes swimlanes, with mechanical and agentic QA/QC reports as the mitigation.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "alt",
@@ -248,7 +269,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 26,
-      "summary": null,
+      "summary": {
+        "text": "Introduces the core data models, marked as work in progress; the slide's content is in its images.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Core data models (work in progress) ## Images - `image29.png` — alt: (none) [missing] - `image29.png` — alt: (none) [missing] - `image29.png` — alt: (none) [missing]",
       "extractCut": false
@@ -263,7 +287,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 122,
-      "summary": null,
+      "summary": {
+        "text": "Sketches the ecosystem of knowledge graphs kept in git repositories as self-documenting JSON(-LD), rendered for downstream public, clinical and personal health products. Groups repositories into tool, content, test and consumer-app repos (examples include who/smart-hiv, who/iris, who/data-hub, kenya/smart-hiv and ohs/folio-asst) and asks one question of each: comparing deterministic and agentic workflows, quality-assured evidence-based authoring with trusted provenance, adjudicating and testing model performance, and assuring consumer apps.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ohs",
@@ -299,7 +326,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 192,
-      "summary": null,
+      "summary": {
+        "text": "Lists what each kind of repository may or must do. Tool repos implement skills with tools, may expose them over MCP or for local runs, and configure the test harness (ITB). Content repos define schemas for knowledge-graph content types, instantiate them, define the skills for publishing and consuming them, and must constrain skill inputs and outputs with schemas. Test repos hold test data, generators, test plans and Gherkin dialects. Consumer apps use the schemas, decision logic and indicators from content repos and the test repos for development and compliance testing. Arrows show the depends, references and utilizes links between repos such as who/smart-base, who/smart-immz and who/smart-kg-tools.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "test repos",
@@ -343,7 +373,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 22,
-      "summary": null,
+      "summary": {
+        "text": "Names cat-harness, the computable asset acquisition, adjudication and agentic test tool harness, with a playful sequence of spellings of the name, and links to litlfred.github.io and github.com/litlfred, noted as not yet live.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "caaaaatt harness caaaaat-harness caa∞aat-harness ca⧝aat-harness ca&at-harness .c&t-harness c@t-harness cat-harnesscat-harnesscat-harness http://litlfred.github.io/ http://github.com/litlfred/ (not yet live) ## Images - `image33.png` — alt: (none) [missing]",
       "extractCut": false
@@ -358,7 +391,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 10,
-      "summary": null,
+      "summary": {
+        "text": "Links the folio-assistant site and repository (litlfred.github.io/folio-assistant and github.com/litlfred/folio-assitant, spelled so on the slide).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "http://litlfred.github.io/folio-assistant http://github.com/litlfred/folio-assitant ## Images - `image34.png` — alt: (none) [missing]",
       "extractCut": false
@@ -373,7 +409,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 106,
-      "summary": null,
+      "summary": {
+        "text": "Summarises the operating model, how the layers meet: an actor performs a task in a process as a role, using that role's skills. An actor is a concrete human, agentic or mechanical participant; a task is a diagram activity naming its skill and bean operation; a process is an executable BPMN diagram with DMN gateways whose state is committed so sibling sessions agree; a role is a swimlane, held only for the length of a lane; a skill is the instruction body for a task, kept in the knowledge graph and inherited across instances.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "actor",

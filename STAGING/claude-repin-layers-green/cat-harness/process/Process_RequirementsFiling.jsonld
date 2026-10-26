@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-layers-green/cat-harness/process/Process_RequirementsFiling",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Requirements filing: promote, organise, trace, supersede, or retire",
-      "summary": "Proposed filing process for bean folio-assistant-qh1s (issue #1164): how a proposal in docs/proposals/<slug>.md is promoted into docs/requirements/<slug>.md when its feature ships, or how an existing filed requirement is amended in place, superseded by a new…",
-      "description": "Proposed filing process for bean folio-assistant-qh1s (issue #1164): how a proposal in docs/proposals/<slug>.md is promoted into docs/requirements/<slug>.md when its feature ships, or how an existing filed requirement is amended in place, superseded by a new requirement (status: superseded + supersededBy: req:<new-slug>), or retired (status: retired) without deleting historical records. Every filed requirement keeps its flat path docs/requirements/<slug>.md (id: req:<slug>) and is organised in docs/requirements/index.md under its canonical concern group from code-lists/concern-group.json, verified by check:requirements, and signed off by the Business Analyst / Owner.",
+      "summary": "How a proposal in docs/proposals/<slug>.md is promoted into docs/requirements/<slug>.md when its feature ships, or how an existing filed requirement is amended in place, superseded by a new requirement (status: superseded + supersededBy: req:<new-slug>), or r…",
+      "description": "How a proposal in docs/proposals/<slug>.md is promoted into docs/requirements/<slug>.md when its feature ships, or how an existing filed requirement is amended in place, superseded by a new requirement (status: superseded + supersededBy: req:<new-slug>), or retired (status: retired) without deleting historical records. Every filed requirement keeps its flat path docs/requirements/<slug>.md (id: req:<slug>) and is organised in docs/requirements/index.md under its canonical concern group from code-lists/concern-group.json, verified by check:requirements, and signed off by the Business Analyst / Owner.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/requirements-filing.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/requirements-filing.bpmn",

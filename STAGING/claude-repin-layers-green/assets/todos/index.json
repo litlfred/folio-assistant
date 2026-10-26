@@ -213,11 +213,16 @@
     "Process_VoiceReview": [
       "Process_CriterionAdjudication"
     ],
+    "Process_CopyIntoFolio": [],
     "Process_GraphDetanglement": [
-      "Process_AskThePerson"
+      "Process_AskThePerson",
+      "Process_BeanClose",
+      "Process_BeanOpen"
     ],
     "Process_KgSeparation": [
       "Process_AskThePerson",
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_PublishVerification",
       "Process_UpstreamAdoption"
     ],
@@ -227,9 +232,14 @@
     "Process_NamedQueryExecution": [],
     "Process_NQuadsDistribution": [],
     "Process_CodeReview": [],
-    "Process_SliceSqlitePublish": [],
+    "Process_SliceSqlitePublish": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
     "Process_SubKgLifecycle": [
-      "Process_AskThePerson"
+      "Process_AskThePerson",
+      "Process_BeanClose",
+      "Process_BeanOpen"
     ],
     "Process_ContentAcquisition": [
       "Process_AskThePerson"
@@ -250,6 +260,8 @@
       "Process_RefreshMaterialized"
     ],
     "Process_SubscribeKg": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_MaterializeRemote",
       "Process_RefreshMaterialized"
     ],
@@ -279,6 +291,8 @@
       "Process_WireframeDesignReview"
     ],
     "Process_CRDM": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_CRDM_Close",
       "Process_CRDM_DataModel",
       "Process_CRDM_Deliver",
@@ -300,9 +314,16 @@
     "Process_SwotAnalysis": [],
     "Process_ActivityLog": [],
     "Process_Adjudication": [],
-    "Process_BeanLifecycle": [],
+    "Process_BeanClose": [],
+    "Process_BeanLifecycle": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
+    "Process_BeanOpen": [],
     "Process_CiHealth": [],
     "Process_CodeChangeReview": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_MergeBase"
     ],
     "Process_CodeQualityGates": [
@@ -321,7 +342,10 @@
     ],
     "Process_JsonLdDrift": [],
     "Process_MergeBase": [],
-    "Process_MergeRefusal": [],
+    "Process_MergeRefusal": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
     "Process_MergeToMain": [
       "Process_AskThePerson",
       "Process_MergeRefusal"
@@ -351,17 +375,27 @@
     "Process_RequirementsFiling": [
       "Process_Adjudication"
     ],
+    "Process_SmeTestDataReview": [],
     "Process_StalledAgentTriage": [
       "Process_AskThePerson"
     ],
+    "Process_TestDataCuration": [
+      "Process_SmeTestDataReview"
+    ],
     "Process_TestPlanExecution": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_QaReportSigning"
     ],
     "Process_UpstreamPinWatch": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_UpstreamAdoption"
     ],
     "Process_UpstreamAdoption": [
       "Process_AskThePerson",
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_OptionsAnalysis"
     ],
     "Process_IngestTheme": [
@@ -380,22 +414,36 @@
     "Process_QuestionnaireWireframeReview": [
       "Process_WireframeDesignReview"
     ],
-    "Process_GettingStarted": [],
-    "Process_DocumentAuthoring": [],
+    "Process_GettingStarted": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
+    "Process_DocumentAuthoring": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
     "Process_ContentChangeReview": [
       "Process_Adjudication",
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_OptionsAnalysis",
       "Process_Review"
     ],
     "Process_Lifecycle": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_Editing",
       "Process_Publication"
     ],
     "Process_Publication": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_Editing",
       "Process_PublicComment"
     ],
     "Process_Editing": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_EvidenceRetrieval",
       "Process_OptionsAnalysis"
     ],
@@ -411,6 +459,8 @@
       "Process_Adjudication"
     ],
     "Process_L1DocumentIngestion": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_BuildL1Kg",
       "Process_DeriveContent",
       "Process_ExtractStructure",
@@ -422,10 +472,17 @@
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],
     "Process_AtomicMassDrift": [],
-    "Process_PaperAuthoring": [],
+    "Process_PaperAuthoring": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
     "Process_LeanDocsPublish": [],
-    "Process_DIIG": [],
+    "Process_DIIG": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
+    ],
     "Process_Planning": [],
+    "Process_ClassifyAndCodeContent": [],
     "Process_DakL3Ig": [
       "Process_L3Fhir"
     ],
@@ -433,6 +490,8 @@
       "Process_Review"
     ],
     "Process_L2Dak": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
       "Process_L2ComponentEditReview"
     ],
     "Process_SgEndToEnd": [

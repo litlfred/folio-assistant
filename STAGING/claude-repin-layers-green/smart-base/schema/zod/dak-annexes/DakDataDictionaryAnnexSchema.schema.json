@@ -8,6 +8,21 @@
           "type": "string",
           "const": "dak-data-dictionary/v1"
         },
+        "annexOf": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "iris": {
+          "type": "string",
+          "pattern": "^10665\\/[0-9]+$"
+        },
+        "section": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*#[a-z0-9][a-z0-9-]*$"
+        },
         "title": {
           "type": "string",
           "minLength": 1
@@ -84,6 +99,9 @@
       },
       "required": [
         "$schema",
+        "annexOf",
+        "label",
+        "section",
         "title",
         "source",
         "idColumn",
@@ -97,8 +115,8 @@
   "description": "Generated from `DakDataDictionaryAnnexSchema` in schemas/dak-annexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

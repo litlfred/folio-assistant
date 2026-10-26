@@ -370,23 +370,23 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-24T09:25:05.011Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitSha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
-  "sourceCommitAt": "2026-10-24T08:39:51Z",
+  "generatedAt": "2026-10-26T11:41:44.322Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitSha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+  "sourceCommitAt": "2026-10-26T11:16:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 22,
-    "Process": 6,
-    "SequenceFlow": 100,
-    "Lane": 14,
-    "ProcessNode": 95,
-    "GraphTypology": 22,
+    "Skill": 23,
+    "Process": 7,
+    "SequenceFlow": 122,
+    "Lane": 17,
+    "ProcessNode": 115,
+    "GraphTypology": 23,
     "Role": 1,
-    "Subgraph": 27,
+    "Subgraph": 28,
     "Asset": 3,
-    "Tool": 12
+    "Tool": 13
   },
   "@graph": [
     {
@@ -409,7 +409,7 @@
       "title": "recommendation-scenarios",
       "description": "Join each L1 recommendation to who acts on it and during which business process: one smart-kg L2 user-scenario candidate per recommendation, from the agent's mapping, reusing the target guide's personas and processes first, then smart-base's generic personas, and never inventing a process. Step 2 of recommendation-extraction; the `l1-recommendation-scenarios` Tool satisfies it.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-scenarios.md",
-      "instructionLines": 39,
+      "instructionLines": 44,
       "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json",
       "hasInstructions": true,
@@ -512,6 +512,21 @@
       "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/classify-and-code-content",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "classify-and-code-content",
+      "title": "classify-and-code-content",
+      "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane for reading and signing proposed L1 coverage exclusions against the printed page (owner ruling 3b, 2026-10-12), and the `terminologist` / ontologist reviewer lane for adjudicating candidate codings and local glossary candidates.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/classify-and-code-content.md",
+      "instructionLines": 159,
+      "inputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
@@ -648,7 +663,7 @@
       "title": "recommendation-extraction",
       "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
-      "instructionLines": 396,
+      "instructionLines": 407,
       "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
       "hasInstructions": true,
@@ -712,8 +727,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG"
       ],
-      "nodeCount": 13,
-      "flowCount": 14,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -721,7 +736,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
       "from": "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG",
-      "to": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -829,6 +844,40 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
       "from": "http://smart.who.int/base/process/Process_DIIG/node/A_ValueProposition",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/A_FormTeam",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "from": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
       "to": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG",
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
@@ -878,11 +927,10 @@
       "requires": [
         "http://smart.who.int/base/skill/methodology-adoption"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim",
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01"
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1"
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_02"
@@ -1106,8 +1154,7 @@
       "requires": [
         "http://smart.who.int/base/skill/methodology-adoption"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "resolve",
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
         "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_13"
@@ -1130,9 +1177,92 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_14"
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4"
       ],
       "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [
+        "http://smart.who.int/base/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_14"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4"
+      ],
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -1148,8 +1278,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline"
       ],
-      "nodeCount": 19,
-      "flowCount": 24,
+      "nodeCount": 24,
+      "flowCount": 29,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1173,7 +1303,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
-      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1335,7 +1465,7 @@
       "name": "validated",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
-      "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1343,7 +1473,49 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_AssembleDak",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1461,10 +1633,10 @@
         "http://smart.who.int/base/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
-      "workPlanOp": "claim",
+      "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_L2Dak#flow/B22"
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1"
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_L2Dak#flow/B03"
@@ -1785,7 +1957,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_L2Dak#flow/B20"
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5"
       ],
       "outgoing": [],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
@@ -1803,9 +1975,114 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_L2Dak#flow/B21"
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4"
       ],
       "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
+      "requires": [
+        "http://smart.who.int/base/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B22"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Not yours — left alone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B21"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/clinical-sme",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B20"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5"
+      ],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3777,6 +4054,399 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Classify and code content",
+      "summary": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) fol…",
+      "description": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) following the terminology-coding methodology and the classify-and-code-content skill (bean folio-assistant-4nfs).\n\nThe authoring agent runs terminology-lookup across the four-rung reuse-first precedence ladder, records provenance (declared, context, inferred) and candidate status, and stages the result for review. When the L1 extraction proposes exclusions in exclusions.proposed.json, a person in the l1-extraction-reviewer lane reads each proposed exclusion against the printed page (sections/page-NNN.md) and signs or rejects it (owner ruling 3b, 2026-10-12). A person in the terminologist / ontologist reviewer lane then adjudicates the candidate codings, SKOS match precision (exactMatch vs closeMatch), and any Rung 4 local glossary candidates.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/classify-and-code-content.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/classify-and-code-content.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/classify-and-code-content.svg",
+      "startNode": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady"
+      ],
+      "nodeCount": 11,
+      "flowCount": 13,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "reject-exclusion",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "signed",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "request-changes",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "approve",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "L1 extraction reviewer (person)",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "bindsRole": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Terminologist / ontologist reviewer (person)",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "bindsRole": "http://smart.who.int/base/role/terminologist",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "L1 extraction or L2 component ready to classify and code",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Gateway_Rework",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Identify slots and proposed exclusions [classify-and-code-content · recommendation-extraction]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/recommendation-extraction"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Run reuse-first lookup and record candidates [classify-and-code-content · recommendation-scenarios · glossary-terms]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/recommendation-scenarios",
+        "http://smart.who.int/base/skill/glossary-terms"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Stage codings, warnings and exclusions for review [staging-review · interaction-modality]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Proposed exclusions?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Read proposed exclusions against page and sign [classify-and-code-content · recommendation-extraction · content-review]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/recommendation-extraction",
+        "http://smart.who.int/base/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Exclusions signed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Adjudicate slot codings and glossary candidates [classify-and-code-content · ontologist · glossary-terms · terminology-management · content-review]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/ontologist",
+        "http://smart.who.int/base/skill/glossary-terms",
+        "http://smart.who.int/base/skill/terminology-management",
+        "http://smart.who.int/base/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Coding verdict?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Content classified, coded and signed off",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/typologies",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "typologies",
@@ -3924,6 +4594,13 @@
       "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "glossary",
+      "renderable": false,
+      "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/l1-extraction",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "l1-extraction",
@@ -3936,12 +4613,14 @@
       "prefLabel": "L1 extraction reviewer",
       "title": "L1 extraction reviewer",
       "notation": "l1-extraction-reviewer",
-      "description": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer; the ontologist/terminologist skills, methodologies and processes that will equip it are bean 4nfs.",
+      "description": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer and performs exclusion sign-off in `classify-and-code-content.bpmn` (bean 4nfs).",
       "sourceKind": "role-registry",
       "actorKinds": [
         "person"
       ],
       "hasSkill": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/content-review",
         "http://smart.who.int/base/skill/recommendation-extraction"
       ]
     },
@@ -4262,7 +4941,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/typologies"
       ],
-      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness's typologies/ are. Today `dak-annex`: a DAK's web annexes beside an IG's artefact index, a kind of smart-base's own so the DAK formats are not listed on fhir-harness's `fhir-artifact-index`.",
+      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness's typologies/ are. Among them `web-annex` (formerly `dak-annex`): a WHO publication's web annexes, L1 or L2, held as data, a kind of smart-base's own because a web annex is a WHO concept fhir-harness may not name.",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-typologies"
     },
@@ -4278,7 +4957,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators"
       ],
-      "description": "The validators smart-base's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks, as fhir-harness's validators/ do (bean riit). Today the two families of the `dak-annex` kind (typologies/dak-annex.json): dak-data-dictionary/v1 and dak-swimlanes/v1 (schemas/dak-annexes.ts), unmapped until 2026-10-11 (check:kind-validators:require-all).",
+      "description": "The validators smart-base's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks, as fhir-harness's validators/ do (bean riit). Today the two families of the `web-annex` kind (typologies/web-annex.json; `dak-annex` until 2026-10-24): dak-data-dictionary/v1 and dak-swimlanes/v1 (schemas/dak-annexes.ts), unmapped until 2026-10-11 (check:kind-validators:require-all).",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-validators"
     },
@@ -4394,6 +5073,23 @@
       "description": "The GRADE code lists — certainty of evidence, reasons to rate certainty down and up, the Evidence-to-Decision criteria, and recommendation direction and strength — one `\"$schema\": \"folio-code-list/v1\"` file per list, read with the `grade` skill; and the SMART Guidelines KG class lists `sgkg-l1-classes.json` and `sgkg-l2-classes.json`, the class ids document kinds name in `modelledBy` (read by `smart-base/scripts/kg-classes.ts`; taken from the deprecated smart-kg on 2026-10-23, which retired the pin and the `external-schemas/` directory, bean pebe). Moved down from cat-harness/code-lists/ on 2026-10-10 (placement audit, bean lthi; owner: 'merge and go'): GRADE is the WHO guideline method this layer authors with, not a harness concept. The harness's generic lists stay there and reach this instance through the dependency overlay; this directory holds only lists of its own, as the harness entry says a dependent should.",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-code-lists"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary"
+      ],
+      "description": "SMART Base's generated glossary (`glossary/generated/smart-base/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and schema fields by `glossary:page`. Moved here from `folio-assistant-core/glossary/generated/smart-base/` on the owner's 2026-10-20 ruling (bean rfev: \"Move to smart-base\") so core holds no base vocabulary.",
+      "readmePath": "glossary/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/glossary"
     },
     {
       "@id": "http://smart.who.int/base/asset/agent-instructions",
@@ -5010,6 +5706,75 @@
       ]
     },
     {
+      "@id": "http://smart.who.int/base/tools/terminology-lookup.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "terminology-lookup",
+      "title": "Reuse-first terminology and code-list lookup",
+      "description": "Look up a concept or code token for a semantic slot (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`) across the four reuse-first precedence rungs of the `terminology-coding` methodology: (1) target guide's `l1-scenario-vocabulary/v1`, (2) `smart-base` generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and `guideline-domain` SKOS glossary, (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`), and (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`) or `could-not-determine` for `business-process`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run smart-base/scripts/terminology-lookup.ts --slot <slot> --query <query> [--vocabulary <guide.json>] [--generic <generic.json>] [--scheme <scheme>] [--out <out.json>]"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "slot",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "The semantic slot to classify and code (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`).",
+            "required": true
+          },
+          {
+            "name": "query",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId",
+            "description": "The concept term, identifier, or code token to look up across the reuse-first precedence rungs.",
+            "required": true
+          },
+          {
+            "name": "vocabulary",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Optional path to the target guide's personas and business processes (`l1-scenario-vocabulary/v1`), Rung 1.",
+            "required": false
+          },
+          {
+            "name": "generic",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Optional path to smart-base's generic personas (`l1-scenario-vocabulary/v1`), Rung 2.",
+            "required": false
+          },
+          {
+            "name": "scheme",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId",
+            "description": "Optional scheme identifier filter (e.g. `guideline-domain`, `ISCO08`, `CDHIv2`, `grade-recommendation-strength`).",
+            "required": false
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Optional repository path where the lookup result JSON is written.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Lookup result JSON conforming to `schemas/skills/classify-and-code-content/output.schema.json`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "http://smart.who.int/base/skill/classify-and-code-content"
+      ]
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/skill/smart-guideline-create",
@@ -5062,6 +5827,12 @@
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/skill/smart-stack-layering",
       "sameAs": "http://smart.who.int/base/skill/smart-stack-layering"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/classify-and-code-content",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/skill/classify-and-code-content",
+      "sameAs": "http://smart.who.int/base/skill/classify-and-code-content"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
@@ -5232,6 +6003,30 @@
       "sameAs": "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_14"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_Bean_1",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_Bean_2",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_Bean_3",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_Bean_4",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_4"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
@@ -5320,6 +6115,30 @@
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG",
       "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/End_Process_DIIG"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Call_BeanOpen",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanOpen"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_BeanYours",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/GW_BeanYours"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/End_BeanNotYours",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/End_BeanNotYours"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Call_BeanClose",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose",
+      "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/Call_BeanClose"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
@@ -5472,6 +6291,36 @@
       "sameAs": "http://smart.who.int/base/process/Process_L2Dak#flow/B21"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/SF_Bean_1",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/SF_Bean_2",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/SF_Bean_3",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/SF_Bean_4",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/SF_Bean_5",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Programme",
@@ -5614,6 +6463,36 @@
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",
       "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Call_BeanOpen",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/GW_BeanYours",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/End_BeanNotYours",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Call_BeanClose",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Call_BeanClose_2",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
+      "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
@@ -6432,6 +7311,174 @@
       "sameAs": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C01",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C02",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C03",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C04",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C05",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C06",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C07",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C08",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C09",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C10",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C11",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C12",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/flow/C13",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+      "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#role/l1-extraction-reviewer",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
@@ -6600,6 +7647,12 @@
       "sameAs": "http://smart.who.int/base/directory/smart-base-code-lists"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/glossary",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/directory/glossary",
+      "sameAs": "http://smart.who.int/base/directory/glossary"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#asset/agent-instructions",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/asset/agent-instructions",
@@ -6620,8 +7673,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   }
 }

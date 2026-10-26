@@ -36,9 +36,9 @@
       "@type": "bootstrap:Skill",
       "name": "audit-coverage",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e882b54eb7646f5b87dc8b168913b390d04e531e69f88e7a6992382151b907f2",
-        "bytes": 13934,
-        "sha256": "e882b54eb7646f5b87dc8b168913b390d04e531e69f88e7a6992382151b907f2"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c05711e87418f4cb3b8da08357151cf0d870227407042f588f46fe9a6dbf8662",
+        "bytes": 13946,
+        "sha256": "c05711e87418f4cb3b8da08357151cf0d870227407042f588f46fe9a6dbf8662"
       },
       "title": "Audit coverage — measured, with denominators"
     },
@@ -69,9 +69,9 @@
       "@type": "bootstrap:Skill",
       "name": "corpus-grep",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fed1c8ac505b1893b24d3c72a65fc7b7a118ab8e8f7e9806dd91e5b343ef2f4d",
-        "bytes": 6886,
-        "sha256": "fed1c8ac505b1893b24d3c72a65fc7b7a118ab8e8f7e9806dd91e5b343ef2f4d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aeca70c5afabe6a1dcf4e8c2aaef6194b5385372bf339d063bb9849810214495",
+        "bytes": 6467,
+        "sha256": "aeca70c5afabe6a1dcf4e8c2aaef6194b5385372bf339d063bb9849810214495"
       },
       "title": "Corpus-Grep Skill"
     },
@@ -91,9 +91,9 @@
       "@type": "bootstrap:Skill",
       "name": "directory-conventions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a9534fdceb564365ced27ab1f9e3b866b4a3f620847a75f15408e2246b908a80",
-        "bytes": 96772,
-        "sha256": "a9534fdceb564365ced27ab1f9e3b866b4a3f620847a75f15408e2246b908a80"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/00d413e939fe775197240fc74408ea6f0f4c0ff07e79644c6f8ec2bc92799ede",
+        "bytes": 96992,
+        "sha256": "00d413e939fe775197240fc74408ea6f0f4c0ff07e79644c6f8ec2bc92799ede"
       },
       "title": "Directory conventions — what an instance declares it scans"
     },
@@ -118,6 +118,17 @@
         "sha256": "9c139a7b347a96c2bb08db16e0f1cbb40c4411781c6f161b9eda4c9c01a07135"
       },
       "title": "Flushable containers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/folio-init",
+      "@type": "bootstrap:Skill",
+      "name": "folio-init",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f681d88fe15e435329efeec53943dee9b368315e1b771cad121b991f1b4fd671",
+        "bytes": 5499,
+        "sha256": "f681d88fe15e435329efeec53943dee9b368315e1b771cad121b991f1b4fd671"
+      },
+      "title": "Instantiate a folio — `folio-init`"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-requirements",
@@ -164,6 +175,17 @@
       "title": "instance-publication — draft is a state, not an absence of one"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-affordances",
+      "@type": "bootstrap:Skill",
+      "name": "kg-affordances",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b0adbeba7641ae7d1d0bd949708ee2830c4030f51d1b94bec9c519bc60289034",
+        "bytes": 8723,
+        "sha256": "b0adbeba7641ae7d1d0bd949708ee2830c4030f51d1b94bec9c519bc60289034"
+      },
+      "title": "Knowledge graph affordances — browse, materialise, instantiate, copy-into-folio"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-contribution-offer",
       "@type": "bootstrap:Skill",
       "name": "kg-contribution-offer",
@@ -179,9 +201,9 @@
       "@type": "bootstrap:Skill",
       "name": "kg-export",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e57993041fc676c87693e54c6e0f0e2ed2a755858ed2c697e98272ba8c112fc2",
-        "bytes": 63830,
-        "sha256": "e57993041fc676c87693e54c6e0f0e2ed2a755858ed2c697e98272ba8c112fc2"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cfa6dfd0030ffe5c40c5de657ceb2d46fa75a7f3f2a027a3e39844db8cb04875",
+        "bytes": 65409,
+        "sha256": "cfa6dfd0030ffe5c40c5de657ceb2d46fa75a7f3f2a027a3e39844db8cb04875"
       },
       "title": "KG export — publishing the graph as linked data, not as a page"
     },
@@ -201,9 +223,9 @@
       "@type": "bootstrap:Skill",
       "name": "npm-kg-distribution",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d0b84bd1c446d07768efeb049118cda133f66b5a9dc3ae50e927d87817a7722a",
-        "bytes": 9482,
-        "sha256": "d0b84bd1c446d07768efeb049118cda133f66b5a9dc3ae50e927d87817a7722a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8220a2a1e3877e65ecccf181f5ea1e67b23461972d5d990df2b097bdfbcae867",
+        "bytes": 9960,
+        "sha256": "8220a2a1e3877e65ecccf181f5ea1e67b23461972d5d990df2b097bdfbcae867"
       },
       "title": "NPM Knowledge Graph Distribution"
     },
@@ -223,9 +245,9 @@
       "@type": "bootstrap:Skill",
       "name": "remote-mount",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dcf1ee527d47b63d4c45e937fb770ea39c771decca5aaf053cd5c2bdfb7f776b",
-        "bytes": 15782,
-        "sha256": "dcf1ee527d47b63d4c45e937fb770ea39c771decca5aaf053cd5c2bdfb7f776b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53de777cd41fc865162bbfc0f4c787d979e9b031cd0a53fd517b2ce3769cc9de",
+        "bytes": 23208,
+        "sha256": "53de777cd41fc865162bbfc0f4c787d979e9b031cd0a53fd517b2ce3769cc9de"
       },
       "title": "Remote-mount a harness"
     },

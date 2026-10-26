@@ -341,6 +341,102 @@
     ]
    }
   },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanOpen",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanClose",
+   "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_3",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     }
+    ]
+   }
+  },
   "CallActivity_BuildKg": {
    "id": "CallActivity_BuildKg",
    "name": "Build the L1 knowledge graph",
@@ -610,6 +706,10 @@
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"

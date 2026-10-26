@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title page of Liu and Jha, \"Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data\" (Washington University in St. Louis). The abstract: RWT techniques evaluate quantitative imaging (QI) methods without gold standards by estimating linear-relationship parameters without the true values, but need many patients, which may be impossible for rare diseases or new procedures. The authors combine patient data without ground truth with known-ground-truth data such as physical phantom studies; numerical studies show better ranking than RWT. The introduction then describes QI applications (myocardial blood flow from cardiac PET, SPECT dosimetry, diffusion-MRI ADC), the RWT premise of a linear stochastic relationship with slope, bias and noise estimated by maximum likelihood, ranking by noise-to-slope ratio (NSR), and RWT's past applications.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "End of the introduction and start of the theory. RWT needs large cohorts because many parameters are estimated: for 3 methods about 13 (3 slopes, 3 biases, 3 noise standard deviations and 4 parameters of a four-parameter beta distribution). Such cohorts may be unavailable for rare diseases or early trials of new tracers or theranostic isotopes, while phantom data with known ground truth often exist. Section 2.1 sets up P patients with unknown true values a_p and Q phantom samples with known true values d_q, both measured by the same K methods, with the same linear model (slope u_k, bias v_k, Gaussian noise σ_k) for both (Eqs. 1–2). Patient true values are assumed drawn from a distribution with parameters Ω, and the probability of a patient's measurements integrates over a_p (Eq. 3).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Estimation, numerical study, results and the start of the discussion. Assuming independence, the parameters are estimated by maximizing the sum of the patient log-likelihood and the phantom log-likelihood (Eq. 4); methods are ranked by NSR σ_k/u_k, lower being more precise. In the numerical study, true values come from a four-parameter beta distribution and three methods use parameters taken from a realistic ²²³Ra SPECT simulation: slopes {0.97, 0.76, 1.00}, biases {0.30, 0, 0}, noise standard deviations {0.21, 0.13, 0.09}. The patient set has 10 to 100 samples, the known-truth set is varied in size, and each combination is repeated over 200 noise realizations. Results: the proposed approach estimates NSR with lower bias and standard deviation than RWT (Figure 1), more so as the known-truth set grows, and ranks and identifies the most precise method more accurately (Figure 2).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -109,7 +133,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Discussion and conclusion, with the captions of Figures 1 and 2. The proposed approach identified the most precise method with nearly 100% accuracy using only 10 known-ground-truth samples and 10 patient samples (Figure 2(B)). The studies were in controlled settings where the model's assumptions held, so validation in clinically realistic settings, and when the assumptions are violated, is future work. The authors conclude that even small amounts of known-ground-truth data can substantially improve ranking when patient data are limited. In both figure legends, Proposed-X means the approach with X known-truth samples; Figure 1 shows bias and standard deviation of NSR estimates, Figure 2 ranking and best-method accuracy.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -128,7 +160,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Acknowledgements (NIBIB grants R01-EB031051 and R01-EB031962, and NSF CAREER Award 2239707) and references 1–16, on the clinical utility of quantitative imaging, QI methods in PET, SPECT and MRI, and the regression-without-truth and no-gold-standard evaluation literature (Hoppin, Kupinski and colleagues 2002 onwards; Jha and colleagues).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -147,7 +187,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "References 17–19 of the paper: NGSE-Corr, a technique for clinical evaluation without a gold standard (in review); Jha and colleagues' practical no-gold-standard framework applied to PET lesion segmentation (2017); and Jha and Frey on incorporating prior information in a no-gold-standard technique for SPECT (2015).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     }
   ]

@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/IgAnnexes",
+  "definitions": {
+    "IgAnnexes": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "ig-annexes/v1"
+        },
+        "annexes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "string",
+                "minLength": 1
+              },
+              "file": {
+                "type": "string",
+                "minLength": 1
+              },
+              "columns": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "page",
+              "file"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "annexes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-annexes/IgAnnexesSchema.schema.json",
+  "title": "IgAnnexesSchema",
+  "description": "Generated from `IgAnnexesSchema` in schemas/ig-annexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-layers-green",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
+    "pr": "2681/merge",
+    "run": "40313808069"
+  }
+}

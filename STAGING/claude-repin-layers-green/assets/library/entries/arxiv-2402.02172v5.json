@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title block, authors and the start of the abstract of the CodeAgent paper by Xunzhu Tang, Kisub Kim, Yewei Song, Cedric Lothritz, Bei Li, Saad Ezzini, Haoye Tian (corresponding author), Jacques Klein and Tegawendé F. Bissyandé (University of Luxembourg, Singapore Management University, Luxembourg Institute of Science and Technology, Northeastern University, Lancaster University, University of Melbourne). Code review is labour-intensive, and existing automated methods use single input-output generative models that struggle to emulate its collaborative nature; CodeAgent is a multi-agent LLM system for code review with a supervisory agent, QA-Checker, that keeps every agent's contribution on the initial review question. The block ends as the evaluation begins.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A fragment of the abstract's list of evaluation tasks, under a heading the extraction misplaced: detecting inconsistencies between code changes and commit messages, and identifying vulnerabilities.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The end of the abstract and the introduction. The evaluation covers the remaining tasks, format coherence and code revision suggestions, and the authors report a new state of the art; data and code are on GitHub. Most code review automation rewrites submitted code and ignores the interactive, collaborative nature of review, which spans vulnerability detection, formatting and revision consistency. CodeAgent simulates a review team (authors, reviewers, decision makers), and its QA-Checker addresses prompt drifting, where multi-agent or chain-of-thought conversations stray from the topic, by refining questions and realigning answers. Contributions claimed are the first autonomous agent-based system for practical code review, a new dataset of 3,545 real-world code changes and commit messages, and a demonstration of QA-Checker. Headline results: a 41% increase in vulnerability hit rate, 3 to 7 percentage points more vulnerabilities than GPT-4 and CodeBERT, about 14% higher inconsistency recall than ReAct, and about 30% better average Edit Progress on code revision.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Tasks and pipeline (with Figures 1 and 2). The four tasks are consistency analysis between code change and commit message (CA), vulnerability analysis (VA), format consistency analysis between the commit and the original files (FA), and code revision suggestions (CR). Six roles (User, CEO, CTO, CPO, Reviewer, Coder) work through four sequential phases in a waterfall: Basic Info Sync, where CEO, CTO and Coder identify the input's modality and language; Code Review, where the Reviewer, helped by the Coder, writes consistency, security and format analyses with revision suggestions; Code Alignment, where the Coder revises the code with the Reviewer; and Document, where CEO, CPO, Coder and Reviewer summarise the review. Each phase is a series of atomic two-agent conversations in instructor-assistant style, each supervised by QA-Checker until requirements are met or the turn limit is reached.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Role card definition. The six characters each have task-specific responsibilities, and every task is handled by two agents in multi-round conversation; for example the Reviewer reviews code for the CA, VA and FA tasks with the Coder's help, and the Coder revises code with the Reviewer's help and also works with the CTO and CEO. Inputs and outputs of each conversation are shown in Figure 1, with role definitions in Appendix C.1.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "QA-Checker (Figure 3). An instruction-driven agent checks each answer against its question; if the first answer a0 is inappropriate for the initial instruction q0, it attaches an additional instruction and forms a new question q1 = CB(q0 + aai0), repeating until the answer is judged appropriate or the maximum number of turns is reached. The authors point to a lemma and proof in Appendix A as a theoretical analysis of this refinement.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The opening of the experimental setup, cut off mid-sentence: CodeAgent is evaluated by qualitative and quantitative experiments across nine programming languages.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -170,7 +226,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Datasets and metrics (with Table 1). For code revision, the same Trans-Review, AutoTransform and T5-Review datasets as the prior state-of-the-art study are used. A new dataset of over 3,545 commits and 2,933 pull requests from more than 180 projects in nine languages (Python, Java, Go, C++, JavaScript, C, C#, PHP, Ruby) targets consistency and format detection, with positive and negative samples split by whether pull requests were merged or closed (for CA, 2,089 and 820 consistent against 501 and 135 inconsistent). Metrics are F1 and recall for CA and FA, Edit Progress (the reduction in edit distance towards correct code) for CR, and hit rate, the share of reported vulnerabilities that are confirmed, for VA.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -189,7 +253,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Compared tools and models, with Table 2. Baselines are the code revision tools Trans-Review, AutoTransform and T5-Review, the code models CodeBERT, GraphCodeBERT and CodeT5, OpenAI's GPT, and the CoT and ReAct prompting methods. Table 2 gives vulnerability findings on the 3,545 items: CodeAgent reports 483 findings with 449 confirmed (a confirmed-over-found rate of 92.96% and 12.67% of all items), against 1,063 and 212 for CodeBERT, 864 and 317 for GPT-3.5, 671 and 345 for GPT-4.0, 752 and 371 for CoT, 693 and 359 for ReAct, and 564 and 413 for CodeAgent without QA-Checker.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -208,7 +280,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A short opening of the results section, pointing to the appendix for execution time by language and a capability comparison with recent approaches.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -227,7 +307,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Vulnerability analysis (Table 2, Figure 4). VA covers more than 25 vulnerability types, and because few commits are labelled, the ground truth was built by running CodeAgent on the 3,545 samples and manually verifying what it found, over 120 hours with each sample checked by a researcher and an engineer; CodeBERT (frozen) and GPT were then applied as binary predictors. CodeAgent's 449 confirmed of 483 found gives a 92.96% confirmation rate, against 19.94% for CodeBERT, 36.69% for GPT-3.5 and 51.42% for GPT-4.0, which the authors partly attribute to GPT-4's longer context. Figure 4 shows the overlaps: CodeAgent's confirmed set contains all of CodeBERT's 212 and GPT-3.5's 317 and 334 of GPT-4.0's 345. In the ablation, removing QA-Checker lowers both hit rates (73.23% and 11.65%).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -246,7 +334,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Consistency and format detection (Tables 3 and 4). On CA, CodeAgent reaches recall of 90.11% (merged) and 87.15% (closed) and F1 of 93.89% and 92.40%, average gains over the next best of 5.62 points in recall and 3.79 in F1. On FA, it reaches recall of 89.34% and 89.57% and F1 of 94.01% and 94.13% for merged and closed commits, an average of 89.46% recall and 94.07% F1; the text gives average improvements of 13.39 points in recall and 10.45 in F1, while Table 4's improvement column lists 15.96 for average recall. Baselines are CodeBERT, GPT-3.5, GPT-4.0, CoT and ReAct, with per-language results in the appendix.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -265,7 +361,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Code revision (Table 5). Measured by Edit Progress against Trans-Review, AutoTransform, T5-Review, CodeBERT, GraphCodeBERT and CodeT5, CodeAgent achieves the highest EP on the T5-Review dataset (37.6%) and the highest average (31.6%, against 29.8% for AutoTransform), though it is not the best on Trans-Review data, where GraphCodeBERT scores 50.6% against its 42.7%.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -284,7 +388,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work, with Table 5 of the code revision results placed in this block. On automating code review, the authors cite work on anticipating code changes, CORE for modification semantics, CommentFinder for comment suggestion, T5CR and CodeReviewer, and LLaMA-Reviewer. On collaborative AI, multi-agent LLM work covers collective thinking, conversation dataset curation and simulated societies, but, they argue, has not been integrated with structured software engineering practice, the gap CodeAgent targets; the full review is in Appendix B.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -303,7 +415,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion, limitations, ethics statement and references. CodeAgent, a multi-agent code review framework kept on task by QA-Checker, is reported to detect vulnerabilities, check code-message consistency and format alignment, and outperform prior code revision tools. Limitations named are uncertain generalisability to other development environments and industries, and a baseline test that may be insufficient, possibly overestimating the system on edge cases. The ethics statement notes no human participants and only public data. The references cover code review studies and tools, code models, multi-agent LLM frameworks and prompting methods.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -322,7 +442,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A table-of-contents fragment (page numbers and an appendix letter) from the appendix contents list.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -341,7 +469,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The appendix table of contents, Appendix A and Appendix B. Appendix A states a lemma: if QA-Checker's quality function Q of a question-answer pair is twice differentiable with a positive definite Hessian, and questions are refined by attaching instructions, the sequence of pairs converges to an optimal pair under regularity conditions; the authors argue this from a second-order Taylor expansion with a Newton-style answer update and a small learning rate. In practice QA-Checker compares Q with a threshold and adds an instruction when it falls below; Q is an equally weighted sum of relevance (cosine similarity of question and answer vectors), specificity (technicality of content words per word) and coherence (discourse connectives, coreference consistency, answer-pattern adherence). Appendix B gives the full related work on code review automation and collaborative AI.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -360,7 +496,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Experimental details: the maximum number of conversation rounds is 10.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -379,7 +523,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Role definitions (Figure 5). The six roles' self-descriptions: the CEO makes decisions and summarises reviews; the User supplies commits, messages and original files; the CPO helps the CEO and Coder summarise reports; the CTO brings language knowledge and high-level technical decisions; the Reviewer assesses code for defects, vulnerabilities and consistency; and the Coder reviews and revises code in nine languages. QA-Checker's initial prompt describes it as keeping code review conversations on topic and correcting topic drift.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -398,7 +550,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Execution time across languages (Figure 6) and the opening of Appendix D. Average review times per language are plotted on an axis from 200 to 450 seconds, and merged pull requests take about 44.92 seconds longer than closed ones on average, which the authors suggest reflects more rigorous review and more frequent commit updates for code intended to be merged. Appendix D then begins comparing QA-Checker with recursive self-improvement systems.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -417,7 +577,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line pointer to Table 6, the comparative overview of QA-Checker and recursive self-improvement systems.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -436,7 +604,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Differences and the importance of QA-Checker in role conversations. QA-Checker is specialised for question-answer tasks with precise execution, while recursive self-improvement systems have broader scope, multi-level learning and integrate experience across projects; the authors argue QA-Checker's specialisation suits role conversations, where accuracy, relevance and clarity of each response matter.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -455,7 +631,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion of the QA-Checker comparison and the capability analysis (Appendix E). QA-Checker is presented as a focused component for improving answer quality in role conversations, as against the broader adaptability of self-improvement systems. Compared with AutoGPT, ChatDev and MetaGPT, CodeAgent is said to offer consistency, vulnerability and format analysis for code review (Table 7), with QA-Checker improving inter-agent conversation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -474,7 +658,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Datasets (Appendix F), with Tables 6 to 8 and Figures 7 and 8. Table 6 contrasts QA-Checker with recursive self-improvement, and Table 7 marks CodeAgent as the only approach with all six features listed (consistency, vulnerability and format analysis, code revision, CoT and QA-Checker). The prior datasets are Trans-Review (Gerrit and GitHub), AutoTransform (three Gerrit repositories, without review comments) and T5-Review (GitHub Java projects), with train/valid/test sizes in Table 8. The new dataset was crawled through the GitHub API from repositories created after April 2023 to avoid leakage; Figure 7 breaks down positive and negative CA and FA samples per language by merged and closed status (Python, for example, has 254 merged and 35 closed negative CA samples), and Figure 8 the merged and closed counts per language.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -493,7 +685,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A short introduction to the appendix table of key factors that can lead to software vulnerabilities, with their descriptions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -512,7 +712,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Data leakage statement, the pipeline algorithm and the vulnerability factors. The new dataset postdates April 2023 to avoid leakage. Algorithm 1 steps through the four phases, with QA-Checker in the Code Review and Code Alignment phases scoring each answer and appending an instruction to the question when the score falls below a threshold. The vulnerability table lists 25 factors, including insufficient input validation, buffer overflows, authentication and authorisation flaws, sensitive data exposure, dependency vulnerabilities, CSRF, code injection, configuration errors, race conditions, path traversal, unsafe deserialisation, XXE, SSRF, hardcoded secrets, unencrypted communications and cloud configuration errors. The block ends as Appendix J, per-language VA results, begins.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -531,7 +739,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line pointer: Table 10 maps each programming language to the figure number of its case study.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -550,7 +766,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Table 10 and the comparison of CodeAgent-3.5 and CodeAgent-4.0. The case-study figures are 13 to 21, one per language from Python to Ruby. The two versions do not differ in general code review, but CodeAgent-4.0 handles long inputs and reasoning better; on one consistency example (Figure 22) its report runs to more than 17.7k lines against 15k for CodeAgent-3.5, with data on Zenodo.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -569,7 +793,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Per-language results and the ablation study (Appendices J, K and M). Table 9 gives CodeAgent's confirmed vulnerabilities per language, for example 193 of 1,305 Python items (14.79%) and 32 of 194 C++ items (16.49%). Figures 9 to 12 compare recall and F1 of CodeBERT, ChatGPT-3.5, ChatGPT-4.0 and CodeAgent per language on merged and closed CA and FA data, with CodeAgent highest in most panels but not all (ChatGPT-4.0 is ahead on closed C# and PHP CA data, for instance). The ablation compares CodeAgent without QA-Checker (Table 11) with the full version (Table 9) and finds fewer confirmed vulnerabilities in most languages without it, which the authors take as evidence of QA-Checker's importance.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -588,7 +820,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Cost statement and case studies. Table 12 gives an average of 3 minutes and USD 0.017 per review for CodeAgent-3.5 and 5 minutes and USD 0.122 for CodeAgent-4, and the authors acknowledge that multi-agent systems add implementation complexity. Figures 13 to 21 show one review per language with the commit, original file, commit message and CodeAgent's semantic consistency, security and format analyses and suggestions; for example, in the Python case (a Centrifuge commit) it flags that renamed dictionary keys and a removed authentication check are not reflected in the commit message. Figure 22 compares the CodeAgent-3.5 and CodeAgent-4.0 reports on one example.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -624,7 +864,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Tool: CodeAgent has a website (Figure 23), linked at code-agent-new.vercel.app.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     }
   ]

@@ -4,9 +4,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/typologies"
       ],
-      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness's typologies/ are. Today `dak-annex`: a DAK's web annexes beside an IG's artefact index, a kind of smart-base's own so the DAK formats are not listed on fhir-harness's `fhir-artifact-index`.",
+      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness's typologies/ are. Among them `web-annex` (formerly `dak-annex`): a WHO publication's web annexes, L1 or L2, held as data, a kind of smart-base's own because a web annex is a WHO concept fhir-harness may not name.",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-typologies"
     }

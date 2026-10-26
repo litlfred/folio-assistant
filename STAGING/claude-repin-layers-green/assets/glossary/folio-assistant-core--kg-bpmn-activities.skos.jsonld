@@ -26,7 +26,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
         }
       ],
       "skos:notation": "GT_SeedWorkPlan",
@@ -451,6 +451,126 @@
       ],
       "skos:notation": "Call_Adjudication",
       "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_Adjudication",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_beanclose_2",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose_2",
+      "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_BeanClose_2",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_beanclose_3",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose_3",
+      "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_BeanClose_3",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_beanclose_4",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose_4",
+      "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_BeanClose_4",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_beanclose_5",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose_5",
+      "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_BeanClose_5",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_BeanOpen",
       "skos:note": "candidate"
     },
     {
@@ -1234,6 +1354,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_documentauthoring.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_documentauthoring.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_documentauthoring.task_authorblocks",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1386,7 +1546,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
         }
       ],
       "skos:notation": "Task_SeedPlan",
@@ -1411,6 +1571,26 @@
       ],
       "skos:notation": "Task_Validate",
       "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_editing.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Call_BeanClose",
       "skos:note": "candidate"
     },
     {
@@ -1501,12 +1681,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Claim or open the bean [todo-manager]"
+          "@value": "Open the bean [bean-open]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Task_ClaimBean",
@@ -1641,12 +1821,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Resolve or re-open the bean [todo-manager]"
+          "@value": "Close the bean [bean-close]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Resolved when the change landed clean; left open with the residue when it did not."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Task_ResolveBean",
@@ -2054,6 +2234,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_gettingstarted.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_gettingstarted.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_gettingstarted.task_askintent",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2311,6 +2531,46 @@
       ],
       "skos:notation": "Task_SeedPlan",
       "dcterms:source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_SeedPlan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Call_BeanOpen",
       "skos:note": "candidate"
     },
     {
@@ -2634,6 +2894,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_lifecycle.call_beanclose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClose",
+      "dcterms:source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Call_BeanClose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_lifecycle.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_lifecycle.callactivity_editing",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2766,7 +3066,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
         }
       ],
       "skos:notation": "Task_SeedBeans",
@@ -2841,12 +3141,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Archive the release bean [todo-manager]"
+          "@value": "Close the bean [bean-close]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Move the bean, now completed, into the archive, with a line saying which process closed it. A bean still open stays where it is with a note saying why: only a completed or scrapped bean may be archived (check:bean-archive). The periodic sweep still archives anything this step leaves."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Task_ArchiveReleaseBean",
@@ -2961,12 +3261,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open or claim the release bean [todo-manager]"
+          "@value": "Open the bean [bean-open]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Task_OpenReleaseBean",

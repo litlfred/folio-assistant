@@ -134,6 +134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/compute-integration-watcher",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "compute-integration-watcher"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring)."
+        }
+      ],
+      "skos:notation": "compute-integration-watcher",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/compute-integration-watcher.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/content-block-review",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -209,6 +229,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/detangler-integration-watcher",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "detangler-integration-watcher"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `local/integration-watcher`."
+        }
+      ],
+      "skos:notation": "detangler-integration-watcher",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/detangler-integration-watcher.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/devils-advocate-paper",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "devils-advocate-paper"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the harness's devils-advocate-watcher means for a paper folio: its claim-bearing kinds and formal tree, the Lean vacuity shapes the Formalist lens looks for, and the paper watchers the adversary sits beside."
+        }
+      ],
+      "skos:notation": "devils-advocate-paper",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/devils-advocate-paper.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/ffi-roundtrip-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -226,6 +286,46 @@
       ],
       "skos:notation": "ffi-roundtrip-audit",
       "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/ffi-roundtrip-audit.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/formal-accuracy",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "formal-accuracy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple."
+        }
+      ],
+      "skos:notation": "formal-accuracy",
+      "dcterms:source": "folio-assistant-sci/skills/content/authoring-math/formal-accuracy.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/formal-layer-editing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "formal-layer-editing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The formal-layer half of the harness's editor: the heavy-proof discipline, the routing rows for formal requests, the proof-block workflow and the pre-merge formal audits, for a paper folio with a Lean layer."
+        }
+      ],
+      "skos:notation": "formal-layer-editing",
+      "dcterms:source": "folio-assistant-sci/skills/content/authoring-math/formal-layer-editing.md",
       "skos:note": "candidate"
     },
     {
@@ -416,6 +516,26 @@
       ],
       "skos:notation": "lean-completeness-audit",
       "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-completeness-audit.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/lean-content-test",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "lean-content-test"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The paper-folio half of the harness's content-test: run Lean proof verification and LaTeX compilation, dispatch the repo's Lean CI, and check how much of the corpus a Lake build reaches before reading its numbers."
+        }
+      ],
+      "skos:notation": "lean-content-test",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-content-test.md",
       "skos:note": "candidate"
     },
     {
@@ -614,6 +734,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/lean-toolchain-contract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "lean-toolchain-contract"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read."
+        }
+      ],
+      "skos:notation": "lean-toolchain-contract",
+      "dcterms:source": "folio-assistant-sci/skills/content/authoring-math/lean-toolchain-contract.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/lean-witness-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -631,6 +771,86 @@
       ],
       "skos:notation": "lean-witness-audit",
       "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-witness-audit.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/math-md-authoring",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "math-md-authoring"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks."
+        }
+      ],
+      "skos:notation": "math-md-authoring",
+      "dcterms:source": "folio-assistant-sci/skills/content/authoring-math/math-md-authoring.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/math-readability-editing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "math-readability-editing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The math half of the harness's readability-editing: math-specific style checks, the blueprint and formal-proof index cross-checks, and the mandatory TeX snippet validation after editing a paper folio's blocks."
+        }
+      ],
+      "skos:notation": "math-readability-editing",
+      "dcterms:source": "folio-assistant-sci/skills/content/authoring-math/math-readability-editing.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/math-render-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "math-render-check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The math half of the harness's markdown-render-check: grep checks for display math, KaTeX and LaTeX patterns that GitHub's renderer breaks, and the fix recipe for multi-line display equations."
+        }
+      ],
+      "skos:notation": "math-render-check",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/math-render-check.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/milnor-exposition-standard",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "milnor-exposition-standard"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so."
+        }
+      ],
+      "skos:notation": "milnor-exposition-standard",
+      "dcterms:source": "folio-assistant-sci/skills/content/authoring-math/milnor-exposition-standard.md",
       "skos:note": "candidate"
     },
     {
@@ -1061,6 +1281,26 @@
       ],
       "skos:notation": "simulator-math-audit",
       "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/simulator-math-audit.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills/uses-formal-comparison",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "uses-formal-comparison"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a paper folio's formal dependency graph (from Lean) relates to the editorial `uses[]` relation the harness's uses-editorial-review audits: why they diverge, why `uses[]` is never populated from Lean, and how to read the advisory `uses-formal-coverage` finding."
+        }
+      ],
+      "skos:notation": "uses-formal-comparison",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/uses-formal-comparison.md",
       "skos:note": "candidate"
     },
     {

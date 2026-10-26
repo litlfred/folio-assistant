@@ -1,0 +1,81 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/log-message/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/log-message.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "When it happened, as an ISO-8601 UTC instant.",
+            "name": "timestamp",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Timestamp"
+          },
+          {
+            "description": "WHO acted. Never the Logger: it receives and records, so it cannot know.",
+            "name": "actor",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The process the actor was inside, e.g. initialize-harness.",
+            "name": "process",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId"
+          },
+          {
+            "description": "The step within it, e.g. A_Install.",
+            "name": "task",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+          },
+          {
+            "description": "What happened, in the one line somebody scanning will read.",
+            "name": "message",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The detail — a diff, an error, what was not where it should have been.",
+            "name": "body",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The entry as posted.",
+            "name": "entry",
+            "render": {
+              "as": "markdown",
+              "reason": "a log entry is prose with formatting; rendered with raw HTML off"
+            },
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "log-message",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message",
+      "title": "Log a message to the discussion"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/log-message",
+  "path": "tools/log-message/"
+}

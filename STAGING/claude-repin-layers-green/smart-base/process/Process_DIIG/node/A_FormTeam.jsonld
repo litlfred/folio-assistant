@@ -4,9 +4,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "cf94ff0d9ffcd3f81ed3db2f241c3a2135469aba",
+    "sha": "e77b8c8796ee67296a049ab14e68ac933faa194c",
     "pr": "2681/merge",
-    "run": "40078913707"
+    "run": "40313808069"
   },
   "@graph": [
     {
@@ -21,11 +21,10 @@
       "requires": [
         "http://smart.who.int/base/skill/methodology-adoption"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim",
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01"
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_Bean_1"
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_02"

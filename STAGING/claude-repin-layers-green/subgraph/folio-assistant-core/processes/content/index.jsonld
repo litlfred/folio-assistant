@@ -10,6 +10,40 @@
       "name": "Content Change and Review"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/a1",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -248,6 +282,36 @@
       "name": "Adjudicate the disagreement"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanClose_2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanClose_3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanClose_4",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanClose_5",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
       "@type": "bootstrap:ProcessNode",
       "name": "Options analysis how to absorb the impact"
@@ -266,6 +330,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/End_Author",
       "@type": "bootstrap:ProcessNode",
       "name": "Change submitted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/End_NotMerged",
@@ -291,6 +360,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/GW_AuthorSatisfied",
       "@type": "bootstrap:ProcessNode",
       "name": "Satisfied with changes?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/GW_Covered",
@@ -533,6 +607,24 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent (system)"
@@ -558,9 +650,29 @@
       "name": "Work plan — beans (shared by humans and agents)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/EndEvent_Published",
       "@type": "bootstrap:ProcessNode",
       "name": "Document published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Gateway_ProfileClean",
@@ -637,7 +749,8 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_03",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_04",
@@ -756,6 +869,19 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent (system)"
@@ -796,6 +922,11 @@
       "name": "Gather and verify the evidence"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_OptionsAnalysis",
       "@type": "bootstrap:ProcessNode",
       "name": "Options analysis accept · revise · discard"
@@ -809,6 +940,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/EndEvent_InCorpus",
       "@type": "bootstrap:ProcessNode",
       "name": "Change is in the corpus"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Gateway_EditorDecision",
@@ -858,7 +999,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ClaimBean",
       "@type": "bootstrap:ProcessNode",
-      "name": "Claim or open the bean"
+      "name": "Open the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_CollateFindings",
@@ -893,7 +1034,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ResolveBean",
       "@type": "bootstrap:ProcessNode",
-      "name": "Resolve or re-open the bean"
+      "name": "Close the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ReviewFindings",
@@ -1162,6 +1303,24 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Editors",
       "@type": "cat-harness:Lane",
       "name": "Editors + authoring agents"
@@ -1202,9 +1361,29 @@
       "name": "Draft, review and publish"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/EndEvent_Retired",
       "@type": "bootstrap:ProcessNode",
       "name": "Folio retired"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Gateway_NextCycle",
@@ -1478,7 +1657,8 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/G02",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/G03",
@@ -1569,6 +1749,15 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
       "@type": "cat-harness:Lane",
       "name": "Corpus + build pipeline (system)"
@@ -1624,6 +1813,16 @@
       "name": "Published officially"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Gateway_BuildMerge",
       "@type": "bootstrap:ProcessNode",
       "name": "Gateway_BuildMerge"
@@ -1656,7 +1855,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ArchiveReleaseBean",
       "@type": "bootstrap:ProcessNode",
-      "name": "Archive the release bean"
+      "name": "Close the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_AuthorizeRelease",
@@ -1686,7 +1885,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenReleaseBean",
       "@type": "bootstrap:ProcessNode",
-      "name": "Open or claim the release bean"
+      "name": "Open the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublicationQa",

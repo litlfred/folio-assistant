@@ -32,6 +32,42 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-accuracy",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 64,
+              "instructionsPath": "skills/content/authoring-math/formal-accuracy.md",
+              "name": "formal-accuracy",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d21ea4329b0e79fae9d483deae0445064adc8bbe5515b2f20b1f14b25998dcfc",
+                "bytes": 2794,
+                "sha256": "d21ea4329b0e79fae9d483deae0445064adc8bbe5515b2f20b1f14b25998dcfc"
+              },
+              "title": "Formal accuracy"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-layer-editing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The formal-layer half of the harness's editor: the heavy-proof discipline, the routing rows for formal requests, the proof-block workflow and the pre-merge formal audits, for a paper folio with a Lean layer.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 84,
+              "instructionsPath": "skills/content/authoring-math/formal-layer-editing.md",
+              "name": "formal-layer-editing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad9e33f41c723157dbb1ac470f1516ac9141ca26c880b39024e7f49969581b71",
+                "bytes": 3786,
+                "sha256": "ad9e33f41c723157dbb1ac470f1516ac9141ca26c880b39024e7f49969581b71"
+              },
+              "title": "Formal-layer editing"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-authoring",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -68,6 +104,78 @@
                 "sha256": "93d655e6df349b12f8559425fc30283b699be6b9f4f7712544649ef28972b16f"
               },
               "title": "lean-formalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-toolchain-contract",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 49,
+              "instructionsPath": "skills/content/authoring-math/lean-toolchain-contract.md",
+              "name": "lean-toolchain-contract",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34d8d399dab82adb25471f099474147a35bb3ac730c86c1325a14cac49973178",
+                "bytes": 2385,
+                "sha256": "34d8d399dab82adb25471f099474147a35bb3ac730c86c1325a14cac49973178"
+              },
+              "title": "Lean toolchain — the role's contract"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-md-authoring",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 129,
+              "instructionsPath": "skills/content/authoring-math/math-md-authoring.md",
+              "name": "math-md-authoring",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0bc0c93cb4adbce6669ed2dcd1d1b3c68df78f4a3167c82a40639908c28a417c",
+                "bytes": 3585,
+                "sha256": "0bc0c93cb4adbce6669ed2dcd1d1b3c68df78f4a3167c82a40639908c28a417c"
+              },
+              "title": "Math markdown authoring"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-readability-editing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The math half of the harness's readability-editing: math-specific style checks, the blueprint and formal-proof index cross-checks, and the mandatory TeX snippet validation after editing a paper folio's blocks.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 68,
+              "instructionsPath": "skills/content/authoring-math/math-readability-editing.md",
+              "name": "math-readability-editing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf1f61c83985a5986dfc7ffa6c933fde535da2aa0b4ea645ae0a7d3145c8ddb7",
+                "bytes": 2701,
+                "sha256": "cf1f61c83985a5986dfc7ffa6c933fde535da2aa0b4ea645ae0a7d3145c8ddb7"
+              },
+              "title": "Math readability editing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/milnor-exposition-standard",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 133,
+              "instructionsPath": "skills/content/authoring-math/milnor-exposition-standard.md",
+              "name": "milnor-exposition-standard",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8b9e76e2f8c65dcc78401171795214550855e08c2131fbfc39b7fec62b690dc",
+                "bytes": 8857,
+                "sha256": "c8b9e76e2f8c65dcc78401171795214550855e08c2131fbfc39b7fec62b690dc"
+              },
+              "title": "The Milnor exposition standard"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification",
@@ -179,13 +287,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 183,
+              "instructionLines": 193,
               "instructionsPath": "skills/content/folio-paper-adapter/compute-audit.md",
               "name": "compute-audit",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7893dde2afee62bd72e93c48528ae9b88b07822ae7874b4d28af94dd95ab935a",
-                "bytes": 8925,
-                "sha256": "7893dde2afee62bd72e93c48528ae9b88b07822ae7874b4d28af94dd95ab935a"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3bd21db2c6706851cb5423579d86fa38d4f7fa55d0a17953d06a8760788d26f8",
+                "bytes": 9425,
+                "sha256": "3bd21db2c6706851cb5423579d86fa38d4f7fa55d0a17953d06a8760788d26f8"
               },
               "title": "Compute Audit Skill"
             },
@@ -197,15 +305,33 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 267,
+              "instructionLines": 275,
               "instructionsPath": "skills/content/folio-paper-adapter/compute-author.md",
               "name": "compute-author",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8dd509e3c20bb9110c148f6b003f9c91aac668a88bf11cb8bc3ecce34fd769c8",
-                "bytes": 12780,
-                "sha256": "8dd509e3c20bb9110c148f6b003f9c91aac668a88bf11cb8bc3ecce34fd769c8"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1bdf04d2df75798e3665c450f0e091863645e7d961ae84f2903e832e36c0611d",
+                "bytes": 13103,
+                "sha256": "1bdf04d2df75798e3665c450f0e091863645e7d961ae84f2903e832e36c0611d"
               },
               "title": "Compute-author skill — read before writing compute code"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/compute-integration-watcher",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 230,
+              "instructionsPath": "skills/content/folio-paper-adapter/compute-integration-watcher.md",
+              "name": "compute-integration-watcher",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/72757a189752b4eb4e59f15e2d289e6661c3dfbc43db50e7d80812e0b3bd0986",
+                "bytes": 10751,
+                "sha256": "72757a189752b4eb4e59f15e2d289e6661c3dfbc43db50e7d80812e0b3bd0986"
+              },
+              "title": "Compute Integration Watcher"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-block-review",
@@ -215,13 +341,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 169,
+              "instructionLines": 177,
               "instructionsPath": "skills/content/folio-paper-adapter/content-block-review.md",
               "name": "content-block-review",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/716dc9a3d0bde708176d45d81615366c75646231248f928eac240bde579cfe22",
-                "bytes": 8410,
-                "sha256": "716dc9a3d0bde708176d45d81615366c75646231248f928eac240bde579cfe22"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b0f7f635a5c19520304a550a9d7de91103ce3348c212f6d53c1543441ca7c1b2",
+                "bytes": 8727,
+                "sha256": "b0f7f635a5c19520304a550a9d7de91103ce3348c212f6d53c1543441ca7c1b2"
               },
               "title": "Content Block Review"
             },
@@ -232,13 +358,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 296,
+              "instructionLines": 305,
               "instructionsPath": "skills/content/folio-paper-adapter/content-validation.md",
               "name": "content-validation",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b96a928e63ba21417e55ef7b2471c18b0253e348d5e895bca53c6ce802b91cc4",
-                "bytes": 13210,
-                "sha256": "b96a928e63ba21417e55ef7b2471c18b0253e348d5e895bca53c6ce802b91cc4"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2e6922ca6eac55b32124999d5dde676852e968eabc61fc92ab0f91eeb0f8c34d",
+                "bytes": 13596,
+                "sha256": "2e6922ca6eac55b32124999d5dde676852e968eabc61fc92ab0f91eeb0f8c34d"
               },
               "title": "Content Validation Skill"
             },
@@ -250,13 +376,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 157,
+              "instructionLines": 166,
               "instructionsPath": "skills/content/folio-paper-adapter/critical-path-analysis.md",
               "name": "critical-path-analysis",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d1a935ea5238a8d981f37577a2a3376e82ccfecebc671f1001e994fd2ca262a6",
-                "bytes": 6412,
-                "sha256": "d1a935ea5238a8d981f37577a2a3376e82ccfecebc671f1001e994fd2ca262a6"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9ae8ec6bcb6e3097e58ddfe26ea9a868481277784b42264fbcc64564300deb4",
+                "bytes": 6889,
+                "sha256": "d9ae8ec6bcb6e3097e58ddfe26ea9a868481277784b42264fbcc64564300deb4"
               },
               "title": "Critical Path Analysis & Context Review"
             },
@@ -277,6 +403,42 @@
                 "sha256": "27ac726d2a9bcbd43b3f9ee37228e08a8ed6bd744c5161a3d2c92563e40b0fb1"
               },
               "title": "definition-clarity-audit"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/detangler-integration-watcher",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `local/integration-watcher`.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 354,
+              "instructionsPath": "skills/content/folio-paper-adapter/detangler-integration-watcher.md",
+              "name": "detangler-integration-watcher",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f8deb09f8b1f3a5dd176d46d8f3d68eca36ba65c2f3809dab1a0d2b02c9f860e",
+                "bytes": 20646,
+                "sha256": "f8deb09f8b1f3a5dd176d46d8f3d68eca36ba65c2f3809dab1a0d2b02c9f860e"
+              },
+              "title": "/detangler-integration-watcher"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/devils-advocate-paper",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "What the harness's devils-advocate-watcher means for a paper folio: its claim-bearing kinds and formal tree, the Lean vacuity shapes the Formalist lens looks for, and the paper watchers the adversary sits beside.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 60,
+              "instructionsPath": "skills/content/folio-paper-adapter/devils-advocate-paper.md",
+              "name": "devils-advocate-paper",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7dea1350a2d1c9b80b4a5f527a741e847de1b281cc527317f043197dde87a7bc",
+                "bytes": 2663,
+                "sha256": "7dea1350a2d1c9b80b4a5f527a741e847de1b281cc527317f043197dde87a7bc"
+              },
+              "title": "Devil's advocate on a paper folio"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/ffi-roundtrip-audit",
@@ -304,13 +466,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 231,
+              "instructionLines": 238,
               "instructionsPath": "skills/content/folio-paper-adapter/formalizer.md",
               "name": "formalizer",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/45db8336b895003d78cc9a0f790c1958352750bdce7e5ff7b274511e6922402f",
-                "bytes": 10805,
-                "sha256": "45db8336b895003d78cc9a0f790c1958352750bdce7e5ff7b274511e6922402f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae617f00478f7170b286192da560be9f5f4865083415645585c9603c24e8335b",
+                "bytes": 11113,
+                "sha256": "ae617f00478f7170b286192da560be9f5f4865083415645585c9603c24e8335b"
               },
               "title": "Lean 4 Formalizer (Narrative to Proof)"
             },
@@ -429,15 +591,33 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 332,
+              "instructionLines": 340,
               "instructionsPath": "skills/content/folio-paper-adapter/lean-completeness-audit.md",
               "name": "lean-completeness-audit",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52932cbe5b7e3e77b2aad683aa6bd64d169aec663d85f2c163589576f3ab0f64",
-                "bytes": 11068,
-                "sha256": "52932cbe5b7e3e77b2aad683aa6bd64d169aec663d85f2c163589576f3ab0f64"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f4802420bf0362fbc6c95c0949d7e47456a5ce61eb82eee3b10ad17fa28047bd",
+                "bytes": 11356,
+                "sha256": "f4802420bf0362fbc6c95c0949d7e47456a5ce61eb82eee3b10ad17fa28047bd"
               },
               "title": "Lean Completeness Audit Skill"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-content-test",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The paper-folio half of the harness's content-test: run Lean proof verification and LaTeX compilation, dispatch the repo's Lean CI, and check how much of the corpus a Lake build reaches before reading its numbers.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 54,
+              "instructionsPath": "skills/content/folio-paper-adapter/lean-content-test.md",
+              "name": "lean-content-test",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3230c98068e1c1f9da680641dc970d066b872130b81eb95b32f7ec84b438d8fc",
+                "bytes": 2175,
+                "sha256": "3230c98068e1c1f9da680641dc970d066b872130b81eb95b32f7ec84b438d8fc"
+              },
+              "title": "Lean content test"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-environment-setup",
@@ -465,13 +645,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 109,
+              "instructionLines": 128,
               "instructionsPath": "skills/content/folio-paper-adapter/lean-formal-graph.md",
               "name": "lean-formal-graph",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c1bf80a263e9e5c9a201835f4f3638a3cf8c386b37e67b5bff6eb76e522640a",
-                "bytes": 4851,
-                "sha256": "1c1bf80a263e9e5c9a201835f4f3638a3cf8c386b37e67b5bff6eb76e522640a"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5351915445c7bf3bb850ea7f4f01c16d0f6279ef349dc92411a4b39feff9b968",
+                "bytes": 5827,
+                "sha256": "5351915445c7bf3bb850ea7f4f01c16d0f6279ef349dc92411a4b39feff9b968"
               },
               "title": "Lean formal dependency graph"
             },
@@ -584,6 +764,24 @@
               "title": "Lean Witness Audit Skill"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-render-check",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The math half of the harness's markdown-render-check: grep checks for display math, KaTeX and LaTeX patterns that GitHub's renderer breaks, and the fix recipe for multi-line display equations.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 99,
+              "instructionsPath": "skills/content/folio-paper-adapter/math-render-check.md",
+              "name": "math-render-check",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/924258e4380d904bfe1f9fea8eba0a15b3dfb9fba941bf13050b9a287d1c9d18",
+                "bytes": 3809,
+                "sha256": "924258e4380d904bfe1f9fea8eba0a15b3dfb9fba941bf13050b9a287d1c9d18"
+              },
+              "title": "Math render check"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-importer",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -609,13 +807,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 277,
+              "instructionLines": 285,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-conciseness.md",
               "name": "proof-conciseness",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0cdff2051880a8e173a468ec002fd830f87a7150cd8faf61367f141956ec4688",
-                "bytes": 9758,
-                "sha256": "0cdff2051880a8e173a468ec002fd830f87a7150cd8faf61367f141956ec4688"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ea9dba7f544aca9416606c33d5b334b5a57b42fc59fda4a49f70a4be1ebdb34",
+                "bytes": 10029,
+                "sha256": "7ea9dba7f544aca9416606c33d5b334b5a57b42fc59fda4a49f70a4be1ebdb34"
               },
               "title": "Proof Conciseness"
             },
@@ -627,13 +825,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 247,
+              "instructionLines": 255,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-editor.md",
               "name": "proof-editor",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1716ab05050ad2a74e0538b4e4a09f7c988f02e9f8a23a6554c4e9d6d85fb073",
-                "bytes": 10288,
-                "sha256": "1716ab05050ad2a74e0538b4e4a09f7c988f02e9f8a23a6554c4e9d6d85fb073"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/372e30c346f97aa8c6c414a6c6163bd103e4928b3a05dfa3f3c059f05ae5c80b",
+                "bytes": 10607,
+                "sha256": "372e30c346f97aa8c6c414a6c6163bd103e4928b3a05dfa3f3c059f05ae5c80b"
               },
               "title": "Proof Editor (Coordinator)"
             },
@@ -663,13 +861,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 391,
+              "instructionLines": 416,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-gap-audit.md",
               "name": "proof-gap-audit",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f4e8203dc9cad325bcdeca11efa686c22ea158b690e031a58846d7d5fc1f1bb",
-                "bytes": 18790,
-                "sha256": "7f4e8203dc9cad325bcdeca11efa686c22ea158b690e031a58846d7d5fc1f1bb"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fe91ef23e812afab6cb7685fa317c4b54e62c1b5e89b496505b6ef28e326f042",
+                "bytes": 19858,
+                "sha256": "fe91ef23e812afab6cb7685fa317c4b54e62c1b5e89b496505b6ef28e326f042"
               },
               "title": "Proof Gap Audit"
             },
@@ -681,13 +879,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 450,
+              "instructionLines": 458,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-integration-watcher.md",
               "name": "proof-integration-watcher",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d73322d9a5716b88ed2c83d77e519db9797d8b8126e770bb6b44c8c0c82274ff",
-                "bytes": 25097,
-                "sha256": "d73322d9a5716b88ed2c83d77e519db9797d8b8126e770bb6b44c8c0c82274ff"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e9bdaed1d2903d079197ee267ea734a435b9af2198a50f4cd80e8b21f9f5bb56",
+                "bytes": 25361,
+                "sha256": "e9bdaed1d2903d079197ee267ea734a435b9af2198a50f4cd80e8b21f9f5bb56"
               },
               "title": "/proof-integration-watcher"
             },
@@ -717,13 +915,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 242,
+              "instructionLines": 250,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-simplifier.md",
               "name": "proof-simplifier",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff431032c64791c778f2e9aaf3f7130ec2c6714b8f1650918221acf3cda305ee",
-                "bytes": 12905,
-                "sha256": "ff431032c64791c778f2e9aaf3f7130ec2c6714b8f1650918221acf3cda305ee"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d596bc49aaf83dbf5e9f631cf752a98508518640b6def918e0546268805ab66f",
+                "bytes": 13201,
+                "sha256": "d596bc49aaf83dbf5e9f631cf752a98508518640b6def918e0546268805ab66f"
               },
               "title": "Proof Simplifier"
             },
@@ -735,13 +933,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 217,
+              "instructionLines": 225,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-status-tracking.md",
               "name": "proof-status-tracking",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2058cf31ba5d3ba88bcc79940e93e529d780f32dac3f9c4add8eb35092624e0f",
-                "bytes": 8572,
-                "sha256": "2058cf31ba5d3ba88bcc79940e93e529d780f32dac3f9c4add8eb35092624e0f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3a3752763a63d21f640fef1b2287d4f8ebb66a64f84a62e48fe6ba332fbf7aad",
+                "bytes": 8872,
+                "sha256": "3a3752763a63d21f640fef1b2287d4f8ebb66a64f84a62e48fe6ba332fbf7aad"
               },
               "title": "Proof Status Tracking"
             },
@@ -753,13 +951,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 386,
+              "instructionLines": 395,
               "instructionsPath": "skills/content/folio-paper-adapter/proof-triage.md",
               "name": "proof-triage",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2dce2f0c0d286932f6dad01c78c2a51939aa6e5c5f7cc3f791308734266bc774",
-                "bytes": 17564,
-                "sha256": "2dce2f0c0d286932f6dad01c78c2a51939aa6e5c5f7cc3f791308734266bc774"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/06c014634029322299fcf1f10f45b3d0f006f6d33c3f21afa7330d5fb80595cc",
+                "bytes": 17983,
+                "sha256": "06c014634029322299fcf1f10f45b3d0f006f6d33c3f21afa7330d5fb80595cc"
               },
               "title": "Proof Triage & Resolution"
             },
@@ -771,13 +969,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 313,
+              "instructionLines": 322,
               "instructionsPath": "skills/content/folio-paper-adapter/proposition-consolidation-audit.md",
               "name": "proposition-consolidation-audit",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/68ce911317a14b32a9c14d262619f4da3d1021cc284810c676f28bbae0aa210d",
-                "bytes": 11957,
-                "sha256": "68ce911317a14b32a9c14d262619f4da3d1021cc284810c676f28bbae0aa210d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5f791c4acefc4fb5707bcd1eedcd7d7ec126b252d41aeb47aaa227d244e5b49e",
+                "bytes": 12395,
+                "sha256": "5f791c4acefc4fb5707bcd1eedcd7d7ec126b252d41aeb47aaa227d244e5b49e"
               },
               "title": "/proposition-consolidation-audit"
             },
@@ -789,13 +987,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 334,
+              "instructionLines": 342,
               "instructionsPath": "skills/content/folio-paper-adapter/q-usage-watcher.md",
               "name": "q-usage-watcher",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a2db1c49148a12298daba82ea9a4c77f547f05d81a52a1988e27c0d2dbb2e74",
-                "bytes": 17476,
-                "sha256": "5a2db1c49148a12298daba82ea9a4c77f547f05d81a52a1988e27c0d2dbb2e74"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ba84ac2ea61b8670ef97ad4148edef7e67780a9828552595d949b52555b4991d",
+                "bytes": 17776,
+                "sha256": "ba84ac2ea61b8670ef97ad4148edef7e67780a9828552595d949b52555b4991d"
               },
               "title": "/q-usage-watcher"
             },
@@ -807,13 +1005,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 177,
+              "instructionLines": 185,
               "instructionsPath": "skills/content/folio-paper-adapter/remark-audit.md",
               "name": "remark-audit",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f544598de0db3f3298197340fb174ba253dc985af994ebb08224fcd8d4261584",
-                "bytes": 6498,
-                "sha256": "f544598de0db3f3298197340fb174ba253dc985af994ebb08224fcd8d4261584"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/733d3fcae6d281f7c70670a4dae8068312113f01e1e35412d388cbc7ed45e1e6",
+                "bytes": 6838,
+                "sha256": "733d3fcae6d281f7c70670a4dae8068312113f01e1e35412d388cbc7ed45e1e6"
               },
               "title": "Remark Audit Skill"
             },
@@ -825,13 +1023,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 418,
+              "instructionLines": 426,
               "instructionsPath": "skills/content/folio-paper-adapter/rendering-auditor.md",
               "name": "rendering-auditor",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53afd209f8c19ee2fd7f6d5e4f9904a572c23964ae31d211399d58bec15fc374",
-                "bytes": 19772,
-                "sha256": "53afd209f8c19ee2fd7f6d5e4f9904a572c23964ae31d211399d58bec15fc374"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b97dce9a7b4d69662885a01616b367bfeb2a3e552e33ff6175a6623652b8322",
+                "bytes": 20064,
+                "sha256": "1b97dce9a7b4d69662885a01616b367bfeb2a3e552e33ff6175a6623652b8322"
               },
               "title": "Rendering Auditor"
             },
@@ -861,13 +1059,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 85,
+              "instructionLines": 93,
               "instructionsPath": "skills/content/folio-paper-adapter/semantic-review-scoping.md",
               "name": "semantic-review-scoping",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/76b7cb30f0b8b73b9b4ae2fa4c9b6e04c7d8842f2b23dce005903df216ee7128",
-                "bytes": 3569,
-                "sha256": "76b7cb30f0b8b73b9b4ae2fa4c9b6e04c7d8842f2b23dce005903df216ee7128"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/841fde90173046cc84ca68e125d72d03c0c9f1b2da021409eb5f7019f7361120",
+                "bytes": 3939,
+                "sha256": "841fde90173046cc84ca68e125d72d03c0c9f1b2da021409eb5f7019f7361120"
               },
               "title": "Semantic review scoping"
             },
@@ -907,6 +1105,24 @@
               "title": "Simulator Math Audit"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/uses-formal-comparison",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "How a paper folio's formal dependency graph (from Lean) relates to the editorial `uses[]` relation the harness's uses-editorial-review audits: why they diverge, why `uses[]` is never populated from Lean, and how to read the advisory `uses-formal-coverage` finding.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "instructionLines": 70,
+              "instructionsPath": "skills/content/folio-paper-adapter/uses-formal-comparison.md",
+              "name": "uses-formal-comparison",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e421dd7a067850b5afc300431b88d3cddae3e680a5e1bcb248b5c3de101419c0",
+                "bytes": 3643,
+                "sha256": "e421dd7a067850b5afc300431b88d3cddae3e680a5e1bcb248b5c3de101419c0"
+              },
+              "title": "`uses[]` against the formal graph"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/verify-local-substrate",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -931,13 +1147,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
-              "instructionLines": 266,
+              "instructionLines": 274,
               "instructionsPath": "skills/content/folio-paper-adapter/witnessed-values.md",
               "name": "witnessed-values",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53842c817a0fa11f7cf62daee4dafbc10d521d47806063f6f7e924ac66d523cc",
-                "bytes": 12149,
-                "sha256": "53842c817a0fa11f7cf62daee4dafbc10d521d47806063f6f7e924ac66d523cc"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/94050fa72e379ce5dca04a301e1b8e9e80adcda550755cff5958ebe2cf31c945",
+                "bytes": 12483,
+                "sha256": "94050fa72e379ce5dca04a301e1b8e9e80adcda550755cff5958ebe2cf31c945"
               },
               "title": "Witnessed Values Skill"
             }
@@ -1215,6 +1431,15 @@
       ],
       "name": "skills/remote-packages",
       "path": "skills/remote-packages/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/requirements/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/requirements",
+      "path": "skills/requirements/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/skill-definitions/",

@@ -641,6 +641,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields/ig-annexes.igannexrecordschema.columns",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgAnnexRecordSchema.columns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Column keys shown before a row is opened. Default: the first six."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-annexes.ts#IgAnnexRecordSchema.columns",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields/ig-annexes.igannexrecordschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgAnnexRecordSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The annex, relative to the directory that holds this declaration."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-annexes.ts#IgAnnexRecordSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields/ig-annexes.igannexrecordschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgAnnexRecordSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page file under `input/pagecontent/`, e.g. `dictionary.md`."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-annexes.ts#IgAnnexRecordSchema.page",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-schema-fields/ig-artifact-jsonld.igartifactencodingschema.dcterms-source",
       "@type": "skos:Concept",
       "skos:inScheme": {

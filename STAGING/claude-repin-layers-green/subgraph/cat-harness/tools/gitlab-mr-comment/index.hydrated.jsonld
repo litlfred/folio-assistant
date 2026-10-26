@@ -1,0 +1,66 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-comment/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-comment.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Add a comment to one merge request. The comment is read from stdin, never from the command line.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr note create"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "Absent: the change proposal of the current branch.",
+            "name": "number",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+          },
+          {
+            "arg": {
+              "stdin": true
+            },
+            "description": "The comment.",
+            "name": "body",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The comment created, as the forge CLI prints it.",
+            "name": "url",
+            "render": {
+              "as": "url",
+              "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
+            },
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          }
+        ]
+      },
+      "name": "gitlab-mr-comment",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+      ],
+      "title": "Comment on a merge request (GitLab)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/gitlab-mr-comment",
+  "path": "tools/gitlab-mr-comment/"
+}

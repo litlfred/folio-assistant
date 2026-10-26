@@ -111,6 +111,24 @@
       "name": "unprovisioned"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/SF_Bean_1",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "claimed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/SF_Bean_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/SF_Bean_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/SF_Bean_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Onboarding agent (system)"
@@ -131,6 +149,16 @@
       "name": "Work plan (beans)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanClose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanOpen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the bean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/EndEvent_HandOff",
       "@type": "bootstrap:ProcessNode",
       "name": "Handed to content authoring"
@@ -139,6 +167,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/EndEvent_Ready",
       "@type": "bootstrap:ProcessNode",
       "name": "Ready to author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/End_BeanNotYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/GW_BeanYours",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Intent",
