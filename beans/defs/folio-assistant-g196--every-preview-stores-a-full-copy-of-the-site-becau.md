@@ -2,11 +2,11 @@
 # folio-assistant-g196
 $schema: bean/1.0.0
 title: Every preview stores a full copy of the site because per-preview facts are baked into every page
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-19T12:53:43Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-26T10:40:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -649,3 +649,6 @@ work here.
 **Left for this bean:** the IG nav JSON and topbar (fhir-harness), and
 whether smart-base's 146 come from the same source. TypeDoc and `changes/`
 stay per-branch.
+
+
+_2026-10-26T10:40:00Z_ — Claimed by the cloud thread "Drain beans and open issues across repos" (session https://claude.ai/code/session_01MuDtPYhiVLUpaCdbvwQVL9). Taking the fhir-harness half: `stage-ig-sites.ts` writes a literal baseurl into the IG nav JSON and ig-topbar.
