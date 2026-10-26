@@ -5,7 +5,7 @@ title: 'L1 EVIDENCE: ingest the external evidence an L1 guideline computes from 
 status: in-progress
 type: task
 created_at: 2026-10-04T10:13:24Z
-updated_at: 2026-10-26T11:20:00Z
+updated_at: 2026-10-26T13:09:00Z
 parent: folio-assistant-qvxh
 ---
 
@@ -14,10 +14,10 @@ Owner, 2026-10-01 (qvxh): smart-L1 is 'fully computable from smart-base assets (
 Four l1-guideline sections (key-questions, evidence-retrieval-and-synthesis, certainty-of-evidence, evidence-to-decision) are computed from evidence smart-base has not ingested. So they carry no `computedFrom` and say so in their descriptions, and check:document-kind-sources would refuse a claim naming an undeclared graph.
 
 ## Done when
-- [ ] the evidence sources are chosen and named: which systematic reviews, from where, and under which licence (Cochrane content is not openly licensed by default)
-- [ ] a declared graph holds them (no empty declaration: dh4f)
-- [ ] the four sections name it in computedFrom, and check:document-kind-sources passes
-- [ ] needs network: WHO IRIS / Cochrane Library are unreachable from the cloud container (2026-10-04)
+- [x] the evidence sources are chosen and named: which systematic reviews, from where, and under which licence (Cochrane content is not openly licensed by default)
+- [x] a declared graph holds them (no empty declaration: dh4f)
+- [x] the four sections name it in computedFrom, and check:document-kind-sources passes
+- [x] needs network: WHO IRIS / Cochrane Library are unreachable from the cloud container (2026-10-04)
 
 ## Claimed 2026-10-24 (FHIR beans thread, session_01Bye99WLJxQpyCxh2eMgW19)
 
@@ -61,3 +61,23 @@ The three d08l PDFs are ingested into smart-base/library as `9789241549912-eng`,
 - [x] a declared graph holds them (library)
 - [x] the four sections name it in computedFrom; check:document-kind-sources passes
 - [ ] #164 merged
+
+## 2026-10-26T13:09:00Z — Parallel connected-agent ingestion (`litlfred/smart-base#165`)
+
+- **PR:** [`litlfred/smart-base#165`](https://github.com/litlfred/smart-base/pull/165) (branch `feat/0lde-l1-evidence`, commit `dc3a5234d76887b428598a0ea6edc8618da6b255`) — opened concurrently by local subagent (`c2017c72-0637-45b3-aceb-1eb3a5840db8`); note that `litlfred/smart-base#164` was also opened concurrently for the same bean.
+- **Ingested library entries (`smart-base/library/`, declared graph `library` in `smart-base.json`):**
+  - `smart-base/library/9789241549912-eng/` (18 sections, 37 JSON-LD nodes, `toc_source=outline`, licence `CC-BY-NC-SA-3.0-IGO`)
+  - `smart-base/library/9789241549912-webannexes-eng/` (24 sections, 49 JSON-LD nodes, `granularity=page`, licence `CC-BY-NC-SA-3.0-IGO`)
+  - `smart-base/library/9789241549912-websupplement-eng/` (129 sections, 259 JSON-LD nodes, `toc_source=inferred`, licence `CC-BY-NC-SA-3.0-IGO`)
+  - Inspected all 4 extracted raster images across the 3 PDFs (back-cover ISBN `978 92 4 154991 2` barcodes, converted to RGB PNGs) and recorded their `decorative` verdicts in `smart-base/library/image-verdicts.json`, and synced all corpus `keywords.json` and `smart-base/library/README.md`.
+- **Wired `computedFrom` and `sources` in `smart-base/document-kinds/l1-guideline.json`:**
+  - `key-questions`, `evidence-retrieval-and-synthesis`, `certainty-of-evidence`, and `evidence-to-decision` declare `"computedFrom": ["library"]` and cite the ingested WHO 2016 ANC evidence sections (`9789241549912-eng` §§2.6–2.11, `9789241549912-webannexes-eng` Web annexes 1 & 3, and `9789241549912-websupplement-eng` EB Tables and search strategies).
+  - Added test in `smart-base/scripts/gen-document-kinds.test.ts` verifying every authored section in `l1`, `l1-guideline`, and `dth` names its declared `computedFrom` graph.
+- **Verification:**
+  - `bun run cat-harness-tools/scripts/check-l1-complete.ts` — passes all 13 derivable requirements on all 3 new entries
+  - `bun run cat-harness-tools/scripts/check-document-kind-sources.ts` — `✓ all 43 computedFrom claim(s) name a graph their instance declares or inherits`
+  - `bun run smart-base/scripts/gen-document-kinds.ts --check` — `✓ 3 document-kind file(s) current`
+  - `bun run cat-harness-tools/scripts/library-keywords.ts --check` — `95 keywords.json file(s) current`
+  - `bun run cat-harness-tools/scripts/library-readmes.ts --check` — `100 library item README(s); 0 stale.`
+  - `bun test smart-base/scripts/gen-document-kinds.test.ts cat-harness-tools/scripts/tests/check-document-kind-sources.test.ts` — `23 pass, 0 fail`
+- **Status:** `in-progress` until `#164` or `#165` merges to `main`.
