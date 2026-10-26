@@ -3950,6 +3950,12 @@ jobs:
       - name: web annexes resolve
         run: bun run cat check:web-annexes
 
+      # The generated `libraries/` of each layer are current (bean `jbvi`).
+      # Brought in with the re-pin that adds the `software-library` kind;
+      # `libraries:check` declares `@covers software-library`.
+      - name: software libraries are current
+        run: bun run cat libraries:check
+
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. folio-assistant-sci's extracted reference lists
       # are in step with the library sections they are read from.
