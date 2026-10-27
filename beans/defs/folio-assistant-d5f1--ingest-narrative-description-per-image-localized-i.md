@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-27T15:12:00Z
+updated_at: 2026-10-27T15:21:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -356,3 +356,5 @@ _2026-10-27T14:47:00Z_ — Batch P opened as [`litlfred/cat-harness#647`](https:
 _2026-10-27T15:01:00Z_ — Batch Q opened as [`litlfred/cat-harness#649`](https://github.com/litlfred/cat-harness/pull/649) (`d434e930`, stacked on `#627` `d961c06a`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for images 26–55 (`img-p004-29` through `img-p025-14`) in `arxiv-2402.02172v5` (no matching `blocks/figure-*.jsonld`). Remaining in `cat-harness/library/`: `arxiv-2402.02172v5` (80).
 
 _2026-10-27T15:12:00Z_ — Batch R opened as [`litlfred/cat-harness#650`](https://github.com/litlfred/cat-harness/pull/650) (`0f16776c`, stacked on `#649` `d434e930`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for images 56–85 (`img-p025-15` through `img-p028-15`) in `arxiv-2402.02172v5` (no matching `blocks/figure-*.jsonld`). Remaining in `cat-harness/library/`: `arxiv-2402.02172v5` (50).
+
+_2026-10-27T15:21:00Z_ — Batch S opened as [`litlfred/cat-harness#652`](https://github.com/litlfred/cat-harness/pull/652) (`8c87901b`, stacked on `#650` `0f16776c`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for images 86–110 (`img-p028-19` through `img-p031-4`) in `arxiv-2402.02172v5` (no matching `blocks/figure-*.jsonld`). Remaining in `cat-harness/library/`: `arxiv-2402.02172v5` (25).
