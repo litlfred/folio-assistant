@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-27T15:23:00Z
+updated_at: 2026-10-27T21:33:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -156,3 +156,5 @@ _2026-10-27T14:57:00Z_ — batch 34 opened as `litlfred/cat-harness#648` (`aff32
 _2026-10-27T15:13:00Z_ — batch 35 opened as `litlfred/cat-harness#651` (`0ce28e1c`, stacked on `#648`): 50 English draft summaries across `omg-2024-spdx-3-0` (blocks 251–300 of 400 prose blocks, `prose-sec-250` through `prose-sec-299`); `drafted_by.model` is `not-disclosed` with session `conversation://b1f0ce75-ce7e-43c4-a5f9-27d50e6d2c96`. Backlog in `cat-harness/library/` 433 → 383 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, `#636`, `#641`, `#642`, `#643`, `#646`, and `#648`; 1152 → 852 against `main` with `#635`, `#641`, `#643`, `#646`, and `#648`; 1208 drafts await human confirmation).
 
 _2026-10-27T15:23:00Z_ — batch 36 opened as `litlfred/cat-harness#653` (`04b5b530`, stacked on `#651`): 50 English draft summaries across `omg-2024-spdx-3-0` (blocks 301–350 of 400 prose blocks, `prose-sec-300` through `prose-sec-349`); `drafted_by.model` is `not-disclosed` with session `conversation://0ffe9ef8-dc9f-492f-8c39-1789e811352c`. Backlog in `cat-harness/library/` 383 → 333 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, `#636`, `#641`, `#642`, `#643`, `#646`, `#648`, and `#651`; 1152 → 802 against `main` with `#635`, `#641`, `#643`, `#646`, `#648`, and `#651`; 1258 drafts await human confirmation).
+
+_2026-10-27T15:35:00Z_ — batch 37 opened as `litlfred/cat-harness#655` (`0b434858`, stacked on `#653`): 50 English draft summaries across `omg-2024-spdx-3-0` (final blocks 351–400 of 400 prose blocks, `prose-sec-350` through `prose-sec-399`, completing `omg-2024-spdx-3-0`); `drafted_by.model` is `not-disclosed` with session `conversation://8fdef7e6-c62c-449e-9e9e-6facfb6e1ec1`. Backlog in `cat-harness/library/` 333 → 283 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, `#636`, `#641`, `#642`, `#643`, `#646`, `#648`, `#651`, and `#653`; 1152 → 752 against `main` with `#635`, `#641`, `#643`, `#646`, `#648`, `#651`, and `#653`; 1308 drafts await human confirmation). All non-held entries in `cat-harness/library/` now have 0 backlog across open/merged batches, leaving only held `ietf-2024-rfc9562-uuid` (283 blocks).
