@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-26T15:49:00Z
+updated_at: 2026-10-27T13:58:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -142,3 +142,5 @@ _2026-10-26T15:36:00Z_ — batch 27 opened as `litlfred/cat-harness#634` (`80d6b
 _2026-10-26T15:45:00Z_ — batch 28 opened as `litlfred/cat-harness#635` (`e04d74d4`): 50 English draft summaries across `omg-2024-spdx-3-0` (first 50 of 400 prose blocks, `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-048`); `drafted_by.model` is `not-disclosed` with session `conversation://60bf5d72-a28c-4963-be20-fa0922d95bc2`. Backlog in `cat-harness/library/` 772 → 722 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, and `#634`; 1152 → 1102 against `main` alone; 869 drafts await human confirmation).
 
 _2026-10-26T15:49:00Z_ — batch 29 opened as `litlfred/cat-harness#636` (`b27d25a5`, stacked on `#634`): 45 English draft summaries across `w3c-2020-json-ld-1-1` (blocks 51–95 of 139 prose blocks, `prose-sec-057` through `prose-sec-102`); `drafted_by.model` is `not-disclosed` with session `conversation://058ee54f-ea98-4422-9a59-a587c16f4ca7`. Backlog in `cat-harness/library/` 722 → 677 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, and `#635`; 1152 → 1057 against `main` with `#634`; 914 drafts await human confirmation).
+
+_2026-10-27T13:58:00Z_ — batch 30 opened as `litlfred/cat-harness#641` (`507540e3`, stacked on `#635`): 50 English draft summaries across `omg-2024-spdx-3-0` (blocks 51–100 of 400 prose blocks, `prose-sec-049` through `prose-sec-098`); `drafted_by.model` is `not-disclosed` with session `conversation://fb5e9aad-2a1c-4139-af26-2bd5ea10f938`. Backlog in `cat-harness/library/` 677 → 627 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, and `#636`; 1152 → 1052 against `main` with `#635`; 964 drafts await human confirmation).
