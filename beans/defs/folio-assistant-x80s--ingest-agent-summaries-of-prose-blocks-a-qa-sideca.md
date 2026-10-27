@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-27T15:13:00Z
+updated_at: 2026-10-27T15:23:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -154,3 +154,5 @@ _2026-10-27T14:39:00Z_ — batch 33 opened as `litlfred/cat-harness#646` (`d50ea
 _2026-10-27T14:57:00Z_ — batch 34 opened as `litlfred/cat-harness#648` (`aff323fa`, stacked on `#646`): 50 English draft summaries across `omg-2024-spdx-3-0` (blocks 201–250 of 400 prose blocks, `prose-sec-200` through `prose-sec-249`); `drafted_by.model` is `not-disclosed` with session `conversation://8eff2d4b-fc02-4ea2-988e-233f54ddb42e`. Backlog in `cat-harness/library/` 483 → 433 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, `#636`, `#641`, `#642`, `#643`, and `#646`; 1152 → 902 against `main` with `#635`, `#641`, `#643`, and `#646`; 1158 drafts await human confirmation).
 
 _2026-10-27T15:13:00Z_ — batch 35 opened as `litlfred/cat-harness#651` (`0ce28e1c`, stacked on `#648`): 50 English draft summaries across `omg-2024-spdx-3-0` (blocks 251–300 of 400 prose blocks, `prose-sec-250` through `prose-sec-299`); `drafted_by.model` is `not-disclosed` with session `conversation://b1f0ce75-ce7e-43c4-a5f9-27d50e6d2c96`. Backlog in `cat-harness/library/` 433 → 383 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, `#636`, `#641`, `#642`, `#643`, `#646`, and `#648`; 1152 → 852 against `main` with `#635`, `#641`, `#643`, `#646`, and `#648`; 1208 drafts await human confirmation).
+
+_2026-10-27T15:23:00Z_ — batch 36 opened as `litlfred/cat-harness#653` (`04b5b530`, stacked on `#651`): 50 English draft summaries across `omg-2024-spdx-3-0` (blocks 301–350 of 400 prose blocks, `prose-sec-300` through `prose-sec-349`); `drafted_by.model` is `not-disclosed` with session `conversation://0ffe9ef8-dc9f-492f-8c39-1789e811352c`. Backlog in `cat-harness/library/` 383 → 333 of 1591 prose blocks (when combined with `#621`, `#624`, `#628`, `#629`, `#630`, `#631`, `#632`, `#633`, `#634`, `#635`, `#636`, `#641`, `#642`, `#643`, `#646`, `#648`, and `#651`; 1152 → 802 against `main` with `#635`, `#641`, `#643`, `#646`, `#648`, and `#651`; 1258 drafts await human confirmation).
