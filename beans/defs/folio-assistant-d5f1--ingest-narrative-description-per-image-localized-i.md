@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-27T14:35:00Z
+updated_at: 2026-10-27T14:47:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -350,3 +350,5 @@ _2026-10-26T14:55:00Z_ — Batch M opened as [`litlfred/cat-harness#627`](https:
 _2026-10-27T14:16:00Z_ — Batch N opened as [`litlfred/cat-harness#644`](https://github.com/litlfred/cat-harness/pull/644) (`720dca41`, stacked on `#626` `0775906a`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for images 26–50 (`img-p003-47` through `img-p004-35`) in `arxiv-2507.23348v1`. Remaining in `cat-harness/library/`: `arxiv-2507.23348v1` (65), `arxiv-2402.02172v5` (110).
 
 _2026-10-27T14:35:00Z_ — Batch O opened as [`litlfred/cat-harness#645`](https://github.com/litlfred/cat-harness/pull/645) (`715b4fe3`, stacked on `#644` `720dca41`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for images 51–80 (`img-p004-36` through `img-p004-108`) in `arxiv-2507.23348v1`. Remaining in `cat-harness/library/`: `arxiv-2507.23348v1` (35), `arxiv-2402.02172v5` (110).
+
+_2026-10-27T14:47:00Z_ — Batch P opened as [`litlfred/cat-harness#647`](https://github.com/litlfred/cat-harness/pull/647) (`6fc88dcb`, stacked on `#645` `715b4fe3`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the final 35 images (81–115 of 115: `img-p004-109` through `img-p009-16`) in `arxiv-2507.23348v1` (all 115 images now carry all 6 locales `en`/`fr`/`es`/`ar`/`ru`/`zh`). Remaining in `cat-harness/library/`: `arxiv-2402.02172v5` (110).
