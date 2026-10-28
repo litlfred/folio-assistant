@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-28T12:07:00Z
+updated_at: 2026-10-28T12:24:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -170,3 +170,5 @@ _2026-10-28T11:31:00Z_ — batch 41 opened as `litlfred/smart-base#173` (`62a603
 _2026-10-28T11:49:00Z_ — batch 42 opened as `litlfred/smart-base#175` (`2648c0fc`): 44 English draft summaries across 3 complete entries in `smart-base/library/` (`9789241549912-eng` (all 18 prose blocks: `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-016`), `9789241549912-webannexes-eng` (all 24 prose blocks: `prose-page-001` through `prose-page-024`), and `mehl-2021-who-smart-guidelines` (all 2 prose blocks: `prose-sec-000` and `prose-sec-front-matter`)); `drafted_by.model` is `not-disclosed` with session `conversation://1644c541-fe28-4988-9eb6-528fe115d568`. Backlog in `smart-base/library/` 1034 → 990 of 1074 prose blocks when combined with `#173` (1074 → 1030 against `main` alone; 84 drafts await human confirmation across `#173` and `#175`).
 
 _2026-10-28T12:07:00Z_ — batch 43 opened as `litlfred/smart-base#176` (`77f76b28`): 48 English draft summaries across `smart-base/library/9789240093362-eng` (all 48 prose blocks: `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-046`, covering the WHO *Digital transformation handbook for primary health care: optimizing person-centred point of service systems*); `drafted_by.model` is `not-disclosed` with session `conversation://1608b136-6ef0-46a7-8822-4a3063d6f630`. Backlog in `smart-base/library/` 990 → 942 of 1074 prose blocks when combined with `#173` and `#175` (1074 → 1026 against `main` alone; 132 drafts await human confirmation across `#173`, `#175`, and `#176`).
+
+_2026-10-28T12:24:00Z_ — batch 44 opened as `litlfred/smart-base#177` (`9420791a`): 53 English draft summaries across `smart-base/library/who-rhr-1806-eng` (all 20 prose blocks: `prose-page-001` through `prose-page-020`, covering the WHO *Classification of digital health interventions v1.0*) and `smart-base/library/9789240081949-eng` (first 33 of 66 prose blocks: `prose-page-001` through `prose-page-033`, covering the front matter, overview, Health System Challenges, Group 1.0 Interventions for Persons, and Group 2.0 Interventions for Healthcare Providers 2.1–2.10 of the WHO *Classification of digital interventions, services and applications in health*, second edition); `drafted_by.model` is `not-disclosed` with session `conversation://fb781b89-ca00-425e-80b4-1517b3ca301d`. Backlog in `smart-base/library/` 942 → 889 of 1074 prose blocks when combined with `#173`, `#175`, and `#176` (1074 → 1021 against `main` alone; 185 drafts await human confirmation across `#173`, `#175`, `#176`, and `#177`; 33 blocks remain in `9789240081949-eng`).
