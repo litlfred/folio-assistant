@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-28T12:05:00Z
+updated_at: 2026-10-28T12:50:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -376,3 +376,5 @@ _2026-10-28T12:05:00Z_ — Batch Z opened as [`litlfred/smart-immunizations#83`]
 _2026-10-28T12:23:00Z_ — Batch AA opened as [`litlfred/smart-immunizations#84`](https://github.com/litlfred/smart-immunizations/pull/84) (`0afb1b8`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the final 32 English-only images (and 30 figure blocks; 2 `page-scan` entries untouched) in `facilityanalysisguide-immunization` in `smart-immunizations/library/`. Across `#82`, `#83`, and `#84`, `smart-immunizations/library/` now has `0` remaining English-only figures.
 
 _2026-10-28T12:37:00Z_ — Batch AB opened as [`litlfred/smart-base#178`](https://github.com/litlfred/smart-base/pull/178) (`3e6ab3e`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 30 English-only images (and 14 figure blocks) across `9789240101197-eng` (all 14 images + 1 figure block), `9789241549912-websupplement-eng` (1 image, 0 figure blocks), and `who-dpi-h-reference-architecture-draft-v1` (first 15 images: `img-p001-1` through `img-p055-2` + 13 figure blocks) in `smart-base/library/`. Remaining in `smart-base/library/` (165 across 5 entries): `who-dpi-h-reference-architecture-draft-v1` (16), `9789241549912-eng` (2), `9789241549912-webannexes-eng` (1), `9789241511766-eng` (44), `9789241509510-eng` (102).
+
+_2026-10-28T12:50:00Z_ — Batch AC opened as [`litlfred/smart-base#180`](https://github.com/litlfred/smart-base/pull/180) (`0ad6612`, stacked on `#178` `3e6ab3e`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 30 English-only images (and 30 figure blocks) across `who-dpi-h-reference-architecture-draft-v1` (remaining 16 images: `img-p055-3` through `img-p254-2` + 16 figure blocks, completing all 31 images) and `9789241511766-eng` (first 14 images: `img-p001-1` through `img-p001-59` + 14 figure blocks) in `smart-base/library/`. Remaining in `smart-base/library/` (135 across 4 entries): `9789241549912-eng` (2), `9789241549912-webannexes-eng` (1), `9789241511766-eng` (30), `9789241509510-eng` (102).
