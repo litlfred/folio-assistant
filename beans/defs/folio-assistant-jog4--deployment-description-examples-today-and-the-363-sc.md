@@ -1,7 +1,7 @@
 ---
 # folio-assistant-jog4
 $schema: bean/1.0.0
-title: 'DEPLOYMENT DESCRIPTIONS (examples): today's setup first, then the #363 scenarios, loaded by tests'
+title: 'DEPLOYMENT DESCRIPTIONS (examples): today''s setup first, then the #363 scenarios, loaded by tests'
 status: completed
 type: task
 priority: normal
