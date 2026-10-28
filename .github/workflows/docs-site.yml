@@ -296,7 +296,10 @@ jobs:
       # pair. The --check form is the PR gate (code-quality-gates.yml); this is
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
-        run: bun run cat-harness-tools/scripts/gen-docs-pages.ts
+        # `--burndown-history` (bean tk99, owner 2026-10-24 option C): fetch the
+        # bean store's history and write `assets/beans/burndown.json`, the
+        # board's burn-down feed. Publish only; never committed.
+        run: bun run cat-harness-tools/scripts/gen-docs-pages.ts --burndown-history
 
       # The /qa/ page (docs/qa/index.html) is written by the state visualiser
       # from the QA results this build fetched. It was committed and never
