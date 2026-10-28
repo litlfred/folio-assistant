@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-28T11:43:00Z
+updated_at: 2026-10-28T11:55:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -368,3 +368,5 @@ _2026-10-28T10:59:00Z_ — Batch V opened as [`litlfred/folio-assistant-sci#100`
 _2026-10-28T11:27:00Z_ — Batch W opened as [`litlfred/who-iris#86`](https://github.com/litlfred/who-iris/pull/86) (`1d3f297`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for all 21 English-only images (and 2 figure blocks) across `9789241548960-eng` (2 images + 2 figure blocks: `img-p126-1` and `img-p154-1`) and `wpr-rdo-2020-003-eng` (19 images; `who-pub-tps-931`'s 121 `page-scan` entries untouched) in `who-iris/library/`. `who-iris/library/` now has `0` remaining English-only figures.
 
 _2026-10-28T11:43:00Z_ — Batch X opened as [`litlfred/smart-base#174`](https://github.com/litlfred/smart-base/pull/174) (`291a9d6`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 26 English-only images (and 26 figure blocks) across `9789240010567-eng` (11 images + 11 figure blocks), `9789240081949-eng` (5 images + 5 figure blocks), `9789240093362-eng` (9 images + 9 figure blocks), and `9789240116191-eng` (1 image + 1 figure block) in `smart-base/library/`. Remaining in `smart-base/library/` (195 across 7 entries): `9789240101197-eng` (14), `9789241509510-eng` (102), `9789241511766-eng` (44), `9789241549912-eng` (2), `9789241549912-webannexes-eng` (1), `9789241549912-websupplement-eng` (1), `who-dpi-h-reference-architecture-draft-v1` (31); plus `smart-immunizations/library/` (89 across 5 entries: `9789240016514-eng` (10), `9789240099456-eng` (18), `9789275119532-eng` (15), `facilityanalysisguide-immunization` (32), `who-2019-ncov-digital-certificates-vaccination-20211-eng` (14)).
+
+_2026-10-28T11:55:00Z_ — Batch Y opened as [`litlfred/smart-immunizations#82`](https://github.com/litlfred/smart-immunizations/pull/82) (`9356781`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 28 English-only images (and 23 figure blocks) across `9789240016514-eng` (10 images + 6 figure blocks) and `9789240099456-eng` (18 images + 17 figure blocks) in `smart-immunizations/library/`. Remaining in `smart-immunizations/library/` (61 across 3 entries): `9789275119532-eng` (15), `facilityanalysisguide-immunization` (32), `who-2019-ncov-digital-certificates-vaccination-20211-eng` (14).
