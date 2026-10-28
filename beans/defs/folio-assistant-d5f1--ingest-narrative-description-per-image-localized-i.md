@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-27T15:31:00Z
+updated_at: 2026-10-28T04:48:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -360,3 +360,5 @@ _2026-10-27T15:12:00Z_ — Batch R opened as [`litlfred/cat-harness#650`](https:
 _2026-10-27T15:21:00Z_ — Batch S opened as [`litlfred/cat-harness#652`](https://github.com/litlfred/cat-harness/pull/652) (`8c87901b`, stacked on `#650` `0f16776c`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for images 86–110 (`img-p028-19` through `img-p031-4`) in `arxiv-2402.02172v5` (no matching `blocks/figure-*.jsonld`). Remaining in `cat-harness/library/`: `arxiv-2402.02172v5` (25).
 
 _2026-10-27T15:31:00Z_ — Batch T opened as [`litlfred/cat-harness#654`](https://github.com/litlfred/cat-harness/pull/654) (`fe936bf9`, stacked on `#652` `8c87901b`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the final 25 images (111–135 of 135: `img-p031-6` through `img-p035-1`) and `blocks/figure-img-p035-1.jsonld` in `arxiv-2402.02172v5` (all 135 images and 1 figure block now carry all 6 locales `en`/`fr`/`es`/`ar`/`ru`/`zh`). All 14 entries in `cat-harness/library/` now have 6-locale figure narratives across open/merged PRs (`0` remaining in `cat-harness/library/`).
+
+_2026-10-28T04:48:00Z_ — Batch U opened as [`litlfred/folio-assistant-sci#98`](https://github.com/litlfred/folio-assistant-sci/pull/98) (`f7316f1`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for 27 images (and 21 figure blocks) across `arxiv-2003.08005v1` (20 images + 20 figure blocks) and `arxiv-2406.01940v2` (7 images + 1 figure block) in `folio-assistant-sci/library/`. Remaining in `folio-assistant-sci/library/` (23 across 5 entries): `arxiv-2512.09874v3` (5), `arxiv-2601.22554v1` (7), `arxiv-2602.16554v1` (1), `arxiv-2604.00554v1` (9), `milnorlink` (1).
