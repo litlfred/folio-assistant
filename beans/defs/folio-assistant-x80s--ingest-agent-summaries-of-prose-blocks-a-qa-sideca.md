@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-28T11:31:00Z
+updated_at: 2026-10-28T11:49:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -166,3 +166,5 @@ _2026-10-28T11:13:00Z_ — batch 40 opened as `litlfred/folio-assistant-sci#102`
 _2026-10-28T11:14:00Z_ — batch 39 opened as `litlfred/folio-assistant-sci#101` (`26ce368f`): 49 English draft summaries across `folio-assistant-sci/library/arxiv-2406.01940v2` (all 49 prose blocks: `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-047`); `drafted_by.model` is `not-disclosed` with session `conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee`. Backlog in `folio-assistant-sci/library/` 49 → 0 of 134 prose blocks when combined with `#99` and `#102` (134 → 85 against `main` alone; all 134 drafts await human confirmation across `#99`, `#101`, and `#102`; all entries in `folio-assistant-sci/library/` now have 0 backlog across open batches).
 
 _2026-10-28T11:31:00Z_ — batch 41 opened as `litlfred/smart-base#173` (`62a60317`): 40 English draft summaries across `smart-base/library/9789240010567-eng` (first 40 of 182 prose blocks: `prose-page-001` through `prose-page-040`, covering front matter, Chapter 1, and Chapter 2 of the WHO Digital Implementation Investment Guide); `drafted_by.model` is `not-disclosed` with session `conversation://2dc9e4c7-8708-48fd-bf82-74f196cd0b19`. Backlog in `smart-base/library/` 1074 → 1034 of 1074 prose blocks (40 drafts await human confirmation; 142 blocks remain in `9789240010567-eng`, plus 892 across the remaining 13 prose-bearing entries).
+
+_2026-10-28T11:49:00Z_ — batch 42 opened as `litlfred/smart-base#175` (`2648c0fc`): 44 English draft summaries across 3 complete entries in `smart-base/library/` (`9789241549912-eng` (all 18 prose blocks: `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-016`), `9789241549912-webannexes-eng` (all 24 prose blocks: `prose-page-001` through `prose-page-024`), and `mehl-2021-who-smart-guidelines` (all 2 prose blocks: `prose-sec-000` and `prose-sec-front-matter`)); `drafted_by.model` is `not-disclosed` with session `conversation://1644c541-fe28-4988-9eb6-528fe115d568`. Backlog in `smart-base/library/` 1034 → 990 of 1074 prose blocks when combined with `#173` (1074 → 1030 against `main` alone; 84 drafts await human confirmation across `#173` and `#175`).
