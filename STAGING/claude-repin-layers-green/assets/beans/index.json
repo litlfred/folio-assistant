@@ -6162,7 +6162,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-26T14:55:00Z",
+      "updatedAt": "2026-10-28T11:55:00Z",
       "preview": "## What\n\nGenerate a narrative description for every image, localized to the folio's\nlanguages.\n\n## The half that is easy to miss\n\n**This applies to an image EXTRACTED FROM A PDF, not only to an uploaded one.**\nMost images in this corpus arrive inside a paper, and a figure nobody has\ndescribed is a figure no grep and no agent can reach.\n\n## Provenance is not optional\n\nEvery description carries its ",
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
@@ -14696,7 +14696,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-10-26T15:45:00Z",
+      "updatedAt": "2026-10-28T11:49:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },

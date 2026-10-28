@@ -148,7 +148,7 @@ choose its parent's id in `subgraphs` and ask for the part by path:
 bun run cat kg:materialize <subscription> skills/voices   # `skills` is chosen
 ```
 
-Owner, 2026-10-24 (cat-harness-tools#744, ruling 4). The snapshot is not
+Owner, 2026-10-24 ([cat-harness-tools#744](https://github.com/litlfred/cat-harness-tools/issues/744), ruling 4). The snapshot is not
 changed and nobody re-subscribes. The snapshot holds the root declaration
 only, so a nested **id** cannot be checked against it offline. The parent's
 id can be, and the path is checked against the parent's declared path. The

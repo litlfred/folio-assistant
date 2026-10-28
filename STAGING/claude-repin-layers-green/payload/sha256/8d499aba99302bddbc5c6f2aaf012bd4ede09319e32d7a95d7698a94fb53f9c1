@@ -18,7 +18,7 @@ explanations. This is the primary way the user sees what an agent did.
 ## 1. Server restart command
 
 ```bash
-git fetch origin <BRANCH> && git switch <BRANCH> && git pull origin <BRANCH> && ./scripts/start-folio-assistant.sh --http
+git fetch origin <BRANCH> && git switch <BRANCH> && git pull origin <BRANCH> && ./cat-harness-tools/scripts/start-folio-assistant.sh --http
 ```
 
 ## 2. Per-block change report
@@ -142,7 +142,7 @@ When users ask to "undo" or "revert" a block change:
 
 > **Restart & preview:**
 > ```bash
-> git fetch origin claude/feature-xyz && git switch claude/feature-xyz && git pull origin claude/feature-xyz && ./scripts/start-folio-assistant.sh --http
+> git fetch origin claude/feature-xyz && git switch claude/feature-xyz && git pull origin claude/feature-xyz && ./cat-harness-tools/scripts/start-folio-assistant.sh --http
 > ```
 >
 > ### Changed content blocks

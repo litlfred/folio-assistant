@@ -173,19 +173,19 @@ bun <span class="nb">install</span>
 available), refreshes <code class="language-plaintext highlighter-rouge">PATH</code>, runs <code class="language-plaintext highlighter-rouge">bun install</code>, and then hands over to the
 capability probe:</p><div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/litlfred/folio-assistant.git</span><span class="w">
 </span><span class="n">cd</span><span class="w"> </span><span class="nx">folio-assistant</span><span class="w">
-</span><span class="o">.</span><span class="n">\cat-harness\scripts\bootstrap.ps1</span><span class="w"> </span><span class="nt">-CheckOnly</span><span class="w">   </span><span class="c"># report only, installs nothing</span><span class="w">
-</span><span class="o">.</span><span class="n">\cat-harness\scripts\bootstrap.ps1</span><span class="w">              </span><span class="c"># do it</span><span class="w">
+</span><span class="o">.</span><span class="n">\cat-harness-tools\scripts\bootstrap.ps1</span><span class="w"> </span><span class="nt">-CheckOnly</span><span class="w">   </span><span class="c"># report only, installs nothing</span><span class="w">
+</span><span class="o">.</span><span class="n">\cat-harness-tools\scripts\bootstrap.ps1</span><span class="w">              </span><span class="c"># do it</span><span class="w">
 </span></code></pre></div></div><p>It installs Bun and nothing else — LaTeX, Lean, Java and the IG Publisher stay
 per content type, reported by <code class="language-plaintext highlighter-rouge">check-deps</code> with install hints.</p><p>The platform’s shell scripts are bash. On Windows they run under <strong>Git Bash</strong>,
 which <a href="https://git-scm.com/download/win">Git for Windows</a> installs, so <code class="language-plaintext highlighter-rouge">git</code>
 is the only extra prerequisite. Every script a user runs by hand or wires into
-a config has a <code class="language-plaintext highlighter-rouge">.bat</code> beside it — <code class="language-plaintext highlighter-rouge">cat-harness\scripts\install-beans.bat</code>,
-<code class="language-plaintext highlighter-rouge">cat-harness\scripts\start-folio-assistant.bat</code>, <code class="language-plaintext highlighter-rouge">cat-harness\scripts\git-hooks\install.bat</code>,
-<code class="language-plaintext highlighter-rouge">cat-harness\scripts\session-start-coord-sweep.bat</code> and so on — which finds Git Bash
+a config has a <code class="language-plaintext highlighter-rouge">.bat</code> beside it — <code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\install-beans.bat</code>,
+<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\start-folio-assistant.bat</code>, <code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\git-hooks\install.bat</code>,
+<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\session-start-coord-sweep.bat</code> and so on — which finds Git Bash
 (never the WSL launcher in <code class="language-plaintext highlighter-rouge">System32</code>) and runs the sibling <code class="language-plaintext highlighter-rouge">.sh</code> with the same
 arguments. Use them from <code class="language-plaintext highlighter-rouge">cmd.exe</code>, PowerShell, Task Scheduler or an MCP
-config entry:</p><div class="language-bat highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">cat</span><span class="na">-harness</span>\scripts\install<span class="na">-beans</span>.bat
-<span class="kd">cat</span><span class="na">-harness</span>\scripts\upload<span class="na">-to-uploads</span>.bat <span class="kd">https</span>://example.org/guideline.pdf
+config entry:</p><div class="language-bat highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">cat</span><span class="na">-harness-tools</span>\scripts\install<span class="na">-beans</span>.bat
+<span class="kd">cat</span><span class="na">-harness-tools</span>\scripts\upload<span class="na">-to-uploads</span>.bat <span class="kd">https</span>://example.org/guideline.pdf
 </code></pre></div></div><p>Anything the <code class="language-plaintext highlighter-rouge">.sh</code> needs — <code class="language-plaintext highlighter-rouge">bun</code>, <code class="language-plaintext highlighter-rouge">curl</code>, <code class="language-plaintext highlighter-rouge">gh</code>, <code class="language-plaintext highlighter-rouge">elan</code> — must be on the
 Windows <code class="language-plaintext highlighter-rouge">PATH</code>, since Git Bash inherits it from the caller. Scripts that only
 make sense on a Linux host (<code class="language-plaintext highlighter-rouge">deploy/</code>, <code class="language-plaintext highlighter-rouge">install-tex.sh</code>, <code class="language-plaintext highlighter-rouge">setup-sage.sh</code>,

@@ -105,7 +105,7 @@ copying a knowledge-graph asset into a folio is **two writes and a refusal**:
   "src": "assets/adapted-guideline-table.json",
   "role": "guideline-table",
   "source": {
-    "instance": "litlfred/smart-base",
+    "instance": "litlfred/example-ig",
     "path": "assets/guideline-table.json",
     "ref": "0123456789abcdef0123456789abcdef01234567"
   }

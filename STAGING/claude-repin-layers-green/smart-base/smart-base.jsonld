@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-26T16:23:03.865Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6694ec782a0452f397cd28445bb0912840dc295e",
-  "sourceCommitSha": "6694ec782a0452f397cd28445bb0912840dc295e",
-  "sourceCommitAt": "2026-10-26T15:44:09Z",
+  "generatedAt": "2026-10-28T12:25:45.503Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d1a68fb2c9bd95205f6dfd6daa669a0509194687",
+  "sourceCommitSha": "d1a68fb2c9bd95205f6dfd6daa669a0509194687",
+  "sourceCommitAt": "2026-10-28T11:59:42Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -382,7 +382,7 @@
     "SequenceFlow": 122,
     "Lane": 17,
     "ProcessNode": 115,
-    "GraphTypology": 23,
+    "GraphTypology": 24,
     "Role": 1,
     "Subgraph": 28,
     "Asset": 3,
@@ -4531,6 +4531,13 @@
       "summary": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS."
     },
     {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "schemas",
+      "renderable": false,
+      "summary": "A Subgraph of Node Schemas: files that state the shape other files must have."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "qa",
@@ -4971,9 +4978,10 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code",
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas"
       ],
-      "description": "The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill's input/output JSON Schemas. Declared at the cutover (bean hupw) so a remote mount brings it: the mounted adapter and QA checkers name these modules.",
+      "description": "The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill's input/output JSON Schemas. Declared at the cutover (bean hupw) so a remote mount brings it: the mounted adapter and QA checkers name these modules. It also holds the `schemas` graph, declared on 2026-10-26: until then it was found only by the schema reader's conventional fallback to `<instance>/schemas/`, which applies only while NO directory of the `schemas` kind exists among the instances stacked on smart-base. cat-harness's `ns/` (`cat-harness-ns`, kind `schemas`) is reproduced into every dependent, so the moment `jsonld:contexts` writes `ns/context/v1.jsonld` into an instance stacked on this one the fallback stopped and smart-base's schema fields left the extracted glossary, making `check:glossary` pass or fail on the order earlier writers ran in.",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
     },
@@ -7673,8 +7681,8 @@
   ],
   "staging": {
     "branch": "claude/repin-layers-green",
-    "sha": "6694ec782a0452f397cd28445bb0912840dc295e",
+    "sha": "d1a68fb2c9bd95205f6dfd6daa669a0509194687",
     "pr": "2681/merge",
-    "run": "40352238038"
+    "run": "40684226263"
   }
 }

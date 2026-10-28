@@ -1006,12 +1006,10 @@ that publishes the contents of a declared subgraph (a `todos.jsonld`, a beans
 graph, a library index) does NOT mint its own collection node for them. It:
 
 1. uses the **declared Subgraph node's IRI** as the container `@id` —
-   `<declaring instance>.jsonld#directory/<id>`, from `declaredSubgraphNode`
-   in `kg-export.ts`, which is the same function the node itself is minted by
-   — typed `Subgraph`, with `hasPart` to each member. That `#directory/<id>`
-   form is what the generator mints TODAY; the ruled form is
-   `<doc dir>/directory/<id>` ([`kg-export`](kg-export.md)
-   §"Subject IRIs — a path, not a `#fragment`"), so take the IRI from
+   `<doc dir>/directory/<id>`, from `declaredSubgraphNode` in
+   `kg-export.ts`, which is the same function the node itself is minted by
+   — typed `Subgraph`, with `hasPart` to each member ([`kg-export`](kg-export.md)
+   §"Subject IRIs — a path, not a `#fragment`"). Take the IRI from
    `declaredSubgraphNode`, never by composing it;
 2. gives **every member `inSubgraph`** → that IRI (`dcterms:isPartOf`, the
    same term the KG export uses for the same edge);
@@ -1337,7 +1335,7 @@ and there cannot be one:
 | marker | who owns the name |
 |---|---|
 | `sushi-config.yaml` | SUSHI reads that exact name, and it is YAML |
-| `index.config.json` `contentTypes.dak` | **ours** — bean `cz17`. Was `dak.json`; the owner moved it into the index on 2026-10-24 ("WHO will adopt harness file"). It is a SECTION, not a file: the content type declares `{ indexSection: "dak" }` (`IndexSectionMarker`). WHO's SMART Base still writes and reads `dak.json`; smart-base's build reads that file into the index for one build, with a warning, until an IG moves it |
+| `index.config.json` `contentTypes.dak` | **ours** — bean `cz17`. Was `dak.json`; the owner moved it into the index on 2026-10-24 ("WHO will adopt harness file"). It is a SECTION, not a file: the content type declares `{ indexSection: "dak" }` (`IndexSectionMarker`). WHO's SMART Base still writes and reads `dak.json`; that IG's build reads that file into the index for one build, with a warning, until an IG moves it |
 | `<name>.json`, `<name>.config.json` | ours |
 | `beans.json`, `todos.json` | ours, and named after the graph TYPOLOGY |
 

@@ -360,9 +360,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     &quot;id&quot;: &quot;smart-base-schemas&quot;,
     &quot;path&quot;: &quot;schemas/&quot;,
     &quot;graphTypologies&quot;: [
-      &quot;code&quot;
+      &quot;code&quot;,
+      &quot;schemas&quot;
     ],
-    &quot;description&quot;: &quot;The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill&#39;s input/output JSON Schemas. Declared at the cutover (bean hupw) so a remote mount brings it: the mounted adapter and QA checkers name these modules.&quot;
+    &quot;description&quot;: &quot;The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill&#39;s input/output JSON Schemas. Declared at the cutover (bean hupw) so a remote mount brings it: the mounted adapter and QA checkers name these modules. It also holds the `schemas` graph, declared on 2026-10-26: until then it was found only by the schema reader&#39;s conventional fallback to `&lt;instance&gt;/schemas/`, which applies only while NO directory of the `schemas` kind exists among the instances stacked on smart-base. cat-harness&#39;s `ns/` (`cat-harness-ns`, kind `schemas`) is reproduced into every dependent, so the moment `jsonld:contexts` writes `ns/context/v1.jsonld` into an instance stacked on this one the fallback stopped and smart-base&#39;s schema fields left the extracted glossary, making `check:glossary` pass or fail on the order earlier writers ran in.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-pipeline&quot;,

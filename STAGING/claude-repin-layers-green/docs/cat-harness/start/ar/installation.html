@@ -154,19 +154,19 @@ bun <span class="nb">install</span>
 يتوفر)، ويحدّث <code class="language-plaintext highlighter-rouge">PATH</code>، ويشغل <code class="language-plaintext highlighter-rouge">bun install</code>، ثم يسلّم المهمة إلى
 فاحص القدرات:</p><div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/litlfred/folio-assistant.git</span><span class="w">
 </span><span class="n">cd</span><span class="w"> </span><span class="nx">folio-assistant</span><span class="w">
-</span><span class="o">.</span><span class="n">\cat-harness\scripts\bootstrap.ps1</span><span class="w"> </span><span class="nt">-CheckOnly</span><span class="w">   </span><span class="c"># report only, installs nothing</span><span class="w">
-</span><span class="o">.</span><span class="n">\cat-harness\scripts\bootstrap.ps1</span><span class="w">              </span><span class="c"># do it</span><span class="w">
+</span><span class="o">.</span><span class="n">\cat-harness-tools\scripts\bootstrap.ps1</span><span class="w"> </span><span class="nt">-CheckOnly</span><span class="w">   </span><span class="c"># report only, installs nothing</span><span class="w">
+</span><span class="o">.</span><span class="n">\cat-harness-tools\scripts\bootstrap.ps1</span><span class="w">              </span><span class="c"># do it</span><span class="w">
 </span></code></pre></div></div><p>وهو يثبت Bun ولا شيء غيره — وتبقى أدوات LaTeX وLean وJava وIG Publisher
 لكل نوع محتوى، ويُبلغ عنها <code class="language-plaintext highlighter-rouge">check-deps</code> مع تلميحات التثبيت.</p><p>البرامج النصية للمنصة مكتوبة بلغة bash. وعلى نظام Windows، تعمل هذه البرامج تحت <strong>Git Bash</strong>،
 الذي يقوم <a href="https://git-scm.com/download/win">Git for Windows</a> بتثبيته، لذا فإن <code class="language-plaintext highlighter-rouge">git</code>
 هو المتطلب الإضافي الوحيد. وكل برنامج نصي يشغله المستخدم يدويًا أو يربطه في
-تكوين ما، يوجد ملف <code class="language-plaintext highlighter-rouge">.bat</code> بجانبه — مثل <code class="language-plaintext highlighter-rouge">cat-harness\scripts\install-beans.bat</code>،
-و<code class="language-plaintext highlighter-rouge">cat-harness\scripts\start-folio-assistant.bat</code>، و<code class="language-plaintext highlighter-rouge">cat-harness\scripts\git-hooks\install.bat</code>،
-و<code class="language-plaintext highlighter-rouge">cat-harness\scripts\session-start-coord-sweep.bat</code> وما إلى ذلك — حيث يعثر على Git Bash
+تكوين ما، يوجد ملف <code class="language-plaintext highlighter-rouge">.bat</code> بجانبه — مثل <code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\install-beans.bat</code>،
+و<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\start-folio-assistant.bat</code>، و<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\git-hooks\install.bat</code>،
+و<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\session-start-coord-sweep.bat</code> وما إلى ذلك — حيث يعثر على Git Bash
 (ولا يستخدم أبدًا مشغّل WSL الموجود في <code class="language-plaintext highlighter-rouge">System32</code>) ويشغّل البرنامج النصي الشقيق <code class="language-plaintext highlighter-rouge">.sh</code> بنفس
 المعاملات. استخدم هذه الملفات من <code class="language-plaintext highlighter-rouge">cmd.exe</code> أو PowerShell أو Task Scheduler أو
-عنصر تكوين MCP:</p><div class="language-bat highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">cat</span><span class="na">-harness</span>\scripts\install<span class="na">-beans</span>.bat
-<span class="kd">cat</span><span class="na">-harness</span>\scripts\upload<span class="na">-to-uploads</span>.bat <span class="kd">https</span>://example.org/guideline.pdf
+عنصر تكوين MCP:</p><div class="language-bat highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">cat</span><span class="na">-harness-tools</span>\scripts\install<span class="na">-beans</span>.bat
+<span class="kd">cat</span><span class="na">-harness-tools</span>\scripts\upload<span class="na">-to-uploads</span>.bat <span class="kd">https</span>://example.org/guideline.pdf
 </code></pre></div></div><p>أي شيء يحتاجه ملف <code class="language-plaintext highlighter-rouge">.sh</code> — مثل <code class="language-plaintext highlighter-rouge">bun</code> و<code class="language-plaintext highlighter-rouge">curl</code> و<code class="language-plaintext highlighter-rouge">gh</code> و<code class="language-plaintext highlighter-rouge">elan</code> — يجب أن يكون موجودًا في
 <code class="language-plaintext highlighter-rouge">PATH</code> الخاص بنظام Windows، نظرًا لأن Git Bash يرثه من برنامج الاستدعاء. والبرامج النصية التي
 لا معنى لها إلا على بيئة استضافة Linux (<code class="language-plaintext highlighter-rouge">deploy/</code>، و<code class="language-plaintext highlighter-rouge">install-tex.sh</code>، و<code class="language-plaintext highlighter-rouge">setup-sage.sh</code>،

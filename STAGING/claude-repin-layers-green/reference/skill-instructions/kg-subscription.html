@@ -233,7 +233,7 @@ do arrive carry a <code class="language-plaintext highlighter-rouge">materializa
 </h3><p>Some subgraphs are declared from within another directory. <code class="language-plaintext highlighter-rouge">skills/voices</code>,
 for example, is declared in <code class="language-plaintext highlighter-rouge">skills/skills.json</code>. To hold only that part,
 choose its parent’s id in <code class="language-plaintext highlighter-rouge">subgraphs</code> and ask for the part by path:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>kg:materialize &lt;subscription&gt; skills/voices   <span class="c"># `skills` is chosen</span>
-</code></pre></div></div><p>Owner, 2026-10-24 (cat-harness-tools#744, ruling 4). The snapshot is not
+</code></pre></div></div><p>Owner, 2026-10-24 (<a href="https://github.com/litlfred/cat-harness-tools/issues/744">cat-harness-tools#744</a>, ruling 4). The snapshot is not
 changed and nobody re-subscribes. The snapshot holds the root declaration
 only, so a nested <strong>id</strong> cannot be checked against it offline. The parent’s
 id can be, and the path is checked against the parent’s declared path. The

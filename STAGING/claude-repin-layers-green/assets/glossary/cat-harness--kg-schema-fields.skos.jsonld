@@ -20040,6 +20040,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/index-config.indexconfigschema.mountapprovers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexConfigSchema.mountApprovers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who may consent to a remote mount in this checkout: `consent.by` on an instance's `trust` must be one of them (`schemas/mount-trust.ts`, roast `1ygp` L4.2). The same field an instance declaration carries, here for the checkout whose mounts the index lists and which may declare no instance of its own (folio-assistant#2389). Declaring it in both is an error, never a pick."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.mountApprovers",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-schema-fields/index-config.indexconfigschema.title",
       "@type": "skos:Concept",
       "skos:inScheme": {

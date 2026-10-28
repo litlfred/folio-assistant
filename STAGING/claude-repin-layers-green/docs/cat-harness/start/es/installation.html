@@ -154,19 +154,19 @@ bun <span class="nb">install</span>
 esté disponible), actualiza el <code class="language-plaintext highlighter-rouge">PATH</code>, ejecuta <code class="language-plaintext highlighter-rouge">bun install</code> y luego da paso a la
 comprobación de capacidades:</p><div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/litlfred/folio-assistant.git</span><span class="w">
 </span><span class="n">cd</span><span class="w"> </span><span class="nx">folio-assistant</span><span class="w">
-</span><span class="o">.</span><span class="n">\cat-harness\scripts\bootstrap.ps1</span><span class="w"> </span><span class="nt">-CheckOnly</span><span class="w">   </span><span class="c"># solo reporte, no instala nada</span><span class="w">
-</span><span class="o">.</span><span class="n">\cat-harness\scripts\bootstrap.ps1</span><span class="w">              </span><span class="c"># ejecutarlo</span><span class="w">
+</span><span class="o">.</span><span class="n">\cat-harness-tools\scripts\bootstrap.ps1</span><span class="w"> </span><span class="nt">-CheckOnly</span><span class="w">   </span><span class="c"># solo reporte, no instala nada</span><span class="w">
+</span><span class="o">.</span><span class="n">\cat-harness-tools\scripts\bootstrap.ps1</span><span class="w">              </span><span class="c"># ejecutarlo</span><span class="w">
 </span></code></pre></div></div><p>Instala Bun y nada más — LaTeX, Lean, Java y el IG Publisher se mantienen
 por tipo de contenido, reportados por <code class="language-plaintext highlighter-rouge">check-deps</code> con sugerencias de instalación.</p><p>Los scripts de shell de la plataforma son bash. En Windows se ejecutan bajo <strong>Git Bash</strong>,
 el cual es instalado por <a href="https://git-scm.com/download/win">Git para Windows</a>, por lo que <code class="language-plaintext highlighter-rouge">git</code>
 es el único prerrequisito adicional. Cada script que un usuario ejecuta manualmente o conecta a
-una configuración tiene un <code class="language-plaintext highlighter-rouge">.bat</code> a su lado — <code class="language-plaintext highlighter-rouge">cat-harness\scripts\install-beans.bat</code>,
-<code class="language-plaintext highlighter-rouge">cat-harness\scripts\start-folio-assistant.bat</code>, <code class="language-plaintext highlighter-rouge">cat-harness\scripts\git-hooks\install.bat</code>,
-<code class="language-plaintext highlighter-rouge">cat-harness\scripts\session-start-coord-sweep.bat</code> y así sucesivamente —, el cual localiza Git Bash
+una configuración tiene un <code class="language-plaintext highlighter-rouge">.bat</code> a su lado — <code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\install-beans.bat</code>,
+<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\start-folio-assistant.bat</code>, <code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\git-hooks\install.bat</code>,
+<code class="language-plaintext highlighter-rouge">cat-harness-tools\scripts\session-start-coord-sweep.bat</code> y así sucesivamente —, el cual localiza Git Bash
 (nunca el iniciador de WSL en <code class="language-plaintext highlighter-rouge">System32</code>) y ejecuta el <code class="language-plaintext highlighter-rouge">.sh</code> hermano con los mismos
 argumentos. Utilízalos desde <code class="language-plaintext highlighter-rouge">cmd.exe</code>, PowerShell, el Programador de tareas o una entrada de
-configuración de MCP:</p><div class="language-bat highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">cat</span><span class="na">-harness</span>\scripts\install<span class="na">-beans</span>.bat
-<span class="kd">cat</span><span class="na">-harness</span>\scripts\upload<span class="na">-to-uploads</span>.bat <span class="kd">https</span>://example.org/guideline.pdf
+configuración de MCP:</p><div class="language-bat highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">cat</span><span class="na">-harness-tools</span>\scripts\install<span class="na">-beans</span>.bat
+<span class="kd">cat</span><span class="na">-harness-tools</span>\scripts\upload<span class="na">-to-uploads</span>.bat <span class="kd">https</span>://example.org/guideline.pdf
 </code></pre></div></div><p>Cualquier cosa que necesite el archivo <code class="language-plaintext highlighter-rouge">.sh</code> — <code class="language-plaintext highlighter-rouge">bun</code>, <code class="language-plaintext highlighter-rouge">curl</code>, <code class="language-plaintext highlighter-rouge">gh</code>, <code class="language-plaintext highlighter-rouge">elan</code> — debe estar en el
 <code class="language-plaintext highlighter-rouge">PATH</code> de Windows, ya que Git Bash lo hereda del proceso que lo llama. Los scripts que solo
 tienen sentido en un host Linux (<code class="language-plaintext highlighter-rouge">deploy/</code>, <code class="language-plaintext highlighter-rouge">install-tex.sh</code>, <code class="language-plaintext highlighter-rouge">setup-sage.sh</code>,
