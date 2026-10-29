@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w2hn
+$schema: bean/1.0.0
 title: 'QA: beans tied to no BPMN task, reported as a warning and clustered to find undocumented processes'
 status: completed
 type: task

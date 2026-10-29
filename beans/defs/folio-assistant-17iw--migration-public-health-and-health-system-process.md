@@ -1,5 +1,6 @@
 ---
 # folio-assistant-17iw
+$schema: bean/1.0.0
 title: 'MIGRATION: public-health and health-system process catalogues move from smart-base to WHO/who-iris once it is live'
 status: todo
 type: task
