@@ -2,11 +2,11 @@
 # folio-assistant-whlc
 $schema: bean/1.0.0
 title: 'KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payload split, late client-side materialization'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-26T15:45:00Z
+updated_at: 2026-10-29T09:36:22Z
 parent: folio-assistant-vuip
 ---
 
@@ -28,8 +28,10 @@ _2026-10-03T08:07:45Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to 
 _2026-10-16T07:57:30Z_ — All 20 child beans (`c1m4`, `1br0`, `lrzn`, `mm2n`, `m7mn`, `3f5f`, `yfqh`, `f233`, `wmk0`, `073f`, `ax6r`, `4ak5`, `q8ar`, `e0hw`, `42u5`, `2tfy`, `t8c4`, `wixl`, `4pla`, `2ee5`) are completed.
 
 ## Done when
-- [ ] every child below is completed or scrapped with reasons
+- [x] every child below is completed or scrapped with reasons
 
 _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
 
 **Re-opened 2026-10-26.** Its child `0exf` (shrink the whole-repo KG slice back toward 5 MB) is still open, so this container is live work again (check:bean-rollup).
+
+_2026-10-29T09:36:22Z_ — Completed: all 21 child beans are completed, including `0exf` (completed 2026-10-29T09:18:00Z), whose being open re-opened this epic on 2026-10-26; the second "every child below is completed or scrapped" box is ticked on that evidence, and the epic holds no scope of its own beyond its children. `check:bean-rollup` flagged it as a container with no open children (folio-assistant main, after #2698). Session: https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5
