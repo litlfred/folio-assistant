@@ -2,10 +2,10 @@
 # folio-assistant-502c
 $schema: bean/1.0.0
 title: 'EXPERIMENT: forced along a BPMN vs managing it — do outcomes change, at what compute?'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-24T14:20:00+02:00
+updated_at: 2026-10-29T07:40:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -73,3 +73,7 @@ Opened [`litlfred/cat-harness-tools#739`](https://github.com/litlfred/cat-harnes
    - **Arm 2 (`self-managed`):** `6/10` (`60.0%`) exact path match (`5/5` disciplined, `1/5` temptation), `9/10` (`90.0%`) terminal match, `10` skipped mandatory steps, `3` invalid DMN gateway assertions, `1` subprocess bypass, `2` context overlay leaks; `132` total turns (`0` refusal retries), `801,686` prompt tokens (`6,073` mean prompt tokens/turn), `4,228` completion tokens, `805,914` total tokens, `4.83 ms` wall time.
 3. **Write-up & confound analysis (`cat-harness#564`, `7b0566c7`):**
    - `docs/research-and-analysis/bpmn-forced-vs-managed.md` (and `skills/process/workflow/deterministic-and-agentic.md`) explicitly frames the experiment as a harness comparison on one diagram pair and task bank rather than a model-vs-model comparison, and documents the three structural confounds (control-flow enforcement co-varying with per-turn prompt context length `241` vs `6,073` tokens/turn; refusal-retry turn overhead depending on shortcut rate; and benchmark isolation outside the KG under `assertBenchmarkOutputPath`).
+
+## Closed 2026-10-29
+
+All done-when boxes met. tools#739 and cat-harness#564 merged 2026-10-29. (Lane B drain thread.)

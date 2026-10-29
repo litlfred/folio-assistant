@@ -2,11 +2,11 @@
 # folio-assistant-c4rz
 $schema: bean/1.0.0
 title: Migrate the feedback store into the declared todos/ graph
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T23:02:16Z
-updated_at: 2026-10-24T10:10:15Z
+updated_at: 2026-10-29T07:40:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -92,3 +92,7 @@ Lane B2 measured it: FeedbackStore is `cat-harness-tools/src/core/feedback.ts`, 
   - `buildKgIndex(instanceRoot)` reads declared `roles`, `actors`, and `processes`/`tasks`, returning `undefined` (`not-checked`) when an axis's directory/file is absent and an empty `Set`/`Map` (`dangling`) when present and empty.
 - `litlfred/folio-assistant-core#204` (`2fba8963`):
   - Wired `POST /api/feedback` (`src/routes/feedback.ts`) to populate `TodoTags` from the submitting context.
+
+## Closed 2026-10-29
+
+All done-when boxes met. cat-harness-tools#692 and folio-assistant-core#204 merged 2026-10-29. (Lane B drain thread.)

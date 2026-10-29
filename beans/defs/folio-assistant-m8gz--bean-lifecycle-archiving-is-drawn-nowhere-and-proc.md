@@ -2,11 +2,11 @@
 # folio-assistant-m8gz
 $schema: bean/1.0.0
 title: 'BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T07:35:41Z
-updated_at: 2026-10-26T13:20:00Z
+updated_at: 2026-10-29T07:40:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -145,3 +145,7 @@ Progress: `cat-harness-tools#449` (superseded by `#562`) adds the op. It moves a
 _2026-10-24T08:15:00Z_ — **Owner ruled: call it, and consolidate (option A).** Measured on main: 19 `claim` ops in 18 diagrams, 13 `resolve` in 11, 3 `archive` in 3 — 7 processes open a bean they never close and 8 close one without archiving. Ruling: split `Process_BeanLifecycle` into a reusable OPEN (check, create, whose, claim / leave alone) and CLOSE (outcome: complete + archive / scrap with reasons / record blocker), called by every bean-touching process at its start and end; the per-diagram claim/resolve/archive ops are removed (the 109 `note` ops stay where the work happens); `Process_BeanLifecycle` becomes OPEN → work → CLOSE; a check flags a diagram that touches a bean without calling both. Archive stays an activity op (the 2026-10-20 ruling), on one shared activity inside CLOSE. No engine change. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
 
 _2026-10-26T13:20:00Z_ — Progress update: `litlfred/cat-harness#416` (`2026-10-23T20:16:02Z`), `litlfred/cat-harness#528` (`56f051cc`, `2026-10-24T11:49:57Z`), `litlfred/smart-base#154` (`9118518c`, `2026-10-24T11:50:00Z`), `litlfred/folio-assistant-core#207` (`2026-10-24T12:30:00Z`), and `litlfred/folio-assistant-sci#73` (`2026-10-24T12:43:05Z`) have all merged on `main`. Only companion PR `litlfred/cat-harness-tools#723` (`check:bean-calls` and engine walk test) remains open before closing.
+
+## Closed 2026-10-29
+
+All done-when boxes met. cat-harness-tools#723 (check:bean-calls) merged 2026-10-29; the OPEN/CLOSE diagrams and test updates landed earlier (cat-harness#528, tools#784). (Lane B drain thread.)

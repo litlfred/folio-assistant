@@ -8,7 +8,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-10-24T09:52:00Z
+updated_at: 2026-10-29T07:40:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -550,3 +550,7 @@ The two modes, both buildable after `mftp` (#2194):
 - `litlfred/cat-harness-tools#687` (`320cfee8`): Documented `ensure-landing-sticky.ts`'s write at its call site as a one-time repair (`!already`), never ongoing state maintenance.
 - `litlfred/bootstrap#29` (`39477d48`): Updated `skills/confirm-harness.md` and `skills/discussion.md` so remote repositories are assumed read-only (`read-from`), asking which mode (`read-from` locally with materialize-or-reference as its own question vs `written-to` putting a harness on the remote) and requiring explicit user permission before writing to any remote repository.
 - Note on §4 (`initialize-harness.bpmn` `<folio:bean>`): Later owner rulings (`iwtn` 2026-09-23, `12s9` 2026-09-24, `bpmn-processes.md` 2026-09-26) and `bootstrap-tools/schemas/graph.test.ts` enforce that `bootstrap/` is self-definitional and carries no work-plan (`<bean>`) or `Tool` elements (`initialize-harness.bpmn:18` states this directly, while `folio-assistant-core/processes/conduct/getting-started.bpmn` carries `<cat-harness.processes:bean op="claim" />` on `Task_SeedPlan`).
+
+## Progress 2026-10-29
+
+cat-harness-tools#687, cat-harness#501 and bootstrap#29 merged 2026-10-29. The unticked boxes (7u3g, folio:bean on initialize-harness.bpmn, derived vs dynamic, slot, bootstrap's own config) remain, so the bean stays open. (Lane B drain thread.)

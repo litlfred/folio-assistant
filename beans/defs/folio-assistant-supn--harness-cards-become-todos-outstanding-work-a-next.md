@@ -5,7 +5,7 @@ title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendati
 status: in-progress
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-10-24T15:00:00Z
+updated_at: 2026-10-29T07:40:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -147,3 +147,7 @@ _2026-10-24T15:00:00Z_ — Boxes 1 and 2 built (Drain folio-assistant-core beans
 - cat-harness branch `claude/supn-harness-state-tool`: the Tool definition; its PR opens once #766 merges (`check:tools` needs the script).
 - folio-assistant branch `claude/supn-harness-state-deploy`: the deploy line; its PR opens once the index pins tools at or after #766.
 First run on the composed index: every harness reports, and several layers have declared directories that are absent (e.g. `test/health/results/` in cat-harness, core and who-iris).
+
+## Progress 2026-10-29
+
+cat-harness-tools#766 (harness:state, boxes 1-2) merged 2026-10-29. Left: the cat-harness Tool definition and the folio-assistant site-build line; box 3 stays paused with todos/stickies. (Lane B drain thread.)

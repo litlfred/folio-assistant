@@ -2,10 +2,10 @@
 # folio-assistant-q2aj
 $schema: bean/1.0.0
 title: Recheck Beads (gastownhall/beads) maturity against beans
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-23T22:32:13Z
-updated_at: 2026-10-24T13:37:30+02:00
+updated_at: 2026-10-29T07:40:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -26,3 +26,7 @@ Re-measured `hmans/beans` and `gastownhall/beads` on 2026-10-24 via GitHub API a
 ## Log
 - 2026-10-24T13:28:00+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Re-measuring `gastownhall/beads` and `hmans/beans` via GitHub API and updating `cat-harness/docs/research-and-analysis/prior-art.md`.
 - 2026-10-24T13:37:30+02:00 — Opened [`litlfred/cat-harness#555`](https://github.com/litlfred/cat-harness/pull/555) (`a9985a706`) with the 2026-10-24 re-measurement and keep/move question for the owner.
+
+## Closed 2026-10-29
+
+All done-when boxes met. cat-harness#555 merged 2026-10-29. (Lane B drain thread.)
