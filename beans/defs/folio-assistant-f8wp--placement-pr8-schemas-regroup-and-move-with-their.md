@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-29T09:20:00Z
+updated_at: 2026-10-29T08:45:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -40,10 +40,18 @@ Same ruling as `8fq9`: **do it now, one concern group per PR** to keep churn dow
 
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: none yet; next after 8fq9 groups.
 
-_2026-10-29T09:20Z_ — Group 1 (conduct) merged: litlfred/cat-harness-tools#806 then litlfred/cat-harness#670. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo; the 10-24 claim had lapsed. What landed:
+_2026-10-29T08:05Z_ — Group 1 (conduct) merged: litlfred/cat-harness-tools#806 then litlfred/cat-harness#670. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo; the 10-24 claim had lapsed. What landed:
 - `schemas/schemas.json` (`concern-groups/v1`) declares the groups from within.
 - `interaction`, `memory` and `waiver` are in `schemas/conduct/`, each with a one-release `@graphNode none` re-export at the old path.
 - The schema readers (`schemaModules` and `instanceZodSchemaDirs`) walk the declared groups and skip re-export shims.
 - `libraries.ts` no longer treats `schemas/schemas.json` as a nested instance.
 
 Checked in a composed index at the layer mains: tsc 0/0, kg-export has 179 Schema nodes with identical ids, 12 gates match the before run, and the touched tests are the same 366 pass / 7 env-fail as main. **Next groups:** tools, process, ui, library, kg, content and sdlc, one per PR. The audit's concern labels cover 155 modules; 146 need classifying first. The barrel removal (box 1) comes after the last group.
+
+_2026-10-29T08:45Z_ — Groups 2 to 5 merged, each as a cat-harness PR then its paired cat-harness-tools PR (Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo):
+- 2 tools: litlfred/cat-harness#671, litlfred/cat-harness-tools#810.
+- 3 process: litlfred/cat-harness#672, litlfred/cat-harness-tools#811.
+- 4 ui: litlfred/cat-harness#673, litlfred/cat-harness-tools#812. It also fixed `import.meta.dir` joins that were one level short in three moved tests (one had passed on main against a missing directory).
+- 5 library: litlfred/cat-harness#674, litlfred/cat-harness-tools#813.
+
+Each one was checked in the composed index the same way as group 1: tsc is clean, the 179 Schema ids are the same, gate exit codes match, partition has 0 wrong-direction edges, and the touched tests fail the same way as on main. kg-qa sidecars that name a moved path are refreshed hash-only. Next: kg, then content and sdlc.
