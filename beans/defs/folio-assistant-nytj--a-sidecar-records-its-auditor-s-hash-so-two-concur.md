@@ -2,11 +2,11 @@
 # folio-assistant-nytj
 $schema: bean/1.0.0
 title: A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T00:26:19Z
-updated_at: 2026-10-29T07:55:00Z
+updated_at: 2026-10-29T09:15:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -123,7 +123,7 @@ cannot be asked to.
 - [x] instance 5's class is named in whatever the owner decides: a workflow-YAML
       change has derived `kg-qa` process sidecars, and no bot can know that
       (named in the 2026-10-29 note below)
-- [ ] MEASURED AFTER the queue is on: bump an action pin by hand, with the seven
+- [x] ~~MEASURED AFTER the queue is on~~ CLOSED NOT DONE: no merge queue on a user-owned repository (2026-10-29 note): bump an action pin by hand, with the seven
       sidecars left stale, and confirm the queue rejects it rather than `main`
       discovering it
 
@@ -139,4 +139,4 @@ _2026-10-29T07:55:00Z_ (drain lane E, https://claude.ai/code/session_01Qmmkt6hTC
 - **The last box can't be done here.** `litlfred/folio-assistant` is owned by a user account, not an organization. GitHub offers merge queues only on organization-owned repositories. This matches bean `1hjm`'s 2026-09-30 measurement: no "Require merge queue" rule in the ruleset form. So the owner's "Turn on merge queue" (2026-09-30) can't be carried out on this repository, and the measurement box can never be ticked. The `merge_group:` triggers stay as they are and do nothing.
 - The owner's standing rule (2026-10-29) is to merge ready PRs and deal with red main afterwards. That accepts instances 1–3 as a cost, not a gate.
 
-Whether to close this bean is an owner question (a card in the drain thread).
+**Owner, 2026-10-29T09:14Z: "A. Close it".** Closed. The last box can't be done on this repository, and the owner's standing "merge, then fix" rule covers red main.
