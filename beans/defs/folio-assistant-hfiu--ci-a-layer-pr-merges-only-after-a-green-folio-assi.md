@@ -7,7 +7,7 @@ type: task
 priority: normal
 parent: folio-assistant-ksek
 created_at: 2026-10-23T08:43:02Z
-updated_at: 2026-10-24T14:08:00+02:00
+updated_at: 2026-10-29T08:10:00Z
 ---
 Rule: a PR to a mounted layer (cat-harness, cat-harness-tools, folio-assistant-core, fhir-harness, bootstrap-tools, smart-*) does not merge until folio-assistant has run its PR gates with that layer pinned to the PR's commit (mount:remote --staging) and they are green. Otherwise the layer goes green alone and the re-pin turns folio-assistant main red. Status, 2026-10-23: another agent is building this check in cat-harness-tools (layer PR checks). This bean records the rule and links that work when its PR exists. Done when a layer PR without a green pinned folio-assistant run is refused by its own required check.
 
@@ -27,3 +27,5 @@ Rule: a PR to a mounted layer (cat-harness, cat-harness-tools, folio-assistant-c
 ## Log
 - 2026-10-24T14:03:00+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Auditing `layer-pr-checks.yml` across all mounted layers (`cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `fhir-harness`, `bootstrap-tools`, `folio-assistant-sci`, `who-iris`, `smart-base`, `smart-trust`, `smart-immunizations`) and wiring any missing caller workflow.
 - 2026-10-24T14:08:00+02:00 — Recorded `layer-pr-checks.yml` audit across all 11 mounted layers and opened [`litlfred/smart-trust#73`](https://github.com/litlfred/smart-trust/pull/73) (`e9ef9b54`) for `smart-trust`.
+
+_2026-10-29T08:10:00Z_ — [`litlfred/smart-trust#73`](https://github.com/litlfred/smart-trust/pull/73) merged (`c4bc864`), so all 11 mounted layers now call `layer-pr-checks.yml`. Left: making the check REQUIRED (branch protection, an owner setting). Owner, 2026-10-29 07:20Z: *"merge all ready and then deal with aftermath"*, so whether a red check should refuse a merge is the owner's call. Lane B drain thread.
