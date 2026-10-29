@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-29T08:45:00Z
+updated_at: 2026-10-29T09:27:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -55,3 +55,10 @@ _2026-10-29T08:45Z_ — Groups 2 to 5 merged, each as a cat-harness PR then its 
 - 5 library: litlfred/cat-harness#674, litlfred/cat-harness-tools#813.
 
 Each one was checked in the composed index the same way as group 1: tsc is clean, the 179 Schema ids are the same, gate exit codes match, partition has 0 wrong-direction edges, and the touched tests fail the same way as on main. kg-qa sidecars that name a moved path are refreshed hash-only. Next: kg, then content and sdlc.
+
+_2026-10-29T09:27Z_ — Groups 6 to 8 merged (Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo):
+- 6 kg: litlfred/cat-harness#675, litlfred/cat-harness-tools#814. Fixes module-relative paths that the move left one level short: `defaultTypologyRoots`, `kg-node.test.ts`, the tools `eval-bpmn-forced-vs-managed.ts` HARNESS_ROOT, and the library group's `translation-tools.ts` checkout root (missed in #674).
+- 7 content: litlfred/cat-harness#676, litlfred/cat-harness-tools#817. Only the 24 plainly-content modules. The audit's other 29 "content" rows look mislabelled.
+- 8 sdlc: litlfred/cat-harness#680, litlfred/cat-harness-tools#822. `test-preload` stays at the top level, because every layer's bunfig names it.
+
+All eight labelled groups are done. **Next:** the 109 modules still at the top level (the 146 unlabelled plus the mislabelled ones) have a drafted placement in `/mnt/project-files/lane-a/f8wp-remaining-schemas.md`. It is waiting on an owner card. After them come the barrel removal (box 1) and the residual gate (box 4). Lesson for later groups: check every `import.meta.url`, `import.meta.dir` and `new URL("..")` in the moved files by hand, because tsc can't see them.
