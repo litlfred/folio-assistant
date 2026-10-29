@@ -2,11 +2,11 @@
 # folio-assistant-e0uk
 $schema: bean/1.0.0
 title: 'AGENT ADVICE PER REPO (phase 1): a generated, drift-checked skill index in every repo''s AGENTS.md'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T13:20:00Z
-updated_at: 2026-10-24T13:20:00Z
+updated_at: 2026-10-29T12:50:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -22,7 +22,7 @@ Tension with an earlier ruling: the cold-start section (owner 2026-09-20, "be ca
 
 ## Todo
 - [ ] Owner picks the index shape.
-- [ ] Section + test in cat-harness-tools; definition note in cat-harness (Tool definition and the skill page that names the section).
+- [x] Section + test in cat-harness-tools; definition note in cat-harness (Tool definition and the skill page that names the section).
 - [ ] Markers added to each layer repo's AGENTS.md, one PR per repo (litlfred repos only; no WHO repo).
 - [ ] `readme:sync:check` runs in every layer's PR checks.
 
@@ -30,3 +30,5 @@ Tension with an earlier ruling: the cold-start section (owner 2026-09-20, "be ca
 Every litlfred layer repo's AGENTS.md carries the generated skill index for the skills it publishes, and CI fails when it drifts.
 
 Follow-up (phase 2): folio-assistant-t5zb.
+
+_2026-10-29T12:50:00Z_ — Box 1 merged: litlfred/cat-harness#573 (the `cat-harness:skills` ReadmeSection, now in `schemas/tools/tool-types.ts`) and litlfred/cat-harness-tools#746 (the section and its test). Owner card 2026-10-29 12:22Z: option A, ship as built (over 32 KB an AGENTS.md gets a folder table plus a SKILLS.md). Next: box 2, the markers, one PR per litlfred layer repo. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.

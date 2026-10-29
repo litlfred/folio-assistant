@@ -62,3 +62,5 @@ _2026-10-29T09:27Z_ — Groups 6 to 8 merged (Lane A, session https://claude.ai/
 - 8 sdlc: litlfred/cat-harness#680, litlfred/cat-harness-tools#822. `test-preload` stays at the top level, because every layer's bunfig names it.
 
 All eight labelled groups are done. **Next:** the 109 modules still at the top level (the 146 unlabelled plus the mislabelled ones) have a drafted placement in `/mnt/project-files/lane-a/f8wp-remaining-schemas.md`. It is waiting on an owner card. After them come the barrel removal (box 1) and the residual gate (box 4). Lesson for later groups: check every `import.meta.url`, `import.meta.dir` and `new URL("..")` in the moved files by hand, because tsc can't see them.
+
+_2026-10-29T12:50:00Z_ — kg batch 2 (39 modules) merged: litlfred/cat-harness#682 then litlfred/cat-harness-tools#823. Owner card 2026-10-29 12:23Z: option A, move the remaining 109 modules as the placement table drafts (/mnt/project-files/lane-a/f8wp-remaining-schemas.md). Next: content-2, library-2, ui-2, sdlc-2, conduct-2, process-2. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
