@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 68,
+      "count": 67,
       "unit": "open beans"
     }
   },
@@ -844,7 +844,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-26T10:23:00Z",
+      "updatedAt": "2026-10-29T11:00:00Z",
       "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
@@ -7517,14 +7517,14 @@
     {
       "id": "folio-assistant-gp2f",
       "title": "PAGE WEIGHT: move per-page nav, harness bar, icons, scripts and IG chrome CSS into shared cached assets (#1885)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:39:55Z",
-      "updatedAt": "2026-10-26T14:03:00Z",
+      "updatedAt": "2026-10-29T11:05:00Z",
       "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
       "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
     },
@@ -16427,13 +16427,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 642,
-        "closed": 617,
-        "open": 25,
-        "inProgress": 11,
+        "closed": 618,
+        "open": 24,
+        "inProgress": 10,
         "todo": 13,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.9610591900311527
+        "share": 0.9626168224299065
       },
       {
         "id": "folio-assistant-npuo",
@@ -16452,8 +16452,8 @@
       }
     ],
     "orphanOpen": 2,
-    "openTotal": 68,
-    "coveredOpen": 63,
+    "openTotal": 67,
+    "coveredOpen": 62,
     "duplicateIds": 0
   }
 }

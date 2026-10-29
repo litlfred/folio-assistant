@@ -104,11 +104,45 @@ The `transcribe-faster-whisper` Tool node's remedy for a huggingface.co
 refusal currently points at `transcribe-whisper-cpp`, whose ggml models are
 hosted on huggingface.co too, so that remedy fails in the same environment.
 
+## 7. File it in the library
+
+A recording becomes a library entry with one transcript per language (bean
+`1r0p`):
+
+```
+library/<slug>/
+  recording.json        folio-recording/v1: title, date, spoken language, speakers, source{} sha256
+  transcript/<lang>.json  folio-transcript/v1: one per language, timed segments + review state
+  blocks/transcript-<lang>.jsonld   written by gen-library-jsonld, one per transcript
+  manifest.jsonld       contains the transcript blocks
+```
+
+1. Write an identity file from the meeting record (title, `YYYY-MM-DD` date,
+   BCP 47 language, speakers as they name themselves). Never guess a field.
+2. `python3 cat-harness-tools/scripts/recording-transcript.py record <media> -o library --identity id.json --slug <slug>`.
+   The media can stay in `uploads/`: `source.sha256` identifies it.
+3. Write a recogniser file from the run (`tool`, `version`, `model`,
+   `model_sha256`, `invocation`), then
+   `recording-transcript.py transcript library/<slug> --whisper-json out.json --recogniser r.json --date <run day>`.
+   The transcript is the recogniser's text unchanged, state `draft`, drafted
+   by the recogniser as a `script`. Name and term corrections are a
+   reviewer's; confirming is a human's.
+4. A translation is `transcript/<lang>.json` with `translated_from: {lang,
+   segments_sha256}` (`recording-transcript.py segments-sha256` prints the
+   source's) and the source's segment times one for one. Its translator is
+   `drafted_by` (an agent names its model). Then the round-trip QA in §4.
+5. `bun run cat-harness-tools/pipeline/gen-library-jsonld.ts --entry library/<slug>`,
+   then `check:l1-complete`. Its `audio-transcripts` requirement checks the
+   record, the source-language transcript, and that every translation is of
+   the same bytes and the same segments. A translation whose source changed
+   after it was made is reported stale, as advisory.
+
 ## Where the pieces are
 
 | piece | where |
 |---|---|
 | Tool nodes (declared, not installed; bean `r279`) | cat-harness `tools/index.ts`: `transcribe-whisper-cpp`, `transcribe-faster-whisper`, `transcribe-vosk` |
 | extract, parse VTT/DOCX, compare, frames, Vosk transcribe | `cat-harness-tools/scripts/meeting-recording.py` |
+| library entry: record, transcript, segments digest | `cat-harness-tools/scripts/recording-transcript.py`; schemas in cat-harness `schemas/library/recording.ts` |
 | walkthrough method (requirements from a recording) | cat-harness `skills/sdlc/crdm/crdm-recorded-walkthrough.md` |
 | translation QA | the `untainted-verification` skill; `translation-roundtrip-record` Tool |

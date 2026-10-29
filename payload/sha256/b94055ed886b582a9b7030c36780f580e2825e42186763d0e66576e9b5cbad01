@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-26T10:23:00Z
+updated_at: 2026-10-29T11:00:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -224,3 +224,18 @@ Executed the commands above on the connected machine and opened [`litlfred/smart
 - **Names needing glossary/prompting:** `Carl Leitner` (both `"Carl Lightner"` at `0:05`), `Chinni Eyetan` (`"Chinni Eyetan"` / `"Tini"` / `"Jiun"` in Teams vs `"Ginny Aie turn"` / `"Ginny"` in `whisper.cpp`), `DPI-F` (`"DPIF"` vs `"DPI F"` at `2:45`), `Swarupu` / `Saroop` (`14:49`).
 
 _2026-10-26T10:23:00Z_ — [`litlfred/smart-ra#91`](https://github.com/litlfred/smart-ra/pull/91) (`052cb21f`, `uploads/output.whisper-base.json` + `uploads/README.md`) merged on `smart-ra` `main`.
+
+## 2026-10-29: the arm exists; the English entry is up; translations remain
+
+Owner chose option A on 2026-10-29: build the arm and file the English transcript now, and leave the translations for agy to draft.
+
+- Merged: litlfred/cat-harness#685 adds `folio-recording/v1` and `folio-transcript/v1` in `schemas/library/recording.ts`, and classifies the `transcript` block kind as authored.
+- Merged: litlfred/cat-harness-tools#834 (issue #829) adds `scripts/recording-transcript.py`, audio and video sniffing, and a `recording` rung in `gen-library-jsonld`. `check:l1-complete` now checks `audio-transcripts`, and `NOT_DERIVABLE` is empty.
+- Merged: litlfred/folio-assistant-core#222 adds §7 "File it in the library" to the `audio-transcription` skill.
+- Open: litlfred/smart-ra#94 adds `library/crdm-walkthrough-2026-10-06/` with `transcript/en.json` (139 segments, draft). It passes L1 under tools main, but it needs a smart-ra re-pin past cat-harness-tools 826f9d4 before its gate can pass.
+
+**Left for Done-when:**
+1. Translations into ar, zh, fr, ru and es (agy). Each goes in `transcript/<lang>.json` with `translated_from: {lang: en, segments_sha256}` and the source's segment times. `recording-transcript.py segments-sha256` prints the digest.
+2. Round-trip QA (`ktt2`) for each translation.
+3. A human confirms en.
+
