@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-29T09:27:00Z
+updated_at: 2026-10-29T14:45:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -19,8 +19,8 @@ Then **keep it at zero**: turn `residual.py`'s five checks into a CI gate (exten
 Blocked by stage 1a and PR6 (library sources regroup after the library split).
 
 ## Done when
-- [ ] `tsc` passes in a scratch run with the barrel REMOVED
-- [ ] `kg-export` has the same Schema node count and ids
+- [x] `tsc` passes in a scratch run with the barrel REMOVED
+- [x] `kg-export` has the same Schema node count and ids
 - [ ] `uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one
 - [ ] the residual gate exists in CI and was watched red on a planted upward reference
 
@@ -66,3 +66,5 @@ All eight labelled groups are done. **Next:** the 109 modules still at the top l
 _2026-10-29T12:50:00Z_ — kg batch 2 (39 modules) merged: litlfred/cat-harness#682 then litlfred/cat-harness-tools#823. Owner card 2026-10-29 12:23Z: option A, move the remaining 109 modules as the placement table drafts (/mnt/project-files/lane-a/f8wp-remaining-schemas.md). Next: content-2, library-2, ui-2, sdlc-2, conduct-2, process-2. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-29T14:30:00Z_ — The approved table is moved, one concern group per PR pair, each merged cat-harness first: content-2 (cat-harness#695, tools#842), library-2 (#696, #844), ui-2 (#698, #845), sdlc-2 (#699, #846), conduct-2 (#700, #847), process-2 (#703, #850). Left at `schemas/` top level: the six that stay (index, constraints, types, builders, test-preload, test-fixture-preload) and the eight above-harness modules (formal-ref, formalization-types, lean-packages, refactor-strategy, computation-witness, precision-scalar toward sci; fsh-guts, vocab-mapping-fhir toward fhir-harness). precision-scalar joined that list because the partition rules already place it in sci. Next: box 1 (barrel and one-release stubs out) and box 4 (residual gate). Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
+
+_2026-10-29T14:45:00Z_ — Boxes 1 and 2 checked. Box 1: in the composed index at every layer's main (cat-harness f01a70c), `schemas/index.ts` deleted, tsc is 0 / 0 / 0 errors in cat-harness, cat-harness-tools and core; no file in any layer imports the barrel (`@litlfred/cat-harness/schemas` bare or `schemas/index`). Box 2: every group PR's kg-export kept the Schema node count and ids (180 after 1r0p added its two). Box 3 (`uml:overview:check`) is not applicable in a composed index; it runs in folio-assistant's code-quality gates. Box 4, the residual gate, is next. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
