@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-29T08:40:00Z
+updated_at: 2026-10-29T15:05:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -30,3 +30,5 @@ _2026-10-26T13:20:00Z_ — Progress update: Slice 1 has merged across all three 
 _2026-10-29T08:05Z_ — ~~Every tool row is now off cat-harness.~~ (corrected 08:40Z below) Slice 2 (litlfred/cat-harness#658 + litlfred/folio-assistant-sci#104) moved paper-preferences, paper-preview and check-dependencies to sci, since they satisfy sci's folio-paper-adapter skills. The last row (litlfred/cat-harness#662 + litlfred/folio-assistant-sci#105) moved headless-render-qc to sci: its subject is a folio's built paper, and satisfying the harness's rendered-verification from sci points down. All of these merged under the owner's 2026-10-29 07:20Z rule ("merge all ready and then deal with aftermath"). litlfred/cat-harness#507 is closed. Left before ticking: "MCP server lists the same tool set; gates green", checked at the next folio-assistant re-pin. The in-process modules stay in cat-harness-tools and resolve through `resolveImplementingPath`. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-29T08:40Z_ — Correction: slice 2 is reverted (litlfred/cat-harness#667, litlfred/folio-assistant-sci#106). A composed-index `check:tools` reported 3 missing paths. `resolveImplementingPath` looks in the declaring instance and in the instances that need it. cat-harness-tools needs cat-harness, but nothing needs sci, so from sci the `src/tools/{preferences,preview,check-deps}.ts` modules are unreachable, and the MCP server would have stopped serving them. **Left:** paper-preferences, paper-preview and check-dependencies, which move only together with their implementations (a sci code home, or a needs edge). headless-render-qc stays in sci, because it is `invoke.shell` only. litlfred/cat-harness#507 is reopened.
+
+_2026-10-29T15:05Z_ — The last three rows moved with their code, and are merged on the owner's 15:01Z card ("A. Merge all five"). litlfred/folio-assistant-sci#113 (150054214) adds the paper-preferences, paper-preview and check-dependencies Tools, with their MCP modules in `adapters/paper/tools/`. litlfred/cat-harness#706 (d6158d5) removes the definitions. litlfred/cat-harness-tools#855 (af72448) removes `src/tools/{preferences,preview,check-deps}.ts`. In the composed index, `registerServedToolGroups` registers all three from sci. kg:audit has 3 fewer critical findings and no new ones. **Left before ticking:** confirm the MCP tool set and gates at the next folio-assistant re-pin, then close litlfred/cat-harness#507. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
