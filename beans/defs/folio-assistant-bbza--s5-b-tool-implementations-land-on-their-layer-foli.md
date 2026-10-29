@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-26T13:20:00Z
+updated_at: 2026-10-29T08:05:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -26,3 +26,5 @@ Re-measured against main: 20 of 23 tool rows still declared in `cat-harness/tool
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/cat-harness#508, litlfred/folio-assistant-sci#67, litlfred/folio-assistant-core#203.
 
 _2026-10-26T13:20:00Z_ — Progress update: Slice 1 has merged across all three repositories (`litlfred/cat-harness#508` @ `2026-10-24T10:43:50Z`, `litlfred/folio-assistant-sci#67` @ `2026-10-24T13:17:53Z` receiving the 11 Lean/LaTeX/proof Tools, and `litlfred/folio-assistant-core#203` @ `2026-10-24T13:17:57Z` receiving `folio-block-qa-summary` and `folio-block-screenshots`). Remaining tools tracked in `litlfred/cat-harness#507`.
+
+_2026-10-29T08:05Z_ — Every tool row is now off cat-harness. Slice 2 (litlfred/cat-harness#658 + litlfred/folio-assistant-sci#104) moved paper-preferences, paper-preview and check-dependencies to sci, since they satisfy sci's folio-paper-adapter skills. The last row (litlfred/cat-harness#662 + litlfred/folio-assistant-sci#105) moved headless-render-qc to sci: its subject is a folio's built paper, and satisfying the harness's rendered-verification from sci points down. All of these merged under the owner's 2026-10-29 07:20Z rule ("merge all ready and then deal with aftermath"). litlfred/cat-harness#507 is closed. Left before ticking: "MCP server lists the same tool set; gates green", checked at the next folio-assistant re-pin. The in-process modules stay in cat-harness-tools and resolve through `resolveImplementingPath`. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.

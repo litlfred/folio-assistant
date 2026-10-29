@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-24T11:36:00Z
+updated_at: 2026-10-29T08:05:00Z
 parent: folio-assistant-9umr
 ---
 
@@ -32,3 +32,5 @@ measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness
 Re-measured by file name: 14 of 28 rows are in their target, 14 still in cat-harness.
 
 _2026-10-24T08:16:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx (bean drain, stalled-triage thread).
+
+_2026-10-29T08:05Z_ — Lane A (session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo; the 10-24 stalled-triage claim had lapsed) merged two PRs. litlfred/cat-harness#659 moved `process/workflow/{branch-freshness,code-review-process,release-epic-planning,release-lifecycle}` to `sdlc/sdlc-core`. litlfred/cat-harness#661 moved `deployment-auth` to `skills/tools/folio-core/`. The audit's crdm and spec-kit rows are out of date: #1729 placed them under `skills/sdlc/`. Still open, and each needs a split, not a move: `conduct-core/{getting-started,repo-conversion}` and `ui-core/{board-windows,board-diagram-interchange}`, which harness code names (site-chrome js/css, `schemas/semantic-zoom.ts`, `scenarios/roles.json`, `cat-harness.json`), so moving them to core adds wrong-direction edges. The core/sci editorial skills: the audit marks most of them SPLIT, with only a passage moving up. `evidence-appraisal` stays under ruling 1 (content-lifecycle stays in the harness). New core skill `block-change-summary` isn't written yet.
