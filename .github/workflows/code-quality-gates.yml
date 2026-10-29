@@ -2341,6 +2341,16 @@ jobs:
       - name: fhir-harness stays WHO-free
         run: bun run cat check:fhir-harness-exclusions
 
+      # fhir-harness's `ig-annex` kind (fhir-harness d911bf4): a markdown annex
+      # is appended to its host page as written, so its links address the
+      # PUBLISHED page (`shownOnPublishedPages`) and are taken out of the
+      # source-tree link sweep. This is the other half, judging them from the
+      # host page; without a step running it, a broken annex link is checked
+      # by nothing, and the gate's `@covers ig-annex` reaches no file. With no
+      # IG mounted it reports "nothing to check" rather than passing silently.
+      - name: every markdown annex link resolves from the page it is appended to
+        run: bun run cat check:ig-annex-links
+
       # The `lean` kind arrived with folio-assistant-sci's `lean/` (sci
       # c396b5b). `audit:coverage` counts a kind as reached only when a gate
       # CI runs declares `@covers` it, so without this step the kind's files
