@@ -4076,7 +4076,7 @@
           "@value": "The content adapter whose vocabulary the kind is from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.adapter",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.adapter",
       "skos:note": "candidate"
     },
     {
@@ -4095,7 +4095,7 @@
           "@value": "The builder function a block manifest calls. Defaults to `kind`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.builder",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.builder",
       "skos:note": "candidate"
     },
     {
@@ -4114,7 +4114,7 @@
           "@value": "A DoCO co-type, only where one is unambiguously right."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.docoType",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.docoType",
       "skos:note": "candidate"
     },
     {
@@ -4133,7 +4133,7 @@
           "@value": "The kind's own RDF class."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.folioType",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.folioType",
       "skos:note": "candidate"
     },
     {
@@ -4152,7 +4152,7 @@
           "@value": "The English heading, singular — the translation graph's source string. Empty for a kind shown without one (`prose`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.heading",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.heading",
       "skos:note": "candidate"
     },
     {
@@ -4171,7 +4171,7 @@
           "@value": "The English heading, plural, for an index that groups by kind."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.headingPlural",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.headingPlural",
       "skos:note": "candidate"
     },
     {
@@ -4190,7 +4190,7 @@
           "@value": "Where the definition index lists this kind's section, lowest first; absent for a kind the index omits. A reading order (definitions before the theorems that use them), so it is authored, not sorted."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.indexRank",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.indexRank",
       "skos:note": "candidate"
     },
     {
@@ -4209,7 +4209,7 @@
           "@value": "The kind string a block's `kind` field carries."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.kind",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.kind",
       "skos:note": "candidate"
     },
     {
@@ -4228,7 +4228,7 @@
           "@value": "The label prefix, without its colon (`def`, not `def:`). Two kinds may share one (`fig`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.labelPrefix",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.labelPrefix",
       "skos:note": "candidate"
     },
     {
@@ -4247,7 +4247,7 @@
           "@value": "Whether a block's label MUST start with the prefix. `false` only where the label rule never applied (`prose`), so moving the table onto nodes did not tighten validation of a corpus nobody re-checked."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.prefixEnforced",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.prefixEnforced",
       "skos:note": "candidate"
     },
     {
@@ -4266,7 +4266,7 @@
           "@value": "The NARROWEST content profile that admits the kind (paper-adapter kinds only; a contributed adapter's kind is in no profile). Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.profile",
       "skos:note": "candidate"
     },
     {
@@ -4285,7 +4285,7 @@
           "@value": "Whether a label of this kind names an upstream provable, which an `algorithm` must cite."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.provable",
+      "dcterms:source": "cat-harness/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.provable",
       "skos:note": "candidate"
     },
     {
@@ -5919,7 +5919,7 @@
           "@value": "Which half of the rule it fails."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.because",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.because",
       "skos:note": "candidate"
     },
     {
@@ -5938,7 +5938,7 @@
           "@value": "The declared directory id this path fills, when it is one (so presence checks do not expect it on disk)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.directory",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.directory",
       "skos:note": "candidate"
     },
     {
@@ -5957,7 +5957,7 @@
           "@value": "`state` only: the declared directory ids of the branch-kept graphs it is computed from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.from",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.from",
       "skos:note": "candidate"
     },
     {
@@ -5976,7 +5976,7 @@
           "@value": "Instance-relative; a directory ends in `/`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.path",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -5995,7 +5995,7 @@
           "@value": "The graph typologies (directory kinds) whose directories, in OTHER instances, this entry's writers read: the declared READ EDGE that orders them (see \"Writer order\" above). `derive:publish` runs these writers after the writers of every other instance's entry that fills (`directory`) a directory of one of these kinds. Kinds, never instance names: a lower layer reading what the layers above it build cannot name them."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.reads",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.reads",
       "skos:note": "candidate"
     },
     {
@@ -6014,7 +6014,7 @@
           "@value": "One sentence a reviewer can check: what makes it pin- or state-dependent."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.reason",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.reason",
       "skos:note": "candidate"
     },
     {
@@ -6033,7 +6033,7 @@
           "@value": "Package scripts that write it, in order — run as `bun run cat <script>`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.writer",
+      "dcterms:source": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.writer",
       "skos:note": "candidate"
     },
     {
@@ -6052,7 +6052,7 @@
           "@value": "Its identifier within the provider: `203`, a SHA, a run id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ArtefactRefSchema.id",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ArtefactRefSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -6071,7 +6071,7 @@
           "@value": "What sort of artefact. See {@link ARTEFACT_KINDS} — open, not an enum."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ArtefactRefSchema.kind",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ArtefactRefSchema.kind",
       "skos:note": "candidate"
     },
     {
@@ -6090,7 +6090,7 @@
           "@value": "Why it is referenced."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ArtefactRefSchema.note",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ArtefactRefSchema.note",
       "skos:note": "candidate"
     },
     {
@@ -6109,7 +6109,7 @@
           "@value": "`github`, `gitlab`, … Defaults to the instance's own forge when absent."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ArtefactRefSchema.provider",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ArtefactRefSchema.provider",
       "skos:note": "candidate"
     },
     {
@@ -6128,7 +6128,7 @@
           "@value": "`owner/repo`. Absent means **this** repository."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ArtefactRefSchema.repo",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ArtefactRefSchema.repo",
       "skos:note": "candidate"
     },
     {
@@ -6147,7 +6147,7 @@
           "@value": "Content nodes this note is ALSO about, without being attached to them."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.alsoAbout",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.alsoAbout",
       "skos:note": "candidate"
     },
     {
@@ -6166,7 +6166,7 @@
           "@value": "Where this note is attached, as a three-state answer."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.anchor",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.anchor",
       "skos:note": "candidate"
     },
     {
@@ -6185,7 +6185,7 @@
           "@value": "The markdown narrative — context, rationale, the question being asked."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.comment",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.comment",
       "skos:note": "candidate"
     },
     {
@@ -6204,7 +6204,7 @@
           "@value": "ISO 8601."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.createdAt",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.createdAt",
       "skos:note": "candidate"
     },
     {
@@ -6223,7 +6223,7 @@
           "@value": "Stable id within its store."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.id",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -6242,7 +6242,7 @@
           "@value": "One line."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.summary",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.summary",
       "skos:note": "candidate"
     },
     {
@@ -6261,7 +6261,7 @@
           "@value": "The knowledge-graph edges — see {@link NoteTagsSchema}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.tags",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.tags",
       "skos:note": "candidate"
     },
     {
@@ -6280,7 +6280,7 @@
           "@value": "Block label this is attached to, when it is attached to one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema.targetLabel",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#CarriedNoteSchema.targetLabel",
       "skos:note": "candidate"
     },
     {
@@ -6299,7 +6299,7 @@
           "@value": "The declared actor this identity belongs to, when known."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ExternalIdentitySchema.actor",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ExternalIdentitySchema.actor",
       "skos:note": "candidate"
     },
     {
@@ -6318,7 +6318,7 @@
           "@value": "Display name, when the provider gave one. Never used for matching."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ExternalIdentitySchema.displayName",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ExternalIdentitySchema.displayName",
       "skos:note": "candidate"
     },
     {
@@ -6337,7 +6337,7 @@
           "@value": "The handle or address **within that provider**."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ExternalIdentitySchema.id",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ExternalIdentitySchema.id",
       "skos:note": "candidate"
     },
     {
@@ -6356,7 +6356,7 @@
           "@value": "The naming system — `github`, `google`, `git`, an institutional IdP."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#ExternalIdentitySchema.provider",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#ExternalIdentitySchema.provider",
       "skos:note": "candidate"
     },
     {
@@ -6375,7 +6375,7 @@
           "@value": "The node's id within that kind."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#KgRefSchema.id",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#KgRefSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -6394,7 +6394,7 @@
           "@value": "The node kind — `skill`, `requirement`, `block`, `process`, …"
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#KgRefSchema.kind",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#KgRefSchema.kind",
       "skos:note": "candidate"
     },
     {
@@ -6413,7 +6413,7 @@
           "@value": "Why it is referenced, when that is not obvious from the pair."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#KgRefSchema.note",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#KgRefSchema.note",
       "skos:note": "candidate"
     },
     {
@@ -6432,7 +6432,7 @@
           "@value": "Issues, pull requests, commits. See {@link ArtefactRefSchema}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#NoteTagsSchema.artefacts",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#NoteTagsSchema.artefacts",
       "skos:note": "candidate"
     },
     {
@@ -6451,7 +6451,7 @@
           "@value": "Who it is for, or who raised it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#NoteTagsSchema.identities",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#NoteTagsSchema.identities",
       "skos:note": "candidate"
     },
     {
@@ -6470,7 +6470,7 @@
           "@value": "BPMN process ids this belongs to."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#NoteTagsSchema.processes",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#NoteTagsSchema.processes",
       "skos:note": "candidate"
     },
     {
@@ -6489,7 +6489,7 @@
           "@value": "Anything else in the graph this points at. See {@link KgRefSchema}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#NoteTagsSchema.references",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#NoteTagsSchema.references",
       "skos:note": "candidate"
     },
     {
@@ -6508,7 +6508,7 @@
           "@value": "Role ids — the swimlane this sits in. `scenarios/roles.json`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#NoteTagsSchema.roles",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#NoteTagsSchema.roles",
       "skos:note": "candidate"
     },
     {
@@ -6527,7 +6527,7 @@
           "@value": "Specific activities, each with its process."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#NoteTagsSchema.tasks",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#NoteTagsSchema.tasks",
       "skos:note": "candidate"
     },
     {
@@ -6546,7 +6546,7 @@
           "@value": "BPMN process id, e.g. `Process_CRDM`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#TaskRefSchema.process",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#TaskRefSchema.process",
       "skos:note": "candidate"
     },
     {
@@ -6565,7 +6565,7 @@
           "@value": "Activity id within that process, e.g. `A_Implement`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/carried-note.ts#TaskRefSchema.task",
+      "dcterms:source": "cat-harness/schemas/kg/carried-note.ts#TaskRefSchema.task",
       "skos:note": "candidate"
     },
     {
@@ -6961,7 +6961,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Whether this instance is published on the site. Defaults to enabled; only `false` disables it. Read through `isPublished` (`schemas/url-space.ts`, bean `nbal`)."
+          "@value": "Whether this instance is published on the site. Defaults to enabled; only `false` disables it. Read through `isPublished` (`schemas/kg/url-space.ts`, bean `nbal`)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#CatHarnessDeclaration.enabled",
@@ -7170,7 +7170,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Who may consent to a remote mount here — `schemas/mount-trust.ts`, roast `1ygp` L4.2."
+          "@value": "Who may consent to a remote mount here — `schemas/kg/mount-trust.ts`, roast `1ygp` L4.2."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#CatHarnessDeclaration.mountApprovers",
@@ -7189,7 +7189,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`."
+          "@value": "What a downstream remote-mounts of this instance by default — `schemas/kg/remote-mount.ts`, bean `0mpw`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#CatHarnessDeclaration.mountDefaults",
@@ -7322,7 +7322,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`."
+          "@value": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/kg/remote-mount.ts`, bean `0mpw`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#CatHarnessDeclaration.remoteMounts",
@@ -7797,7 +7797,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`), which applies the instance config's override by id."
+          "@value": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/kg/subgraph-source.ts`), which applies the instance config's override by id."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#ContentDirectory.source",
@@ -8063,7 +8063,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03."
+          "@value": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/kg/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#ContentDirectoryShape.source",
@@ -9678,7 +9678,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What kind of Knowledge Graph this subscribes to — `substrate` (absent) or `content` (owner, 2026-10-06): a declaration with Subgraphs and NO harness, such as a FHIR IG. Bootstrap's definition of a substrate is unchanged; a content subscription is a separate kind, written explicitly, and contributes no skills, processes or roles — so it may choose no `harnesses`. `SUBSCRIPTION_KINDS` in `schemas/substrate-snapshot.ts` carries the rule once."
+          "@value": "What kind of Knowledge Graph this subscribes to — `substrate` (absent) or `content` (owner, 2026-10-06): a declaration with Subgraphs and NO harness, such as a FHIR IG. Bootstrap's definition of a substrate is unchanged; a content subscription is a separate kind, written explicitly, and contributes no skills, processes or roles — so it may choose no `harnesses`. `SUBSCRIPTION_KINDS` in `schemas/kg/substrate-snapshot.ts` carries the rule once."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#SubscriptionSchema.kind",
@@ -9697,7 +9697,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository-relative DIRECTORY holding the substrate's declaration, when that is not the root — `shared` for a fork whose declaration is `shared/<name>.json` (bean `437w`). Absent: the root. The same name and meaning as `upstreamPath` on a remote subgraph source (`schemas/subgraph-source.ts`, PR #2326), so one word means one thing across both, and the same pattern (a trailing slash is admitted and means nothing). Recorded so `kg:subscribe:check` and a re-subscribe judge the same subtree that was judged the first time."
+          "@value": "The repository-relative DIRECTORY holding the substrate's declaration, when that is not the root — `shared` for a fork whose declaration is `shared/<name>.json` (bean `437w`). Absent: the root. The same name and meaning as `upstreamPath` on a remote subgraph source (`schemas/kg/subgraph-source.ts`, PR #2326), so one word means one thing across both, and the same pattern (a trailing slash is admitted and means nothing). Recorded so `kg:subscribe:check` and a re-subscribe judge the same subtree that was judged the first time."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/cat-harness.ts#SubscriptionSchema.upstreamPath",
@@ -10308,7 +10308,7 @@
           "@value": "Instance directories declared from within, as in `skills.json`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.directories",
+      "dcterms:source": "cat-harness/schemas/kg/concern-groups.ts#ConcernGroupsSchema.directories",
       "skos:note": "candidate"
     },
     {
@@ -10327,7 +10327,7 @@
           "@value": "The concern groups this directory holds, by code; each is `<dir>/<code>/`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.groups",
+      "dcterms:source": "cat-harness/schemas/kg/concern-groups.ts#ConcernGroupsSchema.groups",
       "skos:note": "candidate"
     },
     {
@@ -10688,7 +10688,7 @@
           "@value": "The vocabulary's name — the same field, and the same value, as a block-kind node's `adapter`. Deliberately NOT `name`: a `<stem>.json` whose `name` equals its stem is an instance DECLARATION to `findDeclarationFile`, so `paper.json` with `name: \"paper\"` made `content-adapters/` an instance and collapsed sci's sibling scope."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.adapter",
+      "dcterms:source": "cat-harness/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.adapter",
       "skos:note": "candidate"
     },
     {
@@ -10707,7 +10707,7 @@
           "@value": "Which companion roles this vocabulary's blocks can have."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.companionRoles",
+      "dcterms:source": "cat-harness/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.companionRoles",
       "skos:note": "candidate"
     },
     {
@@ -10726,7 +10726,7 @@
           "@value": "Whether cat-harness's CODE types this vocabulary's blocks (`BlockSchema` in `schemas/types.ts`). A typed vocabulary's kinds are the platform's own and may not be redefined by a contributor; an untyped one reaches a folio only through its dependency tree. `check:kind-validators` holds the typed set to the `ContentAdapter` type the code asserts."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.typed",
+      "dcterms:source": "cat-harness/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.typed",
       "skos:note": "candidate"
     },
     {
@@ -10745,7 +10745,7 @@
           "@value": "The vocabulary's own module, `path.ts`, relative to the declaring instance: the code that defines its blocks. For a TYPED vocabulary it exports the kinds' schemas (`blockSchemas`), and may export `constraintRules` and `builders` — the contract and its loader are `vocabulary-modules.ts`. So a layer above cat-harness types its own kinds, and a composition that does not mount it neither discovers nor types them."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.vocabulary",
+      "dcterms:source": "cat-harness/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.vocabulary",
       "skos:note": "candidate"
     },
     {
@@ -10954,7 +10954,7 @@
           "@value": "The table of slot implementations, typed against the slots' contract."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.implementation",
+      "dcterms:source": "cat-harness/schemas/kg/contribution-nodes.ts#PipelinePluginNodeSchema.implementation",
       "skos:note": "candidate"
     },
     {
@@ -10973,7 +10973,7 @@
           "@value": "The generic pipeline slot this fills (`pipeline/pipeline-plugins.ts`); the key into the table."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.slot",
+      "dcterms:source": "cat-harness/schemas/kg/contribution-nodes.ts#PipelinePluginNodeSchema.slot",
       "skos:note": "candidate"
     },
     {
@@ -10992,7 +10992,7 @@
           "@value": "The dispatch table holding the checker. Its path is the `sourceFile` freshness is hashed over."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.check",
+      "dcterms:source": "cat-harness/schemas/kg/contribution-nodes.ts#QaCheckerNodeSchema.check",
       "skos:note": "candidate"
     },
     {
@@ -11011,7 +11011,7 @@
           "@value": "The QA criterion this checker answers; the key into the table `check` names."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.criterion",
+      "dcterms:source": "cat-harness/schemas/kg/contribution-nodes.ts#QaCheckerNodeSchema.criterion",
       "skos:note": "candidate"
     },
     {
@@ -12284,7 +12284,7 @@
           "@value": "The flattened run order — empty when any problem was found."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#FlattenResult.order",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#FlattenResult.order",
       "skos:note": "candidate"
     },
     {
@@ -12303,7 +12303,7 @@
           "@value": "Everything wrong with the graph. NON-EMPTY MEANS `order` IS EMPTY: a partial order over a broken graph is the shape that gets run anyway."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#FlattenResult.problems",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#FlattenResult.problems",
       "skos:note": "candidate"
     },
     {
@@ -12322,7 +12322,7 @@
           "@value": "Every definer none of the others reaches. Always two or more."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#InheritanceConflict.ids",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#InheritanceConflict.ids",
       "skos:note": "candidate"
     },
     {
@@ -12341,7 +12341,7 @@
           "@value": "Does a failure here end the run?"
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#OrderedStep.fatal",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#OrderedStep.fatal",
       "skos:note": "candidate"
     },
     {
@@ -12360,7 +12360,7 @@
           "@value": "Free-text, carried through to the report so a reader is not left guessing."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#OrderedStep.label",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#OrderedStep.label",
       "skos:note": "candidate"
     },
     {
@@ -12379,7 +12379,7 @@
           "@value": "Ids this step must run after. Absent or empty means it may run first."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#OrderedStep.needs",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#OrderedStep.needs",
       "skos:note": "candidate"
     },
     {
@@ -12398,7 +12398,7 @@
           "@value": "Why it was skipped: the id whose failure reached it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/dependency-order.ts#RunRecord.blockedBy",
+      "dcterms:source": "cat-harness/schemas/kg/dependency-order.ts#RunRecord.blockedBy",
       "skos:note": "candidate"
     },
     {
@@ -12417,7 +12417,7 @@
           "@value": "Emitted only when the exporting instance is itself publishable."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/depends-on.ts#DependsOnExport.records",
+      "dcterms:source": "cat-harness/schemas/kg/depends-on.ts#DependsOnExport.records",
       "skos:note": "candidate"
     },
     {
@@ -12436,7 +12436,7 @@
           "@value": "Why there are no records, when the answer is not \"it has no dependencies\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/depends-on.ts#DependsOnExport.unavailable",
+      "dcterms:source": "cat-harness/schemas/kg/depends-on.ts#DependsOnExport.unavailable",
       "skos:note": "candidate"
     },
     {
@@ -12455,7 +12455,7 @@
           "@value": "The dependency's declared name, which is all an unresolved edge has."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/depends-on.ts#DependsOnGap.name",
+      "dcterms:source": "cat-harness/schemas/kg/depends-on.ts#DependsOnGap.name",
       "skos:note": "candidate"
     },
     {
@@ -12474,7 +12474,7 @@
           "@value": "The dependency's `id` — reverse-DNS, the identity a consumer resolves."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/depends-on.ts#DependsOnRecord.packageId",
+      "dcterms:source": "cat-harness/schemas/kg/depends-on.ts#DependsOnRecord.packageId",
       "skos:note": "candidate"
     },
     {
@@ -12493,7 +12493,7 @@
           "@value": "Its `canonicalUrl`, which plays FHIR's `uri` role (§3.2)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/depends-on.ts#DependsOnRecord.uri",
+      "dcterms:source": "cat-harness/schemas/kg/depends-on.ts#DependsOnRecord.uri",
       "skos:note": "candidate"
     },
     {
@@ -12512,7 +12512,7 @@
           "@value": "Its exact `version`. Never a range, never a SHA (§3.3)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/depends-on.ts#DependsOnRecord.version",
+      "dcterms:source": "cat-harness/schemas/kg/depends-on.ts#DependsOnRecord.version",
       "skos:note": "candidate"
     },
     {
@@ -14222,7 +14222,7 @@
           "@value": "Declared graph ids this section is derived from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.computedFrom",
+      "dcterms:source": "cat-harness/schemas/content/document-kind.ts#DocumentKindSectionSchema.computedFrom",
       "skos:note": "candidate"
     },
     {
@@ -14241,7 +14241,7 @@
           "@value": "The classes of an external vocabulary this section's content instantiates, each as `<system>#<code>` in a PINNED snapshot (`folio-pinned-terminology/v1`) the harness declares. `computedFrom` says where a section's content comes from; this says what KIND of thing it is in a model someone else owns. Resolving the terms is the harness's check, because only it knows which snapshot it pinned — core names no vocabulary."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.modelledBy",
+      "dcterms:source": "cat-harness/schemas/content/document-kind.ts#DocumentKindSectionSchema.modelledBy",
       "skos:note": "candidate"
     },
     {
@@ -14260,7 +14260,7 @@
           "@value": "This section's own sources, when they differ from the kind's."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.sources",
+      "dcterms:source": "cat-harness/schemas/content/document-kind.ts#DocumentKindSectionSchema.sources",
       "skos:note": "candidate"
     },
     {
@@ -14279,7 +14279,7 @@
           "@value": "The part of it that says so: a chapter, a section, a table."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema.locator",
+      "dcterms:source": "cat-harness/schemas/content/document-kind.ts#DocumentKindSourceSchema.locator",
       "skos:note": "candidate"
     },
     {
@@ -14298,7 +14298,7 @@
           "@value": "A library entry id or a URL — something a reader can open."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema.ref",
+      "dcterms:source": "cat-harness/schemas/content/document-kind.ts#DocumentKindSourceSchema.ref",
       "skos:note": "candidate"
     },
     {
@@ -14944,7 +14944,7 @@
           "@value": "Uncompressed size in bytes, from the container's index."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.bytes",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.bytes",
       "skos:note": "candidate"
     },
     {
@@ -14963,7 +14963,7 @@
           "@value": "Why this one entry was extracted, when one was."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.extractedBecause",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.extractedBecause",
       "skos:note": "candidate"
     },
     {
@@ -14982,7 +14982,7 @@
           "@value": "Where the entry was written, IF it was written."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.localPath",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.localPath",
       "skos:note": "candidate"
     },
     {
@@ -15001,7 +15001,7 @@
           "@value": "Media type."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.mediaType",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.mediaType",
       "skos:note": "candidate"
     },
     {
@@ -15020,7 +15020,7 @@
           "@value": "The entry's own timestamp, as the container records it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.modifiedAt",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.modifiedAt",
       "skos:note": "candidate"
     },
     {
@@ -15039,7 +15039,7 @@
           "@value": "Path INSIDE the container, exactly as the container spells it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.path",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -15058,7 +15058,7 @@
           "@value": "sha256 of the entry's bytes, when it was read rather than indexed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.sha256",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractedAssetSchema.sha256",
       "skos:note": "candidate"
     },
     {
@@ -15077,7 +15077,7 @@
           "@value": "Every entry the container indexes."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.assets",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractionSchema.assets",
       "skos:note": "candidate"
     },
     {
@@ -15096,7 +15096,7 @@
           "@value": "When the CONTAINER'S CONTENTS were produced — the capture moment."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.capturedAt",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractionSchema.capturedAt",
       "skos:note": "candidate"
     },
     {
@@ -15115,7 +15115,7 @@
           "@value": "The container this describes, repo-relative."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.container",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractionSchema.container",
       "skos:note": "candidate"
     },
     {
@@ -15134,7 +15134,7 @@
           "@value": "Entries deliberately not listed, and why."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.omitted",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractionSchema.omitted",
       "skos:note": "candidate"
     },
     {
@@ -15153,7 +15153,7 @@
           "@value": "The tool that produced the container, verbatim."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.producer",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractionSchema.producer",
       "skos:note": "candidate"
     },
     {
@@ -15172,7 +15172,7 @@
           "@value": "When THIS record was written — a fact about the reading, not the file."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.readAt",
+      "dcterms:source": "cat-harness/schemas/content/extraction.ts#ExtractionSchema.readAt",
       "skos:note": "candidate"
     },
     {
@@ -18079,7 +18079,7 @@
           "@value": "What a directory of this kind holds: the kind table's `contents`, generated from here."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.description",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.description",
       "skos:note": "candidate"
     },
     {
@@ -18098,7 +18098,7 @@
           "@value": "The kind is harness knowledge-graph content (sod4 #5)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.kgContent",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.kgContent",
       "skos:note": "candidate"
     },
     {
@@ -18117,7 +18117,7 @@
           "@value": "The kind's word, as a directory's `graphTypologies` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `typologies/` read as a directory of four instances (measured on the first move, 2026-10-04)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.kind",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.kind",
       "skos:note": "candidate"
     },
     {
@@ -18136,7 +18136,7 @@
           "@value": "`false`: never part of a published graph (sod4 #5)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.published",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.published",
       "skos:note": "candidate"
     },
     {
@@ -18155,7 +18155,7 @@
           "@value": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.rationale",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.rationale",
       "skos:note": "candidate"
     },
     {
@@ -18174,7 +18174,7 @@
           "@value": "Its markdown is shown on a published page (an IG annex appended to its page), so its links address that page."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.shownOnPublishedPages",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.shownOnPublishedPages",
       "skos:note": "candidate"
     },
     {
@@ -18193,7 +18193,7 @@
           "@value": "The directory may be scanned for skill bodies (sod4 #5)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.skillBearing",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.skillBearing",
       "skos:note": "candidate"
     },
     {
@@ -18212,7 +18212,7 @@
           "@value": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.tileIcon",
+      "dcterms:source": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.tileIcon",
       "skos:note": "candidate"
     },
     {
@@ -19254,7 +19254,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Per-instantiation override of where a declared subgraph gets its content, keyed by the directory's `id` (never its path). The owner, 2026-10-03: *\"That same information can be overwritten by the harness instance config.\"* Applied by `resolveSubgraphSource` and nowhere else (`schemas/subgraph-source.ts`, bean `l4ay`)."
+          "@value": "Per-instantiation override of where a declared subgraph gets its content, keyed by the directory's `id` (never its path). The owner, 2026-10-03: *\"That same information can be overwritten by the harness instance config.\"* Applied by `resolveSubgraphSource` and nowhere else (`schemas/kg/subgraph-source.ts`, bean `l4ay`)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/harness-config.ts#HarnessConfigSchema.subgraphSources",
@@ -19846,7 +19846,7 @@
           "@value": "`kind/local`, lower-case, as the catalogue names the node."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/id-lookup.ts#IdEntry.id",
+      "dcterms:source": "cat-harness/schemas/kg/id-lookup.ts#IdEntry.id",
       "skos:note": "candidate"
     },
     {
@@ -19865,7 +19865,7 @@
           "@value": "Where the node is held: the source's own page for it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/id-lookup.ts#IdEntry.url",
+      "dcterms:source": "cat-harness/schemas/kg/id-lookup.ts#IdEntry.url",
       "skos:note": "candidate"
     },
     {
@@ -19884,7 +19884,7 @@
           "@value": "Which nodes, and from where. A count with no statement of what was counted cannot be checked."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.selection",
+      "dcterms:source": "cat-harness/schemas/kg/id-lookup.ts#IdLookupManifestSchema.selection",
       "skos:note": "candidate"
     },
     {
@@ -19903,7 +19903,7 @@
           "@value": "The corpus this indexes, by its instance name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.source",
+      "dcterms:source": "cat-harness/schemas/kg/id-lookup.ts#IdLookupManifestSchema.source",
       "skos:note": "candidate"
     },
     {
@@ -19922,7 +19922,7 @@
           "@value": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema.shards",
+      "dcterms:source": "cat-harness/schemas/kg/id-lookup.ts#NamespaceIndexSchema.shards",
       "skos:note": "candidate"
     },
     {
@@ -19941,7 +19941,7 @@
           "@value": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/id-lookup.ts#ShardSchema.entries",
+      "dcterms:source": "cat-harness/schemas/kg/id-lookup.ts#ShardSchema.entries",
       "skos:note": "candidate"
     },
     {
@@ -19960,7 +19960,7 @@
           "@value": "The file read; absent for `none`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#DeclaredMounts.file",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#DeclaredMounts.file",
       "skos:note": "candidate"
     },
     {
@@ -19979,7 +19979,7 @@
           "@value": "Where they were read from: the index, the declaration's `remoteMounts` (no index), or nowhere."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#DeclaredMounts.from",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#DeclaredMounts.from",
       "skos:note": "candidate"
     },
     {
@@ -19998,7 +19998,7 @@
           "@value": "Sections that registered CONTENT TYPES declare about this repository, keyed by the type's id: `\"contentTypes\": { \"dak\": { ... } }`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.contentTypes",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexConfigSchema.contentTypes",
       "skos:note": "candidate"
     },
     {
@@ -20017,7 +20017,7 @@
           "@value": "One paragraph under that title, saying what the checkout is for."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.description",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexConfigSchema.description",
       "skos:note": "candidate"
     },
     {
@@ -20036,7 +20036,7 @@
           "@value": "The steps of THIS checkout's own workflows that CI runs and the local gate set does not, each with its reason ({@link GateExemptionsSchema}). The index owns `.github/workflows/`, so it declares their exemptions, in the same change as the step — never ahead of it in a layer."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.gateExemptions",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexConfigSchema.gateExemptions",
       "skos:note": "candidate"
     },
     {
@@ -20052,10 +20052,10 @@
       ],
       "skos:definition": [
         {
-          "@value": "Who may consent to a remote mount in this checkout: `consent.by` on an instance's `trust` must be one of them (`schemas/mount-trust.ts`, roast `1ygp` L4.2). The same field an instance declaration carries, here for the checkout whose mounts the index lists and which may declare no instance of its own (folio-assistant#2389). Declaring it in both is an error, never a pick."
+          "@value": "Who may consent to a remote mount in this checkout: `consent.by` on an instance's `trust` must be one of them (`schemas/kg/mount-trust.ts`, roast `1ygp` L4.2). The same field an instance declaration carries, here for the checkout whose mounts the index lists and which may declare no instance of its own (folio-assistant#2389). Declaring it in both is an error, never a pick."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.mountApprovers",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexConfigSchema.mountApprovers",
       "skos:note": "candidate"
     },
     {
@@ -20074,7 +20074,7 @@
           "@value": "What this CHECKOUT is called. The index declares no instance of its own (owner, 2026-10-08), so nothing else names it; `index:render` titles the root `README.md` and `AGENTS.md` with it (owner, 2026-10-09: those two are rendered files). Absent, they are titled generically."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.title",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexConfigSchema.title",
       "skos:note": "candidate"
     },
     {
@@ -20093,7 +20093,7 @@
           "@value": "The remote mounts moved, by harness."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexMigration.moved",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexMigration.moved",
       "skos:note": "candidate"
     },
     {
@@ -20112,7 +20112,7 @@
           "@value": "The declaration file whose `remoteMounts` moved into the index, when any did."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexMigration.movedFrom",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexMigration.movedFrom",
       "skos:note": "candidate"
     },
     {
@@ -20131,7 +20131,7 @@
           "@value": "This repository is AGENT-RUN: an agent builds and publishes its site (`stage-local.ts`), and its publish workflows keep only `workflow_dispatch`, as documentation of what the agent path must match rather than something to dispatch (owner, 2026-10-10, bean `n3h9`; the `feature-staging` skill, \"Agent-run repositories\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexSiteSchema.agentRun",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexSiteSchema.agentRun",
       "skos:note": "candidate"
     },
     {
@@ -20150,7 +20150,7 @@
           "@value": "An instance name, or {@link HUB_LANDING}. Must name an instance this file lists."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexSiteSchema.landing",
+      "dcterms:source": "cat-harness/schemas/kg/index-config.ts#IndexSiteSchema.landing",
       "skos:note": "candidate"
     },
     {
@@ -21423,7 +21423,7 @@
           "@value": "The type as written in the source."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/kind-validator.ts#ShapeField.type",
+      "dcterms:source": "cat-harness/schemas/kg/kind-validator.ts#ShapeField.type",
       "skos:note": "candidate"
     },
     {
@@ -21442,7 +21442,7 @@
           "@value": "The exported symbol — required; see §\"`module#Export`\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/kind-validator.ts#ValidatorRef.exportName",
+      "dcterms:source": "cat-harness/schemas/kg/kind-validator.ts#ValidatorRef.exportName",
       "skos:note": "candidate"
     },
     {
@@ -21461,7 +21461,7 @@
           "@value": "The instance the module belongs to, by its DECLARED NAME, when that is not the instance resolving the reference: `folio-assistant-core:schemas/x.ts#X`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/kind-validator.ts#ValidatorRef.instance",
+      "dcterms:source": "cat-harness/schemas/kg/kind-validator.ts#ValidatorRef.instance",
       "skos:note": "candidate"
     },
     {
@@ -21480,7 +21480,7 @@
           "@value": "Module path, relative to {@link ValidatorRef.instance}'s root, or to the resolving one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/kind-validator.ts#ValidatorRef.module",
+      "dcterms:source": "cat-harness/schemas/kg/kind-validator.ts#ValidatorRef.module",
       "skos:note": "candidate"
     },
     {
@@ -22202,7 +22202,7 @@
           "@value": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/materialization-state.ts#FixitySchema.verifiedAt",
+      "dcterms:source": "cat-harness/schemas/kg/materialization-state.ts#FixitySchema.verifiedAt",
       "skos:note": "candidate"
     },
     {
@@ -23038,7 +23038,7 @@
           "@value": "Set when the grant is a standing rule's, not a person's at this pin ({@link withStandingConsent})."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#ConsentGrant.standing",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#ConsentGrant.standing",
       "skos:note": "candidate"
     },
     {
@@ -23057,7 +23057,7 @@
           "@value": "Who consented: a person, by the identity they act under here."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.by",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountConsentSchema.by",
       "skos:note": "candidate"
     },
     {
@@ -23076,7 +23076,7 @@
           "@value": "Where the consent was given (an issue comment, a chat session), so it can be read."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.evidence",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountConsentSchema.evidence",
       "skos:note": "candidate"
     },
     {
@@ -23095,7 +23095,7 @@
           "@value": "The pin consented to. Must equal the mount's `ref`; a moved pin asks again."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.ref",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountConsentSchema.ref",
       "skos:note": "candidate"
     },
     {
@@ -23114,7 +23114,7 @@
           "@value": "Present when this pin's consent was written under a STANDING consent (`trust.standing`), by the repin tool rather than by the person at this pin. It holds only while that rule is still declared, unchanged."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.standing",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountConsentSchema.standing",
       "skos:note": "candidate"
     },
     {
@@ -23133,7 +23133,7 @@
           "@value": "The trust network the key is listed in, e.g. `gdhcn`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.network",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountSignatureSchema.network",
       "skos:note": "candidate"
     },
     {
@@ -23152,7 +23152,7 @@
           "@value": "What was signed: the pinned declaration's sha256, as the lock records it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.signedDigest",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountSignatureSchema.signedDigest",
       "skos:note": "candidate"
     },
     {
@@ -23171,7 +23171,7 @@
           "@value": "A standing consent for this instance: see \"Standing consent\" above."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountTrustSchema.standing",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#MountTrustSchema.standing",
       "skos:note": "candidate"
     },
     {
@@ -23190,7 +23190,7 @@
           "@value": "The branch the commit was resolved from — it must be the one the rule follows."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingCandidate.branch",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingCandidate.branch",
       "skos:note": "candidate"
     },
     {
@@ -23209,7 +23209,7 @@
           "@value": "The commit's own combined status / checks: `green` only when every one concluded successfully."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingCandidate.verdict",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingCandidate.verdict",
       "skos:note": "candidate"
     },
     {
@@ -23228,7 +23228,7 @@
           "@value": "When it was given. Part of the rule's identity: a re-given rule re-asks every pin under the old one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.consentAt",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingConsentSchema.consentAt",
       "skos:note": "candidate"
     },
     {
@@ -23247,7 +23247,7 @@
           "@value": "Who gave the standing consent — recorded as `consent.by` on every pin it covers."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.consentBy",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingConsentSchema.consentBy",
       "skos:note": "candidate"
     },
     {
@@ -23266,7 +23266,7 @@
           "@value": "Where it was given, so it can be read. Optional: `consentBy` and `consentAt` are the record."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.evidence",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingConsentSchema.evidence",
       "skos:note": "candidate"
     },
     {
@@ -23285,7 +23285,7 @@
           "@value": "The upstream branch whose newest commit the pin follows."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.follows",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingConsentSchema.follows",
       "skos:note": "candidate"
     },
     {
@@ -23304,7 +23304,7 @@
           "@value": "`green`: only a commit whose own combined status / checks are green. Absent: the branch head."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.require",
+      "dcterms:source": "cat-harness/schemas/kg/mount-trust.ts#StandingConsentSchema.require",
       "skos:note": "candidate"
     },
     {
@@ -23418,7 +23418,7 @@
           "@value": "In the baseline and unkinded, but OWNED by another instance: a baseline may name only its own."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.foreign",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#LayerRatchet.foreign",
       "skos:note": "candidate"
     },
     {
@@ -23437,7 +23437,7 @@
           "@value": "Unkinded now, owned here, and not in the baseline: the gate's finding."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.fresh",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#LayerRatchet.fresh",
       "skos:note": "candidate"
     },
     {
@@ -23456,7 +23456,7 @@
           "@value": "In the baseline and no longer an unkinded family here: a stale baseline, shrunk by the writer."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.gone",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#LayerRatchet.gone",
       "skos:note": "candidate"
     },
     {
@@ -23475,7 +23475,7 @@
           "@value": "What the writer leaves in the baseline (what it held and still owns unkinded, plus `fresh` when accepted)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.keep",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#LayerRatchet.keep",
       "skos:note": "candidate"
     },
     {
@@ -23494,7 +23494,7 @@
           "@value": "Absolute path of the module holding the export."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NameRuleKind.file",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NameRuleKind.file",
       "skos:note": "candidate"
     },
     {
@@ -23513,7 +23513,7 @@
           "@value": "The instance that declares it: the one whose code holds the `nodeKind()`. Absent for a kind reached only as an ANCESTOR (a mixin such as `themed`): no typology names it, so nothing here says where it lives, and guessing from a child would file it under whichever child was read first."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.declaredBy",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.declaredBy",
       "skos:note": "candidate"
     },
     {
@@ -23532,7 +23532,7 @@
           "@value": "How its nodes are found when no typology holds them: by a NAME RULE ({@link NAME_RULE_KINDS}). `instance-declaration` is each instance's own `<instance>.json`, which sits at an instance root rather than in a declared directory, so no typology can name it. Absent: found through `holdings`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.foundBy",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.foundBy",
       "skos:note": "candidate"
     },
     {
@@ -23551,7 +23551,7 @@
           "@value": "The graph typologies that hold nodes of this kind, and the families they file it under."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.holdings",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.holdings",
       "skos:note": "candidate"
     },
     {
@@ -23570,7 +23570,7 @@
           "@value": "`nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.id",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.id",
       "skos:note": "candidate"
     },
     {
@@ -23589,7 +23589,7 @@
           "@value": "Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.module",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.module",
       "skos:note": "candidate"
     },
     {
@@ -23608,7 +23608,7 @@
           "@value": "The kind's own page renderer, when its validator node names one (`pages`), repo-relative. Absent: the generic pages built from the schema."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.pages",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.pages",
       "skos:note": "candidate"
     },
     {
@@ -23627,7 +23627,7 @@
           "@value": "Direct parents, by id, in declared order."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.parents",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.parents",
       "skos:note": "candidate"
     },
     {
@@ -23646,7 +23646,7 @@
           "@value": "Direct subclasses, by id, sorted: the kinds that name this one as a parent."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.subclasses",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.subclasses",
       "skos:note": "candidate"
     },
     {
@@ -23665,7 +23665,7 @@
           "@value": "`<id>/<version>`: the `$schema` a current node carries."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.tag",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.tag",
       "skos:note": "candidate"
     },
     {
@@ -23684,7 +23684,7 @@
           "@value": "SemVer, for a kind whose nodes are files; absent for a mixin."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.version",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindEntry.version",
       "skos:note": "candidate"
     },
     {
@@ -23703,7 +23703,7 @@
           "@value": "Two different kinds sharing one id — always a finding."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex.collisions",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#NodeKindIndex.collisions",
       "skos:note": "candidate"
     },
     {
@@ -23722,7 +23722,7 @@
           "@value": "The `$schema` family; absent when it is the typology's kind-level validator."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#Unkinded.family",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-index.ts#Unkinded.family",
       "skos:note": "candidate"
     },
     {
@@ -23741,7 +23741,7 @@
           "@value": "Repo-relative, for a reader who wants the source."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.file",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-nodes.ts#KindNode.file",
       "skos:note": "candidate"
     },
     {
@@ -23760,7 +23760,7 @@
           "@value": "The instance that holds it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.harness",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-nodes.ts#KindNode.harness",
       "skos:note": "candidate"
     },
     {
@@ -23779,7 +23779,7 @@
           "@value": "The kind the node IS — the kind asked for, or one of its subclasses."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.kind",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-nodes.ts#KindNode.kind",
       "skos:note": "candidate"
     },
     {
@@ -23798,7 +23798,7 @@
           "@value": "The parsed node: a JSON object, or a Markdown file's front matter."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.node",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-nodes.ts#KindNode.node",
       "skos:note": "candidate"
     },
     {
@@ -23817,7 +23817,7 @@
           "@value": "Relative to that instance's root, extension dropped: the node's address."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.path",
+      "dcterms:source": "cat-harness/schemas/kg/node-kind-nodes.ts#KindNode.path",
       "skos:note": "candidate"
     },
     {
@@ -25166,7 +25166,7 @@
           "@value": "Path inside the instance, without extension, `/`-separated."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/prov-jsonld.ts#Owned.path",
+      "dcterms:source": "cat-harness/schemas/kg/prov-jsonld.ts#Owned.path",
       "skos:note": "candidate"
     },
     {
@@ -25185,7 +25185,7 @@
           "@value": "Instance root, absolute."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/prov-jsonld.ts#Owned.root",
+      "dcterms:source": "cat-harness/schemas/kg/prov-jsonld.ts#Owned.root",
       "skos:note": "candidate"
     },
     {
@@ -25432,7 +25432,7 @@
           "@value": "Requested rank. Capped at `min(terms, units) - 1`. Default 100 — the literature's working range for small collections is 50–300, and `k` is reported with the variance it retains so a reader can judge it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#LsiOptions.k",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#LsiOptions.k",
       "skos:note": "candidate"
     },
     {
@@ -25451,7 +25451,7 @@
           "@value": "Drop terms in more than this share of units. Default 0.5."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#LsiOptions.maxDfShare",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#LsiOptions.maxDfShare",
       "skos:note": "candidate"
     },
     {
@@ -25470,7 +25470,7 @@
           "@value": "A term must occur in at least this many units to be kept. A term in one unit can create no co-occurrence and only adds a row. Default 2."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#LsiOptions.minDf",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#LsiOptions.minDf",
       "skos:note": "candidate"
     },
     {
@@ -25489,7 +25489,7 @@
           "@value": "Power iterations for the randomized range finder. Default 4."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#LsiOptions.powerIterations",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#LsiOptions.powerIterations",
       "skos:note": "candidate"
     },
     {
@@ -25508,7 +25508,7 @@
           "@value": "Finding families, keyed by name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResult.families",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResult.families",
       "skos:note": "candidate"
     },
     {
@@ -25527,7 +25527,7 @@
           "@value": "What produced this, so a finding can be traced to the code that made it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResult.producer",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResult.producer",
       "skos:note": "candidate"
     },
     {
@@ -25546,7 +25546,7 @@
           "@value": "The artefact the findings are ABOUT — not an authored subject."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResult.subject",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResult.subject",
       "skos:note": "candidate"
     },
     {
@@ -25565,7 +25565,7 @@
           "@value": "Total findings across every family, so \"clean\" is one read."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResult.total",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResult.total",
       "skos:note": "candidate"
     },
     {
@@ -25584,7 +25584,7 @@
           "@value": "How many findings — `0` is a determined empty, not an absent answer."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResultFamily.count",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResultFamily.count",
       "skos:note": "candidate"
     },
     {
@@ -25603,7 +25603,7 @@
           "@value": "The findings themselves, in whatever shape the producer records."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResultFamily.entries",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResultFamily.entries",
       "skos:note": "candidate"
     },
     {
@@ -25622,7 +25622,7 @@
           "@value": "What this family means, for a reader who has only the file."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaResultFamily.summary",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaResultFamily.summary",
       "skos:note": "candidate"
     },
     {
@@ -25641,7 +25641,7 @@
           "@value": "When the review ran (ISO-8601), or absent when the sidecar records none."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.at",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.at",
       "skos:note": "candidate"
     },
     {
@@ -25660,7 +25660,7 @@
           "@value": "On `stale`, the subject files whose hash moved. On `unknown`, why the comparison could not be made, one phrase per unresolved input."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.changed",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.changed",
       "skos:note": "candidate"
     },
     {
@@ -25679,7 +25679,7 @@
           "@value": "Hash of every extra input the checker consulted beyond the subject."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.depsHash",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.depsHash",
       "skos:note": "candidate"
     },
     {
@@ -25698,7 +25698,7 @@
           "@value": "Whether the verdict still holds for the files on disk."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.freshness",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.freshness",
       "skos:note": "candidate"
     },
     {
@@ -25717,7 +25717,7 @@
           "@value": "Script path, model + skill, or GitHub login."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.id",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.id",
       "skos:note": "candidate"
     },
     {
@@ -25736,7 +25736,7 @@
           "@value": "`script` — a deterministic checker. `agent` — an LLM. `human` — a person."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.kind",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.kind",
       "skos:note": "candidate"
     },
     {
@@ -25755,7 +25755,7 @@
           "@value": "How the verdict was measured, where the checker records it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.method",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.method",
       "skos:note": "candidate"
     },
     {
@@ -25774,7 +25774,7 @@
           "@value": "Agent provenance."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.model",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.model",
       "skos:note": "candidate"
     },
     {
@@ -25793,7 +25793,7 @@
           "@value": "On `partial`, the derived inputs that were not re-computed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.notCompared",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.notCompared",
       "skos:note": "candidate"
     },
     {
@@ -25812,7 +25812,7 @@
           "@value": "Hash of the checker's own source, and the commit it was last changed in."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.scriptHash",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.scriptHash",
       "skos:note": "candidate"
     },
     {
@@ -25831,7 +25831,7 @@
           "@value": "Repo HEAD at review time."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#QaWitness.sha",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#QaWitness.sha",
       "skos:note": "candidate"
     },
     {
@@ -25850,7 +25850,7 @@
           "@value": "The content block this translates, by ITS label — a different identity."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#TranslationBlockQaReport.block",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.block",
       "skos:note": "candidate"
     },
     {
@@ -25866,10 +25866,10 @@
       ],
       "skos:definition": [
         {
-          "@value": "`trans:<locale>/<stem>`, the convention `schemas/translation.ts` fixes."
+          "@value": "`trans:<locale>/<stem>`, the convention `schemas/content/translation.ts` fixes."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#TranslationBlockQaReport.label",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.label",
       "skos:note": "candidate"
     },
     {
@@ -25888,7 +25888,7 @@
           "@value": "Repo-relative paths of the block's files."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#TranslationBlockQaReport.paths",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.paths",
       "skos:note": "candidate"
     },
     {
@@ -25907,7 +25907,7 @@
           "@value": "The PO this verdict was measured against, repo-relative."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-record-shapes.ts#TranslationBlockQaReport.po",
+      "dcterms:source": "cat-harness/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.po",
       "skos:note": "candidate"
     },
     {
@@ -27180,7 +27180,7 @@
           "@value": "The instance the FILE belongs to."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#Occurrence.from",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#Occurrence.from",
       "skos:note": "candidate"
     },
     {
@@ -27199,7 +27199,7 @@
           "@value": "The whole line, which is what an exemption matches against."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#Occurrence.text",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#Occurrence.text",
       "skos:note": "candidate"
     },
     {
@@ -27218,7 +27218,7 @@
           "@value": "The instance whose NAME was found."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#Occurrence.to",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#Occurrence.to",
       "skos:note": "candidate"
     },
     {
@@ -27237,7 +27237,7 @@
           "@value": "Matches the FILE the occurrence sits in, repo-relative. Omitted means any file."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.file",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#ReferenceExemption.file",
       "skos:note": "candidate"
     },
     {
@@ -27256,7 +27256,7 @@
           "@value": "Matches the LINE the occurrence sits on. Omitted means any line, and then `file` must be set."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.pattern",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#ReferenceExemption.pattern",
       "skos:note": "candidate"
     },
     {
@@ -27275,7 +27275,7 @@
           "@value": "Why this is not a reference to the instance. Required."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.reason",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#ReferenceExemption.reason",
       "skos:note": "candidate"
     },
     {
@@ -27294,7 +27294,7 @@
           "@value": "Limit to one target instance; omitted means any."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.to",
+      "dcterms:source": "cat-harness/schemas/kg/reference-direction.ts#ReferenceExemption.to",
       "skos:note": "candidate"
     },
     {
@@ -27351,7 +27351,7 @@
           "@value": "A hydrated directory whose `index.hydrated.jsonld` came from the pin's subgraph index PACKAGE rather than its git tree (bean `mo75` G2b; the contract is `subgraphIndexPackage` in `subgraph-manifest.ts`): the tarball's URL and sha256, and the file's path inside the package, so a replay fetches the same bytes and refuses any others."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.package",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedDirectorySchema.package",
       "skos:note": "candidate"
     },
     {
@@ -27370,7 +27370,7 @@
           "@value": "Relative to the downstream instance's root, no trailing slash."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.path",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedDirectorySchema.path",
       "skos:note": "candidate"
     },
     {
@@ -27389,7 +27389,7 @@
           "@value": "SHA-256 over the sorted `<sha256> <file>` listing — `treeDigest`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.treeDigest",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedDirectorySchema.treeDigest",
       "skos:note": "candidate"
     },
     {
@@ -27408,7 +27408,7 @@
           "@value": "Where the bytes are in the upstream repository."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedDirectorySchema.upstreamPath",
       "skos:note": "candidate"
     },
     {
@@ -27427,7 +27427,7 @@
           "@value": "The instance's DECLARED ASSETS (`assets[].src` — its README and AGENTS.md), each a single file the declaration names and the mount lays down beside the declaration. Bean `hupw`: a mount without them left every declared asset of a mounted instance a dangling reference. Only instance-scoped assets inside the instance are taken; a declared asset the pinned tree lacks makes the instance `missing`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.assets",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.assets",
       "skos:note": "candidate"
     },
     {
@@ -27446,7 +27446,7 @@
           "@value": "Mounted as hydrated metadata (bean `mo75` G2): each directory holds one `index.hydrated.jsonld`, read from the `upstreamPath` directory the instance publishes it in, and the declaration is recorded (it fixed those paths) but NOT laid down — so nothing discovers a code-less instance there."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.hydrated",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.hydrated",
       "skos:note": "candidate"
     },
     {
@@ -27465,7 +27465,7 @@
           "@value": "Where its root landed downstream."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.path",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -27484,7 +27484,7 @@
           "@value": "How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.pinnedBy",
       "skos:note": "candidate"
     },
     {
@@ -27503,7 +27503,7 @@
           "@value": "The basis the mount was allowed on — `staging` (the `--staging` flag) or `consent` with who and when — so a reviewer reads it in the lock and the check can re-judge it (roast `1ygp` L4.2). Optional only so a lock written before it was recorded still parses; the check re-derives it and says so."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.trust",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.trust",
       "skos:note": "candidate"
     },
     {
@@ -27522,7 +27522,7 @@
           "@value": "The instance's root in the upstream repository; `\"\"` is that repository's root."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.upstreamRoot",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.upstreamRoot",
       "skos:note": "candidate"
     },
     {
@@ -27541,7 +27541,7 @@
           "@value": "The `remoteMounts` entry that brought it in."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.via",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#LockedInstanceSchema.via",
       "skos:note": "candidate"
     },
     {
@@ -27560,7 +27560,7 @@
           "@value": "Directory ids, in this instance's own declaration."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.directories",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountDefaultsSchema.directories",
       "skos:note": "candidate"
     },
     {
@@ -27579,7 +27579,7 @@
           "@value": "Mount the WHOLE instance root — every tracked file at the pin, root files included — instead of its declared directories. For an instance a downstream reads as a checkout rather than as graphs: `bootstrap` (whose `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose `package.json` and `tsconfig.json` do), the two git submodules a remote mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.whole",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountDefaultsSchema.whole",
       "skos:note": "candidate"
     },
     {
@@ -27598,7 +27598,7 @@
           "@value": "The `remoteMounts` it was written for, so a changed pin reads as stale."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.mounts",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountLockSchema.mounts",
       "skos:note": "candidate"
     },
     {
@@ -27617,7 +27617,7 @@
           "@value": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountLockSchema.unmounted",
       "skos:note": "candidate"
     },
     {
@@ -27636,7 +27636,7 @@
           "@value": "Mount this instance's directories as their published `index.hydrated.jsonld` only — metadata, no files (bean `mo75` G2). Overrides the mount entry's own `hydrated` either way. `directories` still chooses which subgraphs; `whole` and `hydrated` together are refused at plan time, since one asks for every file and the other for none."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.hydrated",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountOverrideSchema.hydrated",
       "skos:note": "candidate"
     },
     {
@@ -27655,7 +27655,7 @@
           "@value": "Tool ids THIS instance declares, each mounted runnable: its definition, its implementation and their import closure, as the declared directories that closure touches (module note, §\"Tools\"). An id the instance does not declare at the pin is refused at plan time, never dropped. Not with `hydrated` (metadata brings no code) or `skip`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.tools",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountOverrideSchema.tools",
       "skos:note": "candidate"
     },
     {
@@ -27674,7 +27674,7 @@
           "@value": "Consent for THIS instance at its own pin. Required for an instance reached through a GITLINK: that is another repository at another commit, and the parent mount's consent does not cover it (roast `1ygp` L4.2). Ignored for the declared harness and same-tree instances, which the mount's own `trust` covers."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.trust",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountOverrideSchema.trust",
       "skos:note": "candidate"
     },
     {
@@ -27693,7 +27693,7 @@
           "@value": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.whole",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#MountOverrideSchema.whole",
       "skos:note": "candidate"
     },
     {
@@ -27712,7 +27712,7 @@
           "@value": "The harness's instance name, as its own declaration states it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.harness",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#RemoteMountSchema.harness",
       "skos:note": "candidate"
     },
     {
@@ -27731,7 +27731,7 @@
           "@value": "Mount every instance this entry reaches as hydrated metadata ({@link MountOverrideSchema}`.hydrated`), unless its override says `hydrated: false`. Bean `mo75` G2."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.hydrated",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#RemoteMountSchema.hydrated",
       "skos:note": "candidate"
     },
     {
@@ -27750,7 +27750,7 @@
           "@value": "Per-instance overrides across the closure, keyed by instance name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#RemoteMountSchema.overrides",
       "skos:note": "candidate"
     },
     {
@@ -27766,10 +27766,10 @@
       ],
       "skos:definition": [
         {
-          "@value": "What makes this mount trusted: a person's consent for THIS pin, or a signature in a declared trust network (`schemas/mount-trust.ts`, bean `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging mount is then refused rather than fetched."
+          "@value": "What makes this mount trusted: a person's consent for THIS pin, or a signature in a declared trust network (`schemas/kg/mount-trust.ts`, bean `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging mount is then refused rather than fetched."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.trust",
+      "dcterms:source": "cat-harness/schemas/kg/remote-mount.ts#RemoteMountSchema.trust",
       "skos:note": "candidate"
     },
     {
@@ -31588,7 +31588,7 @@
           "@value": "The command that checks the generator's output."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/state-manifest.ts#RouteManifestSchema.gate",
+      "dcterms:source": "cat-harness/schemas/kg/state-manifest.ts#RouteManifestSchema.gate",
       "skos:note": "candidate"
     },
     {
@@ -31607,7 +31607,7 @@
           "@value": "The ONE generator that writes it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/state-manifest.ts#RouteManifestSchema.writer",
+      "dcterms:source": "cat-harness/schemas/kg/state-manifest.ts#RouteManifestSchema.writer",
       "skos:note": "candidate"
     },
     {
@@ -31626,7 +31626,7 @@
           "@value": "True when THIS branch, not `main`, is where readers must look."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/state-manifest.ts#TipManifestSchema.authoritative",
+      "dcterms:source": "cat-harness/schemas/kg/state-manifest.ts#TipManifestSchema.authoritative",
       "skos:note": "candidate"
     },
     {
@@ -31645,7 +31645,7 @@
           "@value": "The commit the content was seeded from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/state-manifest.ts#TipManifestSchema.source",
+      "dcterms:source": "cat-harness/schemas/kg/state-manifest.ts#TipManifestSchema.source",
       "skos:note": "candidate"
     },
     {
@@ -31664,7 +31664,7 @@
           "@value": "The subgraph it holds. Absent only on the retired multi-graph `state` branch."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/state-manifest.ts#TipManifestSchema.subgraph",
+      "dcterms:source": "cat-harness/schemas/kg/state-manifest.ts#TipManifestSchema.subgraph",
       "skos:note": "candidate"
     },
     {
@@ -32196,7 +32196,7 @@
           "@value": "Package-relative and instance-relative: `<docs>/subgraph/<harness>/<subgraph>/<file>`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexFileSchema.path",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexFileSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -32215,7 +32215,7 @@
           "@value": "The subgraph's instance-relative path, no trailing slash; `\"\"` is the harness root (index only)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexFileSchema.subgraph",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexFileSchema.subgraph",
       "skos:note": "candidate"
     },
     {
@@ -32234,7 +32234,7 @@
           "@value": "What the files were built in — they are computed over a checkout's instances, so the checkout is provenance."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexManifestSchema.builtIn",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexManifestSchema.builtIn",
       "skos:note": "candidate"
     },
     {
@@ -32253,7 +32253,7 @@
           "@value": "The instance's declared `docs` directory, no trailing slash."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexManifestSchema.docs",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexManifestSchema.docs",
       "skos:note": "candidate"
     },
     {
@@ -32272,7 +32272,7 @@
           "@value": "npm package name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexPackageRef.name",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexPackageRef.name",
       "skos:note": "candidate"
     },
     {
@@ -32291,7 +32291,7 @@
           "@value": "Its `folio-binary-release/v1` record."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexPackageRef.record",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexPackageRef.record",
       "skos:note": "candidate"
     },
     {
@@ -32310,7 +32310,7 @@
           "@value": "The GitHub release tag holding it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexPackageRef.tag",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexPackageRef.tag",
       "skos:note": "candidate"
     },
     {
@@ -32329,7 +32329,7 @@
           "@value": "The `.tgz` asset — `bun pm pack`'s name for `name@version`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexPackageRef.tarball",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexPackageRef.tarball",
       "skos:note": "candidate"
     },
     {
@@ -32348,7 +32348,7 @@
           "@value": "npm version: `0.0.0-pin.<sha>`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexPackageRef.version",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphIndexPackageRef.version",
       "skos:note": "candidate"
     },
     {
@@ -32367,7 +32367,7 @@
           "@value": "Links to the GraphTypology nodes this subgraph holds."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
       "skos:note": "candidate"
     },
     {
@@ -32386,7 +32386,7 @@
           "@value": "The subgraph's label: the harness name at the root, the instance-relative path below it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-manifest.ts#SubgraphNodeBase.name",
       "skos:note": "candidate"
     },
     {
@@ -32405,7 +32405,7 @@
           "@value": "Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema.repository",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#FamilySourceSchema.repository",
       "skos:note": "candidate"
     },
     {
@@ -32424,7 +32424,7 @@
           "@value": "The upstream instance's name — the `<HARNESS>` segment of the subgraph IRI."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#HydratedSourceSchema.harness",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#HydratedSourceSchema.harness",
       "skos:note": "candidate"
     },
     {
@@ -32443,7 +32443,7 @@
           "@value": "The subgraph's path in that instance, e.g. `tools` or `skills/sdlc`; never the root."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#HydratedSourceSchema.subgraph",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#HydratedSourceSchema.subgraph",
       "skos:note": "candidate"
     },
     {
@@ -32462,7 +32462,7 @@
           "@value": "Integrity SRI string (sha256 or sha512) for fixity verification."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#NpmSourceSchema.integrity",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#NpmSourceSchema.integrity",
       "skos:note": "candidate"
     },
     {
@@ -32481,7 +32481,7 @@
           "@value": "Scoped or unscoped package name (e.g. `@litlfred/cat-harness`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#NpmSourceSchema.package",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#NpmSourceSchema.package",
       "skos:note": "candidate"
     },
     {
@@ -32500,7 +32500,7 @@
           "@value": "Declared Tool that retrieves/mounts the package. Default: 'npm'."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#NpmSourceSchema.tool",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#NpmSourceSchema.tool",
       "skos:note": "candidate"
     },
     {
@@ -32519,7 +32519,7 @@
           "@value": "Upstream path inside the extracted package tarball."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#NpmSourceSchema.upstreamPath",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#NpmSourceSchema.upstreamPath",
       "skos:note": "candidate"
     },
     {
@@ -32538,7 +32538,7 @@
           "@value": "Exact semver version triple (no ranges)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#NpmSourceSchema.version",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#NpmSourceSchema.version",
       "skos:note": "candidate"
     },
     {
@@ -32557,7 +32557,7 @@
           "@value": "#1764's field, if a declaration carries it. Read only to map it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#SourcedEntry.storage",
+      "dcterms:source": "cat-harness/schemas/kg/subgraph-source.ts#SourcedEntry.storage",
       "skos:note": "candidate"
     },
     {
@@ -32576,7 +32576,7 @@
           "@value": "The upstream file, relative to the substrate's repository root: `<name>.json` at the root, or `<upstreamPath>/<name>.json` when the declaration is nested (bean `437w`). Its directory is the subscription's `upstreamPath`, and `kg:subscribe:check` holds the two equal."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "dcterms:source": "cat-harness/schemas/kg/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
       "skos:note": "candidate"
     },
     {
@@ -32595,7 +32595,7 @@
           "@value": "See {@link SUBSCRIPTION_KINDS}. Absent: `substrate`. Written only as `content`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.kind",
+      "dcterms:source": "cat-harness/schemas/kg/substrate-snapshot.ts#SubstrateSnapshotSchema.kind",
       "skos:note": "candidate"
     },
     {
@@ -32614,7 +32614,7 @@
           "@value": "The upstream bytes, exactly as fetched."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
+      "dcterms:source": "cat-harness/schemas/kg/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
       "skos:note": "candidate"
     },
     {
@@ -32633,7 +32633,7 @@
           "@value": "The pinned commit the bytes were read at — a full SHA, never a branch."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
+      "dcterms:source": "cat-harness/schemas/kg/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
       "skos:note": "candidate"
     },
     {
@@ -32652,7 +32652,7 @@
           "@value": "The `subscriptions[].id` this snapshot belongs to."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
+      "dcterms:source": "cat-harness/schemas/kg/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
       "skos:note": "candidate"
     },
     {
@@ -32671,7 +32671,7 @@
           "@value": "What the judgement found, derived from `raw`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
+      "dcterms:source": "cat-harness/schemas/kg/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
       "skos:note": "candidate"
     },
     {
@@ -33032,7 +33032,7 @@
           "@value": "Its authorised label, which the corpus now carries."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.authorisedLabel",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#ChangeProseSchema.authorisedLabel",
       "skos:note": "candidate"
     },
     {
@@ -33051,7 +33051,7 @@
           "@value": "The source assets that were edited, by repository path."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.changed",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#ChangeProseSchema.changed",
       "skos:note": "candidate"
     },
     {
@@ -33070,7 +33070,7 @@
           "@value": "The authorised concept the corpus now uses."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.concept",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#ChangeProseSchema.concept",
       "skos:note": "candidate"
     },
     {
@@ -33089,7 +33089,7 @@
           "@value": "The authority's concept, required unless `relation` is `none`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.concept",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#LocalTermSchema.concept",
       "skos:note": "candidate"
     },
     {
@@ -33108,7 +33108,7 @@
           "@value": "Why the authority's concept does not serve, so the next reader need not re-derive it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.reason",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#LocalTermSchema.reason",
       "skos:note": "candidate"
     },
     {
@@ -33127,7 +33127,7 @@
           "@value": "The candidate's scheme id, as the mapping record keys it (`kg-tools`, …)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#Subject.scheme",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#Subject.scheme",
       "skos:note": "candidate"
     },
     {
@@ -33146,7 +33146,7 @@
           "@value": "The candidate's term id within that scheme."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#Subject.term",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#Subject.term",
       "skos:note": "candidate"
     },
     {
@@ -33165,7 +33165,7 @@
           "@value": "The concept the label reached, where it reached one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.concept",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#VocabularyWrongSchema.concept",
       "skos:note": "candidate"
     },
     {
@@ -33184,7 +33184,7 @@
           "@value": "The domain it does not serve."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.domain",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#VocabularyWrongSchema.domain",
       "skos:note": "candidate"
     },
     {
@@ -33203,7 +33203,7 @@
           "@value": "The vocabulary consulted, as the check's scope names it (`platform`, `who-smart-base@v1.0.0`, …)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.vocabulary",
+      "dcterms:source": "cat-harness/schemas/content/term-adjudication.ts#VocabularyWrongSchema.vocabulary",
       "skos:note": "candidate"
     },
     {
@@ -36680,7 +36680,7 @@
           "@value": "BCP 47 tag for the source language. Default: \"en\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationConfig.defaultLocale",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationConfig.defaultLocale",
       "skos:note": "candidate"
     },
     {
@@ -36699,7 +36699,7 @@
           "@value": "If true, only official translations are shown in the viewer. Default: false (unofficial translations are shown with a badge)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationConfig.officialRequired",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationConfig.officialRequired",
       "skos:note": "candidate"
     },
     {
@@ -36718,7 +36718,7 @@
           "@value": "Whether to generate one POT per block, per chapter, or one for the whole folio."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationConfig.potGranularity",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationConfig.potGranularity",
       "skos:note": "candidate"
     },
     {
@@ -36737,7 +36737,7 @@
           "@value": "Locales the folio supports. Default: the six UN languages."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationConfig.supportedLocales",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationConfig.supportedLocales",
       "skos:note": "candidate"
     },
     {
@@ -36756,7 +36756,7 @@
           "@value": "Subdirectory name within content nodes. Default: \"translations\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationConfig.translationDir",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationConfig.translationDir",
       "skos:note": "candidate"
     },
     {
@@ -36775,7 +36775,7 @@
           "@value": "Translation coverage metrics."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.coverage",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.coverage",
       "skos:note": "candidate"
     },
     {
@@ -36794,7 +36794,7 @@
           "@value": "Optional description of what this PO file covers."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.description",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.description",
       "skos:note": "candidate"
     },
     {
@@ -36813,7 +36813,7 @@
           "@value": "Label following the `trans:<locale>/<stem>` convention."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.label",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.label",
       "skos:note": "candidate"
     },
     {
@@ -36832,7 +36832,7 @@
           "@value": "BCP 47 locale tag of the target language."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.locale",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.locale",
       "skos:note": "candidate"
     },
     {
@@ -36851,7 +36851,7 @@
           "@value": "Path to the `.po` translated file (relative to folio root). This is the file that carries the actual translations."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.poFile",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.poFile",
       "skos:note": "candidate"
     },
     {
@@ -36870,7 +36870,7 @@
           "@value": "One or more additional PO files this translation depends on. Useful for shared glossaries or terminology POs that provide base translations overridden by the primary `poFile`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.poIncludes",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.poIncludes",
       "skos:note": "candidate"
     },
     {
@@ -36889,7 +36889,7 @@
           "@value": "Path to the `.pot` template file (relative to folio root). Optional — omit for hand-authored glossary PO files that have no extractable source."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.potFile",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.potFile",
       "skos:note": "candidate"
     },
     {
@@ -36908,7 +36908,7 @@
           "@value": "Path (relative to folio root) of the **source** file this PO translates. For content blocks, this is the `.md` sibling."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.sourceFile",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.sourceFile",
       "skos:note": "candidate"
     },
     {
@@ -36927,7 +36927,7 @@
           "@value": "SHA-256 hash (12-char prefix) of the source file at extraction time. Used for staleness detection — if the current source hash differs, the POT is stale and needs re-extraction."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.sourceHash",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.sourceHash",
       "skos:note": "candidate"
     },
     {
@@ -36946,7 +36946,7 @@
           "@value": "Translation status (official/unofficial, staleness, etc.)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.status",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.status",
       "skos:note": "candidate"
     },
     {
@@ -36965,7 +36965,7 @@
           "@value": "Optional title for display in the viewer / docs."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationNode.title",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationNode.title",
       "skos:note": "candidate"
     },
     {
@@ -36984,7 +36984,7 @@
           "@value": "Whether the translation has been flagged for review. Typically set by round-trip QA when semantic drift is detected."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.flaggedForReview",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.flaggedForReview",
       "skos:note": "candidate"
     },
     {
@@ -37003,7 +37003,7 @@
           "@value": "Reason for flagging, if any."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.flagReason",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.flagReason",
       "skos:note": "candidate"
     },
     {
@@ -37022,7 +37022,7 @@
           "@value": "ISO 8601 timestamp of generation."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.generatedAt",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.generatedAt",
       "skos:note": "candidate"
     },
     {
@@ -37041,7 +37041,7 @@
           "@value": "What generated the translation."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.generatedBy",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.generatedBy",
       "skos:note": "candidate"
     },
     {
@@ -37060,7 +37060,7 @@
           "@value": "The tool or model used (e.g. \"DeepL\", \"GPT-4o\", \"google-translate\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.generator",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.generator",
       "skos:note": "candidate"
     },
     {
@@ -37079,7 +37079,7 @@
           "@value": "The hierarchy level at which the sign-off was recorded."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.level",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.level",
       "skos:note": "candidate"
     },
     {
@@ -37098,7 +37098,7 @@
           "@value": "BCP 47 locale tag (must match the enclosing directory name)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.locale",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.locale",
       "skos:note": "candidate"
     },
     {
@@ -37117,7 +37117,7 @@
           "@value": "Whether a human has signed off on this translation."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.official",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.official",
       "skos:note": "candidate"
     },
     {
@@ -37136,7 +37136,7 @@
           "@value": "ISO 8601 timestamp of the sign-off."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.signedOffAt",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.signedOffAt",
       "skos:note": "candidate"
     },
     {
@@ -37155,7 +37155,7 @@
           "@value": "Who signed off. A human identifier (GitHub username, email, etc.)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.signedOffBy",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.signedOffBy",
       "skos:note": "candidate"
     },
     {
@@ -37174,7 +37174,7 @@
           "@value": "SHA-256 hash of the source `.md` content at sign-off time. Used for staleness detection: if the current source hash differs, the translation is stale."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.sourceHash",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.sourceHash",
       "skos:note": "candidate"
     },
     {
@@ -37193,7 +37193,7 @@
           "@value": "Whether the source content has changed since the last sign-off. Only meaningful when `official` is true."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/translation.ts#TranslationStatus.stale",
+      "dcterms:source": "cat-harness/schemas/content/translation.ts#TranslationStatus.stale",
       "skos:note": "candidate"
     },
     {
@@ -39834,7 +39834,7 @@
           "@value": "This validator's own name, as its file is named."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id",
+      "dcterms:source": "cat-harness/schemas/kg/validator-node.ts#ValidatorNodeSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -39853,7 +39853,7 @@
           "@value": "The kind's own page renderer, `<harness>:<path>#<Export>`, when the generic pages built from its schema are not enough (issue #2195: *\"Generic + override\"*). The export is a `KindPages` (`scripts/gen-node-kind-pages.ts`). Declared here, beside the schema, so the harness whose code knows the kind is the one that says how to show it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.pages",
+      "dcterms:source": "cat-harness/schemas/kg/validator-node.ts#ValidatorNodeSchema.pages",
       "skos:note": "candidate"
     },
     {
@@ -39872,7 +39872,7 @@
           "@value": "Why this validator is the one, when that is not obvious from the code."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.rationale",
+      "dcterms:source": "cat-harness/schemas/kg/validator-node.ts#ValidatorNodeSchema.rationale",
       "skos:note": "candidate"
     },
     {
@@ -39891,7 +39891,7 @@
           "@value": "The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.schema",
+      "dcterms:source": "cat-harness/schemas/kg/validator-node.ts#ValidatorNodeSchema.schema",
       "skos:note": "candidate"
     },
     {
@@ -39910,7 +39910,7 @@
           "@value": "What it validates: a graph typology, and the `$schema` family within it when the kind has several."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates",
+      "dcterms:source": "cat-harness/schemas/kg/validator-node.ts#ValidatorNodeSchema.validates",
       "skos:note": "candidate"
     },
     {
@@ -39929,7 +39929,7 @@
           "@value": "The script, as a `script` attribution — what looked."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema.by",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#AssemblyBasisSchema.by",
       "skos:note": "candidate"
     },
     {
@@ -39948,7 +39948,7 @@
           "@value": "Of those, page-sized backgrounds that joined no component."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.background",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorAssemblySchema.background",
       "skos:note": "candidate"
     },
     {
@@ -39967,7 +39967,7 @@
           "@value": "Lines inside the region but in no component — the white space `a8wy` found real labels in."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.between",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorAssemblySchema.between",
       "skos:note": "candidate"
     },
     {
@@ -39986,7 +39986,7 @@
           "@value": "Drawing operations on the page. Reported, never graded."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.drawings",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorAssemblySchema.drawings",
       "skos:note": "candidate"
     },
     {
@@ -40005,7 +40005,7 @@
           "@value": "Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.outside",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorAssemblySchema.outside",
       "skos:note": "candidate"
     },
     {
@@ -40024,7 +40024,7 @@
           "@value": "Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.unlabelledClosedShapes",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorAssemblySchema.unlabelledClosedShapes",
       "skos:note": "candidate"
     },
     {
@@ -40043,7 +40043,7 @@
           "@value": "The smallest other labelled box containing this one, or null."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema.parent",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorBoxSchema.parent",
       "skos:note": "candidate"
     },
     {
@@ -40062,7 +40062,7 @@
           "@value": "Box the stroke starts in, or null when it lands in none."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema.from",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorConnectorSchema.from",
       "skos:note": "candidate"
     },
     {
@@ -40081,7 +40081,7 @@
           "@value": "Figure numbers from the page's caption candidates — candidates, not claims."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.captionLabels",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorFigureSchema.captionLabels",
       "skos:note": "candidate"
     },
     {
@@ -40100,7 +40100,7 @@
           "@value": "The render, relative to the entry; null when nothing was rendered, with the reason."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.file",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorFigureSchema.file",
       "skos:note": "candidate"
     },
     {
@@ -40119,7 +40119,7 @@
           "@value": "`vfig-p034` — one per qualifying page; a verdict keys on it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.id",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorFigureSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -40138,7 +40138,7 @@
           "@value": "The rendered rectangle, visible frame."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.region",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorFigureSchema.region",
       "skos:note": "candidate"
     },
     {
@@ -40157,7 +40157,7 @@
           "@value": "Which declared figures the render shows. Inspection only — see the module docblock."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.shows",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorFigureSchema.shows",
       "skos:note": "candidate"
     },
     {
@@ -40176,7 +40176,7 @@
           "@value": "`null` is could-not-determine, never \"draws no figures\" — the `dh4f` rule."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema.figures",
+      "dcterms:source": "cat-harness/schemas/content/vector-figure.ts#VectorFiguresSidecarSchema.figures",
       "skos:note": "candidate"
     },
     {
@@ -40518,7 +40518,7 @@
           "@value": "Who claims it, for the message: `cat-harness.visualisers[library]`, `alias of …`, `site: processes/`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#RouteClaim.by",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#RouteClaim.by",
       "skos:note": "candidate"
     },
     {
@@ -40537,7 +40537,7 @@
           "@value": "Site-relative route, trailing slash for a directory."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#RouteClaim.route",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#RouteClaim.route",
       "skos:note": "candidate"
     },
     {
@@ -40556,7 +40556,7 @@
           "@value": "`same` — one route claimed twice; `nested` — a claim inside another's subtree."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#RouteCollision.kind",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#RouteCollision.kind",
       "skos:note": "candidate"
     },
     {
@@ -40575,7 +40575,7 @@
           "@value": "A path below the (sub-graph's) view, `/`-separated, no leading slash."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#VisualiserRouteParts.asset",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#VisualiserRouteParts.asset",
       "skos:note": "candidate"
     },
     {
@@ -40594,7 +40594,7 @@
           "@value": "The declaring harness's `name`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#VisualiserRouteParts.harness",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#VisualiserRouteParts.harness",
       "skos:note": "candidate"
     },
     {
@@ -40613,7 +40613,7 @@
           "@value": "The locale the page is rendered in (`en`), the route's first segment. Absent for the unlocalised route the t4xb rule keeps working."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#VisualiserRouteParts.locale",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#VisualiserRouteParts.locale",
       "skos:note": "candidate"
     },
     {
@@ -40632,7 +40632,7 @@
           "@value": "A sub-graph of what the visualiser covers — absent for the full KG. One segment, or a `/`-separated path of segments when the visualiser declares its sub-graphs nested (auto-docs' `index/skills/core-skills`, owner 2026-10-03: *\"auto-docs is one declared subgraph, with declared sub-sub-graphs per writer\"*)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#VisualiserRouteParts.subgraph",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#VisualiserRouteParts.subgraph",
       "skos:note": "candidate"
     },
     {
@@ -40651,7 +40651,7 @@
           "@value": "The visualiser's declared `id`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/visualiser-route.ts#VisualiserRouteParts.visualiser",
+      "dcterms:source": "cat-harness/schemas/kg/visualiser-route.ts#VisualiserRouteParts.visualiser",
       "skos:note": "candidate"
     },
     {
@@ -40689,7 +40689,7 @@
           "@value": "R5 `attribute` (a code); R4 `property` (a URI)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.attribute",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#DependencySchema.attribute",
       "skos:note": "candidate"
     },
     {
@@ -40708,7 +40708,7 @@
           "@value": "R4 only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.display",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#DependencySchema.display",
       "skos:note": "candidate"
     },
     {
@@ -40727,7 +40727,7 @@
           "@value": "R4 only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.system",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#DependencySchema.system",
       "skos:note": "candidate"
     },
     {
@@ -40746,7 +40746,7 @@
           "@value": "R5 only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.valueSet",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#DependencySchema.valueSet",
       "skos:note": "candidate"
     },
     {
@@ -40765,7 +40765,7 @@
           "@value": "The source term: a field of the source record, or a code in the source system."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.code",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#ElementSchema.code",
       "skos:note": "candidate"
     },
     {
@@ -40784,7 +40784,7 @@
           "@value": "Deliberately unmapped: an absence that is a statement, not a gap (R5 `noMap`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#ElementSchema.noMap",
       "skos:note": "candidate"
     },
     {
@@ -40803,7 +40803,7 @@
           "@value": "The source vocabulary: an IRI, or a CURIE whose prefix is declared. Never carries `|version`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#GroupSchema.source",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#GroupSchema.source",
       "skos:note": "candidate"
     },
     {
@@ -40822,7 +40822,7 @@
           "@value": "`derived`: a rendering of another target's output, copied from it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.authority",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#TargetSchema.authority",
       "skos:note": "candidate"
     },
     {
@@ -40841,7 +40841,7 @@
           "@value": "The target term: a predicate's local name, or a code in the target system."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.code",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#TargetSchema.code",
       "skos:note": "candidate"
     },
     {
@@ -40860,7 +40860,7 @@
           "@value": "The `key` (or `code`) of the authoritative target a derived one copies."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.derivedFrom",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#TargetSchema.derivedFrom",
       "skos:note": "candidate"
     },
     {
@@ -40879,7 +40879,7 @@
           "@value": "The R4 statement, verbatim, when the row came from an R4 map."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.equivalence",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#TargetSchema.equivalence",
       "skos:note": "candidate"
     },
     {
@@ -40898,7 +40898,7 @@
           "@value": "The JSON term written, when it is not `code`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.key",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#TargetSchema.key",
       "skos:note": "candidate"
     },
     {
@@ -40917,7 +40917,7 @@
           "@value": "This table's id. A ConceptMap's own resource `id` is metadata, kept in `metadata.id`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.id",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#VocabMappingSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -40936,7 +40936,7 @@
           "@value": "Every other ConceptMap field (contact, jurisdiction, meta, text, identifier, the resource id, …), verbatim."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.metadata",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#VocabMappingSchema.metadata",
       "skos:note": "candidate"
     },
     {
@@ -40955,7 +40955,7 @@
           "@value": "R5 map-level `property` and `additionalAttribute` definitions, verbatim."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.property",
+      "dcterms:source": "cat-harness/schemas/content/vocab-mapping.ts#VocabMappingSchema.property",
       "skos:note": "candidate"
     },
     {

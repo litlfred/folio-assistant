@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 68,
+      "count": 67,
       "unit": "open beans"
     }
   },
@@ -6495,7 +6495,7 @@
     {
       "id": "folio-assistant-e0uk",
       "title": "AGENT ADVICE PER REPO (phase 1): a generated, drift-checked skill index in every repo's AGENTS.md",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
@@ -6504,7 +6504,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-24T13:20:00Z",
-      "updatedAt": "2026-10-24T13:20:00Z",
+      "updatedAt": "2026-10-29T12:45:00Z",
       "preview": "Owner, 2026-10-24 09:49Z: *\"all repos should have agentic advice (e.g. based on the skills that they publish)\"*. Card answered 13:15Z: **D. Index now, rest where useful**. Measurements and options: `/mnt/project-files/agent-advice/per-repo-agent-advice-2026-10-24.md` (project files).\n\n## Current state (measured 2026-10-24)\nOnly the folio-assistant aggregate has a generated agent surface (50 skill ",
       "file": "beans/defs/folio-assistant-e0uk--agent-advice-per-repo-a-generated-skill-index-in-ev.md"
     },
@@ -16395,6 +16395,12 @@
       "detail": "blocks `folio-assistant-4fv8` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
     },
     {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-e0uk",
+      "blocks": "folio-assistant-t5zb",
+      "detail": "is completed but still blocks `folio-assistant-t5zb`, which is todo"
+    },
+    {
       "kind": "blocking-unknown",
       "bean": "folio-assistant-ojcx",
       "blocks": "folio-assistant-txut",
@@ -16410,13 +16416,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 325,
-        "closed": 293,
-        "open": 32,
+        "closed": 294,
+        "open": 31,
         "inProgress": 21,
-        "todo": 11,
+        "todo": 10,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.9015384615384615
+        "share": 0.9046153846153846
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16480,8 +16486,8 @@
       }
     ],
     "orphanOpen": 2,
-    "openTotal": 68,
-    "coveredOpen": 63,
+    "openTotal": 67,
+    "coveredOpen": 62,
     "duplicateIds": 0
   }
 }

@@ -2,7 +2,7 @@
  * Universal W3C N-Quads & SPARQL 1.1 In-Browser Client.
  *
  * Implements the browser client side of the `named-query-execution` skill and
- * conforms to `schemas/nquads-distribution.ts`:
+ * conforms to `schemas/kg/nquads-distribution.ts`:
  * - Loads dataset manifest (`subgraph-manifest.json`)
  * - Manages Oxigraph WASM in-memory store
  * - Streams and decompresses `.nq.gz` partitions via native `DecompressionStream("gzip")`

@@ -284,7 +284,7 @@
     "fr": "Fran\u00E7ais", "ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439", "es": "Espa\u00F1ol"
   };
 
-  /* The six UN languages, matching `UN_LOCALES` in `schemas/translation.ts`.
+  /* The six UN languages, matching `UN_LOCALES` in `schemas/content/translation.ts`.
 
      A FALLBACK, never the answer: `fa-translation-meta` carries the instance's
      own `supportedLocales`, and an instance may support more or fewer. This is

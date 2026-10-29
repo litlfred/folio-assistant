@@ -4066,7 +4066,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE METADATA STEP. What enters the knowledge graph is the asset's INDEX — what it is, how big, what type, when it says it was written — and, for a container, what is in it; its contents do not go in unless somebody asks, with a reason. Owner, 2026-09-20: \"make sure you have zip ingestion skills to extract metadata of assets into KG. don't extract contents unless explict ask by user.\" The tool is `cat-harness-tools/scripts/extract-assets.ts`, writing a `folio-extraction/v1` record (`schemas/extraction.ts`, moved down to this layer in placement PR5). The media type is sniffed from the leading bytes, never taken from the extension."
+          "@value": "THE METADATA STEP. What enters the knowledge graph is the asset's INDEX — what it is, how big, what type, when it says it was written — and, for a container, what is in it; its contents do not go in unless somebody asks, with a reason. Owner, 2026-09-20: \"make sure you have zip ingestion skills to extract metadata of assets into KG. don't extract contents unless explict ask by user.\" The tool is `cat-harness-tools/scripts/extract-assets.ts`, writing a `folio-extraction/v1` record (`schemas/content/extraction.ts`, moved down to this layer in placement PR5). The media type is sniffed from the leading bytes, never taken from the extension."
         }
       ],
       "skos:notation": "Task_ExtractMetadata",
@@ -6481,7 +6481,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "An `npm` source (`schemas/subgraph-source.ts`, `npm-kg-distribution`): an npm package specifier or tarball path (`.tgz`). `kg-retrieve-npm` or `npm` fetches and unpacks the package contents into the declared path."
+          "@value": "An `npm` source (`schemas/kg/subgraph-source.ts`, `npm-kg-distribution`): an npm package specifier or tarball path (`.tgz`). `kg-retrieve-npm` or `npm` fetches and unpacks the package contents into the declared path."
         }
       ],
       "skos:notation": "Task_RetrieveNpmPackage",

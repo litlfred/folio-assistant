@@ -328,7 +328,7 @@
       "@type": "skos:ConceptScheme",
       "notation": "own-namespaces",
       "prefLabel": "Namespaces this project mints",
-      "definition": "Every namespace IRI folio-assistant mints for itself, with what each one names. Code reads the values from here (schemas/namespaces.ts); external-schemas:check fails on a spelling of ours that is not listed, and on a retired one still in use.",
+      "definition": "Every namespace IRI folio-assistant mints for itself, with what each one names. Code reads the values from here (schemas/kg/namespaces.ts); external-schemas:check fails on a spelling of ours that is not listed, and on a retired one still in use.",
       "source": {
         "@id": "https://github.com/litlfred/folio-assistant/issues/1140"
       },
@@ -342,7 +342,7 @@
       "prefLabel": "bootstrap vocabulary",
       "definition": "JSON-LD terms the bootstrap instance declares; the prefix is the instance stub.",
       "rdf:value": "https://litlfred.github.io/bootstrap/v0/ns#",
-      "source": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
+      "source": "schemas/kg/namespaces.ts, where each was a constant until 2026-09-23"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-code-lists.jsonld#own-namespaces/cat-harness",
@@ -352,7 +352,7 @@
       "prefLabel": "cat-harness vocabulary",
       "definition": "JSON-LD terms the cat-harness instance declares; the prefix is the instance stub.",
       "rdf:value": "https://litlfred.github.io/cat-harness/v0/ns#",
-      "source": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
+      "source": "schemas/kg/namespaces.ts, where each was a constant until 2026-09-23"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-code-lists.jsonld#own-namespaces/legacy-folio",
@@ -362,7 +362,7 @@
       "prefLabel": "legacy single vocabulary",
       "definition": "The single namespace every term used before the per-layer split. Kept so the vocabulary document can name the stem it published under; never minted into.",
       "rdf:value": "https://litlfred.github.io/folio-assistant/ns#",
-      "source": "schemas/namespaces.ts, where each was a constant until 2026-09-23",
+      "source": "schemas/kg/namespaces.ts, where each was a constant until 2026-09-23",
       "deprecated": true
     },
     {

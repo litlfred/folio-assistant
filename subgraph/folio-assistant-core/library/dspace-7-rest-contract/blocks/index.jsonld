@@ -3,6 +3,3818 @@
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/library/dspace-7-rest-contract/blocks/",
   "@type": "bootstrap:Subgraph",
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s001-dspace-7-rest-contract",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DSpace 7 REST Contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s002-table-of-contents",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Table of Contents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s003-rest-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "REST Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s004-use-of-http-verbs-and-response-codes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Use of HTTP Verbs and Response Codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s005-on-collection-of-resources-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "On Collection of Resources Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s006-on-single-resource-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "On Single Resource Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s007-on-sub-path-of-a-single-resource-endpoint-associ",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "On Sub-Path of a Single Resource Endpoint (Associations)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s008-error-codes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Error Codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s009-pagination",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Pagination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s010-pagination-request-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Pagination Request Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s011-pagination-response",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Pagination Response"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s012-out-of-bound-pages",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Out of Bound Pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s013-pagination-error-codes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Pagination Error Codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s014-rest-design-principles",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "REST Design Principles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s015-on-the-naming-of-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "On the Naming of Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s016-hateoas-hal",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "HATEOAS & HAL"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s017-statelessness",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Statelessness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s018-json-web-tokens",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "JSON Web Tokens"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s019-alps-application-level-profile-semantics",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "ALPS - Application Level Profile Semantics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s020-spring-technology-alignment",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Spring Technology Alignment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s021-content-negotiation",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Content Negotiation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s022-language-support",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Language Support"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s023-proxies",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Proxies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s024-etags-conditional-headers",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "ETags & conditional headers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s025-api-versioning",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "API Versioning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s026-community-resources",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Community Resources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s027-actuator",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Actuator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s028-authentication",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s029-login",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Login"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s030-username-password-based-authentication",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Username Password based authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s031-shibboleth-authentication",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Shibboleth authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s032-refresh-authentication",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Refresh authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s033-json-web-token-structure",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "JSON Web Token structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s034-logout",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Logout"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s035-status",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Status"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s036-log-in-as",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Log in as"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s037-request-short-lived-token",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Request short lived token"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s038-using-short-lived-token",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Using short lived token"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s039-authorizations-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Authorizations Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s040-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s041-single-authorization",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Authorization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s042-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s043-object",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s044-objects",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "objects"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s045-other-http-verbs-than-get",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Other HTTP verbs than GET"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s046-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s047-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s048-object",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s049-feature",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Feature"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s050-bitstream-formats-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Bitstream Formats Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s051-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s052-single-bitstream-format",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Bitstream Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s053-bitstreams-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Bitstreams Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s054-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s055-single-bitstream",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s056-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s057-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s058-format",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s059-bundle",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s060-content",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Content"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s061-main-thumbnail",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Thumbnail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s062-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s063-byitemhandle",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "byItemHandle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s064-delete-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s065-single-bitstream-delete",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Bitstream Delete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s066-multiple-bitstreams-delete",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multiple Bitstreams Delete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s067-browse-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Browse Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s068-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s069-browse-types",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Browse types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s070-single-browse-index",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single browse index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s071-hierarchical-browse-index",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Hierarchical browse index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s072-browse-indexes-configured-for-metadata-linking",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Browse indexes configured for metadata linking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s073-get-a-single-index-configured-as-browse-links-fo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get a single index configured as browse links for the given metadata fields"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s074-browse-entries",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Browse entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s075-metadata-browse-1st-level",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata browse 1st level"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s076-item-browse-or-2nd-level-metadata-browse",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Item browse or 2nd level metadata browse"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s077-bulkaccessconditionoptions-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "BulkAccessConditionOptions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s078-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s079-single-bulkaccessconditionoptions-form",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single bulkaccessconditionoptions-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s080-bundles-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Bundles Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s081-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s082-single-bundle",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s083-creating-a-bundle",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s084-deleting-a-bundle",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s085-bitstreams",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Bitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s086-ordering-bitstreams",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Ordering bitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s087-primary-bitstream",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s088-retrieve-primary-bitstream",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s089-create-primary-bitstream",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s090-update-primary-bitstream",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Update Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s091-removing-primary-bitstream",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Removing Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s092-claimed-tasks-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Claimed Tasks Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s093-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s094-single-claimed-task",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Claimed Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s095-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s096-workflowitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflowitem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s097-owner",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s098-workflow-step",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflow step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s099-workflow-action",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflow action"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s100-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s101-findbyuser",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByUser"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s102-findallbyitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAllByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s103-findbyitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s104-post-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s105-post-method-single-resource-level",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "POST Method (single resource level)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s106-return-code",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Return code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s107-delete-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s108-multipart-post-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s109-collections-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collections Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s110-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s111-single-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s112-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s113-findsubmitauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findSubmitAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s114-findsubmitauthorizedbyentitytype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findSubmitAuthorizedByEntityType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s115-findsubmitauthorizedbycommunity",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findSubmitAuthorizedByCommunity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s116-findsubmitauthorizedbycommunityandentitytype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findSubmitAuthorizedByCommunityAndEntityType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s117-findadminauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAdminAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s118-findeditauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findEditAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s119-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s120-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s121-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s122-retrieve-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s123-create-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s124-replace-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s125-delete-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s126-license",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "License"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s127-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s128-retrieve-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s129-create-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s130-replace-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s131-delete-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s132-default-access-conditions",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Default Access Conditions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s133-mapped-items",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Mapped items"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s134-collection-harvesting-settings",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection Harvesting Settings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s135-changing-collection-harvesting-settings",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Changing Collection Harvesting Settings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s136-parent-community",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parent Community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s137-groups",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s138-collection-administrators",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s139-retrieve-collection-administrators",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve collection administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s140-create-collection-administrators-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create collection administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s141-modifying-the-collection-administrators-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Modifying the collection administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s142-delete-the-collection-administrators-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete the collection administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s143-collection-submitters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection Submitters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s144-collection-default-item-read-rights-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection Default item READ rights group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s145-collection-default-bitstream-read-rights-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection Default bitstream READ rights group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s146-collection-workflow-groups",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection Workflow groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s147-delete-a-collection-workflow-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete a collection workflow group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s148-creating-a-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s149-updating-a-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating a collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s150-deleting-a-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s151-communities-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Communities Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s152-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s153-single-community",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s154-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s155-subcommunities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "SubCommunities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s156-collections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s157-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s158-retrieve-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s159-create-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s160-replace-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s161-delete-logo",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s162-parent-community",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parent Community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s163-groups",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s164-community-administrators",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Community administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s165-retrieve-community-administrators",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve Community administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s166-create-community-administrators-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create Community administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s167-modifying-the-community-administrators-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Modifying the Community administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s168-delete-the-community-administrators-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete the Community administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s169-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s170-top",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "top"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s171-findadminauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAdminAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s172-findeditauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findEditAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s173-findaddauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAddAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s174-creating-communities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating communities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s175-creating-top-level-community",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating top level community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s176-creating-subcommunity",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating subCommunity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s177-updating-a-community",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating a community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s178-deleting-a-community",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s179-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s180-configuration-properties",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Configuration properties"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s181-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s182-single-property",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single property"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s183-csrf-protection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "CSRF Protection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s184-how-to-obtain-reset-a-csrf-token",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How to obtain/reset a CSRF token?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s185-get-api-security-csrf",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "GET /api/security/csrf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s186-what-is-csrf-and-why-is-this-necessary",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What is CSRF and why is this necessary?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s187-how-does-csrf-protection-work-in-dspace-rest-api",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How does CSRF protection work in DSpace REST API?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s188-how-does-csrf-protection-work-in-dspace-user-int",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How does CSRF protection work in DSpace User Interface?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s189-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s190-available-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Available Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s191-actuator-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Actuator endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s192-other-endpoints-raw-list",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Other Endpoints (raw list)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s193-other-endpoints-not-under-api-context",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Other Endpoints not under /api context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s194-entity-type-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Entity Type Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s195-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s196-single-entity-type",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Entity Type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s197-relationship-types-for-the-current-entity-type",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationship Types for the current Entity Type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s198-get-entity-type-from-label",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get Entity type from label"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s199-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s200-findallbyauthorizedcollection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAllByAuthorizedCollection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s201-findallbyauthorizedexternalsource",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAllByAuthorizedExternalSource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s202-eperson-groups-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "EPerson groups Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s203-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s204-single-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s205-create-new-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create new EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s206-deleting-an-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting an EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s207-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s208-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s209-sub-groups-in-a-single-parent-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Sub Groups in a single parent EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s210-get-sub-groups-in-a-single-parent-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get Sub Groups in a single parent EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s211-changing-subgroups",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Changing subgroups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s212-add-a-group-to-a-parent-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add a Group to a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s213-remove-a-group-from-a-parent-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove a Group from a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s214-epeople-in-a-single-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Epeople in a single EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s215-get-epeople-for-a-single-eperson-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get Epeople for a single EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s216-changing-epeople-in-a-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Changing Epeople in a Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s217-add-an-eperson-to-a-parent-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add an EPerson to a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s218-remove-an-eperson-from-a-parent-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove an EPerson from a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s219-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search Methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s220-bymetadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "byMetadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s221-isnotmemberof",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "isNotMemberOf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s222-related-dspace-object-of-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Related DSpace Object of group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s223-eperson-registration-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "EPerson registration Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s224-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s225-single-eperson-registration",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single EPerson registration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s226-search-eperson-registration",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search EPerson registration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s227-create-new-eperson-registration",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create new EPerson registration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s228-forgot-password",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Forgot password"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s229-epersons-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "EPersons Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s230-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s231-single-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s232-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s233-byemail",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "byEmail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s234-bymetadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "byMetadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s235-isnotmemberof",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "isNotMemberOf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s236-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s237-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s238-these-operations-can-be-performed-by-administrat",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "These operations can be performed by administrators."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s239-these-operations-can-be-performed-by-administrat",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "These operations can be performed by administrators and by the authenticated user."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s240-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s241-these-operations-can-be-performed-by-administrat",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "These operations can be performed by administrators and by the authenticated user."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s242-create-new-eperson-requires-admin-permissions",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create new EPerson (requires admin permissions)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s243-create-new-eperson-based-on-registration-token",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create new EPerson based on registration token"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s244-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s245-groups",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s246-external-sources-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "External sources Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s247-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s248-single-authority",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Authority"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s249-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s250-external-source-entries",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "external source entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s251-single-entry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "single entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s252-supported-entity-types",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "supported entity types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s253-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s254-findbyentitytype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByEntityType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s255-features-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Features Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s256-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s257-single-feature",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Feature"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s258-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s259-resourcetype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "resourcetype"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s260-feedbacks-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Feedbacks Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s261-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s262-single-feedback",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s263-creating-a-feedback",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s264-harvesting-metadata-configuration-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Harvesting metadata configuration Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s265-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s266-identifier-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Identifier endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s267-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s268-get-identifiers-for-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get identifiers for item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s269-find-dso-by-identifier-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Find DSO by identifier endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s270-item-request-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Item Request Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s271-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s272-single-request",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s273-creating-a-request",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s274-accepting-denying-a-request",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Accepting / Denying a Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s275-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s276-item-entries",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "item entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s277-bitstream-entries",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "bitstream entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s278-items-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Items Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s279-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s280-single-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s281-withdrawn-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Withdrawn item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s282-creating-an-archived-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating an archived item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s283-creating-an-archived-item-from-an-external-sourc",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating an archived item from an external source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s284-updating-item-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating item metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s285-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s286-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s287-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s288-access-status",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Access Status"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s289-bundles",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Bundles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s290-owning-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Owning Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s291-template-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Template Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s292-relationships-per-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationships per item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s293-main-thumbnail",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Thumbnail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s294-get-single-version-for-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get single version for item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s295-get-item-identifiers",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get item identifiers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s296-deleting-an-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting an item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s297-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s298-findeditauthorized",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findEditAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s299-collection-item-template-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collection Item Template Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s300-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s301-single-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s302-creating-an-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating an item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s303-updating-item-template-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating item template metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s304-delete-item-template",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s305-modifying-metadata-via-patch",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Modifying metadata via Patch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s306-introduction",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Introduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s307-adding-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Adding metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s308-removing-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Removing metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s309-replacing-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replacing metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s310-ordering-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Ordering metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s311-metadata-suggestions-md",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "metadata-suggestions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s312-metadata-suggestions-from-live-import",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata suggestions from live import"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s313-introduction",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Introduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s314-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s315-single-suggestion-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single suggestion endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s316-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s317-live-import-entries",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Live import entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s318-single-entry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s319-differences-for-a-single-entry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Differences for a single entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s320-changes-suggested-from-the-live-import",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Changes suggested from the live import"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s321-introduction",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Introduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s322-adding-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Adding metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s323-replacing-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replacing metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s324-replacing-name-variants",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replacing name variants"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s325-adding-relationships",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Adding relationships"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s326-metadata-fields-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata Fields Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s327-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s328-single-metadata-field",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s329-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s330-schema",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s331-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s332-byschema",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "bySchema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s333-byfieldname",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "byFieldName"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s334-creating-a-metadata-field",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s335-updating-a-metadata-field",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating a Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s336-deleting-a-metadata-field",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s337-metadata-schemas-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata Schemas Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s338-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s339-single-metadata-schema",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s340-creating-a-metadata-schema",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s341-updating-a-metadata-schema",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating a Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s342-deleting-a-metadata-schema",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s343-orcid-history-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "ORCID History Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s344-single-orcid-history-entry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single ORCID History entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s345-send-to-orcid-registry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Send to ORCID registry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s346-orcid-queue-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "ORCID Queue Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s347-single-orcid-queue-entry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single ORCID Queue entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s348-search-orcid-queue-entries-by-profileitem-id",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search ORCID Queue entries by profileItem id"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s349-delete-an-orcid-queue-entry",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete an ORCID Queue entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s350-general-rules-for-the-patch-operation",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "General rules for the Patch operation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s351-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s352-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s353-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s354-move",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s355-test-copy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s356-error-codes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Error codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s357-pool-tasks-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Pool Tasks Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s358-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s359-single-pool-task",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Pool Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s360-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s361-workflowitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflowitem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s362-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s363-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s364-workflow-step",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflow step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s365-workflow-action",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflow action"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s366-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s367-findbyuser",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByUser"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s368-findallbyitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findAllByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s369-findbyitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s370-post-method-collection-level",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "POST Method (collection level)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s371-post-method-single-resource-level",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "POST Method (single resource level)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s372-delete-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s373-multipart-post-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s374-admin-processes-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Admin Processes Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s375-execution-list",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Execution List"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s376-execution-details",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Execution Details"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s377-execution-console-output",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Execution Console Output"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s378-execution-file-output-list",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Execution File Output List"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s379-get-process-file-types",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get process file types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s380-execution-file-output-using-type-identifier",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Execution File Output (using type identifier)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s381-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search Methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s382-search-processes-by-property",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search processes by Property"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s383-retrieve-own-processes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve own processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s384-execution-deletion",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Execution Deletion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s385-script-invocation",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Script Invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s386-researcher-profiles-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Researcher profiles Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s387-get-all-profile",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get all Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s388-single-profile",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s389-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s390-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s391-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s392-creating-a-new-profile",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a new Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s393-claim-an-existing-profile",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Claim an existing Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s394-hide-unhide-a-profile",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Hide/unhide a profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s395-modify-orcid-synchronization-preferences",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Modify ORCID synchronization preferences"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s396-connect-a-profile-with-orcid",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Connect a profile with ORCID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s397-disconnect-a-profile-from-orcid",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Disconnect a profile from ORCID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s398-delete-a-profile",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Delete a profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s399-projections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Projections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s400-standard-projections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Standard Projections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s401-default-projection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Default Projection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s402-full-projection-projection-full",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Full Projection (`?projection=full`)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s403-custom-projections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Custom Projections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s404-specify-embed-requests",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Specify Embed requests"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s405-basic-embeds",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Basic embeds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s406-multi-level-embeds",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multi-level embeds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s407-relationship-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationship Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s408-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s409-single-relationship",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Relationship"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s410-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s411-relationship-involving-specified-items",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationship involving specified items"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s412-deleting-a-relationship",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a relationship"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s413-relationship-type-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationship Type Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s414-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s415-single-relationship-type",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Relationship Type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s416-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s417-relationship-types-containing-an-entity-type",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationship types containing an entity type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s418-resource-policies-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Resource Policies Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s419-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s420-single-resource-policy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Resource Policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s421-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s422-resource",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "resource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s423-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s424-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s425-creating-a-resource-policy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a resource policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s426-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s427-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s428-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s429-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s430-deleting-a-resource-policy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a resource policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s431-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s432-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s433-update-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Update eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s434-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s435-update-group",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Update group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s436-resource",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Resource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s437-admin-scripts-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Admin Scripts Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s438-scripts-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Scripts Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s439-script-name-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Script Name Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s440-script-details",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Script Details"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s441-script-invocation",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Script Invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s442-bulk-access-control-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "bulk-access-control script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s443-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s444-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s445-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s446-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s447-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s448-what-is-an-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What is an Access Condition?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s449-curate-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "curate script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s450-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s451-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s452-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s453-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s454-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s455-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s456-export-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "export script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s457-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s458-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s459-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s460-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s461-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s462-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s463-what-is-saf",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What is SAF?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s464-dspace-simple-archive-format",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DSpace Simple Archive Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s465-a-visual-representation-of-a-saf",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "A visual representation of a SAF"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s466-filter-media-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "filter-media script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s467-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s468-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s469-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s470-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s471-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s472-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s473-harvest-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "harvest script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s474-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s475-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s476-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s477-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s478-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s479-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s480-import-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "import script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s481-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s482-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s483-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s484-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s485-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s486-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s487-index-discovery-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "index-discovery script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s488-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s489-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s490-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s491-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s492-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s493-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s494-available-scripts-index",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Available scripts index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s495-scripts-and-processes-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Scripts and processes endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s496-list-of-available-scripts",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "List of available scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s497-metadata-deletion-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "metadata-deletion script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s498-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s499-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s500-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s501-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s502-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s503-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s504-metadata-export-search-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "metadata-export-search Script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s505-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s506-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s507-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s508-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s509-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s510-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s511-metadata-export-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "metadata-export script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s512-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s513-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s514-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s515-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s516-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s517-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s518-metadata-import-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "metadata-import script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s519-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s520-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s521-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s522-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s523-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s524-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s525-orcid-bulk-push-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "ORCID-bulk-push script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s526-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s527-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s528-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s529-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s530-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s531-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s532-process-cleaner-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "process-cleaner script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s533-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s534-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s535-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s536-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s537-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s538-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s539-retry-tracker-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "retry-tracker script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s540-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s541-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s542-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s543-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s544-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s545-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s546-solr-database-resync-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "solr-database-resync script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s547-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s548-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s549-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s550-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s551-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s552-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s553-subscription-send-script",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "subscription-send script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s554-what-it-does",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s555-who-can-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s556-when-we-use-it",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s557-how-it-works",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s558-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s559-conclusion-quickguide",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s560-discovery-search-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Discovery Search Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s561-search-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s562-matching-dspace-objects-search-results",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Matching DSpace objects search results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s563-matching-facets-search-results",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Matching Facets search results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s564-matching-facet-search-results",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Matching facet search results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s565-list-values-of-a-certain-facet",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "List values of a certain facet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s566-special-configurations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Special configurations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s567-workspace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workspace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s568-workflow",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s569-search-methods-on-collection-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods on collection endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s570-endpoints-that-have-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Endpoints that have Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s571-signposting-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Signposting Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s572-the-signposting-is-used-to-implement-signposting",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "The /signposting is used to implement Signposting."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s573-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s574-in-application-linkset-serialization",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "in application/linkset serialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s575-describes-the-scholarly-object-in-a-commonly-use",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Describes the scholarly object in a commonly used format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s576-displaying-usage-statistics",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Displaying usage statistics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s577-statistics-for-a-dspaceobject",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Statistics for a DSpaceObject"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s578-single-statistic",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single statistic"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s579-search-statistics-for-a-dspaceobject",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search Statistics for a DSpaceObject"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s580-collecting-user-interactions",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Collecting user interactions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s581-view-events-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "View events endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s582-required-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Required Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s583-optional-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Optional Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s584-status-codes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Status codes:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s585-example-item-page-view",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Example item page view:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s586-search-events-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search events Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s587-required-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Required Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s588-optional-parameters",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Optional Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s589-status-codes",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Status codes:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s590-example-search",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Example search:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s591-downloads-and-workflow",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Downloads and workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s592-submission-deposit",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Submission / Deposit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s593-starting-a-submission",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Starting a Submission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s594-modifying-the-submission",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Modifying the Submission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s595-completing-the-submission-starting-workflow",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Completing the Submission / Starting Workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s596-submissionaccessoptions-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "SubmissionAccessOptions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s597-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s598-single-submission-form",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Submission-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s599-submission-cc-licenses-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Submission CC Licenses Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s600-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s601-single-cc-license",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single CC License"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s602-search-cc-license",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search CC License"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s603-submission-definitions-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Submission-Definitions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s604-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s605-single-submission-definition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Submission-Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s606-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s607-findbycollection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByCollection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s608-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s609-collections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "collections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s610-sections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "sections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s611-submission-forms-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Submission-Forms Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s612-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s613-single-submission-form",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Submission-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s614-submission-section-types",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Submission Section Types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s615-submission-sections-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Submission-Sections Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s616-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s617-single-submission-definition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Submission-Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s618-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked Entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s619-config",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "config"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s620-submissionuploads-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "SubmissionUploads Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s621-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s622-single-submission-form",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Submission-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s623-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s624-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s625-subscriptions-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Subscriptions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s626-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s627-single-subscription-object",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Subscription Object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s628-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s629-findbyeperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByEPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s630-findbyepersonanddso",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByEPersonAndDso"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s631-creating-a-subscription",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a subscription"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s632-updating-subscription",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Updating subscription"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s633-deleting-a-subscription-object",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a Subscription Object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s634-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s635-eperson",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s636-resource",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "resource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s637-supervision-orders-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Supervision Orders Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s638-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s639-single-supervision-order",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Supervision Order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s640-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s641-find-by-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Find by Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s642-creating-a-supervision-order",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Creating a supervision order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s643-deleting-a-supervision-order",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Deleting a supervision order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s644-system-wide-alerts",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "System-wide alerts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s645-retrieve-all-active-alerts",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve all active alerts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s646-retrieve-a-specific-alert",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve a specific alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s647-retrieve-all-alerts",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Retrieve all alerts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s648-create-a-new-alert",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create a new alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s649-modify-an-existing-alert",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Modify an existing alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s650-versioning-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Versioning endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s651-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s652-create-version",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Create version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s653-get-single-version",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get single version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s654-get-single-version-for-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get single version for item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s655-remove-version",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s656-update-version-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Update version (patch operations)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s657-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s658-version-history",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Version History"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s659-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s660-version-history-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Version history endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s661-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s662-get-version-history",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get version history"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s663-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s664-versions",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Versions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s665-draftversion",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "draftVersion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s666-controlled-vocabularies-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Controlled Vocabularies Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s667-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s668-single-vocabulary",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s669-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s670-controlled-vocabulary-entries",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "controlled vocabulary entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s671-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s672-get-controlled-vocabulary-by-metadata-and-collec",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get controlled vocabulary by metadata and collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s673-vocabulary-entries-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Vocabulary Entries Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s674-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s675-single-authority",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Authority"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s676-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s677-top",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "top"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s678-workflow-actions-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Workflow Actions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s679-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s680-single-workflow-action-definition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Workflow Action Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s681-workflow-definitions-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Workflow Definitions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s682-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s683-single-workflow-definition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Workflow Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s684-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s685-findbycollection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findByCollection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s686-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s687-collections",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "collections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s688-steps",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s689-workflowitem-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkflowItem Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s690-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s691-single-workflow-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Workflow Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s692-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s693-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s694-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s695-submissiondefinition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "submissionDefinition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s696-workflow-step",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "workflow step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s697-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s698-findbysubmitter",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findBySubmitter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s699-get-single-workflow-item-from-item-uuid",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get Single Workflow Item from Item UUID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s700-post-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s701-multipart-post-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s702-delete-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s703-workflow-steps-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Workflow Steps Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s704-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s705-single-workflow-step-definition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Workflow Step Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s706-workspaceitem-data-of-access-sectiontype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of access sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s707-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s708-add-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s709-remove-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s710-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s711-discoverable",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Discoverable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s712-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s713-relationship-between-the-access-conditions-of-th",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Relationship between the access conditions of the item and the bitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s714-workspaceitem-data-of-cc-license-sectiontype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of CC License sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s715-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s716-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s717-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s718-workspaceitem-data-of-identifiers-sectiontype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of identifiers sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s719-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s720-workspaceitem-data-of-license-sectiontype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of license sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s721-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s722-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s723-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s724-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s725-move-test-copy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Move, Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s726-workspaceitem-data-of-submission-form-sectiontyp",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of submission-form sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s727-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s728-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s729-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s730-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s731-move",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s732-test-copy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s733-workspaceitem-data-of-sherpa-policies-sectiontyp",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of sherpa-policies sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s734-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s735-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s736-workspaceitem-data-of-upload-sectiontype",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem data of upload sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s737-patch-operations",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s738-add",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s739-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s740-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s741-remove",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s742-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s743-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s744-replace",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s745-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s746-access-condition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s747-move",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s748-metadata",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s749-test-copy",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s750-workspaceitem-endpoints",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "WorkspaceItem Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s751-main-endpoint",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s752-multipart-post-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s753-single-workspace-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Single Workspace Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s754-multipart-post-method-on-a-single-workspaceitem",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Multipart POST Method on a single workspaceitem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s755-linked-entities",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s756-collection",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s757-item",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s758-submissiondefinition",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "submissionDefinition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s759-search-methods",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s760-findbysubmitter",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "findBySubmitter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s761-get-single-workspace-item-from-item-uuid",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "Get Single Workspace Item from Item UUID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/blocks/prose-s762-delete-method",
+      "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+      "title": "DELETE Method"
+    }
+  ],
   "holdsGraph": [
     "cat-harness:graphTypology/library"
   ],

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "b61ad260f1d007f3e22291325bcd625aa5354902",
+    "sha": "8fe86485b359f82da50963034bb7b7189c01d86b",
     "pr": "main",
-    "run": "40873105997"
+    "run": "40876052706"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Package and distribute partitioned W3C N-Quads and named queries",
       "summary": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries.",
-      "description": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries. Governed by skills `nquads-distribution` and `named-query-execution`, grounded in `schemas/nquads-distribution.ts`.\n\nCRITICAL INVARIANTS:\n1. 2-TIER SUBGRAPH ARCHITECTURE: A lightweight Spine backbone partition is loaded on startup, while bulky subgraphs (communities, workflow domains) are lazily fetched on demand.\n2. UPSTREAM SKOLEMIZATION: Zero blank nodes across all partitions. Every node must carry a deterministic minted IRI.\n3. PARTITION BUDGET CEILING: Partitions must strictly stay under 5 MB gzipped / 50k quads to protect browser heap and memory allocations.\n4. GRAPH AVAILABILITY GUARD: Queries declare requiredSubgraphs; execution fails fast with MissingPartitionError rather than silently returning partial query results.\n5. NO COMMITTED BINARY PAYLOADS: `.nq.gz` distribution payloads are gitignored, generated on demand or in CI, and served to Pages via 'served: true'.",
+      "description": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries. Governed by skills `nquads-distribution` and `named-query-execution`, grounded in `schemas/kg/nquads-distribution.ts`.\n\nCRITICAL INVARIANTS:\n1. 2-TIER SUBGRAPH ARCHITECTURE: A lightweight Spine backbone partition is loaded on startup, while bulky subgraphs (communities, workflow domains) are lazily fetched on demand.\n2. UPSTREAM SKOLEMIZATION: Zero blank nodes across all partitions. Every node must carry a deterministic minted IRI.\n3. PARTITION BUDGET CEILING: Partitions must strictly stay under 5 MB gzipped / 50k quads to protect browser heap and memory allocations.\n4. GRAPH AVAILABILITY GUARD: Queries declare requiredSubgraphs; execution fails fast with MissingPartitionError rather than silently returning partial query results.\n5. NO COMMITTED BINARY PAYLOADS: `.nq.gz` distribution payloads are gitignored, generated on demand or in CI, and served to Pages via 'served: true'.",
       "enforcement": "strict",
       "sourcePath": "processes/kg/nquads-distribution.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/nquads-distribution.bpmn",
