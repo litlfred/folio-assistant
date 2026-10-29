@@ -668,3 +668,12 @@ Compared the four previews on gh-pages (blob ids from the git tree API):
 Every differing page sampled (smart-trust/artifact 1,466, en/cat-harness 925, uml/overview 244, smart-base 146, proposals) differs only by `/folio-assistant/STAGING/<slug>/` in `relative_url` output: stylesheet and script links, the IG top bar. That is what `site-chrome/_plugins/fa-root-relative.rb` (cat-harness#439) removes. It is not in these builds: folio-assistant main pins cat-harness at a196134 (2026-10-23 19:45), which has no `site-chrome/_plugins/`; #439 merged at 21:36. The previews were built on that pin.
 
 So the next step is the cat-harness re-pin in folio-assistant#2681 (CI speed thread's), then two previews from the new pin and the same comparison. Back to `todo`: nothing here to build until that pin lands.
+---
+
+*2026-10-29* — **Re-measured on deployed previews after folio-assistant#2681 (5827603) pinned the fixes (cat-harness#432, #478, fhir-harness#137).**
+
+_Read from `origin/gh-pages` f1ede3c (git trees and blobs, HTML only)._
+
+- **Cause 2 is fixed in deployed output.** `STAGING/claude-repin-layers-green/` (the #2681 branch, the only preview built with the new pins) has hrefs like `./assets/css/…` and `./assets/qa/…`, and its `index.html` has 0 occurrences of its own slug. A preview built from older pins (`dependabot-…`) still writes `/folio-assistant/STAGING/<slug>/` into every link.
+- **Rebuilds are mostly constant.** The same preview, built 2026-10-26 16:35 and 2026-10-28 12:37 across further layer re-pins: 11,625 common pages, **6,945 byte-identical (59.7 %)**. The differences checked are real content (a count 23→24, a new Schemas link), not build stamps.
+- **Not yet measurable: sharing BETWEEN previews and with the root.** Every other preview and the main-site root were built from pre-#2681 code, so they share 0 identical pages with the new one, as expected. The ~77 MB projection is still unclaimed. It needs two previews (or a preview and the root) built from main at or after 5827603. The `Re-measure STAGING` row stays open for that.
