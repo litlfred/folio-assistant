@@ -294,7 +294,7 @@ directory. The page shows it as one row in the `via sidecar` state.
 
 - **Recognised by declaration, never by path.** A directory is frozen because
   `<name>.md` beside it declares `$schema: folio-fsh-guts/v1` and
-  `kind: separated-instance` (`isFrozenSubtree` in `schemas/fsh-guts.ts`). A
+  `kind: separated-instance` (`isFrozenSubtree` in `schemas/kg/fsh-guts.ts`). A
   copy dropped in with no note, or under a note of another kind, is walked
   like any directory, so its files fail self-declaration loudly rather than
   vanishing from every check.

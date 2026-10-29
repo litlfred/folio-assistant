@@ -1191,8 +1191,9 @@
       "module": "cat-harness/schemas/fsh-guts.ts",
       "instance": "cat-harness",
       "name": "fsh-guts",
-      "graphNode": "schema",
-      "summary": "A node of the trashcan — what `fsh-guts/` holds, and what may leave it.",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./kg/fsh-guts.js`",
+      "summary": "Moved to `./kg/fsh-guts.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -1582,6 +1583,14 @@
       "name": "front-matter",
       "graphNode": "schema",
       "summary": "The one YAML front-matter reader for this repository's self-declaring files.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/kg/fsh-guts.ts",
+      "instance": "cat-harness",
+      "name": "fsh-guts",
+      "graphNode": "schema",
+      "summary": "A node of the trashcan — what `fsh-guts/` holds, and what may leave it.",
       "isTest": false
     },
     {
@@ -22881,91 +22890,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/fsh-guts.ts#FshGutsNode",
-      "name": "FshGutsNode",
-      "module": "cat-harness/schemas/fsh-guts.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/fsh-guts.ts#FshGutsNodeSchema",
-      "name": "FshGutsNodeSchema",
-      "module": "cat-harness/schemas/fsh-guts.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(FSH_GUTS_SCHEMA_ID)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "OPEN, deliberately. A proposal, a webpage, a todo, a retired diagram, a"
-        },
-        {
-          "name": "movedOn",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "When it was moved here."
-        },
-        {
-          "name": "movedFrom",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Where it used to live."
-        },
-        {
-          "name": "issue",
-          "type": "z.union([z.string(), z.number()]).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The issue that superseded it, or that it was written for."
-        },
-        {
-          "name": "bean",
-          "type": "BeanIdSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The work-plan item this was written under, where there is one."
-        },
-        {
-          "name": "summary",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/tools/tool-types.ts#BeanIdSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "FSH_GUTS_SCHEMA_ID",
-        "z"
-      ],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/ig-publisher-service-contract.test.ts#Capability",
       "name": "Capability",
       "module": "cat-harness/schemas/ig-publisher-service-contract.test.ts",
@@ -28016,6 +27940,91 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/kg/fsh-guts.ts#FshGutsNode",
+      "name": "FshGutsNode",
+      "module": "cat-harness/schemas/kg/fsh-guts.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/kg/fsh-guts.ts#FshGutsNodeSchema",
+      "name": "FshGutsNodeSchema",
+      "module": "cat-harness/schemas/kg/fsh-guts.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FSH_GUTS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "OPEN, deliberately. A proposal, a webpage, a todo, a retired diagram, a"
+        },
+        {
+          "name": "movedOn",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When it was moved here."
+        },
+        {
+          "name": "movedFrom",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where it used to live."
+        },
+        {
+          "name": "issue",
+          "type": "z.union([z.string(), z.number()]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The issue that superseded it, or that it was written for."
+        },
+        {
+          "name": "bean",
+          "type": "BeanIdSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The work-plan item this was written under, where there is one."
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tools/tool-types.ts#BeanIdSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "FSH_GUTS_SCHEMA_ID",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -54933,7 +54942,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/fsh-guts.ts#FshGutsNodeSchema",
+        "cat-harness/schemas/kg/fsh-guts.ts#FshGutsNodeSchema",
         "cat-harness/schemas/sdlc/staging-preview.ts#StagingPreviewBlockSchema"
       ],
       "unresolved": [],
@@ -67062,7 +67071,7 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "NPM-style package id, e.g. `smart.who.int.trust`."
+          "doc": "NPM-style package id, e.g. `hl7.fhir.uv.ips`."
         },
         {
           "name": "version",
@@ -67081,7 +67090,7 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`."
+          "doc": "The canonical base every artefact's canonical URL extends, e.g. `http://hl7.org/fhir/uv/ips`."
         },
         {
           "name": "builtAt",
@@ -69388,7 +69397,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
+          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `hl7.fhir.uv.ips`."
         },
         {
           "name": "canonical",
@@ -80703,14 +80712,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/fsh-guts.ts#FshGutsNodeSchema",
-      "to": "cat-harness/schemas/tools/tool-types.ts#BeanIdSchema",
-      "via": "bean",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema",
       "to": "cat-harness/schemas/kg/built-at-publish.ts#BuiltAtPublishCauseSchema",
       "via": "because",
@@ -81573,6 +81574,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/kg/fsh-guts.ts#FshGutsNodeSchema",
+      "to": "cat-harness/schemas/tools/tool-types.ts#BeanIdSchema",
+      "via": "bean",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema",
@@ -85992,7 +86001,7 @@
     },
     {
       "from": "cat-harness/schemas/sdlc/staging-preview.ts#StagingPreviewNodeSchema",
-      "to": "cat-harness/schemas/fsh-guts.ts#FshGutsNodeSchema",
+      "to": "cat-harness/schemas/kg/fsh-guts.ts#FshGutsNodeSchema",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -90199,7 +90208,7 @@
     {
       "id": "fsh-guts",
       "source": "typology",
-      "decl": "cat-harness/schemas/fsh-guts.ts#FshGutsNodeSchema",
+      "decl": "cat-harness/schemas/kg/fsh-guts.ts#FshGutsNodeSchema",
       "instance": "cat-harness",
       "typologies": [
         "fsh-guts"
