@@ -2,11 +2,11 @@
 # folio-assistant-hs08
 $schema: bean/1.0.0
 title: 'MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T10:02:53Z
-updated_at: 2026-10-26T14:03:00Z
+updated_at: 2026-10-29T08:05:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -190,7 +190,7 @@ cross-reference in the corpus. The declaration is four lines.
       ways, and already clean against 37 commits of concurrent work
 - [x] 27 identifiers renamed off `CONTENT_*`
 - [x] qou declares its folio at `content/` (litlfred/qou#7445, merged `0e1b226d`)
-- [x] the eight vendored workflows' `cd content` — after the folios move (`litlfred/folio-assistant#2650` @ `aee46850`, open)
+- [x] the eight vendored workflows' `cd content` — after the folios move (`litlfred/folio-assistant#2650`, merged 137b521)
 
 
 ## RE-MEASURED 2026-09-22 on `main` at `b7f8945b` — every count in this bean is stale, and one is off by 20×
@@ -271,3 +271,5 @@ reader and every tool consult, so it is the one that was corrected. Restating
 the list down here produced a **shadow checklist** — `check:bean-bodies` caught
 it, correctly: a ticked item down here beside an unticked canonical one is two
 answers to one question.
+
+_2026-10-29T08:05:00Z_ — Completed: folio-assistant#2650, the last open item, merged 137b521 on 2026-10-29 (Lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). agy's last edit here was 2026-10-26 (record only, no claim).
