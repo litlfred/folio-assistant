@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:36:56Z
-updated_at: 2026-10-26T14:03:00Z
+updated_at: 2026-10-29T07:35:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -108,3 +108,5 @@ Re-measured: `DAK.fsh` and every `<Name>Source` in `DAKComponentSources.fsh` are
 _2026-10-24T08:30:35Z_ — Owner chose **A** (type the source wrapper only; card, 08:27Z) and OK'd the merge (08:30Z). smart-base#151 merged as eb3f9b5: each of the nine formalized components takes WHO's url / canonical / instance wrapper, exactly one; the inline instance stays `unknown` by that choice. Item 1 is done to the agreed scope. Still open: items 2 to 4 (type registry, the `sushi`/`ig` content types, migrating the real repos).
 
 _2026-10-26T10:39:18Z_ — `litlfred/cat-harness#521` merged (`65e1673b`: `index.config.json` content-type sections as markers and `directory-conventions.md` updated for `contentTypes.dak`); `litlfred/smart-base#156` ("Move the DAK declaration into index.config.json (contentTypes.dak)") is open.
+
+_2026-10-29T07:35:00Z_ — smart-base#156 (e61ef9c) merged: the DAK declaration lives in index.config.json `contentTypes.dak`; IGs still on dak.json keep building with a warning. Still open: items 2 to 4 (type registry, `sushi`/`ig` content types, migrating the other smart-* repos; WHO repos only with the owner's OK). Session https://claude.ai/code/session_01Qmmkt87nxnLXyraNsmmpKH (Drain FHIR and smart layer work).

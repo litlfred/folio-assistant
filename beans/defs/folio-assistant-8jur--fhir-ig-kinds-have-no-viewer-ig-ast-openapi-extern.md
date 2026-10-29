@@ -2,11 +2,11 @@
 # folio-assistant-8jur
 $schema: bean/1.0.0
 title: 'FHIR / IG kinds have no viewer: IG AST, OpenAPI, external schemas, L1 extraction, themes'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-24T14:38:00Z
+updated_at: 2026-10-29T07:35:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -39,3 +39,5 @@ _2026-10-24T14:38:00Z_ — Complete row-by-row audit & final row (`smart-trust` 
   - `l1-extraction` (`smart-base` + `smart-immunizations`) → `/en/smart-base/l1-extraction/smart-base/` (`litlfred/smart-base#102` `237873f` merged)
   - `themes` (`smart-base`, `who-iris`) → `/en/cat-harness/themes/` (`litlfred/cat-harness-tools#554`, `#565`, `#667` + `litlfred/cat-harness#417`, `#414` merged)
 - **Final row (`smart-trust` `ig-ast`)**: [`litlfred/fhir-harness#170`](https://github.com/litlfred/fhir-harness/pull/170) (`54cab1f`) declares `"writer": ["scripts/gen-ig-ast-pages.ts"]` on the `ig-ast` visualiser in `fhir-harness/fhir-harness.json` (so `derive:publish` schedules `gen-ig-ast-pages.ts` for the branch-kept `smart-trust-ast` directory), and [`litlfred/cat-harness-tools#764`](https://github.com/litlfred/cat-harness-tools/pull/764) (`2c356f4`) updates `viewersOf` (`subRef`) in `scripts/viewer-declarations.ts` to honour `v.writer !== undefined` on subgraphs. Verified `/en/fhir-harness/ig-ast/smart-trust/` resolves with 0 `"no viewer yet"` rows across all 6 rows in `8jur`. Ready to close once `fhir-harness#170` and `cat-harness-tools#764` merge.
+
+_2026-10-29T07:35:00Z_ — fhir-harness#170 (f6d64a2) and cat-harness-tools#764 (5c58cb4) merged inside the owner's 2026-10-29 07:21Z merge window. All six rows have a viewer. Session https://claude.ai/code/session_01Qmmkt87nxnLXyraNsmmpKH (Drain FHIR and smart layer work).

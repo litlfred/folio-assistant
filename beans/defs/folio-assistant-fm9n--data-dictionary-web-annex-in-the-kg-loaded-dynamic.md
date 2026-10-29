@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-10T16:13:16Z
-updated_at: 2026-10-24T08:34:00Z
+updated_at: 2026-10-29T07:35:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -31,3 +31,5 @@ _2026-10-24_ — CLAIMED by the library viewers thread (session https://claude.a
 _2026-10-24 08:32Z_ — OWNER CHOSE: annexes go in their own declared directory (B, 08:27Z), and that is generalised to L1 and L2 by widening smart-base `dak-annex` into one `web-annex` kind (A, 08:32Z). Each annex names its document-kind section (e.g. `dak#core-data-elements`, `l1#annexes`). The generic page hook is fhir-harness#152 (issue #151). smart-base and smart-immunizations PRs follow.
 
 _2026-10-24 19:22Z_ — BUILT AND MERGED. fhir-harness#152 (568607d): generic `ig-annex` kind and annex staging. smart-base#153 (cf6b597): `dak-annex` renamed `web-annex`, with annexOf, label, section and iris (merged around readme:subgraphs:check on the owner's 15:52Z card; it clears once folio-assistant re-pins tools ≥ fe768cc). smart-immunizations#80 (ed73b54): the data dictionary (272 elements) as Web Annex A in `web-annexes/`, mounts `smart-immunizations-annexes` and `smart-immunizations-web-annexes` (merged around check:partition on the 19:20Z card; cat-harness-tools#770, 8a27ed3, fixes it). Left: folio-assistant re-pin naming the two new mounts, after folio-assistant#2681; BPMN docs still name check-dak-annexes.ts.
+
+_2026-10-29T07:35:00Z_ — smart-base#166 (30feb70) merged: BPMN docs name check-web-annexes.ts. Left: the folio-assistant re-pin naming the two smart-immunizations annex mounts, after folio-assistant#2681. Session https://claude.ai/code/session_01Qmmkt87nxnLXyraNsmmpKH (Drain FHIR and smart layer work).

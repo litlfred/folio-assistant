@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-23T14:30:00Z
-updated_at: 2026-10-23T14:36:00Z
+updated_at: 2026-10-29T07:35:00Z
 parent: folio-assistant-n3h9
 ---
 
@@ -29,7 +29,7 @@ Measured on smart-trust's AST: 682 artefacts against 678 committed. 608 are iden
 - [x] fhir-harness#123: the ig-ast viewer lists IGs inherited through `needs` (`needing`, `lsRemote`, `AST_FAMILY_PREFIXES`)
 - [x] fhir-harness#127: `ig-index:build` (`build-ig-indexes.ts`) writes index.json, menu.json and releases.json at publish for every IG instance. Real run: 3 of 3 built.
 - [ ] folio-assistant: run `ig-index:build` before the IG page steps (docs-site.yml, feature-staging.yml, code-quality-gates.yml); retire `ingest:ig:check` and `ingest:ig-menu:check`
-- [ ] smart-trust and smart-base: declare `fhir-artifact-index/` builtAtPublish (writer `ig-index:build`), delete the committed index/menu/releases/package.tgz, run SUSHI first
+- [x] smart-trust and smart-base: declare `fhir-artifact-index/` builtAtPublish (writer `ig-index:build`), delete the committed index/menu/releases/package.tgz, run SUSHI first
 - [ ] DAK sidecars (`dak/`): move to smart-base's `ig-site:sidecars` step, never into fhir-harness
 - [ ] Re-pin the index after each merge
 
@@ -37,3 +37,5 @@ Measured on smart-trust's AST: 682 artefacts against 678 committed. 608 are iden
 
 - Category grouping falls back to the Publisher default by resource type once no committed copy is left to keep it from.
 - Published links need a published base, which fhir-harness must not guess.
+
+_2026-10-29T07:35:00Z_ — smart-base#145 (3af02d2) and folio-assistant#2684 (08af24f) merged; smart-trust#71, cat-harness-tools#675 and cat-harness#490 had already merged. folio-assistant runs `ig-index:build` in docs-site, feature-staging and code-quality-gates. Left: delete the unused `ingest:ig:check` / `ingest:ig-menu:check` scripts from package.json, the DAK sidecars step, and the re-pin in folio-assistant#2681. Session https://claude.ai/code/session_01Qmmkt87nxnLXyraNsmmpKH (Drain FHIR and smart layer work).
