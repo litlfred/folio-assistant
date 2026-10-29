@@ -2,11 +2,11 @@
 # folio-assistant-f1e1
 $schema: bean/1.0.0
 title: Identity of the person typing, outside a GitHub environment — needs WAY more work
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T18:50:25Z
-updated_at: 2026-10-24T09:52:00Z
+updated_at: 2026-10-29T08:00:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -54,3 +54,7 @@ Remaining: identity on other agent hosts, and several people per machine or sess
   - Updated `skills/conduct/conduct-core/interaction-modality.md` §3.1 with the agent host identity & `SessionStart` hook table, multi-account provider configuration, and multi-person session disambiguation (`ambiguous-multi-user` fallback to the strictest profile).
 
 _2026-10-24T09:24:00Z_ — Claude drain thread: cat-harness-tools#688 (agent hosts by their markers, `CAT_HARNESS_PERSON`, strictest profile when several people match) and cat-harness#503 (interaction-modality §3.1) are merged. The owner chose to keep #688 as the base (08:21Z). agy rebases the profiles map, the active-account choice and the ambiguous state from #686/#502 onto it, and holds this bean until they land.
+
+## Closed 2026-10-29
+
+All gaps met. cat-harness-tools#686 (profiles, multi-account form, ambiguous-multi-user) and cat-harness#502 (skill text) merged 2026-10-29 onto #688/#503, per the owner ruling of 2026-10-24 08:21Z. (Lane B drain thread.)
