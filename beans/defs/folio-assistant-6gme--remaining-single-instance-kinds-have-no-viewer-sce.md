@@ -2,11 +2,11 @@
 # folio-assistant-6gme
 $schema: bean/1.0.0
 title: 'Remaining single-instance kinds have no viewer: scenarios, policies, UML, test plan, tool releases, vocab mapping, voice vendors, waivers, substrate snapshots, basic CDN site, Lean packages, bootstrap-tools skills'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-24T14:38:00Z
+updated_at: 2026-10-29T07:33:32Z
 parent: folio-assistant-46ob
 ---
 
@@ -80,3 +80,5 @@ _2026-10-24T14:38:00Z_ — Complete row-by-row audit & final row (`bootstrap-too
   - `basic-cdn-site` (`cat-harness`) → `/en/cat-harness/site/` (`cat-harness-tools#494`, `cat-harness#390`, `cat-harness#406`)
   - `lean` (`folio-assistant-sci`) → `"no viewer by design"` (`renderExemption.of: ["visualiser"]`, `folio-assistant-sci#21` + `cat-harness-tools#571` merged)
 - **Final row (`bootstrap-tools` `skills`)**: [`litlfred/cat-harness-tools#764`](https://github.com/litlfred/cat-harness-tools/pull/764) (`2c356f4`) adds `skillsDirectoriesAcrossInstances` to `index/skills` in `scripts/gen-auto-docs.ts` (walking `instanceRootsIn(REPO)` for instances not exempt from `"visualiser"`), emitting `cat-harness/docs/cat-harness/auto-docs/index/skills/bootstrap-tools-skills/index.html` while keeping `bootstrap` exempt. Verified 0 `"no viewer yet"` rows remain across all 14 rows in `6gme`. Ready to close once `cat-harness-tools#764` merges.
+
+_2026-10-29T07:33:32Z_ — Completed: final row (bootstrap-tools skills) landed with cat-harness-tools#764 (5c58cb4), merged 2026-10-29. Every row has a viewer or a recorded exemption.
