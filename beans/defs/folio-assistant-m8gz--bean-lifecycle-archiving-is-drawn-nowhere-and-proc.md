@@ -119,7 +119,7 @@ by default.
       naturally owns "and now tidy the store" — in which case the answer is a
       scheduled process, not a fourth op. Everything else follows from this.
 - [x] `Process_BeanLifecycle` is either called by something or retired. A
-      diagram nobody calls looks like coverage; that is the `dh4f` family. — **split into reusable `Process_BeanOpen` and `Process_BeanClose` called across all four content layers (`litlfred/cat-harness#528` @ `56f051cc`, `litlfred/folio-assistant-core#207`, `litlfred/smart-base#154` @ `9118518c`, `litlfred/folio-assistant-sci#73`, all merged 2026-10-24); companion check `check:bean-calls` in `litlfred/cat-harness-tools#723` is in review.**
+      diagram nobody calls looks like coverage; that is the `dh4f` family. — **split into reusable `Process_BeanOpen` and `Process_BeanClose` called across all four content layers (`litlfred/cat-harness#528` @ `56f051cc`, `litlfred/folio-assistant-core#207`, `litlfred/smart-base#154` @ `9118518c`, `litlfred/folio-assistant-sci#73`, all merged 2026-10-24); companion check `check:bean-calls` merged in `litlfred/cat-harness-tools#723` (`3c34be3`, 2026-10-29).**
 - [x] `action=` on `<folio:bean>` is REFUSED at load rather than ignored — and
       turning it on found 19 live `store="beans/"` instances across 11 diagrams
 - [x] `todo-manager` says when a bean is archived; it currently stops at
@@ -149,3 +149,5 @@ _2026-10-26T13:20:00Z_ — Progress update: `litlfred/cat-harness#416` (`2026-10
 ## Closed 2026-10-29
 
 All done-when boxes met. cat-harness-tools#723 (check:bean-calls) merged 2026-10-29; the OPEN/CLOSE diagrams and test updates landed earlier (cat-harness#528, tools#784). (Lane B drain thread.)
+
+_2026-10-29T07:40:00Z_ — **Completed.** `litlfred/cat-harness-tools#723` (`check:bean-calls`, run inside `check:workflow-refs`) merged as `3c34be3`; every done-when box is ticked. The drain loop built on OPEN/CLOSE is bean `bssi`. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
