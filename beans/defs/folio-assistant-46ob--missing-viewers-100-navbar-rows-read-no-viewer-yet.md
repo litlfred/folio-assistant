@@ -2,11 +2,11 @@
 # folio-assistant-46ob
 $schema: bean/1.0.0
 title: "Missing viewers: 100 navbar rows read 'no viewer yet' across 47 kinds on the live site"
-status: todo
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-22T14:30:00Z
+updated_at: 2026-10-29T15:50:18Z
 parent: folio-assistant-rwmf
 ---
 
@@ -51,3 +51,5 @@ And on the landing page (`index.html`), `folio-assistant-sci` (`lean`) and `boot
 ---
 
 *2026-10-29T12:20Z* — Live re-measure (publish of 10:36Z): only the outside-libraries rows (software-library kind) still said "no viewer yet", on cat-harness, cat-harness-tools, fhir-harness and folio-assistant-sci. The owner chose "no viewer by design" on the Lane D card. PRs declare `coverage.exempt.visualiser` on each layer's libraries directory: cat-harness#692, cat-harness-tools#841, fhir-harness#185, folio-assistant-sci#107 (issue cat-harness#691). Once merged and re-pinned, no row says "no viewer yet". Session https://claude.ai/code/session_01Qmmkt62KVMxDU9gjVV1mm2.
+
+_2026-10-29T15:50:18Z_ — 2026-10-29T15:50Z — Live on gh-pages 643d3f6: no row says "no viewer yet"; the outside-libraries rows say "no viewer by design" (owner card, cat-harness#691; fa#2710). Session https://claude.ai/code/session_01Qmmkt62KVMxDU9gjVV1mm2.
