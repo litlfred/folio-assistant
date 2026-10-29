@@ -173,6 +173,21 @@ accordingly declares `invoke.mcp` as **one optional arm** beside `shell` and
 `container`. A Tool whose *only* invocation is an MCP call is not usable by the
 harness that defines it.
 
+**Editing a skill goes through `skill_update`, not a raw file write**
+(folio-assistant#875). Where the server runs, it is the write side of
+`skill_fetch`. It refuses unless every gate passes:
+
+- the skill resolves as `skill_fetch` serves it;
+- the file is tracked in this repository, so not another layer's skill and not a mounted copy;
+- the file is not generated;
+- a policy grants `skill-update` to the actor (no default policy does);
+- the file is unchanged since it was read;
+- the front matter parses and keeps the skill's name;
+- every link the edit adds resolves.
+
+A gate that cannot decide refuses. The Tool writes the working tree, and the
+caller commits the change.
+
 **That is a statement about dependency, not about ignorance.** MCP is an
 *output* of this harness: [`mcp-projection`](mcp-projection.md) is how an agent
 takes a Tool node describing a CLI and produces a working MCP service from it,

@@ -169,8 +169,9 @@ everything `needs` its way back to `kg-current`. The bean row is what a
 narrower graph buys — `beans` reaches only `docs-pages` and `state-dashboards`.
 
 The two that always run are `bootstrap` (pending — nothing to cache yet) and
-`kg-dynamic` (`alwaysRun`: it exports the graph *after* stage 2 has
-contributed, so its input is that output rather than a source file).
+`kg-dynamic` (`alwaysRun`: it exports the running workflows' state, whose
+stuck states are measured against the clock, so no source hash could make
+caching it correct).
 
 **Report the cached steps as cached, never as a pass.** In this pipeline a
 "skip" already means *its input never rendered*, which is a much worse fact —

@@ -47,3 +47,7 @@ _2026-10-22T14:30:00Z_: Re-measured on `gh-pages` `ec00fd2438` across all 8 `ass
 - **SMART Base:** **3** of 22 (`External schemas`, `L1 extraction`, `Themes` — `Scenarios` now links)
 - **WHO SMART Trust:** **4** of 5 (`Docs`, `IG AST`, `IG pages`, `Openapi`)
 And on the landing page (`index.html`), `folio-assistant-sci` (`lean`) and `bootstrap-tools` (`skills`) remain in `6gme`.
+
+---
+
+*2026-10-29T12:20Z* — Live re-measure (publish of 10:36Z): only the outside-libraries rows (software-library kind) still said "no viewer yet", on cat-harness, cat-harness-tools, fhir-harness and folio-assistant-sci. The owner chose "no viewer by design" on the Lane D card. PRs declare `coverage.exempt.visualiser` on each layer's libraries directory: cat-harness#692, cat-harness-tools#841, fhir-harness#185, folio-assistant-sci#107 (issue cat-harness#691). Once merged and re-pinned, no row says "no viewer yet". Session https://claude.ai/code/session_01Qmmkt62KVMxDU9gjVV1mm2.

@@ -366,10 +366,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-29T11:48:51.096Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/05cc8de788d867091fe1c5bed924b0a8561338e4",
-  "sourceCommitSha": "05cc8de788d867091fe1c5bed924b0a8561338e4",
-  "sourceCommitAt": "2026-10-29T10:55:59Z",
+  "generatedAt": "2026-10-29T12:43:56.595Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b61ad260f1d007f3e22291325bcd625aa5354902",
+  "sourceCommitSha": "b61ad260f1d007f3e22291325bcd625aa5354902",
+  "sourceCommitAt": "2026-10-29T12:25:13Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -383,7 +383,7 @@
     "SequenceFlow": 1037,
     "Lane": 171,
     "ProcessNode": 1004,
-    "Tool": 166,
+    "Tool": 167,
     "Schema": 180,
     "ExternalSchema": 28,
     "GraphTypology": 52,
@@ -3860,7 +3860,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/folio-core"
       ],
       "instructionsPath": "skills/tools/folio-core/skills-and-tools.md",
-      "instructionLines": 445,
+      "instructionLines": 460,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4213,7 +4213,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/render-order.md",
-      "instructionLines": 124,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4324,7 +4324,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/incremental-render.md",
-      "instructionLines": 210,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -46010,6 +46010,96 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/skill-update.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "skill-update",
+      "title": "Edit a skill",
+      "description": "Change one existing local skill's instruction file through a gate: it must resolve as skill-fetch serves it, be tracked in the working repository, not be generated, be granted `skill-update` to the actor by a policy, be unchanged since it was read, keep its name and parse, and add only links that resolve. A gate that cannot decide refuses. Writes the working tree; the caller commits.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "skill_update"
+        },
+        "inProcess": {
+          "module": "src/tools/skill-update.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "skill",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/SkillName",
+            "required": true
+          },
+          {
+            "name": "package_name",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
+            "required": false
+          },
+          {
+            "name": "new_content",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
+            "description": "The whole new file: front matter and body.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          },
+          {
+            "name": "base_sha256",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "SHA-256 hex of the file as the caller read it.",
+            "required": true
+          },
+          {
+            "name": "reason",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Why the skill changes.",
+            "required": true
+          },
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "The declared actor making the write; a policy must grant it skill-update.",
+            "required": false
+          },
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId",
+            "description": "The BPMN process the write is a step of, for the PROV-O activity.",
+            "required": false
+          },
+          {
+            "name": "task",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId",
+            "description": "The task in that process.",
+            "required": false
+          },
+          {
+            "name": "role",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "The role the lane binds.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
+            "description": "Written or not, every gate's verdict with its reason, findings, and the PROV-O activity of an accepted write when a step was named."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/skills-and-tools"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/slice-sqlite.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "slice-sqlite",
@@ -77147,6 +77237,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/skill-list.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/skill-update.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/skill-update.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/skill-update.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/tools/slice-sqlite.jsonld",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/slice-sqlite.jsonld",
@@ -79183,8 +79279,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "05cc8de788d867091fe1c5bed924b0a8561338e4",
+    "sha": "b61ad260f1d007f3e22291325bcd625aa5354902",
     "pr": "main",
-    "run": "40861428685"
+    "run": "40873105997"
   }
 }

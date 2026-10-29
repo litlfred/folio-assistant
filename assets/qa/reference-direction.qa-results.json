@@ -35,10 +35,10 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5915,
+          "occurrences": 5917,
           "allowed": 0,
-          "wrongDirection": 9,
-          "wrongDirectionFiles": 5,
+          "wrongDirection": 11,
+          "wrongDirectionFiles": 7,
           "exempt": 5906,
           "namesRepository": 0,
           "undetermined": 0,
@@ -49,7 +49,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 5,
+      "count": 7,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/bean-dedupe.ts",
@@ -58,6 +58,14 @@
         {
           "file": "cat-harness-tools/scripts/kg-export.ts",
           "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/skills/ui/ui-core/render-order.md",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/tools/skill-update/skill-update.ts",
+          "target": "cat-harness-tools"
         },
         {
           "file": "fhir-harness/fhir-harness.json",
@@ -74,5 +82,5 @@
       ]
     }
   },
-  "total": 6
+  "total": 8
 }

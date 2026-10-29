@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 67,
+      "count": 68,
       "unit": "open beans"
     }
   },
@@ -2434,6 +2434,20 @@
       "file": "beans/defs/folio-assistant-55ao--add-a-first-class-recommendation-block-kind-for-do.md"
     },
     {
+      "id": "folio-assistant-565h",
+      "title": "Re-measure the navbar's 'no viewer yet' rows after the next publish",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-46ob",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-29T12:20:00Z",
+      "updatedAt": "2026-10-29T12:20:00Z",
+      "preview": "## Parent\n\nfolio-assistant-46ob\n\n## Why\n\nEvery viewer child of 46ob is completed, but 3 rows still read \"no viewer yet\" on the live site, because the fixes are not yet published. This is the work 46ob stays open for, recorded as an open child so `check:bean-rollup` sees it.\n\n## Done when\n- [ ] the next folio-assistant publish has deployed\n- [ ] `en/cat-harness/library/index.html` on gh-pages is re",
+      "file": "beans/defs/folio-assistant-565h--re-measure-the-navbar-viewers-after-the-next-publish.md"
+    },
+    {
       "id": "folio-assistant-57mn",
       "title": "qa-sweep loads contributions from cat-harness/ and registers 0 contributed checkers",
       "status": "completed",
@@ -3078,14 +3092,14 @@
     {
       "id": "folio-assistant-6h47",
       "title": "RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:59:52Z",
-      "updatedAt": "2026-10-24T07:40:00Z",
+      "updatedAt": "2026-10-29T12:10:00Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
@@ -12994,6 +13008,20 @@
       "file": "beans/defs/folio-assistant-tlk2--second-hop-move-cat-state-and-cat-fhir-ast-to-cath.md"
     },
     {
+      "id": "folio-assistant-tmo5",
+      "title": "First real KG subscription: litlfred/ihris",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fnx4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-29T12:20:00Z",
+      "updatedAt": "2026-10-29T12:20:00Z",
+      "preview": "## Parent\n\nfolio-assistant-fnx4\n\n## Why\n\nfnx4's own \"Done when\" box \"first real subscription: `litlfred/ihris`\" is unchecked, and no instance declares a real subscription yet. All earlier children are completed, so this records the remaining work as an open child for `check:bean-rollup`.\n\n## Done when\n- [ ] an instance declares a `subscriptions` entry for `litlfred/ihris` and it materialises",
+      "file": "beans/defs/folio-assistant-tmo5--first-real-kg-subscription-litlfred-ihris.md"
+    },
+    {
       "id": "folio-assistant-tn3d",
       "title": "LLM evaluation methodologies for Verifiable AI in SMART guidelines (issue #2513)",
       "status": "completed",
@@ -16381,14 +16409,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 324,
+        "total": 325,
         "closed": 293,
-        "open": 31,
+        "open": 32,
         "inProgress": 21,
-        "todo": 10,
+        "todo": 11,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.904320987654321
+        "share": 0.9015384615384615
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16426,14 +16454,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 20,
-        "total": 642,
-        "closed": 618,
+        "total": 643,
+        "closed": 619,
         "open": 24,
         "inProgress": 10,
         "todo": 13,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.9626168224299065
+        "share": 0.9626749611197511
       },
       {
         "id": "folio-assistant-npuo",
@@ -16452,8 +16480,8 @@
       }
     ],
     "orphanOpen": 2,
-    "openTotal": 67,
-    "coveredOpen": 62,
+    "openTotal": 68,
+    "coveredOpen": 63,
     "duplicateIds": 0
   }
 }

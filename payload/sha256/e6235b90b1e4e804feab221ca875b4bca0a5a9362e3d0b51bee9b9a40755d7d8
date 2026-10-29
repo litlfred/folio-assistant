@@ -2,11 +2,11 @@
 # folio-assistant-6h47
 $schema: bean/1.0.0
 title: 'RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T19:59:52Z
-updated_at: 2026-10-24T07:40:00Z
+updated_at: 2026-10-29T12:10:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -50,3 +50,5 @@ no filename is minted here by guess. Left `todo`; re-measure when a viewer
 that reads dynamic state opens a PR.
 
 _2026-10-24T07:40:00Z_ — Re-measured, still blocked on box 1. On cat-harness-tools `main` only `scripts/render-pipeline.ts` names `kg-dynamic`; in cat-harness only the `render-order` / `incremental-render` skills and the `render-order` Tool mention it. No viewer reads a dynamic-state document, so no filename is minted. Left `todo`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
+
+*2026-10-29T12:10:00Z* — **Completed.** The owner chose option A on 2026-10-29 (Lane B card Q1) and OK'd the merge at 12:04Z. Render stage 3 (`kg-dynamic`) publishes `<site>/<harness>/state.jsonld`, typed `cat-harness:DynamicState`, and the workflow instance pages read it: litlfred/cat-harness-tools#839 (53d4497) and litlfred/cat-harness#688 (e134b39). All three boxes are met. Session https://claude.ai/code/session_01Qmmkt7rXCDPexdBbNqeJqU

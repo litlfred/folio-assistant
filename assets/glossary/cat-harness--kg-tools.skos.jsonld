@@ -2494,6 +2494,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/skill-update",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Edit a skill"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Change one existing local skill's instruction file through a gate: it must resolve as skill-fetch serves it, be tracked in the working repository, not be generated, be granted `skill-update` to the actor by a policy, be unchanged since it was read, keep its name and parse, and add only links that resolve. A gate that cannot decide refuses. Writes the working tree; the caller commits."
+        }
+      ],
+      "skos:notation": "skill-update",
+      "dcterms:source": "cat-harness/tools/skill-update/skill-update.ts#skill-update",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/slice-sqlite",
       "@type": "skos:Concept",
       "skos:inScheme": {

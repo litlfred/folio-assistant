@@ -104,15 +104,24 @@ graph and the graph must not wait on it. Same shape as its exemption from the
 `visualiser` criterion in `check:subgraph-coverage`, and a **second criterion
 rather than a hole**: it owes its own `.json`/`.jsonld` instead (bean `hfkl`).
 
-## What stage 3 writes is not settled, and is not guessed
+## What stage 3 writes: `<harness>/state.jsonld`
 
 The owner named it *"cat-harness/state.jsonld or so (whatever matches the
-dyanmic state vsualizesrs)"* — an explicit uncertainty. **The step's position
-is fixed; its output filename is not.** It is settled when the dynamic-state
-visualisers say what they read, and until then the step re-exports the graph
-the stage-2 renderers contributed to, which is the part of the description
-that was never in question. Do not mint a published artefact name to close a
-gap the author left open.
+dyanmic state vsualizesrs)"*, which was an explicit uncertainty. Until a
+visualiser named its input, the step's position was fixed and its filename
+was not. **Settled 2026-10-29** (bean `6h47`, owner's option A): the workflow
+pages are the dynamic-state visualiser. `kg-dynamic` publishes
+`<site>/<harness>/state.jsonld` (`scripts/dynamic-state-export.ts` in
+cat-harness-tools), and each workflow instance page reads it when it loads.
+
+It is a different document from the stage-1 graph export, and a reader can
+tell them apart without the path: it is typed `cat-harness:DynamicState`, its
+`$schema` is `cat-harness-dynamic-state/v1`, and it holds only the running
+instances, the steps their tokens sit on, and their stuck states. A bean store
+that could not be read is named in `unreadStores`, so its instances read as
+unknown, never as none. The lesson stands for the next open name: **do not
+mint a published artefact name to close a gap the author left open**. Wait
+for the reader that names it.
 
 ## This declares the order; `docs-site.yml` still publishes
 
