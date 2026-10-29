@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-24T15:04:00Z
+updated_at: 2026-10-29T07:55:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -55,3 +55,5 @@ _2026-10-24T12:19:07Z_: G2 done: cat-harness#537 (fb7e393) and cat-harness-tools
 _2026-10-24T13:02:20Z_: G3, nested-subgraph half done: cat-harness-tools#743 (ee46bf6, both remote-mount planners resolve nested ids via instanceDirectories), cat-harness#568 (88106da, skill + Tool text), folio-assistant-core#214 (1d644b6, kg:materialize --nodes uses publishedSubgraphDir and falls back to the per-pin package). planHydrated ignores mountDefaults.directories on purpose (hydrated is the step before choosing). Left: node ids (single Tools) with import closure, and kg:materialize byte mode by nested id — cat-harness-tools#744, waiting on four owner decisions (what a Tool brings, one closure walker, granularity, nested-id choice in byte mode). Note: check:tools-closure is an allowlist gate, not a closure computer.
 
 _2026-10-24T15:04:00Z_: G3 done and end-to-end shown (owner chose all four recommendations, 2026-10-24 card): bootstrap-tools#43 (1584c10, one closure walker importClosure), cat-harness#581 (8747b00, overrides.<instance>.tools), cat-harness-tools#751 (46c1625, tool-closure.ts; T1 = hydrated metadata, three Tools by id, each with definition + implementation + closure, all modules load), folio-assistant-core#216 (f53b0d0, nested subgraph by parent id, materialised by path). Pending owner pick: should a Tool closure narrow OTHER mount entries it touches (A as built / B recommended / C opt-in field). Left: concern names (sdlc expansion) and writing the review choice back to the mount entry.
+
+_2026-10-29T07:55:00Z_ — Claimed by Lane E of the 2026-10-29 drain ("Fix KG mounts and publication", https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo), taking over from the README regen thread.

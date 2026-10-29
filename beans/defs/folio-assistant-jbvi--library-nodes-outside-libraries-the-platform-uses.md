@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-26T14:22:00Z
+updated_at: 2026-10-29T07:55:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -25,9 +25,9 @@ A library's version, licence, which layer uses it, and the shim that types it ar
 
 ## Done when
 
-- [ ] a proposal names the kind, the layer that owns it (cat-harness for the kind; the using layer for each node), and what each node carries: name, version range, licence, used-by and shim
-- [ ] it says how it relates to `software.json`, `THIRD-PARTY-NOTICES.md` and `external-schemas`, and whether any of them becomes derived from it
-- [ ] the owner picks before anything is built
+- [x] a proposal names the kind, the layer that owns it (cat-harness for the kind; the using layer for each node), and what each node carries: name, version range, licence, used-by and shim
+- [x] it says how it relates to `software.json`, `THIRD-PARTY-NOTICES.md` and `external-schemas`, and whether any of them becomes derived from it
+- [x] the owner picks before anything is built
 
 Session https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5.
 
@@ -48,3 +48,5 @@ _2026-10-24 08:25Z_ — OWNER CHOSE D ("Shared core"), after asking to merge A a
 _2026-10-24 12:35Z_ — BUILT AND MERGED. cat-harness#523 (3941401): shared core `schemas/outside-software.ts`, `tool-release` extends it unchanged, new kind `software-library` (tag `software-library/1.0.0`). cat-harness-tools#714 (51b9583): `libraries:derive` and `libraries:check`, 44 nodes under `cat-harness-tools/libraries/`. Remaining as follow-ups: re-pin folio-assistant and name `libraries:check` in `code-quality-gates.yml` (then drop the tools `OWN_SCRIPT_EXEMPTIONS` entry); generate `libraries/` in cat-harness, bootstrap-tools, fhir-harness, folio-assistant-sci, folio-assistant-core and who-iris (the last two need a bun.lock first).
 
 _2026-10-26T14:22:00Z_ — Progress update: `litlfred/cat-harness#609` (`6c5ff04`, `software-library/1.1.0` vendored bundle schema), `litlfred/cat-harness-tools#773` (`e3bb65e`, `libraries:derive` / `libraries:check` vendored bundle support), and `litlfred/folio-assistant-sci#93` (`8d6daa5`, `folio-assistant-sci/libraries/` 17 nodes) merged on `main`.
+
+_2026-10-29T07:55:00Z_ — Lane E (https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo): fhir-harness#172 (11 nodes, 4 vendored) merged c518a22; cat-harness#660 (38 nodes, closes cat-harness#607) merged 1aa4479; cat-harness-tools#797 (a nested package with its own lockfile, e.g. `schemas/block-qa-schema`, is its own package) merged 8fb3515. Left: bootstrap-tools#44 (waits on the ujiv layering card: bootstrap-tools may not name cat-harness's kind); folio-assistant-core and who-iris (need a bun.lock first); after the index re-pin, name `libraries:check` in code-quality-gates.yml and drop the tools `OWN_SCRIPT_EXEMPTIONS` entry.

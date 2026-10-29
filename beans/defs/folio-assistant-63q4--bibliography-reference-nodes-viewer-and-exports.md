@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-14T17:45:00Z
-updated_at: 2026-10-26T10:23:00Z
+updated_at: 2026-10-29T07:55:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -125,3 +125,5 @@ _2026-10-23T20:44:00Z_: Completed `genReferenceJsonLd` (`references/<key>.jsonld
 _2026-10-24T14:50:30+02:00_: Completed the standalone reference form/editor in the bibliography viewer (`buildStandaloneReference`, `parseBibtexOrCsl`, `jsonLdToReferenceNode`, `newReferenceUrl` in `folio-assistant-core/schemas/reference.ts` and `addReferenceHtml` / `#fa-bib-add-form` in `folio-assistant-core/scripts/bibliography-page.ts`, 41/41 tests passing) in [`litlfred/folio-assistant-core#189`](https://github.com/litlfred/folio-assistant-core/pull/189) (`5c95e11`) and [`litlfred/cat-harness-tools#641`](https://github.com/litlfred/cat-harness-tools/pull/641) (`3abda72`). All 9 `## Todo` boxes are now ticked (only HELD `qou#7798` / `qou-l7pj` in `## Progress` remains).
 
 _2026-10-26T10:23:00Z_: Both [`litlfred/folio-assistant-core#189`](https://github.com/litlfred/folio-assistant-core/pull/189) and [`litlfred/cat-harness-tools#641`](https://github.com/litlfred/cat-harness-tools/pull/641) merged on `main`. All 9 `## Todo` items are merged on `main`; only the held `qou#7798` (`qou-l7pj`) box in `## Progress` remains.
+
+_2026-10-29T07:55:00Z_ — who-iris#52 (813 documents name who-iris's own @context) merged 0cc5562 (Lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). The qou#7798 box stays held: qou is a math repo, and any PR there waits on the owner.
