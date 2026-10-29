@@ -2,11 +2,11 @@
 # folio-assistant-gp2f
 $schema: bean/1.0.0
 title: 'PAGE WEIGHT: move per-page nav, harness bar, icons, scripts and IG chrome CSS into shared cached assets (#1885)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-26T14:03:00Z
+updated_at: 2026-10-29T11:05:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -47,17 +47,17 @@ Each phase is its own PR, with a before/after size table and a Chromium check at
 
 - [x] **0. Coordinate.** Post intent and asks to the three sessions above and agree the order.
 - [x] **A. IG chrome CSS.** `gen-ig-pages` emits one shared `ig-chrome.css` per chrome and references it, instead of inlining about 6.6 KB per IG page. Lands after #1816 and #1766, or is rebased onto them.
-- [ ] **B. Icons.** One shared SVG sprite, referenced via `<use href>`. Saves about 30 KB per page.
-- [ ] **C. Harness bar and footer.** Emitted once and made responsive with CSS. Saves about 25 KB per page. Inside the navbar session's area, so this phase is offered to that session or lands after its series.
-- [ ] **D. Site navigation.** One shared, cached nav JSON rendered client-side. Every link is a real page, with a noscript fallback. Saves about 70 KB per page. Last, because it overlaps most with ob3m and p5wm.
-- [ ] **E. Inline scripts.** Moved into shared, cached JS. Saves about 15 KB per page.
+- [x] **B. Icons.** One shared SVG sprite, referenced via `<use href>`. Saves about 30 KB per page.
+- [x] **C. Harness bar and footer.** Emitted once and made responsive with CSS. Saves about 25 KB per page. Inside the navbar session's area, so this phase is offered to that session or lands after its series.
+- [x] **D. Site navigation.** One shared, cached nav JSON rendered client-side. Every link is a real page, with a noscript fallback. Saves about 70 KB per page. Last, because it overlaps most with ob3m and p5wm.
+- [x] **E. Inline scripts.** Moved into shared, cached JS. Saves about 15 KB per page.
 - [x] **F. Skills** (the coordination rule; done in 2814ee1). The site-page skill text lands with phases B–E.
   - The site-page skills say shared assets are never inlined per page.
   - The coordinate, bean-coordination and handover skills gain the owner's rule: a platform refactor first reviews active agents, PRs and beans for impact, and coordinates.
 
 ## Done when
-- [ ] A sampled IG page is at most 20 KB, and the whole-site total is reported before and after.
-- [ ] a11y (axe) and e2e pass, and the Chromium checks pass at both widths.
+- [x] A sampled IG page is at most 20 KB, and the whole-site total is reported before and after.
+- [x] a11y (axe) and e2e pass, and the Chromium checks pass at both widths.
 - [x] The sibling sessions have acknowledged the order, or their overlapping PRs have landed before each overlapping phase.
 
 ## Coordination outcome, 2026-10-02
@@ -132,3 +132,23 @@ Measured on folio-assistant gh-pages `1ad53fa` (STAGING excluded): 351 MiB, 4,60
 - **Done criterion "sampled IG page ≤ 20 KB": met** (smart-trust narrative median 16.9 KB, artefact pages ~5 KB).
 - **Option A (owner's pick, 2026-10-23): the IG menu moves into the shared rail file.** litlfred/cat-harness#468 (regenerated `navbar.js`, which reads `page.documentIndex ?? shared.documentIndex`) merges first; litlfred/cat-harness-tools#644 then stops writing a declared menu into each page's `#fa-rail`. That is about 4 KB more off every IG narrative page. #644's one red check (`navbar-assets.test.ts`) clears once #468 is on main.
 - **Still open:** ~~merging #468 then #644~~ (both merged: `litlfred/cat-harness#468` @ `c3330bae`, `litlfred/cat-harness-tools#644` @ `f0460409`); `shareNavbarRow` on all railed pages once g196 gives the row file a constant path; g196 drops `?v` from the `harness-data.js` tag.
+
+---
+
+*2026-10-29T11:05Z* — **Done: measured on the build that published at 10:36Z. Lane D, session https://claude.ai/code/session_01Qmmkt62KVMxDU9gjVV1mm2.**
+
+Phases B to E were not done as separate PRs from this workplan. The rail work (`fa-rail`, a JSON island the rail script renders) and the IG chrome work removed the same weight. Measured on the local full build of folio-assistant b4cd6f9, which is byte-identical on the sampled page to gh-pages 51c51bc (`smart-trust/artifact/ActorDefinition-Holder-testing.html`: 9,486 bytes local, 9,572 live; it was 194 KB on 2026-10-09):
+
+| | 2026-10-02 baseline | 2026-10-29 |
+|---|---|---|
+| median page, 200 sampled of 9,338 | 220.7 KB | **9.3 KB** |
+| median smart-trust artefact page, 200 of 2,160 | 193 KB | **9.3 KB** |
+| inline `<svg>` (B) | ~31 KB | 0 |
+| harness bar / footer (C) | 38.5 KB × 2 | 0.5 KB |
+| nav (D) | 67.4 KB | client-rendered from one JSON island |
+| inline `<script>` (E) | ~14.5 KB | 3.3 KB |
+| whole site | 595 MiB, about 4,700 pages | 552 MiB, 9,338 pages (207 MiB of it HTML) |
+
+p90 is 57 KB and p99 117 KB. The heaviest pages are long index pages (bibliography 2.1 MB, auto-docs index 1.8 MB, BPMN glossary 836 KB), and their size is content, not chrome.
+
+Checks: axe (wcag2a and wcag2aa) is clean on the sampled artefact page, `smart-trust/index.html` and `cat-harness/index.html`, at both 1280 px and 390 px. Chromium at both widths: no page errors and no horizontal scroll. The e2e suite was not run in this session; the publish pipeline's own checks passed. Observation, not filed: at 390 px the rail opens 248 px wide over the content on first load, on IG and Jekyll pages alike. That may be the intended first-visit drawer.

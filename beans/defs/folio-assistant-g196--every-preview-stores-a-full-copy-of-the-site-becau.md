@@ -677,3 +677,11 @@ _Read from `origin/gh-pages` f1ede3c (git trees and blobs, HTML only)._
 - **Cause 2 is fixed in deployed output.** `STAGING/claude-repin-layers-green/` (the #2681 branch, the only preview built with the new pins) has hrefs like `./assets/css/…` and `./assets/qa/…`, and its `index.html` has 0 occurrences of its own slug. A preview built from older pins (`dependabot-…`) still writes `/folio-assistant/STAGING/<slug>/` into every link.
 - **Rebuilds are mostly constant.** The same preview, built 2026-10-26 16:35 and 2026-10-28 12:37 across further layer re-pins: 11,625 common pages, **6,945 byte-identical (59.7 %)**. The differences checked are real content (a count 23→24, a new Schemas link), not build stamps.
 - **Not yet measurable: sharing BETWEEN previews and with the root.** Every other preview and the main-site root were built from pre-#2681 code, so they share 0 identical pages with the new one, as expected. The ~77 MB projection is still unclaimed. It needs two previews (or a preview and the root) built from main at or after 5827603. The `Re-measure STAGING` row stays open for that.
+
+---
+
+*2026-10-29T11:05Z* — **Second reading, gh-pages 51c51bc (after the 10:36Z main publish). Lane D, session https://claude.ai/code/session_01Qmmkt62KVMxDU9gjVV1mm2.**
+
+- `STAGING/claude-repin-lane-e-2/` is now the one preview on current code. Its pages carry no slug, no SHA and no build time (checked on `smart-trust/artifact/ActorDefinition-Holder-testing.html`); the banner reads `staging.json`.
+- **A preview can never share pages with the root as built.** The root was rebuilt from current code at 10:36Z, yet lane-e-2 and the root share 1 of 9,342 HTML pages. The diff is the inline staging-banner script (about 50 lines at the top of every preview page), which root pages do not have. The script is constant, so previews can share with each other, but not with the root. Moving it to a shared `assets/js/staging-banner.js` would not fix this either: the `<script src>` tag itself still differs from the root page. The ~77 MB projection should count preview-to-preview sharing only.
+- Preview-to-preview sharing is still not measurable: it needs a second preview built on current code. The `Re-measure STAGING` row stays open.
