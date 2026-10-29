@@ -2,10 +2,10 @@
 # folio-assistant-xka5
 $schema: bean/1.0.0
 title: Pages grouped by harness, following the URL; each harness owns its sub-doc graphs
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-29T07:32:15Z
 parent: folio-assistant-9rq1
 ---
 
@@ -22,3 +22,5 @@ Measured today: just-the-docs 0.12, order by nav_order then title; 79 top-level 
 _2026-10-05T16:20:38Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 _2026-10-23T17:16:00Z_ — Implemented in `litlfred/cat-harness-tools#627` (`e594500`): `jekyllNavPages` applies `_config.yml` `defaults`, `harnessOfUrl` + `pagesNav` group top-level pages under their harness derived from the URL, and `pagesNav` sorts siblings within each level using `new Intl.Collator(locale, { sensitivity: "base", numeric: true })` with `pageLangOf(html)` wired in `mount-instance-docs.ts` and `gen-navbar-include.ts` (47/47 nav tests pass).
+
+_2026-10-29T07:32:15Z_ — Completed: cat-harness-tools#627 merged (6bb02ad).

@@ -2,11 +2,11 @@
 # folio-assistant-9rq1
 $schema: bean/1.0.0
 title: 'ONE NAVBAR: every navbar capability is a harness feature, drawn by one mechanism on every layout (.side-bar, .fa-nav rail, viewer pages)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-05T05:37:13Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-29T07:32:15Z
 parent: folio-assistant-rwmf
 ---
 
@@ -30,3 +30,5 @@ A navbar capability is declared once for the harness (cat-harness.json navbarIco
 ## Re-parented to GOAL 4 (rwmf), 2026-10-05
 
 Created under p5wm (GOAL 2) at 05:37Z. GOAL 2 was signed off and closed on main at 04:57Z (e6ac11b), and its open UI work was moved to rwmf on the owner's "Move to GOAL 4 PLATFORM". This bean follows that ruling. check:bean-rollup flagged it as the one open child of a completed GOAL 2.
+
+_2026-10-29T07:32:15Z_ — Completed: last child xka5 landed with cat-harness-tools#627 (6bb02ad); 11 of 11 children done.

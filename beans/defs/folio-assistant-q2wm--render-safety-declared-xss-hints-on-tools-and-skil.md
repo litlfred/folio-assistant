@@ -2,11 +2,11 @@
 # folio-assistant-q2wm
 $schema: bean/1.0.0
 title: 'RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T21:47:28Z
-updated_at: 2026-10-24T14:30:00+02:00
+updated_at: 2026-10-29T07:32:15Z
 parent: folio-assistant-6lb8
 ---
 
@@ -180,3 +180,5 @@ So the vocabulary is the one this bean already proposed, and it is held to an im
 **Still true, and the reason this is not "done":** no page calls `renderToolOutput` yet, because no page renders a tool's output. The day one does, it calls this. Lazy window fetch still has no subject (every fetch loads a whole index once).
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+_2026-10-29T07:32:15Z_ — Completed: cat-harness#565 merged (d469bed) under the owner's 2026-10-29 07:20Z merge rule. All four done-whens ticked.
