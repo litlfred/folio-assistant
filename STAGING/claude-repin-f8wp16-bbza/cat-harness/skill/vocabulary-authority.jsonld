@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/skill/vocabulary-authority.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/skill/vocabulary-authority",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "vocabulary-authority",
+      "title": "Vocabulary authority — one fact, one home, N renderings",
+      "description": "One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping. Which vocabulary owns what here, the pros and cons behind each ruling, how DC and SKOS overlap and what stops them drifting, and the normalisation-first rule for any modelling or mapping exercise.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/vocabulary-authority.md",
+      "instructionLines": 173,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/vocabulary-authority"
+    }
+  ]
+}

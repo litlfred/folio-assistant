@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/capability/pandoc.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/capability/pandoc",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "pandoc",
+      "name": "Pandoc",
+      "description": "Universal document converter. The document adapter's whole render path goes through it: Markdown → HTML and Markdown → PDF, neither of which needs a TeX installation.",
+      "detection": {
+        "method": "command",
+        "command": "pandoc --version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc"
+    }
+  ]
+}

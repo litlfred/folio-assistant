@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/process/Process_Ingestion/node/Task_PlaceInLibrary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/process/Process_Ingestion/node/Task_PlaceInLibrary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Place the asset in library/<slug>/",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/process/Process_Ingestion/lane/Lane_1",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/skill/library-ingestion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/process/Process_Ingestion#flow/Flow_held"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/process/Process_Ingestion#flow/Flow_held_done"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_PlaceInLibrary"
+    }
+  ]
+}

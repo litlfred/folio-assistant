@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/skill/upload-naming.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/skill/upload-naming",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "upload-naming",
+      "title": "Upload naming — the name is normalised, not the link escaped",
+      "description": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/upload-naming.md",
+      "instructionLines": 218,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upload-naming"
+    }
+  ]
+}

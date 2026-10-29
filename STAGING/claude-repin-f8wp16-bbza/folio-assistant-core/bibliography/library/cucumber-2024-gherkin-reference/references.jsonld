@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/cucumber-2024-gherkin-reference",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Gherkin Reference",
+      "dcterms:issued": "2024",
+      "dcterms:source": "fhir-harness/library/cucumber-2024-gherkin-reference/manifest.jsonld",
+      "dcterms:hasVersion": "fhir-harness/library/cucumber-2024-gherkin-reference"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: resolution status Schema API",
+    "description": "JSON Schema for Knowledge graph L1: resolution status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-KGResolutionStatusVS.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-KGResolutionStatusVS",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-KGResolutionStatusVS.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-KGResolutionStatusVS",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-KGResolutionStatusVS.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-KGResolutionStatusVS": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-KGResolutionStatusVS.schema.json",
+        "title": "Knowledge graph L1: resolution status Schema",
+        "description": "JSON Schema for Knowledge graph L1: resolution status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/KGResolutionStatus"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "unresolved",
+              "resolved",
+              "ambiguous"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Knowledge graph L1: resolution status ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-KGResolutionStatusVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-KGResolutionStatusVS.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/KGResolutionStatusVS",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-10-20T16:07:31+00:00"
+      }
+    }
+  }
+}

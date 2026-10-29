@@ -1,0 +1,134 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-comments/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comments.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `review-comment/1.0.0` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/review-comments.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--repo"
+            },
+            "description": "`owner/name` of the repository the pull request is in.",
+            "name": "repo",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--pr"
+            },
+            "description": "The edit-set's pull request.",
+            "name": "pr",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where to write `review-comments.json`.",
+            "name": "out",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--folio"
+            },
+            "description": "Read the head's blocks from the folio's manifests (as text; nothing is executed). Give this OR `blocks`.",
+            "name": "folio",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--blocks-out"
+            },
+            "description": "With `folio`: also write `blocks.json`, so a later run can anchor without checking the folio out.",
+            "name": "blocks-out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--blocks"
+            },
+            "description": "A published `blocks.json`. The comment-triggered refresh uses this, so it never checks out the pull request's code.",
+            "name": "blocks",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--existing"
+            },
+            "description": "The previous `review-comments.json`. Every comment in it is kept, with its status.",
+            "name": "existing",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--commit"
+            },
+            "description": "The head commit. Default `GITHUB_SHA`, else `git rev-parse HEAD`.",
+            "name": "commit",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+          },
+          {
+            "arg": {
+              "flag": "--todos"
+            },
+            "description": "The folio's todos graph root. Review comments committed under its `todo-feedback` directory, on the feature branch, win over the previously published copy.",
+            "name": "todos",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--comments"
+            },
+            "description": "Read comments from this JSON file instead of GitHub: offline runs and tests.",
+            "name": "comments",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "A `folio-review-comments/v1` file whose `comments` are `review-comment/1.0.0` todos. Its one-line summary goes to stderr.",
+            "name": "review-comments",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "folio-review-comments",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
+      "title": "Folio review comments"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/folio-review-comments",
+  "path": "tools/folio-review-comments/"
+}

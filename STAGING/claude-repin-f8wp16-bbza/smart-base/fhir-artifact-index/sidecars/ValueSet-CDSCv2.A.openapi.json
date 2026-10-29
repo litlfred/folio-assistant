@@ -1,0 +1,70 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Services and Application Types: Point of Service Schema API",
+    "description": "JSON Schema for Services and Application Types: Point of Service ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CDSCv2.A.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CDSCv2.A",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CDSCv2.A.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CDSCv2.A",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CDSCv2.A.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CDSCv2.A": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CDSCv2.A.schema.json",
+        "title": "Services and Application Types: Point of Service Schema",
+        "description": "JSON Schema for Services and Application Types: Point of Service ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/CDSCv2"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "A",
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8",
+              "A9"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Services and Application Types: Point of Service ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-CDSCv2.A.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CDSCv2.A.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2.A",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-10-20T16:07:28+00:00"
+      }
+    }
+  }
+}

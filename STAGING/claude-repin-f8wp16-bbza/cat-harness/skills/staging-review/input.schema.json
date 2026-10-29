@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/cat-harness/skills/staging-review/input.schema.json",
+  "title": "Staging Review Input",
+  "description": "What the reader wants to look at, in their own words (kept verbatim; it narrows, never adds), and the branch or pull request whose preview to list.",
+  "type": "object",
+  "properties": {
+    "ask": {
+      "type": "string",
+      "description": "What the reader wants to look at, verbatim. Absent: the whole preview, every page the branch changed."
+    },
+    "branch": {
+      "type": "string"
+    },
+    "pr": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  }
+}

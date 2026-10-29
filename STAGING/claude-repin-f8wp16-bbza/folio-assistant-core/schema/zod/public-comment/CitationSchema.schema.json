@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Citation",
+  "definitions": {
+    "Citation": {
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "page": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "raw": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/folio-assistant-core/schema/zod/public-comment/CitationSchema.schema.json",
+  "title": "CitationSchema",
+  "description": "Generated from `CitationSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  }
+}

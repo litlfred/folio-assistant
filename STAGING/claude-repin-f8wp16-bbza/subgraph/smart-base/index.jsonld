@@ -1,0 +1,194 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/asset/agent-instructions",
+      "@type": "bootstrap:Asset",
+      "name": "agent-instructions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6a4aff9819ac4ad1c6b339341deb9253213ce80939ca67ad311481b0be542893",
+        "bytes": 11122,
+        "sha256": "6a4aff9819ac4ad1c6b339341deb9253213ce80939ca67ad311481b0be542893"
+      },
+      "title": "AGENTS.md — smart-base"
+    },
+    {
+      "@id": "http://smart.who.int/base/asset/checkout-scripts",
+      "@type": "bootstrap:Asset",
+      "name": "checkout-scripts",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d03406dc97ca1470861ebc639253d8320df0e1b09e61c9b8bea79522bf97d6e4",
+        "bytes": 3893,
+        "sha256": "d03406dc97ca1470861ebc639253d8320df0e1b09e61c9b8bea79522bf97d6e4"
+      },
+      "title": "package.json — smart-base"
+    },
+    {
+      "@id": "http://smart.who.int/base/asset/instance-readme",
+      "@type": "bootstrap:Asset",
+      "name": "instance-readme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8bc49dcc13bc1b2a2bcfefb34b8ee3c0805e4202d70bdbd758de9ec5cc74a026",
+        "bytes": 2039,
+        "sha256": "8bc49dcc13bc1b2a2bcfefb34b8ee3c0805e4202d70bdbd758de9ec5cc74a026"
+      },
+      "title": "smart-base"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/glossary",
+      "@type": "bootstrap:Subgraph",
+      "name": "glossary"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/methodologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "methodologies"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/qa",
+      "@type": "bootstrap:Subgraph",
+      "name": "qa"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-artifact-index",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-artifact-index"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-block-kinds",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-block-kinds"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-code-lists",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-code-lists"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-content-adapters",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-content-adapters"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-docs",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-docs"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-document-kinds",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-document-kinds"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-findings",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-findings"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-kg",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-kg"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-pipeline",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-pipeline"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-platform",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-platform"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-qa-checkers",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-qa-checkers"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-schemas",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-scripts",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-scripts"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-site-docs",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-site-docs"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-themes",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-themes"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-translations",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-typologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-typologies"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-validators",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-validators"
+    },
+    {
+      "@id": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "@type": "bootstrap:Role",
+      "title": "L1 extraction reviewer"
+    },
+    {
+      "@id": "cat-harness:graphTypology/document-kinds",
+      "@type": "bootstrap:GraphTypology",
+      "name": "document-kinds"
+    },
+    {
+      "@id": "cat-harness:graphTypology/fhir-artifact-index",
+      "@type": "bootstrap:GraphTypology",
+      "name": "fhir-artifact-index"
+    },
+    {
+      "@id": "cat-harness:graphTypology/ig-pages",
+      "@type": "bootstrap:GraphTypology",
+      "name": "ig-pages"
+    },
+    {
+      "@id": "cat-harness:graphTypology/l1-extraction",
+      "@type": "bootstrap:GraphTypology",
+      "name": "l1-extraction"
+    },
+    {
+      "@id": "cat-harness:graphTypology/themes",
+      "@type": "bootstrap:GraphTypology",
+      "name": "themes"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/methodologies/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library",
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/scenarios",
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "smart-base",
+  "path": "./",
+  "title": "SMART Base"
+}

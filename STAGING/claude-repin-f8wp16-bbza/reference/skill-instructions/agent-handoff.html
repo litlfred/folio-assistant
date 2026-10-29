@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(198)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(142) > ul > li:nth-child(2) > ul > li:nth-child(198) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(142) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(142) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(142) > ul > li:nth-child(2) > ul > li:nth-child(198) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(142) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(142) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(142) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(198) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>One task, two agents, one human between them | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="One task, two agents, one human between them" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="One task, two agents, one human between them" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-agent-handoff",
+    "src": "../../assets/qa/reference-skill-instructions-agent-handoff/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-agent-handoff/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=4885e06b0507"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=ffd09062ff20"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=d1e44c948d21" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-jq55perxp9.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-jq55perxp9","here":"/reference/skill-instructions/agent-handoff.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#why-this-exists-bean-mac1-2026-10-02","label":"Why this exists: bean mac1, 2026-10-02"},{"href":"#1-one-bean-one-writer-and-the-receiver-claims-it","label":"1. One bean, one writer, and the receiver claims it"},{"href":"#2-the-report-channel-is-in-the-bean-from-the-start","label":"2. The report channel is in the bean, from the start"},{"href":"#3-one-sentence-to-paste-and-a-brief-inside-the-bean","label":"3. One sentence to paste, and a brief inside the bean"},{"href":"#4-pin-the-inputs-and-check-them-before-acting","label":"4. Pin the inputs, and check them before acting"},{"href":"#5-the-executors-measurement-is-evidence-not-the-close","label":"5. The executor’s measurement is evidence, not the close"},{"href":"#6-only-the-owner-grants-an-exception","label":"6. Only the owner grants an exception"},{"href":"#7-when-the-executor-fails","label":"7. When the executor fails"},{"href":"#checklist-the-bean-you-hand-over","label":"Checklist: the bean you hand over"},{"href":"#checklist-the-executor-before-the-first-irreversible-step","label":"Checklist: the executor, before the first irreversible step"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>One task, two agents, one human between them</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/agent-handoff.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/agent-handoff.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/agent-handoff.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/agent-handoff.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="one-task-two-agents-one-human-between-them"><a href="#one-task-two-agents-one-human-between-them" class="anchor-heading" aria-labelledby="one-task-two-agents-one-human-between-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One task, two agents, one human between them
+  
+  
+</h1><p>Two agents, two environments: the <strong>coordinator</strong> can see the work, but it
+cannot do one step, usually because of network or credentials. The
+<strong>executor</strong> can do that step, but it has none of the coordinator’s context.
+Often the only link between them is a person, retyping. Every rule below is
+about that gap.</p><p>This is not <a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>, which governs sibling
+sessions sharing one store and racing for one claim. It is not
+<a href="../../reference/skill-instructions/dispatch-agent.html"><code class="language-plaintext highlighter-rouge">dispatch-agent</code></a> either: that governs subagents you spawn
+and can read directly. Here you <strong>cannot see the executor’s checkout</strong>. The
+only things you will ever see are what it pushes and what it posts.</p><p><strong>Needs</strong> the <code class="language-plaintext highlighter-rouge">beans</code> CLI on both sides (<code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/install-beans.sh</code>)
+and <code class="language-plaintext highlighter-rouge">bun run cat beans:claim</code>. An executor without them reports that it is
+blocked; it does not edit bean files by hand.</p><h2 id="why-this-exists-bean-mac1-2026-10-02"><a href="#why-this-exists-bean-mac1-2026-10-02" class="anchor-heading" aria-labelledby="why-this-exists-bean-mac1-2026-10-02"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this exists: bean <code class="language-plaintext highlighter-rouge">mac1</code>, 2026-10-02
+  
+  
+</h2><p>The cloud session could restore and verify an FHIR AST cache, but it could not
+build one, because <code class="language-plaintext highlighter-rouge">packages.fhir.org</code> was blocked. It wrote bean <code class="language-plaintext highlighter-rouge">mac1</code> for a
+local agent on the owner’s Mac: re-seed two caches, done when <code class="language-plaintext highlighter-rouge">verify</code> passes
+on a fresh clone. The handoff went wrong in five ways, and all five were
+visible only from outside:</p><div class="table-wrapper"><table><thead><tr><th>what happened</th><th>the rule it breaks</th></tr></thead><tbody><tr><td>the executor worked in another checkout (<code class="language-plaintext highlighter-rouge">folio-assistant-backup</code>) and created <strong>its own</strong> bean, so two files on one branch now carry the id <code class="language-plaintext highlighter-rouge">mac1</code></td><td>§1, claim the handed bean and never create one</td></tr><tr><td>the bean said “STOP and report the counts” without saying where, so the coordinator had to add a channel mid-flight, and the owner asked <em>“hopefully your bean told where to coordinate”</em></td><td>§2, the report channel is in the bean from the start</td></tr><tr><td>one cache was seeded from <code class="language-plaintext highlighter-rouge">5891a22</code> while the IG’s <code class="language-plaintext highlighter-rouge">main</code> was <code class="language-plaintext highlighter-rouge">e151a4d</code>, because the executor’s checkout was behind</td><td>§4, pin the inputs and check them first</td></tr><tr><td>the executor closed <code class="language-plaintext highlighter-rouge">mac1</code> on its own build log, and <code class="language-plaintext highlighter-rouge">verify</code> on a fresh clone failed for <strong>both</strong> caches</td><td>§5, the verifier closes</td></tr><tr><td>the coordinator “approved” a <code class="language-plaintext highlighter-rouge">--force</code> in a PR comment that the bean itself forbade</td><td>§6, only the owner grants an exception</td></tr></tbody></table></div><h2 id="1-one-bean-one-writer-and-the-receiver-claims-it"><a href="#1-one-bean-one-writer-and-the-receiver-claims-it" class="anchor-heading" aria-labelledby="1-one-bean-one-writer-and-the-receiver-claims-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. One bean, one writer, and the receiver claims it
+  
+  
+</h2><p>Before you hand off, write down who may write what. Put it in the bean as a
+<code class="language-plaintext highlighter-rouge">## Roles</code> table, so the executor reads it in the bean rather than hearing it
+from a person:</p><div class="table-wrapper"><table><thead><tr><th>role</th><th>who</th><th>writes</th></tr></thead><tbody><tr><td>coordinator</td><td>the session that opened the bean</td><td>the bean’s <strong>instructions</strong>, written before the claim; the parent and related beans; the verification record</td></tr><tr><td>executor</td><td>the agent named in the bean</td><td><strong>only</strong> the handed bean, from the claim onward: its holder note, <code class="language-plaintext highlighter-rouge">## Progress</code>, <code class="language-plaintext highlighter-rouge">## Evidence</code>, the <code class="language-plaintext highlighter-rouge">ready-to-close</code> tag</td></tr><tr><td>verifier</td><td>whoever can run the check in <code class="language-plaintext highlighter-rouge">## Done when</code>, usually the coordinator</td><td>the verification result and the close</td></tr><tr><td>owner</td><td>the person</td><td>any exception to a boundary (§6)</td></tr></tbody></table></div><p><strong>The executor claims the handed bean and never runs <code class="language-plaintext highlighter-rouge">beans create</code> for the
+handed work.</strong> If <code class="language-plaintext highlighter-rouge">beans show &lt;id&gt;</code> finds nothing, it is in the wrong branch
+or the wrong checkout. That is a <strong>stop-and-report</strong>, not a cue to recreate
+the bean: a fresh <code class="language-plaintext highlighter-rouge">beans create</code> mints a new id, or, as with <code class="language-plaintext highlighter-rouge">mac1</code>, a second
+file under an id someone typed by hand, and now two beans answer one question.</p><p><strong>After the claim, the coordinator never edits the bean.</strong> The claim writes to
+the bean file, so a concurrent edit is a merge conflict on exactly the file
+both agents care about. Anything the coordinator learns after the claim goes
+to the report channel (§2).</p><h2 id="2-the-report-channel-is-in-the-bean-from-the-start"><a href="#2-the-report-channel-is-in-the-bean-from-the-start" class="anchor-heading" aria-labelledby="2-the-report-channel-is-in-the-bean-from-the-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The report channel is in the bean, from the start
+  
+  
+</h2><p>Give the bean a <code class="language-plaintext highlighter-rouge">## Report to</code> section that names ONE place: a PR or issue
+both agents can reach. Then give the exact one-line formats, so the
+coordinator can act on a report without having to interpret it:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;id&gt;: started &lt;what&gt; at &lt;input revisions&gt;
+&lt;id&gt;: done &lt;what&gt; &lt;result sha/count&gt;
+&lt;id&gt;: refused &lt;what&gt; &lt;the numbers&gt;        ← stop here
+&lt;id&gt;: blocked &lt;step&gt; &lt;error&gt;              ← stop here
+</code></pre></div></div><p>The chat is <strong>not</strong> a channel. The coordinator cannot read the executor’s
+chat, and the person relaying it should not have to. The person is a reader
+of the channel, not a router between the two agents.</p><p><strong>The executor re-reads the channel before each irreversible step</strong> (a push,
+a seed, a release). That is how a correction posted after the claim reaches it.</p><h2 id="3-one-sentence-to-paste-and-a-brief-inside-the-bean"><a href="#3-one-sentence-to-paste-and-a-brief-inside-the-bean" class="anchor-heading" aria-labelledby="3-one-sentence-to-paste-and-a-brief-inside-the-bean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. One sentence to paste, and a brief inside the bean
+  
+  
+</h2><p>Two texts reach the executor, and they do different jobs.</p><p><strong>What the person pastes: one sentence naming the bean, the branch and the
+repository.</strong></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Do bean &lt;id&gt; on branch &lt;branch&gt; of repo &lt;owner&gt;/&lt;repo&gt;.
+</code></pre></div></div><p>That is all an agent with a checkout needs to find everything else. The
+person should not have to edit, shorten or explain it. A paste that carries
+the instructions is long, unversioned and impossible to correct. A paste that
+carries less (“do bean <code class="language-plaintext highlighter-rouge">mac1</code>, report on #1816”) leaves the executor asking
+which branch, as the owner had to ask on 2026-10-02.</p><p><strong>What the bean opens with: a <code class="language-plaintext highlighter-rouge">## Brief</code> addressed to the executor.</strong> It is
+the first section after the front matter, so <code class="language-plaintext highlighter-rouge">beans show</code> prints it first.
+It is written to an agent that has seen only that one sentence.</p><p><strong>Voice.</strong> Write the brief in the second person, to the executor, about its
+own task: “You are the executor…”, “Stop and report if…”. Do not write in the
+coordinator’s voice (“I verify…”, “my watch…”), in the third person about the
+executor (“the agent should…”), or to the person. A brief that says “I” makes
+the executor guess who is speaking.</p><p><strong>What the brief carries.</strong> It has to work on its own:</p><div class="table-wrapper"><table><thead><tr><th>part</th><th>example</th></tr></thead><tbody><tr><td>who you are and why this came to you</td><td>executor; the coordinator lacks <code class="language-plaintext highlighter-rouge">packages.fhir.org</code></td></tr><tr><td>WHERE: repository, canonical checkout path (and which one NOT to use), branch and its PR, this bean’s id and file path</td><td><code class="language-plaintext highlighter-rouge">~/space_cats/folio-assistant</code>, not <code class="language-plaintext highlighter-rouge">-backup</code></td></tr><tr><td>START: the exact commands, with a test that FAILS in the wrong checkout, ending in <code class="language-plaintext highlighter-rouge">beans:claim</code></td><td>naming the checkout is not enough: <code class="language-plaintext highlighter-rouge">mac1</code>’s executor ran from <code class="language-plaintext highlighter-rouge">-backup</code> in all three attempts</td></tr><tr><td>the task in two or three sentences, and why the last attempt failed</td><td>so the executor knows what the pins guard against</td></tr><tr><td>REPORT: where, and the line formats</td><td>§2</td></tr><tr><td>STOP AND REPORT IF</td><td>the bean’s <code class="language-plaintext highlighter-rouge">## Fails if</code></td></tr><tr><td>LIMITS</td><td>§6, plus “never create or edit any other bean”</td></tr><tr><td>FINISH: evidence, <code class="language-plaintext highlighter-rouge">ready-to-close</code>, commit only this bean, final report line</td><td>§5</td></tr></tbody></table></div><p>The brief summarises and points. The exact commands, pins and history are in
+the sections below it in the same bean. Corrections after the claim go in the
+report channel (§2), never into the brief.</p><p><strong>Template for <code class="language-plaintext highlighter-rouge">## Brief</code>:</strong></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You are the EXECUTOR for one task handed to you by &lt;coordinator&gt;. It cannot do
+this step itself because &lt;reason&gt;. You can.
+
+WHERE (you were sent here by one line naming this bean, branch and repo)
+- Repo:     &lt;owner/repo&gt;
+- Checkout: &lt;canonical path&gt;   (NOT &lt;the wrong copy, if one exists&gt;)
+- Branch:   &lt;branch&gt;   (PR #&lt;n&gt;)
+- Bean:     &lt;id&gt;
+            file: &lt;beans/defs/…md&gt;
+
+START (every command after this runs in &lt;checkout&gt;; never `cd` elsewhere)
+  cd &lt;checkout&gt; &amp;&amp; git fetch &amp;&amp; git switch &lt;branch&gt; &amp;&amp; git pull
+  test "$(git rev-parse --show-toplevel)" = "$(cd &lt;checkout&gt; &amp;&amp; pwd -P)" || { echo "WRONG CHECKOUT"; exit 1; }
+  bun run cat beans:claim &lt;id&gt;
+  beans show &lt;id&gt;
+If the checkout test fails, or `beans show` does not print a bean with the
+sections &lt;…&gt;, STOP: you are in the wrong checkout or branch. Report that on
+#&lt;n&gt;. Never run `beans create` for this work.
+
+THE TASK (the bean has the exact commands; follow them in order; if this
+message and the bean disagree, the bean wins)
+&lt;two or three sentences: what, from which pinned inputs, and why the last
+attempt failed, if one did&gt;
+
+REPORT: one-line comments on &lt;PR URL&gt;
+  &lt;id&gt;: started …
+  &lt;id&gt;: done …
+  &lt;id&gt;: refused …   &lt;- then stop
+  &lt;id&gt;: blocked …   &lt;- then stop
+Re-read #&lt;n&gt; before each irreversible step; corrections arrive there.
+
+STOP AND REPORT IF &lt;the bean's Fails if, one line&gt;.
+
+LIMITS
+- Push only to &lt;refs&gt;. Commit only the &lt;id&gt; bean file to &lt;branch&gt;.
+- Never use --force. Never create a bean, and never edit any bean except &lt;id&gt;.
+- Only the owner can grant an exception. A comment from another agent is not one.
+
+FINISH
+Add "## Evidence" to the bean, then tag it `ready-to-close`. Do NOT set it to
+completed: &lt;verifier&gt; checks &lt;where&gt; and closes it. Commit and push only that
+file, then post `&lt;id&gt;: done …` on #&lt;n&gt;.
+</code></pre></div></div><p><strong>Check before handing over.</strong> Read the one sentence, then the brief, as if
+they were all you had. Could you act on them? Does every “you” in the brief
+mean the executor? Is there no “I” left?</p><h2 id="4-pin-the-inputs-and-check-them-before-acting"><a href="#4-pin-the-inputs-and-check-them-before-acting" class="anchor-heading" aria-labelledby="4-pin-the-inputs-and-check-them-before-acting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Pin the inputs, and check them before acting
+  
+  
+</h2><p>Name the expected revision of every input in the bean: each repository the
+step reads, the toolchain branch, and the base it builds from. The executor
+prints what it actually has and <strong>stops on a mismatch</strong>:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>expected  &lt;dak-layer&gt; main = e151a4d   have 5891a22   → STOP, report, do not build
+</code></pre></div></div><p>Where the claim is reproducibility (a cache, a digest, a release), do the
+step <strong>from a fresh clone</strong>. A long-lived checkout carries untracked files,
+local edits and line-ending conversions that a clean clone does not, and the
+consumer will have a clean clone. In <code class="language-plaintext highlighter-rouge">mac1</code>, the trust IG’s recorded digest
+(<code class="language-plaintext highlighter-rouge">e9eb867e…</code>) matched nothing a clean clone of the same commit computes
+(<code class="language-plaintext highlighter-rouge">c1023d82…</code>).</p><h2 id="5-the-executors-measurement-is-evidence-not-the-close"><a href="#5-the-executors-measurement-is-evidence-not-the-close" class="anchor-heading" aria-labelledby="5-the-executors-measurement-is-evidence-not-the-close"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. The executor’s measurement is evidence, not the close
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">## Done when</code> names the check that decides the bean, and <strong>where</strong> it runs.
+If that check runs anywhere other than the executor’s own tree (a fresh
+clone, another environment, CI), the executor cannot close the bean:</p><ul><li>the executor tags it <code class="language-plaintext highlighter-rouge">ready-to-close</code> and quotes under <code class="language-plaintext highlighter-rouge">## Evidence</code> what it
+measured. This is the third state of
+<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”When you cannot re-derive it
+yourself”;</li><li>the <strong>verifier</strong> runs the named check and closes the bean, or records the
+failure and reopens the work.</li></ul><p>A build log saying “678 resources, 671 edges” is the executor’s view of its
+own tree. <code class="language-plaintext highlighter-rouge">mac1</code>’s criterion was <code class="language-plaintext highlighter-rouge">verify</code> on a fresh clone, and it failed
+while the log read clean.</p><p><strong>The executor’s own check runs on an untouched copy, not on the tree it
+built in.</strong> A build leaves its own files behind, so a check run where the
+work happened agrees with itself whether or not the work is right. In <code class="language-plaintext highlighter-rouge">mac1</code>
+attempt 2 the executor’s <code class="language-plaintext highlighter-rouge">verify</code> read <code class="language-plaintext highlighter-rouge">valid</code> in its build clone, and the
+verifier’s read <code class="language-plaintext highlighter-rouge">stale-inputs</code> on untouched clones for both caches. So the
+bean’s local-check step names a <strong>second</strong> copy: a new clone, a clean
+container, the published artefact. Never the working directory the step ran
+in. If the step can only be checked in place, say so in <code class="language-plaintext highlighter-rouge">## Evidence</code>, and
+expect the verifier to disagree.</p><h2 id="6-only-the-owner-grants-an-exception"><a href="#6-only-the-owner-grants-an-exception" class="anchor-heading" aria-labelledby="6-only-the-owner-grants-an-exception"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Only the owner grants an exception
+  
+  
+</h2><p>A boundary in the bean (“never <code class="language-plaintext highlighter-rouge">--force</code>”, “push only to <code class="language-plaintext highlighter-rouge">fhir-ast/*</code>”, “never
+<code class="language-plaintext highlighter-rouge">main</code>”) is the owner’s. A coordinating agent <strong>cannot waive it</strong>, even when
+the waiver looks safe, and even in a PR comment the executor will read as
+authoritative. Put the question to the owner with the numbers, and let the
+executor stop until the answer comes. An agent’s “approval” is a second voice
+claiming the owner’s authority, and an executor has no way to tell the two
+apart.</p><h2 id="7-when-the-executor-fails"><a href="#7-when-the-executor-fails" class="anchor-heading" aria-labelledby="7-when-the-executor-fails"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. When the executor fails
+  
+  
+</h2><p>Failure is part of the handoff, so the bean states it in advance as a
+<code class="language-plaintext highlighter-rouge">## Fails if</code> section: the conditions under which the executor <strong>stops and
+reports</strong> instead of carrying on. At minimum:</p><ul><li>an input mismatch (§4);</li><li>a refused or blocked step;</li><li>its own local check disagrees with what it expected;</li><li>it cannot reach the report channel.</li></ul><p>The bean also carries an <strong>expiry</strong>: the time by which the first <code class="language-plaintext highlighter-rouge">started</code>
+line is due. As <a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a> §”An external block’s
+expiry” says, an executor in another environment is an external party, so the
+expiry is a date to <strong>ask again, not a takeover</strong>. The coordinator cannot do
+the step in any case, which is why it handed the step off.</p><p>The coordinator recognises five kinds of failure, and responds to each the
+same way every time:</p><div class="table-wrapper"><table><thead><tr><th>failure</th><th>how you see it</th><th>response</th></tr></thead><tbody><tr><td><strong>silent</strong>: no <code class="language-plaintext highlighter-rouge">started</code> line by the expiry</td><td>no line in the report channel; no liveness signal (<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”A quiet claim”)</td><td>ask the person <strong>once</strong>, in the channel, re-posting the one sentence (§3); set the next expiry. Never re-hand to a second executor while the first claim may be live</td></tr><tr><td><strong>stopped</strong>: <code class="language-plaintext highlighter-rouge">refused</code> or <code class="language-plaintext highlighter-rouge">blocked</code></td><td>its report line</td><td>the coordinator settles the cause if it is in this repository; a boundary or an exception goes to the <strong>owner</strong> (§6) with the numbers. The executor waits</td></tr><tr><td><strong>wrong result</strong>: the step ran, <code class="language-plaintext highlighter-rouge">## Done when</code> fails</td><td>the verifier’s check</td><td>record the failure under <code class="language-plaintext highlighter-rouge">## Attempts</code> (attempt <em>n</em>: inputs, what was measured, the cause); the bean goes back to <code class="language-plaintext highlighter-rouge">todo</code> with a holder note, never <code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code>; fix what the cause names (usually the bean) and re-hand</td></tr><tr><td><strong>out of protocol</strong>: created a bean, wrote another bean, pushed outside the boundaries</td><td>an unexpected file or ref</td><td>a duplicate bean is re-identified and <code class="language-plaintext highlighter-rouge">scrapped</code> with a pointer, never deleted (<code class="language-plaintext highlighter-rouge">mac1</code> → <code class="language-plaintext highlighter-rouge">8ao5</code>); a stray push is <strong>reported to the owner</strong>, never reverted by the coordinator (<a href="../../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a>)</td></tr><tr><td><strong>partial</strong>: some items done</td><td>per-item lines</td><td>per-item evidence; the bean stays open until every item verifies</td></tr></tbody></table></div><p><strong>Two failed attempts with the same cause go to the owner, not round again.</strong>
+A third hand-off of the same bean with the same cause shows that the bean
+cannot express what the step needs. The owner decides whether to change the
+step, the environment, or the executor. This is the rule an agent tends to
+break by re-handing with more emphasis.</p><h2 id="checklist-the-bean-you-hand-over"><a href="#checklist-the-bean-you-hand-over" class="anchor-heading" aria-labelledby="checklist-the-bean-you-hand-over"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist: the bean you hand over
+  
+  
+</h2><ul class="task-list"><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Roles</code>: coordinator, executor, verifier, owner (§1)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />the one sentence to paste: <code class="language-plaintext highlighter-rouge">Do bean &lt;id&gt; on branch &lt;branch&gt; of repo &lt;owner&gt;/&lt;repo&gt;.</code> (§3)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Brief</code> as the bean’s first section, second person, to the executor (§3)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Report to</code>: one PR or issue, with the line formats (§2)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Inputs</code>: every expected revision, and “stop on mismatch” (§4)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />fresh clone, where reproducibility is the claim (§4)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Done when</code>: the check, <strong>where</strong> it runs, and <strong>who</strong> closes (§5)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />boundaries, with “exceptions: owner only” (§6)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Fails if</code> and an expiry for the first <code class="language-plaintext highlighter-rouge">started</code> line (§7)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">## Attempts</code>, left empty; the verifier fills it on a failure (§7)</li></ul><h2 id="checklist-the-executor-before-the-first-irreversible-step"><a href="#checklist-the-executor-before-the-first-irreversible-step" class="anchor-heading" aria-labelledby="checklist-the-executor-before-the-first-irreversible-step"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist: the executor, before the first irreversible step
+  
+  
+</h2><ul class="task-list"><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">beans show &lt;id&gt;</code> finds the handed bean on this branch; if not, stop</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />claimed with <code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code>, with no <code class="language-plaintext highlighter-rouge">beans create</code></li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />inputs printed and matched against <code class="language-plaintext highlighter-rouge">## Inputs</code></li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />report channel re-read for corrections</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />after the step: report in the channel’s format, tag <code class="language-plaintext highlighter-rouge">ready-to-close</code>
+    with <code class="language-plaintext highlighter-rouge">## Evidence</code> unless you can run the <code class="language-plaintext highlighter-rouge">## Done when</code> check yourself</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

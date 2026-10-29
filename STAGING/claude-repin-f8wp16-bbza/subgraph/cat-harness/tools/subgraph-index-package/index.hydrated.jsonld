@@ -1,0 +1,97 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/subgraph-index-package/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/subgraph-index-package.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Pack every built `index.jsonld` and `index.hydrated.jsonld` under an instance's `<docs>/subgraph/<harness>/` into ONE npm package for one pin — `<harness>-subgraph-index@0.0.0-pin.<sha>`, with a `folio-subgraph-index/v1` manifest giving each file's sha256 — through `pack-tarball` (`bun pm pack`), which also writes the tarball's `folio-binary-release/v1` record. The reusable workflow `layer-publish-subgraph-index.yml` attaches both to the GitHub release `subgraph-index-<sha>`, where `remote-mount` finds them for a `hydrated` source whose pin's git tree holds no index file (they are `builtAtPublish`, so none does). It builds nothing: run `subgraph:jsonld` first. No subgraph files under the instance is a refusal, never an empty package.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat subgraph-index:pack"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--root"
+            },
+            "description": "The instance root whose `<docs>/subgraph/<name>/` is packed.",
+            "name": "root",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--repository"
+            },
+            "description": "owner/name of the repository the pin is a commit of.",
+            "name": "repository",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--ref"
+            },
+            "description": "The pin: the full 40-character commit the files were built from.",
+            "name": "ref",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+          },
+          {
+            "arg": {
+              "flag": "--out-dir"
+            },
+            "description": "Where the tarball and its release record are written.",
+            "name": "outDir",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--built-in"
+            },
+            "description": "`<owner/name>@<40-char sha>` of the checkout the files were built in, recorded as provenance.",
+            "name": "builtIn",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PinnedRepo"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The package `.tgz`.",
+            "name": "tarball",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "Its `folio-binary-release/v1` record.",
+            "name": "release",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "subgraph-index-package",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount"
+      ],
+      "title": "Package one pin's subgraph index files for a hydrated mount"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/subgraph-index-package",
+  "path": "tools/subgraph-index-package/"
+}

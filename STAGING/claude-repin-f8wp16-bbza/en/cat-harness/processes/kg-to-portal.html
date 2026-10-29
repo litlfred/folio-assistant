@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style><script src="../../../assets/js/vendor/lunr.min.js"></script><script src="../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>KG to public portal | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="KG to public portal" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="KG to public portal" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-processes-kg-to-portal",
+    "src": "../../../assets/qa/en-cat-harness-processes-kg-to-portal/page.translation.json",
+    "index": "../../../assets/qa/en-cat-harness-processes-kg-to-portal/qa-index.json",
+    "list": "../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../folio-assistant-core/","jsonld":"../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../build.json"><meta name="fa-fsh-guts-src" content="../../../fsh-guts.json"><link rel="stylesheet" href="../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../assets/css/docs-ui.css?v=4885e06b0507"><link rel="stylesheet" href="../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../assets/css/avatars.css?v=ffd09062ff20"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../assets/js/harness-data.js" defer></script><script src="../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../assets/js/kg-render.js" defer></script><script src="../../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../../assets/js/docs-ui.js?v=d1e44c948d21" defer></script><script src="../../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../../assets/js/work-plan.js" defer></script><script src="../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../assets/css/navbar.css"><script src="../../../assets/navbar/rail-jq55perxp9.js" defer></script><script src="../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../assets/page-layout.css" data-fa-page-layout><script src="../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-jq55perxp9","here":"/en/cat-harness/processes/kg-to-portal.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#how-it-connects","label":"How it connects"},{"href":"#lanes--who-acts","label":"Lanes — who acts"},{"href":"#steps","label":"Steps"},{"href":"#decisions","label":"Decisions"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/kg/kg-to-portal.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p></blockquote><h1 id="kg-to-public-portal"><a href="#kg-to-public-portal" class="anchor-heading" aria-labelledby="kg-to-public-portal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> KG to public portal
+  
+  
+</h1><p><code class="language-plaintext highlighter-rouge">Process_KgToPortal</code> · advisory · 10 step(s)</p><p>How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal’s side. folio-assistant — KG to public portal.</p><p>Six stages: select, serialize, package, sign, distribute, verify. Three
+decisions belong to the DEPLOYMENT and are drawn as gateways rather than
+as steps — the ingestion transport, the versioned store, and the signing
+scheme. A pipeline that picks one of those is asserting a decision nobody
+made.</p><p>A CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers “what
+serves the rendering”; a cache answers “what stands between the server and
+the reader”, and the canonical URL stays the origin’s either way.</p><style>.pt-diagram{position:relative;width:100%}.pt-diagram>img{display:block;width:100%;height:auto}.pt-mark{position:absolute;transform:translate(-50%,-50%);width:1.35em;height:1.35em;padding:0;border-radius:50%;border:1px solid #1f6feb;background:#fff;color:#1f6feb;font:bold 0.8em/1 sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.25)}.pt-mark:hover,.pt-mark[aria-expanded=true]{background:#1f6feb;color:#fff}.pt-mark:focus-visible{outline:2px solid #1f6feb;outline-offset:2px}.pt-panel{position:absolute;z-index:5;margin:0.9em 0 0 -0.6em;max-width:min(26em,90vw);min-width:14em;padding:0.6em 0.7em;background:#fff;color:#1b1f24;border:1px solid #8c959f;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:0.85em;line-height:1.35}.pt-close{position:absolute;top:0.2em;right:0.35em;border:0;background:none;font-size:1.2em;cursor:pointer;color:inherit}.pt-obj{border:1px solid #57606a;border-radius:3px;margin:0.15em 0}.pt-head{border-bottom:1px solid #57606a;padding:0.15em 0.45em;background:#f6f8fa;text-decoration:underline}.pt-head .pt-st{text-decoration:none;display:inline-block;margin-right:0.35em}.pt-attr{padding:0.1em 0.45em}.pt-st,.pt-via{color:#57606a;font-size:0.9em}.pt-edge{color:#57606a;font-size:0.85em;padding-left:1em}.pt-role .pt-head{background:#fff8c5}.pt-skill .pt-head{background:#ddf4ff}.pt-task .pt-head{background:#f6f8fa}.pt-none{color:#57606a;font-style:italic;margin-top:0.3em}</style><div class="pt-diagram" data-panel="kg-to-portal.tasks.json"><img src="../../../assets/img/workflows/kg-to-portal.svg" alt="BPMN diagram: KG to public portal" /> <button type="button" class="pt-mark" data-task="D_Constraints" style="left:18.79%;top:21.83%" aria-expanded="false" aria-label="About step: State the constraints, with denominators" title="About: State the constraints, with denominators">i</button> <button type="button" class="pt-mark" data-task="E_Scope" style="left:30.35%;top:3.52%" aria-expanded="false" aria-label="About step: Decide what may leave the repository" title="About: Decide what may leave the repository">i</button> <button type="button" class="pt-mark" data-task="A_Select" style="left:30.35%;top:41.55%" aria-expanded="false" aria-label="About step: Cut the subgraph that leaves" title="About: Cut the subgraph that leaves">i</button> <button type="button" class="pt-mark" data-task="A_Serialize" style="left:41.33%;top:41.55%" aria-expanded="false" aria-label="About step: Serialize to JSON-LD" title="About: Serialize to JSON-LD">i</button> <button type="button" class="pt-mark" data-task="A_Package" style="left:52.31%;top:41.55%" aria-expanded="false" aria-label="About step: Package: files plus a manifest of digests" title="About: Package: files plus a manifest of digests">i</button> <button type="button" class="pt-mark" data-task="S_Sign" style="left:69.08%;top:58.45%" aria-expanded="false" aria-label="About step: Sign the package and/or each asset" title="About: Sign the package and/or each asset">i</button> <button type="button" class="pt-mark" data-task="E_HumanEyes" style="left:69.08%;top:3.52%" aria-expanded="false" aria-label="About step: Human eyes on the rendered artefact" title="About: Human eyes on the rendered artefact">i</button> <button type="button" class="pt-mark" data-task="D_Undetermined" style="left:86.99%;top:21.83%" aria-expanded="false" aria-label="About step: Record the decision as still open" title="About: Record the decision as still open">i</button> <button type="button" class="pt-mark" data-task="A_Distribute" style="left:78.03%;top:72.54%" aria-expanded="false" aria-label="About step: Publish to the origin (a cache may front it)" title="About: Publish to the origin (a cache may front it)">i</button> <button type="button" class="pt-mark" data-task="P_Verify" style="left:78.03%;top:86.62%" aria-expanded="false" aria-label="About step: Verify what arrived against what was signed" title="About: Verify what arrived against what was signed">i</button><div class="pt-panel" role="dialog" aria-label="Task details" hidden=""></div></div><script>(function () {
+  Array.prototype.forEach.call(document.querySelectorAll(".pt-diagram:not([data-pt-ready])"), init);
+  function init(root) {
+  root.setAttribute("data-pt-ready", "");
+  var panel = root.querySelector(".pt-panel"), data = null, pending = null, open = null;
+  function load() {
+    if (data) return Promise.resolve(data);
+    if (!pending) pending = fetch(root.getAttribute("data-panel")).then(function (r) {
+      if (!r.ok) throw new Error(r.status + " " + r.statusText);
+      return r.json();
+    }).then(function (j) { data = j; return j; });
+    return pending;
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function link(l, cls) {
+    var e = el(l.href ? "a" : "code", cls, l.name);
+    if (l.href) e.href = l.href; else e.title = "no page for this one";
+    return e;
+  }
+  function obj(stereo, name, kind) {
+    var box = el("div", "pt-obj pt-" + kind), head = el("div", "pt-head");
+    head.appendChild(el("span", "pt-st", "\u00ab" + stereo + "\u00bb"));
+    head.appendChild(typeof name === "string" ? el("b", null, name) : name);
+    box.appendChild(head);
+    return box;
+  }
+  function edge(label) { return el("div", "pt-edge", "\u2502 " + label + " \u25bc"); }
+  function render(t) {
+    panel.textContent = "";
+    var close = el("button", "pt-close", "\u00d7"); close.type = "button"; close.setAttribute("aria-label", "Close");
+    close.onclick = function () { hide(); }; panel.appendChild(close);
+    var task = obj(t.type.replace(/^bpmn:/, ""), link({ name: t.name, href: t.href }), "task");
+    task.appendChild(el("div", "pt-attr", "id = " + t.id));
+    if (t.lane) { var ln = el("div", "pt-attr", "lane = "); ln.appendChild(link({ name: t.lane, href: t.laneHref })); task.appendChild(ln); }
+    if (data && data.processHref) { var pr = el("div", "pt-attr", "process = "); pr.appendChild(link({ name: data.process, href: data.processHref })); task.appendChild(pr); }
+    panel.appendChild(task);
+    if (t.calls) {
+      panel.appendChild(edge("calls"));
+      var cp = obj("Process", link(t.calls), "proc");
+      if (t.calls.diagram && t.calls.diagram !== t.calls.href) { var dg = el("div", "pt-attr"); dg.appendChild(link({ name: "diagram", href: t.calls.diagram })); cp.appendChild(dg); }
+      panel.appendChild(cp);
+    }
+    if (t.shared) {
+      panel.appendChild(edge("calls"));
+      var gt = obj(t.shared.type.replace(/^bpmn:/, ""), t.shared.id, "proc");
+      Object.keys(t.shared.inputs || {}).forEach(function (k) { gt.appendChild(el("div", "pt-attr", k + " = " + t.shared.inputs[k])); });
+      panel.appendChild(gt);
+    }
+    t.skills.forEach(function (s) {
+      panel.appendChild(edge("requires"));
+      var sk = obj("Skill", link(s), "skill");
+      (s.methodologies || []).forEach(function (m) {
+        var row = el("div", "pt-attr"); row.appendChild(el("span", "pt-st", "uses-methodology \u2192 "));
+        row.appendChild(link(m)); sk.appendChild(row);
+      });
+      panel.appendChild(sk);
+    });
+    if (!t.skills.length && !t.calls) panel.appendChild(el("div", "pt-none", "This task names no skill."));
+    if (t.role) {
+      panel.appendChild(edge("lane names"));
+      var role = obj("Role", link(t.role), "role");
+      if (t.role.title) role.appendChild(el("div", "pt-attr", "title = " + t.role.title));
+      var list = el("div", "pt-attr"); list.appendChild(el("span", "pt-st", "hasSkill: "));
+      if (!t.role.skills.length) list.appendChild(el("i", null, "none listed"));
+      t.role.skills.forEach(function (s, i) {
+        if (i) list.appendChild(document.createTextNode(", "));
+        list.appendChild(link(s));
+        if (s.via) list.appendChild(el("span", "pt-via", " (via " + s.via + ")"));
+      });
+      role.appendChild(list); panel.appendChild(role);
+    } else if (t.binding) {
+      panel.appendChild(el("div", "pt-none", "Lane role: " + t.binding + "."));
+    }
+  }
+  function hide() { panel.hidden = true; if (open) open.setAttribute("aria-expanded", "false"); open = null; }
+  root.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest(".pt-mark");
+    if (!b) return;
+    if (open === b) { hide(); return; }
+    if (open) open.setAttribute("aria-expanded", "false");
+    open = b; b.setAttribute("aria-expanded", "true");
+    panel.style.left = b.style.left; panel.style.top = b.style.top;
+    panel.hidden = false; panel.textContent = "Loading\u2026";
+    load().then(function (j) {
+      var t = j.tasks[b.getAttribute("data-task")];
+      if (open === b) { if (t) render(t); else panel.textContent = "No details for this task."; }
+    }).catch(function (e) { if (open === b) panel.textContent = "Could not load task details: " + e.message; });
+  });
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && open) hide(); });
+  }
+})();</script><h2 id="how-it-connects"><a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
+  
+  
+</h2><ul><li><strong>Called by:</strong> no call activity names this process</li><li><strong>Calls:</strong> none</li><li><strong>Presented on:</strong> no docs page section shows this diagram</li><li><strong>Skill:</strong> <a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></li><li><strong>Running instances:</strong> none recorded</li></ul><h2 id="lanes--who-acts"><a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>lane</th><th>role</th><th>what it does here</th></tr></thead><tbody><tr><td>Editorial</td><td><code class="language-plaintext highlighter-rouge">editor</code></td><td>Two decisions, not one: E_Scope bounds what may leave the repository before the pipeline runs, and E_HumanEyes — reached only after S_Sign — approves what a reader will actually see, which merging to main does not. When GW_Budget rejects a package as over budget, narrowing scope here is the only way back in, so this lane is doing gatekeeping at both ends of the pipeline rather than once.</td></tr><tr><td>Deployment owner</td><td><code class="language-plaintext highlighter-rouge">publication-manager</code></td><td>Owns the numbers every other gate in the pipeline checks against: GW_Budget measures the package against D_Constraints’ figures, not a feeling. When GW_Transport has no default branch to take, this lane is the one that records the gap as still open — at D_Undetermined — rather than letting the build pick a transport nobody decided on.</td></tr><tr><td>Build pipeline</td><td><code class="language-plaintext highlighter-rouge">build-pipeline</code></td><td>Executes E_Scope’s decision as bytes — cut, serialize, package — precisely enough that GW_Budget can weigh the actual package rather than guess from the graph’s node count. Each step reports what it did rather than only succeeding, which is what lets an empty selection be told apart from one that never ran.</td></tr><tr><td>Attestation (GDHCN / WHO SMART Trust)</td><td><code class="language-plaintext highlighter-rouge">attestation-service</code></td><td>Signs after A_Package and before E_HumanEyes, so what a human approves downstream is exactly what got signed — reordering the two would let a reviewer approve bytes the signature no longer covers. Whether that signature covers the whole package, each asset, or both composed is a deployment choice this lane executes rather than makes.</td></tr><tr><td>Publish target</td><td><code class="language-plaintext highlighter-rouge">publish-target</code></td><td>The one lane whose action makes a URL live, which is exactly why a CDN in front of it is not drawn as a second lane — folding the cache in as a participant would make its URL look like the published one, and the canonical URL is this lane’s promise to keep, not the cache’s. Uploading and exposing stay two separate moments here rather than one, so a bad layout is still catchable before a reader can reach it.</td></tr><tr><td>Portal (external consumer)</td><td><code class="language-plaintext highlighter-rouge">external-registry</code></td><td>The only lane outside this instance’s control, so P_Verify checks against an external trust anchor — the GDHCN trustlist — rather than against anything the pipeline itself asserts. When that trustlist cannot be reached, this lane’s answer is <code class="language-plaintext highlighter-rouge">unknown</code>, and GW_Verified routes it the same way as a mismatch: to the last good version, never to a guessed pass.</td></tr></tbody></table></div><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
+  
+  
+</h2><p>Every one of the 10 step(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>step</th><th>lane</th><th>skill / sub-process</th><th>what it does</th></tr></thead><tbody><tr><td><strong>State the constraints, with denominators</strong><br /><code class="language-plaintext highlighter-rouge">D_Constraints</code></td><td>Deployment owner</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>Money, network traffic, graph size, latency. Each needs a NUMBER and each number needs a denominator, because a constraint with no denominator is a preference: “the graph is too big” is not a finding, “6.2 MB per publication against a 100 GB free tier” is. Say which figures were measured, which were quoted from a vendor, and which could not be obtained — a figure from a chat message is none of the three, and the who-iris catalogue carries the worked example where “0.7 TB” propagated through ten files and the measured figure was about half.</td></tr><tr><td><strong>Decide what may leave the repository</strong><br /><code class="language-plaintext highlighter-rouge">E_Scope</code></td><td>Editorial</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>EDITORIAL, and it is stage 1 rather than a filter bolted to the exporter. kg-export produces the WHOLE graph because inspection wants the whole graph; a portal wants what its readers may see. Running the second as the first is how a QA verdict, a bean’s blocking note or an unpublished draft reaches a public cache. Decided once, here, rather than at each consumer.</td></tr><tr><td><strong>Cut the subgraph that leaves</strong><br /><code class="language-plaintext highlighter-rouge">A_Select</code></td><td>Build pipeline</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>Apply the editorial scope mechanically and report what it removed. A selection that reports nothing cannot be told from one that ran over an empty rule.</td></tr><tr><td><strong>Serialize to JSON-LD</strong><br /><code class="language-plaintext highlighter-rouge">A_Serialize</code></td><td>Build pipeline</td><td><a href="../../../reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a></td><td>kg-export, already built and host-agnostic by design. Every edge term declared {“@type”: “@id”} — without that coercion the document is a list of records that merely LOOKS linked, and the node IRIs are fragments of the document’s own @id so the graph is mergeable with anyone else’s.</td></tr><tr><td><strong>Package: files plus a manifest of digests</strong><br /><code class="language-plaintext highlighter-rouge">A_Package</code></td><td>Build pipeline</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>The serialization alone is not a package. A package is an addressable set — the JSON-LD, the assets it references, and a manifest naming every file with its digest and byte count. The manifest is what makes a REMOVED file detectable, which a per-file signature cannot do on its own.</td></tr><tr><td><strong>Sign the package and/or each asset</strong><br /><code class="language-plaintext highlighter-rouge">S_Sign</code></td><td>Attestation (GDHCN / WHO SMART Trust)</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20, paraphrased: proposal signing is GDHCN, as the WHO SMART Trust IG specifies). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is <code class="language-plaintext highlighter-rouge">unknown</code> and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment’s choice rather than the pipeline’s.</td></tr><tr><td><strong>Human eyes on the rendered artefact</strong><br /><code class="language-plaintext highlighter-rouge">E_HumanEyes</code></td><td>Editorial</td><td><a href="../../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a></td><td>Bean xies, gate 3, and the one that is easy to drop because gate 2 (merge to main) looks like an approval. It is not: merging approves the CHANGE, and this approves what a reader will actually see. continual-progress measured why a description cannot stand in for it (PR #178, 2026-09-16).</td></tr><tr><td><strong>Record the decision as still open</strong><br /><code class="language-plaintext highlighter-rouge">D_Undetermined</code></td><td>Deployment owner</td><td><a href="../../../reference/skill-instructions/decision-audit.html"><code class="language-plaintext highlighter-rouge">decision-audit</code></a></td><td>An undetermined decision is DATA, not silence. It is recorded with what it waits on and what would settle it, so the next session can tell “nobody has chosen” from “somebody chose and did not write it down” — the same third state bean-blocking keeps for a block with no expiry.</td></tr><tr><td><strong>Publish to the origin (a cache may front it)</strong><br /><code class="language-plaintext highlighter-rouge">A_Distribute</code></td><td>Publish target</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>Reach host behaviour through publication.host, never by assuming GitHub Pages’ behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin’s, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose (xies, gate 4), because collapsing them removes the last moment at which a bad URL layout can still be caught.</td></tr><tr><td><strong>Verify what arrived against what was signed</strong><br /><code class="language-plaintext highlighter-rouge">P_Verify</code></td><td>Portal (external consumer)</td><td><a href="../../../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td><td>Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (<code class="language-plaintext highlighter-rouge">tng-cdn.who.int</code>), and its path is a hierarchical filter — domain, participant, key usage, with <code class="language-plaintext highlighter-rouge">-</code> as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO’s own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports <code class="language-plaintext highlighter-rouge">unknown</code> — a portal nobody asked is not a portal that checked.</td></tr></tbody></table></div><h2 id="decisions"><a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
+  
+  
+</h2><p>Every one of the 3 decision(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>decision</th><th>what decides it</th><th>branches</th></tr></thead><tbody><tr><td><strong>Within the stated budget?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Budget</code></td><td>Measured against D_Constraints’ numbers, not against a feeling. The gate is here rather than before packaging because the package’s own size is the quantity being judged, and estimating it from the graph’s node count is the guess this gate exists to replace.</td><td><strong>within budget</strong> → Sign the package and/or each asset<br /><strong>over budget</strong> → Refused — over budget</td></tr><tr><td><strong>Which transport? (UNDETERMINED)</strong><br /><code class="language-plaintext highlighter-rouge">GW_Transport</code></td><td>THIS GATEWAY HAS NO DEFAULT BRANCH, AND THAT IS THE POINT. Owner, 2026-09-20: “ingestion method not determined.” Pull from the portal, push to an object store, a git fetch, a signed tarball on a schedule — they differ in cost, in who initiates, in what must be reachable from where, and in what happens when a publication is missed. The deployment answers using D_Constraints’ numbers; until it does, the diagram reaches here and stops. Drawing one branch as the obvious one would record a decision nobody made.</td><td><strong>a transport was chosen</strong> → Publish to the origin (a cache may front it)<br /><strong>still undetermined</strong> → Record the decision as still open</td></tr><tr><td><strong>Verifies?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Verified</code></td><td>Answered by verifying what arrived against what was signed. <code class="language-plaintext highlighter-rouge">signature and digests match</code> serves the bytes; <code class="language-plaintext highlighter-rouge">mismatch</code> rejects them and keeps serving the previous version.</td><td><strong>signature and digests match</strong> → Readers have the bytes<br /><strong>mismatch</strong> → Rejected — serve the previous version</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

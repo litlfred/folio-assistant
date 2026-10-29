@@ -1,0 +1,79 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/package-release-workflow/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/package-release-workflow.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build, tag, and publish an npm package tarball to GitHub Releases and GitHub Packages registry via workflow_dispatch across any repository.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "gh workflow run release-npm.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The package being released. Default: root package in the target repository.",
+            "name": "package",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+          },
+          {
+            "description": "The semver version string to release (e.g. '0.1.0').",
+            "name": "version",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "arg": {
+              "flag": "-R"
+            },
+            "description": "Target repository full name (e.g. 'litlfred/cat-harness', 'litlfred/bootstrap-tools'). If omitted, runs in the current repository.",
+            "name": "repo",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "description": "The workflow file to trigger (default: 'release-npm.yml').",
+            "name": "workflow",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The tag created by the workflow, e.g. `<package>-v<version>` or `v<version>`.",
+            "name": "tag",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Workflow dispatch status and run URL.",
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "package-release-workflow",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "gh"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution"
+      ],
+      "title": "Release package via GitHub Actions release workflow"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/package-release-workflow",
+  "path": "tools/package-release-workflow/"
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/library",
+      "@type": "bootstrap:Subgraph",
+      "name": "library"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789240010567-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789240081949-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789240093362-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789240101197-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789240116191-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789240120747-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789241509510-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789241511766-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789241549912-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789241549912-webannexes-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/9789241549912-websupplement-eng/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/mehl-2021-who-smart-guidelines/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/smart-trust/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/who-dpi-h-reference-architecture-draft-v1/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/who-rhr-1806-eng/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library",
+  "path": "library/"
+}

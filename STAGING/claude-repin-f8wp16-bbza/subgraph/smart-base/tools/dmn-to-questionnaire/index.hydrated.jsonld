@@ -1,0 +1,55 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dmn-to-questionnaire/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/dmn-to-questionnaire.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: its output is validated and indexed by the IG Publisher like any other resource.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 input/scripts/dmn_questionnaire_generator.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The directory of DMN sources. `input/dmn/` by convention.",
+            "name": "dmnDir",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The generated `Questionnaire` resources, written where SUSHI's output is collected from.",
+            "name": "questionnaires",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "How many were produced. Zero is a determined empty only if the DMN directory was found; absent input is a different state and is reported as such.",
+            "name": "generated",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          }
+        ]
+      },
+      "name": "dmn-to-questionnaire",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+      "title": "DMN → FHIR Questionnaire"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/dmn-to-questionnaire",
+  "path": "tools/dmn-to-questionnaire/"
+}

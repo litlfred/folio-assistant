@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-resolve-thread/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-resolve-thread.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Mark one discussion on a merge request as resolved.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr note resolve"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "Absent: the merge request of the current branch.",
+            "name": "number",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+          },
+          {
+            "arg": {
+              "positional": 1
+            },
+            "description": "The discussion id, or a prefix of 8 or more of it.",
+            "name": "thread",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ReviewThreadId"
+          }
+        ],
+        "outputs": []
+      },
+      "name": "gitlab-mr-resolve-thread",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+      "title": "Resolve a review thread on a merge request (GitLab)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/gitlab-mr-resolve-thread",
+  "path": "tools/gitlab-mr-resolve-thread/"
+}

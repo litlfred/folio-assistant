@@ -1,0 +1,50 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-files/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-files.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "List the paths one pull request changes.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr diff --name-only"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "Absent: the change proposal of the current branch.",
+            "name": "number",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One repository path per line.",
+            "name": "files",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "github-pr-files",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+      "title": "List a pull request's changed files (GitHub)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/github-pr-files",
+  "path": "tools/github-pr-files/"
+}

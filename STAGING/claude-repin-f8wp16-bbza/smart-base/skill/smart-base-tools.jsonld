@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/smart-base/skill/smart-base-tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-f8wp16-bbza/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/smart-base-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-f8wp16-bbza",
+    "sha": "bc73d602431c7136e13e05449768fb5a596a49db",
+    "pr": "2723/merge",
+    "run": "40906380573"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/smart-base-tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "smart-base-tools",
+      "title": "smart-base Toolchain",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+      "instructionLines": 157,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

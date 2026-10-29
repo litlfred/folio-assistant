@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(354)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(142) > ul > li:nth-child(2) > ul > li:nth-child(354) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(142) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(142) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(142) > ul > li:nth-child(2) > ul > li:nth-child(354) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(142) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(142) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(142) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(354) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>ig-publisher-reduction | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="ig-publisher-reduction" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="ig-publisher-reduction" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-ig-publisher-reduction",
+    "src": "../../assets/qa/reference-skill-instructions-ig-publisher-reduction/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-ig-publisher-reduction/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=4885e06b0507"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=ffd09062ff20"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=d1e44c948d21" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-jq55perxp9.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-jq55perxp9","here":"/reference/skill-instructions/ig-publisher-reduction.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#what-the-owner-asked-for-verbatim","label":"What the owner asked for, verbatim"},{"href":"#what-the-publisher-does-that-a-cache-cannot-fake","label":"What the Publisher does that a cache cannot fake"},{"href":"#the-phases","label":"The phases","children":[{"href":"#approved-by-the-owner-2026-09-30","label":"Approved by the owner, 2026-09-30","depth":1},{"href":"#p0-is-a-re-point-not-a-build","label":"P0 is a re-point, not a build","depth":1},{"href":"#p1s-exit-criterion-is-a-diff-deliberately","label":"P1’s exit criterion is a diff, deliberately","depth":1},{"href":"#p3-is-where-the-honesty-lives","label":"P3 is where the honesty lives","depth":1},{"href":"#p3-is-blocked-on-more-than-a-fork","label":"P3 is BLOCKED on more than a fork","depth":1}],"fold":"5 sub-sections"},{"href":"#what-is-not-settled-and-must-not-be-decided-by-drift","label":"What is NOT settled, and must not be decided by drift"},{"href":"#do-not","label":"Do not"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>ig-publisher-reduction</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md"><code class="language-plaintext highlighter-rouge">fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md" class="fa-edit-source" data-fa-link="edit" data-src="fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="ig-publisher-reduction"><a href="#ig-publisher-reduction" class="anchor-heading" aria-labelledby="ig-publisher-reduction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ig-publisher-reduction
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">ig-publisher-reduction</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:
+<code class="language-plaintext highlighter-rouge">fhir-harness</code> · Bean <code class="language-plaintext highlighter-rouge">kn0t</code></p></blockquote><p>Get to the point where the IG Publisher is needed <strong>only</strong> to produce an AST
+and a QA record, with rendering owned by the just-the-docs pipeline.</p><h2 id="what-the-owner-asked-for-verbatim"><a href="#what-the-owner-asked-for-verbatim" class="anchor-heading" aria-labelledby="what-the-owner-asked-for-verbatim"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the owner asked for, verbatim
+  
+  
+</h2><blockquote><p>i want to slowly get rid of IG publisher in the publication/iteration pahse.
+you or sibling should be working on AST dump as cache of published IG. we can
+use this for iterative delta’s (if we dont care about indexing/versioning so
+much in STAGING, we need full IG AST rereun)</p></blockquote><p>and, on the second ingested IG:</p><blockquote><p>i dont want the. /html generated… just the calculated versions, dependcies
+and such the AST end</p></blockquote><p>Two things are being asked for at once and they are separable: <strong>stop mounting
+generated HTML</strong> (a rendering change) and <strong>cache an AST</strong> (a build change).
+The phases below do the first three before the second, because the first is
+verifiable without a fork and the second is not.</p><h2 id="what-the-publisher-does-that-a-cache-cannot-fake"><a href="#what-the-publisher-does-that-a-cache-cannot-fake" class="anchor-heading" aria-labelledby="what-the-publisher-does-that-a-cache-cannot-fake"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the Publisher does that a cache cannot fake
+  
+  
+</h2><p>State this before any phase, because it is what stops the transition becoming
+“remove the Publisher”:</p><ul><li><strong>Profile validation</strong> against the declared FHIR version.</li><li><strong>Dependency-closure resolution</strong> with version pinning —
+<code class="language-plaintext highlighter-rouge">hl7.terminology</code>, <code class="language-plaintext highlighter-rouge">hl7.fhir.uv.cql</code>, <code class="language-plaintext highlighter-rouge">hl7.fhir.uv.cpg</code>,
+<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.crmi</code>, <code class="language-plaintext highlighter-rouge">hl7.fhir.uv.sdc</code> for the WHO SMART Base IG.</li><li><strong>Terminology expansion</strong> against a <code class="language-plaintext highlighter-rouge">tx</code> server.</li></ul><p>None is reproducible from its own output. The end state is the Publisher
+invoked <em>for these</em>, not the Publisher gone.</p><h2 id="the-phases"><a href="#the-phases" class="anchor-heading" aria-labelledby="the-phases"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The phases
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th></th><th>does</th><th>exit criterion — MEASURED</th></tr></thead><tbody><tr><td><strong>P0</strong></td><td>re-point the metadata→variables bridge; render one IG’s <code class="language-plaintext highlighter-rouge">input/pages/</code> through just-the-docs</td><td>the <strong>WHO SMART Trust IG</strong>’s pages render with Publisher metadata populating the Jekyll variables, and every page the Publisher renders for that IG is accounted for as <strong>exactly one</strong> of: <strong>matched</strong> (this site renders it), <strong>refused under P2</strong> (an XML/Turtle view, in P2’s refusal record), or <strong>on the fork’s ask</strong> (rendered from data the Publisher does not export, listed with the data it needs). A page in none is a <strong>gap</strong>; P0 passes with zero gaps</td></tr><tr><td><strong>P1</strong></td><td>derive navigation from <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>’s <code class="language-plaintext highlighter-rouge">pages:</code> and <code class="language-plaintext highlighter-rouge">menu:</code></td><td>the derived navigation is diffed against the Publisher’s, <strong>one diff per IG</strong>, and each difference is <strong>empty or explained entry by entry</strong>; the per-IG diffs are also reported <strong>together</strong>, answering “what are the differences in IG1, IG2, … IGN?”</td></tr><tr><td><strong>P2</strong></td><td>JSON-only representations; XML/TTL dropped from the render path, and not linked (owner, 2026-10-23: <em>“excise XML and ttl everywhere for now”</em>)</td><td>every dropped representation is <strong>recorded as a refusal</strong>, per IG with the same combined view as P1, so “publishes no Turtle” and “we ignored its Turtle” stay distinguishable</td></tr><tr><td><strong>P3</strong></td><td>AST dump behind a flag on the fork; staging renders from cached AST</td><td>a staging page built from cache carries a <strong>visible</strong> stale-until-full-run mark, and a reader can tell which facts are provisional — the AST comes <strong>from the fork</strong>, which is a prerequisite</td></tr><tr><td><strong>P4</strong></td><td>Publisher invoked for AST + QA only</td><td>a release is still cut from a full build, and the artefact <strong>says which</strong> it came from</td></tr></tbody></table></div><h3 id="approved-by-the-owner-2026-09-30"><a href="#approved-by-the-owner-2026-09-30" class="anchor-heading" aria-labelledby="approved-by-the-owner-2026-09-30"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Approved by the owner, 2026-09-30
+  
+  
+</h3><p>All five phases were put to the owner one at a time, with the criteria above
+(bean <code class="language-plaintext highlighter-rouge">kn0t</code>). Three answers changed the wording, and the table carries them:</p><ul><li><strong>P0</strong> — approved with the WHO SMART Trust IG as the named IG, and the page-set match
+kept <strong>strict</strong>. The looser option (list data-limited page kinds as
+exceptions) was offered and not taken.</li><li><strong>P1</strong> — approved with a change in the owner’s words: <em>“each IG should have
+its own set of diffs. can be grouped together to see ‘what are diffs in IG1,
+IG2, … IGN?’“</em>. P2 takes the same per-IG + combined shape.</li><li><strong>P3</strong> — approved with the <strong>fork required</strong>. <code class="language-plaintext highlighter-rouge">fsh-cone</code>’s source edges
+(458 of 458, below) are real and stay useful for rebuild cones, but they were
+offered as a replacement for the fork and <strong>not</strong> accepted as one: the AST is
+the Publisher’s.</li><li><strong>P2</strong> and <strong>P4</strong> — approved as written.</li><li><strong>P4, scoped 2026-10-24</strong> (bean <code class="language-plaintext highlighter-rouge">h3tx</code>, option C). The refresh rebuilds a
+stale cache incrementally. A release step refuses an incremental AST
+(<code class="language-plaintext highlighter-rouge">ig-ast.ts build-kind --require-full</code>), and the site’s <code class="language-plaintext highlighter-rouge">folio-build.json</code>
+says which kind of build it came from (<code class="language-plaintext highlighter-rouge">ast.kind</code>). Skill
+<a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a>, “The AST cache lifecycle”.</li><li><strong>P0, restated 2026-10-01</strong> (bean <code class="language-plaintext highlighter-rouge">jut3</code>, owner’s answer <em>“1y”</em>). The strict
+wording counted P2’s refusals and the fork’s data as P0 gaps, so P0 could not
+pass before the phases after it — the phase order inverted. P0 now accounts
+for every page as matched, refused under P2, or on the fork’s ask, and passes
+only with zero pages in none of the three. Still strict: nothing is silently
+excepted; each page is in exactly one named list.</li></ul><p>Still open, and not decided by these approvals: <code class="language-plaintext highlighter-rouge">transform_dmn.py</code>’s HTML, the
+“parity-ish” checklist, and whether staging keeps a <code class="language-plaintext highlighter-rouge">tx</code> dependency (below).</p><h3 id="p0-is-a-re-point-not-a-build"><a href="#p0-is-a-re-point-not-a-build" class="anchor-heading" aria-labelledby="p0-is-a-re-point-not-a-build"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> P0 is a re-point, not a build
+  
+  
+</h3><p><strong>The metadata half now exists (bean <code class="language-plaintext highlighter-rouge">bamf</code>, 2026-09-30):</strong> the <code class="language-plaintext highlighter-rouge">ig-site-data</code>
+tool writes <code class="language-plaintext highlighter-rouge">site.data.fhir</code> (<code class="language-plaintext highlighter-rouge">ig.*</code> from the ImplementationGuide resource,
+<code class="language-plaintext highlighter-rouge">packageId</code>, <code class="language-plaintext highlighter-rouge">canonical</code>) for one IG — <strong>from the FHIR AST first</strong> (the
+ImplementationGuide resource in <code class="language-plaintext highlighter-rouge">output-ast/</code>; owner, 2026-10-09, bean
+<code class="language-plaintext highlighter-rouge">jut3</code>), then <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> or a published IG’s <code class="language-plaintext highlighter-rouge">fhir-artifact-index</code>
+for what the AST lacks, reporting a field the AST and sushi-config state
+differently — lists every field it cannot source instead of
+writing an empty string, and refuses a source describing another package.
+fhir-harness declares <code class="language-plaintext highlighter-rouge">site.data</code> as a <strong>pass-through Liquid prefix</strong>, so the
+platform’s value resolver leaves <code class="language-plaintext highlighter-rouge">{{ site.data.fhir.… }}</code> for Jekyll and the
+Publisher alike. The <code class="language-plaintext highlighter-rouge">smart__</code>-style per-artefact variables below are still P0’s
+open half.</p><p><code class="language-plaintext highlighter-rouge">generate_smart_liquid.py</code> already computes <code class="language-plaintext highlighter-rouge">IG metadata → Liquid variables</code>
+from <code class="language-plaintext highlighter-rouge">output/</code>, emitting <code class="language-plaintext highlighter-rouge">smart__&lt;ResourceType&gt;__&lt;id&gt;__&lt;category&gt;__&lt;key&gt;</code> across
+<code class="language-plaintext highlighter-rouge">url__canonical</code>, <code class="language-plaintext highlighter-rouge">url__page</code>, <code class="language-plaintext highlighter-rouge">url__json</code>, <code class="language-plaintext highlighter-rouge">text__display</code>, <code class="language-plaintext highlighter-rouge">link__html</code> and
+<code class="language-plaintext highlighter-rouge">elements__&lt;key&gt;</code>. It is aimed at the Publisher’s own Jekyll.</p><p><strong>Lift it; do not redesign it.</strong> And fix the defect on the way: it writes
+<code class="language-plaintext highlighter-rouge">input/pagecontent/smart.liquid.md</code> <em>“processed by IG Publisher on the NEXT
+build”</em>, so the surface takes two builds to converge — which is fatal to an
+incremental loop and disappears when variables are computed and consumed in one
+pass. Drop the <code class="language-plaintext highlighter-rouge">smart__</code> prefix: it is WHO’s, and this layer does not know
+about WHO.</p><h3 id="p1s-exit-criterion-is-a-diff-deliberately"><a href="#p1s-exit-criterion-is-a-diff-deliberately" class="anchor-heading" aria-labelledby="p1s-exit-criterion-is-a-diff-deliberately"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> P1’s exit criterion is a diff, deliberately
+  
+  
+</h3><p>“Navigation looks right” is not a criterion. <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>’s <code class="language-plaintext highlighter-rouge">pages:</code> is
+an <strong>ordered map</strong> and <code class="language-plaintext highlighter-rouge">menu:</code> carries the grouping, so the derived navigation
+is computable and so is the Publisher’s — compare them. An entry that differs
+is either a bug or a deliberate improvement, and saying which is the work.</p><h3 id="p3-is-where-the-honesty-lives"><a href="#p3-is-where-the-honesty-lives" class="anchor-heading" aria-labelledby="p3-is-where-the-honesty-lives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> P3 is where the honesty lives
+  
+  
+</h3><p>A staging build from cached AST is <strong>provisional</strong>, and the owner named exactly
+which facts go stale: <em>“the indices, dependecies may not be valid until full IG
+publisher is run”</em>.</p><p>So the contract is:</p><blockquote><p><strong>An AST is a CACHE, never an authority.</strong> Anything rendered from one
+declares, in the artefact a reader sees, that its indices, dependency edges
+and versions are unverified until a full run.</p></blockquote><p>A stale mark that exists only in a log is not this. <code class="language-plaintext highlighter-rouge">ci-health</code>’s rule is the
+same shape — <em>could not check is never green</em> — and the failure here would be
+worse, because a page that silently serves stale dependencies looks exactly
+like one that does not.</p><h3 id="p3-is-blocked-on-more-than-a-fork"><a href="#p3-is-blocked-on-more-than-a-fork" class="anchor-heading" aria-labelledby="p3-is-blocked-on-more-than-a-fork"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> P3 is BLOCKED on more than a fork
+  
+  
+</h3><p>Measured, from <code class="language-plaintext highlighter-rouge">nsbb</code>, re-derived 2026-09-23 and it <strong>holds exactly</strong>: nothing in
+the Publisher’s current exports carries dependencies among Libraries,
+PlanDefinitions or Measures — <strong>458 artefacts, 61 % of the WHO SMART Immunizations IG</strong>
+(Library 279 + PlanDefinition 138 + Measure 41 of 748), the CQL and
+decision-logic core, with no dependency edges at all. The index’s field set is
+<code class="language-plaintext highlighter-rouge">canonical, category, dak, description, id, key, materialization, name,
+published, resourceType, title, version</code> — there is <strong>no edge field</strong>, so this
+is not “edges are missing” but “this export has nowhere to put one”, and the
+exit criterion is <strong>unsatisfiable</strong> against it rather than merely hard (<code class="language-plaintext highlighter-rouge">kn0t</code>).
+An AST that stops at terminology cannot support iterative deltas over the part
+of an IG that actually changes. Re-derive that 61 % before quoting it.</p><h4 id="there-is-a-second-route-to-the-edges-and-it-needs-no-fork"><a href="#there-is-a-second-route-to-the-edges-and-it-needs-no-fork" class="anchor-heading" aria-labelledby="there-is-a-second-route-to-the-edges-and-it-needs-no-fork"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> There is a second route to the edges, and it needs no fork
+  
+  
+</h4><p><code class="language-plaintext highlighter-rouge">scripts/fsh-cone.ts</code> (merged, from <code class="language-plaintext highlighter-rouge">267x</code>) builds the same IG’s graph
+from <strong>source</strong> — <code class="language-plaintext highlighter-rouge">.fsh</code> + <code class="language-plaintext highlighter-rouge">.cql</code> — where the export side is the Publisher’s
+output. Both are true at once: 2,478 source edges, 0 export edges. Measured on
+the WHO SMART Immunizations IG 2026-09-23 (<code class="language-plaintext highlighter-rouge">f4gj</code>, reproduce with
+<code class="language-plaintext highlighter-rouge">scripts/measure-logic-layer-edges.ts</code>):</p><ul><li>The 458 map onto FSH source <strong>1:1, zero unmatched ids</strong>.</li><li><strong>The edges are there.</strong> After FSH <code class="language-plaintext highlighter-rouge">RuleSet</code> parameter substitution — what
+SUSHI does before the Publisher sees a resource — <strong>458 of 458</strong> logic
+artefacts carry an edge to another logic artefact, reaching 458 distinct
+targets.</li></ul><p><strong>So the blocker is real but this section’s inference was too strong.</strong> P3 does
+not depend on a fork for the <em>existence</em> of logic-layer edges; those are in the
+IG source at full per-artefact resolution. What the fork uniquely delivers is
+<strong>resolved, version-pinned, cross-package</strong> edges.</p><h4 id="and-it-was-not-a-route-for-two-separable-reasons--both-now-fixed"><a href="#and-it-was-not-a-route-for-two-separable-reasons--both-now-fixed" class="anchor-heading" aria-labelledby="and-it-was-not-a-route-for-two-separable-reasons--both-now-fixed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> …and it was not a route, for two separable reasons — both now fixed
+  
+  
+</h4><p>As first measured, <code class="language-plaintext highlighter-rouge">fsh-cone</code> extracted <strong>none</strong> of them: all 458 artefacts
+reached <strong>8 distinct targets, every one a shared <code class="language-plaintext highlighter-rouge">RuleSet</code></strong> — <strong>0 logic→logic
+edges</strong>. Aggregate “coverage” read 99.8 %, which was boilerplate: every
+Library’s mean out-degree was exactly <strong>1.00</strong> and all 279 pointed at the same
+node, so the graph could not tell one Library from another. Both staleness
+directions were wrong — a change to a Library’s own CQL marked <strong>nothing</strong>
+stale; a change to <code class="language-plaintext highlighter-rouge">LogicLibrary.fsh</code> marked <strong>all 279</strong>. <strong>Break any such
+number down by resource type</strong>; the aggregate hid this.</p><p><strong>(a) The Library→CQL edge.</strong> The <code class="language-plaintext highlighter-rouge">Library ↔ cql (by name)</code> edge was guarded on
+<code class="language-plaintext highlighter-rouge">node.id</code>, and all 279 Library instances omit <code class="language-plaintext highlighter-rouge">Id:</code> and rely on SUSHI’s name→id
+default, so it fired 0 times and was absent from the edge-kind table entirely.
+The fix is <code class="language-plaintext highlighter-rouge">node.id ?? node.name</code>.</p><p><strong>(b) The library canonical inside a parameterised RuleSet.</strong> PlanDefinition and
+Measure write it as <code class="language-plaintext highlighter-rouge">* library = Canonical({library}Logic)</code> in
+<code class="language-plaintext highlighter-rouge">PlanDefMain(library, version)</code>, and as a string URL in
+<code class="language-plaintext highlighter-rouge">MeasureProportionBasic</code> reached through a second level. Read literally the
+token is <code class="language-plaintext highlighter-rouge">{library}Logic</code>, which resolves to nothing, so the edge was
+attributed to the RuleSet. <code class="language-plaintext highlighter-rouge">buildFshGraph</code> now substitutes a RuleSet’s
+positional arguments into its body before scanning, tagging what it finds
+<code class="language-plaintext highlighter-rouge">insert (parameter expanded)</code> so the two claims stay distinguishable.</p><p>Re-measured on the WHO SMART Immunizations IG at each step:</p><div class="table-wrapper"><table><thead><tr><th></th><th>as merged</th><th>after (a)</th><th>after (b)</th></tr></thead><tbody><tr><td>logic→logic edges, of 458</td><td><strong>0</strong></td><td>279</td><td><strong>458</strong></td></tr><tr><td>distinct targets, all 458</td><td>8</td><td>287</td><td><strong>469</strong></td></tr><tr><td>internal edges</td><td>2,478</td><td>2,757</td><td><strong>3,329</strong></td></tr><tr><td>nodes with no dependent</td><td>715</td><td>536</td><td><strong>354</strong></td></tr><tr><td>backward-cone median</td><td>3</td><td>8</td><td><strong>11</strong></td></tr><tr><td>largest forward cone</td><td>278</td><td>551</td><td><strong>856</strong></td></tr></tbody></table></div><p>Source extraction now reaches every logic target an independent
+RuleSet-substituting read of the source names — 458 of 458, verified per
+resource type.</p><h4 id="a-correct-graph-made-the-incremental-case-weaker-at-every-step"><a href="#a-correct-graph-made-the-incremental-case-weaker-at-every-step" class="anchor-heading" aria-labelledby="a-correct-graph-made-the-incremental-case-weaker-at-every-step"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A correct graph made the incremental case WEAKER at every step
+  
+  
+</h4><p>Replaying the same 257 commits after each correction:</p><div class="table-wrapper"><table><thead><tr><th>graph</th><th>mean rebuild per commit</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">267x</code>, quoted</td><td>8.2 %</td></tr><tr><td>as merged, re-derived</td><td>9.4 %</td></tr><tr><td>after (a)</td><td>16.0 %</td></tr><tr><td><strong>after (b)</strong></td><td><strong>23.5 %</strong></td></tr></tbody></table></div><p>Every correction made the number worse, and the total is nearly <strong>three times</strong>
+the figure the original proposal’s case rested on. The optimistic figures were
+optimistic <em>because edges were missing</em>. <strong>Do not quote a rebuild fraction
+without saying which graph produced it</strong> — an incremental build sized from any
+of the first three would under-rebuild, which is the one failure <code class="language-plaintext highlighter-rouge">fsh-cone</code>’s
+own header calls dangerous. Whether ~24 % of an IG per commit still pays for
+the machinery is an <strong>open question this measurement does not answer</strong>, and it
+is a different question from whether the edges exist.</p><h4 id="what-a-source-edge-still-cannot-carry"><a href="#what-a-source-edge-still-cannot-carry" class="anchor-heading" aria-labelledby="what-a-source-edge-still-cannot-carry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a source edge still cannot carry
+  
+  
+</h4><p>Even with (a) and (b), the second route answers <em>which artefact</em> is stale, not
+<em>what a reader must be told</em>. It cannot carry:</p><ul><li><strong>Version pinning.</strong> <code class="language-plaintext highlighter-rouge">resolveRef</code> strips <code class="language-plaintext highlighter-rouge">|version</code>, and <code class="language-plaintext highlighter-rouge">PlanDefMain</code> takes
+<code class="language-plaintext highlighter-rouge">library</code> and <code class="language-plaintext highlighter-rouge">version</code> as separate parameters that are never associated. The
+graph cannot tell a dependency on <code class="language-plaintext highlighter-rouge">X|1.0.0</code> from one on <code class="language-plaintext highlighter-rouge">X|2.0.0</code>.</li><li><strong>Cross-package references.</strong> Dropped by design — <code class="language-plaintext highlighter-rouge">InstanceOf</code> contributes 3
+edges across the whole IG, because 179 of the 458 are <code class="language-plaintext highlighter-rouge">InstanceOf:</code> a
+cpg/cqfmeasures profile URL that resolves into a dependency package.</li><li><strong>Rendering-time coupling.</strong> Invisible to it; a cone is a <strong>lower bound</strong>.</li></ul><p>And the fix for (b) is itself the fourth limit, which is why it is stated here
+rather than only in the code. <strong>Substituting RuleSet parameters is a partial
+reimplementation of SUSHI.</strong> It handles positional <code class="language-plaintext highlighter-rouge">{param}</code> substitution,
+nested inserts and multi-line argument lists; it does <strong>not</strong> evaluate soft
+indexing, apply a RuleSet’s defaults, or know which of SUSHI’s
+context-sensitive rules would have applied. An edge it derives is a claim about
+the <strong>source</strong>, not about the compiled resource. That is the same standing the
+rest of this graph has — but the derived edges are tagged
+<code class="language-plaintext highlighter-rouge">insert (parameter expanded)</code> precisely so a reader can tell which claims rest
+on a substitution this codebase performed rather than on a token the source
+wrote literally.</p><p>So: the second route can supply the <strong>dependency-edge</strong> third of P3’s visible
+mark and the rebuild set behind it, the <strong>index</strong> third only as a lower bound,
+and the <strong>version</strong> third not at all. <a href="../../reference/skill-instructions/ig-publisher-fork.html"><code class="language-plaintext highlighter-rouge">ig-publisher-fork</code></a>
+is still what closes P3 — for versions and package closure, not for the
+existence of logic-layer edges.</p><h2 id="what-is-not-settled-and-must-not-be-decided-by-drift"><a href="#what-is-not-settled-and-must-not-be-decided-by-drift" class="anchor-heading" aria-labelledby="what-is-not-settled-and-must-not-be-decided-by-drift"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is NOT settled, and must not be decided by drift
+  
+  
+</h2><ul><li><strong><code class="language-plaintext highlighter-rouge">transform_dmn.py</code> emits HTML</strong>, which the JSON-only contract does not take
+as a representation. Structured output, or embedded asset? Open.</li><li><strong>“Parity-ish”</strong> needs a stated checklist of asset types and page kinds
+before MVP is declared. The ceiling is a <strong>data</strong> limit: a page kind whose
+source the Publisher does not emit cannot be rendered at any effort, and
+belongs on the fork’s ask rather than on the parity list.</li><li><strong>Whether P4 keeps a <code class="language-plaintext highlighter-rouge">tx</code> dependency in staging.</strong> Expansion is the slowest
+step and the one most likely to be unavailable offline.</li></ul><h2 id="do-not"><a href="#do-not" class="anchor-heading" aria-labelledby="do-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not
+  
+  
+</h2><ul><li>Declare a phase done on an impression. Each criterion above is a measurement
+or a diff; if you cannot run it, the phase is not done.</li><li>Collapse P2 into P0. Dropping representations while the renderer is also
+changing makes a missing page and a refused representation indistinguishable.</li><li>Treat a green gate set as a rendered page. <code class="language-plaintext highlighter-rouge">preview:site</code> exists because a
+generator’s output looked right while kramdown gave 22 headings one anchor.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

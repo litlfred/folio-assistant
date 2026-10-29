@@ -1,0 +1,100 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-html-docs/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-html-docs.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build the doc-gen4 HTML render of a folio's Lake package — the visualiser of a declared `lean` directory — with `lake -R -Kenv=dev build <Lib>:docs`, cache-aware: refuses while another lake/lean process holds `.lake/`, refuses on a restored tree that carries no traces (a Lake build there EVICTS the cache), checks or restores the warm cache first, and enables a sentinel-commented doc-gen4 `[[require]]` for this build only, restoring the lakefile on exit. Never runs `lake update`. Output: `<lake-root>/.lake/build/doc`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash folio-assistant-sci/adapters/paper/lean/lean-docs-build.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--lake-root"
+            },
+            "description": "The Lake package directory whose lakefile requires (or sentinel-comments) doc-gen4, e.g. `folio/quantum-observable-universe/lean`.",
+            "name": "lakeRoot",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--lib"
+            },
+            "description": "The `lean_lib` to document, e.g. `QOU` (a Lean library name: alphanumerics, dot, underscore, hyphen). Repeat for several.",
+            "name": "lib",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+          },
+          {
+            "arg": {
+              "flag": "--platform"
+            },
+            "description": "The index checkout holding `lake-cache.sh`. Default `$FOLIO_ASSISTANT_ROOT`.",
+            "name": "platform",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--restore"
+            },
+            "description": "Restore the warm cache first (about 2 minutes) instead of only checking it.",
+            "name": "restore",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--allow-cold"
+            },
+            "description": "Build without a warm cache: Mathlib from source, 30-60 minutes before doc-gen4 starts.",
+            "name": "allowCold",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--dry-run"
+            },
+            "description": "Run every guard, print the build command, build nothing.",
+            "name": "dryRun",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`<lake-root>/.lake/build/doc`, doc-gen4's output, printed as the last line. Feed it to `lean-render-publish`.",
+            "name": "render",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "lean-html-docs",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bash",
+          "git",
+          "lake"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
+      "title": "Build a Lean package's HTML docs (doc-gen4)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/lean-html-docs",
+  "path": "tools/lean-html-docs/"
+}

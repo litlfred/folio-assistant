@@ -1,0 +1,129 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-preferences/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preferences.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "adapters/paper/tools/preferences.ts"
+        },
+        "mcp": {
+          "tool": "paper_preferences"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--action"
+            },
+            "name": "action",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreferenceAction"
+          },
+          {
+            "arg": {
+              "flag": "--render-format"
+            },
+            "name": "render_format",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderFormat"
+          },
+          {
+            "arg": {
+              "flag": "--render-scope"
+            },
+            "name": "render_scope",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderScope"
+          },
+          {
+            "arg": {
+              "flag": "--latex-engine"
+            },
+            "name": "latex_engine",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LatexEngine"
+          },
+          {
+            "arg": {
+              "flag": "--math-renderer"
+            },
+            "name": "math_renderer",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MathRenderer"
+          },
+          {
+            "arg": {
+              "flag": "--auto-preview"
+            },
+            "name": "auto_preview",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--formula-dpi"
+            },
+            "name": "formula_dpi",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"
+          },
+          {
+            "arg": {
+              "flag": "--default-chapter"
+            },
+            "name": "default_chapter",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--print-mode"
+            },
+            "name": "print_mode",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PrintMode"
+          },
+          {
+            "arg": {
+              "flag": "--compact-inline-refs"
+            },
+            "name": "compact_inline_refs",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The preferences after the call.",
+            "name": "preferences",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "paper-preferences",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-pdf",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-docs"
+      ],
+      "title": "Rendering preferences"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/paper-preferences",
+  "path": "tools/paper-preferences/"
+}
