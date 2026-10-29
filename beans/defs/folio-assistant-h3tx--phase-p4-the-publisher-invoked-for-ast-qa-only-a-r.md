@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-24T12:40:00Z
+updated_at: 2026-10-29T08:00:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -43,3 +43,5 @@ Still to show: the first stale-cache refresh on a runner, and the first release 
 - 2026-10-24 11:55Z: claimed by the "Publisher AST" thread; fhir-harness#161 opened.
 
 - 2026-10-24 12:40Z: fhir-harness#161 merged (`ae07c25`), inside the owner's merge window. CI is green after `fb77e45` regenerated the stale ig-ast schemas. Open: the first stale-cache refresh on a runner, once an IG repins fhir-harness.
+
+_2026-10-29T08:00:00Z_ — Checked. **Release guard:** the only release path in the litlfred forks is smart-base `release.yml`, which hands off to WHO's smart-html release (a full IG Publisher build that never reads the cached AST), so no release step has an AST for `build-kind --require-full` to judge yet. **Stale-cache refresh:** smart-base's ig-ast-refresh ran on the 07:21Z push (run 40834892898) and failed before export because `https://build.fhir.org/ig/WorldHealthOrganization/smart-ig-template/branches/main/package.tgz` returned 404, which is upstream and not this layer. smart-base passes `pre-export`, so it always builds in full anyway; the first incremental refresh needs an IG without pre-export (smart-trust or smart-immunizations). Still open. Session https://claude.ai/code/session_01Qmmkt87nxnLXyraNsmmpKH.
