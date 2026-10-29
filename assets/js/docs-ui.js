@@ -2904,7 +2904,7 @@
    * and this file must never turn that into a number: with no declaration
    * every card keeps its words, and the console says why once.
    *
-   * ## This mirrors `schemas/window-stack.ts`, and that is a real cost
+   * ## This mirrors `schemas/ui/window-stack.ts`, and that is a real cost
    *
    * The model is specified and unit-tested there; this is a browser script and
    * cannot import it. Two implementations of one rule can drift, so the
@@ -2930,7 +2930,7 @@
    * cannot perform 404s for exactly the reader who cannot edit, which reads as
    * "this page is broken" rather than "you cannot do this".
    *
-   * Mirrors `schemas/panel-chrome.ts`, which this file cannot import. Same
+   * Mirrors `schemas/ui/panel-chrome.ts`, which this file cannot import. Same
    * cost, same mitigation as `window-stack.ts`: the e2e asserts the browser's
    * answer against the model's, case for case.
    */
@@ -3006,7 +3006,7 @@
    * Owner: *"be able to filter out by kind properties things on miror board"*.
    *
    * TWO FILTERS, AND THEY MUST NOT BECOME ONE FIELD. A board carries a
-   * DECLARED filter (`schemas/board.ts`) that says what the board IS, and it
+   * DECLARED filter (`schemas/ui/board.ts`) that says what the board IS, and it
    * lives in `boards/<id>.json` where everyone opening that board gets it.
    * This is the other one: a reader narrowing their own view, at view time.
    * Conflating them would make one reader's temporary view edit the board
@@ -3396,7 +3396,7 @@
 
   /* ═══ Which URL schemes may reach an `href` ══════════════════════════
    *
-   * R17, the owner: *"skill tool hints for XSSrsiction"*. `schemas/safe-url.ts`
+   * R17, the owner: *"skill tool hints for XSSrsiction"*. `schemas/ui/safe-url.ts`
    * carries the argument; this is its mirror, and the rule is one line long:
    * **default-deny**. A blocklist has to enumerate every dangerous scheme and
    * is wrong the day a browser ships a new one; an allow-list is wrong only
@@ -3487,7 +3487,7 @@
    *
    * ## SESSION-ONLY, like the stack above it
    *
-   * `schemas/board-positions.ts` is where a move becomes durable, and
+   * `schemas/ui/board-positions.ts` is where a move becomes durable, and
    * `moveBy` is the function that does it — for a tool or an agent, against
    * the repository. A published page cannot write that file, and the lesson
    * `db7g` settled applies unchanged: it is better to be a control over this
@@ -4332,7 +4332,7 @@
   }
 
   /**
-   * Browser mirror of `schemas/render-output.ts` (`renderToolOutput`, bean
+   * Browser mirror of `schemas/ui/render-output.ts` (`renderToolOutput`, bean
    * `q2wm`, R17): renders one tool/skill output value according to its declared
    * `RENDER_AS` hint (`text`, `url`, `markdown`, `json`) as DOM nodes with no
    * raw HTML injection.
@@ -9870,7 +9870,7 @@
   function mountPageStickies(items, board) {
     /* ── The two relations, from ONE pass ─────────────────────────────────
      *
-     * Mirrors `notesAt()` in `schemas/note-anchor.ts`, including the rule
+     * Mirrors `notesAt()` in `schemas/ui/note-anchor.ts`, including the rule
      * that decides the overlap: a note both attached here AND also-about
      * here counts ONCE, as attached — the stronger relation wins, so a
      * self-referential declaration cannot inflate a badge past the length of

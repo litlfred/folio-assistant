@@ -29,7 +29,7 @@
           "@value": "Default red-flag category if a blocking finding is raised."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.defaultCategory",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.defaultCategory",
       "skos:note": "candidate"
     },
     {
@@ -48,7 +48,7 @@
           "@value": "Default severity for findings under this check."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.defaultSeverity",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.defaultSeverity",
       "skos:note": "candidate"
     },
     {
@@ -67,7 +67,7 @@
           "@value": "Which skill or discipline this check extends."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.extendsSource",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.extendsSource",
       "skos:note": "candidate"
     },
     {
@@ -86,7 +86,7 @@
           "@value": "Detailed guidance on how to evaluate this question adversarially."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.guidance",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.guidance",
       "skos:note": "candidate"
     },
     {
@@ -105,7 +105,7 @@
           "@value": "Unique stable identifier for the checklist question."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.id",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.id",
       "skos:note": "candidate"
     },
     {
@@ -124,7 +124,7 @@
           "@value": "Content block kind this check applies to."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.kind",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.kind",
       "skos:note": "candidate"
     },
     {
@@ -143,7 +143,7 @@
           "@value": "The adversarial hypothesis/question to test against the subject."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.question",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.question",
       "skos:note": "candidate"
     },
     {
@@ -162,7 +162,7 @@
           "@value": "The rules supporting this check, BY NAME — `skill:<name>` or `schema:<module>` — never by path. Code, which is addressed by path on purpose, is `code:<layer>/<module path>`. Paths went stale as skills moved between packages (two named a skill that no longer exists); a name is found wherever the declaration puts it (`check:declared-paths`, bean `rmi6` follow-up). `adversarial-checklist.test.ts` resolves every one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/adversarial-checklist.ts#AdversarialChecklistItem.references",
+      "dcterms:source": "cat-harness/schemas/sdlc/adversarial-checklist.ts#AdversarialChecklistItem.references",
       "skos:note": "candidate"
     },
     {
@@ -599,7 +599,7 @@
           "@value": "Why this store, in one sentence — it is a choice, and a choice with no reason cannot be revisited."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.basis",
+      "dcterms:source": "cat-harness/schemas/sdlc/artifact-store.ts#ArtifactStoreSchema.basis",
       "skos:note": "candidate"
     },
     {
@@ -618,7 +618,7 @@
           "@value": "What a CDN in front of this store will hold onto. Absent means unstated, never zero."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.cacheTtlSeconds",
+      "dcterms:source": "cat-harness/schemas/sdlc/artifact-store.ts#ArtifactStoreSchema.cacheTtlSeconds",
       "skos:note": "candidate"
     },
     {
@@ -637,7 +637,7 @@
           "@value": "Whether the store's URLs are immutable once published. `true` means a re-publish MUST use a new path; `false` means readers may be served a cached old copy for up to `cacheTtlSeconds`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.immutableUrls",
+      "dcterms:source": "cat-harness/schemas/sdlc/artifact-store.ts#ArtifactStoreSchema.immutableUrls",
       "skos:note": "candidate"
     },
     {
@@ -656,7 +656,7 @@
           "@value": "Largest single artifact, where the host states one. Absent means unstated, never unlimited."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.maxArtifactBytes",
+      "dcterms:source": "cat-harness/schemas/sdlc/artifact-store.ts#ArtifactStoreSchema.maxArtifactBytes",
       "skos:note": "candidate"
     },
     {
@@ -675,7 +675,7 @@
           "@value": "The base the artifact will be READABLE at. Required, and it is the \"EXTREME care in URL handling\" clause in schema form: a published URL is a promise, and the address has to be decided before the upload rather than discovered from whatever the host returned."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl",
+      "dcterms:source": "cat-harness/schemas/sdlc/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl",
       "skos:note": "candidate"
     },
     {
@@ -694,7 +694,7 @@
           "@value": "Debian package name (e.g., \"texlive-full\", \"ripgrep\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#AptDependency.package",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#AptDependency.package",
       "skos:note": "candidate"
     },
     {
@@ -713,7 +713,7 @@
           "@value": "Why this package is needed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#AptDependency.reason",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#AptDependency.reason",
       "skos:note": "candidate"
     },
     {
@@ -732,7 +732,7 @@
           "@value": "Debian version relation (e.g., \">=2.3\"). Omit for any version."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#AptDependency.version",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#AptDependency.version",
       "skos:note": "candidate"
     },
     {
@@ -751,7 +751,7 @@
           "@value": "Expected binary on PATH after install."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#InstallerDependency.binary",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#InstallerDependency.binary",
       "skos:note": "candidate"
     },
     {
@@ -770,7 +770,7 @@
           "@value": "Shell command to install the tool."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#InstallerDependency.installCommand",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#InstallerDependency.installCommand",
       "skos:note": "candidate"
     },
     {
@@ -789,7 +789,7 @@
           "@value": "Tool identifier."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#InstallerDependency.name",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#InstallerDependency.name",
       "skos:note": "candidate"
     },
     {
@@ -808,7 +808,7 @@
           "@value": "Why this tool is needed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#InstallerDependency.reason",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#InstallerDependency.reason",
       "skos:note": "candidate"
     },
     {
@@ -827,7 +827,7 @@
           "@value": "Pin to a specific version (empty = latest)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#InstallerDependency.version",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#InstallerDependency.version",
       "skos:note": "candidate"
     },
     {
@@ -846,7 +846,7 @@
           "@value": "npm package name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#NodeDependency.package",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#NodeDependency.package",
       "skos:note": "candidate"
     },
     {
@@ -865,7 +865,7 @@
           "@value": "semver range (e.g., \"^1.0.0\", \">=2.0.0\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#NodeDependency.version",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#NodeDependency.version",
       "skos:note": "candidate"
     },
     {
@@ -884,7 +884,7 @@
           "@value": "APT packages (Ubuntu/Debian)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.apt",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.apt",
       "skos:note": "candidate"
     },
     {
@@ -903,7 +903,7 @@
           "@value": "Target CPU architecture(s)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.architectures",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.architectures",
       "skos:note": "candidate"
     },
     {
@@ -922,7 +922,7 @@
           "@value": "Base Docker image. Ubuntu LTS only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.baseImage",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.baseImage",
       "skos:note": "candidate"
     },
     {
@@ -941,7 +941,7 @@
           "@value": "What this package provides."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.description",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.description",
       "skos:note": "candidate"
     },
     {
@@ -960,7 +960,7 @@
           "@value": "Environment variables required at runtime."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.envVars",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.envVars",
       "skos:note": "candidate"
     },
     {
@@ -979,7 +979,7 @@
           "@value": "Ports exposed by services in this package."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.exposedPorts",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.exposedPorts",
       "skos:note": "candidate"
     },
     {
@@ -998,7 +998,7 @@
           "@value": "OCI-compatible healthcheck."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.healthcheck",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.healthcheck",
       "skos:note": "candidate"
     },
     {
@@ -1017,7 +1017,7 @@
           "@value": "Tools installed via custom scripts/curl."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.installers",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.installers",
       "skos:note": "candidate"
     },
     {
@@ -1036,7 +1036,7 @@
           "@value": "Human-readable name (e.g., \"authoring-math\", \"authoring-who-smart-guidelines\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.name",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.name",
       "skos:note": "candidate"
     },
     {
@@ -1055,7 +1055,7 @@
           "@value": "Node/Bun packages."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.node",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.node",
       "skos:note": "candidate"
     },
     {
@@ -1074,7 +1074,7 @@
           "@value": "OCI image annotations."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.ociAnnotations",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.ociAnnotations",
       "skos:note": "candidate"
     },
     {
@@ -1093,7 +1093,7 @@
           "@value": "Package identifier matching skills-config.json name or \"local\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.packageId",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.packageId",
       "skos:note": "candidate"
     },
     {
@@ -1112,7 +1112,7 @@
           "@value": "Python packages (installed via uv/pip)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PackageManifest.python",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PackageManifest.python",
       "skos:note": "candidate"
     },
     {
@@ -1131,7 +1131,7 @@
           "@value": "PyPI package name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PythonDependency.package",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PythonDependency.package",
       "skos:note": "candidate"
     },
     {
@@ -1150,7 +1150,7 @@
           "@value": "PEP 440 version specifier (e.g., \">=1.0,<2.0\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-package.ts#PythonDependency.version",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-package.ts#PythonDependency.version",
       "skos:note": "candidate"
     },
     {
@@ -1169,7 +1169,7 @@
           "@value": "Capability IDs directly granted to this actor."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.capabilities",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.capabilities",
       "skos:note": "candidate"
     },
     {
@@ -1188,7 +1188,7 @@
           "@value": "What this actor can do."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.description",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.description",
       "skos:note": "candidate"
     },
     {
@@ -1207,7 +1207,7 @@
           "@value": "Unique identifier (used as reference key)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.id",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.id",
       "skos:note": "candidate"
     },
     {
@@ -1226,7 +1226,7 @@
           "@value": "This field carried a role lattice under an actor's name — `author` inherits `reviewer` inherits `viewer` — which is a property of a position, not of a person. The lattice now lives in `scenarios/roles.json` (`schemas/process/role-graph.ts`), where `inherits` means what it says. Optional so an unmigrated registry still validates."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.inherits",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.inherits",
       "skos:note": "candidate"
     },
     {
@@ -1245,7 +1245,7 @@
           "@value": "Human, agentic or mechanical — see {@link ActorKind}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.kind",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.kind",
       "skos:note": "candidate"
     },
     {
@@ -1264,7 +1264,7 @@
           "@value": "Arbitrary metadata (e.g., MCP endpoint, config path)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.meta",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.meta",
       "skos:note": "candidate"
     },
     {
@@ -1283,7 +1283,7 @@
           "@value": "PERMISSION ids — what this actor is allowed to do, independent of process."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.permissions",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.permissions",
       "skos:note": "candidate"
     },
     {
@@ -1302,7 +1302,7 @@
           "@value": "What this participant can reach off its own machine — `internet`, `egress-restricted` or `air-gapped`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.reach",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.reach",
       "skos:note": "candidate"
     },
     {
@@ -1321,7 +1321,7 @@
           "@value": "Roles this actor may take on — ids from the role graph."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.roles",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.roles",
       "skos:note": "candidate"
     },
     {
@@ -1340,7 +1340,7 @@
           "@value": "The system-under-test facet — present when this actor can be executed against a `test-plan/v1` (bean `3o5b`). `agent` and `system` actors only; reach is the actor's own {@link ActorDefinition.reach}, never restated. See `SystemUnderTestFacetSchema` in `skill-package.ts`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.systemUnderTest",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.systemUnderTest",
       "skos:note": "candidate"
     },
     {
@@ -1359,7 +1359,7 @@
           "@value": "Display text. `title`/`description`, like every KG node — see `schemas/kg/kg-node.ts`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.title",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#ActorDefinition.title",
       "skos:note": "candidate"
     },
     {
@@ -1378,7 +1378,7 @@
           "@value": "How to detect this capability at runtime."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#CapabilityDefinition.detection",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#CapabilityDefinition.detection",
       "skos:note": "candidate"
     },
     {
@@ -1397,7 +1397,7 @@
           "@value": "Other capability IDs this one depends on."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#CapabilityDefinition.requires",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#CapabilityDefinition.requires",
       "skos:note": "candidate"
     },
     {
@@ -1416,7 +1416,7 @@
           "@value": "Shell command to execute."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#HookCommand.command",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#HookCommand.command",
       "skos:note": "candidate"
     },
     {
@@ -1435,7 +1435,7 @@
           "@value": "Timeout in seconds."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#HookCommand.timeout",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#HookCommand.timeout",
       "skos:note": "candidate"
     },
     {
@@ -1454,7 +1454,7 @@
           "@value": "Actor IDs this requirement applies to."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.actors",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.actors",
       "skos:note": "candidate"
     },
     {
@@ -1473,7 +1473,7 @@
           "@value": "IDs of requirements this one derives from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.derivedFrom",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.derivedFrom",
       "skos:note": "candidate"
     },
     {
@@ -1492,7 +1492,7 @@
           "@value": "What this requirement governs."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.description",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.description",
       "skos:note": "candidate"
     },
     {
@@ -1511,7 +1511,7 @@
           "@value": "Unique requirement identifier."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.id",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.id",
       "skos:note": "candidate"
     },
     {
@@ -1530,7 +1530,7 @@
           "@value": "Testable statements within this requirement."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.statements",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.statements",
       "skos:note": "candidate"
     },
     {
@@ -1549,7 +1549,7 @@
           "@value": "Searchable tags."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.tags",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.tags",
       "skos:note": "candidate"
     },
     {
@@ -1568,7 +1568,7 @@
           "@value": "Human-readable title."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#Requirement.title",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#Requirement.title",
       "skos:note": "candidate"
     },
     {
@@ -1587,7 +1587,7 @@
           "@value": "Actors this statement applies to (defaults to parent's actors)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RequirementStatement.actors",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RequirementStatement.actors",
       "skos:note": "candidate"
     },
     {
@@ -1606,7 +1606,7 @@
           "@value": "FHIR conformance verb."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RequirementStatement.conformance",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RequirementStatement.conformance",
       "skos:note": "candidate"
     },
     {
@@ -1625,7 +1625,7 @@
           "@value": "Keys of other statements this one depends on."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RequirementStatement.dependsOn",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RequirementStatement.dependsOn",
       "skos:note": "candidate"
     },
     {
@@ -1644,7 +1644,7 @@
           "@value": "Unique key within this requirement (e.g., \"REQ-SS-1\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RequirementStatement.key",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RequirementStatement.key",
       "skos:note": "candidate"
     },
     {
@@ -1663,7 +1663,7 @@
           "@value": "Short human-readable label."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RequirementStatement.label",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RequirementStatement.label",
       "skos:note": "candidate"
     },
     {
@@ -1682,7 +1682,7 @@
           "@value": "Full requirement text."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RequirementStatement.requirement",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RequirementStatement.requirement",
       "skos:note": "candidate"
     },
     {
@@ -1701,7 +1701,7 @@
           "@value": "Actor ID to assign."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RoleAssignment.actorId",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RoleAssignment.actorId",
       "skos:note": "candidate"
     },
     {
@@ -1720,7 +1720,7 @@
           "@value": "How the user's identity was determined."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RoleAssignment.identitySource",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RoleAssignment.identitySource",
       "skos:note": "candidate"
     },
     {
@@ -1739,7 +1739,7 @@
           "@value": "Higher priority wins."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RoleAssignment.priority",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RoleAssignment.priority",
       "skos:note": "candidate"
     },
     {
@@ -1758,7 +1758,7 @@
           "@value": "Glob pattern matched against the user identifier."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#RoleAssignment.userPattern",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#RoleAssignment.userPattern",
       "skos:note": "candidate"
     },
     {
@@ -1777,7 +1777,7 @@
           "@value": "Commands to execute when the event fires."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SessionHook.commands",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SessionHook.commands",
       "skos:note": "candidate"
     },
     {
@@ -1796,7 +1796,7 @@
           "@value": "The event that triggers this hook."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SessionHook.event",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SessionHook.event",
       "skos:note": "candidate"
     },
     {
@@ -1815,7 +1815,7 @@
           "@value": "Tool name regex matcher (for PostToolUse)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SessionHook.matcher",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SessionHook.matcher",
       "skos:note": "candidate"
     },
     {
@@ -1834,7 +1834,7 @@
           "@value": "The capability this skill needs."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillCapabilityRef.capabilityId",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillCapabilityRef.capabilityId",
       "skos:note": "candidate"
     },
     {
@@ -1853,7 +1853,7 @@
           "@value": "What to do when the capability is unavailable."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillCapabilityRef.degradation",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillCapabilityRef.degradation",
       "skos:note": "candidate"
     },
     {
@@ -1872,7 +1872,7 @@
           "@value": "Tools the agent is allowed to use when this skill is active."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.allowedTools",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.allowedTools",
       "skos:note": "candidate"
     },
     {
@@ -1891,7 +1891,7 @@
           "@value": "Dependencies on other skills or requirements."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.dependsOn",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.dependsOn",
       "skos:note": "candidate"
     },
     {
@@ -1910,7 +1910,7 @@
           "@value": "What this skill does."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.description",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.description",
       "skos:note": "candidate"
     },
     {
@@ -1929,7 +1929,7 @@
           "@value": "Unique skill identifier."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.id",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.id",
       "skos:note": "candidate"
     },
     {
@@ -1948,7 +1948,7 @@
           "@value": "Lifecycle stages this skill participates in."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.lifecycleStages",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.lifecycleStages",
       "skos:note": "candidate"
     },
     {
@@ -1967,7 +1967,7 @@
           "@value": "Human-readable name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.name",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.name",
       "skos:note": "candidate"
     },
     {
@@ -1986,7 +1986,7 @@
           "@value": "External package this skill belongs to (undefined = local)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.package",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.package",
       "skos:note": "candidate"
     },
     {
@@ -2005,7 +2005,7 @@
           "@value": "Capabilities this skill needs to function."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.requiredCapabilities",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.requiredCapabilities",
       "skos:note": "candidate"
     },
     {
@@ -2024,7 +2024,7 @@
           "@value": "Regex patterns for routing user requests to this skill."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.routingPatterns",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.routingPatterns",
       "skos:note": "candidate"
     },
     {
@@ -2043,7 +2043,7 @@
           "@value": "Searchable tags."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.tags",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDefinition.tags",
       "skos:note": "candidate"
     },
     {
@@ -2062,7 +2062,7 @@
           "@value": "How strongly this dependency is required."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDependency.conformance",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDependency.conformance",
       "skos:note": "candidate"
     },
     {
@@ -2081,7 +2081,7 @@
           "@value": "Whether the dependency is on a skill or a requirement."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDependency.kind",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDependency.kind",
       "skos:note": "candidate"
     },
     {
@@ -2100,7 +2100,7 @@
           "@value": "Target skill ID or requirement ID."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDependency.ref",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillDependency.ref",
       "skos:note": "candidate"
     },
     {
@@ -2119,7 +2119,7 @@
           "@value": "Path to the package's `PackageManifest` for Docker deps."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillPackageRef.manifestPath",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillPackageRef.manifestPath",
       "skos:note": "candidate"
     },
     {
@@ -2138,7 +2138,7 @@
           "@value": "Package name (matches directory under `.claude/skills/`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillPackageRef.name",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillPackageRef.name",
       "skos:note": "candidate"
     },
     {
@@ -2157,7 +2157,7 @@
           "@value": "Path within the source repo."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillPackageRef.path",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillPackageRef.path",
       "skos:note": "candidate"
     },
     {
@@ -2176,7 +2176,7 @@
           "@value": "Git ref to sync from (commit hash preferred)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillPackageRef.ref",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillPackageRef.ref",
       "skos:note": "candidate"
     },
     {
@@ -2195,7 +2195,7 @@
           "@value": "Source repository (e.g., \"K-Dense-AI/claude-scientific-skills\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillPackageRef.repo",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillPackageRef.repo",
       "skos:note": "candidate"
     },
     {
@@ -2214,7 +2214,7 @@
           "@value": "Skill IDs provided by this package."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillPackageRef.skills",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillPackageRef.skills",
       "skos:note": "candidate"
     },
     {
@@ -2233,7 +2233,7 @@
           "@value": "All actor/role definitions."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.actors",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.actors",
       "skos:note": "candidate"
     },
     {
@@ -2252,7 +2252,7 @@
           "@value": "All capability definitions."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.capabilities",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.capabilities",
       "skos:note": "candidate"
     },
     {
@@ -2271,7 +2271,7 @@
           "@value": "Lifecycle hooks."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.hooks",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.hooks",
       "skos:note": "candidate"
     },
     {
@@ -2290,7 +2290,7 @@
           "@value": "Skill packages under `skills/`, with their Docker requirements."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.packages",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.packages",
       "skos:note": "candidate"
     },
     {
@@ -2309,7 +2309,7 @@
           "@value": "Repository identifier (e.g., \"litlfred/qou\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.repository",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.repository",
       "skos:note": "candidate"
     },
     {
@@ -2328,7 +2328,7 @@
           "@value": "All workflow requirements."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.requirements",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.requirements",
       "skos:note": "candidate"
     },
     {
@@ -2347,7 +2347,7 @@
           "@value": "Identity-source → actor mapping rules, evaluated by priority (highest first)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.roleAssignments",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.roleAssignments",
       "skos:note": "candidate"
     },
     {
@@ -2366,7 +2366,7 @@
           "@value": "Schema version for forward compatibility."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.schemaVersion",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.schemaVersion",
       "skos:note": "candidate"
     },
     {
@@ -2385,7 +2385,7 @@
           "@value": "All skill definitions (local + packaged)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillRegistry.skills",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillRegistry.skills",
       "skos:note": "candidate"
     },
     {
@@ -2404,7 +2404,7 @@
           "@value": "Whether this skill reads or writes these types."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillSchemaRef.access",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillSchemaRef.access",
       "skos:note": "candidate"
     },
     {
@@ -2423,7 +2423,7 @@
           "@value": "Schema module (e.g., \"schemas/types\", \"schemas/formalization-types\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillSchemaRef.module",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillSchemaRef.module",
       "skos:note": "candidate"
     },
     {
@@ -2442,7 +2442,7 @@
           "@value": "Type name(s) within the module."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillSchemaRef.types",
+      "dcterms:source": "cat-harness/schemas/conduct/assistant-types.ts#SkillSchemaRef.types",
       "skos:note": "candidate"
     },
     {
@@ -3107,7 +3107,7 @@
           "@value": "The bean this note adds to. It must exist in the bean store."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.bean",
+      "dcterms:source": "cat-harness/schemas/sdlc/bean-note.ts#BeanNoteFrontMatterSchema.bean",
       "skos:note": "candidate"
     },
     {
@@ -3126,7 +3126,7 @@
           "@value": "The branch that wrote it — the key that keeps two writers apart."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.branch",
+      "dcterms:source": "cat-harness/schemas/sdlc/bean-note.ts#BeanNoteFrontMatterSchema.branch",
       "skos:note": "candidate"
     },
     {
@@ -3145,7 +3145,7 @@
           "@value": "When this branch started its note on this bean (UTC)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.created",
+      "dcterms:source": "cat-harness/schemas/sdlc/bean-note.ts#BeanNoteFrontMatterSchema.created",
       "skos:note": "candidate"
     },
     {
@@ -3164,7 +3164,7 @@
           "@value": "Store reads only: how many store files were read."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.files",
+      "dcterms:source": "cat-harness/schemas/library/bib-attestations.ts#LedgerRead.files",
       "skos:note": "candidate"
     },
     {
@@ -3183,7 +3183,7 @@
           "@value": "Store reads only: a legacy file is still there beside the store."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.legacyPresent",
+      "dcterms:source": "cat-harness/schemas/library/bib-attestations.ts#LedgerRead.legacyPresent",
       "skos:note": "candidate"
     },
     {
@@ -3202,7 +3202,7 @@
           "@value": "One line for the caller to print: which home answered."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.note",
+      "dcterms:source": "cat-harness/schemas/library/bib-attestations.ts#LedgerRead.note",
       "skos:note": "candidate"
     },
     {
@@ -3221,7 +3221,7 @@
           "@value": "The legacy file's `_meta`, when that is where the read came from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.meta",
+      "dcterms:source": "cat-harness/schemas/library/bib-attestations.ts#ReviewRead.meta",
       "skos:note": "candidate"
     },
     {
@@ -3240,7 +3240,7 @@
           "@value": "Reference id → review, in recorded order."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.reviews",
+      "dcterms:source": "cat-harness/schemas/library/bib-attestations.ts#ReviewRead.reviews",
       "skos:note": "candidate"
     },
     {
@@ -3259,7 +3259,7 @@
           "@value": "Paths written (store) or the legacy path."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#WriteResult.written",
+      "dcterms:source": "cat-harness/schemas/library/bib-attestations.ts#WriteResult.written",
       "skos:note": "candidate"
     },
     {
@@ -5729,7 +5729,7 @@
           "@value": "Horizontal position in board units."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board-positions.ts#BoardPositionSchema.x",
+      "dcterms:source": "cat-harness/schemas/ui/board-positions.ts#BoardPositionSchema.x",
       "skos:note": "candidate"
     },
     {
@@ -5748,7 +5748,7 @@
           "@value": "Vertical position in board units."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board-positions.ts#BoardPositionSchema.y",
+      "dcterms:source": "cat-harness/schemas/ui/board-positions.ts#BoardPositionSchema.y",
       "skos:note": "candidate"
     },
     {
@@ -5767,7 +5767,7 @@
           "@value": "The node's kind, when it has one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardContentNode.kind",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardContentNode.kind",
       "skos:note": "candidate"
     },
     {
@@ -5786,7 +5786,7 @@
           "@value": "The node's id within that page."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardContentNode.node",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardContentNode.node",
       "skos:note": "candidate"
     },
     {
@@ -5805,7 +5805,7 @@
           "@value": "The page slug the node is on."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardContentNode.page",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardContentNode.page",
       "skos:note": "candidate"
     },
     {
@@ -5824,7 +5824,7 @@
           "@value": "Content kinds. Absent: every kind."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardFilterSchema.kinds",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardFilterSchema.kinds",
       "skos:note": "candidate"
     },
     {
@@ -5843,7 +5843,7 @@
           "@value": "Page slugs. Absent: every page."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardFilterSchema.pages",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardFilterSchema.pages",
       "skos:note": "candidate"
     },
     {
@@ -5862,7 +5862,7 @@
           "@value": "What this board shows. **Absent is the default and means the whole folio** — see the module docs; it is the state that cannot go stale."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardSchema.filter",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardSchema.filter",
       "skos:note": "candidate"
     },
     {
@@ -5881,7 +5881,7 @@
           "@value": "The id the positions layer already keys by."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardSchema.id",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -5900,7 +5900,7 @@
           "@value": "What a reader sees in a tab or a heading."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/board.ts#BoardSchema.title",
+      "dcterms:source": "cat-harness/schemas/ui/board.ts#BoardSchema.title",
       "skos:note": "candidate"
     },
     {
@@ -10118,7 +10118,7 @@
           "@value": "Source and rationale behind the limit."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.basis",
+      "dcterms:source": "cat-harness/schemas/sdlc/change-size.ts#ChangeSizeThresholdSchema.basis",
       "skos:note": "candidate"
     },
     {
@@ -10137,7 +10137,7 @@
           "@value": "Patterns or categories treated as exempt."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.exemptions",
+      "dcterms:source": "cat-harness/schemas/sdlc/change-size.ts#ChangeSizeThresholdSchema.exemptions",
       "skos:note": "candidate"
     },
     {
@@ -10156,7 +10156,7 @@
           "@value": "Numerical limit in effective lines."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.limit",
+      "dcterms:source": "cat-harness/schemas/sdlc/change-size.ts#ChangeSizeThresholdSchema.limit",
       "skos:note": "candidate"
     },
     {
@@ -10175,7 +10175,7 @@
           "@value": "Current enforcement mode: advisory reporting vs blocking gate."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.mode",
+      "dcterms:source": "cat-harness/schemas/sdlc/change-size.ts#ChangeSizeThresholdSchema.mode",
       "skos:note": "candidate"
     },
     {
@@ -10194,7 +10194,7 @@
           "@value": "Weights per file category."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.weights",
+      "dcterms:source": "cat-harness/schemas/sdlc/change-size.ts#ChangeSizeThresholdSchema.weights",
       "skos:note": "candidate"
     },
     {
@@ -21784,7 +21784,7 @@
           "@value": "Comparable within one library's matrix only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema.score",
+      "dcterms:source": "cat-harness/schemas/library/library-keywords.ts#ScoredKeywordSchema.score",
       "skos:note": "candidate"
     },
     {
@@ -21803,7 +21803,7 @@
           "@value": "The actor id from `cat-harness/scenarios/actors/`, where one is known."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.actor",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.actor",
       "skos:note": "candidate"
     },
     {
@@ -21822,7 +21822,7 @@
           "@value": "The bean this work is claimed against, where there is one. A typed id (#1168 B8)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.bean",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.bean",
       "skos:note": "candidate"
     },
     {
@@ -21841,7 +21841,7 @@
           "@value": "Git ref the work was on."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.branch",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.branch",
       "skos:note": "candidate"
     },
     {
@@ -21860,7 +21860,7 @@
           "@value": "Whether this entry is kept in git. Never defaulted silently."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.capture",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.capture",
       "skos:note": "candidate"
     },
     {
@@ -21879,7 +21879,7 @@
           "@value": "Command-execution detail, when this entry IS one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.execution",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.execution",
       "skos:note": "candidate"
     },
     {
@@ -21898,7 +21898,7 @@
           "@value": "Stable id, so an entry can be emptied individually."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.id",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.id",
       "skos:note": "candidate"
     },
     {
@@ -21917,7 +21917,7 @@
           "@value": "BPMN process id, when the entry was written inside one."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.process",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.process",
       "skos:note": "candidate"
     },
     {
@@ -21936,7 +21936,7 @@
           "@value": "Everything the entry references — a chat, an issue, a commit, a file."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.references",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.references",
       "skos:note": "candidate"
     },
     {
@@ -21955,7 +21955,7 @@
           "@value": "The role the actor was acting AS — a BPMN swimlane, per the role model."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.role",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.role",
       "skos:note": "candidate"
     },
     {
@@ -21974,7 +21974,7 @@
           "@value": "Session identifier, so one run's entries can be emptied together."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.session",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.session",
       "skos:note": "candidate"
     },
     {
@@ -21993,7 +21993,7 @@
           "@value": "One line. The detail goes in `detail`, so a log stays skimmable."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.summary",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.summary",
       "skos:note": "candidate"
     },
     {
@@ -22012,7 +22012,7 @@
           "@value": "The activity/step id within that process."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.task",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogEntrySchema.task",
       "skos:note": "candidate"
     },
     {
@@ -22031,7 +22031,7 @@
           "@value": "Argv, when the caller has it structured and does not want re-parsing."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogExecutionSchema.argv",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogExecutionSchema.argv",
       "skos:note": "candidate"
     },
     {
@@ -22050,7 +22050,7 @@
           "@value": "The command as run. NEVER include a secret in an argument."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogExecutionSchema.command",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogExecutionSchema.command",
       "skos:note": "candidate"
     },
     {
@@ -22069,7 +22069,7 @@
           "@value": "Working directory, relative to the instance root."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogExecutionSchema.cwd",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogExecutionSchema.cwd",
       "skos:note": "candidate"
     },
     {
@@ -22088,7 +22088,7 @@
           "@value": "Exit status. `undefined` means it did not finish, which is not `0`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogExecutionSchema.exitCode",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogExecutionSchema.exitCode",
       "skos:note": "candidate"
     },
     {
@@ -22107,7 +22107,7 @@
           "@value": "WHERE the output went. There is deliberately no field for the output."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogExecutionSchema.outputRef",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogExecutionSchema.outputRef",
       "skos:note": "candidate"
     },
     {
@@ -22126,7 +22126,7 @@
           "@value": "When the referenced thing happened, if that differs from the entry."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogReferenceSchema.at",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogReferenceSchema.at",
       "skos:note": "candidate"
     },
     {
@@ -22145,7 +22145,7 @@
           "@value": "Open by design — see {@link LOG_REF_KINDS}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogReferenceSchema.kind",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogReferenceSchema.kind",
       "skos:note": "candidate"
     },
     {
@@ -22164,7 +22164,7 @@
           "@value": "Where the thing IS: a URL, a repo-relative path, an instance id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogReferenceSchema.ref",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogReferenceSchema.ref",
       "skos:note": "candidate"
     },
     {
@@ -22183,7 +22183,7 @@
           "@value": "Human-readable, for a reader skimming rather than dereferencing."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/log-entry.ts#LogReferenceSchema.title",
+      "dcterms:source": "cat-harness/schemas/sdlc/log-entry.ts#LogReferenceSchema.title",
       "skos:note": "candidate"
     },
     {
@@ -22373,7 +22373,7 @@
           "@value": "Maximum allowed empirical false-positive rate (default 0.05 / 5%)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#AgenticPromotionCriteriaSchema.maximumFalsePositiveRate",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#AgenticPromotionCriteriaSchema.maximumFalsePositiveRate",
       "skos:note": "candidate"
     },
     {
@@ -22392,7 +22392,7 @@
           "@value": "Minimum number of PRs evaluated under warn-only mode (default 50)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#AgenticPromotionCriteriaSchema.minimumPrWindow",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#AgenticPromotionCriteriaSchema.minimumPrWindow",
       "skos:note": "candidate"
     },
     {
@@ -22411,7 +22411,7 @@
           "@value": "Minimum share of findings with conclusive (non-unknown) human adjudication (default 0.80 / 80%)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#AgenticPromotionCriteriaSchema.minimumReviewCoverage",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#AgenticPromotionCriteriaSchema.minimumReviewCoverage",
       "skos:note": "candidate"
     },
     {
@@ -22430,7 +22430,7 @@
           "@value": "The run, comment or log that shows it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EjectionSchema.evidenceUrl",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EjectionSchema.evidenceUrl",
       "skos:note": "candidate"
     },
     {
@@ -22449,7 +22449,7 @@
           "@value": "What the steward concluded, e.g. \"own CI red on `docs:harness:check`\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EjectionSchema.reason",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EjectionSchema.reason",
       "skos:note": "candidate"
     },
     {
@@ -22468,7 +22468,7 @@
           "@value": "Beans and epics this PR serves. Epics are beans, so one list."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.beans",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.beans",
       "skos:note": "candidate"
     },
     {
@@ -22487,7 +22487,7 @@
           "@value": "Who decided — a session URL, `owner`, or an actor id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.decidedBy",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.decidedBy",
       "skos:note": "candidate"
     },
     {
@@ -22506,7 +22506,7 @@
           "@value": "Why this placement, in a sentence. For `computed`, the rule's description will do."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.reason",
       "skos:note": "candidate"
     },
     {
@@ -22525,7 +22525,7 @@
           "@value": "A person's decision to merge, or not — {@link ReleaseSchema}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.release",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.release",
       "skos:note": "candidate"
     },
     {
@@ -22544,7 +22544,7 @@
           "@value": "`owner/name` — a PR number means nothing without its repository."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.repository",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.repository",
       "skos:note": "candidate"
     },
     {
@@ -22563,7 +22563,7 @@
           "@value": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.status",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.status",
       "skos:note": "candidate"
     },
     {
@@ -22582,7 +22582,7 @@
           "@value": "Assigned once the PR is taken into a train; the train-run instance's id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.trainId",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#EntryObjectSchema.trainId",
       "skos:note": "candidate"
     },
     {
@@ -22601,7 +22601,7 @@
           "@value": "Changed paths a declared merge pattern would REFUSE — the authored ones (T3, R7)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.authoredPaths",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.authoredPaths",
       "skos:note": "candidate"
     },
     {
@@ -22620,7 +22620,7 @@
           "@value": "Shares an AUTHORED path with another live queued PR — input (d), T3."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.conflictRisk",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.conflictRisk",
       "skos:note": "candidate"
     },
     {
@@ -22639,7 +22639,7 @@
           "@value": "Did CI run on the head that would be merged (T2; bean `u7be` item 3)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.headShaMatchesCi",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.headShaMatchesCi",
       "skos:note": "candidate"
     },
     {
@@ -22658,7 +22658,7 @@
           "@value": "Tagged MVP / feature-priority, by epic or label — input (c)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.mvp",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.mvp",
       "skos:note": "candidate"
     },
     {
@@ -22677,7 +22677,7 @@
           "@value": "WHICH KIND of collision this PR has with the rest of the live queue."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.overlapKind",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.overlapKind",
       "skos:note": "candidate"
     },
     {
@@ -22696,7 +22696,7 @@
           "@value": "The PR's own CI on its head: T2's first evidence."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.ownCi",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.ownCi",
       "skos:note": "candidate"
     },
     {
@@ -22715,7 +22715,7 @@
           "@value": "Has the OWNING session signalled this PR is finished, against `main`? Bean `uoob` (merge gate (f)), read by `Rule_NotReady`. `ready` is the only admitting value, and the others stay apart because each has a different remedy:"
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.readiness",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.readiness",
       "skos:note": "candidate"
     },
     {
@@ -22734,7 +22734,7 @@
           "@value": "A declared merge pattern refuses a conflicted path, or GitHub reports it dirty."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.refused",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.refused",
       "skos:note": "candidate"
     },
     {
@@ -22753,7 +22753,7 @@
           "@value": "Input (a): `touchesHarness` AND a linked bean descends from the separation goal — the PR seeds the staging repos, which is the reason the owner gave for (a). See `merge-priority.dmn`'s note."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.seedsStaging",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.seedsStaging",
       "skos:note": "candidate"
     },
     {
@@ -22772,7 +22772,7 @@
           "@value": "Changed files plus changed lines, banded — input (d)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.sizeBand",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.sizeBand",
       "skos:note": "candidate"
     },
     {
@@ -22791,7 +22791,7 @@
           "@value": "An authored path under `cat-harness/` or its tools layer's directory. The raw measurement behind input (a) — NOT input (a) itself: measured 2026-10-02, it was true for 11 of the 11 PRs in that day's queue."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesHarness",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.touchesHarness",
       "skos:note": "candidate"
     },
     {
@@ -22810,7 +22810,7 @@
           "@value": "Touches a shared declaration: a schema, generator, `<instance>.json`, BPMN or DMN (T3, R6)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesShared",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.touchesShared",
       "skos:note": "candidate"
     },
     {
@@ -22829,7 +22829,7 @@
           "@value": "Open PRs or beans this unblocks, or tangle edges it removes — input (b)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.unblocks",
+      "dcterms:source": "cat-harness/schemas/sdlc/merge-queue.ts#MemberFactsSchema.unblocks",
       "skos:note": "candidate"
     },
     {
@@ -22943,7 +22943,7 @@
           "@value": "Specific named capabilities (e.g. \"code_execution\", \"json_schema\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-capabilities.ts#ModelCapabilitiesSchema.capabilities",
+      "dcterms:source": "cat-harness/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema.capabilities",
       "skos:note": "candidate"
     },
     {
@@ -22962,7 +22962,7 @@
           "@value": "Minimum context window size in tokens."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-capabilities.ts#ModelCapabilitiesSchema.context_window",
+      "dcterms:source": "cat-harness/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema.context_window",
       "skos:note": "candidate"
     },
     {
@@ -22981,7 +22981,7 @@
           "@value": "Whether multimodal input (images, diagrams) is required."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-capabilities.ts#ModelCapabilitiesSchema.multimodal",
+      "dcterms:source": "cat-harness/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema.multimodal",
       "skos:note": "candidate"
     },
     {
@@ -23000,7 +23000,7 @@
           "@value": "Minimum reasoning tier required."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-capabilities.ts#ModelCapabilitiesSchema.reasoning_tier",
+      "dcterms:source": "cat-harness/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema.reasoning_tier",
       "skos:note": "candidate"
     },
     {
@@ -23019,7 +23019,7 @@
           "@value": "Whether function calling / tool invocation is required."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-capabilities.ts#ModelCapabilitiesSchema.tool_use",
+      "dcterms:source": "cat-harness/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema.tool_use",
       "skos:note": "candidate"
     },
     {
@@ -24406,7 +24406,7 @@
           "@value": "The digest of the bytes. Required: a record with no digest gives nothing to compare a download against."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/outside-software.ts#OutsideSoftwareCoreSchema.digest",
+      "dcterms:source": "cat-harness/schemas/library/outside-software.ts#OutsideSoftwareCoreSchema.digest",
       "skos:note": "candidate"
     },
     {
@@ -24425,7 +24425,7 @@
           "@value": "An SPDX licence expression, one line. Checked against the pinned list by {@link outsideSoftwareLicenceProblem}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/outside-software.ts#OutsideSoftwareCoreSchema.licence",
+      "dcterms:source": "cat-harness/schemas/library/outside-software.ts#OutsideSoftwareCoreSchema.licence",
       "skos:note": "candidate"
     },
     {
@@ -24444,7 +24444,7 @@
           "@value": "Where the licence was read from — the jar's own `-license`, the archive's `legal/`, the package's own `package.json`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/outside-software.ts#OutsideSoftwareCoreSchema.licenceSource",
+      "dcterms:source": "cat-harness/schemas/library/outside-software.ts#OutsideSoftwareCoreSchema.licenceSource",
       "skos:note": "candidate"
     },
     {
@@ -24463,7 +24463,7 @@
           "@value": "The software's name. Each kind narrows it to its own naming rule."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/outside-software.ts#OutsideSoftwareCoreSchema.name",
+      "dcterms:source": "cat-harness/schemas/library/outside-software.ts#OutsideSoftwareCoreSchema.name",
       "skos:note": "candidate"
     },
     {
@@ -24482,7 +24482,7 @@
           "@value": "Why this control exists, for whoever is deciding whether to keep it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/panel-chrome.ts#PanelControl.because",
+      "dcterms:source": "cat-harness/schemas/ui/panel-chrome.ts#PanelControl.because",
       "skos:note": "candidate"
     },
     {
@@ -24501,7 +24501,7 @@
           "@value": "The accessible name. Words, because a glyph alone is a guess."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/panel-chrome.ts#PanelControl.label",
+      "dcterms:source": "cat-harness/schemas/ui/panel-chrome.ts#PanelControl.label",
       "skos:note": "candidate"
     },
     {
@@ -24520,7 +24520,7 @@
           "@value": "What the environment must be able to do for this to work."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/panel-chrome.ts#PanelControl.needs",
+      "dcterms:source": "cat-harness/schemas/ui/panel-chrome.ts#PanelControl.needs",
       "skos:note": "candidate"
     },
     {
@@ -24802,7 +24802,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "WHICH SOFTWARE produced the text, cited by digest: the `folio-run-context/v1` of the run that wrote it (`schemas/run-context.ts`), reused rather than restated — the one optional `runContext: { sha256 }` reference that `docs/proposals/tool-releases-2026-10-07.md` gives every run and report record (owner, C1 = a)."
+          "@value": "WHICH SOFTWARE produced the text, cited by digest: the `folio-run-context/v1` of the run that wrote it (`schemas/sdlc/run-context.ts`), reused rather than restated — the one optional `runContext: { sha256 }` reference that `docs/proposals/tool-releases-2026-10-07.md` gives every run and report record (owner, C1 = a)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/ui/pdf-structure.ts#PdfSourceSchema.runContext",
@@ -25223,7 +25223,7 @@
           "@value": "The distribution name pip installs, e.g. `pdfminer.six`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.distribution",
+      "dcterms:source": "cat-harness/schemas/sdlc/python-deps.ts#PythonDepSchema.distribution",
       "skos:note": "candidate"
     },
     {
@@ -25242,7 +25242,7 @@
           "@value": "The module name Python imports, when it differs from the distribution."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.imports",
+      "dcterms:source": "cat-harness/schemas/sdlc/python-deps.ts#PythonDepSchema.imports",
       "skos:note": "candidate"
     },
     {
@@ -25261,7 +25261,7 @@
           "@value": "Nothing imports it directly; it is required by something that does."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.transitive",
+      "dcterms:source": "cat-harness/schemas/sdlc/python-deps.ts#PythonDepSchema.transitive",
       "skos:note": "candidate"
     },
     {
@@ -25280,7 +25280,7 @@
           "@value": "Why this is declared — and for a `transitive` entry, why it has no import of its own."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.why",
+      "dcterms:source": "cat-harness/schemas/sdlc/python-deps.ts#PythonDepSchema.why",
       "skos:note": "candidate"
     },
     {
@@ -25299,7 +25299,7 @@
           "@value": "`translation-qa` only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.locale",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#AttestationKey.locale",
       "skos:note": "candidate"
     },
     {
@@ -25318,7 +25318,7 @@
           "@value": "The subject root relative to the instance root, POSIX, without extension."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.subject",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#AttestationKey.subject",
       "skos:note": "candidate"
     },
     {
@@ -25337,7 +25337,7 @@
           "@value": "Absolute attestations home (the `<family>` directory goes under it)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.attHome",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#KgAttestationTree.attHome",
       "skos:note": "candidate"
     },
     {
@@ -25356,7 +25356,7 @@
           "@value": "Repo-relative instance root, `.` for the checkout root."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.instance",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#KgAttestationTree.instance",
       "skos:note": "candidate"
     },
     {
@@ -25375,7 +25375,7 @@
           "@value": "Absolute `<qa home>/kg-qa`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.kgTree",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#KgAttestationTree.kgTree",
       "skos:note": "candidate"
     },
     {
@@ -25394,7 +25394,7 @@
           "@value": "The declared directory whose absence is \"store absent\" — see `attestationsHomeFor`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.storeRoot",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#KgAttestationTree.storeRoot",
       "skos:note": "candidate"
     },
     {
@@ -25413,7 +25413,7 @@
           "@value": "`baseline` counts as a judgement (owner, 2026-10-01): it records the state the drift is measured from."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema.by",
+      "dcterms:source": "cat-harness/schemas/sdlc/qa-attestations.ts#PairAttestationSchema.by",
       "skos:note": "candidate"
     },
     {
@@ -26705,7 +26705,7 @@
           "@value": "The repository `pr` is in, `owner/repo`. Optional, as `pr` is: the gate looks a verdict up by its head sha, but a reader of the store cannot link a pull request number without it. A reader links only an `owner/repo` spelling, so a malformed one costs the link, never the verdict."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/red-flag.ts#MergeReviewSchema.repository",
+      "dcterms:source": "cat-harness/schemas/sdlc/red-flag.ts#MergeReviewSchema.repository",
       "skos:note": "candidate"
     },
     {
@@ -26724,7 +26724,7 @@
           "@value": "What this category means and what kind of defect it covers."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/red-flag.ts#RedFlagCategoryDefinition.definition",
+      "dcterms:source": "cat-harness/schemas/sdlc/red-flag.ts#RedFlagCategoryDefinition.definition",
       "skos:note": "candidate"
     },
     {
@@ -26743,7 +26743,7 @@
           "@value": "Concrete historical example drawn from this repository's history."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/red-flag.ts#RedFlagCategoryDefinition.historicalExample",
+      "dcterms:source": "cat-harness/schemas/sdlc/red-flag.ts#RedFlagCategoryDefinition.historicalExample",
       "skos:note": "candidate"
     },
     {
@@ -26762,7 +26762,7 @@
           "@value": "When the steward actually performed the single write, if it has."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.closedAt",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#RefWindowObjectSchema.closedAt",
       "skos:note": "candidate"
     },
     {
@@ -26781,7 +26781,7 @@
           "@value": "The hard close. Set once, at open: there is no extend, because a window that extends on every arrival never closes."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.expires",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#RefWindowObjectSchema.expires",
       "skos:note": "candidate"
     },
     {
@@ -26800,7 +26800,7 @@
           "@value": "Who takes this window if the holder stops — the field that makes a handover safe. Without it the next steward cannot tell \"mine to close\" from \"someone else's, in flight\", and both wrong answers push twice."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.handoff",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#RefWindowObjectSchema.handoff",
       "skos:note": "candidate"
     },
     {
@@ -26819,7 +26819,7 @@
           "@value": "Who holds the window — a session URL, `owner`, or an actor id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.heldBy",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#RefWindowObjectSchema.heldBy",
       "skos:note": "candidate"
     },
     {
@@ -26838,7 +26838,7 @@
           "@value": "Whether an AUTHOR wrote this route's content, as opposed to a generator regenerating it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.authored",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#WriteRequestSchema.authored",
       "skos:note": "candidate"
     },
     {
@@ -26857,7 +26857,7 @@
           "@value": "Who asked — a workflow file, a session URL, or an actor id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.requestedBy",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#WriteRequestSchema.requestedBy",
       "skos:note": "candidate"
     },
     {
@@ -26876,7 +26876,7 @@
           "@value": "The route this write owns — `/` for the published site, `STAGING/<slug>/` for a preview. Composition is per route: two different routes compose by union, two of the same route take the newer."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.route",
+      "dcterms:source": "cat-harness/schemas/sdlc/ref-window.ts#WriteRequestSchema.route",
       "skos:note": "candidate"
     },
     {
@@ -28130,7 +28130,7 @@
           "@value": "Predicted and measured."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.confirmed",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#PredictionCheck.confirmed",
       "skos:note": "candidate"
     },
     {
@@ -28149,7 +28149,7 @@
           "@value": "Measured to change but not predicted: a cone defect, never a pass."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.missed",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#PredictionCheck.missed",
       "skos:note": "candidate"
     },
     {
@@ -28168,7 +28168,7 @@
           "@value": "Predicted, not measured: expected for content pages that load their data (rule 3), suspicious otherwise."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.unconfirmed",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#PredictionCheck.unconfirmed",
       "skos:note": "candidate"
     },
     {
@@ -28187,7 +28187,7 @@
           "@value": "The fragment ids within `path` the change alters, for a page that assembles many units (a document page with an anchor per block). A review list links `path#anchor` for each. Absent when the whole file is the unit, or when a build diff cannot say which part changed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.anchors",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedFileSchema.anchors",
       "skos:note": "candidate"
     },
     {
@@ -28206,7 +28206,7 @@
           "@value": "What a review of this file is pinned to (see \"A PIN\"): for a `cone` file, a hash of the blobs of the changed inputs on `via`; for a `build-diff` file, its content hash. Absent when nothing pinned it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.hash",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedFileSchema.hash",
       "skos:note": "candidate"
     },
     {
@@ -28225,7 +28225,7 @@
           "@value": "Path in the BUILT site, relative to its root, e.g. `ast/artifact/PlanDefinition-X.html`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.path",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedFileSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -28244,7 +28244,7 @@
           "@value": "How the change reached this file: the changed input first, then each node the cone went through, e.g. `[\"input/fsh/x.fsh\", \"IMMZD18SBCG\", \"PlanDefinition/IMMZD18SBCG\"]`. Empty for a build diff, which measures that a file changed and cannot say why."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.via",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedFileSchema.via",
       "skos:note": "candidate"
     },
     {
@@ -28263,7 +28263,7 @@
           "@value": "The changed input files the renderer was given, relative to its source root."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.inputs",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedImpactSchema.inputs",
       "skos:note": "candidate"
     },
     {
@@ -28282,7 +28282,7 @@
           "@value": "The renderer, by its Tool id or script, e.g. `fhir-ig-ast-pages`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.renderer",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedImpactSchema.renderer",
       "skos:note": "candidate"
     },
     {
@@ -28301,7 +28301,7 @@
           "@value": "The site the paths are relative to, as a reader finds it (an instance, a URL path)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedImpactSchema.site",
       "skos:note": "candidate"
     },
     {
@@ -28320,7 +28320,7 @@
           "@value": "The commit the PR's change is measured against."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.baseCommit",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedMeasuredSchema.baseCommit",
       "skos:note": "candidate"
     },
     {
@@ -28339,7 +28339,7 @@
           "@value": "The commit the before side was built from, as its publish manifest records it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.beforeCommit",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#RenderedMeasuredSchema.beforeCommit",
       "skos:note": "candidate"
     },
     {
@@ -28358,7 +28358,7 @@
           "@value": "The input's blob at head, so a waiver of it is pinned to this version."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.hash",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#UndeterminedSchema.hash",
       "skos:note": "candidate"
     },
     {
@@ -28377,7 +28377,7 @@
           "@value": "`all`: the input can re-render anything (a site config, a shared include)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.scope",
+      "dcterms:source": "cat-harness/schemas/ui/rendered-impact.ts#UndeterminedSchema.scope",
       "skos:note": "candidate"
     },
     {
@@ -29099,7 +29099,7 @@
           "@value": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/run-context.ts#RunContextSchema.profile",
+      "dcterms:source": "cat-harness/schemas/sdlc/run-context.ts#RunContextSchema.profile",
       "skos:note": "candidate"
     },
     {
@@ -29118,7 +29118,7 @@
           "@value": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/run-context.ts#RunContextSchema.prov",
+      "dcterms:source": "cat-harness/schemas/sdlc/run-context.ts#RunContextSchema.prov",
       "skos:note": "candidate"
     },
     {
@@ -29137,7 +29137,7 @@
           "@value": "The script path, the model id, the person's handle."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.id",
+      "dcterms:source": "cat-harness/schemas/sdlc/run-context.ts#RunInvokerSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -29156,7 +29156,7 @@
           "@value": "Hash of the script's bytes, or `unknown`. Required for a `system` invoker."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.script_hash",
+      "dcterms:source": "cat-harness/schemas/sdlc/run-context.ts#RunInvokerSchema.script_hash",
       "skos:note": "candidate"
     },
     {
@@ -29365,7 +29365,7 @@
           "@value": "The command, relative to the checkout root."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.command",
+      "dcterms:source": "cat-harness/schemas/sdlc/script-table.ts#ScriptEntry.command",
       "skos:note": "candidate"
     },
     {
@@ -29384,7 +29384,7 @@
           "@value": "The manifest it is declared in, repository-relative (`package.json` for the root)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
+      "dcterms:source": "cat-harness/schemas/sdlc/script-table.ts#ScriptEntry.manifest",
       "skos:note": "candidate"
     },
     {
@@ -30657,7 +30657,7 @@
           "@value": "The bundle's directory, layer-relative (`scripts/assets/vendor/jquery/3.6.0`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/software-library.ts#VendoredSchema.path",
+      "dcterms:source": "cat-harness/schemas/library/software-library.ts#VendoredSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -30676,7 +30676,7 @@
           "@value": "Whether this identifier is guaranteed by an authority outside the source. A Handle is; a DSpace UUID is the source's own; a local slug is neither. The distinction decides which identifier survives the source moving, and IRIS is the worked case — one of its two handles points at a regional instance that was merged away."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema.authoritative",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#IdentifierSystemSchema.authoritative",
       "skos:note": "candidate"
     },
     {
@@ -30695,7 +30695,7 @@
           "@value": "The characterisation the \"ingest a new data source\" process produces. Required — these are what decide how the source may be REFERENCED, and a descriptor that has not said cannot answer that question."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.character",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#SourceDescriptorSchema.character",
       "skos:note": "candidate"
     },
     {
@@ -30714,7 +30714,7 @@
           "@value": "What one node IS in this corpus. Different per source, and never assumed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.nodeKind",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#SourceDescriptorSchema.nodeKind",
       "skos:note": "candidate"
     },
     {
@@ -30733,7 +30733,7 @@
           "@value": "Why `subsetIsSelfContained` has the value it has. Optional, because a self-contained source (IRIS: fetch an item and you have it) has little to say; the `false` case is the one that needs its reason recorded."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetBasis",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#SourceDescriptorSchema.subsetBasis",
       "skos:note": "candidate"
     },
     {
@@ -30752,7 +30752,7 @@
           "@value": "Whether a subset chosen by the strategies above stands on its own. `false` means every request must be closed over dependencies first."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetIsSelfContained",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#SourceDescriptorSchema.subsetIsSelfContained",
       "skos:note": "candidate"
     },
     {
@@ -30771,7 +30771,7 @@
           "@value": "The software, where there is some — `DSpace 7`, `Lean 4 / Lake`. Descriptors for one system are often reusable."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.system",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#SourceDescriptorSchema.system",
       "skos:note": "candidate"
     },
     {
@@ -30790,7 +30790,7 @@
           "@value": "Whether the source states terms, and where. Feeds the `restrictions` and `copyright` gates; `unknown` stays unknown."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.termsUrl",
+      "dcterms:source": "cat-harness/schemas/library/source-descriptor.ts#SourceDescriptorSchema.termsUrl",
       "skos:note": "candidate"
     },
     {
@@ -30923,7 +30923,7 @@
           "@value": "Listed ids the edition marks deprecated, canonical spelling."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.deprecated",
+      "dcterms:source": "cat-harness/schemas/library/spdx-license-expression.ts#ExpressionCheck.deprecated",
       "skos:note": "candidate"
     },
     {
@@ -30942,7 +30942,7 @@
           "@value": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
+      "dcterms:source": "cat-harness/schemas/library/spdx-license-expression.ts#ExpressionCheck.recased",
       "skos:note": "candidate"
     },
     {
@@ -30961,7 +30961,7 @@
           "@value": "Extracted feature title/name if found."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.featureName",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.featureName",
       "skos:note": "candidate"
     },
     {
@@ -30980,7 +30980,7 @@
           "@value": "Descriptive findings for any rule breach."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.findings",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.findings",
       "skos:note": "candidate"
     },
     {
@@ -30999,7 +30999,7 @@
           "@value": "Whether the spec carries an ACTION REQUIRED marker."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.hasActionRequired",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.hasActionRequired",
       "skos:note": "candidate"
     },
     {
@@ -31018,7 +31018,7 @@
           "@value": "Whether the status is considered adjudicated."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.isAdjudicated",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.isAdjudicated",
       "skos:note": "candidate"
     },
     {
@@ -31037,7 +31037,7 @@
           "@value": "Any mandatory sections that were not found in the spec."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.missingSections",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.missingSections",
       "skos:note": "candidate"
     },
     {
@@ -31056,7 +31056,7 @@
           "@value": "\"pass\" if compliant, \"fail\" if mandatory section missing or invalid adjudication."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.state",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.state",
       "skos:note": "candidate"
     },
     {
@@ -31075,7 +31075,7 @@
           "@value": "Extracted status string from header, if found."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.status",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.status",
       "skos:note": "candidate"
     },
     {
@@ -31094,7 +31094,7 @@
           "@value": "Any unresolved [NEEDS CLARIFICATION: ...] markers."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.unresolvedClarifications",
+      "dcterms:source": "cat-harness/schemas/sdlc/spec-template.ts#SpecValidationResult.unresolvedClarifications",
       "skos:note": "candidate"
     },
     {
@@ -32690,7 +32690,7 @@
           "@value": "Who ran it, so a reader can ask: a session URL or id. Absent when the runner did not know."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema.by",
+      "dcterms:source": "cat-harness/schemas/sdlc/sweep-mark.ts#SweepMarkSchema.by",
       "skos:note": "candidate"
     },
     {
@@ -32709,7 +32709,7 @@
           "@value": "The check this marks, by its `cat` command name — `session-staleness`. Also the file's stem."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema.check",
+      "dcterms:source": "cat-harness/schemas/sdlc/sweep-mark.ts#SweepMarkSchema.check",
       "skos:note": "candidate"
     },
     {
@@ -32728,7 +32728,7 @@
           "@value": "When the check last read its input, ISO-8601 with a zone."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema.checkedAt",
+      "dcterms:source": "cat-harness/schemas/sdlc/sweep-mark.ts#SweepMarkSchema.checkedAt",
       "skos:note": "candidate"
     },
     {
@@ -32747,7 +32747,7 @@
           "@value": "How many findings it reported."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema.findings",
+      "dcterms:source": "cat-harness/schemas/sdlc/sweep-mark.ts#SweepMarkSchema.findings",
       "skos:note": "candidate"
     },
     {
@@ -32766,7 +32766,7 @@
           "@value": "How many subjects the run read — sessions, for `session-staleness`. Zero is a real answer."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema.read",
+      "dcterms:source": "cat-harness/schemas/sdlc/sweep-mark.ts#SweepMarkSchema.read",
       "skos:note": "candidate"
     },
     {
@@ -33450,7 +33450,7 @@
           "@value": "Decision table, rule, or logic under review."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#DecisionSupportWorkedCaseSchema.decisionLogicRef",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#DecisionSupportWorkedCaseSchema.decisionLogicRef",
       "skos:note": "candidate"
     },
     {
@@ -33469,7 +33469,7 @@
           "@value": "Expected domain guidance or action as stated by the SME or source guideline."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#DecisionSupportWorkedCaseSchema.expectedGuidance",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#DecisionSupportWorkedCaseSchema.expectedGuidance",
       "skos:note": "candidate"
     },
     {
@@ -33488,7 +33488,7 @@
           "@value": "Case id within the fixed test data set."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#DecisionSupportWorkedCaseSchema.id",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#DecisionSupportWorkedCaseSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -33507,7 +33507,7 @@
           "@value": "Structured case input (subject state, observations, context)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#DecisionSupportWorkedCaseSchema.input",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#DecisionSupportWorkedCaseSchema.input",
       "skos:note": "candidate"
     },
     {
@@ -33526,7 +33526,7 @@
           "@value": "Domain narrative summary of the worked scenario."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#DecisionSupportWorkedCaseSchema.summary",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#DecisionSupportWorkedCaseSchema.summary",
       "skos:note": "candidate"
     },
     {
@@ -33545,7 +33545,7 @@
           "@value": "Output produced by the decision logic under review."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#DecisionSupportWorkedCaseSchema.systemOutput",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#DecisionSupportWorkedCaseSchema.systemOutput",
       "skos:note": "candidate"
     },
     {
@@ -33564,7 +33564,7 @@
           "@value": "Indicator value computed by the definition under review."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.computedValue",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.computedValue",
       "skos:note": "candidate"
     },
     {
@@ -33583,7 +33583,7 @@
           "@value": "Optional expected/observed denominator for ratio or proportion indicators."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.denominator",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.denominator",
       "skos:note": "candidate"
     },
     {
@@ -33602,7 +33602,7 @@
           "@value": "Expected indicator value determined by SME domain judgement."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.expectedValue",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.expectedValue",
       "skos:note": "candidate"
     },
     {
@@ -33621,7 +33621,7 @@
           "@value": "Cohort id within the fixed test data set."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.id",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -33640,7 +33640,7 @@
           "@value": "Indicator definition under review."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.indicatorRef",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.indicatorRef",
       "skos:note": "candidate"
     },
     {
@@ -33659,7 +33659,7 @@
           "@value": "Cohort member records or stratified aggregate inputs."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.inputs",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.inputs",
       "skos:note": "candidate"
     },
     {
@@ -33678,7 +33678,7 @@
           "@value": "Optional expected/observed numerator for ratio or proportion indicators."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.numerator",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.numerator",
       "skos:note": "candidate"
     },
     {
@@ -33697,7 +33697,7 @@
           "@value": "Optional reporting period (e.g. `\"2026-Q1\"` or ISO interval)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.period",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.period",
       "skos:note": "candidate"
     },
     {
@@ -33716,7 +33716,7 @@
           "@value": "Number of subjects / records in the cohort (`>= 1`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.populationSize",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.populationSize",
       "skos:note": "candidate"
     },
     {
@@ -33735,7 +33735,7 @@
           "@value": "Domain summary of the cohort and measurement window."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#IndicatorCohortCaseSchema.summary",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#IndicatorCohortCaseSchema.summary",
       "skos:note": "candidate"
     },
     {
@@ -33754,7 +33754,7 @@
           "@value": "Optional declared actor id from `scenarios/actors/`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#SmeReviewerIdentitySchema.actor",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#SmeReviewerIdentitySchema.actor",
       "skos:note": "candidate"
     },
     {
@@ -33773,7 +33773,7 @@
           "@value": "Optional human-readable display name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#SmeReviewerIdentitySchema.displayName",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#SmeReviewerIdentitySchema.displayName",
       "skos:note": "candidate"
     },
     {
@@ -33792,7 +33792,7 @@
           "@value": "Attributable account handle or identifier at `provider`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#SmeReviewerIdentitySchema.handle",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#SmeReviewerIdentitySchema.handle",
       "skos:note": "candidate"
     },
     {
@@ -33811,7 +33811,7 @@
           "@value": "Identity authority, e.g. `\"github\"`, `\"orcid\"`, `\"institutional-sso\"`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#SmeReviewerIdentitySchema.provider",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#SmeReviewerIdentitySchema.provider",
       "skos:note": "candidate"
     },
     {
@@ -33830,7 +33830,7 @@
           "@value": "Role under which the SME reviewed the case/cohort (e.g. `\"clinical-sme\"`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-data.ts#SmeReviewerIdentitySchema.role",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-data.ts#SmeReviewerIdentitySchema.role",
       "skos:note": "candidate"
     },
     {
@@ -33849,7 +33849,7 @@
           "@value": "Repo-relative path to the committed set."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#FixedTestDataSchema.path",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#FixedTestDataSchema.path",
       "skos:note": "candidate"
     },
     {
@@ -33868,7 +33868,7 @@
           "@value": "The generator, when it is not implied by the template — `synthea`, `fsh`. FHIR `testData.type`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.generator",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#GeneratedTestDataSchema.generator",
       "skos:note": "candidate"
     },
     {
@@ -33887,7 +33887,7 @@
           "@value": "The generator's parameters. Hashed with the template into the run's data basis."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.params",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#GeneratedTestDataSchema.params",
       "skos:note": "candidate"
     },
     {
@@ -33906,7 +33906,7 @@
           "@value": "Required: without a fixed seed, regenerating does not give the bytes that were hashed (`zz0a`)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.seed",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#GeneratedTestDataSchema.seed",
       "skos:note": "candidate"
     },
     {
@@ -33925,7 +33925,7 @@
           "@value": "Repo-relative path to the template (a FHIR template, a Synthea module, …)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.template",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#GeneratedTestDataSchema.template",
       "skos:note": "candidate"
     },
     {
@@ -33944,7 +33944,7 @@
           "@value": "What is expected, for a reader who has only the plan."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestAssertionSchema.expectation",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestAssertionSchema.expectation",
       "skos:note": "candidate"
     },
     {
@@ -33963,7 +33963,7 @@
           "@value": "FHIR `TestPlan.testCase.assertion.type`: does a failure fail the case?"
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestAssertionSchema.type",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestAssertionSchema.type",
       "skos:note": "candidate"
     },
     {
@@ -33982,7 +33982,7 @@
           "@value": "A case with no assertion asserts nothing, and would pass vacuously."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.assertions",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanCaseSchema.assertions",
       "skos:note": "candidate"
     },
     {
@@ -34001,7 +34001,7 @@
           "@value": "Sibling cases that must run first. FHIR `testCase.dependency`, resolved."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.dependsOn",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanCaseSchema.dependsOn",
       "skos:note": "candidate"
     },
     {
@@ -34020,7 +34020,7 @@
           "@value": "Optional Gherkin `.feature` file the case is written in."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.feature",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanCaseSchema.feature",
       "skos:note": "candidate"
     },
     {
@@ -34039,7 +34039,7 @@
           "@value": "May be empty: a case can test behaviour on no input. Absent and empty are the same here."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.testData",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanCaseSchema.testData",
       "skos:note": "candidate"
     },
     {
@@ -34058,7 +34058,7 @@
           "@value": "The certification rule, executable."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema.decision",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanExitCriteriaSchema.decision",
       "skos:note": "candidate"
     },
     {
@@ -34077,7 +34077,7 @@
           "@value": "A reader's summary of it. Never the rule itself — the DMN is."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema.description",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanExitCriteriaSchema.description",
       "skos:note": "candidate"
     },
     {
@@ -34096,7 +34096,7 @@
           "@value": "What the plan is evidence FOR. At least one: a plan tied to no requirement certifies nothing."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanSchema.requirements",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanSchema.requirements",
       "skos:note": "candidate"
     },
     {
@@ -34115,7 +34115,7 @@
           "@value": "The PLAN's version — a run records which one it executed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanSchema.version",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanSchema.version",
       "skos:note": "candidate"
     },
     {
@@ -34134,7 +34134,7 @@
           "@value": "The specific system, when the plan is for one: a skill name, a tool name, an IG canonical. Absent means the plan applies to any system of `kind` (a conformance plan any implementer may run)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema.target",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanScopeSchema.target",
       "skos:note": "candidate"
     },
     {
@@ -34153,7 +34153,7 @@
           "@value": "The versions the plan applies to, as a semver range (`>=1.2 <2`, `*`). Required: `*` is a statement; absence would be an omission that reads the same."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema.versionRange",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-plan.ts#TestPlanScopeSchema.versionRange",
       "skos:note": "candidate"
     },
     {
@@ -34172,7 +34172,7 @@
           "@value": "Per-assertion results, keyed by the assertion's criterion id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.assertions",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestCaseVerdictSchema.assertions",
       "skos:note": "candidate"
     },
     {
@@ -34191,7 +34191,7 @@
           "@value": "Why the case was skipped. Required when `result` is `skipped`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.reason",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestCaseVerdictSchema.reason",
       "skos:note": "candidate"
     },
     {
@@ -34210,7 +34210,7 @@
           "@value": "ISO-8601 UTC."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.reviewed_at",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestCaseVerdictSchema.reviewed_at",
       "skos:note": "candidate"
     },
     {
@@ -34229,7 +34229,7 @@
           "@value": "Case id → reviewer entries, oldest first. The last is current."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReportSchema.cases",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestReportSchema.cases",
       "skos:note": "candidate"
     },
     {
@@ -34248,7 +34248,7 @@
           "@value": "ONE plan. There is no field for a second — see the module note."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReportSchema.plan",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestReportSchema.plan",
       "skos:note": "candidate"
     },
     {
@@ -34267,7 +34267,7 @@
           "@value": "Content-addressed reference to the `folio-run-context/v1` record of the run that produced this report (`docs/proposals/tool-releases-2026-10-07.md`, owner C1 = a)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReportSchema.runContext",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestReportSchema.runContext",
       "skos:note": "candidate"
     },
     {
@@ -34286,7 +34286,7 @@
           "@value": "On whose authority — an id under `scenarios/actors/`. Absent is unresolved, not permitted."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReviewerSchema.actor",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestReviewerSchema.actor",
       "skos:note": "candidate"
     },
     {
@@ -34305,7 +34305,7 @@
           "@value": "What ran: a script path, an agent name, a GitHub login."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReviewerSchema.id",
+      "dcterms:source": "cat-harness/schemas/sdlc/test-report.ts#TestReviewerSchema.id",
       "skos:note": "candidate"
     },
     {

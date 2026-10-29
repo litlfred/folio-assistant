@@ -366,10 +366,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-29T13:12:41.431Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8fe86485b359f82da50963034bb7b7189c01d86b",
-  "sourceCommitSha": "8fe86485b359f82da50963034bb7b7189c01d86b",
-  "sourceCommitAt": "2026-10-29T12:46:25Z",
+  "generatedAt": "2026-10-29T13:50:34.784Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b1c2b15680c5b2ff6457af86d571e549bdb59ee6",
+  "sourceCommitSha": "b1c2b15680c5b2ff6457af86d571e549bdb59ee6",
+  "sourceCommitAt": "2026-10-29T13:20:22Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -24797,7 +24797,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "A merge train",
       "summary": "Land the ready pull requests as one train: place each by the merge-priority decision table, merge the members with `merge-base`, run the gate set on the combination, and on red eject the culprit rather than reject the train.",
-      "description": "Land the ready pull requests as one train: place each by the merge-priority decision table, merge the members with `merge-base`, run the gate set on the combination, and on red eject the culprit rather than reject the train. A TRAIN OF PULL REQUESTS, landed together. Bean `hfag` (merge-pipeline epic), owner's ruling 2026-10-02. One instance per train run, committed under `beans/workflows/` like every other instance, so a sibling steward sees the same position and the run's record is what T4 will later be tuned from (R10).\n\nIT LINKS THE EXISTING PROCESSES AND DUPLICATES NONE. Each member is merged by `merge-base.bpmn` (`Process_MergeBase`); the train is gated by `code-quality-gates.bpmn` and `pr-checks-present.bpmn`; a refused or ejected member is handed back by `merge-refusal.bpmn` (`Process_MergeRefusal`, draft PR #1888 — until it lands the call stays opaque, which the engine permits). The ORDER is computed by `decisions/merge-priority.dmn`, whose inputs come from the ordering processes: `graph-detanglement.bpmn` (a PR that removes tangle edges unblocks others, input b) and `kg-separation.bpmn` (a PR that seeds the staging repos, input a; `seed:ready` on branch `claude/seed-ready` reports which). A landed member's preview is taken down by `feature-staging.bpmn`, which this process does not repeat.\n\nTHE QUEUE STORES DECISIONS, NEVER GITHUB'S FACTS. CI status, mergeability, labels and head SHA are read live at each step (`schemas/merge-queue.ts`). What this instance records is what the steward decided and the dated evidence it acted on.\n\nFROM THE LITERATURE (requirements note `cat-harness/docs/proposals/merge-pipeline-requirements.md`, branch `claude/merge-pipeline-library`): T3 cheap conflict prediction on authored paths (R6, R7; SQ19 §5.2 pp. 7-8) feeds the placement table; T7 retries a declared-flaky gate once (R11; TAP17 Table II p. 5); T2 attributes a red train from each member's own CI before bisecting (SQ19 §2.1 pp. 2-3); T1 ejects the culprit and re-runs the rest rather than rejecting the whole train (R3; SQ19 §2.2 p. 3), handing it back with the reason (R4; SQ19 §3.2 p. 4). The tools behind the steps are `merge:overlap`, `merge:train` and `merge:leftover`, on branch `claude/merge-pipeline-tools`.",
+      "description": "Land the ready pull requests as one train: place each by the merge-priority decision table, merge the members with `merge-base`, run the gate set on the combination, and on red eject the culprit rather than reject the train. A TRAIN OF PULL REQUESTS, landed together. Bean `hfag` (merge-pipeline epic), owner's ruling 2026-10-02. One instance per train run, committed under `beans/workflows/` like every other instance, so a sibling steward sees the same position and the run's record is what T4 will later be tuned from (R10).\n\nIT LINKS THE EXISTING PROCESSES AND DUPLICATES NONE. Each member is merged by `merge-base.bpmn` (`Process_MergeBase`); the train is gated by `code-quality-gates.bpmn` and `pr-checks-present.bpmn`; a refused or ejected member is handed back by `merge-refusal.bpmn` (`Process_MergeRefusal`, draft PR #1888 — until it lands the call stays opaque, which the engine permits). The ORDER is computed by `decisions/merge-priority.dmn`, whose inputs come from the ordering processes: `graph-detanglement.bpmn` (a PR that removes tangle edges unblocks others, input b) and `kg-separation.bpmn` (a PR that seeds the staging repos, input a; `seed:ready` on branch `claude/seed-ready` reports which). A landed member's preview is taken down by `feature-staging.bpmn`, which this process does not repeat.\n\nTHE QUEUE STORES DECISIONS, NEVER GITHUB'S FACTS. CI status, mergeability, labels and head SHA are read live at each step (`schemas/sdlc/merge-queue.ts`). What this instance records is what the steward decided and the dated evidence it acted on.\n\nFROM THE LITERATURE (requirements note `cat-harness/docs/proposals/merge-pipeline-requirements.md`, branch `claude/merge-pipeline-library`): T3 cheap conflict prediction on authored paths (R6, R7; SQ19 §5.2 pp. 7-8) feeds the placement table; T7 retries a declared-flaky gate once (R11; TAP17 Table II p. 5); T2 attributes a red train from each member's own CI before bisecting (SQ19 §2.1 pp. 2-3); T1 ejects the culprit and re-runs the rest rather than rejecting the whole train (R3; SQ19 §2.2 p. 3), handing it back with the reason (R4; SQ19 §3.2 p. 4). The tools behind the steps are `merge:overlap`, `merge:train` and `merge:leftover`, on branch `claude/merge-pipeline-tools`.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/merge-train.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/merge-train.bpmn",
@@ -26077,7 +26077,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "SME Review of Decision Support and Indicator Test Data",
       "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions.",
-      "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions. It runs on its caller's bean (Process_TestDataCuration calls it), so it opens and closes none: every step that touches the plan notes on it.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
+      "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions. It runs on its caller's bean (Process_TestDataCuration calls it), so it opens and closes none: every step that touches the plan notes on it.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/sdlc/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/sme-test-data-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/sme-test-data-review.bpmn",
@@ -30133,7 +30133,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Test Data Curation — Fixed Sets and Generated Recipes",
       "summary": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets.",
-      "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets. It opens its bean with Process_BeanOpen before any work and closes it with Process_BeanClose before it ends; the steps between note on it.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/kg/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
+      "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets. It opens its bean with Process_BeanOpen before any work and closes it with Process_BeanClose before it ends; the steps between note on it.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/kg/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/sdlc/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/sdlc/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/test-data-curation.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/test-data-curation.bpmn",
@@ -48437,87 +48437,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "adversarial-checklist",
-      "title": "adversarial-checklist",
-      "summary": "Per-content-block adversarial checklists for tools, schemas, skills, and processes.",
-      "module": "schemas/adversarial-checklist.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "artifact-store",
-      "title": "artifact-store",
-      "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
-      "module": "schemas/artifact-store.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "assistant-package",
-      "title": "assistant-package",
-      "summary": "Package Manifest — Docker and system dependency declarations.",
-      "module": "schemas/assistant-package.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "assistant-types",
-      "title": "assistant-types",
-      "summary": "Assistant Framework — Schema definitions for the agent skills system.",
-      "module": "schemas/assistant-types.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "bean-note",
-      "title": "bean-note",
-      "summary": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
-      "module": "schemas/bean-note.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "bib-attestations",
-      "title": "bib-attestations",
-      "summary": "BIBLIOGRAPHY ATTESTATIONS — the ONE reader and the ONE writer for a folio's",
-      "module": "schemas/bib-attestations.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "board-positions",
-      "title": "board-positions",
-      "summary": "Where a note sits on a board — a layer ON TOP of the notes, never inside them.",
-      "module": "schemas/board-positions.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "board",
-      "title": "board",
-      "summary": "A board — the surface a folio's notes and its content are read on together.",
-      "module": "schemas/board.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "change-size",
-      "title": "change-size",
-      "summary": "The change-size rule: thresholds, basis, and prose/KG versus code weighting.",
-      "module": "schemas/change-size.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/computation-witness",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "computation-witness",
@@ -48590,129 +48509,12 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "library-keywords",
-      "title": "library-keywords",
-      "summary": "`library/<slug>/keywords.json` — an entry's keywords, read from the LSI",
-      "module": "schemas/library-keywords.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "library-nodes",
-      "title": "library-nodes",
-      "summary": "The JSON-LD nodes a library entry holds: its `manifest.jsonld` (a",
-      "module": "schemas/library-nodes.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "log-entry",
-      "title": "log-entry",
-      "summary": "The agent activity log — what an agent did, when, and in which process.",
-      "module": "schemas/log-entry.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "merge-queue",
-      "title": "merge-queue",
-      "summary": "The MERGE QUEUE — what the merge steward DECIDED about each open pull",
-      "module": "schemas/merge-queue.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "merge-review",
-      "title": "merge-review",
-      "summary": "Agentic pre-merge review and would-have-blocked counterfactual schemas.",
-      "module": "schemas/merge-review.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "model-capabilities",
-      "title": "model-capabilities",
-      "summary": "Model capabilities and single-model capability refusal schema.",
-      "module": "schemas/model-capabilities.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "note-anchor",
-      "title": "note-anchor",
-      "summary": "Where a note is attached, as a three-state answer.",
-      "module": "schemas/note-anchor.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "outside-software",
-      "title": "outside-software",
-      "summary": "Outside software — the core every record of somebody else's software shares:",
-      "module": "schemas/outside-software.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "panel-chrome",
-      "title": "panel-chrome",
-      "summary": "What a card's open panel offers — the kind declares, the platform fixes.",
-      "module": "schemas/panel-chrome.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "precision-scalar",
       "title": "precision-scalar",
       "summary": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
       "module": "schemas/precision-scalar.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "python-deps",
-      "title": "python-deps",
-      "summary": "The Python packages this repository's scripts need — declared once.",
-      "module": "schemas/python-deps.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "qa-attestations",
-      "title": "qa-attestations",
-      "summary": "QA ATTESTATIONS — the judgement half of a QA verdict, kept on `main` where a",
-      "module": "schemas/qa-attestations.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "red-flag",
-      "title": "red-flag",
-      "summary": "RED FLAG taxonomy, adversarial review sidecar schema, and recorded override path.",
-      "module": "schemas/red-flag.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "ref-window",
-      "title": "ref-window",
-      "summary": "A COALESCING WINDOW over a watched ref — the writes a steward batched into",
-      "module": "schemas/ref-window.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -48725,42 +48527,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "render-output",
-      "title": "render-output",
-      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
-      "module": "schemas/render-output.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "rendered-impact",
-      "title": "rendered-impact",
-      "summary": "What a change does to a RENDERED site: the contract every renderer answers",
-      "module": "schemas/rendered-impact.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "run-context",
-      "title": "run-context",
-      "summary": "Run context — what ONE run ran on, stated once, and cited by digest.",
-      "module": "schemas/run-context.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "safe-url",
-      "title": "safe-url",
-      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
-      "module": "schemas/safe-url.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "scenario-overlay",
@@ -48770,84 +48536,12 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "software-library",
-      "title": "software-library",
-      "summary": "Software libraries — one outside library a layer's code IMPORTS, at the",
-      "module": "schemas/software-library.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "source-descriptor",
-      "title": "source-descriptor",
-      "summary": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
-      "module": "schemas/source-descriptor.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "spdx-license-expression",
-      "title": "spdx-license-expression",
-      "summary": "An SPDX licence expression, checked against the pinned SPDX License List.",
-      "module": "schemas/spdx-license-expression.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "spec-template",
-      "title": "spec-template",
-      "summary": "Spec template schema and validator for platform feature specifications (spec-kit).",
-      "module": "schemas/spec-template.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "sweep-mark",
-      "title": "sweep-mark",
-      "summary": "WHEN A SWEEP STEP WAS LAST RUN — so skipping it leaves a trace.",
-      "module": "schemas/sweep-mark.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "test-data",
-      "title": "test-data",
-      "summary": "Test data sets (fixed and generated) and SME review case/verdict pairs —",
-      "module": "schemas/test-data.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "test-plan",
-      "title": "test-plan",
-      "summary": "A TEST PLAN — what a system under test must do, case by case, and the rule",
-      "module": "schemas/test-plan.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "test-preload",
       "title": "test-preload",
       "summary": "Register core's graph typologies before any test reads a declaration.",
       "module": "schemas/test-preload.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "test-report",
-      "title": "test-report",
-      "summary": "A TEST REPORT — the verdicts one run of one plan reached against one system",
-      "module": "schemas/test-report.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -48878,12 +48572,21 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "window-stack",
-      "title": "window-stack",
-      "summary": "Which cards are OPEN on a board, and in what order they stack.",
-      "module": "schemas/window-stack.ts",
+      "name": "assistant-package",
+      "title": "assistant-package",
+      "summary": "Package Manifest — Docker and system dependency declarations.",
+      "module": "schemas/conduct/assistant-package.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "assistant-types",
+      "title": "assistant-types",
+      "summary": "Assistant Framework — Schema definitions for the agent skills system.",
+      "module": "schemas/conduct/assistant-types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -48902,6 +48605,15 @@
       "title": "memory",
       "summary": "An agent's memory — what it carries into the next task, as a graph node.",
       "module": "schemas/conduct/memory.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "model-capabilities",
+      "title": "model-capabilities",
+      "summary": "Model capabilities and single-model capability refusal schema.",
+      "module": "schemas/conduct/model-capabilities.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -49592,6 +49304,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "bib-attestations",
+      "title": "bib-attestations",
+      "summary": "BIBLIOGRAPHY ATTESTATIONS — the ONE reader and the ONE writer for a folio's",
+      "module": "schemas/library/bib-attestations.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-verification",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "bib-verification",
@@ -49619,6 +49340,33 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "library-keywords",
+      "title": "library-keywords",
+      "summary": "`library/<slug>/keywords.json` — an entry's keywords, read from the LSI",
+      "module": "schemas/library/library-keywords.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "library-nodes",
+      "title": "library-nodes",
+      "summary": "The JSON-LD nodes a library entry holds: its `manifest.jsonld` (a",
+      "module": "schemas/library/library-nodes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "outside-software",
+      "title": "outside-software",
+      "summary": "Outside software — the core every record of somebody else's software shares:",
+      "module": "schemas/library/outside-software.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/recording",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "recording",
@@ -49637,6 +49385,24 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "software-library",
+      "title": "software-library",
+      "summary": "Software libraries — one outside library a layer's code IMPORTS, at the",
+      "module": "schemas/library/software-library.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "source-descriptor",
+      "title": "source-descriptor",
+      "summary": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
+      "module": "schemas/library/source-descriptor.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-licence",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "source-licence",
@@ -49652,6 +49418,15 @@
       "title": "source-provenance",
       "summary": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
       "module": "schemas/library/source-provenance.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "spdx-license-expression",
+      "title": "spdx-license-expression",
+      "summary": "An SPDX licence expression, checked against the pinned SPDX License List.",
+      "module": "schemas/library/spdx-license-expression.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -49745,12 +49520,39 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "adversarial-checklist",
+      "title": "adversarial-checklist",
+      "summary": "Per-content-block adversarial checklists for tools, schemas, skills, and processes.",
+      "module": "schemas/sdlc/adversarial-checklist.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "artifact-store",
+      "title": "artifact-store",
+      "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
+      "module": "schemas/sdlc/artifact-store.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-graph",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "bean-graph",
       "title": "bean-graph",
       "summary": "The bean graph — what `beans/` is, rather than where it happens to be.",
       "module": "schemas/sdlc/bean-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "bean-note",
+      "title": "bean-note",
+      "summary": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
+      "module": "schemas/sdlc/bean-note.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -49772,6 +49574,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "change-size",
+      "title": "change-size",
+      "summary": "The change-size rule: thresholds, basis, and prose/KG versus code weighting.",
+      "module": "schemas/sdlc/change-size.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/health-report",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "health-report",
@@ -49790,6 +49601,51 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "log-entry",
+      "title": "log-entry",
+      "summary": "The agent activity log — what an agent did, when, and in which process.",
+      "module": "schemas/sdlc/log-entry.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "merge-queue",
+      "title": "merge-queue",
+      "summary": "The MERGE QUEUE — what the merge steward DECIDED about each open pull",
+      "module": "schemas/sdlc/merge-queue.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "merge-review",
+      "title": "merge-review",
+      "summary": "Agentic pre-merge review and would-have-blocked counterfactual schemas.",
+      "module": "schemas/sdlc/merge-review.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "python-deps",
+      "title": "python-deps",
+      "summary": "The Python packages this repository's scripts need — declared once.",
+      "module": "schemas/sdlc/python-deps.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "qa-attestations",
+      "title": "qa-attestations",
+      "summary": "QA ATTESTATIONS — the judgement half of a QA verdict, kept on `main` where a",
+      "module": "schemas/sdlc/qa-attestations.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-report",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "qa-report",
@@ -49805,6 +49661,33 @@
       "title": "qa-review",
       "summary": "QA review — findings, decisions, and the audit notes that justify them.",
       "module": "schemas/sdlc/qa-review.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "red-flag",
+      "title": "red-flag",
+      "summary": "RED FLAG taxonomy, adversarial review sidecar schema, and recorded override path.",
+      "module": "schemas/sdlc/red-flag.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "ref-window",
+      "title": "ref-window",
+      "summary": "A COALESCING WINDOW over a watched ref — the writes a steward batched into",
+      "module": "schemas/sdlc/ref-window.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "run-context",
+      "title": "run-context",
+      "summary": "Run context — what ONE run ran on, stated once, and cited by digest.",
+      "module": "schemas/sdlc/run-context.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -49835,6 +49718,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "spec-template",
+      "title": "spec-template",
+      "summary": "Spec template schema and validator for platform feature specifications (spec-kit).",
+      "module": "schemas/sdlc/spec-template.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/staging-preview",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "staging-preview",
@@ -49850,6 +49742,42 @@
       "title": "staging",
       "summary": "Staging comparison schema — before/after URL pairs for content review.",
       "module": "schemas/sdlc/staging.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "sweep-mark",
+      "title": "sweep-mark",
+      "summary": "WHEN A SWEEP STEP WAS LAST RUN — so skipping it leaves a trace.",
+      "module": "schemas/sdlc/sweep-mark.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "test-data",
+      "title": "test-data",
+      "summary": "Test data sets (fixed and generated) and SME review case/verdict pairs —",
+      "module": "schemas/sdlc/test-data.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "test-plan",
+      "title": "test-plan",
+      "summary": "A TEST PLAN — what a system under test must do, case by case, and the rule",
+      "module": "schemas/sdlc/test-plan.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "test-report",
+      "title": "test-report",
+      "summary": "A TEST REPORT — the verdicts one run of one plan reached against one system",
+      "module": "schemas/sdlc/test-report.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -49958,12 +49886,48 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "board-positions",
+      "title": "board-positions",
+      "summary": "Where a note sits on a board — a layer ON TOP of the notes, never inside them.",
+      "module": "schemas/ui/board-positions.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "board",
+      "title": "board",
+      "summary": "A board — the surface a folio's notes and its content are read on together.",
+      "module": "schemas/ui/board.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diff-renderers",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "diff-renderers",
       "title": "diff-renderers",
       "summary": "The diff renderers a reviewer chooses between on the review page. Bean",
       "module": "schemas/ui/diff-renderers.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "note-anchor",
+      "title": "note-anchor",
+      "summary": "Where a note is attached, as a three-state answer.",
+      "module": "schemas/ui/note-anchor.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "panel-chrome",
+      "title": "panel-chrome",
+      "summary": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "module": "schemas/ui/panel-chrome.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -49985,12 +49949,39 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "render-output",
+      "title": "render-output",
+      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
+      "module": "schemas/ui/render-output.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-targets",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "render-targets",
       "title": "render-targets",
       "summary": "Which render target a content profile validates against — declared as data,",
       "module": "schemas/ui/render-targets.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "rendered-impact",
+      "title": "rendered-impact",
+      "summary": "What a change does to a RENDERED site: the contract every renderer answers",
+      "module": "schemas/ui/rendered-impact.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "safe-url",
+      "title": "safe-url",
+      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/ui/safe-url.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -50048,6 +50039,15 @@
       "title": "webpage",
       "summary": "`webpage` — a published documentation page, modelled as a graph node that",
       "module": "schemas/ui/webpage.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "window-stack",
+      "title": "window-stack",
+      "summary": "Which cards are OPEN on a board, and in what order they stack.",
+      "module": "schemas/ui/window-stack.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -50709,7 +50709,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "boards",
       "renderable": false,
-      "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
+      "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/ui/board.ts`.",
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board"
     },
     {
@@ -50717,7 +50717,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "board-positions",
       "renderable": false,
-      "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
+      "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/ui/board-positions.ts`.",
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions"
     },
     {
@@ -52082,7 +52082,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/attestations"
       ],
-      "description": "The JUDGEMENT half of every QA verdict this instance carries across runs, split out of `test/results/` by owner ruling D2 (a), 2026-10-01 (bean `2gst`, arc `3fva`): derived script verdicts move to the `qa-reports` branch; anything a reviewer judged stays HERE, on main, where a `git rm` of derived results cannot reach it. One `qa-attestations/v1` file per subject at `<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1`) and the mirror is exactly that family's own, so a subject's attestation is found by swapping the tree root and the suffix. Today: the `pair_attestations` that were carried inside `kg-qa/v1` sidecars, ALL of them, the `by: baseline` entries with the `by: agent` ones; the owner ruled on 2026-10-01 that a baseline is a judgement, because a regenerated one forgets the drift it recorded (defect C4). `voice_reviews` live here too when one is recorded. Under `block-qa/` and `translation-qa/`: every block or translation verdict whose `reviewer.kind` is not `script` (13 at the split, 11 + 2), held in a `criteria` map of the derived report's own shape; the derived report keeps a projection composed from here. Schema and the five read states (hit / miss / absent / corrupt / unknown): `schemas/qa-attestations.ts`. Owner ruling 2 (2026-10-01): a writer that finds judgements in a prior derived file and no store entry MOVES them here as it saves, rather than refusing; a corrupt store is still unknown and refused. Hosted instances (bootstrap) would sit under `<stub>/`, as their `qa` verdicts do. Declared WITH its files, per bean dh4f.",
+      "description": "The JUDGEMENT half of every QA verdict this instance carries across runs, split out of `test/results/` by owner ruling D2 (a), 2026-10-01 (bean `2gst`, arc `3fva`): derived script verdicts move to the `qa-reports` branch; anything a reviewer judged stays HERE, on main, where a `git rm` of derived results cannot reach it. One `qa-attestations/v1` file per subject at `<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1`) and the mirror is exactly that family's own, so a subject's attestation is found by swapping the tree root and the suffix. Today: the `pair_attestations` that were carried inside `kg-qa/v1` sidecars, ALL of them, the `by: baseline` entries with the `by: agent` ones; the owner ruled on 2026-10-01 that a baseline is a judgement, because a regenerated one forgets the drift it recorded (defect C4). `voice_reviews` live here too when one is recorded. Under `block-qa/` and `translation-qa/`: every block or translation verdict whose `reviewer.kind` is not `script` (13 at the split, 11 + 2), held in a `criteria` map of the derived report's own shape; the derived report keeps a projection composed from here. Schema and the five read states (hit / miss / absent / corrupt / unknown): `schemas/sdlc/qa-attestations.ts`. Owner ruling 2 (2026-10-01): a writer that finds judgements in a prior derived file and no store entry MOVES them here as it saves, rather than refusing; a corrupt store is still unknown and refused. Hosted instances (bootstrap) would sit under `<stub>/`, as their `qa` verdicts do. Declared WITH its files, per bean dh4f.",
       "readmePath": "test/attestations/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations"
@@ -52099,7 +52099,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/test-plan"
       ],
-      "description": "Test plans this instance certifies against — one `test-plan/v1` document per plan (`schemas/test-plan.ts`). Content, not state: a process reads a plan and never writes it, and the run points at the plan, never the reverse. The runs and reports a plan's execution produces go to the `qa-reports` branch with the rest of `test/results/`, and the certification decision to `test/attestations/` (owner ruling D2). First declared for dogfood plan #1, `crdm-detect-evaluation` (bean `folio-assistant-ff09`). Declared WITH its files, per bean dh4f.",
+      "description": "Test plans this instance certifies against — one `test-plan/v1` document per plan (`schemas/sdlc/test-plan.ts`). Content, not state: a process reads a plan and never writes it, and the run points at the plan, never the reverse. The runs and reports a plan's execution produces go to the `qa-reports` branch with the rest of `test/results/`, and the certification decision to `test/attestations/` (owner ruling D2). First declared for dogfood plan #1, `crdm-detect-evaluation` (bean `folio-assistant-ff09`). Declared WITH its files, per bean dh4f.",
       "readmePath": "test/plans/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/test-plans"
@@ -52444,7 +52444,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/software-library"
       ],
       "title": "Software libraries",
-      "description": "The outside libraries this layer's code imports, one `software-library` node each: the version and sha512 `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, and the files that import it (`usedBy`). GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, or a shim no node names. The kind is this layer's own (`schemas/software-library.ts`, bean `jbvi`); each layer keeps its own nodes because it pins its own versions.",
+      "description": "The outside libraries this layer's code imports, one `software-library` node each: the version and sha512 `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, and the files that import it (`usedBy`). GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, or a shim no node names. The kind is this layer's own (`schemas/library/software-library.ts`, bean `jbvi`); each layer keeps its own nodes because it pins its own versions.",
       "readmePath": "libraries/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/cat-harness-libraries"
@@ -77501,60 +77501,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/actor-reach"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adversarial-checklist",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/artifact-store",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-package",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-types",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-note",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-attestations",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board-positions",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/change-size",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/computation-witness",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/computation-witness",
@@ -77603,88 +77549,10 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/lean-packages"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-keywords",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-nodes",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/log-entry",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/merge-queue",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/merge-review",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/model-capabilities",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/note-anchor",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/outside-software",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/panel-chrome",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/python-deps",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-attestations",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/red-flag",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ref-window",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/refactor-strategy",
@@ -77693,88 +77561,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/refactor-strategy"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-output",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/rendered-impact",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/run-context",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/scenario-overlay",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/software-library",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spdx-license-expression",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spec-template",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/sweep-mark",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-data",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-plan",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-report",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types",
@@ -77795,10 +77591,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocab-mapping-fhir"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-package",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-types",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction",
@@ -77811,6 +77613,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/memory",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/memory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/model-capabilities",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/waiver",
@@ -78263,6 +78071,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archive-contents"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-attestations",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-verification",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-verification",
@@ -78281,6 +78095,24 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/intake"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-keywords",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-nodes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/outside-software",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/recording",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/recording",
@@ -78293,6 +78125,18 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/referenced-source"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/software-library",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-licence",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-licence",
@@ -78303,6 +78147,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-provenance",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-provenance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spdx-license-expression",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tabular-csvw",
@@ -78365,10 +78215,28 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/role-graph"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adversarial-checklist",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/artifact-store",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-graph",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-graph",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-note",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/binary-release",
@@ -78383,6 +78251,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/change-size",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/health-report",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/health-report",
@@ -78395,6 +78269,36 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/kg-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/log-entry",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/merge-queue",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/merge-review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/python-deps",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-attestations",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-report",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-report",
@@ -78405,6 +78309,24 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-review",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/red-flag",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ref-window",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/run-context",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/script-qa",
@@ -78425,6 +78347,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/session-survey"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spec-template",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/staging-preview",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/staging-preview",
@@ -78435,6 +78363,30 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/staging",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/sweep-mark",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-data",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-plan",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-report",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-run",
@@ -78503,10 +78455,34 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board-positions",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/diff-renderers",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diff-renderers",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diff-renderers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/note-anchor",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/panel-chrome",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pdf-structure",
@@ -78521,10 +78497,28 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-log"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-output",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-targets",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-targets",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-targets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/rendered-impact",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site-indexes",
@@ -78561,6 +78555,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/webpage",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/webpage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi",
@@ -79279,8 +79279,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8fe86485b359f82da50963034bb7b7189c01d86b",
+    "sha": "b1c2b15680c5b2ff6457af86d571e549bdb59ee6",
     "pr": "main",
-    "run": "40876052706"
+    "run": "40881023675"
   }
 }

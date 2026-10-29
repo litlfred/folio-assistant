@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "8fe86485b359f82da50963034bb7b7189c01d86b",
+    "sha": "b1c2b15680c5b2ff6457af86d571e549bdb59ee6",
     "pr": "main",
-    "run": "40876052706"
+    "run": "40881023675"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Test Data Curation — Fixed Sets and Generated Recipes",
       "summary": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets.",
-      "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets. It opens its bean with Process_BeanOpen before any work and closes it with Process_BeanClose before it ends; the steps between note on it.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/kg/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
+      "description": "General curation process for fixed (`test-data-fixed/1.0.0`) and generated (`test-data-generated/1.0.0`) test data sets. It opens its bean with Process_BeanOpen before any work and closes it with Process_BeanClose before it ends; the steps between note on it.\n\nSEPARATE GRAPH DIRECTORIES, SELF-IDENTIFYING FILES. Fixed sets live in a declared `test-data-fixed` directory and generated recipes live in a declared `test-data-generated` directory (`schemas/kg/graph-typology-registry.ts`). Every file carries both its `$schema` tag (`test-data-fixed/1.0.0` vs `test-data-generated/1.0.0`) and `kind: \"fixed\" | \"generated\"` (`schemas/sdlc/test-data.ts`), so a consumer (`discriminateTestDataSet`) tells which it is reading from the file content, never from the directory path.\n\nCONTENT-TYPE SPECIALISATION AS A CALLED SUBPROCESS. How a recipe synthesises test inputs or how a fixed payload is structured depends on the folio's `contentType`. `Call_ContentTypeSpecialisation` delegates that step to the content type's own subprocess (`specialisation` in `schemas/sdlc/test-data.ts`). FHIR templating (`specialisation: \"fhir-templating\"`) is one named specialisation for FHIR IG / DAK content, not the platform design.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/test-data-curation.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/test-data-curation.bpmn",
