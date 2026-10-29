@@ -3976,6 +3976,15 @@ jobs:
       - name: adversarial review of agent changes (warn-only)
         run: bun run cat check:adversarial-review
 
+      # Wired 2026-10-29: declared by cat-harness-tools#827 and run by no
+      # workflow until now. Every generated file names a writer that exists
+      # (folio-assistant#1254). Warn-only by the owner's 2026-10-29 ruling
+      # (option A: derive, accept all, warn), so it exits 0 in every state and
+      # prints each marker naming no writer the checkout can find, the
+      # `dependency-advisories` pattern. `--strict` is the switch for later.
+      - name: every generated file names a writer that exists (warn-only)
+        run: bun run cat check:generated-writers
+
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. Bean `ymvt`: no imported `<name>.config.json`
       # is left beside the index; each instance's config is inline in
