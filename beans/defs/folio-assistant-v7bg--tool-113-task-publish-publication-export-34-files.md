@@ -2,11 +2,11 @@
 # folio-assistant-v7bg
 $schema: bean/1.0.0
 title: 'TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T04:34:11Z
-updated_at: 2026-10-24T15:05:00Z
+updated_at: 2026-10-29T08:00:00Z
 parent: folio-assistant-d308
 ---
 
@@ -282,3 +282,7 @@ _2026-10-23T13:45:00Z_ — Status synced from `in-progress` to `completed` to ma
 _2026-10-23T13:47:00Z_ — Restored `status: in-progress` (all 16/16 checkboxes remain `[x]`) because setting `v7bg` to `completed` while `d308` is `in-progress` trips `check:bean-rollup` (`folio-assistant-d308: in-progress over 7 child(ren), none of them open`), and setting `d308` to `completed` before `epic-under-epic:folio-assistant-d308` is removed from `cat-harness-tools/scripts/bean-parents-baseline.json` trips `check:bean-parents` (`baseline entry epic-under-epic:folio-assistant-d308 matches nothing`). Both `v7bg` and `d308` will flip to `completed` together as soon as the `bean-parents-baseline.json` cleanup PR lands and is repinned.
 
 _2026-10-24T15:05:00Z_ — Opened [`litlfred/cat-harness-tools#767`](https://github.com/litlfred/cat-harness-tools/pull/767) (`b6ed0fd`) retiring `"epic-under-epic:folio-assistant-d308"` from `cat-harness-tools/scripts/bean-parents-baseline.json` and marking `d308` `completed` in `cat-harness-tools/beans/defs/`. Ready to flip `v7bg` and `d308` to `completed` once `cat-harness-tools#767` merges and is repinned.
+
+## Closed 2026-10-29
+
+16/16 boxes met; it flips with its parent d308 now that cat-harness-tools#767 retired the epic-under-epic baseline entry (merged 2026-10-29). (Lane B drain thread.)
