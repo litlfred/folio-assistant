@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-29T07:55:00Z
+updated_at: 2026-10-29T08:45:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -24,8 +24,8 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md`, Option 
 - [x] G1: Tool nodes exported as a named subgraph with `index.jsonld` + `index.hydrated.jsonld` (`subgraph:jsonld:check`)
 - [x] G2: a mount entry or override can ask for `hydrated: true` — the named subgraph's `index.hydrated.jsonld` at the pin, no files
 - [x] G3: `overrides.<instance>.directories` and `kg:materialize` accept NESTED subgraph ids and NODE ids, resolved through `resolveDirectories` / the hydrated index; code nodes bring their import closure (`check:tools-closure`)
-- [ ] concern names: `"sdlc"` at the top level expands to its kind-first members (`docs/sdlc`, `skills/sdlc`, `processes/sdlc`, `scripts/sdlc`), derived from the `concern-groups/v1` declarations, checked by `check:concern-groups`
-- [ ] the CHOICE made in review is written back to the mount entry (the choice, never the state), so a fresh clone replays it; `index.lock.json` records what it resolved to
+- [x] concern names: `"sdlc"` at the top level expands to its kind-first members (`docs/sdlc`, `skills/sdlc`, `processes/sdlc`, `scripts/sdlc`), derived from the `concern-groups/v1` declarations, checked by `check:concern-groups`
+- [x] the CHOICE made in review is written back to the mount entry (the choice, never the state), so a fresh clone replays it; `index.lock.json` records what it resolved to
 - [x] package exports derived from declared `code` subgraphs, checked (owner 2026-10-14, option 1) — litlfred/cat-harness-tools#198 (`scripts/package-exports.ts`; also declares `tools/`)
 - [x] end to end: "load tools metadata, review, materialize three Tools" from a downstream checkout
 
@@ -57,3 +57,5 @@ _2026-10-24T13:02:20Z_: G3, nested-subgraph half done: cat-harness-tools#743 (ee
 _2026-10-24T15:04:00Z_: G3 done and end-to-end shown (owner chose all four recommendations, 2026-10-24 card): bootstrap-tools#43 (1584c10, one closure walker importClosure), cat-harness#581 (8747b00, overrides.<instance>.tools), cat-harness-tools#751 (46c1625, tool-closure.ts; T1 = hydrated metadata, three Tools by id, each with definition + implementation + closure, all modules load), folio-assistant-core#216 (f53b0d0, nested subgraph by parent id, materialised by path). Pending owner pick: should a Tool closure narrow OTHER mount entries it touches (A as built / B recommended / C opt-in field). Left: concern names (sdlc expansion) and writing the review choice back to the mount entry.
 
 _2026-10-29T07:55:00Z_ — Claimed by Lane E of the 2026-10-29 drain ("Fix KG mounts and publication", https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo), taking over from the README regen thread.
+
+_2026-10-29T08:45:00Z_ — Lane E (https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo): concern names done, cat-harness-tools#798 (d76fa26) + cat-harness#664 (b396d93): an id that is a concern code expands to the members each grouping kind declares at the pin, locked as `<dir id>/<code>`. Choice written back done, cat-harness-tools#799 (e6f5b51) + cat-harness#666 (c7c5bdd): `mount:remote --choose <harness>[:<instance>] --directories … --tools …` writes `overrides.<instance>`, pin and consent untouched. Every box is ticked; the bean stays open only for the owner's pick on Tool closures narrowing other entries (A/B/C, re-asked in the Lane E thread).
