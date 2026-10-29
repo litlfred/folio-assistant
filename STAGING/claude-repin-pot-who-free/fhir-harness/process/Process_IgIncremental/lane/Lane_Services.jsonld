@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/fhir-harness/process/Process_IgIncremental/lane/Lane_Services.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Publisher + validator services (JVM)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

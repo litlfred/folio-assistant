@@ -1,0 +1,68 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-formal-edges/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-formal-edges.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "pipeline/formal-edges-mcp.ts"
+        },
+        "mcp": {
+          "tool": "lean_formal_edges"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The folio's Lake project directory (holds lakefile.* and .lake/).",
+            "name": "lake_dir",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "Content root to collect lean.ref targets from (default: the folio's declared one).",
+            "name": "root",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "Record the result in the formal cache as source \"elaborated\".",
+            "name": "ingest",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The extracted edges, or why they could not be determined — never an empty edge set in place of a failure.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "lean-formal-edges",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "lake"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formal-edges",
+      "title": "Formal edges from the Lean build"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/lean-formal-edges",
+  "path": "tools/lean-formal-edges/"
+}

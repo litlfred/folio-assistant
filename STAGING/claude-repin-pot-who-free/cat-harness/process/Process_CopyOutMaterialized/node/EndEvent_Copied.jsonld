@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_Copied.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "A working copy, saying what it is a copy of",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Verify",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_CopyOutMaterialized#flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_Copied"
+    }
+  ]
+}

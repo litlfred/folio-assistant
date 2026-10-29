@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Test Scenario Source API",
+    "description": "Source reference for Test Scenario - exactly one of the following must be provided:\n- url (url data type): URL to retrieve TestScenario definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the TestScenario definition\n- instance: Inline TestScenario instance data",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-TestScenarioSource.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-TestScenarioSource",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-TestScenarioSource.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-TestScenarioSource",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-TestScenarioSource.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-TestScenarioSource": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-TestScenarioSource.schema.json",
+        "title": "Test Scenario Source",
+        "description": "Source reference for Test Scenario - exactly one of the following must be provided:\n- url (url data type): URL to retrieve TestScenario definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the TestScenario definition\n- instance: Inline TestScenario instance data",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "TestScenarioSource",
+            "description": "Resource type identifier for TestScenarioSource logical model"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to retrieve TestScenario definition from input/ or external source"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URI pointing to the TestScenario definition"
+          },
+          "instance": {
+            "$ref": "http://smart.who.int/base/StructureDefinition-TestScenario.schema.json",
+            "description": "Inline TestScenario instance data"
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/TestScenarioSource",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}

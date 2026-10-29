@@ -1,0 +1,90 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/pdf-cover/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pdf-cover.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.",
+      "install": {
+        "cli": "pip install pymupdf"
+      },
+      "invoke": {
+        "shell": "bun run cat pdf:cover"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "The PDF to render from. Its bytes must be here; nothing is fetched.",
+            "name": "pdf",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "The PNG to write.",
+            "name": "out",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--page"
+            },
+            "description": "1-based page to render, default 1. Asking for a page past the end is refused, not clamped.",
+            "name": "page",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          },
+          {
+            "arg": {
+              "flag": "--width"
+            },
+            "description": "Output width in pixels, default 300. `Count` admits zero and a zero width does not; the script refuses it rather than writing a 0x0 PNG, which is the tighter bound stated at the port as `CountSchema` asks. Height follows the page's own aspect and is never forced.",
+            "name": "width",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Write nothing; exit non-zero if the target differs from what would be written.",
+            "name": "checkOnly",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "With `--json`: source path and sha256, page, page count, point geometry, pixel geometry, output bytes and sha256, media type, renderer version. Everything a provenance record needs and nothing it has to guess.",
+            "name": "facts",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "pdf-cover",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3",
+          "pymupdf"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/asset-extraction",
+      "title": "PDF page raster"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/pdf-cover",
+  "path": "tools/pdf-cover/"
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/content-test.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/content-test",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "content-test",
+      "title": "Content Testing",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
+      "instructionLines": 99,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skills/content-test/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skills/content-test/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test"
+    }
+  ]
+}

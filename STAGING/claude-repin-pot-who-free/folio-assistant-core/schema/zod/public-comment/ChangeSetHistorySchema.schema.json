@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/ChangeSetHistory",
+  "definitions": {
+    "ChangeSetHistory": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "at",
+        "by",
+        "what"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/schema/zod/public-comment/ChangeSetHistorySchema.schema.json",
+  "title": "ChangeSetHistorySchema",
+  "description": "Generated from `ChangeSetHistorySchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  }
+}

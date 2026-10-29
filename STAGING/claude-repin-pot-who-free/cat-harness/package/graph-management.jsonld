@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/graph-management.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/graph-management",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "name": "graph-management",
+      "version": "0.1.0",
+      "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave — and how any graph is DRAWN so the restructuring can be seen (graph-rendering). The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
+      "path": "skills/kg/graph-management",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/domain-fencing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/edge-kinds-and-blast-radius",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/graph-detanglement",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/graph-rendering",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-separation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-subgraph-layout",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/lsi-indexing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/named-query-execution",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/nquads-distribution",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/sub-kg-lifecycle"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/graph-management"
+    }
+  ]
+}

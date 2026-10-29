@@ -1,0 +1,215 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: Indicator API",
+    "description": "A WHO indicator, identified by its published reference number. Printed in several places (HIV SI 2022: summary list, Table 2.3, reference sheet) and stored once. variants is a list of {population, definition, numerator, denominator} for population-specific or level-specific forms (PRV.17, PRV.3). Corresponds to ProgramIndicator: definition, numerator, denominator and disaggregation are ProgramIndicator's elements and types (markdown); not a Parent because ProgramIndicator makes them 1..1 and an L1 indicator is recorded with what its source prints. Class IRI: http://smart.who.int/kg/indicator.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-KGIndicator.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-KGIndicator",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-KGIndicator.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-KGIndicator",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-KGIndicator.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-KGIndicator": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-KGIndicator.schema.json",
+        "title": "Knowledge graph L1: Indicator",
+        "description": "A WHO indicator, identified by its published reference number. Printed in several places (HIV SI 2022: summary list, Table 2.3, reference sheet) and stored once. variants is a list of {population, definition, numerator, denominator} for population-specific or level-specific forms (PRV.17, PRV.3). Corresponds to ProgramIndicator: definition, numerator, denominator and disaggregation are ProgramIndicator's elements and types (markdown); not a Parent because ProgramIndicator makes them 1..1 and an L1 indicator is recorded with what its source prints. Class IRI: http://smart.who.int/kg/indicator.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "KGIndicator",
+            "description": "Resource type identifier for KGIndicator logical model"
+          },
+          "@context": {
+            "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri",
+                "description": "URI reference to external JSON-LD context"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON-LD context",
+                "properties": {
+                  "@version": {
+                    "type": "number",
+                    "const": 1.1
+                  },
+                  "fhir": {
+                    "type": "string",
+                    "const": "http://hl7.org/fhir/"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "array",
+                "description": "Array of JSON-LD context objects/URIs",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "@type": {
+            "type": "string",
+            "description": "JSON-LD type identifier for KGIndicator logical model",
+            "examples": [
+              "LogicalModel-KGIndicator"
+            ]
+          },
+          "refNo": {
+            "type": "string",
+            "description": "The indicator's printed reference number (e.g. PRV.3)."
+          },
+          "shortName": {
+            "type": "string",
+            "description": "Short name, as printed."
+          },
+          "definition": {
+            "type": "string",
+            "description": "Definition, verbatim."
+          },
+          "numerator": {
+            "type": "string",
+            "description": "Numerator, verbatim."
+          },
+          "denominator": {
+            "type": "string",
+            "description": "Denominator, verbatim."
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "FHIR BackboneElement"
+            },
+            "description": "Population- or level-specific forms (PRV.17, PRV.3)."
+          },
+          "id": {
+            "type": "object",
+            "description": "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."
+          },
+          "modifierExtension": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "FHIR Extension"
+            },
+            "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+          },
+          "population": {
+            "type": "string",
+            "description": "The population this variant is for."
+          },
+          "whatItMeasures": {
+            "type": "string",
+            "description": "As printed."
+          },
+          "rationale": {
+            "type": "string",
+            "description": "As printed."
+          },
+          "methodOfMeasurement": {
+            "type": "string",
+            "description": "As printed."
+          },
+          "disaggregation": {
+            "type": "string",
+            "description": "As printed."
+          },
+          "programmeArea": {
+            "type": "string",
+            "description": "As printed."
+          },
+          "isCore": {
+            "type": "boolean",
+            "description": "Whether the publication marks it a core indicator."
+          },
+          "isSurveyBased": {
+            "type": "boolean",
+            "description": "Whether it is measured by survey."
+          },
+          "changeStatus": {
+            "$ref": "./ValueSet-KGChangeStatusVS.schema.json",
+            "description": "Whether this edition of a consolidated guideline introduces, updates or carries a recommendation or indicator unchanged."
+          },
+          "contentHash": {
+            "type": "string",
+            "description": "sha256 of the normalised definition, numerator and denominator."
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/base/StructureDefinition/KGIndicator"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              },
+              "jsonld:valuesets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "const": [
+                  "KGChangeStatusVS"
+                ]
+              },
+              "jsonld:contextTemplate": {
+                "type": "object",
+                "const": {
+                  "@version": 1.1,
+                  "fhir": "http://hl7.org/fhir/",
+                  "KGChangeStatusVS": "http://smart.who.int/base/ValueSet-KGChangeStatusVS.jsonld"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

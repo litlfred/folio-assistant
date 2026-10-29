@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/tool-types/IgCacheAction.schema.json",
+  "title": "IgCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "seed",
+    "contribute",
+    "verify",
+    "list",
+    "doctor"
+  ],
+  "description": "An ig-cache verb: restore AST, seed it, or diagnose.",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  }
+}

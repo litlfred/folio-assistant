@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/process/Process_L2Dak/node/Task_Terminology.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Terminology.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Terminology",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Terminology bindings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Terminologist",
+      "requires": [
+        "http://smart.who.int/base/skill/terminology-management",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B10"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B16"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

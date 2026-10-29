@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/separation-cutover-check/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/separation-cutover-check.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "separation-cutover-check",
+      "title": "Is this repository's cutover from the monorepo complete? Measured, condition by condition"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/separation-cutover-check",
+  "path": "tools/separation-cutover-check/"
+}

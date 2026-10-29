@@ -1,0 +1,26 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/smart-trust",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "WHO SMART Trust",
+      "dcterms:source": "smart-base/library/smart-trust/manifest.jsonld",
+      "dcterms:hasVersion": "smart-base/library/smart-trust"
+    }
+  ]
+}

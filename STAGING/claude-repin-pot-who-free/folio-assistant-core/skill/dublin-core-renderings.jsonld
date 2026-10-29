@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/skill/dublin-core-renderings.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/skill/dublin-core-renderings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "dublin-core-renderings",
+      "title": "Dublin Core renderings",
+      "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+      "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
+      "instructionLines": 170,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dublin-core-renderings"
+    }
+  ]
+}

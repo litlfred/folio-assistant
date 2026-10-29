@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/benchmarking-mode.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/benchmarking-mode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "benchmarking-mode",
+      "title": "Benchmarking mode — reports across models, deliberately excluded from the KG",
+      "description": "Benchmarking output is a synthesized report across models and configurations, deliberately excluded from declared knowledge-graph typologies. Contrast with QA review mode, where reports land (build/benchmarks/ or reports/), and path guards preventing benchmark data from polluting the knowledge graph.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/benchmarking-mode.md",
+      "instructionLines": 56,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/benchmarking-mode"
+    }
+  ]
+}

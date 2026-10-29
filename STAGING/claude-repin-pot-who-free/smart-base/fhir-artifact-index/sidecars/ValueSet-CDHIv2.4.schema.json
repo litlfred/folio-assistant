@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDHIv2.4.schema.json",
+  "title": "Digital Health Interventions: Data Services Schema",
+  "description": "JSON Schema for Digital Health Interventions: Data Services ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/base/CodeSystem/CDHIv2"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "4",
+        "4.1",
+        "4.1.1",
+        "4.1.2",
+        "4.1.3",
+        "4.1.4",
+        "4.2",
+        "4.2.1",
+        "4.2.2",
+        "4.2.3",
+        "4.3",
+        "4.3.1",
+        "4.3.2",
+        "4.3.3",
+        "4.3.4",
+        "4.3.5",
+        "4.4",
+        "4.4.1",
+        "4.4.2",
+        "4.4.3",
+        "4.5",
+        "4.5.1",
+        "4.5.2",
+        "4.5.3",
+        "4.5.4"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the Digital Health Interventions: Data Services ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-CDHIv2.4.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/base/ValueSet-CDHIv2.4.displays.json",
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDHIv2.4",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:28+00:00"
+}

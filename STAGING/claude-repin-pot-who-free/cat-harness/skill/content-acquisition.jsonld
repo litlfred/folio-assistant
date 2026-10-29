@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/content-acquisition.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/content-acquisition",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "content-acquisition",
+      "title": "Acquisition is the step before ingestion, and it had no home",
+      "description": "Getting a resource INTO the graph in the first place — accepting one offered unprompted, or asking for one and then asking for it to be uploaded. The channels are plural and open: `uploads/` is one, the conversation is another. Runs before document ingestion, which begins only once a file has landed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/content-acquisition.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-acquisition"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Business analyst",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "bindsRole": "http://smart.who.int/base/role/business-analyst",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    }
+  ]
+}

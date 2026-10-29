@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/pdf-viewer-install/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pdf-viewer-install.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "pdf-viewer-install",
+      "title": "Install the inline PDF viewer into a built site"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/pdf-viewer-install",
+  "path": "tools/pdf-viewer-install/"
+}

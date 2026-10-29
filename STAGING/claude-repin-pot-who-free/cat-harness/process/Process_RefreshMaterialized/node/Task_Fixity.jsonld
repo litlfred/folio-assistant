@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RefreshMaterialized/node/Task_Fixity.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RefreshMaterialized/node/Task_Fixity",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "ARCHIVAL verify fixity — never re-fetch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RefreshMaterialized/lane/Lane_1",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/materialize-remote"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RefreshMaterialized#flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RefreshMaterialized#flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Fixity"
+    }
+  ]
+}

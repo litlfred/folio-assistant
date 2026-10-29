@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoRender.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoRender",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "No render — refused or failed; nothing published",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/role/lean-toolchain",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoRender"
+    }
+  ]
+}

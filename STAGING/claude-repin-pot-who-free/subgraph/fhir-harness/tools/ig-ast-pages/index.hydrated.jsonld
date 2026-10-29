@@ -1,0 +1,68 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-pages/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-pages.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "For every visualiser an instance declares `renderedBy: ig-ast-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `ig-ast` directory, at `…/<instance>/`. Each lists the ASTs the directory holds: the IG's package id, resources in total and by type, dependency edges (resolved inside the IG, by origin, by kind), the rebuild plan when one is recorded, and what stays provisional. A declared directory not on disk — a branch-family member not restored, which is the normal case — is reported UNKNOWN with the family it would be restored from, never as zero ASTs. Not `ig-ast-list` extended: that Tool summarises ONE AST it is handed, and a site build has no AST path to hand it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/gen-ig-ast-pages.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--site"
+            },
+            "description": "A site being built: the pages go under it (`visualiser-writers.ts` in cat-harness-tools passes it). Absent, they go under the checkout's site directory.",
+            "name": "site",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--root"
+            },
+            "description": "The checkout whose declarations are read. Default: the checkout holding the working directory.",
+            "name": "root",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "Write nothing; exit 1 when a page is stale, missing or orphaned.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Pages written: the hub and one per instance.",
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          }
+        ]
+      },
+      "name": "ig-ast-pages",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
+      "title": "Write the IG AST viewer: a page per instance holding `ig-ast` directories, and a hub"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ig-ast-pages",
+  "path": "tools/ig-ast-pages/"
+}

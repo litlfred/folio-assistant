@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-subscription.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-subscription",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "kg-subscription",
+      "title": "Subscribing to a knowledge graph",
+      "description": "Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/large-datasets"
+      ],
+      "instructionsPath": "skills/library/large-datasets/kg-subscription.md",
+      "instructionLines": 237,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-subscription"
+    }
+  ]
+}

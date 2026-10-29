@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/terminology-index/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/terminology-index.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "terminology-index",
+      "title": "Write an IG site's static terminology index from the IG's own cache"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/terminology-index",
+  "path": "tools/terminology-index/"
+}

@@ -1,0 +1,98 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2512.09874v3/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/arxiv-2512.09874v3/manifest.jsonld",
+      "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p005-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2512.09874v3/blocks/figure-img-p005-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p005-2",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2512.09874v3/blocks/figure-img-p005-2.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p008-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2512.09874v3/blocks/figure-img-p008-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p010-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2512.09874v3/blocks/figure-img-p010-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p010-2",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2512.09874v3/blocks/figure-img-p010-2.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2512.09874v3/blocks/prose-sec-000.jsonld",
+          "title": "Document"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2512.09874v3/blocks",
+      "path": "library/arxiv-2512.09874v3/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/figures/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2512.09874v3/figures",
+      "path": "library/arxiv-2512.09874v3/figures/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2512.09874v3/images",
+      "path": "library/arxiv-2512.09874v3/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2512.09874v3/sections/sec-000.jsonld",
+          "title": "Document"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2512.09874v3/sections",
+      "path": "library/arxiv-2512.09874v3/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/arxiv-2512.09874v3",
+  "path": "library/arxiv-2512.09874v3/"
+}

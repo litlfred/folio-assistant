@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_KgToPortal/node/P_Verify.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_KgToPortal/node/P_Verify",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Verify what arrived against what was signed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_KgToPortal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/external-registry",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_KgToPortal/lane/Lane_Portal",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-to-portal"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_KgToPortal#flow/F14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_KgToPortal#flow/F15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/P_Verify"
+    }
+  ]
+}

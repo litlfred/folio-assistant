@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/sushi-compiler.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/sushi-compiler",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "sushi-compiler",
+      "name": "SUSHI Compiler",
+      "description": "FSH (FHIR Shorthand) to FHIR JSON compiler.",
+      "detection": {
+        "method": "command",
+        "command": "sushi --version"
+      },
+      "satisfiesStatement": [
+        "req:fhir-validation#sushi-compile"
+      ],
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/node-runtime"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler"
+    }
+  ]
+}

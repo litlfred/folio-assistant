@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/merge-leftover/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-leftover.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "merge-leftover",
+      "title": "Merge leftover (has a PR's intent landed?)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/merge-leftover",
+  "path": "tools/merge-leftover/"
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/bootstrap-tools/directory/bootstrap-tools-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/bootstrap-tools/directory/bootstrap-tools-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "bootstrap-tools-scripts",
+      "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "title": "The tools",
+      "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the Process renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`bootstrap:validate`), and the semver bump the published schemas require, computed from a diff (`bootstrap:semver`).",
+      "readmePath": "scripts/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/bootstrap-tools/directory/bootstrap-tools-scripts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-scripts"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/staging-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/staging-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "staging-review",
+      "title": "Staging review — before/after comparison",
+      "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
+      "instructionLines": 770,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skills/staging-review/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skills/staging-review/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
+    }
+  ]
+}

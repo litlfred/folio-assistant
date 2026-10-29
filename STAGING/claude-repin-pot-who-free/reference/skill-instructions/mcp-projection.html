@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(178)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > ul > li:nth-child(178) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(143) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > ul > li:nth-child(178) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(178) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>MCP projection | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="MCP projection" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="MCP projection" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-mcp-projection",
+    "src": "../../assets/qa/reference-skill-instructions-mcp-projection/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-mcp-projection/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=4885e06b0507"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=ffd09062ff20"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=d1e44c948d21" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-22w97xwcj2n.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-22w97xwcj2n","here":"/reference/skill-instructions/mcp-projection.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#why-the-projection-is-nearly-free","label":"Why the projection is nearly free"},{"href":"#the-mapping","label":"The mapping"},{"href":"#three-states-at-the-boundary","label":"Three states, at the boundary"},{"href":"#what-a-projector-must-not-do","label":"What a projector must not do"},{"href":"#transport-and-what-the-harness-cares-about","label":"Transport, and what the harness cares about"},{"href":"#status","label":"Status"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>MCP projection</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/tools/folio-core/mcp-projection.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/tools/folio-core/mcp-projection.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/tools/folio-core/mcp-projection.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/tools/folio-core/mcp-projection.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="mcp-projection--turning-a-tool-node-into-an-mcp-service"><a href="#mcp-projection--turning-a-tool-node-into-an-mcp-service" class="anchor-heading" aria-labelledby="mcp-projection--turning-a-tool-node-into-an-mcp-service"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> MCP projection — turning a Tool node into an MCP service
+  
+  
+</h1><p><strong>The harness does not require MCP. It knows how to emit it.</strong> That distinction
+is the whole design: <code class="language-plaintext highlighter-rouge">agentic-harness</code> runs on a filesystem alone (see
+<a href="../../reference/skill-instructions/skills-and-tools.html"><code class="language-plaintext highlighter-rouge">skills-and-tools</code></a> §”The harness assumes no MCP”), and
+MCP is something an instance <em>produces</em> from its Tool nodes when it wants
+agents to reach them over a protocol rather than by reading files.</p><p>So this is a <strong>bootstrap skill</strong>: it stands a service up. An agent with a CLI
+tool and a Tool node describing it should be able to produce a working MCP
+server without inventing the mapping each time.</p><h2 id="why-the-projection-is-nearly-free"><a href="#why-the-projection-is-nearly-free" class="anchor-heading" aria-labelledby="why-the-projection-is-nearly-free"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the projection is nearly free
+  
+  
+</h2><p>Because the pieces already line up, and that is not a coincidence — it is what
+the carrier decision bought:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>schemas/tools/tool.ts  (Zod, authoritative)
+  └─→ JSON Schema                    ← already generated; MCP speaks JSON Schema
+        └─→ MCP tool.inputSchema
+ToolDefinition.io.inputs/outputs      ← already the I/O contract
+        └─→ MCP tool.inputSchema / outputSchema
+ToolDefinition.invoke.shell           ← already the mechanism
+        └─→ what the server executes on tools/call
+</code></pre></div></div><p>An MCP tool declaration is a name, a description and a JSON Schema for its
+input (plus an output schema in recent spec revisions). A <code class="language-plaintext highlighter-rouge">ToolDefinition</code>
+carries all four in <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">summary</code> and <code class="language-plaintext highlighter-rouge">io</code>. <strong>The projection is a rename, not
+a translation</strong> — which is the sign the Tool schema was shaped correctly rather
+than a sign that MCP is trivial.</p><h2 id="the-mapping"><a href="#the-mapping" class="anchor-heading" aria-labelledby="the-mapping"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The mapping
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Tool node field</th><th>MCP</th><th>notes</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">id</code></td><td><code class="language-plaintext highlighter-rouge">tools[].name</code></td><td>subject to the naming rules — see <a href="../../reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">title</code></td><td><code class="language-plaintext highlighter-rouge">tools[].title</code></td><td>human-facing; omit rather than duplicate <code class="language-plaintext highlighter-rouge">name</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">summary</code></td><td><code class="language-plaintext highlighter-rouge">tools[].description</code></td><td>what the model reads to decide whether to call it</td></tr><tr><td><code class="language-plaintext highlighter-rouge">io.inputs</code></td><td><code class="language-plaintext highlighter-rouge">tools[].inputSchema</code></td><td>object schema; <code class="language-plaintext highlighter-rouge">required: true</code> → the <code class="language-plaintext highlighter-rouge">required</code> array</td></tr><tr><td><code class="language-plaintext highlighter-rouge">io.outputs</code></td><td><code class="language-plaintext highlighter-rouge">tools[].outputSchema</code></td><td>omit entirely when the tool returns unstructured text</td></tr><tr><td><code class="language-plaintext highlighter-rouge">invoke.shell</code></td><td>what the server runs on <code class="language-plaintext highlighter-rouge">tools/call</code></td><td>the harness’s arm</td></tr><tr><td><code class="language-plaintext highlighter-rouge">io.inputs[].arg</code></td><td>position in argv, or stdin</td><td><code class="language-plaintext highlighter-rouge">{flag}</code>, <code class="language-plaintext highlighter-rouge">{positional}</code> or <code class="language-plaintext highlighter-rouge">{stdin}</code> — explicit per input, never a template</td></tr><tr><td><code class="language-plaintext highlighter-rouge">io.inputs[].repeated</code></td><td><code class="language-plaintext highlighter-rouge">"type": "array"</code> in the input schema</td><td>the flag is emitted once per element; a repeated positional is the trailing words</td></tr><tr><td><code class="language-plaintext highlighter-rouge">invoke.container</code></td><td>same, in a container</td><td>for a tool with host dependencies</td></tr><tr><td><code class="language-plaintext highlighter-rouge">invoke.inProcess</code></td><td>the function the server calls directly</td><td>the projection <strong>source</strong>, not something to proxy</td></tr><tr><td><code class="language-plaintext highlighter-rouge">invoke.mcp</code></td><td><strong>nothing</strong></td><td>already MCP; projecting it would be circular</td></tr><tr><td><code class="language-plaintext highlighter-rouge">requires</code></td><td>not expressible</td><td>becomes a startup precondition, not a tool field</td></tr><tr><td><code class="language-plaintext highlighter-rouge">satisfies</code></td><td>not expressible</td><td>a KG edge; it has no MCP counterpart and must not be smuggled into the description</td></tr></tbody></table></div><p>Three rows are the ones that go wrong.</p><p><strong><code class="language-plaintext highlighter-rouge">invoke.mcp</code> is not a source for projection.</strong> A Tool already reachable over
+MCP is not re-wrapped; the projector skips it. A generator that treats every
+arm uniformly will emit a server that proxies itself.</p><p><strong><code class="language-plaintext highlighter-rouge">invoke.inProcess</code> is the opposite case, and looks deceptively similar.</strong> It
+is a function in the instance’s own code, so the server calls it directly rather
+than spawning anything — there is no argv, and asking for one is an error rather
+than a gap in the node. It is what most of a mature instance’s Tools turn out to
+be: of the twenty-four <code class="language-plaintext highlighter-rouge">folio-assistant</code> declares, twenty are in-process and
+only seven have a shell equivalent at all. A projector that handles <code class="language-plaintext highlighter-rouge">shell</code>
+alone will find nothing to project.</p><p><strong>A repeated input’s elements are parsed individually, and that is the whole
+safety story.</strong> A list of an injection-safe type cannot contain an element that
+is a payload, because the element type already made one unrepresentable — so
+cardinality needs no new check. What it does need is the projection rule: emit
+the flag once per element, <strong>never comma-joined</strong>. Joining invents a separator
+the tool never agreed to, and makes an element containing that separator
+ambiguous.</p><p><strong><code class="language-plaintext highlighter-rouge">requires</code> does not become a tool.</strong> An agent cannot satisfy “needs network”
+by calling something. It is checked when the server starts, and a tool whose
+requirements are unmet is <strong>not listed</strong> rather than listed-and-failing —
+<code class="language-plaintext highlighter-rouge">tools/list</code> is what the model plans against, and advertising a tool that
+cannot run makes every plan containing it wrong.</p><h2 id="three-states-at-the-boundary"><a href="#three-states-at-the-boundary" class="anchor-heading" aria-labelledby="three-states-at-the-boundary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, at the boundary
+  
+  
+</h2><p>Same rule as everywhere here, and it is easy to lose in a generator:</p><ul><li><strong>Projected</strong> — the Tool has a <code class="language-plaintext highlighter-rouge">shell</code>, <code class="language-plaintext highlighter-rouge">container</code> or <code class="language-plaintext highlighter-rouge">inProcess</code> arm and a
+complete <code class="language-plaintext highlighter-rouge">io</code> block. It is listed.</li><li><strong>Deliberately not projected</strong> — <code class="language-plaintext highlighter-rouge">invoke.mcp</code> only, or <code class="language-plaintext highlighter-rouge">requires</code> unmet on
+this host. Omitted, and the omission is <em>reported</em> at startup.</li><li><strong>Could not determine</strong> — the Tool node will not parse, or its <code class="language-plaintext highlighter-rouge">io.*.schema</code>
+reference does not resolve. <strong>This is not “omit quietly”.</strong> Fail the
+projection loudly: a server that silently drops a tool it could not read is
+indistinguishable from an instance that never had it.</li></ul><h2 id="what-a-projector-must-not-do"><a href="#what-a-projector-must-not-do" class="anchor-heading" aria-labelledby="what-a-projector-must-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a projector must not do
+  
+  
+</h2><ul><li><strong>Do not invent a schema.</strong> A Tool whose <code class="language-plaintext highlighter-rouge">io.inputs</code> is empty projects a tool
+taking no arguments. Guessing parameters from the shell string produces a
+contract nothing checks.</li><li><strong>Do not shell-interpolate arguments.</strong> Model-supplied values reach the
+process as an argv array, never spliced into a string a shell parses. This is
+the whole attack surface of the projection, and the one place a bug is a
+vulnerability rather than a defect. <code class="language-plaintext highlighter-rouge">src/mcp/project.ts</code> has <strong>no code path
+that produces a command string</strong>, which is the point: a caller cannot hand one
+to a shell because it never has one.</li><li><strong>Do not project a Tool whose argv input is unconstrained.</strong> The argv array is
+the <em>second</em> line of defence — it is a property of the caller, and a caller is
+one refactor away from a template literal. The first line is that the value
+cannot be a payload: <code class="language-plaintext highlighter-rouge">BeanStatus</code> is an enum, <code class="language-plaintext highlighter-rouge">BeanId</code> is <code class="language-plaintext highlighter-rouge">^[a-z0-9-]+$</code>. A
+Tool with a free-text argv input is <strong>omitted with a reason</strong>, and free prose
+goes on stdin. Full rule, and the GitHub Actions form of the same defect:
+<a href="../../reference/skill-instructions/untrusted-input.html"><code class="language-plaintext highlighter-rouge">untrusted-input</code></a>.</li><li><strong>Do not let the projection become the source of truth.</strong> The generated
+server is a rendering, like the JSON Schema and the JSON-LD. A fix lands in
+<code class="language-plaintext highlighter-rouge">schemas/tools/tool.ts</code> or the Tool node, never in the emitted server — see
+<a href="../../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> §”What lives in the
+<code class="language-plaintext highlighter-rouge">schemas</code> graph”.</li></ul><h2 id="transport-and-what-the-harness-cares-about"><a href="#transport-and-what-the-harness-cares-about" class="anchor-heading" aria-labelledby="transport-and-what-the-harness-cares-about"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Transport, and what the harness cares about
+  
+  
+</h2><p>MCP servers speak stdio or streamable HTTP. <strong>The harness has no preference and
+should express none</strong>: stdio is what a local agent spawns, HTTP is what a shared
+service exposes, and the choice belongs to the instance deploying it. Record it
+in the deployment, not in the Tool node — a Tool that names a transport has
+swallowed a deployment decision the same way a skill that names a forge has
+swallowed a Tool.</p><h2 id="status"><a href="#status" class="anchor-heading" aria-labelledby="status"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Status
+  
+  
+</h2><p><strong>Built, as a library.</strong> <code class="language-plaintext highlighter-rouge">src/mcp/project.ts</code> implements this mapping:
+<code class="language-plaintext highlighter-rouge">project()</code> returns declarations plus the omissions and their reasons,
+<code class="language-plaintext highlighter-rouge">buildArgv()</code> produces argv (always an array) with every value parsed by its
+declared type first, and <code class="language-plaintext highlighter-rouge">recordInvocation()</code> writes the audit record.</p><p><strong>It is deliberately not registered on a running server.</strong> The harness is meant
+to carry no tools of its own, and the twelve hand-written MCP tools in
+<code class="language-plaintext highlighter-rouge">src/tools/</code> are content to be migrated OUT — wiring this to them would build on
+the thing being removed. Turning it on is one call, once that migration lands.</p><p>Three of the rules above are enforced rather than remembered:
+<code class="language-plaintext highlighter-rouge">ToolDefinitionSchema</code> refuses a Tool whose only invocation is <code class="language-plaintext highlighter-rouge">invoke.mcp</code>;
+<code class="language-plaintext highlighter-rouge">project()</code> omits a Tool with an unconstrained argv input and says why; and
+<code class="language-plaintext highlighter-rouge">check:tools</code> fails CI on one.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

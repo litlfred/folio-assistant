@@ -1,0 +1,88 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-snippet-validate/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-snippet-validate.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat latex:validate"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--paper"
+            },
+            "description": "One folio by slug. Absent, every folio the content root holds.",
+            "name": "paper",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--file"
+            },
+            "description": "A single `.md` block, for the narrow case.",
+            "name": "file",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--compile"
+            },
+            "description": "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim.",
+            "name": "compile",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--warnings-log"
+            },
+            "description": "Write a QA-compatible log to this path.",
+            "name": "warningsLog",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 2 — could-not-determine (this repository carries no folio, so there was nothing to scan). Read the scanned count before reading the verdict.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "tex-snippet-validate",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-validation",
+      "title": "TeX snippet validation (AST)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/tex-snippet-validate",
+  "path": "tools/tex-snippet-validate/"
+}

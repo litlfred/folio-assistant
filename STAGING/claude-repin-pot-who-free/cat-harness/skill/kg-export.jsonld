@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-export.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/kg-export",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "kg-export",
+      "title": "KG export — publishing the graph as linked data, not as a page",
+      "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, before adding a node type to the export, and before minting or authoring any subject IRI — subjects are `<doc dir>/<kind>/<id>`, never `#fragments`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/kg-export.md",
+      "instructionLines": 1196,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export"
+    }
+  ]
+}

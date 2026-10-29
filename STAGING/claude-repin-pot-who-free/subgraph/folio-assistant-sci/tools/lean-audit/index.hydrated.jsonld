@@ -1,0 +1,78 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-audit/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-audit.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat lean:audit"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--chapter"
+            },
+            "description": "One chapter instead of the whole corpus.",
+            "name": "chapter",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--strict"
+            },
+            "name": "strict",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--check-axioms"
+            },
+            "description": "Axiom-cleanliness is a separate question from vacuity: a proof can be axiom-clean and still assume its conclusion.",
+            "name": "checkAxioms",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Sorry inventory and trivial-truth detections. Sibling of `lean-coverage`, not an alternative to it: that one COUNTS what is proved, this one asks whether a proof says anything.",
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "lean-audit",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-proof-vacuity-audit",
+      "title": "Lean vacuity audit"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/lean-audit",
+  "path": "tools/lean-audit/"
+}

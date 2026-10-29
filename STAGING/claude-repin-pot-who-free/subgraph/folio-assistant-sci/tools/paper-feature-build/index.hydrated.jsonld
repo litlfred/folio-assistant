@@ -1,0 +1,100 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-feature-build/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash folio-assistant-sci/adapters/paper/latex/feature-build.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--base"
+            },
+            "description": "The ref to diff against. Default `origin/main`.",
+            "name": "base",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          },
+          {
+            "arg": {
+              "flag": "--chapters"
+            },
+            "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`.",
+            "name": "chapters",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--paper"
+            },
+            "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them.",
+            "name": "paper",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Output directory, which the folio should gitignore. Default `build-feature`.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--notation"
+            },
+            "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present.",
+            "name": "notation",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--preload"
+            },
+            "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool.",
+            "name": "preload",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`.",
+            "name": "preview",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "paper-feature-build",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "git",
+          "bash"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache",
+      "title": "Paper feature build (changed chapters + latexdiff)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/paper-feature-build",
+  "path": "tools/paper-feature-build/"
+}

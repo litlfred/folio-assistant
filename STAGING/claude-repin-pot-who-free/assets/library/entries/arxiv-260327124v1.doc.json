@@ -1,0 +1,128 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-260327124v1",
+  "title": "arxiv-260327124v1",
+  "variant": "pdf",
+  "pages": null,
+  "tocSource": "none",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "page-001",
+      "number": null,
+      "title": "Page 1",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 619,
+      "summary": {
+        "text": "Title page of Liu and Jha, \"Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data\" (Washington University in St. Louis). The abstract: RWT techniques evaluate quantitative imaging (QI) methods without gold standards by estimating linear-relationship parameters without the true values, but need many patients, which may be impossible for rare diseases or new procedures. The authors combine patient data without ground truth with known-ground-truth data such as physical phantom studies; numerical studies show better ranking than RWT. The introduction then describes QI applications (myocardial blood flow from cardiac PET, SPECT dosimetry, diffusion-MRI ADC), the RWT premise of a linear stochastic relationship with slope, bias and noise estimated by maximum likelihood, ranking by noise-to-slope ratio (NSR), and RWT's past applications.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data Yan Liua, Abhinav K. Jhaa,b,* aDepartment of Biomedical Engineering, Washington University in St. Louis, St. Louis, MO, USA; bMallinckrodt Institute of Radiology, Washington University in St. Louis, St. Louis, MO, USA ABSTRACT Objective evaluation of quantitative imaging (QI)",
+      "extractCut": true
+    },
+    {
+      "id": "page-002",
+      "number": null,
+      "title": "Page 2",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 714,
+      "summary": {
+        "text": "End of the introduction and start of the theory. RWT needs large cohorts because many parameters are estimated: for 3 methods about 13 (3 slopes, 3 biases, 3 noise standard deviations and 4 parameters of a four-parameter beta distribution). Such cohorts may be unavailable for rare diseases or early trials of new tracers or theranostic isotopes, while phantom data with known ground truth often exist. Section 2.1 sets up P patients with unknown true values a_p and Q phantom samples with known true values d_q, both measured by the same K methods, with the same linear model (slope u_k, bias v_k, Gaussian noise σ_k) for both (Eqs. 1–2). Patient true values are assumed drawn from a distribution with parameters Ω, and the probability of a patient's measurements integrates over a_p (Eq. 3).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "ing metabolic tumor volume18. These applications demonstrate the promise of RWT to evaluate QI methods in the absence of ground truth. Despite the promise of RWT techniques, a major challenge for broader applications of these techniques is the requirement for large patient cohorts12. This requirement arises because the RWT techniques involve estimation of many parameters. For example, when evaluating 3 QI methods,",
+      "extractCut": true
+    },
+    {
+      "id": "page-003",
+      "number": null,
+      "title": "Page 3",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 693,
+      "summary": {
+        "text": "Estimation, numerical study, results and the start of the discussion. Assuming independence, the parameters are estimated by maximizing the sum of the patient log-likelihood and the phantom log-likelihood (Eq. 4); methods are ranked by NSR σ_k/u_k, lower being more precise. In the numerical study, true values come from a four-parameter beta distribution and three methods use parameters taken from a realistic ²²³Ra SPECT simulation: slopes {0.97, 0.76, 1.00}, biases {0.30, 0, 0}, noise standard deviations {0.21, 0.13, 0.09}. The patient set has 10 to 100 samples, the known-truth set is varied in size, and each combination is repeated over 200 noise realizations. Results: the proposed approach estimates NSR with lower bias and standard deviation than RWT (Figure 1), more so as the known-truth set grows, and ranks and identifies the most precise method more accurately (Figure 2).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "the true values of the 𝑃 patients and given that the patient data and physical phantom data are independent, we can use an ML approach to estimate the values of {𝚯, 𝚺, 𝛀}. The ML estimate of {𝚯, 𝚺, 𝛀} is given by {𝚯, 𝚺, 𝛀}ெ௅= arg max൛log pr ൫𝓐෡|𝚯, 𝚺, 𝛀൯+ log pr ൫𝓓෡|𝚯, 𝚺, 𝐃൯ൟ. (4) Same as in the RWT technique10,11, after the estimation of the linear-relationship parameters, the ratio of estimated",
+      "extractCut": true
+    },
+    {
+      "id": "page-004",
+      "number": null,
+      "title": "Page 4",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 320,
+      "summary": {
+        "text": "Discussion and conclusion, with the captions of Figures 1 and 2. The proposed approach identified the most precise method with nearly 100% accuracy using only 10 known-ground-truth samples and 10 patient samples (Figure 2(B)). The studies were in controlled settings where the model's assumptions held, so validation in clinically realistic settings, and when the assumptions are violated, is future work. The authors conclude that even small amounts of known-ground-truth data can substantially improve ranking when patient data are limited. In both figure legends, Proposed-X means the approach with X known-truth samples; Figure 1 shows bias and standard deviation of NSR estimates, Figure 2 ranking and best-method accuracy.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "QI methods. We note that the proposed approach achieved nearly 100% accuracy in identifying the most precise method using only 10 known-ground-truth samples and 10 patient samples (Figure 2(B)), where the ground truth is unavailable. The numerical studies conducted in this manuscript are in controlled settings where the assumptions made by the technique were satisfied. However, in clinically realistic scenarios, the",
+      "extractCut": true
+    },
+    {
+      "id": "page-005",
+      "number": null,
+      "title": "Page 5",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 634,
+      "summary": {
+        "text": "Acknowledgements (NIBIB grants R01-EB031051 and R01-EB031962, and NSF CAREER Award 2239707) and references 1–16, on the clinical utility of quantitative imaging, QI methods in PET, SPECT and MRI, and the regression-without-truth and no-gold-standard evaluation literature (Hoppin, Kupinski and colleagues 2002 onwards; Jha and colleagues).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "ACKNOWLEDGEMENTS This work was supported by the National Institute of Biomedical Imaging and Bioengineering of the National Institute of Health under grants R01-EB031051, R01-EB031962 and NSF CAREER Award 2239707. REFERENCES [1] Rosenkrantz, A. B., Mendiratta-Lala, M., Bartholmai, B. J., Ganeshan, D., Abramson, R. G., Burton, K. R., Yu, J.-P. J., Scalzetti, E. M., Yankeelov, T. E., Subramaniam, R. M. and Lenchik,",
+      "extractCut": true
+    },
+    {
+      "id": "page-006",
+      "number": null,
+      "title": "Page 6",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 115,
+      "summary": {
+        "text": "References 17–19 of the paper: NGSE-Corr, a technique for clinical evaluation without a gold standard (in review); Jha and colleagues' practical no-gold-standard framework applied to PET lesion segmentation (2017); and Jha and Frey on incorporating prior information in a no-gold-standard technique for SPECT (2015).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "[17] Yan, L., Ziping, L., Zekun, L., Jingqin, L., Daniel L. J., T., Barry A., S. and Abhinav K., J., “NGSE-Corr: A technique for objective clinical evaluation of quantitative-imaging methods without a gold standard,” IEEE Trans. Med. Imaging In review. [18] Jha, A. K., Mena, E., Caffo, B., Ashrafinia, S., Rahmim, A., Frey, E. and Subramaniam, R. M., “Practical no-gold- standard evaluation framework for quantitative",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "pagesCovered": 6,
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/arxiv-260327124v1"
+  }
+}

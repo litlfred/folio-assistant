@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/openapi-ingest-rendered/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/openapi-ingest-rendered.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `rendered` by fetching each published spec URL (https), verbatim, with a provenance recording the URL, when it was fetched and the document's sha256 — a URL has no commit, so the digest pins the bytes. A failed fetch or bytes that are not OpenAPI 3 write nothing and never replace a held copy.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat openapi:ingest:rendered"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root holding `cat-openapi.config.json` and the declared `openapi` directory.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--only"
+            },
+            "description": "Ingest just this document id.",
+            "name": "only",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`<id>.openapi.json` and `<id>.source.json` per rendered document, in the declared `openapi` directory.",
+            "name": "documents",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "openapi-ingest-rendered",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
+      "title": "OpenAPI ingest from a published spec"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/openapi-ingest-rendered",
+  "path": "tools/openapi-ingest-rendered/"
+}

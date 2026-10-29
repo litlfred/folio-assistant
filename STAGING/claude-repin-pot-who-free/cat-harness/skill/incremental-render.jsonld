@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/incremental-render.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/incremental-render",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "incremental-render",
+      "title": "Incremental render — the cache is easy, the cascade is the work",
+      "description": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/incremental-render.md",
+      "instructionLines": 211,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/incremental-render"
+    }
+  ]
+}

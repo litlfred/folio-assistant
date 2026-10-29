@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/schema/voice-skill.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/schema/voice-skill",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "voice-skill",
+      "title": "voice-skill",
+      "summary": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
+      "module": "schemas/content/voice-skill.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/voice-skill"
+    }
+  ]
+}

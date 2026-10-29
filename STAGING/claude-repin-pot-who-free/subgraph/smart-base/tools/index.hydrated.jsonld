@@ -1,0 +1,807 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/tools",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "smart-base's Tool nodes. The owner, 2026-09-22: \"things like dmn -> fhir questionnaire should be a tool. the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo\", serving \"want to slowly get smart-base back to a more conventional IG state w/o tooling\". THIS REVERSES NOTHING THIS FILE'S HEADER SAYS: the header refuses to VENDOR the upstream Python, and a Tool node is a declaration -- what the capability consumes, what it produces, which skill it satisfies -- not a copy of a line of it. Declare here, execute upstream, until the execution moves too. The two Library strippers are deliberately NOT here: they are not DAK-shaped and belong to `fhir-harness` by the placement question in `smart-stack-layering`, and filing them here to tidy the list would be a step's own name overruling the layering rule.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/tools",
+      "name": "tools",
+      "path": "tools/",
+      "readmePath": "tools/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/bpmn-to-fsh/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/bpmn-to-fsh.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Derive FSH from a DAK's BPMN business processes — the render direction, of which the extractors are the inverse.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 scripts/smart-base-transform.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "name": "bpmn",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Generated FSH, for SUSHI to compile.",
+                "name": "fsh",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "bpmn-to-fsh",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+          "title": "BPMN → FHIR Shorthand"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/bpmn-to-fsh",
+      "path": "tools/bpmn-to-fsh/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dak-api-hub/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/dak-api-hub.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Generate `dak-api.html` and the per-artefact `.openapi.json` / `.displays.json` sidecars — the hub a reader enters the DAK API through.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/generate_dak_api_hub.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "name": "igOutput",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`dak-api.html`.",
+                "name": "hub",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`.openapi.json` and `.displays.json` under `schemas/`.",
+                "name": "sidecars",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "dak-api-hub",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": [
+            "http://smart.who.int/base/skill/dak-postprocessing",
+            "http://smart.who.int/base/skill/ig-artifact-ingestion"
+          ],
+          "title": "DAK API hub"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/dak-api-hub",
+      "path": "tools/dak-api-hub/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dak-config-from-sushi/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/dak-config-from-sushi.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Derive the DAK configuration from `sushi-config.yaml` plus repository and branch context.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/generate_dak_from_sushi.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "`sushi-config.yaml` at the IG root.",
+                "name": "sushiConfig",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Sanitised branch name, for the publication and preview URLs.",
+                "name": "branch",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`dak.config.json` — ours, per bean `cz17`. Upstream still writes `dak.json`.",
+                "name": "dakConfig",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "dak-config-from-sushi",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+          "title": "sushi-config.yaml → dak.config.json"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/dak-config-from-sushi",
+      "path": "tools/dak-config-from-sushi/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dmn-to-html/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/dmn-to-html.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render each DMN decision table to HTML for inclusion in a page, via `dmn2html.xslt` and `dmn.css`. The only human-readable rendering of a decision table an IG has.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/transform_dmn.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "name": "dmnDir",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "One HTML fragment per decision table.",
+                "name": "html",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "dmn-to-html",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+          "title": "DMN → HTML"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/dmn-to-html",
+      "path": "tools/dmn-to-html/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dmn-to-questionnaire/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/dmn-to-questionnaire.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: its output is validated and indexed by the IG Publisher like any other resource.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/dmn_questionnaire_generator.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The directory of DMN sources. `input/dmn/` by convention.",
+                "name": "dmnDir",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The generated `Questionnaire` resources, written where SUSHI's output is collected from.",
+                "name": "questionnaires",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "How many were produced. Zero is a determined empty only if the DMN directory was found; absent input is a different state and is reported as such.",
+                "name": "generated",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              }
+            ]
+          },
+          "name": "dmn-to-questionnaire",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+          "title": "DMN → FHIR Questionnaire"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/dmn-to-questionnaire",
+      "path": "tools/dmn-to-questionnaire/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/extract-dak/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/extract-dak.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Run WHO's `extract_dak.py` in a DAK or IG repository: it reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes the DMN decision tables, the CPG recommendation PlanDefinitions with their citations, CQL library skeletons, Requirements and logical-model FSH. The authoring path the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`) prescribes: an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 $SMART_BASE_HOME/input/scripts/extract_dak.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The working directory: a DAK or IG repository holding `input/decision-logic/`, `input/system-requirements/` and `input/dictionary/` spreadsheets in the DAK template layout.",
+                "name": "dakRepository",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Decision tables in the DAK DMN format (namespace `https://www.omg.org/spec/DMN/20240513/MODEL/`), each with an `Annotations` and a `Reference(s)` output.",
+                "name": "dmn",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "PlanDefinition, ActivityDefinition, Requirements and logical-model FSH, for SUSHI to compile.",
+                "name": "fsh",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "CQL library skeletons, one per decision table, with the definitions already present in `input/cql/` carried over.",
+                "name": "cql",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "extract-dak",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+          "title": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/extract-dak",
+      "path": "tools/extract-dak/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-extraction-pages/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/l1-extraction-pages.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "For every visualiser an instance declares `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each shows what was extracted, read from the files by what they declare: the L1 statements (graph nodes carrying a `statement`, and an authored L1 source's `recommendations`), the candidate work list's counts, coverage and decisions, each graph document's nodes by type and edges by predicate (the L2 scenario candidates among them), the curation, mapping, vocabulary, exclusions and run context counted, and every file linked to its published copy (cat-harness's `library:viz`) when the site holds it and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never as zero.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/gen-l1-extraction-pages.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "A site being built: the pages go under it (`visualiser-writers.ts` in cat-harness-tools passes it). Absent, they go under the checkout's site directory.",
+                "name": "site",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--root"
+                },
+                "description": "The checkout whose declarations are read. Default: the checkout holding the working directory.",
+                "name": "root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Write nothing; exit 1 when a page is stale, missing or orphaned.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Pages written: the hub and one per instance.",
+                "name": "pages",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              }
+            ]
+          },
+          "name": "l1-extraction-pages",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "title": "Write the L1 extraction viewer: a page per instance holding `l1-extraction` directories, and a hub"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/l1-extraction-pages",
+      "path": "tools/l1-extraction-pages/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-recommendation-candidates/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), hint where a reading is uncertain, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph, checked with `kg/src/validate.ts`, with coverage and the proposed (unsigned) exclusions.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "An ingested `library/<id>/` with page-tagged `sections/*.md` and `structure.json`.",
+                "name": "entry",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The agent's decisions per candidate location (`l1-recommendation-curation/v1`). Absent: only the work list is written.",
+                "name": "curation",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`recommendation-candidates.json` — every normative sentence, its hints and its decision; cites the run context.",
+                "name": "candidates",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`l1.json` — L1 3.0 publication, recommendation and remark nodes, every one `inferred`.",
+                "name": "graph",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`exclusions.proposed.json`, in `l1-coverage`'s shape; none counts until a person signs it.",
+                "name": "exclusions",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`extraction-warnings.md` — undecided candidates, unsigned exclusions, statements taken from a layout fragment.",
+                "name": "warnings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`run-context.json`, cat-harness `folio-run-context/v1`.",
+                "name": "runContext",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "l1-recommendation-candidates",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/recommendation-candidates",
+          "title": "L1 guideline → recommendation candidates (L1 3.0)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/l1-recommendation-candidates",
+      "path": "tools/l1-recommendation-candidates/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-recommendation-scenarios/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/l1-recommendation-scenarios.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "One smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by the edges smart-kg L2 already licenses, from an agent's `l1-scenario-mapping/v1`. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/l1-recommendation-scenarios.ts --l1 <l1.json|yaml> --vocabulary <guide.json> [--generic <generic.json>] --mapping <mapping.yaml> --out <dir> [--check]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The recommendations: the first tool's L1 3.0 graph, or an authored L1 YAML.",
+                "name": "l1",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The target guide's personas and processes (`l1-scenario-vocabulary/v1`).",
+                "name": "vocabulary",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "smart-base's generic personas, the second rung.",
+                "name": "generic",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The agent's persona, process, act, outcome and domain per recommendation, each with a source and a basis.",
+                "name": "mapping",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`scenario-candidates.l2.json`.",
+                "name": "graph",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`scenario-warnings.md` — processes not determined, personas that are glossary candidates.",
+                "name": "warnings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`run-context.json`, cat-harness `folio-run-context/v1`.",
+                "name": "runContext",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "l1-recommendation-scenarios",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/recommendation-scenarios",
+          "title": "L1 recommendations → L2 user-scenario candidates"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/l1-recommendation-scenarios",
+      "path": "tools/l1-recommendation-scenarios/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-transcription-verbatim/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/l1-transcription-verbatim.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names, every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`, and keys must be unique.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/l1-transcription-verbatim.ts --dir <dir of *.l1.yaml> [--root <repo>]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The directory of authored `*.l1.yaml`; each names its library entry in `graph.source.entry`.",
+                "name": "dir",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "One summary line per file and one `FINDING` line per failure. Exit 0 clean, 1 findings, 2 nothing to check (not a pass).",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "l1-transcription-verbatim",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/transcription-verbatim",
+          "title": "Authored L1 → verbatim against transcriptions and image narratives"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/l1-transcription-verbatim",
+      "path": "tools/l1-transcription-verbatim/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/smart-fhir-cache-seed/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/smart-fhir-cache-seed.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`): `smart.who.int.*` packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts --site-repo smart.who.int.=WorldHealthOrganization/smart-html@main [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--missing-out <file>] [--dry-run] [name#version ...]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`.",
+                "name": "sushi-config",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              },
+              {
+                "description": "Default `~/.fhir/packages`, which SUSHI and the IG Publisher read.",
+                "name": "cache",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "installed",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              },
+              {
+                "description": "Exit 1 when any is missing, each listed with why.",
+                "name": "missing",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              }
+            ]
+          },
+          "name": "smart-fhir-cache-seed",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun",
+              "npm",
+              "git"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-fork",
+          "title": "Seed the FHIR package cache, with WHO's published site as a source"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/smart-fhir-cache-seed",
+      "path": "tools/smart-fhir-cache-seed/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/smart-liquid-variables/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/smart-liquid-variables.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/generate_smart_liquid.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The Publisher's `output/`; the script names this its source of truth.",
+                "name": "igOutput",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Repository root, where `input/` lives. Defaults to `.`.",
+                "name": "igRoot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`input/includes/smart.liquid`, copied to `output/smart.liquid`.",
+                "name": "include",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`url__canonical`, `url__page`, `url__json`, `text__display`, `link__html`, `elements__<key>`.",
+                "name": "categories",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "smart-liquid-variables",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/dak-postprocessing",
+          "title": "IG metadata → Liquid variables"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/smart-liquid-variables",
+      "path": "tools/smart-liquid-variables/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/terminology-lookup/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/terminology-lookup.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Look up a concept or code token for a semantic slot (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`) across the four reuse-first precedence rungs of the `terminology-coding` methodology: (1) target guide's `l1-scenario-vocabulary/v1`, (2) `smart-base` generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and `guideline-domain` SKOS glossary, (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`), and (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`) or `could-not-determine` for `business-process`.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/terminology-lookup.ts --slot <slot> --query <query> [--vocabulary <guide.json>] [--generic <generic.json>] [--scheme <scheme>] [--out <out.json>]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The semantic slot to classify and code (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`).",
+                "name": "slot",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "description": "The concept term, identifier, or code token to look up across the reuse-first precedence rungs.",
+                "name": "query",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+              },
+              {
+                "description": "Optional path to the target guide's personas and business processes (`l1-scenario-vocabulary/v1`), Rung 1.",
+                "name": "vocabulary",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Optional path to smart-base's generic personas (`l1-scenario-vocabulary/v1`), Rung 2.",
+                "name": "generic",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Optional scheme identifier filter (e.g. `guideline-domain`, `ISCO08`, `CDHIv2`, `grade-recommendation-strength`).",
+                "name": "scheme",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+              },
+              {
+                "description": "Optional repository path where the lookup result JSON is written.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Lookup result JSON conforming to `schemas/skills/classify-and-code-content/output.schema.json`.",
+                "name": "result",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "terminology-lookup",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/classify-and-code-content",
+          "title": "Reuse-first terminology and code-list lookup"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/terminology-lookup",
+      "path": "tools/terminology-lookup/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

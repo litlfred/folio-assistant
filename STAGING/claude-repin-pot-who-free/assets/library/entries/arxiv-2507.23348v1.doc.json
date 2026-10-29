@@ -1,0 +1,1173 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2507.23348v1",
+  "title": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+  "variant": "pdf",
+  "pages": 19,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Motivation",
+      "number": "2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-2-motivation"
+    },
+    {
+      "level": 1,
+      "title": "Methodology",
+      "number": "3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-3-methodology"
+    },
+    {
+      "level": 2,
+      "title": "Problem Formulation",
+      "number": "3.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-31-problem-formulation"
+    },
+    {
+      "level": 2,
+      "title": "Fault Propagation Traces Proposal",
+      "number": "3.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-32-fault-propagation-traces-proposal"
+    },
+    {
+      "level": 2,
+      "title": "Multi-Agent Debate",
+      "number": "3.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-33-multi-agent-debate"
+    },
+    {
+      "level": 2,
+      "title": "Patch Generation",
+      "number": "3.4",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-34-patch-generation"
+    },
+    {
+      "level": 1,
+      "title": "Experimental Setup",
+      "number": "4",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-4-experimental-setup"
+    },
+    {
+      "level": 2,
+      "title": "Research Questions",
+      "number": "4.1",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-41-research-questions"
+    },
+    {
+      "level": 2,
+      "title": "Datasets",
+      "number": "4.2",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-42-datasets"
+    },
+    {
+      "level": 2,
+      "title": "Baselines",
+      "number": "4.3",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-43-baselines"
+    },
+    {
+      "level": 2,
+      "title": "Metrics",
+      "number": "4.4",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-44-metrics"
+    },
+    {
+      "level": 2,
+      "title": "Implementation Details",
+      "number": "4.5",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-45-implementation-details"
+    },
+    {
+      "level": 1,
+      "title": "Results",
+      "number": "5",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-5-results"
+    },
+    {
+      "level": 2,
+      "title": "RQ1: Effectiveness on Issue Resolution",
+      "number": "5.1",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-51-rq1-effectiveness-on-issue-resolution"
+    },
+    {
+      "level": 2,
+      "title": "RQ2: Ablation Study",
+      "number": "5.2",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-52-rq2-ablation-study"
+    },
+    {
+      "level": 2,
+      "title": "RQ3: Localization Performance Comparison",
+      "number": "5.3",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-53-rq3-localization-performance-comparison"
+    },
+    {
+      "level": 2,
+      "title": "RQ4: Impact of the Chain Depth.",
+      "number": "5.4",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-54-rq4-impact-of-the-chain-depth"
+    },
+    {
+      "level": 2,
+      "title": "Case Study",
+      "number": "5.5",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-55-case-study"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": "6",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-6-discussion"
+    },
+    {
+      "level": 2,
+      "title": "Strengths",
+      "number": "6.1",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-61-strengths"
+    },
+    {
+      "level": 2,
+      "title": "Limitations and Future Work",
+      "number": "6.2",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-62-limitations-and-future-work"
+    },
+    {
+      "level": 1,
+      "title": "Threats to Validity",
+      "number": "7",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-7-threats-to-validity"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "8",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-8-related-work"
+    },
+    {
+      "level": 2,
+      "title": "Fault Localization",
+      "number": "8.1",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-025-81-fault-localization"
+    },
+    {
+      "level": 2,
+      "title": "Repository-Level Issue Resolution",
+      "number": "8.2",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-026-82-repository-level-issue-resolution"
+    },
+    {
+      "level": 2,
+      "title": "LLM Multi-Agent Systems",
+      "number": "8.3",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-027-83-llm-multi-agent-systems"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "9",
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-028-9-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-029-references"
+    },
+    {
+      "level": 1,
+      "title": "A SWE-Bench-Verified-S",
+      "number": null,
+      "page": 12,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "B Hyperparameters of MCTS",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "C Prompt Templates",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 63,
+      "summary": {
+        "text": "Title and authors: \"SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution\" by Han Li and Yuling Shi (equal contribution), Shaoxin Lin, Xiaodong Gu (corresponding author), Heng Lian, Xin Wang, Yantao Jia, Tao Huang and Qianxiang Wang, of Shanghai Jiao Tong University, Huawei and Xidian University.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution Han Li† Shanghai Jiao Tong University China lihan0421@sjtu.edu.cn Yuling Shi† Shanghai Jiao Tong University China yuling.shi@sjtu.edu.cn Shaoxin Lin Huawei China 2120200411@mail.nankai.edu.cn Xiaodong Gu‡ Shanghai Jiao Tong University China xiaodong.gu@sjtu.edu.cn Heng Lian Xidian University China lianheng23@163.com Xin Wang Huawei China",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 188,
+      "summary": {
+        "text": "Abstract. Agent-based issue resolution such as SWE-agent relies on agents exploring independently, which often get stuck in local solutions and miss issue patterns spanning different parts of a codebase. SWE-Debate is a competitive multi-agent debate framework: it builds several fault propagation traces as localization proposals by traversing a code dependency graph, runs a three-round debate among specialised agents along those traces to converge on a consolidated fix plan, and hands the plan to an MCTS-based code modification agent for patch generation. On SWE-bench the authors report new state-of-the-art results among open-source agent frameworks.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Issue resolution has made remarkable progress thanks to the ad- vanced reasoning capabilities of large language models (LLMs). Recently, agent-based frameworks such as SWE-agent have further advanced this progress by enabling autonomous, tool-using agents to tackle complex software engineering tasks. While existing agent- based issue resolution approaches are primarily based on agents’ independent explorations, they",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 846,
+      "summary": {
+        "text": "Introduction. Fault localization, linking an issue's natural-language description to the code that triggers it, is the key challenge in repository-level issue resolution. Agent-based methods explore independently and suffer from what the authors call limited observation scope: when several locations look relevant they lack the diverse perspectives to compare them and fall back on trial and error. SWE-Debate works in three stages: build a static dependency graph (calls, inheritance, imports, variable references), pick issue-relevant entry entities by LLM semantic matching and traverse from them to get candidate localization chains; run a debate in which agents rank chains, propose modification plans from different perspectives, critique each other and let a discriminator pick a plan; then seed Monte Carlo Tree Search with that plan to generate a patch. The contributions listed are the multi-trace generation method, the debate framework, and experiments the authors summarise as 6.7% better issue resolution and 5.1% better fault localization; ablations attribute the largest share of the gain to multiple chain generation.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Automated repository-level issue resolution has emerged as a criti- cal challenge in software engineering. The task aims to automat- ically localize and fix the defective code snippets, based on re- ported issues. In software development, developers spend a major- ity of their debugging efforts in understanding code and making changes [15, 52]. Meanwhile, automated tools often struggle with the same challenge [4,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-2-motivation",
+      "number": "2",
+      "title": "Motivation",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 451,
+      "summary": {
+        "text": "Motivation, through the Django-11999 issue, where users cannot override get_FOO_display() since Django 2.2. A single exploring agent searches for \"get_FOO_display impl\", fixes on Model._get_FIELD_display in django/db/models/base.py, and cannot step back to ask whether the fault lies there or in field registration, nor weigh runtime workarounds against structural fixes. The correct cause is in Field.contribute_to_class, which unconditionally overwrites user-defined methods while the class is built. In a debate, one agent argues for changing _get_FIELD_display and another for Field.contribute_to_class, forcing a comparison of runtime flexibility against prevention at the source, and the agents come to favour the contribute_to_class fix; the block ends mid-sentence as its advantages are listed.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Repository-level issue resolution reveals the fundamental limited observation scope that agentic approaches face in complex software engineering scenarios [5, 7]. While individual agents can success- fully handle straightforward localization tasks, they systematically fail when multiple code locations appear relevant to issue descrip- tions, requiring comprehensive architectural understanding and careful evaluation",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-33-multi-agent-debate",
+      "number": "3.3",
+      "title": "Multi-Agent Debate",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 284,
+      "summary": {
+        "text": "The end of the motivating example, with Figure 1. The contribute_to_class fix prevents the overwrite at its source with a minimal existence check, if not hasattr(cls, method_name), at lines 765-767 of django/db/models/fields/__init__.py, keeping backward compatibility. Figure 1 contrasts the individual-exploration plan, which edits the wrong place in base.py, with the debate's plan targeting contribute_to_class, alongside the issue text and the golden patch. The authors present this tension, with agents defending their approaches against alternatives, as turning issue resolution into multi-perspective reasoning.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Conference’17, July 2017, Washington, DC, USA Individual Exploration ***stage 1*** instruction: Enhance the _get_FIELD_display method in django/db/models/base.py to support custom display methods by checking for a user-defined get_FOO_display method (where FOO is the field name) before falling back to the default display logic. context: django/db/models/base.py:Model._get_FIELD_display, lines 939-944 Competitive",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-3-methodology",
+      "number": "3",
+      "title": "Methodology",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "A section heading only: the start of the Methodology section (3.1).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "3.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-005-31-problem-formulation",
+      "number": "3.1",
+      "title": "Problem Formulation",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 255,
+      "summary": {
+        "text": "Problem formulation. Given an issue description and code entities V, an agent must find the subset to modify through a sequence of actions and observations. Current approaches explore inefficiently, ignoring structural relations between entities, and struggle to disambiguate between several plausible modification sites. SWE-Debate reasons over a dependency graph G = (V, E), builds localization chains of entities tracing fault propagation, and uses a multi-agent debate to choose the fix plan (Figure 2): Section 3.2 covers trace proposal by graph traversal, Section 3.3 the debate over chains and modifications, and Section 3.4 MCTS-based patch generation.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Given an issue description 𝑝and a codebase state represented as a set of code entities 𝑉= {𝑣1, . . . , 𝑣𝑚}, an agent must identify the subset of entities to be modified 𝑉𝑚𝑜𝑑⊂𝑉through an explo- ration chain {(𝑎1,𝑜1), . . . , (𝑎𝑛,𝑜𝑛)}, where 𝑎𝑡and 𝑜𝑡denote the action and observation at time step 𝑡. Current approaches, however, face two fundamental limitations. First, their exploration is ineffi-",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-32-fault-propagation-traces-proposal",
+      "number": "3.2",
+      "title": "Fault Propagation Traces Proposal",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1305,
+      "summary": {
+        "text": "Fault propagation trace proposal and the multi-agent debate (with Figure 2, the framework overview). A static dependency graph of code entities with call, inheritance, import and reference edges is built; an LLM then extracts the top-K entities named explicitly in the issue text as entry points, restricted to direct textual matches. From each, a breadth-first step picks the top-W issue-relevant neighbours, using code snippets fed to the LLM to widen the candidates, and a depth-limited search (maximum depth L) follows the best-scoring next entity by semantic and structural relevance, giving K × W chains. For the debate, the longest chain and the m − 1 most distinct (by embeddings) are ranked by several agents, and the top-voted chain is kept. N agents each turn it into a structured JSON modification plan (targets, modification type, priority, reasoning), then review and critique each other's plans and refine their own, and a discriminator agent synthesises a single prioritised plan.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Since issue descriptions rarely pinpoint exact modification loca- tions, agents need to identify the fault propagation trace for issue resolution. To enable competitive fault localization, our algorithm generates multiple candidate fault propagation traces as localiza- tion proposals, followed by a competitive multi-agent debate to select the most promising trace. A fault propagation trace refers to a structured",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-34-patch-generation",
+      "number": "3.4",
+      "title": "Patch Generation",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 296,
+      "summary": {
+        "text": "Patch generation. The debate's modification plan seeds a Monte Carlo Tree Search, as in SWE-Search, whose nodes are codebase states and whose actions are Search, Plan and Edit; the initial branches come from the plan's steps rather than arbitrary exploration. Actions are chosen by a modified UCT criterion, and a value function, first informed by the plan's rationale, scores each outcome with a numerical value and a written explanation; after edits the agent can run and write tests, and the feedback is propagated back up the tree until the issue is resolved or the maximum depth is reached.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Based on the modification plans, the final stage generates patches and fixes the issue by employing a Monte Carlo Tree Search (MCTS) framework [1]. The MCTS process allows the agent to systemati- cally explore the codebase, refine its modification plans, and itera- tively evaluate the impact of each action on the codebase [21]. Un- like previous approaches that begin with arbitrary exploration [1], our MCTS process",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-4-experimental-setup",
+      "number": "4",
+      "title": "Experimental Setup",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "A section heading only: the start of the Experimental Setup (4.1).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-41-research-questions",
+      "number": "4.1",
+      "title": "Research Questions",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 32,
+      "summary": {
+        "text": "The research questions: how effective SWE-Debate is at repository-level issue resolution (RQ1), how each component contributes (RQ2), and how it performs at fault localization (RQ3, cut off mid-sentence).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "RQ1: How effective is SWE-Debate in terms of repository-level issue resolution? RQ2: How does each component of SWE-Debate contribute to its overall performance? RQ3: How is the fault localization performance of SWE-Debate",
+      "extractCut": false
+    },
+    {
+      "id": "sec-010-43-baselines",
+      "number": "4.3",
+      "title": "Baselines",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 15,
+      "summary": {
+        "text": "The last research question, under a heading the extraction misplaced: how the depth of chains in the debate affects performance (RQ4).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "RQ4: How do the depth of chains in the debate influence the per- formance? 4.2",
+      "extractCut": false
+    },
+    {
+      "id": "sec-011-42-datasets",
+      "number": "4.2",
+      "title": "Datasets",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 249,
+      "summary": {
+        "text": "Datasets and baselines. Evaluation uses SWE-Bench-Verified (500 verified issues) and SWE-bench-Lite (300 tasks). Issue-resolution baselines are Agentless, AutoCodeRover, SWE-Agent, SWE-Search, SWESynInfer and OpenHands; fault-localization baselines are CodeActAgent, LocAgent and KGCompass.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "We evaluate SWE-Debate on the SWE-Bench-Verified dataset [26], which contains 500 verified issues from SWE-bench [15]. We also evaluated on SWE-bench-Lite [15], which contains 300 carefully selected tasks. 4.3 Baselines We compare SWE-Debate with the following baselines on issue resolution: • Agentless [43]: A non-agentic pipeline that breaks down the repair process into different phases of localization, repair, and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-44-metrics",
+      "number": "4.4",
+      "title": "Metrics",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 124,
+      "summary": {
+        "text": "Metrics: Pass@1, the share of issues resolved on the first attempt, and Acc@1 (File), file-level localization accuracy where a prediction counts only if all required modification points fall within the top-1 predicted locations.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "We employ the following metrics to evaluate the performance of SWE-Debate: • Pass@1: The percentage of issues that are resolved success- fully within the first attempt, following the evaluation protocol established by [1, 46]. This metric directly measures the frame- work’s ability to generate correct patches without requiring multiple iterations, representing the most practical scenario for real-world deployment. •",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-45-implementation-details",
+      "number": "4.5",
+      "title": "Implementation Details",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 133,
+      "summary": {
+        "text": "Implementation details. SWE-Debate extends the SWE-Search framework, but its testbed was not used because it could not be set up. The dependency graph comes from static analysis with Python's ast module, and the debate uses DeepSeek-V3-0324 with different system prompts to simulate perspectives. Parameters are K = 5 entry points, W = 4 expansion width, L = 5 maximum chain length, m = 6 chains for ranking and N = 5 agents, set on a held-out part of the full SWE-Bench; baseline numbers come from their papers or repositories (block cut off).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "We implement SWE-Debate by extending the SWE-Search [1] frame- work with our graph-based localization and multi-agent debate components. Due to unsuccessful testbed setup, we did not utilize it in our experiments. The code dependency graph is constructed us- ing static analysis tools2, and the multi-agent debate employs offical DeepSeek-V3-0324 [8] with different system prompts to simulate diverse reasoning",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-5-results",
+      "number": "5",
+      "title": "Results",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 46,
+      "summary": {
+        "text": "The end of the implementation details and the opening of the Results: for DeepSeek-V3-0324, representative baselines were reproduced from their official repositories, and the results are then presented by research question.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "official paper or repository. For experiments on DeepSeek-V3-0324, we reproduce the results on representative baselines with their official repositories. 5 RESULTS We present experimental results addressing each research question, examining the effectiveness of SWE-Debate across multiple dimen- sions and providing detailed analysis of component contributions. 5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-015-51-rq1-effectiveness-on-issue-resolution",
+      "number": "5.1",
+      "title": "RQ1: Effectiveness on Issue Resolution",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 239,
+      "summary": {
+        "text": "RQ1, effectiveness (Table 1). On SWE-Bench-Verified SWE-Debate resolves 207 of 500 issues, a 41.4% Pass@1. With the same DeepSeek-V3-0324 model it improves on SWE-Search (35.4%) by 6.0 points and on SWE-Agent and OpenHands (both 38.8%) by 2.6 points; other baselines in Table 1, on GPT-4o, Claude-3.5 Sonnet or Lingma SWE-GPT, range from 23.0% to 38.4%. The authors read this as a benefit beyond model choice alone (Finding 1).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Table 1 presents the main experimental results comparing SWE- Debate with state-of-the-art baselines on the SWE-Bench-Verified dataset. We observe that SWE-Debate is able to solve 207 out of 500 problems, achieving 41.4% success rate. While individual baseline approaches show varying performance across different language models, SWE-Debate demonstrates consistent superiority over ex- isting methods. Specifically,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-52-rq2-ablation-study",
+      "number": "5.2",
+      "title": "RQ2: Ablation Study",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 329,
+      "summary": {
+        "text": "RQ2, ablation (Table 2). Removing multiple chain generation drops Pass@1 from 41.4% to 31.4% (−10.0 points), removing the edit plan to 35.4% (−6.0) and removing the multi-agent debate to 37.2% (−4.2). The authors attribute these to single-path exploration missing cross-file dependencies, the MCTS editor lacking direction without a plan, and lone agents getting stuck when many candidate locations exist (Finding 2).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "To understand the contribution of each component in SWE-Debate, we conduct comprehensive ablation studies by systematically re- moving key components and measuring performance degradation on the SWE-Bench-Verified dataset. Table 2 shows the results of this analysis, revealing distinct contributions from different archi- tectural elements. Table 2: Ablation study results showing the contribution of different",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-53-rq3-localization-performance-comparison",
+      "number": "5.3",
+      "title": "RQ3: Localization Performance Comparison",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 422,
+      "summary": {
+        "text": "RQ3, localization (Table 3, SWE-Bench-Lite, baseline numbers taken from LocAgent). SWE-Debate reaches 81.67% file-level Acc@1, against 67.00% for SWE-Agent with the same DeepSeek-V3-0324 model and 77.74% for the strongest baseline, LocAgent with Claude-3.5 Sonnet, a gain of 3.93 points. The authors credit the graph-guided multiple traces, which raise the chance that one contains the correct location, and argue that the gains over identical-model baselines show they stem from the reasoning framework rather than the model (Finding 3).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Table 3: Localization Performance on SWE-Bench-lite. Method Model Acc@1 (File) Agentless GPT-4o (2024-05-13) 67.15 Claude-3.5 Sonnet 72.63 SWE-Agent GPT-4o (2024-05-13) 57.30 Claude-3.5 Sonnet 77.37 DeepSeek-V3-0324 67.00 SWE-Search GPT-4o (2024-05-13) 73.36 Claude-3.5 Sonnet 72.63 CodeActAgent GPT-4o (2024-05-13) 60.95 Claude-3.5 Sonnet 76.28 LocAgent Qwen2.5-7B (FT) 70.80 Qwen2.5-32B (FT) 75.91 Claude-3.5 Sonnet",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-54-rq4-impact-of-the-chain-depth",
+      "number": "5.4",
+      "title": "RQ4: Impact of the Chain Depth.",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 286,
+      "summary": {
+        "text": "RQ4, chain depth (Figure 3), on SWE-Bench-Verified-S, a 75-instance set of the 50 in SWE-Bench-verified-mini plus 25 random SWE-Bench-Verified instances. File-level Acc@1 rises with depth from 70.7% at depth 1 and 72.0% at depth 3 to a peak of 86.7% at depth 5, then falls to 82.7% at depth 7; the authors attribute the drop to longer chains bringing in unrelated information that distracts the debate (Finding 4).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "To investigate the optimal configuration for multi-agent reason- ing in software fault localization, we study the impact of chain depth on localization performance. To balance computational effi- ciency with representative evaluation, we constructed a dataset of 75 instances, termed SWE-Bench-Verified-S, consisting of 50 sam- ples from SWE-Bench-verified-mini 3 and 25 additional instances randomly selected in",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-55-case-study",
+      "number": "5.5",
+      "title": "Case Study",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 333,
+      "summary": {
+        "text": "Case study: SymPy issue 13974, where powers of TensorProduct expressions, such as TensorProduct(1, Pauli(3)) squared, are not simplified by expand(tensorproduct=True) or tensor_product_simp. Among the candidate chains, Chain 2 captured the modules involved (tensor_product_simp_Mul, tensor_product_simp and TensorProduct._eval_expand_tensorproduct). The debate produced a four-step plan, modifying tensor_product_simp, updating tensor_product_simp_Mul for powers, extending _eval_expand_tensorproduct and adding a TensorProduct._eval_power method, and the resulting edit distributes the exponent over the tensor product's arguments; every modified function was covered by the selected chain.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "To further verify the effectiveness of SWE-debate in actual use, we analyzed a case in SWE-bench. In this case, we investigate an issue in SymPy related to the incorrect evaluation of powers ap- plied to TensorProduct expressions. Specifically, expressions like TensorProduct(1,Pauli(3))*TensorProduct(1,Pauli(3)) fail to simplify into TensorProduct(1,1) or 1, even though Pauli(3)**2 =1. This failure arises because",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-6-discussion",
+      "number": "6",
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "A section heading only: the start of the Discussion (6.1).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "6.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-021-61-strengths",
+      "number": "6.1",
+      "title": "Strengths",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 523,
+      "summary": {
+        "text": "Strengths (with Figure 4, the SymPy-13974 case study showing five candidate chains, the four-stage plan and the patch). The authors name three: graph-based localization reaches 81.67% file-level accuracy, 14.67 points above SWE-Agent with DeepSeek-V3-0324 and 8.31 above SWE-Search with GPT-4o, which they link to the 41.4% Pass@1 against baselines of 23.0% to 38.8%; the debate resolves modification ambiguity, its removal costing 4.2 points; and the framework can plug into the localization stage of systems such as SWE-Search and Agentless without major changes.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "SWE-Debate demonstrates three key advantages over existing ap- proaches. First, the graph-based localization significantly improves fault localization accuracy. By building dependency graphs from code structure and generating multiple fault propagation traces, our method achieves 81.67% file-level accuracy. When comparing with SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution Conference’17,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-62-limitations-and-future-work",
+      "number": "6.2",
+      "title": "Limitations and Future Work",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 209,
+      "summary": {
+        "text": "Limitations and future work. Graph construction can be costly on large codebases; static analysis misses dynamic and runtime relationships; the debate uses one model with different prompts, so heterogeneous models or domain knowledge could add diversity; and batch processing limits integration with real-time development workflows.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Despite the promising results, SWE-Debate has several limitations that suggest directions for future work. The graph construction process can be computationally expensive for large codebases, lim- iting scalability. Future work chould explore more efficient graph construction algorithms and incremental analysis techniques to handle enterprise-scale repositories. Additionally, the current static analysis approach may",
+      "extractCut": true
+    },
+    {
+      "id": "sec-023-7-threats-to-validity",
+      "number": "7",
+      "title": "Threats to Validity",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 266,
+      "summary": {
+        "text": "Threats to validity. Internally, DeepSeek-V3-0324's pre-training may include SWE-Bench repositories; the authors argue that gains over identical-model baselines point to reasoning rather than memorisation, and plan contamination-free evaluation. Time and budget limited the study to one model and, in the authors' words, a subset of SWE-Bench-Verified. Externally, the benchmark is Python-only; the components are designed to be language-agnostic, and Multi-SWE-Bench is planned.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Internal. The primary internal threat stems from potential data contamination, as the pre-training corpus of DeepSeek-V3-0324 may contain repositories from SWE-Bench. To mitigate this con- cern, we emphasize that our evaluation focuses on reasoning pro- cesses rather than memorized solutions. Our method generates fault propagation traces through systematic graph traversal and struc- tured multi-agent debate, relying",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-8-related-work",
+      "number": "8",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "A section heading only: the start of Related Work (8.1).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "8.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-025-81-fault-localization",
+      "number": "8.1",
+      "title": "Fault Localization",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 41,
+      "summary": {
+        "text": "The opening of the related work on fault localization, cut off mid-sentence: traditional spectrum-based, mutation-based and learning-based techniques rely on test execution data and program analysis, and face fundamental limitations.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Traditional fault localization techniques, including spectrum-based fault localization (SBFL) [16], mutation-based fault localization (MBFL) [28], and learning-based methods [17, 24, 36], mainly relied on test execution data and program analysis to identify buggy code regions. However, these techniques face fundamental limitations",
+      "extractCut": false
+    },
+    {
+      "id": "sec-026-82-repository-level-issue-resolution",
+      "number": "8.2",
+      "title": "Repository-Level Issue Resolution",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 384,
+      "summary": {
+        "text": "Related work on fault localization and repository-level issue resolution. Traditional techniques need comprehensive tests, struggle with cross-file dependencies and cannot bridge issue text and code. LLM-based localizers (RCAgent, AgentFL, LocAgent, OrcaLoca, CoSIL) improve navigation but remain single-perspective. Issue-resolution systems are either agent-based (SWE-Agent, AutoCodeRover, SWE-Search with MCTS, CodeR with multi-agent task graphs) or pipeline-based (Agentless, CodeMonkeys), with further work on long-context prompting, fine-tuning and repository knowledge graphs; the authors argue all share the limited observation scope that SWE-Debate's competitive analysis targets, and that it can integrate with these systems.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "prehensive test suites to trigger fault patterns [25, 37], struggle with complex dependency relationships across multiple files, and cannot effectively bridge the semantic gap between natural language issue descriptions and code structures. Recent LLM-based approaches have advanced fault localization through sophisticated code understanding and repository naviga- tion capabilities. Methods like RCAgent [40]",
+      "extractCut": true
+    },
+    {
+      "id": "sec-027-83-llm-multi-agent-systems",
+      "number": "8.3",
+      "title": "LLM Multi-Agent Systems",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 258,
+      "summary": {
+        "text": "Related work on LLM multi-agent systems. Multi-agent systems have helped with code generation, testing and debugging, mostly through collaborative, consensus-seeking designs scaled by stronger agents or larger collectives. Existing debate frameworks are also collaborative and suffer from thought degeneration and agents clinging to incorrect stances; role assignment and agreement modulation help but keep the consensus paradigm. SWE-Debate instead makes the debate competitive, forcing agents to defend localization hypotheses, combined with graph-based dependency analysis.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Multi-agent systems have emerged as a promising approach for complex problem-solving by leveraging diverse specialized per- spectives and collaborative reasoning. In software engineering contexts, these systems have shown success across various tasks including code generation [12, 41], automated testing and debug- ging [11, 34]. Current multi-agent architectures mainly use col- laborative paradigms that emphasize",
+      "extractCut": true
+    },
+    {
+      "id": "sec-028-9-conclusion",
+      "number": "9",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 120,
+      "summary": {
+        "text": "Conclusion and acknowledgment. SWE-Debate tackles agents' limited observation scope by combining graph-based fault propagation traces with structured competitive debate, and the authors report a 6.7% improvement in issue resolution rate over state-of-the-art baselines and 5.1% in fault localization accuracy on SWE-Bench-Verified (the results section's same-model margins are 2.6 and, on SWE-Bench-Lite, 3.93 points). Funding came from the National Key R&D Program of China and the Natural Science Foundation of Shanghai.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "In this paper, we presented SWE-Debate, a competitive multi-agent debate framework that addresses the agents’ limited observation scope problem in repository-level issue resolution. Our approach combines graph-based fault propagation trace generation with structured multi-agent debates to systematically evaluate compet- ing localization hypotheses, overcoming the perspective limitations of single-agent methods.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-029-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 5182,
+      "summary": {
+        "text": "References and appendices. The references cover issue-resolution agents and pipelines, LLM fault localization, multi-agent debate and collaboration, and the SWE-bench datasets. Appendix A defines SWE-Bench-Verified-S, the 50 SWE-Bench-verified-mini instances plus 25 more, listed in Table 4 (Django, SymPy and Sphinx issues); Appendix B gives the MCTS hyperparameters in Table 5 (for example UCT exploration 1.41, 20 iterations, maximum depth 20, 5 discriminator agents over 3 debate rounds). Appendix C lists the eight prompts: initial entity extraction, code-snippet entity extraction, neighbour prefiltering, node selection, chain voting, round 1 modification locations, round 2 refined modification, and the final discriminator, which must give only concrete modification actions.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "[1] Antonis Antoniades, Albert Örwall, Kexun Zhang, Yuxi Xie, Anirudh Goyal, and William Wang. 2024. SWE-Search: Enhancing Software Agents with Monte Carlo Tree Search and Iterative Refinement. arXiv:2410.20285 [2] Chi-Min Chan, Weize Chen, Yusheng Su, Jianxuan Yu, Wei Xue, Shanghang Zhang, Jie Fu, and Zhiyuan Liu. 2023. ChatEval: Towards Better LLM-based Evaluators through Multi-Agent Debate. In The Twelfth",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 12,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 13,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 14,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 15,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 16,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 17,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 18,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 19,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "Motivating example of multi-agent debate",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Overview of SWE-Debate framework. Identifying Entry Nodes via Semantic Matching. Next, the",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Main effectiveness results on SWE-Bench-Verified",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "Ablation study results showing the contribution of different components",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "3",
+      "title": "Localization Performance on SWE-Bench-lite",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Impact of the Chain Depth",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Case study of SWE-Debate with instance sympy-13974. methods using identical models, SWE-Debate demonstrates substantial improvements: 14.67% over SWE-Agent with DeepSeek-V3-0324 and 8.31% over SWE-Search with GPT-4o , representing an 3.93 percentage point improvement over the strongest baseline acro",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "4",
+      "title": "Instance Id in SWE-Bench-Verified-S",
+      "page": 12,
+      "pageLabel": null,
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "5",
+      "title": "MCTS Hyperparameters",
+      "page": 13,
+      "pageLabel": null,
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/arxiv-2507.23348v1"
+  }
+}

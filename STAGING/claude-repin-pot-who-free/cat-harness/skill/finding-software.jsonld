@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/finding-software.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/finding-software",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "finding-software",
+      "title": "Finding software — get it, do not route around it",
+      "description": "A script needs a program or module the container does not have (tesseract, pdftoppm, PyMuPDF, a CLI from a GitHub release). Get it: `bun run cat software:ensure`, which tries apt, pip, then a pinned and checksummed GitHub release, from the declared table `scripts/software.json`. Do not route around a missing tool with a cache, a weaker backend or a skipped step, and do not report \"not installed\" as if it were a finding about the work.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/finding-software.md",
+      "instructionLines": 85,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/finding-software"
+    }
+  ]
+}

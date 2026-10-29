@@ -1,0 +1,35 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-CDSCv2.E.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-CDSCv2"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-CDSCv2.E.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-10-29T15:29:21.245Z",
+  "@graph": [
+    {
+      "id": "#E",
+      "name": "Surveillance and Response"
+    },
+    {
+      "id": "#E1",
+      "name": "Emergency preparedness and response systems"
+    },
+    {
+      "id": "#E2",
+      "name": "Public health and disease surveillance systems"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

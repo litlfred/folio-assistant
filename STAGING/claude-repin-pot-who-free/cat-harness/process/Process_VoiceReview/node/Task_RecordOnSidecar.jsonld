@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_VoiceReview/node/Task_RecordOnSidecar.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_VoiceReview/node/Task_RecordOnSidecar",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Record on the block's QA sidecar",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/narrative-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_VoiceReview#flow/F_V12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_VoiceReview#flow/F_V13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_RecordOnSidecar"
+    }
+  ]
+}

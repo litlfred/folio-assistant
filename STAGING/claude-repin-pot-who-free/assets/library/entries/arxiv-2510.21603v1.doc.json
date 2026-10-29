@@ -1,0 +1,1310 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2510.21603v1",
+  "title": "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research",
+  "variant": "pdf",
+  "pages": 13,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-2-related-work"
+    },
+    {
+      "level": 1,
+      "title": "Method: Doc-Researcher",
+      "number": "3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-3-method-doc-researcher"
+    },
+    {
+      "level": 2,
+      "title": "Deep Multimodal Document Parsing",
+      "number": "3.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-31-deep-multimodal-document-parsing"
+    },
+    {
+      "level": 2,
+      "title": "Multimodal Retrieval Architecture",
+      "number": "3.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-32-multimodal-retrieval-architecture"
+    },
+    {
+      "level": 2,
+      "title": "Multimodal Deep Research",
+      "number": "3.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-33-multimodal-deep-research"
+    },
+    {
+      "level": 1,
+      "title": "M4DocBench Benchmark",
+      "number": "4",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-4-m4docbench-benchmark"
+    },
+    {
+      "level": 2,
+      "title": "Motivation of M4DocBench",
+      "number": "4.1",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-41-motivation-of-m4docbench"
+    },
+    {
+      "level": 2,
+      "title": "Domain and Document Collection",
+      "number": "4.2",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-42-domain-and-document-collection"
+    },
+    {
+      "level": 2,
+      "title": "Annotation Process",
+      "number": "4.3",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-43-annotation-process"
+    },
+    {
+      "level": 2,
+      "title": "Benchmark Statistics",
+      "number": "4.4",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-44-benchmark-statistics"
+    },
+    {
+      "level": 1,
+      "title": "Experiment",
+      "number": "5",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-5-experiment"
+    },
+    {
+      "level": 2,
+      "title": "Evaluation Metrics and Benchmarks",
+      "number": "5.1",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-51-evaluation-metrics-and-benchmarks"
+    },
+    {
+      "level": 2,
+      "title": "System Setting and Baselines",
+      "number": "5.2",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-52-system-setting-and-baselines"
+    },
+    {
+      "level": 2,
+      "title": "Multimodal Retrieval System Results",
+      "number": "5.3",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-53-multimodal-retrieval-system-results"
+    },
+    {
+      "level": 2,
+      "title": "Main Results: Multimodal Deep Research",
+      "number": "5.4",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-54-main-results-multimodal-deep-research"
+    },
+    {
+      "level": 2,
+      "title": "Ablation Study",
+      "number": "5.5",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-55-ablation-study"
+    },
+    {
+      "level": 2,
+      "title": "Parsing and Deep Research Efficiency",
+      "number": "5.6",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-56-parsing-and-deep-research-efficiency"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "6",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-6-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-references"
+    },
+    {
+      "level": 1,
+      "title": "A M4DocBench: Supplementary Materials",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "B Implementation Details",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "C Extended Experimental Results",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 47,
+      "summary": {
+        "text": "Title and author block: \"Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research\", by Kuicai Dong, Shurui Huang, Fangda Ye (co-first authors) and nine others at Huawei Technologies, with corresponding addresses for Dong and Yong Liu.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "zhang",
+          "heading": false
+        },
+        {
+          "term": "wang",
+          "heading": false
+        },
+        {
+          "term": "liu",
+          "heading": false
+        }
+      ],
+      "extract": "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research Kuicai Dong∗, Shurui Huang∗, Fangda Ye∗, Wei Han, Zhi Zhang, Dexun Li, Wenjun Li, Qu Yang, Gang Wang, Yichao Wang, Chen Zhang, Yong Liu Huawei Technologies Co., Ltd. * denotes co-first authors; correspond to {dong.kuicai, liu.yong6}@huawei.com",
+      "extractCut": false
+    },
+    {
+      "id": "sec-000-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 426,
+      "summary": {
+        "text": "Abstract of Doc-Researcher. Deep Research systems are limited to textual web data, while scientific papers, technical reports and financial documents keep critical information in figures, tables, charts and equations. Doc-Researcher combines (i) deep multimodal parsing that keeps layout and visual semantics and builds representations from chunk to document level, (ii) retrieval that supports text-only, vision-only and hybrid paradigms with dynamic granularity selection, and (iii) iterative multi-agent workflows that decompose queries and accumulate evidence. The authors also introduce M4DocBench, a benchmark of 158 expert-annotated questions with complete evidence chains over 304 documents, for multi-modal, multi-hop, multi-document and multi-turn deep research. They report 50.6% accuracy, 3.4× the best baseline. The block ends with the CCS concepts, keywords and the ACM copyright notice.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep research",
+          "heading": false
+        },
+        {
+          "term": "multimodal document",
+          "heading": false
+        },
+        {
+          "term": "document parsing",
+          "heading": false
+        },
+        {
+          "term": "across documents",
+          "heading": false
+        },
+        {
+          "term": "visual semantics",
+          "heading": false
+        },
+        {
+          "term": "unified system",
+          "heading": false
+        },
+        {
+          "term": "copies",
+          "heading": false
+        },
+        {
+          "term": "zhang",
+          "heading": false
+        }
+      ],
+      "extract": "Deep Research systems have revolutionized how LLMs solve com- plex questions through iterative reasoning and evidence gathering. However, current systems remain fundamentally constrained to textual web data, overlooking the vast knowledge embedded in mul- timodal documents: scientific papers, technical reports, and finan- cial documents where critical information exists in figures, tables, charts, and equations.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 966,
+      "summary": {
+        "text": "Introduction. Agentic RAG lets systems plan retrieval, call tools, refine queries and validate context, and it underpins current Deep Research systems; but these work only on textual web data and cannot use a person's own local documents. Multimodal agentic RAG systems such as MDocAgent and M3DocRAG have three limitations, the authors argue: (1) shallow parsing, either OCR text or raw page screenshots, which loses the semantics of charts, tables, figures, equations and layout; (2) retrieval over OCR chunks or whole pages only, with no way to pick a granularity (full text, summary, page or chunk) to suit the query; and (3) single-round visual QA instead of iterative, multi-step research. They add that no evaluation framework tests multimodal document understanding in realistic research settings. The block ends mid-sentence at a page break.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep multimodal",
+          "heading": false
+        },
+        {
+          "term": "deep research",
+          "heading": false
+        },
+        {
+          "term": "multimodal retrieval",
+          "heading": false
+        },
+        {
+          "term": "plus private",
+          "heading": false
+        },
+        {
+          "term": "multimodal parsing",
+          "heading": false
+        },
+        {
+          "term": "doc ument",
+          "heading": false
+        },
+        {
+          "term": "research capabilities",
+          "heading": false
+        },
+        {
+          "term": "multimodal document",
+          "heading": false
+        }
+      ],
+      "extract": "Recently, agentic retrieval-augmented generation (RAG) systems have significantly transformed the way LLMs retrieve, organize, and present information [30, 43]. Agentic RAG enhances tradi- tional RAG paradigm by enabling systems to plan retrieval strate- gies, invoke external tools, adaptively refine queries, and validate context [18]. These capabilities underpin recent Deep Research systems [13], which support",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-2-related-work",
+      "number": "2",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 366,
+      "summary": {
+        "text": "Related work, first two of three directions. Document parsing comes in three kinds: shallow parsing (OCR text only, losing spatial and visual information), deep parsing such as MinerU (layout boxes, equations to LaTeX, tables to structured formats, recently VLM-based), and parsing-free approaches that treat pages as screenshots, which avoids parsing cost but loses fine-grained localisation and copes poorly with dense text. The authors say their framework combines the strengths of the deep and parsing-free kinds. Visual document understanding benchmarks have moved from single pages to multi-page and long documents, but none test multi-document synthesis, multi-turn interaction or evidence-chain annotation, which motivates M4DocBench. The rest of the block is the text layer of Figure 2 (the architecture diagram): labels for the offline parsing and indexing stage and the online research stage.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep parsing",
+          "heading": false
+        },
+        {
+          "term": "deep research",
+          "heading": false
+        },
+        {
+          "term": "document parsing",
+          "heading": false
+        },
+        {
+          "term": "page retrieval",
+          "heading": false
+        },
+        {
+          "term": "chunk page",
+          "heading": false
+        },
+        {
+          "term": "multimodal document",
+          "heading": false
+        },
+        {
+          "term": "page screenshots",
+          "heading": false
+        },
+        {
+          "term": "full-text",
+          "heading": false
+        }
+      ],
+      "extract": "Our work builds upon three research directions that collectively define the landscape of multimodal document understanding. Document Parsing Strategies. Document parsing approaches fall into three categories, each with distinct tradeoffs. Shallow parsing relies on OCR to extract text while discarding spatial and visual information [31]. Deep parsing systems like MinerU [39] preserve layout structure through bounding",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-33-multimodal-deep-research",
+      "number": "3.3",
+      "title": "Multimodal Deep Research",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 102,
+      "summary": {
+        "text": "Despite its heading, this block holds the caption of Figure 2 (the Doc-Researcher architecture: (a) multimodal deep parsing and indexing, (b) multimodal deep research) and the third related-work direction, document RAG. M3DocRAG uses vision-only page retrieval, MDocAgent combines text chunks with screenshots, and VDocRAG adds figure extraction, but all do single-round retrieval at a fixed granularity. The authors present Doc-Researcher as the first deep-research framework for multimodal documents, with dynamic granularity selection and progressive evidence synthesis.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "multimodal deep",
+          "heading": true
+        },
+        {
+          "term": "deep research",
+          "heading": true
+        },
+        {
+          "term": "systems",
+          "heading": false
+        },
+        {
+          "term": "strategies",
+          "heading": false
+        }
+      ],
+      "extract": "Figure 2: Doc-Researcher Architecture: (a) multimodal deep parsing and indexing, and (b) multimodal deep research. Document RAG Systems. Due to limited context windows, DocRAG systems have merged that decompose understanding into retrieval and reasoning stages. Current systems [3, 6, 12] employ various strategies: M3DocRAG uses vision-only page re- trieval, MDocAgent combines text chunks with screenshots, and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-3-method-doc-researcher",
+      "number": "3",
+      "title": "Method: Doc-Researcher",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 52,
+      "summary": {
+        "text": "Opening of the method section. Doc-Researcher (Figure 2) has two modules: deep parsing, which turns multimodal documents into structured, multi-granular, searchable units while keeping their multimodal semantics, and deep research, a multi-agent framework that answers complex questions by iterative search and refinement.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep parsing",
+          "heading": false
+        },
+        {
+          "term": "doc-researcher",
+          "heading": true
+        },
+        {
+          "term": "multimodal",
+          "heading": false
+        }
+      ],
+      "extract": "Doc-Researcher (in Figure 2) consists of two main modules: deep parsing and deep research. The deep parsing pipeline transforms multimodal documents into structured, multi-granular, and search- able units while preserving multimodal semantics. The deep re- search adopts a multi-agent collaborative framework to solve com- plex questions with iterative search and refinement. 3.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-005-31-deep-multimodal-document-parsing",
+      "number": "3.1",
+      "title": "Deep Multimodal Document Parsing",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 229,
+      "summary": {
+        "text": "Section 3.1, deep multimodal document parsing. Each document is parsed with MinerU into layout elements indexed by document, page and reading order, each with a type (text, table, figure, equation) and a bounding box. Tables and figures are described once by Qwen2.5-VL, as both a coarse summary and a fine-grained description; equations are converted to LaTeX with UniMERNet. This one-time conversion avoids processing multimodal tokens repeatedly. Layout-aware chunking then merges text elements within section boundaries up to a maximum length, keeping page IDs and boxes for citation. Four granularities are built: chunk, page (merged elements or the raw screenshot), full text, and an LLM-written document summary.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "through layout-aware",
+          "heading": false
+        },
+        {
+          "term": "multimodal",
+          "heading": true
+        },
+        {
+          "term": "box coordinates",
+          "heading": false
+        },
+        {
+          "term": "parsing",
+          "heading": true
+        },
+        {
+          "term": "document",
+          "heading": true
+        },
+        {
+          "term": "bounding box",
+          "heading": false
+        },
+        {
+          "term": "doc",
+          "heading": false
+        },
+        {
+          "term": "elements",
+          "heading": false
+        }
+      ],
+      "extract": "Multi-modal Doc Parsing. Given a collection of multimodal doc- uments D, each document 𝑑𝑖∈D undergoes layout-aware parsing via MinerU [39] to extract structural elements 𝐸𝑖= {𝑒𝑖,𝑗,𝑘}, where indices denote document 𝑖, page 𝑗, and reading sequence 𝑘. Each el- ement is pair with its layout type (text, table, figure, equation), and bounding box coordinates (Figure 5a). For computational efficiency, we perform",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-32-multimodal-retrieval-architecture",
+      "number": "3.2",
+      "title": "Multimodal Retrieval Architecture",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 813,
+      "summary": {
+        "text": "Section 3.2, the three retrieval paradigms. Vision-only retrieval encodes raw page screenshots: no parsing cost, but dense vectors represent interleaved text and images poorly, multi-vector retrievers produce thousands of vectors per page (one per 14×14 or 16×16 patch), and the models are large (often over 3B parameters). Text-only retrieval encodes OCR text, chunks and VLM descriptions of visual elements at page or chunk level with small models (often under 1B), at the cost of preprocessing and some lost visual semantics. Hybrid retrieval encodes visual chunks and screenshots directly alongside text, avoiding conversion loss but costing more at inference. Between the paragraphs is the text layer of Table 1, which compares M4DocBench with ten document RAG/VQA datasets on multi-hop, multimodal, multi-document and multi-turn support, question count, annotation type, domains, languages and retrieval annotation; M4DocBench is the only one with all four properties, with 158 questions, 3.8 documents, 7.0 pages and 14.8 layout elements of evidence per question.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "retrieval",
+          "heading": true
+        },
+        {
+          "term": "human domains",
+          "heading": false
+        },
+        {
+          "term": "computational efficiency",
+          "heading": false
+        },
+        {
+          "term": "multimodal",
+          "heading": true
+        },
+        {
+          "term": "hybrid retrieval",
+          "heading": false
+        },
+        {
+          "term": "visual elements",
+          "heading": false
+        },
+        {
+          "term": "textual conversion",
+          "heading": false
+        },
+        {
+          "term": "vision retrievers",
+          "heading": false
+        }
+      ],
+      "extract": "Vision-only Retrieval. Vision-only retrieval operates at page gran- ularity using raw screenshots as encoded passages. This approach eliminates parsing overhead, offering high efficiency without OCR or layout analysis. However, it faces challenges in representing complex interleaved text-vision content through dense vectors. For high-resolution pages, multi-vector vision retrievers can produce thousands of vectors,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-4-m4docbench-benchmark",
+      "number": "4",
+      "title": "M4DocBench Benchmark",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "Heading-only block: it holds just the number \"4.1\" of the first subsection of the M4DocBench section, whose text is in the next block.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-008-41-motivation-of-m4docbench",
+      "number": "4.1",
+      "title": "Motivation of M4DocBench",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 236,
+      "summary": {
+        "text": "Section 4.1, why M4DocBench. A deep-research benchmark must test four things: multi-hop reasoning, multimodal integration (at least two modalities per question), multi-document synthesis (each document contributing essential information, with topically similar distractors), and multi-turn dialogue. Table 1 shows that most existing DocVQA/RAG datasets have multi-hop and multimodal evidence but only one has genuine multi-document reasoning; evidence averages under two pages per question; only two give layout-level evidence; and none is multi-turn. A footnote says that adding noise documents to single-document questions does not make a true multi-document setting. M4DocBench is presented as filling these gaps with expert-annotated QA pairs and complete evidence chains.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep research",
+          "heading": false
+        },
+        {
+          "term": "m4docbench",
+          "heading": true
+        },
+        {
+          "term": "multimodal document",
+          "heading": false
+        },
+        {
+          "term": "evidence",
+          "heading": false
+        },
+        {
+          "term": "multi-modal",
+          "heading": false
+        },
+        {
+          "term": "questions",
+          "heading": false
+        },
+        {
+          "term": "multi-turn",
+          "heading": false
+        },
+        {
+          "term": "multi-hop",
+          "heading": false
+        }
+      ],
+      "extract": "Existing evaluation benchmarks fail to capture the complexity of multimodal document deep research. A comprehensive evaluation must assess four critical dimensions: (1) Multi-hop reasoning: Complex questions requiring sophisticated reasoning chains across evidence. (2) Multi-modal integration: Questions demanding information from at least two modalities (text, tables, images). (3) Multi-document synthesis: Questions",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-42-domain-and-document-collection",
+      "number": "4.2",
+      "title": "Domain and Document Collection",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 165,
+      "summary": {
+        "text": "Section 4.2, domains and documents. Four domains were chosen for multimodal richness, reasoning complexity and practical relevance: research (166 computer-science papers from arXiv and top conferences, averaging 26.7 pages), insurance (43 brochures and policy documents, 11.0 pages), education (56 university programme materials, 7.5 pages) and finance (38 market research reports on A-shares, Hong Kong and NASDAQ, 22.2 pages).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "averaging",
+          "heading": false
+        },
+        {
+          "term": "insurance",
+          "heading": false
+        },
+        {
+          "term": "words",
+          "heading": false
+        },
+        {
+          "term": "research",
+          "heading": false
+        },
+        {
+          "term": "finance",
+          "heading": false
+        },
+        {
+          "term": "domain",
+          "heading": true
+        }
+      ],
+      "extract": "We select four distinct domains (research, insurance, education, and finance) based on three criteria: (1) Multimodal richness: Each domain features essential visual elements (tables, charts, figures) in- tegrated with text; (2) Reasoning complexity: Questions require diverse capabilities from technical comprehension to numerical analysis; (3) Practical relevance: These represent real-world sce- narios where",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-43-annotation-process",
+      "number": "4.3",
+      "title": "Annotation Process",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 249,
+      "summary": {
+        "text": "Section 4.3, annotation. PhD- and Master's-level researchers annotated, beyond question-answer pairs, six dimensions: hard-negative documents that are topically similar but lack the needed information; the best retrieval granularity for each query (full text, summary, page or chunk); relevant pages and bounding boxes, following MMDocIR; ground-truth sub-query decompositions; answer-verification checklists for long answers, used for LLM-based judging; and bilingual English and Chinese questions and documents. Figure 1 and Figure 4 show annotation examples.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "annotation",
+          "heading": true
+        },
+        {
+          "term": "research systems",
+          "heading": false
+        },
+        {
+          "term": "deep research",
+          "heading": false
+        },
+        {
+          "term": "evaluation",
+          "heading": false
+        },
+        {
+          "term": "questions",
+          "heading": false
+        },
+        {
+          "term": "annotate",
+          "heading": false
+        },
+        {
+          "term": "checklists",
+          "heading": false
+        },
+        {
+          "term": "enabling",
+          "heading": false
+        }
+      ],
+      "extract": "Our annotation process employs PhD/Master-level researchers with extensive research experience to ensure benchmark quality. Beyond basic question-answer pairs, we annotate six critical dimensions that enable comprehensive evaluation of deep research systems: • Hard Negative Documents: We carefully curate documents that share topical similarity with target questions while lacking essential information. This tests",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-44-benchmark-statistics",
+      "number": "4.4",
+      "title": "Benchmark Statistics",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 132,
+      "summary": {
+        "text": "Section 4.4, benchmark statistics (Table 7). Each of the 158 questions involves 12.7 documents (306.4 pages) on average and up to 42 documents (836 pages), of which 3.8 are relevant. 112 questions need more than one modality; evidence is 40.9% text, 30.2% tables and 28.9% images, and averages 7.0 pages and 14.8 layout elements per question. 58 questions are in multi-turn conversations; questions average 3.9 search clauses, and answers range from 59.7 to 272.0 words.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "questions require",
+          "heading": false
+        },
+        {
+          "term": "average",
+          "heading": false
+        },
+        {
+          "term": "statistics",
+          "heading": true
+        },
+        {
+          "term": "pages",
+          "heading": false
+        },
+        {
+          "term": "testing",
+          "heading": false
+        }
+      ],
+      "extract": "Table 7 presents statistics of M4DocBench’s 158 expert-annotated questions, demonstrating its unique evaluation capabilities: (1) Document-scale Complexity. Questions require processing 12.7 documents (306.4 pages) on average, up to 42 documents (836 pages) in challenging cases. Systems must identify 3.8 relevant documents from extensive collections, testing critical document filtering ca- pabilities underexplored",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-5-experiment",
+      "number": "5",
+      "title": "Experiment",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "Heading-only block: it holds just the number \"5.1\" of the first subsection of the experiments section, whose text is in the next block.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-013-51-evaluation-metrics-and-benchmarks",
+      "number": "5.1",
+      "title": "Evaluation Metrics and Benchmarks",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1034,
+      "summary": {
+        "text": "Section 5.1, metrics and benchmarks. Retrieval is scored as recall@k at document, page and layout level: document and page by exact ID match, layout by bounding-box overlap following MMDocIR (parsing-free methods cannot be scored at layout level). The full deep-research workflow is scored on document selection (precision, recall and F1 of the Planner's chosen documents), agentic retrieval (the same recall metrics over the passages accumulated after the search-refine loops), and answer accuracy, judged by an LLM against the annotated checklist; an answer counts as correct only when every checklist item is present. The two benchmarks are M4DocBench and MMDocIR. Most of the block is the text layer of Table 2, recall@10 of text, vision and hybrid retrievers (BM25, E5, BGE-M3, Qwen3-embedding, DSE, ColPali, ColQwen, Jina-embedding-v4 and combinations) on both benchmarks; the block is cut off inside the table.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "bge-m jina",
+          "heading": false
+        },
+        {
+          "term": "multi reranking",
+          "heading": false
+        },
+        {
+          "term": "qwen jina",
+          "heading": false
+        },
+        {
+          "term": "evaluation",
+          "heading": true
+        },
+        {
+          "term": "dense",
+          "heading": false
+        },
+        {
+          "term": "retrieval performance",
+          "heading": false
+        },
+        {
+          "term": "text vision",
+          "heading": false
+        },
+        {
+          "term": "vision hybrid",
+          "heading": false
+        }
+      ],
+      "extract": "Multimodal Retrieval Evaluation. We evaluate retrieval per- formance at three granularities aligned with our retrieval frame- work (§3.2): document, page, and layout. For each granularity, we compute recall@k by comparing retrieved passages2 against gold annotations. Document and page recall are computed using exact ID matching. For chunk-level evaluation, following Dong et al. [5], we calculate recall based on",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-52-system-setting-and-baselines",
+      "number": "5.2",
+      "title": "System Setting and Baselines",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 903,
+      "summary": {
+        "text": "Section 5.2, setup and baselines. Ten retrievers are tested in three configurations: five text retrievers (BM25, E5, BGE-M3, Qwen3-embedding-0.6B, Qwen3-reranker-0.6B) and vision retrievers (DSE, ColPali, ColQwen, and multi-vector and dense Jina-embedding-v4), used text-only (visual elements via VLM descriptions), vision-only (page screenshots, no parsing) or hybrid. Sub-query results are reranked with Qwen3-reranker for text and accumulated equally per sub-query for vision and hybrid. Doc-Researcher runs with Qwen3-32B, Qwen3-235B or DeepSeek-R1 as backbone at three parsing levels: parsing-free (screenshots, plus InternVL3.5-38B to read them), shallow (fixed-length OCR chunks) and deep (layout-aware chunks with VLM transcriptions). Baselines are direct answering with no documents, long context (documents truncated at 96k tokens), and existing document RAG systems. The rest of the block is the text layer of Table 3, accuracy by language and domain, document-selection scores and retrieval recall per configuration; it is cut off inside the table.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "vision retrievers",
+          "heading": false
+        },
+        {
+          "term": "text retrievers",
+          "heading": false
+        },
+        {
+          "term": "retrievers encode",
+          "heading": false
+        },
+        {
+          "term": "text retrieval",
+          "heading": false
+        },
+        {
+          "term": "page screenshots",
+          "heading": false
+        },
+        {
+          "term": "visual chunks",
+          "heading": false
+        },
+        {
+          "term": "doc-researcher",
+          "heading": false
+        },
+        {
+          "term": "qwen3-235b",
+          "heading": false
+        }
+      ],
+      "extract": "Retrieval System. We evaluate 10 retrievers to implement our multimodal retrieval architecture (§3.2): 5 Text retrievers: BM25 [28], E5 [40], BGE-M3 [2], Qwen3-embedding-0.6B [45], and Qwen3- reranker-0.6B [45]. 5 Vision retrievers: DSE [22], ColPali [10], ColQwen [10], and Jina-embedding-v4 [11] (multi-vector and dense variants). We configure these retrievers in three paradigms: (1) Text-only: Text retrievers",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-53-multimodal-retrieval-system-results",
+      "number": "5.3",
+      "title": "Multimodal Retrieval System Results",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 202,
+      "summary": {
+        "text": "Section 5.3, retrieval results (Table 2, details in Figure 7). Among text retrievers BM25 is weakest and dense retrievers (BGE-M3, Qwen3-Embedding) much better. Among vision retrievers Jina-embedding-v4, even dense, beats the other multi-vector models. Vision-only beats text-only on MMDocIR's visual tasks but not on M4DocBench's multi-document questions. Hybrid retrieval beats either single modality throughout: Qwen3-Embedding with Jina-embedding-v4 improves page recall by 8–12% over either alone. Sub-query decomposition helps every paradigm, for example Qwen3-Embedding page recall at k=15 from 42.1% to 49.9%. Recall falls with granularity: over 70% at document level for hybrid methods, 30–40 points lower at page and layout level.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "retrieval",
+          "heading": true
+        },
+        {
+          "term": "hybrid methods",
+          "heading": false
+        },
+        {
+          "term": "recall",
+          "heading": false
+        },
+        {
+          "term": "qwen3-embedding",
+          "heading": false
+        },
+        {
+          "term": "sub",
+          "heading": false
+        },
+        {
+          "term": "performance",
+          "heading": false
+        },
+        {
+          "term": "jina-embedding-v",
+          "heading": false
+        },
+        {
+          "term": "sub-query",
+          "heading": false
+        }
+      ],
+      "extract": "Table 2 presents retrieval performance across different paradigms on M4DocBench and MMDocIR, evaluating both original questions and decomposed sub-queries. Fine-grained results are in Figure 7. Retrieval Paradigm Comparison. Text-only retrieval shows hierarchical performance: sparse retrieval (BM25) performs worst, while dense retrievers (BGE-M3, Qwen3-Embedding) achieve sub- stantial improvements. Vision-only",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-54-main-results-multimodal-deep-research",
+      "number": "5.4",
+      "title": "Main Results: Multimodal Deep Research",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 291,
+      "summary": {
+        "text": "Section 5.4, main results (Table 3). Direct answering scores 5–10% and long context 9–31%, while Doc-Researcher reaches 50.6%, which the authors take to show that research-level questions need a multi-agent workflow, not more context. Shallow parsing gives 34–39%, below parsing-free screenshots at 36–43%; deep parsing with hybrid retrieval gives 42–50%, about 10 points better. Baseline document RAG systems do poorly because they retrieve once with a fixed strategy: MDocAgent 15.8%, M3DocRAG 7.0%, ColQwen-gen 5.7%; Doc-Researcher's 50.6% is 3.4× MDocAgent. The block also holds the text layer and caption of Figure 3, accuracy, accumulated chunks and document, page and layout recall over search turns 1–5 for the three backbones, with accuracy gains of +7.2%, +9.7% and +11.1%.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep research",
+          "heading": true
+        },
+        {
+          "term": "doc-researcher achieves",
+          "heading": false
+        },
+        {
+          "term": "deep parsing",
+          "heading": false
+        },
+        {
+          "term": "multimodal",
+          "heading": true
+        },
+        {
+          "term": "recall",
+          "heading": false
+        },
+        {
+          "term": "long-context",
+          "heading": false
+        },
+        {
+          "term": "despite",
+          "heading": false
+        },
+        {
+          "term": "simplistic",
+          "heading": false
+        }
+      ],
+      "extract": "Table 3 validates our core contributions via systematic comparisons. Deep Research can largely improve multimodal understand- ing. Direct answering achieves only 5-10%; long-context processing ranges within 9-31% despite document content of 96k tokens is given. Results show that neither parametric knowledge nor brute- force context extension can handle research-level complexity. In comparison, Doc-Researcher with",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-55-ablation-study",
+      "number": "5.5",
+      "title": "Ablation Study",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 293,
+      "summary": {
+        "text": "Section 5.5, ablations. Within deep parsing, hybrid retrieval (42.4–50.6%) beats text-only (39.2–45.6%) by 3–5 points, so some visual meaning is lost even with good transcriptions. Removing the Planner costs 6–8 points, since the system then retrieves chunks uniformly from the noisy document set without filtering documents or choosing granularity. Over search turns (Figure 3), document recall rises from 62–65% at turn 1 to 75–82% at turn 3 and levels off near 82–83% by turn 5; accuracy rises from turn 1 to turn 5 by 7.2 points for Qwen3-32B, 9.7 for Qwen3-235B and 11.1 for DeepSeek-R1, mostly in turns 1–3, while accumulated chunks grow from 7–10 to 14–17. Stronger models use fewer chunks (DeepSeek-R1 14.1 against Qwen3-32B 17.2 at turn 5). Layout recall goes from 24–26% to 40–45%. The authors suggest three iterations as a good balance of quality and cost.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "hybrid retrieval",
+          "heading": false
+        },
+        {
+          "term": "turn",
+          "heading": false
+        },
+        {
+          "term": "iterative search",
+          "heading": false
+        },
+        {
+          "term": "design",
+          "heading": false
+        },
+        {
+          "term": "gains",
+          "heading": false
+        },
+        {
+          "term": "accuracy",
+          "heading": false
+        },
+        {
+          "term": "iterations",
+          "heading": false
+        },
+        {
+          "term": "improves",
+          "heading": false
+        }
+      ],
+      "extract": "We ablate components of Doc-Researcher, and validate different architectural design as follows: Hybrid Retrieval Necessity. Within our deep parsing frame- work, hybrid retrieval (42.4-50.6%) outperforms text-only (39.2- 45.6%) by 3-5%. This shows that even with high-quality textual transcriptions in both coarse and fine-grained level, some visual se- mantics is lost. In comparison, visual encoders that directly",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-56-parsing-and-deep-research-efficiency",
+      "number": "5.6",
+      "title": "Parsing and Deep Research Efficiency",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 282,
+      "summary": {
+        "text": "Section 5.6, efficiency (Table 4, whose text layer is in this block), on M4DocBench's 304 documents (6,177 pages, 4,146 figures, 2,739 tables) and 158 questions. Deep parsing takes about 2.5 hours up front, against 9–39 minutes for parsing-free indexing, mostly for MinerU layout analysis and VLM transcription. But at research time parsing-free methods spend about 20 hours, 80% of inference, reading screenshots, while deep parsing finishes the same questions in about 4 hours, a 5× speedup. Multi-vector embeddings take 10–20× the storage and about 4× the indexing time of dense ones, and current vector databases do not support their late-interaction search. For deep parsing, research time splits into about 2 hours planning, 4 hours of search-refine loops and 2 hours answering.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep parsing",
+          "heading": true
+        },
+        {
+          "term": "deep research",
+          "heading": true
+        },
+        {
+          "term": "parsing setting",
+          "heading": false
+        },
+        {
+          "term": "dense",
+          "heading": false
+        },
+        {
+          "term": "storage",
+          "heading": false
+        },
+        {
+          "term": "efficiency",
+          "heading": true
+        },
+        {
+          "term": "transcription",
+          "heading": false
+        },
+        {
+          "term": "phase",
+          "heading": false
+        }
+      ],
+      "extract": "Table 4 analyzes computational tradeoffs across parsing strategies on M4DocBench’s 304 documents (6,177 pages, 4,146 figures, and 2,739 tables) and deep research latency on 158 questions. Parsing Setting Parsing Latency and Cost Doc-Researcher Latency Level Type Parse Index Caption Store Plan Search Refine Answer free vision:dense - 08:56 - 0.15 - 05:34 19:50:16 03:30:42 vision:multi - 39:14 - 4.33 - 59:47 20:32:23",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-6-conclusion",
+      "number": "6",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 187,
+      "summary": {
+        "text": "Conclusion. The authors restate their three contributions: deep multimodal parsing that keeps layout and modality-specific features (11.4% better than simple OCR), a retrieval architecture over text, vision and hybrid paradigms and chunk, page, full and summary granularities, and iterative multi-agent workflows with planning and search-refine loops (3.4× the best baseline); plus M4DocBench, 158 expert-annotated questions over 4 domains. Future work: compact multimodal embeddings, better cross-modal reasoning, and active learning that adapts retrieval to user interaction.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deep research",
+          "heading": false
+        },
+        {
+          "term": "multimodal",
+          "heading": false
+        },
+        {
+          "term": "synthesis",
+          "heading": false
+        },
+        {
+          "term": "doc-researcher",
+          "heading": false
+        },
+        {
+          "term": "parsing",
+          "heading": false
+        },
+        {
+          "term": "systems",
+          "heading": false
+        },
+        {
+          "term": "existing",
+          "heading": false
+        }
+      ],
+      "extract": "We introduced Doc-Researcher, addressing the critical limitation that existing deep research systems cannot process multimodal doc- uments. Our work identifies and resolves three fundamental gaps in current systems. First, we developed a deep multimodal parsing framework that preserves layout structure and modality-specific characteristics, achieving 11.4% improvement over simplistic OCR approaches. Second, we",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 4564,
+      "summary": {
+        "text": "Reference list of the paper, pages 9–13: 46 numbered entries, 36 of them from 2024 or 2025 and 31 on arXiv. They cover vision-language models and embeddings (Qwen2.5-VL, Qwen3, BGE-M3, E5, ColPali, Jina-embedding-v4, DSE), document parsing (MinerU, UniMERNet), document VQA and RAG benchmarks and systems (MMDocIR, ViDoRe, DocBench, M3DocRAG, MDocAgent), and agentic RAG and deep-research systems.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "page layout",
+          "heading": false
+        },
+        {
+          "term": "layout merged",
+          "heading": false
+        },
+        {
+          "term": "layout annotation",
+          "heading": false
+        },
+        {
+          "term": "computer vision",
+          "heading": false
+        },
+        {
+          "term": "layout type",
+          "heading": false
+        },
+        {
+          "term": "layout info",
+          "heading": false
+        },
+        {
+          "term": "layout box",
+          "heading": false
+        },
+        {
+          "term": "vision hybrid",
+          "heading": false
+        }
+      ],
+      "extract": "[1] Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, Humen Zhong, Yuanzhi Zhu, Mingkun Yang, Zhaohai Li, Jianqiang Wan, Pengfei Wang, Wei Ding, Zheren Fu, Yiheng Xu, Jiabo Ye, Xi Zhang, Tianbao Xie, Zesen Cheng, Hang Zhang, Zhibo Yang, Haiyang Xu, and Junyang Lin. 2025. Qwen2.5-VL Technical Report. arXiv:2502.13923 [cs.CV]",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "deep research",
+      "heading": true
+    },
+    {
+      "term": "deep multimodal",
+      "heading": true
+    },
+    {
+      "term": "multimodal retrieval",
+      "heading": true
+    },
+    {
+      "term": "deep parsing",
+      "heading": true
+    },
+    {
+      "term": "deep hybrid",
+      "heading": false
+    },
+    {
+      "term": "page retrieval",
+      "heading": false
+    },
+    {
+      "term": "document retrieval",
+      "heading": false
+    },
+    {
+      "term": "multimodal doc",
+      "heading": false
+    },
+    {
+      "term": "deep text",
+      "heading": false
+    },
+    {
+      "term": "research systems",
+      "heading": false
+    },
+    {
+      "term": "research evaluation",
+      "heading": false
+    },
+    {
+      "term": "research capabilities",
+      "heading": false
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant-core",
+    "branch": "main",
+    "dir": "library/arxiv-2510.21603v1"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/external-registry.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/external-registry",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "External registry",
+      "title": "External registry",
+      "notation": "external-registry",
+      "description": "Trusted registries and observatories outside this instance's control. Nothing here instructs it; its skill is the contract the diagrams rely on it for.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "external"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/external-registry-contract"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry"
+    }
+  ]
+}

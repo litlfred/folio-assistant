@@ -1,0 +1,50 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/valueset-schemas/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/valueset-schemas.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
+            "name": "ast",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One schema per ValueSet, plus the enumeration-response schemas at the IG root.",
+            "name": "valueSetSchemas",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "valueset-schemas",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+      "title": "ValueSets → JSON Schema"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/valueset-schemas",
+  "path": "tools/valueset-schemas/"
+}

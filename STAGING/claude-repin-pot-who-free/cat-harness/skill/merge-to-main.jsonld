@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/merge-to-main.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/merge-to-main",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "merge-to-main",
+      "title": "Merge to `main` — a sub-process with its own gate",
+      "description": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/merge-to-main.md",
+      "instructionLines": 279,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main"
+    }
+  ]
+}

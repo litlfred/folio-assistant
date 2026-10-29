@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/lsi-indexing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/lsi-indexing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "lsi-indexing",
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`",
+      "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
+      "instructionLines": 316,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lsi-indexing"
+    }
+  ]
+}

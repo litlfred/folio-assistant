@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/fhir-validator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/fhir-validator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "fhir-validator",
+      "name": "HL7 FHIR Validator",
+      "description": "HL7's standalone FHIR resource validator. Distinct from ig-publisher, which builds a whole IG: this validates individual resources and profiles against a package, and is what an L3 authoring loop runs between builds.",
+      "detection": {
+        "method": "command",
+        "command": "java -jar ${FHIR_VALIDATOR_JAR:-/opt/fhir-validator/validator_cli.jar} -version"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/java-runtime"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
+    }
+  ]
+}

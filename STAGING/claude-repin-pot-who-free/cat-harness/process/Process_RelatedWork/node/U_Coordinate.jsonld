@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RelatedWork/node/U_Coordinate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RelatedWork/node/U_Coordinate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Coordinate? How?",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RelatedWork/lane/Lane_User",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_AskThePerson",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/U_Coordinate"
+    }
+  ]
+}

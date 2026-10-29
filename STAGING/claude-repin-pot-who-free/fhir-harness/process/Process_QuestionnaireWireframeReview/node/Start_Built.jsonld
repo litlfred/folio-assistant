@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Start_Built.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Start_Built.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Start_Built",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Questionnaire built",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

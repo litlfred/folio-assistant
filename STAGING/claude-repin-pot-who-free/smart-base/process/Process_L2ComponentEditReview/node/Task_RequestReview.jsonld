@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/process/Process_L2ComponentEditReview/node/Task_RequestReview.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_RequestReview.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_RequestReview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Ask for review with staging deep links",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R07"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R08"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

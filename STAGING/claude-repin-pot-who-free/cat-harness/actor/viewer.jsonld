@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/actor/viewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/actor/viewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "viewer",
+      "actorKind": "person",
+      "title": "Viewer",
+      "description": "A read-only identity. Takes on no role: it never appears in a swimlane, which is why `roles` is empty rather than absent.",
+      "hasCapability": [],
+      "mayTakeRole": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/viewer"
+    }
+  ]
+}

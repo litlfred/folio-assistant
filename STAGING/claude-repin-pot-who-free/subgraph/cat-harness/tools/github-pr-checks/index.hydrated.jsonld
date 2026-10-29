@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-checks/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-checks.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Read the check runs of one pull request and their state.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr checks"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "Absent: the change proposal of the current branch.",
+            "name": "number",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One line per check run: name, state, elapsed time, link.",
+            "name": "checks",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "github-pr-checks",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch"
+      ],
+      "title": "Read a pull request's checks (GitHub)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/github-pr-checks",
+  "path": "tools/github-pr-checks/"
+}

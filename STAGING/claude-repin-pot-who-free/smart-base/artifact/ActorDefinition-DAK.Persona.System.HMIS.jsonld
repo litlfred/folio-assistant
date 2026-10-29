@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.System.HMIS.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.System.HMIS",
+  "schema:name": "HealthManagementInformationSystem",
+  "dcterms:title": "Health Management Information System (HMIS)",
+  "dcterms:description": "A digital system used to collect, process, report, and use aggregate health data\nfor programme planning, monitoring, and evaluation at district and national levels.\n\nThe HMIS supports DHIs including:\n- Routine health indicator data collection and management (2.2.4)\n- Non-routine data collection and management (4.1.1)\n- Data storage and aggregation (4.1.2)\n- Data synthesis and visualisations (4.1.3)\n- Data exchange across systems (4.4)\n\n**Services and Application Type**: D6 — Health Management Information Systems (HMIS)\n\n**Functional areas**: Data collection, reporting dashboards, target monitoring,\nprogramme performance tracking, data quality management.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.HMIS"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-base/ActorDefinition-DAK.Persona.System.HMIS.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

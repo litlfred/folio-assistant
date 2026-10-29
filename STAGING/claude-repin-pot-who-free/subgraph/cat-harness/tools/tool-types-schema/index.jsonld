@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/tool-types-schema/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/tool-types-schema.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "tool-types-schema",
+      "title": "Tool I/O type vocabulary"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/tool-types-schema",
+  "path": "tools/tool-types-schema/"
+}

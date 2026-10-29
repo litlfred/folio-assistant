@@ -1,0 +1,61 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/transcribe-whisper-cpp/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/transcribe-whisper-cpp.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      "install": {
+        "cli": "build whisper.cpp from source and download a ggml model (tiny ≈ 75 MB, base ≈ 142 MB)"
+      },
+      "invoke": {
+        "shell": "whisper-cli"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "-f"
+            },
+            "description": "The recording, under the declared `uploads` graph.",
+            "name": "file",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "-l"
+            },
+            "name": "language",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Locale"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Timed transcript under the entry's `transcript/`.",
+            "name": "transcript",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "transcribe-whisper-cpp",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "whisper-cli"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
+      "title": "Transcribe audio — whisper.cpp (option, not installed)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/transcribe-whisper-cpp",
+  "path": "tools/transcribe-whisper-cpp/"
+}

@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/actor/admin.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/actor/admin",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "admin",
+      "actorKind": "person",
+      "title": "Administrator",
+      "description": "Full administrative access. `roles` is what it may act AS and `capabilities` what its machine has. What it may DO is no longer written here: it is an ODRL rule in cat-harness/policies/folio-defaults.jsonld (issue #1180).",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/administrator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/publication-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/editor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/code-reviewer"
+      ],
+      "permissionName": [
+        "admin-settings",
+        "role-management",
+        "release-authorization"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/admin"
+    }
+  ]
+}

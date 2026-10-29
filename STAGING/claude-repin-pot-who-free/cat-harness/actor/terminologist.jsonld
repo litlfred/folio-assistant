@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/actor/terminologist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/actor/terminologist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "terminologist",
+      "actorKind": "person",
+      "title": "Terminologist",
+      "description": "Semantic interoperability and terminology governance specialist who maps data elements to standard terminologies (ICD-11, SNOMED CT, LOINC).",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.Terminologist",
+        "lifecycle": [
+          "author",
+          "validate"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/terminologist",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/role/author"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/terminologist"
+    }
+  ]
+}

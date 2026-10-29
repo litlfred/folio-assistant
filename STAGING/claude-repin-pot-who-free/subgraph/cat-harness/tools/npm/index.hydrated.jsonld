@@ -1,0 +1,54 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/npm/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/npm.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Package, publish, inspect, and retrieve npm packages and Knowledge Graphs distributed as tarballs or packages from npm registry or GitHub Packages.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "npm"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "Arguments passed to npm (e.g. 'pack', 'publish', 'view').",
+            "name": "args",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Standard output from npm invocation.",
+            "name": "stdout",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "npm",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "node"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release"
+      ],
+      "title": "Package manager and registry client for npm and GitHub Packages"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/npm",
+  "path": "tools/npm/"
+}

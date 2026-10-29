@@ -1,0 +1,112 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/fhir-ig-base/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-ig-create",
+      "@type": "bootstrap:Skill",
+      "name": "fhir-ig-create",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c3c69ac96016c591d6c1579fb2cdfa792e98d5c1850c1e75b66e13732eb37a55",
+        "bytes": 9626,
+        "sha256": "c3c69ac96016c591d6c1579fb2cdfa792e98d5c1850c1e75b66e13732eb37a55"
+      },
+      "title": "fhir-ig-create"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
+      "@type": "bootstrap:Skill",
+      "name": "ig-ast-delta",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e96f7a0efa9f69a77e3ceec7cab3de3a9ef3994239f1d4a91730e59f754cdfd",
+        "bytes": 12313,
+        "sha256": "4e96f7a0efa9f69a77e3ceec7cab3de3a9ef3994239f1d4a91730e59f754cdfd"
+      },
+      "title": "ig-ast-delta"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+      "@type": "bootstrap:Skill",
+      "name": "ig-binary-artefacts",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/366f612048bb0082443bf1377bfd6e3abef7b4dc7addf4de1803b08416644000",
+        "bytes": 4904,
+        "sha256": "366f612048bb0082443bf1377bfd6e3abef7b4dc7addf4de1803b08416644000"
+      },
+      "title": "ig-binary-artefacts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+      "@type": "bootstrap:Skill",
+      "name": "ig-build-pipeline",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d3316e6bfab9c99331b3c5487793317301a247fe6df36704cb07a625870eccbc",
+        "bytes": 35061,
+        "sha256": "d3316e6bfab9c99331b3c5487793317301a247fe6df36704cb07a625870eccbc"
+      },
+      "title": "ig-build-pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-fork",
+      "@type": "bootstrap:Skill",
+      "name": "ig-publisher-fork",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e7aac25001ba2171e6f3fe9d625b8dac75529a883de2e7b783c3945d493be5ec",
+        "bytes": 13858,
+        "sha256": "e7aac25001ba2171e6f3fe9d625b8dac75529a883de2e7b783c3945d493be5ec"
+      },
+      "title": "ig-publisher-fork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-reduction",
+      "@type": "bootstrap:Skill",
+      "name": "ig-publisher-reduction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2582638eb09411bc45ce58c315a1363970a42862acde87f56c4a51b54deb9733",
+        "bytes": 15920,
+        "sha256": "2582638eb09411bc45ce58c315a1363970a42862acde87f56c4a51b54deb9733"
+      },
+      "title": "ig-publisher-reduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
+      "@type": "bootstrap:Skill",
+      "name": "ig-render-jekyll",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/328721dcd135afba632476ac592f0203a370e8232aa3fa37b76b6d6b84015ed8",
+        "bytes": 16499,
+        "sha256": "328721dcd135afba632476ac592f0203a370e8232aa3fa37b76b6d6b84015ed8"
+      },
+      "title": "ig-render-jekyll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-links",
+      "@type": "bootstrap:Skill",
+      "name": "ig-site-links",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91cd689e001378d8af3719669b54800ae2e1a2ec6f133f1253d59cb236e4eaf1",
+        "bytes": 5616,
+        "sha256": "91cd689e001378d8af3719669b54800ae2e1a2ec6f133f1253d59cb236e4eaf1"
+      },
+      "title": "ig-site-links"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-theme",
+      "@type": "bootstrap:Skill",
+      "name": "ig-site-theme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/438560dd95ad934912cf419aaddf998e13d8577b451f27f1072aaebe19b2d266",
+        "bytes": 4477,
+        "sha256": "438560dd95ad934912cf419aaddf998e13d8577b451f27f1072aaebe19b2d266"
+      },
+      "title": "ig-site-theme"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/fhir-ig-base",
+  "path": "skills/fhir-ig-base/"
+}

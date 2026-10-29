@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/ig-publisher-service-contract.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/skill/ig-publisher-service-contract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ig-publisher-service-contract",
+      "title": "IG publisher + validator — the role's contract",
+      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/ig-publisher-service-contract.md",
+      "instructionLines": 47,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract"
+    }
+  ]
+}

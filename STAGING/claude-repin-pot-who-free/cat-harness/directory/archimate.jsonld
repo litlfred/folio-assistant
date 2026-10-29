@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/archimate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/archimate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "archimate",
+      "path": "archimate/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/cat-harness"
+      ],
+      "description": "The ArchiMate subgraph — a NAMED SUBGRAPH of the harness, on the `openapi` subgraph's pattern (owner, 2026-10-09: *\"need new specialixed harness (like openapi) for archimate content in the KG\"*). It holds the machinery for ArchiMate models rather than models: the graph typology `archimate` an instance declares to hold them, the validator for the instance's `cat-archimate.config.json`, the reader for Archi's native format, and the rendering sub-pipeline that gives every view, element and relationship a page and an IRI and draws every view as SVG from the model's own diagram — no Archi install. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `archimate-validators`, `archimate-typologies`, `archimate-schemas`, `archimate-scripts` — are declared FROM WITHIN, in `archimate/graph.json` (#980). First instance: smart-ra's DPI-H reference architecture models.",
+      "readmePath": "archimate/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/archimate"
+    }
+  ]
+}

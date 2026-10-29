@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/JudgementCode",
+  "definitions": {
+    "JudgementCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "means": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "means"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-pot-who-free/folio-assistant-core/schema/zod/adjudication/JudgementCodeSchema.schema.json",
+  "title": "JudgementCodeSchema",
+  "description": "Generated from `JudgementCodeSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-pot-who-free",
+    "sha": "4dffd5eceafa5838bb2615cbf8a8cb756a1761be",
+    "pr": "claude/repin-pot-who-free",
+    "run": "40900742963"
+  }
+}

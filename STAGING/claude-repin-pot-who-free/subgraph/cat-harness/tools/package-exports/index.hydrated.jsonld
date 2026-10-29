@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/package-exports/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/package-exports.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Derive a package's `package.json` `exports` from the instance declaration beside it: a directory declared with graph typology `code` (top level or from within) AND named in `files` is exported as `./<dir>/*.js → ./<dir>/*.ts` and `./<dir>/* → ./<dir>/*`; a declared code directory that is not shipped (`test/`) stays private. Keys without `*` are named entry points, kept as written and checked to point into an exported directory. Without `--write` it reports each difference; with it, it rewrites `exports`. Exit 0 in agreement, 1 drift, 2 cannot tell (no declaration, no `package.json`, or no shipped code directory).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat check:package-exports"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--root"
+            },
+            "description": "The instance whose package to check. Default: the instance holding the script.",
+            "name": "root",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--write"
+            },
+            "description": "Rewrite `exports` to the derived set.",
+            "name": "write",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Each difference between the written and the derived `exports`, or the directories exported and those declared but not shipped.",
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          }
+        ]
+      },
+      "name": "package-exports",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-separation",
+      "title": "A package's exports are its declared, shipped code directories"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/package-exports",
+  "path": "tools/package-exports/"
+}
