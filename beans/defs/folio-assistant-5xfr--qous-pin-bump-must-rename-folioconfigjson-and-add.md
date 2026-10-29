@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:37:58Z
-updated_at: 2026-10-29T09:20:00Z
+updated_at: 2026-10-29T08:00:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -361,7 +361,7 @@ Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository" (qou pin bump); no done-when met. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
-_2026-10-29T09:20:00Z_ (drain lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). **Closed. Re-derived on qou `main`, nothing new needed:**
+_2026-10-29T08:00:00Z_ (drain lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). **Closed. Re-derived on qou `main`, nothing new needed:**
 
 - qou c44aed2a (2026-09-22) added `"qaAxes": ["archimedean-wall"]`. It opens all six fenced criteria, not just `detangler-archimedean-wall`.
 - qou dad33d97 (2026-09-26) renamed the config to `qou.config.json` (`<name>.config.json`, since `harness.config.json` was retired too) and fixed `feedbackDir`.
