@@ -5,67 +5,45 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow",
       "@type": "cat-harness:SkillPackage",
       "name": "workflow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
       "@type": "bootstrap:Skill",
       "name": "bpmn-authoring",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/79afa2233d5c8e2e7807f3bd143600700dee752e6e8da579fc0dd03e9d09496c",
-        "bytes": 5585,
-        "sha256": "79afa2233d5c8e2e7807f3bd143600700dee752e6e8da579fc0dd03e9d09496c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ef408ec45122a00f2ff3bff834374e009fca6d4afee2dca9ce583916d5003535",
+        "bytes": 5579,
+        "sha256": "ef408ec45122a00f2ff3bff834374e009fca6d4afee2dca9ce583916d5003535"
       },
       "title": "bpmn-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-processes",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-processes",
       "@type": "bootstrap:Skill",
       "name": "bpmn-processes",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1dca12f59750dfa65209dd93b2332a30c5fe6be279fa8df549f8ebb531a6630c",
-        "bytes": 14462,
-        "sha256": "1dca12f59750dfa65209dd93b2332a30c5fe6be279fa8df549f8ebb531a6630c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b2ed3887c624e1565ac7cb8843ff06929ff2325bce5521907911e2df255459fb",
+        "bytes": 14676,
+        "sha256": "b2ed3887c624e1565ac7cb8843ff06929ff2325bce5521907911e2df255459fb"
       },
       "title": "Processes are BPMN, and the diagrams are executable"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
-      "@type": "bootstrap:Skill",
-      "name": "branch-freshness",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c77f3f8db2fc917f9c5e280168e268fdf880ddb4470c0b315e9761b06eab928",
-        "bytes": 3585,
-        "sha256": "4c77f3f8db2fc917f9c5e280168e268fdf880ddb4470c0b315e9761b06eab928"
-      },
-      "title": "Branch freshness — stay current with main"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
-      "@type": "bootstrap:Skill",
-      "name": "code-review-process",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a5075549e0f965ba01358c022d4417eb6b85519afa0569a42ebbda3bc2fabbb",
-        "bytes": 3721,
-        "sha256": "1a5075549e0f965ba01358c022d4417eb6b85519afa0569a42ebbda3bc2fabbb"
-      },
-      "title": "Code review process — from PR to release approval"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deterministic-and-agentic",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deterministic-and-agentic",
       "@type": "bootstrap:Skill",
       "name": "deterministic-and-agentic",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c531dea751def98aeaeb64dfdd63e129ab347401dda9ae1b8ff6bb4a392e6ff9",
-        "bytes": 14359,
-        "sha256": "c531dea751def98aeaeb64dfdd63e129ab347401dda9ae1b8ff6bb4a392e6ff9"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/75efe8213704467480481d242ce838fc0584e862ad0892726c6c2a2eecc3e18d",
+        "bytes": 14756,
+        "sha256": "75efe8213704467480481d242ce838fc0584e862ad0892726c6c2a2eecc3e18d"
       },
       "title": "The deterministic-to-agentic spectrum"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring",
       "@type": "bootstrap:Skill",
       "name": "dmn-authoring",
       "payload": {
@@ -76,62 +54,40 @@
       "title": "dmn-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/process-state",
       "@type": "bootstrap:Skill",
       "name": "process-state",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a55bdad392895afaa6532a9d44ae7b55a6216fb3981ed618528bd4f20cfb650d",
-        "bytes": 14024,
-        "sha256": "a55bdad392895afaa6532a9d44ae7b55a6216fb3981ed618528bd4f20cfb650d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c81f71c80e0783027764f66c8febbf42967cfd0f4ea5d5639153fe23ea33d7e4",
+        "bytes": 14037,
+        "sha256": "c81f71c80e0783027764f66c8febbf42967cfd0f4ea5d5639153fe23ea33d7e4"
       },
       "title": "Process state — the task you are in, inside the process you are running"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning",
-      "@type": "bootstrap:Skill",
-      "name": "release-epic-planning",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4e305e98616d3127459b214301c69cad5e7c69c734caa54c9b2e4ed07dfa0cb",
-        "bytes": 4975,
-        "sha256": "a4e305e98616d3127459b214301c69cad5e7c69c734caa54c9b2e4ed07dfa0cb"
-      },
-      "title": "Release epic planning"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
-      "@type": "bootstrap:Skill",
-      "name": "release-lifecycle",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cd9bdc86b2b016bc908ed700a63118ca86ddc4717c1a66c5e9b1a86dd5eddd90",
-        "bytes": 4215,
-        "sha256": "cd9bdc86b2b016bc908ed700a63118ca86ddc4717c1a66c5e9b1a86dd5eddd90"
-      },
-      "title": "Release lifecycle — process and policy"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-kg-to-cdn",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
       "@type": "bootstrap:Skill",
       "name": "render-kg-to-cdn",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9d1610edb98a86ea5d57f92076b290cb5cb924df84aa690494ebbe1f6594f970",
-        "bytes": 3664,
-        "sha256": "9d1610edb98a86ea5d57f92076b290cb5cb924df84aa690494ebbe1f6594f970"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9d4f59f8b574d59aa26eed7ead155983190107697aa1b623c31dd4962016d1ed",
+        "bytes": 3691,
+        "sha256": "9d4f59f8b574d59aa26eed7ead155983190107697aa1b623c31dd4962016d1ed"
       },
       "title": "Render a Knowledge Graph to a CDN"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-context",
       "@type": "bootstrap:Skill",
       "name": "session-context",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/249eba5bde26b0e8ca4bf8fe93c59e5013e4bc66edb1f59021b404d108f4d84d",
-        "bytes": 7293,
-        "sha256": "249eba5bde26b0e8ca4bf8fe93c59e5013e4bc66edb1f59021b404d108f4d84d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6feaae002617f2be9ec9fc1d62b777d314aeb32ba1266f2c9a6cc9f93feee524",
+        "bytes": 7303,
+        "sha256": "6feaae002617f2be9ec9fc1d62b777d314aeb32ba1266f2c9a6cc9f93feee524"
       },
       "title": "Session context"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-state-machine",
       "@type": "bootstrap:Skill",
       "name": "session-state-machine",
       "payload": {
@@ -142,7 +98,7 @@
       "title": "Playing a state machine"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-compiled-agents",
       "@type": "bootstrap:Skill",
       "name": "specification-compiled-agents",
       "payload": {
@@ -153,13 +109,13 @@
       "title": "Specification-compiled agents"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/workflow-state",
       "@type": "bootstrap:Skill",
       "name": "workflow-state",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2c380ac49a922026fb1ffa2d616a7af0512b02e2aff01805b05b5ee5601b076e",
-        "bytes": 6755,
-        "sha256": "2c380ac49a922026fb1ffa2d616a7af0512b02e2aff01805b05b5ee5601b076e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6659f09c6944f0b7fd0130d766219e6f3727c79e57808a81a6aa7d8b6cc67862",
+        "bytes": 7116,
+        "sha256": "6659f09c6944f0b7fd0130d766219e6f3727c79e57808a81a6aa7d8b6cc67862"
       },
       "title": "State in a running process"
     }

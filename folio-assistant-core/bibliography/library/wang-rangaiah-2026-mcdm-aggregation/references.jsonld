@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/wang-rangaiah-2026-mcdm-aggregation",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Multi-Criteria Decision-Making: Aggregation-Type Methods",
+      "dcterms:creator": [
+        "Rangaiah, Prof. GP"
+      ],
+      "dcterms:issued": "D:20250908",
+      "dcterms:source": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation"
+    }
+  ]
+}

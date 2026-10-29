@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/GW_StakeholderOK.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/GW_StakeholderOK",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Accepted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/lane/Lane_Stakeholders",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_11",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

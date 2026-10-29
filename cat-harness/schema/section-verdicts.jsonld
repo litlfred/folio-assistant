@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/section-verdicts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/section-verdicts",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "section-verdicts",
+      "title": "section-verdicts",
+      "summary": "Section verdicts — which ingested sections are not PROSE. Bean `fnqn`.",
+      "module": "schemas/content/section-verdicts.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

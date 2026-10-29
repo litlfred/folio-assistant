@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title, abstract, and opening of Section 1 (Introduction) of Borman et al. (Commonwealth Bank of Australia, SCALE workshop at ICML 2026), \"Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution\". Abstract: evaluates a specialist workflow that compiles deterministic BPMN 2.0 diagrams into executable ReAct agents against generalist coding agents (Roo and Cline), reporting ~9-20 percentage points higher tool-use exactness, 2-4x lower penalty-adjusted latency, 3x fewer tool-call errors, >95% lower generation token cost, and zero repair iterations. Section 1 contrasts generalist IDE and multi-agent frameworks (Roo, Cline, FLOW, AFLOW, AutoGen, MetaGPT), which incur high planning/token overhead and cross-generation inconsistency, with specialist templated workflows where the LLM performs localised reasoning within predefined steps.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 1, Section 1.1 (Business Processes), and start of Section 2.1 (BPMN and Traditional Workflow Execution). Argues that although specialist workflows require higher upfront design effort, they suit repeated or large-scale deployment by producing consistent outputs and scoping active context to the minimum needed per subtask, avoiding long-context degradation and lowering token cost as standard operating procedures evolve. The authors compile BPMN 2.0 models into a ReAct-style control graph where each BPMN node defines a typed tool contract and node-local policy, and the control plane enforces branches/joins, per-node context scoping, and contract-derived runtime validation with targeted retries. Section 1.1 motivates BPMN as an auditable enterprise workflow representation, and Section 2.1 introduces deterministic rule-based BPMN engines.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Remainder of Section 2 (Literature Review: 2.1 BPMN and Traditional Workflow Execution, 2.2 LLMs and Agentic Workflows, 2.3 BPMN and LLM Integration) and Section 3 / 3.1 (Methodology: Workflow Selection). Reviews limitations of static BPMN execution under unstructured inputs, general-purpose LLM agentic architectures (ReAct, Tree-of-Thoughts, PAL, AFLOW, MaAS), and prior text-to-BPMN modelling work. Section 3.1 introduces ten author-constructed deterministic BPMN workflows spanning 9 to 52 nodes across e-commerce, cost optimisation, risk, and information retrieval, noting the absence of an established BPMN-to-agent execution benchmark and acknowledging design-bias and determinism scope limits.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Sections 3.2 (Agentic System Design), 3.3 (Proposed System), and start of Section 4.1 (Baseline Systems and Experimental Setup). Explains why the target is a ReAct agent rather than a fixed DAG (adaptability to runtime conditions, scalability to dynamic multi-step coordination, and natural-language prompt editability). Section 3.3 details the five-stage specialist pipeline: (1) BPMN parsing into tasks, decision gateways, and API calls; (2) reusable API client service generation; (3) per-node tool/context generation; (4) iterative self-verification and refinement of each tool; and (5) agent assembly behind a FastAPI service. Section 4.1 describes the comparison against VS Code extensions Roo and Cline on identical BPMN 2.0 XML, API specs, and backend LLM, and notes that AutoGen, MetaGPT, and FLOW failed to produce working end-to-end agents.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -111,7 +143,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 1 caption (Proposed System Architecture), conclusion of Section 4.1, Section 4.2 (Evaluation Metrics), and start of Section 4.2.1 (Agent Generation Evaluation). Obtaining 10 compiled, executable agents per workflow across the 10 workflows (9 nodes/10 edges for Weather up to 52 nodes/60 edges for Cart) took 371 generation attempts (300 successes, 71 failures): 117 attempts each for the specialist system and Cline (85.5% success rate) and 137 for Roo (73.0%). The 300 agents were evaluated across 30,543 test cases (~102 per run) covering all control-flow flag combinations; Weather (46.4% failure rate) and Tournament (42.3%) were hardest, while Social, Spam, and News had zero failures. Cross-run coefficient of variation of Tool-Use Exactness was 0.63 (specialist), 0.86 (Cline), and 1.05 (Roo). Section 4.2.1 defines repair iterations and token usage.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -130,7 +170,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "End of Section 4.2.1, Section 4.2.2 (Agent Run Evaluations using GPT-4.1), and Section 4.3 (Results: 4.3.1 Agent Generation Results and 4.3.2 Agent Run Evaluation Results). Defines LLM-as-a-judge Process Adherence, binary Tool-Use Exactness (TUE), and Penalty-Adjusted Latency Latency = T / max(epsilon, C - (M + E + O)) with epsilon = 1. In generation (4.3.1), the specialist system required 0 repair iterations (vs 2.08 for Roo and 1.89 for Cline) and averaged 49.24k input / 5.82k output tokens (~55k total) vs 1,484.46k/17.40k for Roo and 1,029.27k/15.36k for Cline. In agent execution (4.3.2), the specialist system achieved 57.69% TUE (vs 48.62% Cline, 38.11% Roo), 1.27 mean tool-call errors per run (vs 3.19 Cline, 3.22 Roo, mostly missed calls at 0.86 vs 2.05 and 1.76), 54.68% process adherence (vs 51.57% Cline, 42.43% Roo), and 2.49 s penalty-adjusted latency per effective step (vs 6.59 s Cline, 9.08 s Roo).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -166,7 +214,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 2 caption (Agent Generation Metrics: repair iterations and input/output token usage), closing discussion of Section 4.3.2, and Section 5 (Conclusion). Summarises how externalised BPMN control flow, targeted context management, and modular prompt/tool/orchestration decomposition yield higher tool-use exactness and process adherence, lower latency and error rates, >95% token savings, and zero repair iterations compared to Roo and Cline. Notes that evaluation is scoped to deterministic workflows under default low-configuration baseline usage and outlines future work on heavily tuned generalist baselines and component-level ablations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -185,7 +241,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 6 (GenAI Usage Disclosure: LLMs were used to generate and execute the evaluated agentic workflows and for light editing such as grammar and sentence restructuring) and the first part of References (Aljohani & Do 2025 through Hong et al. 2024).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -204,7 +268,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of References (IEEE Task Force on Process Mining 2025 through Sapkota et al. 2026).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -223,7 +295,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion of References (Schick et al. 2023 through Zhang et al. 2025b).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -259,7 +339,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A / A.1 (Workflow Agent Runs): section heading and caption for Figure 3 (per-workflow agent run evaluation metrics: Tool-Use Exactness, Tool-Call Errors, Latency, and Process Adherence for the specialist system).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -278,7 +366,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.2 (Workflow Summary Table, Table 1): lists the ten deterministic BPMN evaluation workflows with brief overview, node count, and edge count: Cart (52 nodes, 60 edges), Cost (12, 15), Deal (11, 13), Labelling (13, 16), News (34, 38), Risk (23, 25), Social Media (25, 29), Promotion (18, 19), Tournament (14, 17), and Weather (9, 10).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -314,7 +410,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.3 (Key Metrics by Approach): section heading and caption for Figure 4 comparing aggregate agent run evaluation metrics across approaches.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -333,7 +437,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.4 (Base Prompt for Agent Generation, Figure 5): verbatim base prompt given to Roo and Cline to create a ReAct agent in `{framework}_agent_experiment_{num}` with `agent.py` (FastAPI service on `localhost:7860` exposing `/chat` and `/get_history`), `tools.py`, and `prompts/agent_prompt.md`, reading `OPENAI_BASE_URL`, `OPENAI_API_KEY`, and `AGENT_LLM` from environment variables and implementing the supplied `<API_SPEC>` and `<BPMN>` blocks without reading other files or executing the code.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -369,7 +481,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.5 (BPMN Specifications for Each Workflow): section heading and Figure 6 caption for the online retail cart/order fulfillment BPMN workflow (cart validation, payment authorisation, inventory reservation, shipping or cancellation/backorder routing, delivery monitoring, and delivery confirmation, refund, or reorder).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -405,7 +525,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 7 caption: costing/estimation BPMN workflow consisting of a deterministic sequence of data-gathering and calculation tasks with decision gateways selecting cost components and aggregating a final cost/price output.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -441,7 +569,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 8 caption: deal assessment BPMN workflow evaluating a candidate deal through staged checks and scoring steps and routing via decision gateways to accept, reject, or escalate outcomes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -477,7 +613,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 9 caption: rules/criteria-driven labelling/classification BPMN workflow applying sequential checks and gateways to assign labels and/or exclude items.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -513,7 +657,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 10 caption: news processing BPMN workflow that ingests an item, performs validation and enrichment steps, and routes through conditional eligibility/quality branches to categorise, discard, or escalate.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -549,7 +701,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 11 caption: risk and opportunity classifier BPMN workflow that computes risk/opportunity signals, derives a risk/opportunity/mixed/neutral label, and routes via a decision gateway into high/medium vs low priority handling paths.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -585,7 +745,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 12 caption: social media BPMN workflow performing content, user, and context checks and routing via decision gateways to allow, flag, or escalate.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -621,7 +789,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 13 caption: customer promotion BPMN workflow that fetches and validates customer profiles, retrieves order history and loyalty points, checks eligibility, segments customers into high/low value tiers, calculates tier-appropriate discounts, generates recommendations, and routes notifications by urgency.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -657,7 +833,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 14 caption: tournament/bracket BPMN workflow advancing participants through staged rounds via decision gateways until a final winner/outcome is determined.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -693,7 +877,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Figure 15 caption: deterministic weather BPMN workflow performing data retrieval and transformation steps with conditional availability/threshold branches to produce a final forecast/decision output.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     }
   ]

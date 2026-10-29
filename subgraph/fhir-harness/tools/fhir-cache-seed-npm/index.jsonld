@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/fhir-cache-seed-npm/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-cache-seed-npm.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "fhir-cache-seed-npm",
+      "title": "Seed the FHIR package cache from trusted sources (exact versions)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/fhir-cache-seed-npm",
+  "path": "tools/fhir-cache-seed-npm/"
+}

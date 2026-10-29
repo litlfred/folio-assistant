@@ -30,7 +30,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 6046,
-      "summary": null,
+      "summary": {
+        "text": "Presents a benchmark by Horn and Keuper evaluating 21 PDF document parsers on mathematical formula extraction across 100 synthetically generated arXiv-derived PDFs containing over 2,000 inline and display formulas with exact LaTeX ground truth. Introduces a two-stage LLM-and-fuzzy formula alignment pipeline and validates an LLM-as-a-Judge semantic equivalence metric against 750 human ratings across 250 formula pairs (achieving Pearson r = 0.78 versus r = 0.34 for Character Detection Matching and r ≈ -0.16 for Levenshtein similarity), ranking vision-language models and specialized OCR systems led by Qwen3-VL-235B (9.76/10), Gemini 3 Pro (9.75), PaddleOCR-VL (9.65), and Mathpix (9.64) down to rule-based parsers such as GROBID (5.70), followed by 46 references.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "parsed formulas",

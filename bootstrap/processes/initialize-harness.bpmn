@@ -3,11 +3,11 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns#"
                   id="Definitions_Process_InitializeHarness"
-                  targetNamespace="https://litlfred.github.io/bootstrap/0.1.0/workflows"
+                  targetNamespace="https://litlfred.github.io/bootstrap/v0/workflows"
                   exporter="bootstrap" exporterVersion="1">
-  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns#" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
   <bpmn:resource id="bootstrapping-agent" name="Bootstrapping Agent"/>
   <bpmn:resource id="knowledge-graph-data-store" name="Knowledge Graph Data Store"/>
   <bpmn:collaboration id="Collaboration_Process_InitializeHarness">

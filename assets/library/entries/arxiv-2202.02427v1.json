@@ -18,7 +18,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title and authors: \"Lightweight Compositional Embeddings for Incremental Streaming Recommendation\" by Mengyue Hang (Purdue University), Tobias Schnabel and Longqi Yang (Microsoft), and Jennifer Neville (Purdue University and Microsoft).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Abstract. Graph-based recommenders usually assume a static setting where everything about test users and items is known at training time, but real data arrives as a stream of new edges and nodes, and retraining to keep up is impractical. The paper proposes Lightweight Compositional Embedding (LCE), which learns explicit embeddings for only one node type and represents the other implicitly, by composing over its graph interactions, so it can be updated incrementally at low cost when one type (such as items) suits a static representation. On three large user-item datasets in a streaming setting, the authors report that LCE beats competitive baselines and comes close to skyline performance with far fewer parameters than other graph-based models.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction. Graph-based recommenders frame recommendation as link prediction on the user-item graph, but interaction data streams in continuously, while most work assumes a static setting, which hurts cold-start performance and forces regular retraining. The paper studies top-k recommendation under streaming data (long-term interests, as distinct from next-item sequential recommendation). LCE learns a static representation for the node type that is more amenable to one (for example, items) and a compositional function for the other, which lets it update without relearning, use fewer parameters than fully explicit models, and make partially inductive predictions for new nodes of the composed type. The contributions are a formalisation of incremental streaming graph recommendation, the LCE method, and results under an incremental replay protocol, including cold-start items and a Microsoft Teams production setting.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Problem formulation. There is a fixed future graph G_final whose edges are the prediction target, with nodes split into users U and items W and no item-item edges. Only subsets of edges and nodes are seen at time t0, and growing subsets arrive over time, like sampling without replacement from G_final. The setting is partially inductive: new nodes of only one type can arrive, the other type being known at t0. The block ends mid-sentence, as it begins to state that a model may be trained only once, at t0.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The rest of the problem setup and the start of the method, under a heading the extraction misplaced. After the single training at t0, the model goes through K rounds of incremental updates, predicting the edges E_final − E_tK conditioned on G_tK while its parameters can only be estimated on G_t0; Figure 1 illustrates this with an evolving user-book graph. The key idea of LCE is then stated: learn explicit embeddings for only one node set, usually the smaller, and compute the other's representations by a composition function, which makes streaming updates cheap and the model smaller.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The LCE model. Taking users as the explicitly embedded type, each user u has two embeddings (z_u, z̃_u), one for aggregation and one for scoring, and the edge probability is S(u, w) = σ(z̃_uᵀ z_w); recommendations rank items by this score. An item's initial embedding composes the embeddings of the users it interacted with, by mean or sum pooling (Eq. 2), and L graph-convolution layers then propagate information through the graph, with the final item embedding the average of all layers (Eqs. 3 and 4). Following LightGCN, aggregation is mean pooling and the layer transformation is the identity. In offline training the explicit embeddings are fitted with simplified GCN layers; in each update the compositional embeddings and scores are recomputed with the new edges.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Offline batch training. The explicit user embedding matrices are initialised randomly and learned by back-propagation on the initial snapshot G_t0, through an auxiliary task of reconstructing sampled training edges from the remaining ones, with the Bayesian Personalized Ranking loss plus L2 regularisation (Eq. 5). Only the user embeddings are parameters; item embeddings are computed from them by Eqs. 2-4. A validation set is used for hyperparameter search. Figure 1, the streaming user-book graph, is placed in this block.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Online incremental updates. After offline training the explicit user embeddings are frozen; at each new snapshot G_tk, item embeddings are recomputed with Eqs. 2 and 3 on the new adjacency matrix, and new scores are computed with Eq. 1 for missing user-item edges.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The opening of the Empirical evaluation section, cut off after the first research question begins: how LCE compares with competitive baselines.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The list of research questions, continued (the extraction places it under the Baselines heading): whether methods can use incremental updates to improve, how much they gain over the offline setting, how close they get to skyline retraining, and how they handle cold-start items; how important LCE's components and its choice of compositional embedding are; and how LCE performs in a production system.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Replay protocol, data and baselines. Data is split by time into an offline training set with validation, K streaming chunks, and a test set; models are trained once offline, then fed each streaming chunk with parameters fixed, and compared with skyline models retrained on all data so far, using recall@N and nDCG@N on the new test edges. The datasets are Yelp (20,458 users, 37,552 items), Epinions (10,277 users, 87,791 items, with a trust network) and LibraryThing (16,894 users, 59,079 items, with social links), with their time windows in Table 1; since items outnumber users, users are embedded explicitly and items compositionally. Baselines (Table 2) are Top-Popu, ALS, ENSFM, RP3β, SLIM and LightGCN, plus two LCE ablations; ENSFM, which cannot update incrementally, is retrained instead.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Comparison with baselines. In Table 3 (recall@20 and nDCG@20 after the last streaming chunk), almost every method improves with streaming data, the exception being LightGCN on Yelp, and LCE beats all baselines, by 5.2% to 17.1% over the best one, significantly so in the starred cells by paired t-test. LightGCN and SLIM are the strongest baselines; LCE beats LightGCN while having fewer parameters whenever the composed node set is the larger. In Figure 2, LCE's gap between incremental updates and skyline retraining is the smallest of the methods compared, and each incremental step takes seconds against hours to retrain. With cold-start items on Epinions and LibraryThing (Figure 3), LCE improves on SLIM and ALS, the baselines that can handle new items.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Ablations. Using one user embedding instead of two (LCE-1 emb) is slightly worse than full LCE but still comparable to or better than LightGCN, and a single GCN layer (LCE-1 layer) is worse than three, supporting the value of separate aggregation and scoring embeddings and of multiple layers. Mean and sum composition give comparable results. Figures 2 and 3, and Table 4 and Figure 4 of the next section, are placed in this block.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explicit against implicit embeddings. Reversing the design, embedding items explicitly and composing users, performs significantly worse, whether the parameter count is held equal or doubled (Table 4). To test the stationarity assumption, the authors split training data into four chronological buckets, learn LightGCN embeddings on the first, then fix one node type and relearn the other on later buckets: fixing users and updating items does consistently better (Figure 4), which they read as items being the more non-stationary type in these datasets, and as support for composing the non-stationary type.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Evaluation on production data from Microsoft Teams, recommending teams for users to join: 224K users, 26K teams and 65 million interactions, with offline, streaming and test windows of 3 weeks, 2 weeks and 5 months and daily streaming slices. Against LightGCN, LCE matched offline performance with over 80% fewer parameters and was up to 6.42% better on precision@3 with streaming data; LCE kept improving with more streaming data while LightGCN did not, possibly, the authors suggest, because of over-parameterisation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -303,7 +423,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line opening of Related Work, cut off mid-sentence: the work draws on three research directions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -341,7 +469,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work on sequential and streaming recommendation (the block's heading is misplaced by the extraction). Sequential recommenders model the temporal dynamics of interactions, which the authors call orthogonal to incremental recommendation, and cannot handle non-bipartite graphs. Prior streaming recommenders retrain on subsamples or use meta-learning, but have only been shown to work for shallow matrix-factorisation models, and retraining is not practical for large deep or graph-based models; LCE is presented as a graph-based model that supports incremental recommendation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -360,7 +496,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work on graph-based and cold-start recommendation. Graph recommenders such as GraphSage-based models, NGCF and LightGCN cast recommendation as link prediction but need auxiliary features or explicit embeddings for every node, so they do not fit the incremental streaming setting, which LCE's compositional embeddings do. Some non-graph models also represent users by the items they interacted with to address cold start, but cold start assumes a static setting; LCE handles new entities of its composed type and improves over matrix factorisation and SLIM on cold-start items. A fully inductive version could compose over stationary objects or node attributes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -379,7 +523,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion. The paper considers recommendation in an incremental streaming setting, where data keeps arriving after training, and proposes LCE, a compositional graph-based method that supports cheap continuous updates. On three real-world datasets it outperforms competitive baselines, uses streaming data effectively, in many cases approaching skyline performance as if retrained on all data, and improves markedly on cold-start items; results in a Microsoft Teams production setting were also positive.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -398,7 +550,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "References and appendix. The references cover graph and factorisation recommenders (LightGCN, NGCF, PinSage, SLIM, ALS, ENSFM, RP3β), sequential, dynamic and streaming recommendation, cold-start methods, and the datasets. The appendix compares LCE with related methods (Table 5, where LCE is the only one marked as supporting new items, efficient incremental updates, top-k prediction and user-user links without needing features), gives training details (Xavier initialisation, Adam, up to 800 epochs with early stopping on validation recall@20, three GCN layers), dataset filtering, and baseline settings. Table 6 gives offline results, where LCE's margins over the best baseline range from −0.69% (Yelp recall) to +17.07%. On model capacity, LCE learns 2|U|d parameters against LightGCN's (|U| + |W|)d, about five times fewer on Epinions, and Figure 5 shows LCE competitive offline and clearly better with streaming data at a much smaller size.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     }
   ]

@@ -1,0 +1,64 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ns-vocabulary/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ns-vocabulary.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat ns:export"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--layer"
+            },
+            "description": "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does.",
+            "name": "layer",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NamespaceLayer"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where to write; defaults under `_kg/`, which is build output.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The written namespace document.",
+            "name": "vocabulary",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "maintains": "https://litlfred.github.io/folio-assistant/cat-harness/ns.jsonld",
+      "maintainsFrom": "schemas/content/vocabulary.ts",
+      "name": "ns-vocabulary",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
+      "title": "Namespace vocabulary"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ns-vocabulary",
+  "path": "tools/ns-vocabulary/"
+}

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-harness-state.ts",
-    "script_hash": "b71f17caf585"
+    "script_hash": "7c5dfc876e88"
   },
   "subject": {
     "kind": "harness-state",
@@ -21,19 +21,23 @@
     },
     "health-result-is-from-the-current-producer": {
       "summary": "A committed health result was written by a version of its producer that no longer exists, so the remedies it states are the old code's remedies — which is how a reader is told to do something the repository has since established cannot work (bean `7umv`). Examined 4.",
-      "count": 3,
+      "count": 4,
       "entries": [
         {
           "where": "cat-harness-tools/health/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
+          "detail": "written by `test/health/run.ts` at c870fc970a83; the checker is now 2fe437a0f36e. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
         },
         {
           "where": "folio-assistant-core/test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
+          "detail": "written by `test/health/run.ts` at c870fc970a83; the checker is now 2fe437a0f36e. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
+        },
+        {
+          "where": "test/health/results/repository.health-report.json",
+          "detail": "written by `test/health/run.ts` at c870fc970a83; the checker is now 2fe437a0f36e. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
         },
         {
           "where": "who-iris/test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 10855e728e1b; the checker is now c870fc970a83. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
+          "detail": "written by `test/health/run.ts` at c870fc970a83; the checker is now 2fe437a0f36e. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
         }
       ]
     },
@@ -68,5 +72,5 @@
       "entries": []
     }
   },
-  "total": 3
+  "total": 4
 }

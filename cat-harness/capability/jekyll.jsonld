@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/jekyll.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/jekyll",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "jekyll",
+      "name": "Jekyll",
+      "description": "Jekyll static site generator for IG publication.",
+      "detection": {
+        "method": "command",
+        "command": "jekyll --version"
+      }
+    }
+  ]
+}

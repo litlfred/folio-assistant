@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/workflow-list/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-list.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "The BPMN processes this instance defines, and the instances currently open against them.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        },
+        "mcp": {
+          "tool": "workflow_list"
+        }
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "description": "Each process, its policy, and its open instances.",
+            "name": "processes",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "workflow-list",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/process-state",
+      "title": "List processes"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/workflow-list",
+  "path": "tools/workflow-list/"
+}

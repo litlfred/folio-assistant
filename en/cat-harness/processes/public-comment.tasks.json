@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PublicComment",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
  "tasks": {
   "Task_Ingest": {
    "id": "Task_Ingest",
    "name": "Ingest and place each comment",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
    "lane": "Intake agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
    "skills": [
     {
      "name": "public-comment",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -57,7 +60,9 @@
    "id": "Task_Triage",
    "name": "Triage: confirm the anchor, type and priority",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Triage",
    "lane": "Review coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Coordinator",
    "skills": [
     {
      "name": "public-comment",
@@ -66,7 +71,7 @@
    ],
    "role": {
     "name": "review-coordinator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-review-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
     "title": "Review coordinator",
     "skills": [
      {
@@ -92,7 +97,9 @@
    "id": "Task_ProposeChangeSets",
    "name": "Propose change-sets, as records with no issue yet",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets",
    "lane": "Intake agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
    "skills": [
     {
      "name": "public-comment",
@@ -101,7 +108,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -143,7 +150,9 @@
    "id": "Task_GroupChangeSets",
    "name": "Agree each change-set's requirements on its issue",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
    "lane": "Review committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
    "skills": [
     {
      "name": "public-comment",
@@ -152,7 +161,7 @@
    ],
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -170,10 +179,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -206,7 +211,9 @@
    "id": "Task_Assign",
    "name": "Assign to committee members",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Assign",
    "lane": "Review coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Coordinator",
    "skills": [
     {
      "name": "public-comment",
@@ -215,7 +222,7 @@
    ],
    "role": {
     "name": "review-coordinator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-review-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
     "title": "Review coordinator",
     "skills": [
      {
@@ -241,7 +248,9 @@
    "id": "Task_CommitteeRecommends",
    "name": "Recommend a decision, with a rationale",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_CommitteeRecommends",
    "lane": "Review committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
    "skills": [
     {
      "name": "public-comment",
@@ -250,7 +259,7 @@
    ],
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -268,10 +277,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -304,7 +309,9 @@
    "id": "Task_EditorDecides",
    "name": "Decide, weighing the recommendations",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_EditorDecides",
    "lane": "Editor",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
    "skills": [
     {
      "name": "public-comment",
@@ -313,7 +320,7 @@
    ],
    "role": {
     "name": "editor",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
     "title": "Editor",
     "skills": [
      {
@@ -346,12 +353,18 @@
       "via": "author"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html",
       "via": "author"
      },
      {
@@ -365,7 +378,9 @@
    "id": "Task_AuthorEdits",
    "name": "Edit the document as decided, on a feature branch",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
    "lane": "Author (human or agentic)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
    "skills": [
     {
      "name": "public-comment",
@@ -374,7 +389,7 @@
    ],
    "role": {
     "name": "author",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
     "title": "Author",
     "skills": [
      {
@@ -398,12 +413,16 @@
       "href": "../../../reference/skill-instructions/evidence-appraisal.html"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
       "name": "voice-authoring-guidance",
@@ -416,7 +435,9 @@
    "id": "CallActivity_ChangeSet",
    "name": "Review the change set on its staging preview",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
    "lane": "Change set — feature branch and staging",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "staging-review",
@@ -425,11 +446,12 @@
    ],
    "calls": {
     "name": "Content Change and Review",
-    "href": "content-change-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
+    "diagram": "content-change-review.html"
    },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -519,7 +541,9 @@
    "id": "Task_Incorporate",
    "name": "Mark incorporated when the change set merges",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
    "lane": "Change set — feature branch and staging",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "public-comment",
@@ -528,7 +552,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -618,7 +642,9 @@
    "id": "Task_Withdraw",
    "name": "Record the withdrawal",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Withdraw",
    "lane": "Public commenter",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Commenter",
    "skills": [
     {
      "name": "public-comment",
@@ -627,7 +653,7 @@
    ],
    "role": {
     "name": "feedback-provider",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-feedback-provider",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
     "title": "Feedback provider",
     "skills": [
      {

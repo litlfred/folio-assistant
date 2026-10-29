@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_FeatureStaging",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
  "tasks": {
   "Task_Build": {
    "id": "Task_Build",
    "name": "Build the docs site Jekyll · TypeDoc · KG export",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Build",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "feature-staging",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -105,7 +108,9 @@
    "id": "Task_Deploy",
    "name": "Push to the CDN at STAGING/&lt;slug&gt;/",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Deploy",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "render-kg-to-cdn",
@@ -114,11 +119,12 @@
    ],
    "calls": {
     "name": "Render a Knowledge Graph to a CDN",
-    "href": "render-kg-to-cdn.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn",
+    "diagram": "render-kg-to-cdn.html"
    },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -208,7 +214,9 @@
    "id": "Task_LogRendered",
    "name": "Append `rendered` to the render log",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_LogRendered",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "render-logging",
@@ -217,7 +225,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -307,7 +315,9 @@
    "id": "Task_Comment",
    "name": "Comment the preview URL on the PR",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Comment",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "staging-review",
@@ -316,7 +326,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -406,7 +416,9 @@
    "id": "Task_Slug",
    "name": "Derive the slug from the head ref",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Slug",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "feature-staging",
@@ -415,7 +427,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -505,7 +517,9 @@
    "id": "Task_Remove",
    "name": "Remove the preview AND append `removed` — one commit",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Remove",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -514,7 +528,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -604,16 +618,22 @@
    "id": "Task_LogRetained",
    "name": "Append `retained`, with why it stays",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_LogRetained",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "render-logging",
      "href": "../../../reference/skill-instructions/render-logging.html"
     }
    ],
+   "shared": {
+    "id": "GT_LogRetained",
+    "type": "bpmn:GlobalScriptTask"
+   },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -703,7 +723,9 @@
    "id": "Task_Notice",
    "name": "Post the retention notice on the PR",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Notice",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "staging-review",
@@ -712,7 +734,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -802,7 +824,9 @@
    "id": "Task_Validate",
    "name": "Check the slug's SHAPE and that the confirmation repeats it",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Validate",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -811,7 +835,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -901,7 +925,9 @@
    "id": "Task_Preflight",
    "name": "Re-evaluate liveness AT REMOVAL TIME",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Preflight",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -910,7 +936,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -1000,7 +1026,9 @@
    "id": "Task_RemoveDisp",
    "name": "Remove it AND append `removed` — one commit",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_RemoveDisp",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -1009,7 +1037,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -1099,7 +1127,9 @@
    "id": "H_Confirm",
    "name": "Repeat the slug, exactly, to confirm",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/H_Confirm",
    "lane": "Human actor",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Human",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -1108,7 +1138,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -1124,12 +1154,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",

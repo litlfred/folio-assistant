@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/computation-witness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/computation-witness",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "computation-witness",
+      "title": "computation-witness",
+      "summary": "`computation-witness/v1` — the runtime schema for a folio's",
+      "module": "schemas/computation-witness.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

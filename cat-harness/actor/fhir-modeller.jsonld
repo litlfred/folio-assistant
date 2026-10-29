@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/fhir-modeller.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/fhir-modeller",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "fhir-modeller",
+      "actorKind": "person",
+      "title": "FHIR Modeller",
+      "description": "L3 machine-readable artifact creator who translates L2 specifications into FHIR Implementation Guide artifacts using FSH, SUSHI, CQL, and IG Publisher.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.FHIRModeller",
+        "lifecycle": [
+          "author",
+          "validate",
+          "test"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler",
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/author"
+      ]
+    }
+  ]
+}

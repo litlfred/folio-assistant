@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "QC reviewer",
+      "title": "QC reviewer",
+      "notation": "qc-reviewer",
+      "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta"
+      ]
+    }
+  ]
+}

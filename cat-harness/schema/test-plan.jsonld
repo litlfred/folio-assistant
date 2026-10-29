@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "test-plan",
+      "title": "test-plan",
+      "summary": "A TEST PLAN — what a system under test must do, case by case, and the rule",
+      "module": "schemas/test-plan.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

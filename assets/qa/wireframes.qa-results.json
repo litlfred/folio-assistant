@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-wireframes.ts",
-    "script_hash": "891d941d1b66"
+    "script_hash": "76369d5b773b"
   },
   "subject": {
     "kind": "corpus",
@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 48,
+      "count": 49,
       "entries": [
         {
           "ref": "cat-harness/attestations",
@@ -146,6 +146,10 @@
           "wireframe": "state-registry"
         },
         {
+          "ref": "cat-harness/themes",
+          "wireframe": "themes"
+        },
+        {
           "ref": "cat-harness/todos",
           "wireframe": "todos"
         },
@@ -233,5 +237,5 @@
       "entries": []
     }
   },
-  "total": 48
+  "total": 49
 }

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_RenderKgToCdn",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn",
  "tasks": {
   "Task_Resolve": {
    "id": "Task_Resolve",
    "name": "Resolve the Subgraphs, the root URL and the target's Tool",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Task_Resolve",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [
     {
      "name": "render-kg-to-cdn",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -105,7 +108,9 @@
    "id": "Call_ToolSubprocess",
    "name": "Render and push with the target's Tool [its own subprocess]",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Call_ToolSubprocess",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [
     {
      "name": "render-kg-to-cdn",
@@ -114,7 +119,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -204,7 +209,9 @@
    "id": "Task_Report",
    "name": "Report the push: status and message",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Task_Report",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [
     {
      "name": "render-kg-to-cdn",
@@ -213,7 +220,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

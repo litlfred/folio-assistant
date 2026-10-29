@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Chapter 8 title page, author affiliations (Zhiyuan Wang and Gade Pandu Rangaiah), abstract, and the opening of Section 8.1 (Overview), introducing eight aggregation-type multi-criteria decision-making (MCDM) methods—SAW, MEW, AHP, ANP, COPRAS, MOORA, FUCA, and WASPAS—that convert an alternatives-criteria matrix (ACM) into a single performance score per alternative via additive, multiplicative, or hybrid aggregation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 8.1 listing the chronological outline of Sections 8.2–8.10, noting that the Excel-based EMCDM program (Chapter 10) implements SAW, COPRAS, MOORA, and FUCA, stating three chapter learning outcomes, and defining standard ACM notation (m alternatives, n criteria, original values f_ij, normalized values F_ij, weights w_j summing to 1, and weighted normalized values v_ij).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents Table 8.1 (the common 4-alternative, 3-criterion non-dominated ACM with benefit criteria C1 and C2, cost criterion C3, and weights w1 = 0.25, w2 = 0.33, w3 = 0.42) and begins Section 8.2 on Simple Additive Weighting (SAW / WSM, MacCrimmon 1968), defining Step 1's Max normalization equations (8.1) and (8.2) for benefit and cost criteria.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Provides the SAW numerical walkthrough for Step 1 (Table 8.2: normalized ACM) and Step 2 (Equation 8.3 and Table 8.3: weighted normalized ACM obtained by multiplying each normalized value F_ij by its criterion weight w_j), and introduces Step 3 for summing weighted normalized values into performance score P_i.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes the SAW walkthrough in Step 3 (Equation 8.4), yielding P1 = 0.6846, P2 = 0.6648, P3 = 0.8388, and P4 = 0.8290 (ranking A3 > A4 > A1 > A2), summarizes SAW's advantages (simplicity, transparency, broad applicability) and limitations (rank reversal, full additive compensation), and opens Section 8.3 on Multiplicative Exponent Weighting (MEW / WPM, Miller and Starr 1969).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Details MEW Step 2 (Equation 8.5, computing P_i as the product of normalized criteria values raised to weights w_j), computes P1 = 0.6197, P2 = 0.6271, P3 = 0.8329, and P4 = 0.8056 (ranking A3 > A4 > A2 > A1), outlines MEW's advantages (penalizing poor criteria to avoid excessive compensation) and limitations (zero-value disqualification and rank reversal), and opens Section 8.4 on the Analytic Hierarchy Process (AHP).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -149,7 +197,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduces the Analytic Hierarchy Process (AHP, Saaty 1977, 1990), explaining how a decision hierarchy of Goal, Criteria, and Alternatives (Figure 8.1) is evaluated through subjective pairwise comparisons on Saaty's 1–9 scale (begun in Table 8.4) to derive criteria weights via the principal eigenvector or sum-normalization approximation without requiring an ACM.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -168,7 +224,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes Table 8.4 (Saaty's 1–9 pairwise comparison scale and reciprocals) and explains how AHP acts as a full MCDM method: constructing n pairwise comparison matrices (m x m) of alternatives per criterion—either from subjective judgments or by mapping objective ACM data onto the 1–9 scale—deriving local priority vectors via the eigenvalue method, and multiplying by the criteria weight vector to obtain global priorities.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -187,7 +251,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines AHP Step 1 for constructing the n x n reciprocal pairwise comparison matrix M_A of criteria (Equations 8.6 and 8.7, requiring n(n-1)/2 comparisons) and illustrates it with subjective judgments on C1, C2, and C3 (a_12 = 3, a_13 = 5, a_23 = 4) to form a 3 x 3 matrix.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -206,7 +278,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines AHP Step 2 for computing criteria weights from the principal eigenvector w* of M_A w* = lambda_max w* (Equations 8.8 and 8.9), and solves the 3 x 3 numerical example (lambda_max = 3.086, w* = [6.6943, 2.9876, 1]^T) to obtain normalized criteria weights w1 = 0.6267, w2 = 0.2797, and w3 = 0.0936.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -225,7 +305,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines AHP Step 3 for checking pairwise comparison consistency via the Consistency Index CI = (lambda_max - n)/(n - 1) and Consistency Ratio CR = CI / RI (Equation 8.10), explains the transitivity property and Saaty's Random Index values (Table 8.5 for n = 1 to 10), and verifies acceptable consistency for the 3-criteria example (CI = 0.0429, RI = 0.58, CR = 0.074 <= 0.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -244,7 +332,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduces AHP Step 4 for determining local priority scores v_ij of alternatives under each criterion from m x m pairwise comparison matrices, and presents the logarithmic transformation procedure (starting with Max normalization in Equations 8.11 and 8.12) for mapping objective ACM data onto Saaty's 1–9 scale.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -263,7 +359,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes the logarithmic mapping equations for AHP Step 4—defining the maximum and minimum normalized ratios r_max,j and r_min,j = 1 (Equations 8.13–8.14) and the log-linear mapping to [1, 9] (Equation 8.15) with reciprocal entries for F_ij < F_kj—and explains why logarithmic scaling preserves multiplicative ratio relationships before solving for local priority eigenvectors.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -282,7 +386,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Walks through the AHP Step 4 numerical calculations on the Table 8.1 ACM: presents the Max-normalized ACM (Table 8.6), computes r_max,1 = 1.8235 and sample pairwise entry a_13 = 3.5140 (a_31 = 0.2846) under C1, and tabulates the complete 4 x 4 pairwise comparison matrix, local priority vector v_i1, and consistency ratio (CR = 0.0427) for C1 in Table 8.7.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -301,7 +413,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents the AHP pairwise comparison matrices and local priority vectors for alternatives under C2 (Table 8.8, CR = 0.0677) and C3 (Table 8.9, CR = 0.0389), and defines Step 5 (Equation 8.16) for aggregating local priorities with criteria weights to compute global priority score P1 = 0.4105.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -320,7 +440,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes the AHP global priority calculations (P1 = 0.4105, P2 = 0.1951, P3 = 0.1761, P4 = 0.2183, ranking A1 > A4 > A2 > A3) and explains how to build and solve the same 3-level AHP model using the SuperDecisions software, referencing screenshots in Figures 8.2(a)–(c) and a shared model file.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -373,7 +501,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Captions for Figure 8.2(a), showing the 3-level AHP hierarchy in SuperDecisions software, and Figure 8.2(b), showing the SuperDecisions output screenshot with criteria weights and local priorities of alternatives highlighted.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -409,7 +545,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents Figure 8.2(c) (SuperDecisions global priorities for AHP), notes the common hybrid practice of combining subjective AHP criteria weights with objective MCDM ranking methods (such as SAW or MEW) directly on the ACM, and lists the main advantages and limitations of AHP (dependence on subjective judgments, discrete 1–9 scale granularity, and rank reversal).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -428,7 +572,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Concludes the limitations of AHP (rank reversal and exponential growth in pairwise comparisons) and opens Section 8.5 on the Analytic Network Process (ANP, Saaty 1996, 1999), contrasting ANP's generalized network of clusters, inner/outer dependencies, and feedback loops with AHP's strict hierarchy and setting up a simplified 2-alternative (A1, A2), 3-criterion (C1: Cost, C2: Technical Feasibility, C3: Market Risk) example in Step 1.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -464,7 +616,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes the ANP Step 1 network specification—detailing mutual criteria influences, feedback from alternatives A1 and A2 to C2 and C3, and the 75%/25% influence split between alternatives and criteria clusters (illustrated in Figure 8.3)—and begins Step 2 for node-by-node pairwise comparisons starting under the Goal node G.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -483,7 +643,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Computes ANP Step 2 local priorities under the Goal node G (yielding w_{G->C1} = 0.25, w_{G->C2} = 0.25, w_{G->C3} = 0.50 with lambda_max = 3.0) and under Criterion 1 (C1), weighting C1's inner comparison of {C2, C3} by 0.25 to obtain w_{C1->C2} = 0.0833.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -502,7 +670,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continues ANP Step 2 local priority calculations: completes C1's weights to C3 (0.1667) and to alternatives A1 (0.5625) and A2 (0.1875) using the 75% alternatives allocation, derives all cluster-weighted priorities under parent node C2 (to C1, C3, A1, A2), and begins the calculations under parent node C3.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -521,7 +697,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes ANP Step 2 by computing the remaining priorities under C3 (to C2, A1, and A2) and the feedback priorities from alternatives A1 (to C2: 0.3333, C3: 0.6667) and A2 (to C2: 0.50, C3: 0.50), then defines Step 3 to assemble these column vectors into the 6 x 6 weighted supermatrix W (Table 8.10).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -540,7 +724,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Displays the 6 x 6 ANP weighted supermatrix W (Table 8.10) and defines Step 4 (Equation 8.17) for computing the limit supermatrix W^infinity = lim_{k->infinity} W^k by raising W to powers until steady-state convergence (Table 8.11), yielding raw alternative priorities A1 = 0.2409 and A2 = 0.1876 and normalized global priorities 0.5622 and 0.4378.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -593,7 +785,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Concludes the ANP example by recommending A1 (0.5622 vs. 0.4378 for A2), explains how SuperDecisions verifies the weighted supermatrix W, limit supermatrix W^infinity, and normalized global priorities, and provides captions for Figures 8.4(a) and 8.4(b).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -629,7 +829,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents Figure 8.4(c) (SuperDecisions normalized global priorities for ANP), summarizes ANP's four advantages (modeling interdependence and feedback loops, systemic insight, consistency checks, handling intertwined factors) and four limitations (stakeholder communication difficulty, software/theory barrier, complex verification, overkill for independent criteria), and opens Section 8.6 on Complex Proportional Assessment (COPRAS, Zavadskas et al. 1994).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -648,7 +856,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Outlines the COPRAS method and walks through Step 1 (Sum normalization via Equation 8.18 and Table 8.12 on the Table 8.1 ACM) and Step 2 (multiplying by criterion weights w_j via Equation 8.19 to form the weighted normalized ACM begun in Table 8.13).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -667,7 +883,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes Table 8.13 for COPRAS, defines Step 3 (Equations 8.20 and 8.21) for separately summing weighted normalized benefit criteria (S_i+) and cost criteria (S_i-) per alternative, tabulates S_i+, S_i-, and P_i for all four alternatives in Table 8.14, and introduces Step 4.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -686,7 +910,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines COPRAS Step 4 (Equation 8.22) for computing performance score P_i from S_i+ and inversely scaled S_i-, calculates P1 = 0.2214, P2 = 0.2183, P3 = 0.2813, and P4 = 0.2790 (ranking A3 > A4 > A1 > A2), summarizes COPRAS's advantages and limitations, and opens Section 8.7 on Multi-Objective Optimization on the basis of Ratio Analysis (MOORA, Brauers and Zavadskas 2006).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -705,7 +937,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents Steps 1 and 2 of the MOORA method on the Table 8.1 ACM: Step 1 applies vector (Euclidean) normalization (Equation 8.23, Table 8.15), and Step 2 multiplies by criterion weights w_j (Equation 8.24) to construct the weighted normalized ACM begun in Table 8.16.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -724,7 +964,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes Table 8.16 and presents MOORA Step 3 (Equation 8.25, subtracting the sum of weighted normalized cost criteria from benefit criteria), yielding P1 = 0.0193, P2 = 0.0523, P3 = 0.1537, and P4 = 0.1391 (ranking A3 > A4 > A2 > A1), discusses MOORA's advantages and limitations, and opens Section 8.8 on Faire Un Choix Adequat (FUCA, Fernando et al. 2011).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -743,7 +991,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains the normalization-free FUCA method: Step 1 assigns integer ranks r_ij (1 for best to m for worst under each benefit or cost criterion, illustrated in Table 8.17 for the Table 8.1 ACM), and Step 2 computes the weighted rank sum R_i = sum_j (r_ij * w_j) (Equation 8.26), where the smallest R_i ranks first.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -762,7 +1018,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes the FUCA numerical calculation (R1 = 2.59, R2 = 2.59, R3 = 2.58, R4 = 2.24, giving ranking A4 > A3 > A1 = A2), summarizes FUCA's advantages (simplicity, no normalization dependence, outlier insensitivity) and limitations (loss of magnitude differences, ties, rank reversal), and opens Section 8.9 on Weighted Aggregated Sum Product Assessment (WASPAS, Zavadskas et al. 2012) through Step 1 (Max normalization).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -781,7 +1045,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines WASPAS Step 2 (Equation 8.27, blending SAW and MEW scores via parameter lambda in [0, 1]), calculates scores at lambda = 0.5 on the Table 8.1 ACM (P1 = 0.6521, P2 = 0.6460, P3 = 0.8358, P4 = 0.8173, ranking A3 > A4 > A1 > A2), summarizes WASPAS's advantages and limitations, and opens the chapter summary (Section 8.11).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -800,7 +1072,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents eight concluding summary points comparing the eight aggregation-type MCDM methods (noting that SAW, MEW, COPRAS, MOORA, and WASPAS all rank A3 first on Table 8.1 whereas FUCA ranks A4 first, and recommending multi-method comparison in practice) and begins Section 8.12 (References) with Baydas et al. (2024) and Brauers and Zavadskas (2006).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -819,7 +1099,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continues the Section 8.12 reference list from Fernando et al. (2011) through Si et al. (2016), covering foundational sources for SAW (MacCrimmon 1968), MEW (Miller and Starr 1969), AHP (Saaty 1977, 1990; Podvezko 2009), ANP (Saaty 1996, 1999), and chemical engineering MCDM applications.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -838,7 +1126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continues the Section 8.12 reference list from Stefano et al. (2015) through Zavadskas et al. (1994), citing works on COPRAS, AHP hybrid comparisons, and multi-objective optimization / MCDM applications in chemical engineering by Wang, Rangaiah, and co-authors.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -857,7 +1153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Concludes the Section 8.12 references with Zavadskas et al. (2012) on WASPAS and begins Section 8.13 (Exercises) with practice problems E8.1 (3 alternatives, 4 criteria), E8.2 (4 alternatives, 5 criteria), and the start of E8.3 (6 alternatives, 3 criteria).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -876,7 +1180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completes Exercise E8.3 (6-alternative, 3-criterion ACM) and presents conceptual and sensitivity-analysis exercises E8.4 (comparing SAW and MEW), E8.5 (comparing AHP and ANP), E8.6 (comparing COPRAS, MOORA, and FUCA), and E8.7 (role and sensitivity analysis of lambda in WASPAS on the E8.1 ACM).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     }
   ]

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_KgToPortal",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
  "tasks": {
   "D_Constraints": {
    "id": "D_Constraints",
    "name": "State the constraints, with denominators",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Constraints",
    "lane": "Deployment owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Deployment",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {
@@ -61,7 +64,9 @@
    "id": "E_Scope",
    "name": "Decide what may leave the repository",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_Scope",
    "lane": "Editorial",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Editorial",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -70,7 +75,7 @@
    ],
    "role": {
     "name": "editor",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
     "title": "Editor",
     "skills": [
      {
@@ -103,12 +108,18 @@
       "via": "author"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html",
       "via": "author"
      },
      {
@@ -122,7 +133,9 @@
    "id": "A_Select",
    "name": "Cut the subgraph that leaves",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Select",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -131,7 +144,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -221,7 +234,9 @@
    "id": "A_Serialize",
    "name": "Serialize to JSON-LD",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Serialize",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "kg-export",
@@ -230,7 +245,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -320,7 +335,9 @@
    "id": "A_Package",
    "name": "Package: files plus a manifest of digests",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Package",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -329,7 +346,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -419,7 +436,9 @@
    "id": "S_Sign",
    "name": "Sign the package and/or each asset",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/S_Sign",
    "lane": "Attestation (GDHCN / WHO SMART Trust)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Attestation",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -428,7 +447,7 @@
    ],
    "role": {
     "name": "attestation-service",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-attestation-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
     "title": "Attestation service",
     "skills": [
      {
@@ -446,7 +465,9 @@
    "id": "E_HumanEyes",
    "name": "Human eyes on the rendered artefact",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_HumanEyes",
    "lane": "Editorial",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Editorial",
    "skills": [
     {
      "name": "continual-progress",
@@ -455,7 +476,7 @@
    ],
    "role": {
     "name": "editor",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
     "title": "Editor",
     "skills": [
      {
@@ -488,12 +509,18 @@
       "via": "author"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html",
       "via": "author"
      },
      {
@@ -507,7 +534,9 @@
    "id": "D_Undetermined",
    "name": "Record the decision as still open",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Undetermined",
    "lane": "Deployment owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Deployment",
    "skills": [
     {
      "name": "decision-audit",
@@ -516,7 +545,7 @@
    ],
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {
@@ -562,7 +591,9 @@
    "id": "A_Distribute",
    "name": "Publish to the origin (a cache may front it)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Distribute",
    "lane": "Publish target",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Target",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -571,7 +602,7 @@
    ],
    "role": {
     "name": "publish-target",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
     "title": "Publish target",
     "skills": [
      {
@@ -585,7 +616,9 @@
    "id": "P_Verify",
    "name": "Verify what arrived against what was signed",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/P_Verify",
    "lane": "Portal (external consumer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Portal",
    "skills": [
     {
      "name": "kg-to-portal",
@@ -594,7 +627,7 @@
    ],
    "role": {
     "name": "external-registry",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-external-registry",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
     "title": "External registry",
     "skills": [
      {

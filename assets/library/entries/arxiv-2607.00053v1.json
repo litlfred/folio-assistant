@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Abstract. LLM routers that decide from the task description alone inherit a Bayes-error floor in multi-turn agentic software engineering, because a similar issue can hide a one-line typo or a multi-module refactor. The paper proposes SWE-Router: a cheap model runs a few exploratory turns, and the router reads that partial trajectory before deciding whether to continue cheaply or escalate to an expensive model. A Bayes-optimality theorem says conditioning on the partial trajectory never harms routing and is strictly better when exploration is informative. Across weak/strong model pairs the authors report large cost-efficiency gains while keeping most of the strong model's performance, and they release a multi-LLM trajectory dataset.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction, opening. LLMs in agentic harnesses reach state-of-the-art resolution rates on repository-scale coding benchmarks, but their per-task cost exceeds open-weight alternatives by an order of magnitude or more while only a minority of tasks need frontier capability, so sending every task to a frontier model is wasteful. The block also carries the author affiliations (UCL, UNIST, PSL, Basel) and the venue line: the 5th Deep Learning for Code Workshop, ICML 2026.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction: LLM routing. Existing routers choose a model per instance as classifiers or calibrated probability estimators over the task description q, picking the cheapest model with the best cost-adjusted success probability. The authors argue this fits agentic SWE poorly, since the difficulty is often not identifiable from q alone; the disambiguating information is produced by the agent itself, whose ReAct-style turns spend much effort on bug localization and yield failed tests, file contents and stack traces that no prompt-only router can see.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction: value-based temporal routing and contributions. A cheap weak model m1 runs a few exploratory turns, then a learned value head, supervised by binary trajectory rewards and related to execution-free reward models, predicts from the partial trajectory whether m1 will solve the task; above a cost-adjusted threshold m1 continues, otherwise the task escalates to a stronger m2. Stated contributions: identifying the Bayes-error floor of prompt-conditioned routers and introducing temporal routing; SWE-Router as the first routing framework conditioned on the agent's own intermediate observations; and substantial cost reductions at matched resolution on SWE-Bench Verified against prompt-only baselines.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Front matter: the title, \"SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks\", and the authors Seongho Son, Sangwoong Yoon, Jiahua Tang, Shuhan Wang, Lorenz Wolf and Ilija Bogunovic.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Text extracted from the left panel of Figure 1, not running prose: a conventional router maps the task q to a prediction r̂(q), and the panel notes that q alone carries too little information, giving a large Bayes error.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Text extracted from the right panel of Figure 1 plus its caption. The weak, cheaper model m1 explores the code base for K turns of thought, action and observation; a value head reads that partial trajectory, predicts the probability m1 succeeds, and either continues with m1 (high) or switches to the stronger, more expensive m2 (low), which restarts from the original prompt q. The caption says conditioning on the partial trajectory breaks the information-theoretic ceiling of prompt-only routers (Theorem 4.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -170,7 +226,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Background and method. A SWE-agent trajectory is a sequence of (thought, action, observation) turns ending in a submit whose git patch is scored by unit tests as a binary reward. A binary router invokes the weak model m1 when its estimated success minus λ times its cost exceeds the strong model's; λ converts cost to success-probability units and tracing it gives the cost–quality Pareto curve. Because early turns reveal what the issue text lacks, the paper runs m1 for K turns, trains a value function (a pretrained LLM with a small classification head, cross-entropy on the binary reward) on that partial trajectory, and escalates by restarting m2 from q, with the K weak turns counted in the cost. Two simplifications reduce the rule to one tuned threshold; the authors use the one-sided version, continue iff r̂1 ≥ λ''.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -189,7 +253,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A fragment only: the tail of a sentence (\"deployment-time decision procedure\") and the running header, with no content of the Experiments section itself.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -208,7 +280,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Theoretical results. Routing is treated as a one-step Bayesian decision, so the Bayes-optimal expected utility is monotone in the information conditioned on (the classical \"information never hurts\" principle of DeGroot and Blackwell). Theorem 4.1: because the task description Q is a function of the partial trajectory S_t, the optimal utility given S_t is at least that given Q, strictly better whenever the expected utility gap given S_t is not determined by Q. The proof sketch uses max{a,b} = ½(a+b+|a−b|), the tower rule and conditional Jensen. Read practically, prompt-only routers see only the gap averaged over Q, while a few exploratory turns let easy instances stay cheap and hard ones escalate; the gain vanishes only when the prompt already determines the choice.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -227,7 +307,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Evaluation metrics and Algorithm 1. AUROC scores the value head as a binary classifier of success; Route-AUC is the normalised area under the cost-versus-resolved-rate curve from sweeping the threshold, with all-weak at (0,0) and all-strong at (1,1), so 0 is cost-proportional interpolation and 1 is the strong model's resolved rate at the weak model's cost. Algorithm 1 gives the deployment procedure: run m1 for up to K steps (returning early if it submits), score the trajectory with the value head, then either continue with m1 to submission or restart m2 from q.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -246,7 +334,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Experiment setting and start of results. Training and test splits come from SWE-Smith and SWE-Bench, validation from SWE-Smith only. Trajectories are generated in mini-SWE-agent, forming two weak/strong pairs: gpt-5-mini or deepseek-v3.2 as the weak model and gemini-3-pro-preview as the strong one. The value head is Qwen2.5-Coder-7B-Instruct with a two-class head fine-tuned by LoRA. Baselines are logistic regression, k-NN and XGBoost on text-embedding-3-large embeddings of q, plus the authors' own non-temporal router (K=0). The block includes the text of Figure 2, cost-versus-resolved curves on held-out SWE-Bench Verified against a random-assignment band from 400 Monte-Carlo permutations; its caption says SWE-Router (K=3) lies above the band and for some thresholds exceeds the strong-model endpoint.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -265,7 +361,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Results: does conditioning on the partial trajectory beat prompt-only baselines? The authors read Figure 2 as SWE-Router lying above the random band for both pairs and dominating the embedding baselines over most of the cost range. On the SWE-Bench Verified test split, with deepseek-v3.2 as m1 SWE-Router reaches Route-AUC 0.780, +15.3 points over the non-temporal K=0 router, and with gpt-5-mini as m1 it is +12 points over the strongest baseline. AUROC is not strongly correlated with routing performance. On both pairs the curve briefly passes above the all-strong point, which the authors attribute to weak and strong models solving different subsets of instances.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -284,7 +388,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work, short form. Agentic frameworks such as ReAct and SWE-agent let LLMs work on real repositories, and code benchmarks have moved from self-contained problems to repository-level evaluation led by SWE-bench and its curated subset. FrugalGPT introduced cost-aware cascades and RouteLLM formalised binary routing from preference data. All of these condition on the prompt alone; SWE-Router differs by conditioning on the partial agent trajectory.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -303,7 +415,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion. SWE-Router routes on a short partial trajectory of a cheap weak model rather than the task description alone; Theorem 4.1 shows this never harms routing and helps when exploration is informative. Evaluated on two popular model pairs, it improves Route-AUC by at least 12 points over the strongest baseline on the SWE-Bench Verified test split.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -322,7 +442,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Impact statement. The authors expect lower frontier-model inference cost and energy use at little performance cost, but warn that routing on partial trajectories could be misused to bypass safety-focused frontier models, and name routing that also weighs task safety as future work.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -341,7 +469,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The reference list (Aggarwal et al. through Zhuo et al.), mostly LLM-routing, code-generation and SWE benchmark papers. The block also carries Table 1, which belongs to the appendix: per split, instances / resolved % / cost for each model run in mini-SWE-agent with a 75-step budget. On SWE-Bench Verified the resolved rates are 55.6% (gpt-5-mini, $16.6), 62.4% (deepseek-v3.2, $22.6) and 70.4% (gemini-3-pro, $391.3); total collection cost was $105.4, $130.5 and $608.2. The strong model has no training split because only weak models need one.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -379,7 +515,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: data collection. Because SWE-smith ships only claude-3.7-sonnet trajectories, the authors generated and release their own. SWE-smith is sub-sampled into repository-disjoint train (about 1.7k trajectories per weak model), validation (about 210, for threshold tuning) and test (about 170–346) partitions, labelled by the SWE-smith unit tests. Trajectories were also collected on all 500 SWE-bench Verified issues for all models; under the mix-1 constitution four fifths of these go to training, so the genuinely held-out SWE-bench slice is 100 instances.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -398,7 +542,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: experiment design. Mix-1 merges SWE-Smith training trajectories with four of five cross-validation folds of SWE-Bench Verified; validation comes from SWE-Smith, with separate test splits from SWE-Smith and SWE-Bench Verified. The LoRA adapter uses r=32, α=64, dropout 0.05; training is 5 epochs, learning rate 5×10⁻⁵ cosine with 50 warmup steps, effective batch 16 and an 8192-token context. One packed row per trajectory applies the head at every user-turn boundary K from 0 to Kmax=4, and each q is replaced by a random one of three LLM paraphrases during training and validation. The baselines repeat those of the main text.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -417,7 +569,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: full results, Table 2 — AUROC and Route-AUC on SWE-Smith validation, SWE-Smith test and SWE-Bench Verified test for the three embedding baselines, the non-temporal router and SWE-Router with K = 1 to 4. On SWE-Bench Verified, SWE-Router's Route-AUC is 0.694–0.709 against at most 0.565 for the baselines and the non-temporal router with gpt-5-mini as m1, and 0.718–0.780 against at most 0.627 with deepseek-v3.2. The caption concedes that on the SWE-Smith test split the gpt-5-mini router does not beat the baselines, and attributes the inconsistency between SWE-Smith validation and test to a distribution shift from splitting by repository.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -436,7 +596,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: full proof of Theorem 4.1. With Δ = U1 − U2, the max identity writes the Bayes-optimal utility as a Z-independent term plus ½E|E[Δ|Z]|. Since Q is a function of S_t, the tower property and conditional Jensen with |x| give E|E[Δ|Q]| ≤ E|E[Δ|S_t]|, so V(S_t) ≥ V(Q), with equality iff E[Δ|S_t] is σ(Q)-measurable, that is, iff the partial trajectory says nothing about Δ beyond the prompt.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -455,7 +623,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: additional related work in three groups. LLMs for software engineering: OpenHands, structure-aware and two-stage repair, planning, multi-agent testing and executable code actions, with SWE-smith and Agent-RLVR for training and SWE-RM for execution-free patch scoring, to which the value head is related. SWE benchmarks: cross-file completion, tool use, SWE-bench and its multimodal, multilingual, higher-rigor, live and performance variants, with contamination concerns answered by contamination-resistant benchmarks and SWE-bench Pro. LLM routing: hybrid, mixing, meta-modelling and ensembling approaches, contrastive, classification, graph and budget-aware routers, reasoning-mode routing and cascades, model embeddings for unseen models, RL-based routers, and routing benchmarks.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     }
   ]

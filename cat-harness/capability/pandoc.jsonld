@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "pandoc",
+      "name": "Pandoc",
+      "description": "Universal document converter. The document adapter's whole render path goes through it: Markdown → HTML and Markdown → PDF, neither of which needs a TeX installation.",
+      "detection": {
+        "method": "command",
+        "command": "pandoc --version"
+      }
+    }
+  ]
+}

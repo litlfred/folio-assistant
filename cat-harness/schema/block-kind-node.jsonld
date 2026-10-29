@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-kind-node.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-kind-node",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "block-kind-node",
+      "title": "block-kind-node",
+      "summary": "A block kind as a KG node: `folio-block-kind/v1`, one JSON file per kind in",
+      "module": "schemas/block-kind-node.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

@@ -5,174 +5,174 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
       "@type": "cat-harness:SkillPackage",
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/create-sticky-note",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/site-presentation-assets",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-art-intake",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-artefacts",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-contrast",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-declaration",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-generation",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theming"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-artefacts",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-contrast",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-generation",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming"
       ],
       "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
       "hasManifest": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "name": "theming",
       "path": "skills/ui/theming",
       "version": "0.1.0"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/create-sticky-note",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 154,
       "instructionsPath": "skills/ui/theming/create-sticky-note.md",
       "name": "create-sticky-note",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/51bb6c277b2569f91454a0b827941e24af68f6b97de10b10cfdc24370f306063",
-        "bytes": 7869,
-        "sha256": "51bb6c277b2569f91454a0b827941e24af68f6b97de10b10cfdc24370f306063"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9771483588520966f32ef37bacf48d3361347a9d7d473c428b6184984f360e3d",
+        "bytes": 7872,
+        "sha256": "9771483588520966f32ef37bacf48d3361347a9d7d473c428b6184984f360e3d"
       },
       "title": "Create a sticky note"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/site-presentation-assets",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 111,
       "instructionsPath": "skills/ui/theming/site-presentation-assets.md",
       "name": "site-presentation-assets",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ce04b5abea85119190f2f519cccfe10ed4801c19fb38040ad0fa5eb3ea095bc",
-        "bytes": 5290,
-        "sha256": "1ce04b5abea85119190f2f519cccfe10ed4801c19fb38040ad0fa5eb3ea095bc"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b9c2f0a4336ff1498b6d39482f8e7883f091e9fe3669283e47365b3803387829",
+        "bytes": 5302,
+        "sha256": "b9c2f0a4336ff1498b6d39482f8e7883f091e9fe3669283e47365b3803387829"
       },
       "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-art-intake",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 177,
       "instructionsPath": "skills/ui/theming/theme-art-intake.md",
       "name": "theme-art-intake",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3bbf674966e7f74cf45113e74b7e5007d61e9b74787b915abbd0d625ee6a584d",
-        "bytes": 9634,
-        "sha256": "3bbf674966e7f74cf45113e74b7e5007d61e9b74787b915abbd0d625ee6a584d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5d54f5a505f023ca8417941b75fab2cb2b656a0e2293d8da46f7d51cfc5a4dc5",
+        "bytes": 9653,
+        "sha256": "5d54f5a505f023ca8417941b75fab2cb2b656a0e2293d8da46f7d51cfc5a4dc5"
       },
       "title": "Theme art intake"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-artefacts",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-artefacts",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 228,
       "instructionsPath": "skills/ui/theming/theme-artefacts.md",
       "name": "theme-artefacts",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/23aa7d69c9c2f5da756207daa162a14508bdd6d2355e8f99fcbd3c3e23801800",
-        "bytes": 11742,
-        "sha256": "23aa7d69c9c2f5da756207daa162a14508bdd6d2355e8f99fcbd3c3e23801800"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/28cbe600fdc5fc52b4175c1c5be5574c0f74fa341e1f09a9d59a2abc920baec1",
+        "bytes": 11750,
+        "sha256": "28cbe600fdc5fc52b4175c1c5be5574c0f74fa341e1f09a9d59a2abc920baec1"
       },
       "title": "Per-artefact specialisation"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-contrast",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-contrast",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 75,
       "instructionsPath": "skills/ui/theming/theme-contrast.md",
       "name": "theme-contrast",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5e589bc22abc605625c8ea02c6532110310e43d10e9c65d91477bdb0abfc5d31",
-        "bytes": 3553,
-        "sha256": "5e589bc22abc605625c8ea02c6532110310e43d10e9c65d91477bdb0abfc5d31"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1537da5c6d8bf5dd3331643e24d945f5fb73c00c66b8c1ed222bdc8b73c62d06",
+        "bytes": 3556,
+        "sha256": "1537da5c6d8bf5dd3331643e24d945f5fb73c00c66b8c1ed222bdc8b73c62d06"
       },
       "title": "Contrast: measured over the darkest thing that could be there"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-declaration",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 104,
       "instructionsPath": "skills/ui/theming/theme-declaration.md",
       "name": "theme-declaration",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8eaff4851357114d6ba91ab5232f4bfee8c3318b2936a5bfbce12aa0c278be92",
-        "bytes": 5117,
-        "sha256": "8eaff4851357114d6ba91ab5232f4bfee8c3318b2936a5bfbce12aa0c278be92"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5bc6c169b768e1a6d13c6f743e6b5373bc877a00f34ebed22d0bd4a3b354f954",
+        "bytes": 5120,
+        "sha256": "5bc6c169b768e1a6d13c6f743e6b5373bc877a00f34ebed22d0bd4a3b354f954"
       },
       "title": "Declaring a theme"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-generation",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-generation",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Turning a declared theme into CSS — `bun run cat themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 75,
       "instructionsPath": "skills/ui/theming/theme-generation.md",
       "name": "theme-generation",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/09ba2ee4711fbe67069d600c4a48f903d367440c0b8009205555b10e624c121b",
-        "bytes": 3366,
-        "sha256": "09ba2ee4711fbe67069d600c4a48f903d367440c0b8009205555b10e624c121b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5af2ad3a9dc1cbca683d3631fa046e8ee3b7abed200f77237fa3c3db42036037",
+        "bytes": 3369,
+        "sha256": "5af2ad3a9dc1cbca683d3631fa046e8ee3b7abed200f77237fa3c3db42036037"
       },
       "title": "Generating a theme's CSS"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theming",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last. Read this to find which stage owns the fact you need; read the stage for the fact.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 101,
       "instructionsPath": "skills/ui/theming/theming.md",
       "name": "theming",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7607df86087080c4b8c5e2fa8beeff4b3be5066e499520f16620682aec309438",
-        "bytes": 5755,
-        "sha256": "7607df86087080c4b8c5e2fa8beeff4b3be5066e499520f16620682aec309438"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/70ff051edb31a284ac30ec9b3ca330f7467f6d0588ddb9405c8cf2e0c87514f1",
+        "bytes": 5769,
+        "sha256": "70ff051edb31a284ac30ec9b3ca330f7467f6d0588ddb9405c8cf2e0c87514f1"
       },
       "title": "Theming, split on the stage it fails at"
     }

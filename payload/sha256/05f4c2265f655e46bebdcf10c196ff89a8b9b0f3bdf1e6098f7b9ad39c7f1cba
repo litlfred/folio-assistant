@@ -1,0 +1,654 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2606.04382v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "When a research library acquires a book, a profes-\nsional cataloger reads it and attaches a small set\nof standardised labels describing what it is about.\nFor English-language cataloging worldwide these la-\nbels are drawn from the Library of Congress Subject\nHeadings (LCSH) (Library of Congress, n.d.), a con-\ntrolled vocabulary of roughly half a million autho-\nrised headings, many further refined by subdivisions\n(e.g. Sociology--Research). Subject access of this kind\nis what lets a reader find everything a collection holds\non a topic, independent of the words an author chose.\nAssigning it well",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Introduction and contributions. LCSH is a controlled vocabulary of roughly half a million authorised headings, many refined by subdivisions, and assigning it is slow expert work that software and LLMs may assist; but unlike GND (LLMs4Subjects), MeSH (BioASQ) or EuroVoc (MultiEURLEX), LCSH has no standard public benchmark, so published numbers cannot be compared. LCSHBench v1.0 contributes a consensus-grounded dataset of 22,346 books in 15 languages, admitted when at least two independent cataloging agencies assigned LCSH, with a default union answer key (about 46% of development assertions are single-source) plus unanimous and per-catalog views, and further contributions on concordance, tasks, metrics and baselines.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for\nLibrary of Congress Subject Heading Assignment\nKwok Leong Tang\n2026-06-01\nAbstract\nAutomated subject cataloging assigns controlled-\nvocabulary headings to bibliographic records, but\nLCSH has no standard public benchmark. We intro-\nduce LCSHBench: 22,346 books in 15 languages from\nthe openly licensed Harvard, Columbia, and Prince-\nton catalogs. Records enter only when at least two\nindependent cataloging agencies assigned LCSH; we\nrelease per-catalog provenance plus union and unani-\nmous answer views. A concordance study of 465,187\nwork",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Title, author and abstract of \"LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment\" by Kwok Leong Tang (2026-06-01). The paper introduces a public, versioned benchmark for automated assignment of Library of Congress Subject Headings, built from books that independent professional catalogers in several research libraries cataloged, and scores systems with a panel of metrics rather than one headline number.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Literature review",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-001-literature-review.md",
+      "narrative": null,
+      "content": "This work sits at the intersection of three literatures:\nthe cataloging-theory tradition on what a “subject”\nis and how reliably it can be assigned; the automated\nsubject-indexing literature on systems that assign it;\nand the benchmark literature in adjacent controlled\nvocabularies. We draw on all three, and locate the\ngap each leaves for LCSH.\n2.1\nWhat a “subject” is: subject anal-\nysis and aboutness\nSubject cataloging begins with subject analysis —\ndetermining what a work is about and rendering\nthat judgement as controlled-vocabulary headings\n(Joudrey and Taylor 2018). Hjørland’s foundationa",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Literature review, part one. The work draws on cataloging theory, automated subject indexing and benchmarks in adjacent vocabularies. On what a subject is, Hjørland argues that a subject is a judgement shaped by the analyst's purpose rather than a property read off a document, so there is no single gold answer and a key must come from agreement among experts, which the consensus design operationalises. On inter-indexer consistency, studies since Zunde and Dexter (1969) and Leonard's review (1977) find that independent indexers agree on exact terms only modestly, commonly in the 10–50% range, with consistency rising as terms are generalised.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Automated subject indexing",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-automated-subject-indexing.md",
+      "narrative": null,
+      "content": "Automated subject indexing has a long applied his-\ntory, surveyed comprehensively by Golub (Golub\n2021). The dominant open toolkit is Annif (Suomi-\nnen 2019), which combines string-matching and su-\npervised extreme-multi-label learning and underpins\nproduction services at several national libraries; re-\ncent work adapts transformer-based extreme-multi-\nlabel classifiers to subject indexing (Bertalis et al.\n2024). These systems are typically trained and evalu-\nated against a single institution’s headings, which —\ngiven the consistency results above — conflates gen-\nuine error with legitimate ca",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Literature review, part two. Automated subject indexing is surveyed by Golub; the main open toolkit, Annif, combines string matching with extreme multi-label learning, but such systems are usually trained and evaluated against one institution's headings, conflating error with legitimate cataloger variation. On LLMs, Chow, Kao and Li used ChatGPT to generate LCSH for theses and concluded that human catalogers remain essential; the German National Library's DNB-AI ranked fourth by F1 but first by expert rating in SemEval-2025, which the author calls the most important prior result because numeric and expert rankings diverge; Chow's agentic pipeline and hybrid embedding-plus-LLM pipelines are also noted.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-methodology.md",
+      "narrative": null,
+      "content": "3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A section number only: the start of the Methodology (3.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The two tasks",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-004-the-two-tasks.md",
+      "narrative": null,
+      "content": "A system takes a book’s bibliographic fields and pro-\nposes subject headings. We score two tasks that iso-\nlate different abilities.\nTask A — Generation (open vocabulary). Given only\n3\nthe bibliographic fields, the system must produce the\ncorrect headings from the entire vocabulary, with no\nhints. This is the realistic, end-to-end task a human\ncataloger performs. Output is an unordered set of\nheadings.\nTask B — Retrieval pipeline (retrieve →rerank →se-\nlect). Many practical systems work in stages: a fast\nfirst stage retrieves a rough shortlist from the vocabu-\nlary, and later stages re-examine",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The two tasks. A system takes a book's bibliographic fields and proposes subject headings. Task A is open-vocabulary generation: from the fields alone, produce an unordered set of headings from the whole vocabulary, as a cataloger does. Task B is a staged pipeline over the full released vocabulary of about 515,000 LCSH and LCGFT labels: retrieval of the top k headings (L1, whose recall bounds everything downstream), cross-encoder reranking (L2), LLM reranking (L3) and selection of the final set (L4, scored like Task A). This replaces a frozen per-record candidate pool, which would bake in one retriever's choices and hide the embedding model, the component most worth measuring.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Consensus ground truth",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-005-consensus-ground-truth.md",
+      "narrative": null,
+      "content": "There is no single correct heading set for a book —\ncataloging is expert judgement, and while profession-\nals largely agree on a work’s subject they vary in how\nthey express it, as shown in Section 3.3. We therefore\ndefine ground truth by consensus across independent\nlibraries: the same book is cataloged separately by\nseveral research libraries, and where independent ex-\nperts agree we have something close to truth. The\ninclusion rule is strict and never relaxed to enlarge\nthe dataset: a book is admitted only if at least two\nlibraries independently assigned LCSH to it.\nInde-\npendence is enforc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Consensus ground truth and inter-cataloger concordance. Since cataloging is expert judgement, ground truth is defined by agreement across independent libraries: a book is admitted only if at least two libraries independently assigned LCSH, with independence enforced at the cataloging agency (MARC 040) so copy-cataloged records do not count twice, and the rule is never relaxed to enlarge the dataset. To test whether experts agree enough, the paper compares the 465,187 works subject-cataloged by all three libraries, using three-way and mean-pairwise Jaccard indices under exact and concept matching (Table 1): 93.3% share a concept-level heading but only 39.4% have identical heading sets, 35.6% of assertions are single-source, and median three-way Jaccard is 0.50 exact and 0.86 concept. A human cataloger reproduces about 87% (exact) and 93% (concept) of peers' consensus.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sources and matching",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-006-sources-and-matching.md",
+      "narrative": null,
+      "content": "The raw material is openly licensed bulk MARC from\nresearch libraries — Harvard, Columbia, and Prince-\nton (the Library of Congress dump was considered\nbut dropped, as its coverage stops at 2014). All are\nCC0 / public domain, so the benchmark redistributes\nthe actual records, making it fully reproducible. The\nsame book is identified across catalogs by OCLC\nnumber (primary) and LCCN (fallback); a subtle\nbut high-impact step strips the historical ocm/ocn/on\nprefixes and leading zeros from OCLC numbers and\nrejects all-zero identifiers, without which matching\nsilently fails — or, worse, collapses",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Sources, matching and extraction. The data are CC0 bulk MARC from Harvard, Columbia and Princeton (the Library of Congress dump was dropped because coverage stops in 2014), so actual records are redistributed. Books are matched by OCLC number, with LCCN as fallback, after stripping ocm/ocn/on prefixes and leading zeros and rejecting all-zero identifiers, without which matching fails or merges unrelated records. Inputs are title, authors, date, publisher, physical description, summary, contents and notes, with language and broad discipline; answers are the 6xx headings reassembled with subdivisions. Provenance filtering keeps 600–651 headings only with second indicator 0 or $2 lcsh, and 655 only with $2 lcgft, removing many FAST, MeSH and foreign-vocabulary strings that look like LCSH; headings are then typed by MARC field (topical 65.9%, geographic 17.4%, name 14.3%, genre/form 2.2%), and 78.8% carry subdivisions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Consensus views and cleaning",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-007-consensus-views-and-cleaning.md",
+      "narrative": null,
+      "content": "Heading by heading, a heading asserted by 𝑣of\nthe 𝑛libraries that hold a book (its vote, Equa-\ntion 1) is tiered unanimous if 𝑣= 𝑛, single if\n𝑣= 1, and majority otherwise; from which we re-\nlease three answer-key views: per-catalog (the raw\nevidence), merged/union (the default; rewards find-\ning any heading a professional used), and unanimous\n(the strictest, highest-confidence view).\nHeadings\nare cleaned by discarding MARC-machinery artifacts\n(strings whose base matches a ^\\d{3}[-/] field-tag\npattern) and by canonical normalization before any\ncomparison: NFC, lower-casing, -- separator ca",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Consensus views and cleaning. A heading asserted by v of the n libraries holding a book is tiered unanimous if v = n, single if v = 1 and majority otherwise, and three answer-key views are released: per-catalog (the raw evidence), merged union (the default, rewarding any heading a professional used) and unanimous (the strictest). Headings are cleaned by discarding MARC field-tag artifacts and normalised before comparison (NFC, lower-casing, canonical -- separators, collapsed whitespace, trailing periods stripped), so systems are judged on substance rather than typography.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Balancing and splits",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-008-balancing-and-splits.md",
+      "narrative": null,
+      "content": "Naively harvested cross-library matches are badly\nskewed:\nheavily co-collected, uniformly identified\nWestern art music floods the pool, and a few Euro-\npean languages crowd out the rest. We correct this\nat selection by stratified sampling over LC classifica-\ntion (round-robin across disciplines with a hard 5%\nmusic cap) and language (explicit per-language tar-\ngets and floors). All randomness is driven by a fixed\nseed, so builds are reproducible. To avoid letting in-\nput scarcity distort which books appear, we select\nfirst and enrich second: books are chosen on consen-\nsus, discipline, and lan",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Balancing and splits. Naively harvested cross-library matches are skewed toward heavily co-collected Western art music and a few European languages, so selection uses stratified sampling over LC classification (round-robin across disciplines with a hard 5% music cap) and over language (per-language targets and floors), driven by a fixed seed. Books are chosen on consensus, discipline and language alone, and only then is each one's input completed with the longest non-empty value of each field across its libraries. The collection is split, balanced by language, into a public development set and a held-out test set.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Composition",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-009-composition.md",
+      "narrative": null,
+      "content": "LCSHBench v1.0 contains 22,346 books (develop-\nment 18,993; test 3,353), none discarded for empty\nanswers. It spans 15 languages, with English delib-\nerately held to 23.2% (German and French 10.1%\neach; Chinese, Spanish, and Russian 8.1%;\nItal-\nian, Arabic, and Japanese 6.4%; Korean and Por-\ntuguese 5.0%; down to Hindi 0.1%). Across the LC-\nclassification areas present the collection is near-flat\n(~3.2–5.0% each), with music pinned at its 5.0% cap\nand ~4.8% of books carrying no classification. 66.1%\nof books rest on two-library agreement and 33.9%\non three. Roughly a quarter carry an original-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Composition. LCSHBench v1.0 contains 22,346 books (development 18,993, test 3,353), none discarded for empty answers, across 15 languages with English deliberately held to 23.2%; 66.1% of books rest on two-library agreement and 33.9% on three.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Contamination",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-010-contamination.md",
+      "narrative": null,
+      "content": "The test answers are released only as SHA-256 hashes\nof normalized headings, so scoring is exact and auto-\nmatic without the answers appearing verbatim. In\nthe public release, record identifiers (OCLC, LCCN)\nare likewise replaced by an opaque hashed key — pre-\nserving each work’s stable identity for linking and\nscoring without redistributing the source libraries’\nidentifier numbers in bulk. (The construction repos-\nitory retains raw identifiers as a build artifact; the\ndistinction is between the internal build and the pub-\nlished dataset.) We are explicit that the test-answer\nhashing is a spee",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Contamination. Test answers are released only as SHA-256 hashes of normalised headings, so scoring is exact and automatic without the answers appearing verbatim; the author treats this as a speed-bump, not a guarantee, since hashes over a finite public vocabulary can be dictionary-attacked.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Metrics",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-011-metrics.md",
+      "narrative": null,
+      "content": "The central methodological commitment is that no\nsingle number is trustworthy on its own: an aggre-\ngate can hide catastrophic per-language or per-type\nfailure, and can rank systems against the grain of\nexpert judgement (Galke et al. 2022; D’Souza et al.\n2025). We report a panel and read the pattern across\nit.\nFor generation, predictions and answers are sets; we\nreport micro- and macro-averaged precision, recall,\nand F1.\nFor the retrieval pipeline, predictions are\nranked and we report recall@𝑘(𝑘∈{5, 10, 50, 200}),\nP@𝑘, R-Precision, and MRR. Every measure is com-\nputed under two match defini",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Metrics. No single number is trusted on its own, because an aggregate can hide per-language or per-type failure and can rank systems against expert judgement. Generation is scored as sets with micro- and macro-averaged precision, recall and F1; the retrieval pipeline with recall@k (k = 5, 10, 50, 200), P@k, R-precision and MRR. Every measure is computed under exact matching (the full subdivided heading) and concept matching (the base term before the first --); a high concept but low exact score means the right topic in the wrong authorised form. Every measure is also broken down by language and heading type, which the paper calls the panel's most important safeguard. Retrieval is scored against the gold headings reachable in the vocabulary, with the ceiling reported (41% of gold headings exact, 85% concept, on the evaluation subset; name headings are reported separately) and only records with at least one reachable heading averaged: 1,483 of 2,002 for exact, 1,929 for concept, with bootstrap 95% confidence intervals.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Baselines and experimental setup",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-012-baselines-and-experimental-setup.md",
+      "narrative": null,
+      "content": "We establish reference systems on the development\nset; the neural systems are run on a deterministic,\nlanguage-stratified 2,002-record subset of the 18,993-\nrecord development set (the full neural run is deferred\nfor cost).\n• Frequency floor. Predict the 200 globally most-\nfrequent development headings for every record\n— a trivial, input-independent baseline that ex-\nposes head-heavy exploits.\n• Stock on-device embedder. EmbeddingGemma-\n300M embeddings over the full vocabulary at the\ndeployed 256 dimensions — a strong, free, fully\nlocal retriever, untouched.\n• Hosted\nembedders.\nOpenAI\ntext-emb",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Baselines and setup. Reference systems run on the development set, the neural ones on a deterministic, language-stratified 2,002-record subset (the full run is deferred for cost): a frequency floor predicting the 200 most frequent development headings for every record; stock EmbeddingGemma-300M at 256 dimensions; OpenAI text-embedding-3-small (1,536 dimensions) and -large (3,072); and the same EmbeddingGemma backbone with a low-rank fine-tune, the only system trained on the benchmark's records, under a strict leakage protocol.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Generation and selection",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-013-generation-and-selection.md",
+      "narrative": null,
+      "content": "A general-\npurpose\nLLM\n(deepseek-chat)\nfor\nopen-\nvocabulary Task A and for final-cut selection\nover a retrieved pool.\n3.11.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Generation and selection: a general-purpose LLM, deepseek-chat, is used for open-vocabulary Task A and for final-cut selection over a retrieved pool.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fine-tuning the on-device embedder",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-014-fine-tuning-the-on-device-embedder.md",
+      "narrative": null,
+      "content": "The L1 results below show the stock on-device embed-\nder trailing the hosted APIs, and the per-language\npanel localizes why: the gap is largest where a multi-\nlingual record must be matched to an English head-\ning. We treat that as a hypothesis — that the bottle-\nneck is cross-lingual alignment, not model capacity —\nand address it directly by fine-tuning the 300M model\nto map a record to its English headings.\nThe recipe is cheap and fully reproducible.\nWe\nbuild (record, heading) training pairs by taking, for\neach development record outside the evaluation sub-\nset, its merged-consensus LCSH hea",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Fine-tuning the on-device embedder. Because the stock model trails most where multilingual records must match English headings, the author hypothesises that the bottleneck is cross-lingual alignment, not capacity, and fine-tunes it on (record, heading) pairs from development records outside the evaluation subset: a rank-16 LoRA adapter, multiple-negatives ranking loss inside a Matryoshka loss over 768/512/256/128 dimensions, one epoch on one commodity GPU (about fifteen minutes, under one US dollar), merged and exported to the same on-device runtime. Leakage control excludes evaluation records by identifier and by a title–first-author key, and an audit finds residual overlap at the held-out test's incidental collision rate.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Findings",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-015-findings.md",
+      "narrative": null,
+      "content": "4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A section number only: the start of the Findings (4.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "First-stage retrieval",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-016-first-stage-retrieval.md",
+      "narrative": null,
+      "content": "Table 2 reports first-stage retrieval over the full vo-\ncabulary on the reachable-GT subset.\nTwo find-\nings stand out.\nFirst, among the off-the-shelf sys-\ntems the hosted embedders out-retrieve the stock\non-device model at every depth, and dimension\nhelps:\ntext-embedding-3-large (3,072-d) leads\ntext-embedding-3-small (1,536-d), which leads the\nstock 256-d on-device model. On its own this would\nread as the expected “bigger hosted API beats the\nsmall local model” story.\nSecond, that ordering reverses under fine-tuning\n— on this development subset.\nThe fine-tuned\n300M on-device embedder described",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "First-stage retrieval, generation and selection (Table 2). Off the shelf, the hosted embedders beat the stock on-device model at every depth, larger before smaller. After fine-tuning, on this development subset, the 300M on-device model reaches exact recall@200 of 0.659 against 0.623 for text-embedding-3-large and 0.511 for -small, a small lead the paper reports as significant (paired approximate-randomisation test, +0.036, p = 0.0004) and as pending held-out-test confirmation; against its own stock backbone it rises from 0.407 (+62%). The frequency floor scores 0.130. In Task A the LLM gets the best set scores: generation F1 0.161 exact and 0.384 concept, selection 0.118 and 0.318.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The metric panel is necessary",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-017-the-metric-panel-is-necessary.md",
+      "narrative": null,
+      "content": "The fine-tune’s aggregate lead (Table 2) invites a one-\nline summary — “the on-device model now wins.”\nThe panel shows that summary is wrong in two in-\nstructive ways.\nThe\nranking\nflips\nby\nmetric.\nThe\nfine-tune\nleads on exact recall@200 (0.659 vs 0.623) but\ntext-embedding-3-large\nleads\non\nconcept\nre-\ncall@200 (0.762 vs 0.732, paired p = 0.0001). Which\nmodel is “best” therefore depends entirely on whether\none scores the exact subdivided heading or the under-\nlying concept — the same exact-versus-concept axis\nthat the concordance analysis in Section 3.3 shows\nis where catalogers themselves disag",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Why the metric panel is needed. The aggregate lead does not mean \"the on-device model wins\". By metric, the fine-tune leads on exact recall@200 (0.659 vs 0.623) but text-embedding-3-large leads on concept recall@200 (0.762 vs 0.732, p = 0.0001), the same exact-versus-concept axis on which catalogers disagree. By language (Table 3), the fine-tune wins Korean (0.668 vs 0.517), Arabic (0.689 vs 0.540), Japanese (0.593 vs 0.537), Chinese (0.618 vs 0.600) and German (0.704 vs 0.651), but the hosted model still leads on English (0.710 vs 0.696) and Russian (0.543 vs 0.505), so the win comes from closing the cross-lingual gap.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-018-discussion.md",
+      "narrative": null,
+      "content": "Cataloging is reproducible about topic,\nvariable\nabout expression — and that shapes everything. The\nconcordance analysis in Section 3.3 reframes the folk\nview that subject assignment is “subjective.”\nIt is,\nbut at a specific layer: three independent libraries\nconverge on what a book is about (concept agree-\nment 93.3%) while differing on how to say it (exact-\nidentical 39.4%). This is why a single library’s head-\nings make a noisy gold standard, why a consensus\ntarget is worth the construction cost, and why exact\nmatch alone is the wrong yardstick — it penalizes a\nmodel for a subdivision choic",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Discussion. Cataloging is reproducible about topic and variable about expression: libraries agree on concept (93.3%) but rarely on exact sets (39.4%), so a single library's headings make a noisy gold standard and exact match alone penalises choices catalogers themselves make differently. Human agreement (about 87% exact, 93% concept) is a reference, not a ceiling for recall@200, because a retriever gets 200 candidates while a cataloger gives a short set. A 256-dimensional, 300M-parameter embedder with no network or per-query cost out-retrieves a hosted API on exact recall after a sub-dollar fine-tune, which matters for libraries with privacy, cost or connectivity constraints, though the hosted model remains preferable for mainly English collections.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitations and future work",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-019-limitations-and-future-work.md",
+      "narrative": null,
+      "content": "Consensus is record-level, not heading-level. A book\nqualifies on agency-independent agreement, but the\ndefault merged key still includes single-source head-\nings; we release the unanimous view for studies that\nneed heading-level agreement, and report which view\na result uses.\nThe neural leaderboard is on a 2K subset. The small-\nest languages (Hindi, with a handful of evaluation\nrecords, Turkish, Hebrew) are individually noisy and\nshould be read as indicative; the held-out test set\n(3,353 records) is the basis for the eventual full-scale\nevaluation. Scaling the neural runs to full develop-\nmen",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Limitations and future work. Consensus is record-level, not heading-level, so the default key includes single-source headings. Neural results are on a 2K development subset, with the smallest languages (Hindi, Turkish, Hebrew) noisy. The fine-tune result is preliminary: development subset only, first stage only, not run through reranking and selection, and not confirmed on the held-out test, though an earlier overlapping variant inflated recall@200 by only about 0.03; the benchmark does not depend on it. Hashed answers are a convenience, not a guarantee, and a private evaluation server is future work; the vocabulary is a mid-2026 snapshot.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 11,
+      "pageEnd": 12,
+      "target": "../sections/sec-020-conclusion.md",
+      "narrative": null,
+      "content": "LCSHBench provides the missing standard exam for\nan important, hitherto unmeasurable task: multilin-\ngual subject-heading assignment against the Library\nof Congress vocabulary. Its design choices — inde-\npendent multi-catalog consensus, full-vocabulary re-\ntrieval rather than a frozen pool, provenance-filtered\nground truth, and a metric panel in place of a head-\nline F1 — are grounded rather than incidental: the\nconcordance analysis shows why a consensus tar-\nget and concept-level metrics are needed, and every\nleaderboard result has a per-cell counter-reading that\na single aggregate would hide",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Conclusion. LCSHBench is offered as a standard exam for multilingual LCSH assignment, built on independent multi-catalog consensus, full-vocabulary retrieval, provenance-filtered ground truth and a metric panel. Its per-language panel located cross-lingual alignment as the first-stage bottleneck, and the fine-tune that addressed it is reported as a development-subset demonstration, with held-out-test and end-to-end confirmation left as future work. Data, scorer, baselines, fine-tune recipe, leakage audit and seeds are released together.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data and code availability",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/sec-021-data-and-code-availability.md",
+      "narrative": null,
+      "content": "The LCSHBench v1.0 dataset — development and\nheld-out test splits, the language-balanced evaluation\nsubset, the full inter-cataloger concordance popula-\ntion, and the retrieval vocabulary — is available on\nthe Hugging Face Hub at https://huggingface.co\n/datasets/kltng/lcshbench. The scorer, baselines,\nfine-tuning recipe, leakage audit, and the full extrac-\ntion and release pipeline are at https://github.com\n/kltng/lcshbench. Held-out test answers are released\nonly as SHA-256 hashes, and record identifiers are\nanonymized in the public release; all randomness is\nseed-driven, so reported results",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Data and code availability: the dataset (development and held-out test splits, the language-balanced evaluation subset, the concordance population and the retrieval vocabulary) is on Hugging Face as kltng/lcshbench, and the scorer, baselines, fine-tuning recipe, leakage audit and release pipeline are on GitHub at kltng/lcshbench. Test answers are released only as hashes, record identifiers are anonymised, and all randomness is seeded so results reproduce exactly.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2606.04382v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Use of generative AI",
+      "pageStart": 12,
+      "pageEnd": 13,
+      "target": "../sections/sec-022-use-of-generative-ai.md",
+      "narrative": null,
+      "content": "The author used Anthropic’s Claude (Opus 4.8, via\nClaude Code) to assist with software development\nfor the benchmark’s extraction, scoring, and analysis\npipeline; with organizing and cross-checking the liter-\nature; and with drafting and language refinement of\nthe manuscript and its typesetting. The benchmark\ndata and all reported experimental results were pro-\nduced by the author through the described pipeline\nand were not generated by AI. The author reviewed\nand verified all content — including results, claims,\nand references — and takes full responsibility for the\nwork.\nBertalis, Nerijus, P",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Use of generative AI, followed by the start of the reference list. The author used Anthropic's Claude via Claude Code to help with software for the extraction, scoring and analysis pipeline, with organising and cross-checking the literature, and with drafting, language and typesetting; the data and all reported results were produced by the author through the described pipeline, not generated by AI, and the author reviewed all content and takes full responsibility. The references begin with work on extreme multi-label classification, MultiEURLEX, FAST and agentic LCSH indexing.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGProvenanceSource.schema.json",
+  "title": "Knowledge graph: provenance source",
+  "description": "A source a graph document was extracted from, pinned by hash.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGProvenanceSource",
+      "description": "Resource type identifier for KGProvenanceSource logical model"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path of the source."
+    },
+    "sha256": {
+      "type": "string",
+      "description": "Hash of the source (64 lower-case hex digits)."
+    },
+    "repository": {
+      "type": "string",
+      "description": "Repository holding the source."
+    },
+    "commit": {
+      "type": "string",
+      "description": "Commit the source was read at."
+    },
+    "note": {
+      "type": "string",
+      "description": "What the hash covers, where that is not obvious."
+    }
+  },
+  "required": [
+    "resourceType",
+    "path",
+    "sha256"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGProvenanceSource"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        }
+      }
+    }
+  ]
+}

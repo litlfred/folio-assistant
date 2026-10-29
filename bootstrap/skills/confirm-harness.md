@@ -34,6 +34,18 @@ Adding a candidate costs nothing; inventing one costs a wrong repository.
 repositories supplied? Both are Knowledge Graph Data Stores and the difference
 is only how you reach them — the git CLI, or a forge's API.
 
+**Assume a remote repository is read-only (`read-from`).** Having push access
+to a remote git repository is never evidence that you are meant to modify it,
+and never makes it `written-to`. When a remote Knowledge Graph is supplied, two
+modes are open — and the Requestor chooses which:
+
+- **keep it here (`read-from`)** — build and render from the remote Knowledge
+  Graph in this repository, with **whether to materialize its content locally
+  or reference it in place** asked as its own question; or
+- **put a harness on the remote repository (`written-to`)** — instantiate the
+  harness in that remote repository itself. Nothing is written to a remote
+  repository without the Requestor's explicit permission for that repository.
+
 ## Asking
 
 Before you ask, say where you are — *Initialize a harness*, determining the

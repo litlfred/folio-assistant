@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_L2Dak",
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak",
  "tasks": {
   "Task_ScopeDak": {
    "id": "Task_ScopeDak",
    "name": "Scope the DAK",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_ScopeDak",
    "lane": "Programme manager / technical officer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Programme",
    "skills": [
     {
      "name": "content-plan",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "programme-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
     "title": "Programme manager",
     "skills": [
      {
@@ -57,7 +60,9 @@
    "id": "Task_L1Library",
    "name": "Build the L1 library from Component 1",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_L1Library",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "dak-l1-library",
@@ -66,7 +71,7 @@
    ],
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -136,7 +141,9 @@
    "id": "Task_SeedBeans",
    "name": "Seed the work plan",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_SeedBeans",
    "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -145,7 +152,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -163,7 +170,9 @@
    "id": "Task_Personas",
    "name": "Personas and scenarios",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_Personas",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "l2-dak-authoring",
@@ -176,11 +185,12 @@
    ],
    "calls": {
     "name": "L2 component edit and review",
-    "href": "l2-component-edit-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
+    "diagram": "l2-component-edit-review.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -250,7 +260,9 @@
    "id": "Task_Bpmn",
    "name": "Business processes · BPMN 2.0",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_Bpmn",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "bpmn-authoring",
@@ -263,11 +275,12 @@
    ],
    "calls": {
     "name": "L2 component edit and review",
-    "href": "l2-component-edit-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
+    "diagram": "l2-component-edit-review.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -337,7 +350,9 @@
    "id": "Task_Dmn",
    "name": "Decision logic · DMN tables",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_Dmn",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "dmn-authoring",
@@ -350,11 +365,12 @@
    ],
    "calls": {
     "name": "L2 component edit and review",
-    "href": "l2-component-edit-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
+    "diagram": "l2-component-edit-review.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -424,7 +440,9 @@
    "id": "Task_DataDict",
    "name": "Data dictionary and core data elements",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_DataDict",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "l2-dak-authoring",
@@ -437,11 +455,12 @@
    ],
    "calls": {
     "name": "L2 component edit and review",
-    "href": "l2-component-edit-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
+    "diagram": "l2-component-edit-review.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -511,7 +530,9 @@
    "id": "Task_Indicators",
    "name": "Indicators and requirements",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_Indicators",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "l2-dak-authoring",
@@ -524,11 +545,12 @@
    ],
    "calls": {
     "name": "L2 component edit and review",
-    "href": "l2-component-edit-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
+    "diagram": "l2-component-edit-review.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -598,7 +620,9 @@
    "id": "Task_Terminology",
    "name": "Terminology bindings",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_Terminology",
    "lane": "Terminologist",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Terminologist",
    "skills": [
     {
      "name": "terminology-management",
@@ -611,11 +635,12 @@
    ],
    "calls": {
     "name": "L2 component edit and review",
-    "href": "l2-component-edit-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
+    "diagram": "l2-component-edit-review.html"
    },
    "role": {
     "name": "terminologist",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-terminologist",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
     "title": "Terminologist",
     "skills": [
      {
@@ -633,7 +658,9 @@
    "id": "Task_SmeValidate",
    "name": "Clinical validation",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_SmeValidate",
    "lane": "Clinical SME",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Sme",
    "skills": [
     {
      "name": "content-review",
@@ -642,7 +669,7 @@
    ],
    "role": {
     "name": "clinical-sme",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-clinical-sme",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
     "title": "Clinical / scientific SME",
     "skills": [
      {
@@ -663,11 +690,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html",
-      "via": "reviewer"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
       "via": "reviewer"
      },
      {
@@ -707,7 +729,9 @@
    "id": "Task_AssembleDak",
    "name": "Assemble and validate the DAK",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Task_AssembleDak",
    "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
    "skills": [
     {
      "name": "content-validate",
@@ -716,7 +740,7 @@
    ],
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -778,6 +802,202 @@
      {
       "name": "wireframe-design-review",
       "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Call_BeanOpen",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Call_BeanClose",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../reference/skill-instructions/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../reference/skill-instructions/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../reference/skill-instructions/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../reference/skill-instructions/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../reference/skill-instructions/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose_2": {
+   "id": "Call_BeanClose_2",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Call_BeanClose_2",
+   "lane": "Clinical SME",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Sme",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "clinical-sme",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
+    "title": "Clinical / scientific SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
      }
     ]
    }

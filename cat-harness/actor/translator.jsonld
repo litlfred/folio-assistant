@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/translator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "translator",
+      "actorKind": "person",
+      "title": "Translator",
+      "description": "Localization specialist who adapts content for UN-supported languages.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.Translator",
+        "lifecycle": [
+          "author"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/translator"
+      ],
+      "permissionName": [
+        "translation"
+      ]
+    }
+  ]
+}

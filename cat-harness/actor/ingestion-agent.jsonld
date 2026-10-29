@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ingestion-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ingestion-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "ingestion-agent",
+      "actorKind": "agent",
+      "title": "Ingestion engine",
+      "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material itself.",
+      "meta": {
+        "workflow": "processes/library/document-ingestion.bpmn#Lane_1"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ]
+    }
+  ]
+}

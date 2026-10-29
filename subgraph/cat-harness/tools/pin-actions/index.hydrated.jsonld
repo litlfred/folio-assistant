@@ -1,0 +1,54 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/pin-actions/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pin-actions.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Rewrite every third-party `uses: owner/repo@ref` outside the declared staging-only workflows to `@<full commit SHA> # <ref>`, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by `git ls-remote` with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat actions:pin"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--dry-run"
+            },
+            "description": "Report what would be pinned and write nothing.",
+            "name": "dry-run",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "uses: lines pinned, per workflow, with every refused ref named; exit 1 when any is refused.",
+            "name": "pinned",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          }
+        ]
+      },
+      "name": "pin-actions",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun",
+          "git"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/security",
+      "title": "Pin third-party GitHub Actions to full commit SHAs"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/pin-actions",
+  "path": "tools/pin-actions/"
+}

@@ -64,6 +64,7 @@
 .ig-topbar{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;padding:.5rem 1.5rem;background:var(--ig-topbar-bg,#1c4b7c);color:#fff;font-size:.95rem}
 .ig-topbar a{color:#fff;text-decoration:none}
 .ig-topbar-home{flex:0 0 100%;font-weight:600}
+body:has(> .fa-glass-handle) .ig-topbar.fa-page-bar{padding-top:2.25rem}
 .ig-topbar-group{position:relative}
 .ig-topbar-group summary{cursor:pointer;list-style:none}
 .ig-topbar-group summary::after{content:" \25BE"}

@@ -1,16 +1,19 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CRDM_Close",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
  "tasks": {
   "S_FeatureSignoff": {
    "id": "S_FeatureSignoff",
    "name": "Feature sign-off on issue",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/S_FeatureSignoff",
    "lane": "Stakeholders",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Stakeholders",
    "skills": [],
    "role": {
     "name": "stakeholder",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
     "title": "Stakeholder",
     "skills": []
    }
@@ -19,7 +22,9 @@
    "id": "BA_Confirm",
    "name": "Confirm all criteria met",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/BA_Confirm",
    "lane": "BA / Feature Requestor",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_BA",
    "skills": [
     {
      "name": "adjudication",
@@ -28,11 +33,12 @@
    ],
    "calls": {
     "name": "Adjudication",
-    "href": "adjudication.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+    "diagram": "adjudication.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -102,16 +108,22 @@
    "id": "A_RecordSignoff",
    "name": "Record the sign-off as a requirement-signoff attestation",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff",
    "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
    "skills": [
     {
      "name": "adjudication",
      "href": "../../../reference/skill-instructions/adjudication.html"
     }
    ],
+   "shared": {
+    "id": "GT_RecordSignoff",
+    "type": "bpmn:GlobalScriptTask"
+   },
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -121,6 +133,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -183,6 +199,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -191,8 +211,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -213,6 +241,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -273,6 +305,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -309,7 +349,9 @@
    "id": "Call_MergeToMain",
    "name": "Land the feature's PRs",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/Call_MergeToMain",
    "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
    "skills": [
     {
      "name": "merge-to-main",
@@ -318,11 +360,12 @@
    ],
    "calls": {
     "name": "Merge to main",
-    "href": "merge-to-main.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+    "diagram": "merge-to-main.html"
    },
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -332,6 +375,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -394,6 +441,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -402,8 +453,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -424,6 +483,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -484,6 +547,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -520,7 +591,9 @@
    "id": "A_Close",
    "name": "Close issue ONLY on BA authorisation",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/A_Close",
    "lane": "Agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
    "skills": [
     {
      "name": "crdm-requirements-workflow",
@@ -529,7 +602,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -539,6 +612,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -601,6 +678,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -609,8 +690,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -631,6 +720,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -691,6 +784,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",

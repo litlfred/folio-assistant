@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/integration-watcher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/integration-watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Integration watcher",
+      "title": "Integration watcher",
+      "notation": "integration-watcher",
+      "description": "Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/canonical-watcher",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/devils-advocate-watcher",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watch",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-audit",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-backlog"
+      ]
+    }
+  ]
+}

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_L1Gate",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
  "tasks": {
   "Task_CheckDerived": {
    "id": "Task_CheckDerived",
    "name": "Is every derived artefact present?",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_CheckDerived",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -57,7 +60,9 @@
    "id": "Task_RoundTrip",
    "name": "Round-trip translation QA",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_RoundTrip",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
    "skills": [
     {
      "name": "translation-manager",
@@ -70,7 +75,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -112,7 +117,9 @@
    "id": "Task_FlagDrift",
    "name": "Adjudicate the flagged passage",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_FlagDrift",
    "lane": "Reviewer (SME or editor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_1",
    "skills": [
     {
      "name": "document-intake",
@@ -125,11 +132,12 @@
    ],
    "calls": {
     "name": "Adjudication",
-    "href": "adjudication.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+    "diagram": "adjudication.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -147,10 +155,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -183,7 +187,9 @@
    "id": "Task_Verdict",
    "name": "Record the L1 completeness verdict",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_Verdict",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -192,7 +198,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {

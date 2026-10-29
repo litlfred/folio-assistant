@@ -437,7 +437,7 @@ function renderBlocks(id, data, err, entry){
    as text rather than colour alone, and none is styled as an error: "not yet
    summarised" is the drain's backlog, which is expected and slow on purpose.
    A draft names its MODEL, because "a model wrote this" without which one is
-   the provenance gap schemas/attribution.ts closes. */
+   the provenance gap schemas/content/attribution.ts closes. */
 function summaryLabel(s){
   var d = s.draftedBy;
   switch (s.status) {
@@ -687,6 +687,24 @@ function withheldBanner(e, bs){
     }
     return best === null ? null : location.origin + best + "assets/vendor/crepe/";
   };
+  // The site's editor bundle (suggest-editor.ts), fetched once: on the first
+  // hover or focus of a ✍ suggest link, so it is usually ready by the click.
+  // A failed fetch is forgotten, so the next open tries again.
+  let bundle = null;
+  const editorBundle = () => {
+    const sc = config().suggest || {};
+    const vb = vendorBase();
+    const moduleUrl = sc.module || (vb && vb + "crepe.js");
+    if (!moduleUrl) return Promise.reject(new Error("this site has no editor bundle (assets/vendor/crepe/)"));
+    const cssUrl = sc.css || (vb && !sc.module ? vb + "crepe.css" : null);
+    if (cssUrl && !document.querySelector('link[href="' + cssUrl + '"]')) document.head.append(el("link", { rel: "stylesheet", href: cssUrl }));
+    if (!bundle) bundle = import(moduleUrl).catch((e) => { bundle = null; throw e; });
+    return bundle;
+  };
+  // How long the visual editor may take to open before the dialog falls back
+  // to the raw Markdown: a slow link or a stalled import must not leave the
+  // reader looking at an empty editor (smart-ra, 2026-10-26).
+  const VISUAL_WAIT_MS = 20000;
   // The KG labels and bibliography keys a profile's checker warns against, read once from the page's graph.
   let kgRefs;
   const kgReferences = async (c) => {
@@ -936,6 +954,7 @@ function withheldBanner(e, bs){
       if (!r.ok) throw new Error(r.status + " reading " + path);
       original = await r.text();
     } catch (e) { status.textContent = "Could not load the block: " + e.message; return; }
+    status.textContent = "Loaded " + path + ". Opening the editor …";
     const fm = FRONT_MATTER.exec(original);
     const head = fm ? fm[0] : "", body = original.slice(head.length);
     // The site's variable values, as KG nodes (values.jsonld), when it publishes them.
@@ -1048,6 +1067,10 @@ function withheldBanner(e, bs){
     const syntaxErrors = (t) => tokens.errors(t, !!mod);
     const wrapped = shield(body);
     let katex = null, lib = null, visualBase = null;
+    // Each surface choice takes a ticket; a visual editor still opening when
+    // a newer choice (a timeout, Raw, closing the dialog) is made is dropped.
+    let ticket = 0;
+    const abandoned = () => new Error("abandoned");
     // The visual surface: Crepe, with the profile's feature settings, node views
     // and first remark transformer, the toolbar's commands and the change
     // marks. Its base is Crepe's round-trip of the SOURCE, kept across a
@@ -1057,14 +1080,12 @@ function withheldBanner(e, bs){
       // The site's own bundle (suggest-editor.ts): Crepe and KaTeX from one
       // copy of ProseMirror, its stylesheet with every import resolved.
       const sc = c.suggest || {};
-      const vb = vendorBase();
-      const moduleUrl = sc.module || (vb && vb + "crepe.js");
-      if (!moduleUrl) throw new Error("this site has no editor bundle (assets/vendor/crepe/)");
-      const cssUrl = sc.css || (vb && !sc.module ? vb + "crepe.css" : null);
-      if (cssUrl && !document.querySelector('link[href="' + cssUrl + '"]')) document.head.append(el("link", { rel: "stylesheet", href: cssUrl }));
-      lib = lib || (await import(moduleUrl));
+      const mine = ++ticket;
+      const live = () => mine === ticket && dlg.isConnected;
+      lib = lib || (await editorBundle());
       const Crepe = lib.Crepe;
       if (mod && mod.nodeViews && !katex) katex = sc.katex ? (await import(sc.katex)).default : lib.default;
+      if (!live()) throw abandoned();
       const box = el("div");
       host.replaceChildren(box);
       // The dialog's own toolbar replaces Crepe's selection toolbar, and
@@ -1088,6 +1109,7 @@ function withheldBanner(e, bs){
         };
       });
       await crepe.create();
+      if (!live()) { try { crepe.destroy(); } catch {} throw abandoned(); }
       const view = crepe.editor.action((ctx) => ctx.get("editorView"));
       const run = (cmd, payload) => { view.focus(); crepe.editor.action(lib.callCommand(cmd.key, payload)); };
       const get = () => unwrap(crepe.getMarkdown());
@@ -1104,6 +1126,7 @@ function withheldBanner(e, bs){
         if (visualBase === null) visualBase = unwrap(probe.getMarkdown());
         if (marks) baseBlocks = baseBlocksOf(probe.editor.action((ctx) => ctx.get("editorView")).state.doc);
         probe.destroy();
+        if (!live()) { try { crepe.destroy(); } catch {} throw abandoned(); }
       }
       if (marks) view.dispatch(view.state.tr.setMeta(marks.key, true));
       return {
@@ -1117,6 +1140,7 @@ function withheldBanner(e, bs){
     };
     // The raw surface: the block's Markdown exactly as it is; the toolbar types Markdown.
     const rawSurface = (text) => {
+      ticket++;
       const ta = el("textarea", { value: text });
       ta.setAttribute("aria-label", "The block's Markdown");
       host.replaceChildren(ta);
@@ -1147,8 +1171,13 @@ function withheldBanner(e, bs){
       visualBtn.setAttribute("aria-pressed", String(surface.name === "visual"));
       rawBtn.setAttribute("aria-pressed", String(surface.name === "raw"));
     };
+    // The visual editor, unless it does not open in time: then the raw pane.
+    const visualInTime = (text) => new Promise((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error("it did not open within " + VISUAL_WAIT_MS / 1000 + " seconds; press Visual to try again")), VISUAL_WAIT_MS);
+      visual(text).then((v) => { clearTimeout(t); resolve(v); }, (e) => { clearTimeout(t); reject(e); });
+    });
     try {
-      surface = rawFirst ? rawSurface(body) : await visual(wrapped);
+      surface = rawFirst ? rawSurface(body) : await visualInTime(wrapped);
     } catch (e) {
       // No editor bundle, or it failed: the same flow over plain Markdown.
       surface = rawSurface(body);
@@ -1161,7 +1190,8 @@ function withheldBanner(e, bs){
       if (surface.name === next) return;
       const text = surface.get();
       surface.destroy();
-      try { surface = next === "raw" ? rawSurface(text) : await visual(shield(text)); }
+      status.textContent = next === "raw" ? "" : "Opening the visual editor …";
+      try { surface = next === "raw" ? rawSurface(text) : await visualInTime(shield(text)); }
       catch (e) { surface = rawSurface(text); notes.push("The visual editor did not load (" + e.message + ")."); }
       show();
       status.textContent = notes.concat([describe()]).filter(Boolean).join(" ");
@@ -1236,6 +1266,7 @@ function withheldBanner(e, bs){
       const a = e.target.closest("a[data-fa-link]"), h = e.target.closest("[data-src]");
       if (a) ready(a);
       if (h && h !== a) ready(h);
+      if (a && a.dataset.faLink === "suggest") editorBundle().catch(() => {});
     }, { passive: true });
 })();
 

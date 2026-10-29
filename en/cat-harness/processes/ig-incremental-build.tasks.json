@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IgIncremental",
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
  "tasks": {
   "Task_Restore": {
    "id": "Task_Restore",
    "name": "Restore derived state",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Restore",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -105,7 +108,9 @@
    "id": "Task_LogEnvError",
    "name": "Log the environment error on the bean",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogEnvError",
    "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -114,7 +119,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -132,7 +137,9 @@
    "id": "Task_FullBuild",
    "name": "Full publisher build",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_FullBuild",
    "lane": "Publisher + validator services (JVM)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
    "skills": [
     {
      "name": "ig-publication",
@@ -141,7 +148,7 @@
    ],
    "role": {
     "name": "ig-publisher-service",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
     "title": "IG publisher + validator",
     "skills": [
      {
@@ -155,7 +162,9 @@
    "id": "Task_Cone",
    "name": "Compute the cone of the change (fsh-cone --changed)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Cone",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -172,7 +181,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -262,7 +271,9 @@
    "id": "Task_ConeReport",
    "name": "Post the cone report on the PR",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ConeReport",
    "lane": "PR reviewer / QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
    "skills": [
     {
      "name": "quality-control",
@@ -279,7 +290,7 @@
    ],
    "role": {
     "name": "qc-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
     "title": "QC reviewer",
     "skills": [
      {
@@ -313,11 +324,6 @@
      {
       "name": "ig-ast-delta",
       "href": "../../../reference/skill-instructions/ig-ast-delta.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",
@@ -360,7 +366,9 @@
    "id": "Task_Checkout",
    "name": "Restricted checkout of the backward cone",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Checkout",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -377,7 +385,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -467,7 +475,9 @@
    "id": "Task_Sushi",
    "name": "SUSHI on the restricted tank",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Sushi",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -476,7 +486,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -566,7 +576,9 @@
    "id": "Task_ContextLoad",
    "name": "Load or reuse the warm context (fhir_context_load)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ContextLoad",
    "lane": "Publisher + validator services (JVM)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
    "skills": [
     {
      "name": "ig-publication",
@@ -583,7 +595,7 @@
    ],
    "role": {
     "name": "ig-publisher-service",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
     "title": "IG publisher + validator",
     "skills": [
      {
@@ -597,7 +609,9 @@
    "id": "Task_Validate",
    "name": "Validate the cone (fhir_validate)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate",
    "lane": "Publisher + validator services (JVM)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
    "skills": [
     {
      "name": "fhir-validation",
@@ -606,7 +620,7 @@
    ],
    "role": {
     "name": "ig-publisher-service",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
     "title": "IG publisher + validator",
     "skills": [
      {
@@ -620,7 +634,9 @@
    "id": "Task_LogFindings",
    "name": "Log findings on the bean",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogFindings",
    "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -629,7 +645,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -647,7 +663,9 @@
    "id": "Task_Render",
    "name": "Re-render the cone's records (fhir_narrative · skip lists)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Render",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -664,7 +682,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -754,7 +772,9 @@
    "id": "Task_Merge",
    "name": "Merge restored and rebuilt records",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Merge",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -763,7 +783,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -853,7 +873,9 @@
    "id": "Task_Index",
    "name": "Rebuild the meta-index (ig_metaindex_rebuild)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Index",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -870,7 +892,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -960,7 +982,9 @@
    "id": "Task_Site",
    "name": "Assemble the site (template · Jekyll)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Site",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -969,7 +993,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -1059,7 +1083,9 @@
    "id": "Task_Qa",
    "name": "QC gates on the aggregate QA",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Qa",
    "lane": "PR reviewer / QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
    "skills": [
     {
      "name": "quality-control",
@@ -1068,7 +1094,7 @@
    ],
    "role": {
     "name": "qc-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
     "title": "QC reviewer",
     "skills": [
      {
@@ -1102,11 +1128,6 @@
      {
       "name": "ig-ast-delta",
       "href": "../../../reference/skill-instructions/ig-ast-delta.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",
@@ -1149,7 +1170,9 @@
    "id": "Task_QcBeans",
    "name": "File QC findings as beans",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_QcBeans",
    "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -1158,7 +1181,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -1176,7 +1199,9 @@
    "id": "Task_DeployPreview",
    "name": "Deploy the preview site",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_DeployPreview",
    "lane": "PR reviewer / QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
    "skills": [
     {
      "name": "content-publish",
@@ -1185,7 +1210,7 @@
    ],
    "role": {
     "name": "qc-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
     "title": "QC reviewer",
     "skills": [
      {
@@ -1219,11 +1244,6 @@
      {
       "name": "ig-ast-delta",
       "href": "../../../reference/skill-instructions/ig-ast-delta.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",
@@ -1266,7 +1286,9 @@
    "id": "Task_Deploy",
    "name": "Deploy the site [content-publish]",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Deploy",
    "lane": "Publication manager — deploy and seed",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_PubMgr",
    "skills": [
     {
      "name": "content-publish",
@@ -1279,7 +1301,7 @@
    ],
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {
@@ -1325,7 +1347,9 @@
    "id": "Task_Seed",
    "name": "Seed the cache from the green build (ig-cache seed · verify · promote)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Seed",
    "lane": "Publication manager — deploy and seed",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_PubMgr",
    "skills": [
     {
      "name": "ig-publication",
@@ -1342,7 +1366,7 @@
    ],
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {

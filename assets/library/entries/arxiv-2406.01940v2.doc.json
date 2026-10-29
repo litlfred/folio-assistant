@@ -547,7 +547,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 222,
-      "summary": null,
+      "summary": {
+        "text": "Presents the title, authors, affiliations, and abstract for \"Process-Driven Autoformalization in Lean 4,\" summarizing the FORML4 dataset of natural- and formal-language statements and proofs and the Process-Driven Autoformalization (PDA) framework that uses Lean 4 compiler feedback to improve autoformalization accuracy and data utilization.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "hong kong",
@@ -595,7 +598,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1140,
-      "summary": null,
+      "summary": {
+        "text": "Introduces FORML4, an autoformalization dataset for Lean 4 derived from Mathlib 4 theorems that pairs statements with proofs in both natural and formal languages, and proposes Process-Driven Autoformalization (PDA), which uses step-level Lean 4 compiler feedback to train a Process-Supervised Verifier (PSV) and iteratively refine statement autoformalization.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "coe min",
@@ -643,7 +649,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 398,
-      "summary": null,
+      "summary": {
+        "text": "Reviews prior work on LLM-based autoformalization and outcome- versus process-supervised verifiers (OSV vs. PSV), contrasting expensive human or Monte Carlo Tree Search process annotation with PDA's use of automatic step-level feedback from the Lean 4 compiler.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "machine annotation",
@@ -691,7 +700,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 87,
-      "summary": null,
+      "summary": {
+        "text": "Motivates the FORML4 benchmark by noting that existing Lean 4 autoformalization datasets rely on unchecked zero-shot GPT-4 informalization of theorem statements alone and omit proofs as context for dataset quality and evaluation.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "informalizing",
@@ -719,7 +731,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 74,
-      "summary": null,
+      "summary": {
+        "text": "Introduces FORML4's inclusion of formal-informal proof-step pairs alongside statement translation as an auxiliary task to provide reasoning context and enable comprehensive autoformalization assessment through a fine-grained pipeline and quality checks.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "proof steps",
@@ -747,7 +762,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 4,
-      "summary": null,
+      "summary": {
+        "text": "Contains the page number and running header (\"3 / Work in progress\") preceding the Data Source subsection.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "3 Work in progress",
       "extractCut": false
@@ -762,7 +780,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1426,
-      "summary": null,
+      "summary": {
+        "text": "Details FORML4's data extraction from Mathlib 4 and NuminaMath across training, random test, basic test, and real test splits (Table 1); its two-step decompositional informalization of statements and proofs; its curation pipeline using Gemini-Pro-1.5, self-contained Theorem Environments, and human verification by four Lean 4 experts (0.72 average success rate); and its feature comparison against MMA, Lean Workbook, ProofNet, MiniF2F, and FIMO (Table 2).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "basic test",
@@ -810,7 +831,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 96,
-      "summary": null,
+      "summary": {
+        "text": "Summarizes Table 2's comparison between FORML4 and existing autoformalization datasets, highlighting that FORML4 pairs statements with proofs via human-verified LLM informalization and supports automated process-driven training from Lean 4 compiler feedback across diverse mathematical complexities.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "forml",
@@ -842,7 +866,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 54,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the Process-Driven Autoformalization (PDA) methodology, starting from a baseline LLM fine-tuned on FORML4, introducing a Process-Supervised Verifier (PSV) trained on Lean 4 compiler feedback, and establishing an iterative improvement loop.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "feedback",
@@ -870,7 +897,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 497,
-      "summary": null,
+      "summary": {
+        "text": "Formulates the verification models and notation (Table 3), contrasting an Outcome-Supervised Verifier (OSV) trained with uniform final-compilation labels against a Process-Supervised Verifier (PSV) trained with step-level cross-entropy loss using \"first error location\" labels from the Lean 4 compiler.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "step-level loss",
@@ -918,7 +948,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 228,
-      "summary": null,
+      "summary": {
+        "text": "Describes the three-step iterative refinement cycle between the autoformalizer, the Lean 4 compiler, and the verifier: filtering autoformalizer outputs with the verifier for fine-tuning, compiling outputs from the improved autoformalizer to collect step-level feedback, and re-fine-tuning the verifier on the resulting higher-quality process-labeled data.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "process feedback",
@@ -966,7 +999,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Contains the subsection numbering (\"5.1\") introducing the experimental evaluation section.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "5.1",
       "extractCut": false
@@ -981,7 +1017,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 11,
-      "summary": null,
+      "summary": {
+        "text": "Introduces the experimental evaluation of the Process-Driven Autoformalization (PDA) framework.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "This section presents our process-driven autoformalization framework and its experimental results.",
       "extractCut": false
@@ -996,7 +1035,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 375,
-      "summary": null,
+      "summary": {
+        "text": "Presents Table 4 comparing greedy compilation rates of closed-source, open-source, and FORML4-fine-tuned LLMs across the Random, Basic, and Real test sets, and defines the experimental setup: the Mistral-v0.3-7B Baseline Autoformalizer (BA) augmented with compiled GSM8K and MATH outputs, the PSV and OSV verifier models, and the MP1, Precision, and Recall metrics.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "closed-source llms",
@@ -1044,7 +1086,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 333,
-      "summary": null,
+      "summary": {
+        "text": "Analyzes the comparison among the Baseline, Rejective Sampling Fine-tuned (RFT), Verifier-Enhanced (VEA), and combined RFT+VEA autoformalizers (Table 4), showing that FORML4 fine-tuning drastically outperforms off-the-shelf LLMs, RFT and VEA trade compilation time against data quality, and RFT+VEA achieves the best compilation rates across all test splits by pairing compiler validity with verifier semantic alignment.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "rft vea",
@@ -1092,7 +1137,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 417,
-      "summary": null,
+      "summary": {
+        "text": "Evaluates verifier refinement on data generated by the RFT+VEA autoformalizer (Table 5) and summarizes human evaluation scores (Table 6), showing that both OSV+ and PSV+ improve over OSV and PSV in MP1, precision, and recall across all three test sets, with PSV+ consistently outperforming OSV+.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "verifier",
@@ -1140,7 +1188,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 462,
-      "summary": null,
+      "summary": {
+        "text": "Reports a factorial post-hoc human evaluation of 60 syntactically valid autoformalized statements across Proof Validity (statement+proof compilation), PDA Enhancement (Baseline vs. RFT+VEA), and Test Set Categories (Basic, Random, Real), finding statistically significant gains for samples with valid compiled proofs (p = 0.002992) and across dataset splits (p = 0.000002), as well as higher scores for the enhanced model.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "human evaluation",
@@ -1188,7 +1239,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 4307,
-      "summary": null,
+      "summary": {
+        "text": "Concludes by summarizing the FORML4 benchmark and the Process-Driven Autoformalization (PDA) pipeline, noting future plans to extend the benchmark and method to Isabelle, HOL Light, and Coq, followed by the paper's bibliography.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "url arxiv",
@@ -1236,7 +1290,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 114,
-      "summary": null,
+      "summary": {
+        "text": "Summarizes three experimental takeaways—the synergy of RFT+VEA, the superiority of process-supervised fine-tuning (PSV/PSV+) over outcome supervision, and the promise of iterative compiler-verifier-autoformalizer refinement—and identifies future work on refining process supervision and reducing RFT's compilation time overhead.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "future",
@@ -1268,7 +1325,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 856,
-      "summary": null,
+      "summary": {
+        "text": "Provides extended related work covering interactive theorem provers and Lean 4, formal mathematics datasets across Coq, Isabelle, and Lean, prompting and verification techniques for LLM mathematical reasoning, and learning from human, internal, or tool-based feedback.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "formal datasets",
@@ -1316,7 +1376,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 296,
-      "summary": null,
+      "summary": {
+        "text": "Explains the three-step decomposition strategy for informalization—translating the formal statement into a natural-language problem, explaining each formal proof step's lemmas or tactics, and writing a standalone natural-language proof free of Lean 4 identifiers—so that the extracted problem and proof do not leak Lean 4 terms into the autoformalization input.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "decomposition strategy",
@@ -1364,7 +1427,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1286,
-      "summary": null,
+      "summary": {
+        "text": "Provides the full few-shot prompt template used to informalize Lean 4 theorems into # Problem:, # Explanation:, and # Proof: sections, illustrated with three worked examples (eq_zero_iff_even, forall_mem_comm, and asq_pos).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "property holds",
@@ -1412,7 +1478,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Contains the subsection numbering (\"E.1\") introducing the human evaluation protocol for comparative informalization model selection.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "E.1",
       "extractCut": false
@@ -1427,7 +1496,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Contains the subsection numbering (\"E.1.1\") introducing the annotation protocol for comparing informalization models.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "E.1.1",
       "extractCut": false
@@ -1442,7 +1514,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 14,
-      "summary": null,
+      "summary": {
+        "text": "States the opening sentence of the annotation protocol for evaluating the informalization quality of two sampled models.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "The protocol provides guidance for evaluating the quality of informalization of two sampled models",
       "extractCut": false
@@ -1457,7 +1532,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 97,
-      "summary": null,
+      "summary": {
+        "text": "Describes the informalization task format (Theorem, Problem, Explanation, and Proof) in which models translate Lean 4 statements and proofs into natural language understandable without Lean 4 knowledge.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "natural language",
@@ -1485,7 +1563,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 201,
-      "summary": null,
+      "summary": {
+        "text": "Specifies the JSON schema of the 10-sample model comparison files (nl, formal, gemini_output/gpt4o_output, nl_problem, nl_explanation, nl_proof) and defines the three binary human annotation criteria: Informalization Success, Informal Proof Correctness, and Model Preference.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "model output",
@@ -1525,7 +1606,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 97,
-      "summary": null,
+      "summary": {
+        "text": "Defines the quality criteria for ideal informalized outputs—semantic equivalence to the Lean 4 theorem and proof, and intuitive natural-language phrasing without Lean 4 function names—and refers annotators to the few-shot prompt examples and JSON comparison tools.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "intuitive terms",
@@ -1553,7 +1637,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 45,
-      "summary": null,
+      "summary": {
+        "text": "Presents Table 7 comparing Gemini and GPT-4o across Informalization Success (80.0% vs. 72.5%), Informal Proof Correctness (85.0% vs. 62.5%), and Model Preference (60.0% vs. 22.5%), along with inter-rater agreement rates.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "model preference",
@@ -1581,7 +1668,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 299,
-      "summary": null,
+      "summary": {
+        "text": "Reports the manual quality verification of 60 FORML4 samples (20 basic test, 40 random test/train) by four independent Lean 4 experts, yielding a 0.72 average statement informalization success rate (0.875 on basic vs. 0.575 on random, p = 0.0099) and a Fleiss' Kappa of 0.3730, and notes challenges from topic incompatibility and implicit constraint specification.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "human",
@@ -1629,7 +1719,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 293,
-      "summary": null,
+      "summary": {
+        "text": "Contrasts FORML4/PDA with MMA on a concrete trigonometry example (cos(pi : Angle) = -1, referenced in Table 8), showing that requiring both the formal statement and proof enables the Lean 4 compiler to verify tactic reasoning rather than merely issuing an incomplete-proof warning on a bare statement.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "syntax checking",
@@ -1677,7 +1770,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 36,
-      "summary": null,
+      "summary": {
+        "text": "Notes that the four Lean 4 annotators cross-evaluated 60 autoformalized samples, with each sample annotated twice at roughly 5 minutes per sample.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "evaluation",
@@ -1705,7 +1801,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Contains the subsection numbering (\"I.1\") introducing the experimental training settings appendix.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "I.1",
       "extractCut": false
@@ -1720,7 +1819,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 326,
-      "summary": null,
+      "summary": {
+        "text": "Specifies the full-parameter training configuration on 8 NVIDIA A100 (40GB) GPUs with AdamW (Table 9 for autoformalizers: batch size 128, learning rate 5e-6, 2 epochs, max length 2048; Table 10 for verifiers: batch size 512, learning rate 2e-6, 1 epoch) and includes Table 8's side-by-side input, output, and compiler feedback comparison between PDA and MMA.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "cos coe",
@@ -1768,7 +1870,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 119,
-      "summary": null,
+      "summary": {
+        "text": "Describes the vLLM-based inference settings used across experiments, with temperature 0.0 for greedy decoding and temperature 0.7 with n = 20 samples per instance to compute the unbiased pass@k estimator of Chen et al. (2021).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "generation",
@@ -1800,7 +1905,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 298,
-      "summary": null,
+      "summary": {
+        "text": "Details the Lean 4 compilation setup based on a multiprocessing wrapper around the JSON-stream Lean 4 REPL, lists the pinned commit revisions for mathlib, std, Qq, aesop, proofwidgets, Cli, and importGraph (Table 11), and notes that compiling 1,000 examples takes roughly 10 minutes compared to 1–2 minutes for LLM generation.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compilation",
@@ -1848,7 +1956,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 172,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the three-step pipeline for generating compiler-supervised training data from FORML4, MATH, and GSM8K with the RFT+VEA autoformalizer to refine the PSV verifier, and reports the RFT+VEA model's Greedy, Pass@1, and Pass@5 compilation rates across the Basic, Random, and Real test sets (Table 12).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "enhanced autoformalizer",
@@ -1888,7 +1999,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 181,
-      "summary": null,
+      "summary": {
+        "text": "Summarizes the comparative human evaluation of Gemini-Pro-1.5 and GPT-4 on 10 sampled formal theorems by four annotators across statement informalization success, informalized proof correctness, and model preference, explaining why Gemini-Pro-1.5 (80% success, 80% preference, 0.77 inter-rater agreement) was selected to construct FORML4.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "selection process",
@@ -1928,7 +2042,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 310,
-      "summary": null,
+      "summary": {
+        "text": "Provides a dimension-by-dimension analysis of Table 2 comparing FORML4 against MMA, Lean Workbook, ProofNet, MiniF2F, and FIMO across source language, dataset size (>17k entries), inclusion of proofs, Lean 4 usage, construction method (informalization, LLM-based, human-verified), and primary usage (training, benchmarking, and automated process-driven compiler feedback).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "except mma",
@@ -1976,7 +2093,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 384,
-      "summary": null,
+      "summary": {
+        "text": "Compares base Mistral-7B against models supervised-fine-tuned on 5k and full (14.51k) FORML4 training samples without GSM8K/MATH rejective-sampling augmentation (Table 13), showing that scaling FORML4 training data improves compilation rates across all splits while the out-of-distribution Real test set remains challenging due to domain shift and the absence of Mathlib lemma dependencies.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "training data",
@@ -2024,7 +2144,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 171,
-      "summary": null,
+      "summary": {
+        "text": "Reports compilation rates of the FORML4-only SFT Mistral models on the MATH and GSM8K training sets (Table 14: 0.65% on MATH and 8.16% on GSM8K for Mistral Full) and explains how 10-sample temperature-0.7 outputs from Mistral (Full) that compiled in Lean 4 were collected to further fine-tune the baseline model used in Section 5.1.2.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "math training",
@@ -2060,7 +2183,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Contains the subsection numbering (\"O.1\") introducing the data construction and preprocessing details appendix.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "O.1",
       "extractCut": false
@@ -2075,7 +2201,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 164,
-      "summary": null,
+      "summary": {
+        "text": "Details three preprocessing rules applied before informalization: retaining Mathport #align directives linking Lean 3 and Lean 4 names, filtering out 262 samples whose theorem statements reference file-local custom .mk lemmas, and removing 35 Python-based problems from the Real test set.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "lean names",
@@ -2111,7 +2240,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 350,
-      "summary": null,
+      "summary": {
+        "text": "Describes the construction of the Basic Test set—sampled exclusively from ~10,000 theorems in Mathlib Basic.lean files after excluding training and random test items—and the Real Test set—derived from NuminaMath natural-language math questions and answers (Li et al., 2024) without GPT-4 informalization and evaluated under the MiniF2F-Lean4 predefined theorem environment.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "basic test",
@@ -2159,7 +2291,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 114,
-      "summary": null,
+      "summary": {
+        "text": "Lists the post-filtering criteria applied to FORML4 training and test splits: removing API failures or empty informalizations, excluding examples with natural-language text <= 400 characters or formal theorem+proof <= 200 characters, and manually removing inspected samples with evidently incorrect informalizations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "exceed",
@@ -2187,7 +2322,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Contains the subsection numbering (\"P.1\") introducing the automated autoformalization evaluation details appendix.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "P.1",
       "extractCut": false
@@ -2202,7 +2340,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 61,
-      "summary": null,
+      "summary": {
+        "text": "Gives the instruction prompt template used to query LLMs to translate a natural-language # Statement: and # Proof: pair into Lean 4.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prompt",
@@ -2230,7 +2371,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 400,
-      "summary": null,
+      "summary": {
+        "text": "Describes the post-processing extraction of Lean 4 code from raw LLM responses, defines the greedy and unbiased pass@k evaluation metrics (repeated 5 times with 20 samples at temperature 0.7), and presents Table 15 comparing Greedy, Pass@1, and Pass@5 compilation scores of closed-source and open-source LLMs across the Random, Basic, and Real test sets.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "pass",
@@ -2278,7 +2422,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 308,
-      "summary": null,
+      "summary": {
+        "text": "Analyzes the baseline LLM evaluation results in Table 15, highlighting the performance gap between closed-source models (GPT-4/GPT-4o, GPT-3.5) and open-source models (where DeepSeek-Math-Instruct-7B leads on the Random Test while LLEMMA models score near zero), and observing that scaling parameter count from 7B to 34B alone does not yield strong Lean 4 autoformalization performance.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "closed-source llms",

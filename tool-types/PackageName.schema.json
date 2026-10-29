@@ -1,15 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/tool-types/PackageName.schema.json",
-  "title": "PackageName",
-  "type": "string",
-  "minLength": 1,
-  "pattern": "^[a-z][a-z0-9-]*$",
-  "description": "A skill package, e.g. folio-core",
+  "title": "PackageName (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/cat-harness/tool-types/PackageName.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types/PackageName.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types/PackageName.schema.json"
+    }
+  ],
   "staging": {
     "branch": "main",
-    "sha": "b08c961e48d303cf8ca8185be4206f93f85f086b",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
     "pr": "main",
-    "run": "40036055825"
+    "run": "40854353981"
   }
 }

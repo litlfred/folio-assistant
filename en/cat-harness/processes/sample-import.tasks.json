@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_SampleImport",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
  "tasks": {
   "Task_Scope": {
    "id": "Task_Scope",
    "name": "Scope the sample: which items, which store, and is it PERMANENT?",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Scope",
    "lane": "Contributor (human or agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_0",
    "skills": [
     {
      "name": "sample-import",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -31,12 +34,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -61,7 +72,9 @@
    "id": "Call_Materialize",
    "name": "Materialize remote content (the five gates)",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Materialize",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
     {
      "name": "sample-import",
@@ -74,11 +87,12 @@
    ],
    "calls": {
     "name": "Materialize remote content — the shared subprocess",
-    "href": "materialize-remote.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote",
+    "diagram": "materialize-remote.html"
    },
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -120,7 +134,9 @@
    "id": "Task_Library",
    "name": "Land it in library/",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Library",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
     {
      "name": "sample-import",
@@ -129,7 +145,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -171,7 +187,9 @@
    "id": "Task_Trial",
    "name": "Keep it as a trial: the unpublished trashcan",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Trial",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
     {
      "name": "sample-import",
@@ -180,7 +198,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -222,7 +240,9 @@
    "id": "Task_ImportTest",
    "name": "Import into the store, and test the import",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_ImportTest",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
     {
      "name": "sample-import",
@@ -231,7 +251,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -273,7 +293,9 @@
    "id": "Task_RecordFindings",
    "name": "Record what failed",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_RecordFindings",
    "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_2",
    "skills": [
     {
      "name": "sample-import",
@@ -282,9 +304,13 @@
    ],
    "role": {
     "name": "corpus",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"
@@ -300,7 +326,9 @@
    "id": "Call_Refresh",
    "name": "Refresh materialized content",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Refresh",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
     {
      "name": "sample-import",
@@ -313,11 +341,12 @@
    ],
    "calls": {
     "name": "Refresh materialized remote content",
-    "href": "refresh-materialized.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
+    "diagram": "refresh-materialized.html"
    },
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {

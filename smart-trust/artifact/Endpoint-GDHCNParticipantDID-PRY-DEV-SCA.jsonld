@@ -10,6 +10,7 @@
   "@type": "fhir:Endpoint",
   "dcterms:identifier": "Endpoint/GDHCNParticipantDID-PRY-DEV-SCA",
   "dcterms:title": "GDHCNParticipantDID-PRY-DEV-SCA",
+  "dcterms:description": "Paraguay Trustlist (DID v2) - DEV - Certificate Signing Authority did:web:tng-cdn.who.int:v2:trustlist:-:PRY:SCA resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/PRY/SCA/did.json",
   "dcterms:type": "Other",
   "schema:creativeWorkStatus": "referenced",
   "schema:encoding": [
@@ -25,9 +26,14 @@
   "dcterms:isPartOf": {
     "@type": "fhir:ImplementationGuide",
     "dcterms:identifier": "smart.who.int.trust",
-    "schema:version": "1.8.0",
+    "schema:version": "1.7.5",
     "schema:sameAs": {
       "@id": "http://smart.who.int/trust"
     }
-  }
+  },
+  "dcterms:conformsTo": [
+    {
+      "@id": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint"
+    }
+  ]
 }

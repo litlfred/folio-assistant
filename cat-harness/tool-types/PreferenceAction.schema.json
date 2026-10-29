@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types/PreferenceAction.schema.json",
+  "title": "PreferenceAction",
+  "type": "string",
+  "enum": [
+    "get",
+    "set",
+    "reset"
+  ],
+  "description": "Read, write or clear the stored preferences.",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  }
+}

@@ -40,10 +40,12 @@ Extensions, is a **Subkind** of bootstrap's: read it as bootstrap's, and it
 still means what it says.
 
 **Versions and addresses.** A declaration may state its `version`
-(MAJOR.MINOR.PATCH) and an `iriBase`. Every identifier it mints is then
-`<iriBase><version>/…`, which pins exactly, and a page meant for a person is
-`<iriBase>v<major>/…`. Bootstrap's own are in its declaration; read them
-there rather than trusting a copy.
+(MAJOR.MINOR.PATCH) and an `iriBase`. Every identifier it mints, and every
+page meant for a person, is then `<iriBase>v<major>/…`: the address carries
+the major alone, so only a breaking release moves it. The exact release you
+read is fixed by the pin that brought this repository to you, not by the
+address. Bootstrap's own are in its declaration; read them there rather than
+trusting a copy.
 
 ## Do this, in order
 

@@ -5,13 +5,13 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-actions",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
       "instructionLines": 157,
       "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
       "name": "block-actions",
@@ -23,12 +23,12 @@
       "title": "Block actions: [edit] and [feedback] on every block"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-authoring",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
       "instructionLines": 93,
       "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
@@ -42,12 +42,12 @@
       "title": "document-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-publishing",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "instructionLines": 119,
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
@@ -61,12 +61,12 @@
       "title": "document-publishing"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-structure",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-structure",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/input.schema.json",
       "instructionLines": 64,
       "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
@@ -80,12 +80,12 @@
       "title": "document-structure"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/normative-statements",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
       "instructionLines": 95,
       "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
@@ -99,12 +99,12 @@
       "title": "normative-statements"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "instructionLines": 347,
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",

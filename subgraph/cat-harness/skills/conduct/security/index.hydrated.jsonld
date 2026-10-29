@@ -5,30 +5,30 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
       "@type": "cat-harness:SkillPackage",
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/zero-trust-handover"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/injection-boundaries",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/path-containment",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/security",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/zero-trust-handover"
       ],
       "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 (paraphrased: a cybersecurity sub-KG in tools, injection first, consolidating the many related skills already scattered across the folio and content layers) and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
       "hasManifest": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "name": "security",
       "path": "skills/conduct/security",
       "version": "0.1.0"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/injection-boundaries",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 188,
       "instructionsPath": "skills/conduct/security/injection-boundaries.md",
       "name": "injection-boundaries",
@@ -40,14 +40,14 @@
       "title": "Injection — the value became program"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/path-containment",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 102,
       "instructionsPath": "skills/conduct/security/path-containment.md",
       "name": "path-containment",
@@ -59,14 +59,14 @@
       "title": "Path containment — two questions that look like one"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/security",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "instructionLines": 76,
       "instructionsPath": "skills/conduct/security/security.md",
       "name": "security",
@@ -78,21 +78,21 @@
       "title": "Security — one question, asked at every boundary"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/zero-trust-handover",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/zero-trust-handover",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 404,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 405,
       "instructionsPath": "skills/conduct/security/zero-trust-handover.md",
       "name": "zero-trust-handover",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5394b9e32275f2157872892c1d166ea33bddd537a67ef28a1b8bc3696c6514c5",
-        "bytes": 28921,
-        "sha256": "5394b9e32275f2157872892c1d166ea33bddd537a67ef28a1b8bc3696c6514c5"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bcc195fd5ec843f9d8ec8669aa361eae44311ec6f1b16513ac69429c40414144",
+        "bytes": 29019,
+        "sha256": "bcc195fd5ec843f9d8ec8669aa361eae44311ec6f1b16513ac69429c40414144"
       },
       "title": "Zero-trust handover"
     }

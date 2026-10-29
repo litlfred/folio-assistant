@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_GettingStarted",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
  "tasks": {
   "Task_DetectModality": {
    "id": "Task_DetectModality",
    "name": "Detect the interaction modality",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_DetectModality",
    "lane": "Onboarding agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
     {
      "name": "interaction-modality",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "onboarding-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-onboarding-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
     "title": "Onboarding agent",
     "skills": [
      {
@@ -26,6 +29,11 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html",
       "via": "authoring-agent"
      },
      {
@@ -104,6 +112,11 @@
       "via": "authoring-agent"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html",
       "via": "authoring-agent"
@@ -114,12 +127,22 @@
       "via": "authoring-agent"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "document-intake",
       "href": "../../../reference/skill-instructions/document-intake.html"
      },
      {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
      },
      {
@@ -153,6 +176,11 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
       "via": "authoring-agent"
      },
      {
@@ -232,6 +260,16 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html",
       "via": "authoring-agent"
      },
      {
@@ -276,7 +314,9 @@
    "id": "Task_ReadFacts",
    "name": "Read the repository facts",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReadFacts",
    "lane": "Onboarding agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
     {
      "name": "getting-started",
@@ -285,7 +325,7 @@
    ],
    "role": {
     "name": "onboarding-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-onboarding-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
     "title": "Onboarding agent",
     "skills": [
      {
@@ -296,6 +336,11 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html",
       "via": "authoring-agent"
      },
      {
@@ -374,6 +419,11 @@
       "via": "authoring-agent"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html",
       "via": "authoring-agent"
@@ -384,12 +434,22 @@
       "via": "authoring-agent"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "document-intake",
       "href": "../../../reference/skill-instructions/document-intake.html"
      },
      {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
      },
      {
@@ -423,6 +483,11 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
       "via": "authoring-agent"
      },
      {
@@ -502,6 +567,16 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html",
       "via": "authoring-agent"
      },
      {
@@ -546,7 +621,9 @@
    "id": "Task_AskIntent",
    "name": "Choose from the offered options",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent",
    "lane": "User (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
    "skills": [
     {
      "name": "interaction-modality",
@@ -559,7 +636,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -575,12 +652,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -605,7 +690,9 @@
    "id": "Task_ScanRepo",
    "name": "Scan the repo for content worth importing",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ScanRepo",
    "lane": "Onboarding agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
     {
      "name": "repo-conversion",
@@ -618,7 +705,7 @@
    ],
    "role": {
     "name": "onboarding-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-onboarding-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
     "title": "Onboarding agent",
     "skills": [
      {
@@ -629,6 +716,11 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html",
       "via": "authoring-agent"
      },
      {
@@ -707,6 +799,11 @@
       "via": "authoring-agent"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html",
       "via": "authoring-agent"
@@ -717,12 +814,22 @@
       "via": "authoring-agent"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "document-intake",
       "href": "../../../reference/skill-instructions/document-intake.html"
      },
      {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
      },
      {
@@ -756,6 +863,11 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
       "via": "authoring-agent"
      },
      {
@@ -835,6 +947,16 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html",
       "via": "authoring-agent"
      },
      {
@@ -879,7 +1001,9 @@
    "id": "Task_ConfirmImport",
    "name": "Import what, where, and who does it",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ConfirmImport",
    "lane": "User (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
    "skills": [
     {
      "name": "repo-conversion",
@@ -892,7 +1016,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -908,12 +1032,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -938,7 +1070,9 @@
    "id": "Task_CreateRepo",
    "name": "Create the repository",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_CreateRepo",
    "lane": "Onboarding agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
     {
      "name": "repo-conversion",
@@ -947,7 +1081,7 @@
    ],
    "role": {
     "name": "onboarding-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-onboarding-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
     "title": "Onboarding agent",
     "skills": [
      {
@@ -958,6 +1092,11 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html",
       "via": "authoring-agent"
      },
      {
@@ -1036,6 +1175,11 @@
       "via": "authoring-agent"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html",
       "via": "authoring-agent"
@@ -1046,12 +1190,22 @@
       "via": "authoring-agent"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "document-intake",
       "href": "../../../reference/skill-instructions/document-intake.html"
      },
      {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
      },
      {
@@ -1085,6 +1239,11 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
       "via": "authoring-agent"
      },
      {
@@ -1164,6 +1323,16 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html",
       "via": "authoring-agent"
      },
      {
@@ -1208,7 +1377,9 @@
    "id": "Task_Scaffold",
    "name": "Scaffold the folio (folio_init)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_Scaffold",
    "lane": "Onboarding agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
     {
      "name": "getting-started",
@@ -1217,7 +1388,7 @@
    ],
    "role": {
     "name": "onboarding-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-onboarding-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
     "title": "Onboarding agent",
     "skills": [
      {
@@ -1228,6 +1399,11 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html",
       "via": "authoring-agent"
      },
      {
@@ -1306,6 +1482,11 @@
       "via": "authoring-agent"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html",
       "via": "authoring-agent"
@@ -1316,12 +1497,22 @@
       "via": "authoring-agent"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "document-intake",
       "href": "../../../reference/skill-instructions/document-intake.html"
      },
      {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
      },
      {
@@ -1355,6 +1546,11 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
       "via": "authoring-agent"
      },
      {
@@ -1437,6 +1633,16 @@
       "via": "authoring-agent"
      },
      {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html",
       "via": "authoring-agent"
@@ -1478,7 +1684,9 @@
    "id": "Task_SeedPlan",
    "name": "Seed the work plan",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_SeedPlan",
    "lane": "Work plan (beans)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -1487,7 +1695,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -1505,7 +1713,9 @@
    "id": "Task_ProvisionGhPages",
    "name": "Provision gh-pages",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ProvisionGhPages",
    "lane": "Publish — GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
     {
      "name": "getting-started",
@@ -1514,7 +1724,7 @@
    ],
    "role": {
     "name": "publish-target",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
     "title": "Publish target",
     "skills": [
      {
@@ -1528,7 +1738,9 @@
    "id": "Task_PagesBootstrap",
    "name": "Start the Pages build and derive the URL",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_PagesBootstrap",
    "lane": "Publish — GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
     {
      "name": "getting-started",
@@ -1537,7 +1749,7 @@
    ],
    "role": {
     "name": "publish-target",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
     "title": "Publish target",
     "skills": [
      {
@@ -1551,7 +1763,9 @@
    "id": "Task_ReportUrl",
    "name": "Hand over the live link",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUrl",
    "lane": "Publish — GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
     {
      "name": "getting-started",
@@ -1560,7 +1774,7 @@
    ],
    "role": {
     "name": "publish-target",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
     "title": "Publish target",
     "skills": [
      {
@@ -1574,7 +1788,9 @@
    "id": "Task_ReportPending",
    "name": "Say where it will be",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportPending",
    "lane": "Publish — GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
     {
      "name": "getting-started",
@@ -1583,7 +1799,7 @@
    ],
    "role": {
     "name": "publish-target",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
     "title": "Publish target",
     "skills": [
      {
@@ -1597,7 +1813,9 @@
    "id": "Task_ReportUnknown",
    "name": "Say it could not be confirmed",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUnknown",
    "lane": "Publish — GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
     {
      "name": "getting-started",
@@ -1606,7 +1824,71 @@
    ],
    "role": {
     "name": "publish-target",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanOpen",
+   "lane": "Work plan (beans)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanClose",
+   "lane": "Publish — GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
     "title": "Publish target",
     "skills": [
      {

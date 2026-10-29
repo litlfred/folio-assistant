@@ -1,0 +1,21 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_0.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_0",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Contributor (human or agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_ActorRoleAdministration",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
  "tasks": {
   "Task_AddActor": {
    "id": "Task_AddActor",
    "name": "Add an actor, and declare its kind",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_AddActor",
    "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
    "skills": [
     {
      "name": "role-model",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "administrator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
     "title": "Administrator",
     "skills": [
      {
@@ -53,7 +56,9 @@
    "id": "Task_AssignRoles",
    "name": "Open or close a role to an actor",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_AssignRoles",
    "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
    "skills": [
     {
      "name": "role-model",
@@ -62,7 +67,7 @@
    ],
    "role": {
     "name": "administrator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
     "title": "Administrator",
     "skills": [
      {
@@ -100,7 +105,9 @@
    "id": "Task_GrantOrRevoke",
    "name": "Grant or revoke a permission",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
    "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
    "skills": [
     {
      "name": "role-model",
@@ -109,7 +116,7 @@
    ],
    "role": {
     "name": "administrator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
     "title": "Administrator",
     "skills": [
      {
@@ -147,7 +154,9 @@
    "id": "Task_RetireActor",
    "name": "Retire an actor — never delete one",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RetireActor",
    "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -160,7 +169,7 @@
    ],
    "role": {
     "name": "administrator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
     "title": "Administrator",
     "skills": [
      {
@@ -198,7 +207,9 @@
    "id": "CallActivity_CodeChangeReview",
    "name": "Branch, gates, PR and review",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
    "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
    "skills": [
     {
      "name": "prepare-merge",
@@ -211,11 +222,12 @@
    ],
    "calls": {
     "name": "Code change and review",
-    "href": "code-change-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
+    "diagram": "code-change-review.html"
    },
    "role": {
     "name": "administrator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
     "title": "Administrator",
     "skills": [
      {
@@ -253,7 +265,9 @@
    "id": "Task_RunKgAudit",
    "name": "Audit the graph [kg:audit]",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
    "lane": "Graph audit (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Audit",
    "skills": [
     {
      "name": "role-model",
@@ -262,7 +276,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

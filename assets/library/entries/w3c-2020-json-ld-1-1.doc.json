@@ -2142,7 +2142,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Front-matter masthead header containing the W3C mark on page 1 of the JSON-LD 1.1 Recommendation.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "W3C",
       "extractCut": false
@@ -2157,7 +2160,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 310,
-      "summary": null,
+      "summary": {
+        "text": "Title block and abstract for the W3C Recommendation JSON-LD 1.1 (16 July 2020), listing version links, test suite and implementation report URIs, current and former editors and authors (Gregg Kellogg, Pierre-Antoine Champin, Dave Longley, Manu Sporny, Markus Lanthaler, Niklas Lindström), and repository links. The abstract defines JSON-LD 1.1 as a JSON-based serialization format for Linked Data that integrates into existing JSON systems and is a backwards-compatible superset of JSON-LD 1.0.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "digital bazaar",
@@ -2250,7 +2256,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 425,
-      "summary": null,
+      "summary": {
+        "text": "Status of This Document and opening of the Table of Contents. Notes the live JSON-LD playground, states that this W3C Recommendation produced by the JSON-LD Working Group under the W3C Patent Policy and 1 March 2019 Process Document supersedes JSON-LD 1.0 as one of three JSON-LD 1.1 Recommendations (alongside Processing Algorithms and API, and Framing), and begins the Table of Contents from Section 1 (Introduction) through Section 4.3 (Value Ordering).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "w3c patent",
@@ -2313,7 +2322,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1002,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of the Table of Contents (Section 4.4 Nested Properties through Appendix J References) followed by the non-normative Section 1 Introduction and Section 1.1 How to Read this Document. Introduces Linked Data and JSON-LD's additions to JSON (universal IRI identifiers, context-based key disambiguation, cross-site resource links, language annotations, datatyped values, and named graphs), explains how JSON-LD works both as idiomatic JSON and as an RDF syntax, identifies target developer audiences, and notes the preference for the term IRI over URL or URI.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "rdf graph",
@@ -2361,7 +2373,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 18,
-      "summary": null,
+      "summary": {
+        "text": "Interactive note at the end of Section 1.1 stating that the specification can highlight changes since the JSON-LD 1.0 Recommendation, plus the non-normative marker opening Section 1.2 (Contributing).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "This document can highlight changes since the JSON-LD 1.0 version. Select to highlight changes. This section is non-normative.",
       "extractCut": false
@@ -2406,7 +2421,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 290,
-      "summary": null,
+      "summary": {
+        "text": "Section 1.2 (Contributing) and Section 1.3 (Typographical conventions). Lists the public-json-ld-wg@w3.org mailing list and #json-ld IRC channels for participation, and defines the typographical conventions used across the specification for markup, variables, definitions, internal and external definition references, hyperlinks, bracketed bibliographic references, and change highlighting.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "monospace font",
@@ -2454,7 +2472,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 229,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note styling convention in Section 1.3 followed by the opening of Section 1.4 (Terminology), importing terms from ECMAScript, RFC 8259 (JSON), the WHATWG Infra Standard, and Web IDL: array (unordered by default in JSON-LD unless specified as a list), boolean (true and false), and JSON object (curly-bracketed unique name/value pairs).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "brackets surrounding",
@@ -2498,7 +2519,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 59,
-      "summary": null,
+      "summary": {
+        "text": "Example 1 box in Section 1.3 illustrating how informative examples are formatted in monospace with optional syntax coloring and tabbed navigation buttons for transformed representations, followed by the Section 1.4 Terminology heading.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "monospace",
@@ -2526,7 +2550,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1734,
-      "summary": null,
+      "summary": {
+        "text": "Section 1.4 Terminology definitions imported from external specifications (INFRA map, Web IDL record, null, number, scalar, string; RFC 3987 IRI, IRI reference, and relative IRI reference; RDF 1.1 Concepts, RDF Schema, and Linked Data Design Issues terms from base IRI and blank node through RDF graph, resource, subject, and triple) and the first half of JSON-LD-specific term definitions from active context and base direction through JSON-LD document and JSON-LD internal representation.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "graph entry",
@@ -2574,7 +2601,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 904,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 1.4 JSON-LD Specific Term Definitions (JSON-LD Processor, JSON-LD value, keyword, language map, list object, local context, nested property, node object, node reference, prefix, processing mode, scoped context, set object, term, term definition, type map, typed value, value object, and vocabulary mapping) followed by the opening of Section 1.5 (Design Goals and Rationale) introducing the Simplicity goal.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld",
@@ -2622,7 +2652,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 531,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section 1.5 (Design Goals and Rationale) and Section 1.6 (Data Model Overview). Summarizes the design goals of Compatibility, Expressiveness, Terseness, Zero Edits (most of the time), and Usable as RDF, and gives a non-normative overview of the JSON-LD labeled directed graph data model (nodes, blank nodes, node objects vs. value objects, relationship to the RDF data model, and the JSON-LD internal representation).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld document",
@@ -2670,7 +2703,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 188,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note at the end of Section 1.6 noting that non-JSON surface syntaxes such as YAML 1.2 and CBOR can map into the JSON-LD internal representation, followed by the opening of Section 1.7 (Syntax Tokens and Keywords) defining the colon separator (:), @base, @container, and @context.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "base iri",
@@ -2725,7 +2761,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 802,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 1.7 (Syntax Tokens and Keywords), summarizing the purpose and section references for @context, @direction, @graph, @id, @import, @included, @index, @json, @language, @list, @nest, @none, @prefix, @propagate, @protected, @reverse, @set, @type, @value, @version, and @vocab, noting that all keys, keywords, and values in JSON-LD are case-sensitive and explaining why @version takes the numeric value 1.1.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "node objects",
@@ -2773,7 +2812,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 443,
-      "summary": null,
+      "summary": {
+        "text": "Section 2 (Conformance) and the opening of Section 3 (Basic Concepts). Specifies BCP 14 (RFC 2119 / RFC 8174) keyword interpretation, document conformance via the Section 9 JSON-LD Grammar or Section 6.1 HTTP Link interpretation, and the table of compact IRI namespace prefixes (dc11, dcterms, cred, foaf, geojson, prov, i18n, rdf, schema, skos, xsd), then introduces how IRIs disambiguate JSON keys such as name and homepage using the schema.org vocabulary.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "unambiguous identifiers",
@@ -2821,7 +2863,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 466,
-      "summary": null,
+      "summary": {
+        "text": "Examples 2 and 3 in Section 3 (Basic Concepts) and the opening of Section 3.1 (The Context). Contrasts a plain JSON person object (Example 2) with a verbose JSON-LD document using full schema.org IRIs and @id value objects (Example 3), then introduces the JSON-LD @context mechanism for mapping case-sensitive shortcut terms to IRIs through simple string mappings or expanded term definitions.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "shortcut terms",
@@ -2869,7 +2914,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 63,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Example 3's http://schema.org/image entry and prose in Section 3.1 explaining that contexts can either be embedded directly in a document or referenced externally via a URL such as https://json-ld.org/contexts/person.jsonld.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "embedded",
@@ -2897,7 +2945,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 288,
-      "summary": null,
+      "summary": {
+        "text": "Examples 4 and 5 in Section 3.1 (The Context) showing an inline context definition that maps name, image, and homepage to schema.org IRIs with @type: @id coercion (Example 4) and a compact JSON-LD document referencing that context by URL (Example 5), followed by prose explaining that non-@context keys in external context documents are ignored and that remote contexts can be referenced using relative URLs.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "context",
@@ -2945,7 +2996,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1293,
-      "summary": null,
+      "summary": {
+        "text": "Conclusion of Section 3.1 (with Examples 6 and 7), all of Section 3.2 (IRIs, with Examples 8–12), Section 3.3 (Node Identifiers), and the first half of Section 3.4 (Uses of JSON Objects). Covers relative and inline contexts, how IRIs are expressed via context terms, @id/@type values, or @type coercion (ignoring unmapped JSON keys like status), identifying nodes with @id, and how JSON-LD uses JSON objects for node objects, value objects, list/set objects, and map objects.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "relative iri",
@@ -2993,7 +3047,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 29,
-      "summary": null,
+      "summary": {
+        "text": "Example 13 in Section 3.3 (Node Identifiers), showing a compacted JSON-LD node object identified by \"@id\": \"http://me.markus-lanthaler.com/\" with a schema.org name property.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Input Example 13: Identifying a node Compacted (Input) Expanded (Result) Statements Turtle Open in playground { \"@context\": { ... \"name\": \"http://schema.org/name\" }, \"@id\": \"http://me.markus-lanthaler.com/\", \"name\": \"Markus Lanthaler\", ... }",
       "extractCut": false
@@ -3008,7 +3065,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 415,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section 3.4 (Uses of JSON Objects) and the opening of Section 3.5 (Specifying the Type). Summarizes Language Maps, Index Maps, Id Maps, Type Maps, Named Graph Indexing, Graph objects, and Context Definitions, and introduces specifying node types explicitly with @type using an IRI, an array of IRIs, or a term from the active context.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "named graph",
@@ -3056,7 +3116,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 503,
-      "summary": null,
+      "summary": {
+        "text": "Examples 14–16 in Section 3.5 (Specifying the Type) and the opening of Section 4 (Advanced Concepts). Illustrates assigning a single IRI type (Example 14), an array of multiple types (Example 15), and a context term as a type (Example 16), notes the use of @type for typed values and type coercion, and introduces advanced JSON-LD concepts including describing values, value ordering, property nesting, referencing objects across the Web, and object embedding.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "typed value",
@@ -3104,7 +3167,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 334,
-      "summary": null,
+      "summary": {
+        "text": "Examples 17 and 18 in Section 4 (Advanced Concepts) showing cross-document IRI references and embedded node objects with FOAF, followed by summaries of indexed values and reverse properties and the opening of Section 4.1 (Advanced Context Usage) explaining where @context may appear and how top-level arrays or @graph describe disconnected nodes.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "indexed values",
@@ -3152,7 +3218,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 378,
-      "summary": null,
+      "summary": {
+        "text": "Examples 19 and 20 in Section 4.1 (Advanced Context Usage) and prose explaining context overriding and composition. Shows separate contexts in a top-level array (Example 19) and an array of contexts combined with @graph (Example 20), explains most-recently-defined-wins term overriding, removing terms by mapping them to null, resetting the active context with \"@context\": null, and previews scoped contexts, context propagation, imported contexts, and protected terms.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "empire state",
@@ -3200,7 +3269,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 217,
-      "summary": null,
+      "summary": {
+        "text": "Informative Notes and Examples 21 and 22 in Section 4.1 (Advanced Context Usage). Recommends placing @context at the top of a document for readability and streaming parsers, warns against custom @-prefixed ALPHA terms and disallows empty-string terms (\"\"), and shows embedded contexts overriding a term in a nested object (Example 21) and layering a local context onto an external context in an array (Example 22).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "terms starting",
@@ -3240,7 +3312,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 123,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.1.1 (JSON-LD 1.1 Processing Mode), explaining that JSON-LD 1.1 features are enabled unless the processing mode is set to json-ld-1.0 via the API, and that setting \"@version\": 1.1 in the first versioned context (or via the API) explicitly locks the processing mode to json-ld-1.1 and prevents JSON-LD 1.0 processors from misprocessing the document.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "processing mode",
@@ -3272,7 +3347,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 235,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note and Example 23 in Section 4.1.1 recommending explicit \"@version\": 1.1 in contexts, followed by the prose of Section 4.1.2 (Default Vocabulary) explaining how @vocab sets a common IRI prefix for unmapped properties and types, how mapping a term to null suppresses expansion under @vocab, and how JSON-LD 1.1 allows relative IRI references in @vocab to concatenate with a prior active vocabulary mapping.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "vocabulary mapping",
@@ -3312,7 +3390,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 168,
-      "summary": null,
+      "summary": {
+        "text": "Examples 24 and 25 in Section 4.1.2 (Default Vocabulary) showing a @vocab prefix for Restaurant properties and setting databaseId to null so it is ignored during expansion, an informative note that terms used as the value of @vocab must already be in scope, and the opening sentence of Section 4.1.3 (Base IRI).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "default vocabulary",
@@ -3348,7 +3429,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 271,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.1.3 (Base IRI, with Examples 27 and 28), Example 26 from Section 4.1.2, and the prose of Section 4.1.4 (Using the Document Base for the Default Vocabulary). Explains resolving relative IRI references (including empty \"@id\": \"\") against the document location or an explicit @base in a local context, notes that setting @base to null disables relative IRI expansion and that @base is ignored in external contexts, and introduces resolving a relative @vocab against the base IRI when no vocabulary mapping is in scope.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "base iri",
@@ -3396,7 +3480,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 246,
-      "summary": null,
+      "summary": {
+        "text": "Opening of Example 29 in Section 4.1.4 and the introductory prose of Section 4.1.5 (Compact IRIs). Explains compact IRIs of the form prefix:suffix (such as foaf:name and foaf:Person) and the expansion rules requiring the prefix to match a term in the active context and the suffix not to start with // (while a leading underscore _ denotes a blank node identifier).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compact iri",
@@ -3436,7 +3523,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 255,
-      "summary": null,
+      "summary": {
+        "text": "Completion of Example 29 and Example 30 in Section 4.1.4 (showing \"@vocab\": \"#\" resolved against @base), followed by Examples 31 and 32 and the compact IRI prefix eligibility rules in Section 4.1.5 (Compact IRIs). Explains that in JSON-LD 1.1 a term is used as a compact IRI prefix only if its simple term definition ends with an RFC 3986 gen-delim character or its expanded term definition sets \"@prefix\": true (whereas \"@prefix\": false disables prefix use).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compact iris",
@@ -3484,7 +3574,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 593,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note and Examples 33–37 in Section 4.1.5 illustrating the JSON-LD 1.0 errata change to compact IRI term selection and how \"@prefix\": true restores prefix compaction in JSON-LD 1.1, followed by Section 4.1.6 (Aliasing Keywords) and the opening of Section 4.1.7 (IRI Expansion within a Context). Explains aliasing keywords other than @context (with restrictions on expanded term definitions for keyword aliases) and using defined terms as prefixes inside the same context.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compact iri",
@@ -3532,7 +3625,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 32,
-      "summary": null,
+      "summary": {
+        "text": "Example 38 in Section 4.1.6 (Aliasing Keywords), demonstrating a context that aliases @id to url and @type to a in a compacted person node object.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "aliasing",
@@ -3560,7 +3656,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 133,
-      "summary": null,
+      "summary": {
+        "text": "Opening of Example 39 and prose in Section 4.1.7 (IRI Expansion within a Context) explaining how a context term such as xsd can be used in @type coercion of another term within the same context, and how compact IRIs and full IRIs can appear on the left-hand side of term definitions.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "iri",
@@ -3592,7 +3691,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 449,
-      "summary": null,
+      "summary": {
+        "text": "Warnings and Examples 39–44 in Section 4.1.7 (IRI Expansion within a Context) plus the opening prose of Section 4.1.8 (Scoped Contexts). Warns that in JSON-LD 1.1 a compact IRI or IRI used as a term key must expand to the same IRI it would expand to on its own (Example 42), explains exact string matching before prefix lookup when IRIs are used as term keys (Example 43), forbids circular term definitions (Example 44), and introduces property-scoped contexts via @context inside an expanded term definition.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compact iri",
@@ -3640,7 +3742,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 217,
-      "summary": null,
+      "summary": {
+        "text": "Example 45 and prose in Section 4.1.8 (Scoped Contexts), demonstrating a property-scoped context on the interest term that switches the default vocabulary to FOAF for its value, and explaining type-scoped contexts defined on terms used as values of @type (which by default do not propagate into nested node objects).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "scoping",
@@ -3684,7 +3789,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 266,
-      "summary": null,
+      "summary": {
+        "text": "Informative Notes and Examples 46 and 47 in Section 4.1.8 (Scoped Contexts). Explains that property-scoped and local contexts remain in effect across nested node objects while type-scoped contexts are applied in lexicographical order of @type values, and states the processing order: property-scoped context first, embedded context second, and type-scoped contexts last.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "scoped contexts",
@@ -3732,7 +3840,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 276,
-      "summary": null,
+      "summary": {
+        "text": "Informative Notes and completion of Examples 47 and 48 in Section 4.1.8 (Scoped Contexts) showing the equivalent array of embedded contexts corresponding to property-scoped, embedded, and type-scoped contexts, followed by the opening of Section 4.1.9 (Context Propagation) introducing the @propagate keyword for controlling whether a context survives descent into nested node objects.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "defines term",
@@ -3780,7 +3891,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 386,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note and Example 49 in Section 4.1.9 (Context Propagation) showing a property-scoped context with \"@propagate\": false reverting in deeper node objects, followed by the prose of Section 4.1.10 (Imported Contexts) explaining how a wrapping context uses @import to load a remote context and merge local overrides into it before processing.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "wrapping context",
@@ -3828,7 +3942,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 297,
-      "summary": null,
+      "summary": {
+        "text": "Examples 50–54 and concluding rules in Section 4.1.10 (Imported Contexts). Illustrates importing a remote context inside a type-scoped context to set \"@propagate\": true (Examples 50–52) and importing a remote context to override @vocab and a term definition prior to processing (Examples 53–54), noting that an imported context document must resolve to a single context definition map and may not itself contain @import.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "imported",
@@ -3872,7 +3989,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 635,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.1.11 (Protected Term Definitions, with Examples 55–57). Explains using \"@protected\": true on individual term definitions or on a whole @context (with \"@protected\": false exceptions) so embedded contexts or \"@context\": null cannot override terms relied upon by plain-JSON consumers, and details the two exceptions where overriding is permitted: identical redefinitions (Example 57) and property-scoped contexts.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "protected term",
@@ -3920,7 +4040,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 133,
-      "summary": null,
+      "summary": {
+        "text": "Completion of Example 57 and Example 58 in Section 4.1.11 (Protected Term Definitions), illustrating how a property-scoped context on employee can override a protected name term and how a property-scoped context on location can clear all protected terms using null before introducing a new @vocab.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "protected",
@@ -3952,7 +4075,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 241,
-      "summary": null,
+      "summary": {
+        "text": "Informative Notes closing Section 4.1.11 (warning that term protection prevents downstream adaptation in general-purpose contexts), Section 4.2 (Describing Values), and the prose of Section 4.2.1 (Typed Values) explaining the three ways to express typed values in JSON-LD: @type coercion in a term definition, an expanded value object with @value and @type, or native JSON booleans and numbers.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "type keyword",
@@ -4011,7 +4137,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 105,
-      "summary": null,
+      "summary": {
+        "text": "Examples 59 and 60 in Section 4.2.1 (Typed Values), showing an xsd:dateTime typed value expressed via @type coercion on the modified term in the context (Example 59) and via an explicit value object with @value and @type in the document body (Example 60).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "turtle open",
@@ -4039,7 +4168,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 274,
-      "summary": null,
+      "summary": {
+        "text": "Context-sensitivity discussion and Note in Section 4.2.1 distinguishing node types from value types (when @value and @type appear in the same map, @type denotes a value datatype; otherwise it denotes a node type, and type coercion applies only to string values), followed by the opening of Section 4.2.2 (JSON Literals) motivating preserving raw JSON data across JSON-LD transformations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "type keyword",
@@ -4087,7 +4219,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 234,
-      "summary": null,
+      "summary": {
+        "text": "Warning and prose in Section 4.2.2 (JSON Literals) alongside Examples 61 and 62 from Section 4.2.1. Warns that JSON literals create opaque blobs and should only be used when JSON cannot be modeled as JSON-LD, explains that \"@type\": \"@json\" produces an rdf:JSON literal serialized in canonical JSON form when converted to RDF, and shows Examples 61–62 contrasting a schema:BlogPosting node type with an xsd:dateTime value type.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json literal",
@@ -4131,7 +4266,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 13,
-      "summary": null,
+      "summary": {
+        "text": "Caption and tab header for Example 63 (JSON Literal) in Section 4.2.2.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Example 63: JSON Literal Compacted (Input) Expanded (Result) Statements Turtle Open in playground",
       "extractCut": false
@@ -4146,7 +4284,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 439,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note and Example 63 payload in Section 4.2.2 (noting that null values inside an @json literal are preserved rather than stripped), followed by the prose of Section 4.2.3 (Type Coercion) explaining how expanded term definitions coerce string values using a datatype IRI, @id (document-relative IRI expansion), or @vocab (term and vocabulary-relative IRI expansion).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compact iri",
@@ -4194,7 +4335,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 195,
-      "summary": null,
+      "summary": {
+        "text": "Example 64 and prose for Example 65 in Section 4.2.3 (Type Coercion). Shows coercing age to xsd:integer and homepage to @id (Example 64), and explains why the string \"barney\" expands to different IRIs when used as a document-relative @id value versus a vocabulary-relative \"@type\": \"@vocab\" property value (Example 65).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "barney",
@@ -4234,7 +4378,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 256,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note and Examples 65–67 in Section 4.2.3 (Type Coercion). Notes that duplicate triples emitted when @id and @vocab resolve to the same IRI collapse in the output dataset, contrasts \"@type\": \"@vocab\" (Example 65) with \"@type\": \"@id\" (Example 66), and shows defining type coercion on compact IRIs and full IRIs in the context (Example 67), where lookup matches the unexpanded key.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "compact iris",
@@ -4282,7 +4429,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 180,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note closing Section 4.2.3 (noting that multiple context terms such as dog and cat can expand to the same IRI with different coercion or language rules) followed by the opening of Section 4.2.4 (String Internationalization), introducing document-wide default language tags via @language in the context, clearing @language with null in a scoped context, and associating a language with a specific term.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "default language",
@@ -4318,7 +4468,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 803,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.2.4 (String Internationalization, Examples 68–73) and opening of Section 4.2.4.1 (Base Direction, Examples 74–76). Demonstrates setting and clearing document-wide default @language tags (Examples 68–69), binding term-specific languages in expanded term definitions (Example 70), using @container: @language maps for multi-language properties (Example 71), overriding or clearing default language via value objects (Examples 72–73), and setting, clearing, or term-binding base text direction (rtl/ltr) with @direction (Examples 74–76).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "إنشاء تصميم",
@@ -4366,7 +4519,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 215,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 4.2.4.1 (Base Direction, Example 77) and introduction to Section 4.3 (Value Ordering). Notes that @direction applies only to plain and language-tagged strings (not typed or type-coerced values), illustrates overriding default language and clearing @direction in a value object (Example 77), and introduces Section 4.3 by explaining that JSON-LD arrays represent unordered multi-valued properties by default, including values of heterogeneous types.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "base direction",
@@ -4410,7 +4566,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 219,
-      "summary": null,
+      "summary": {
+        "text": "Examples 78–80 in Section 4.3 (Value Ordering) and introduction to Section 4.3.1 (Lists). Shows unordered multi-valued properties in compact and expanded forms (Examples 78–80) and introduces ordered collections in JSON-LD via the @list keyword or @container: @list in the context, noting how RDF represents ordered lists using rdf:first, rdf:rest, and rdf:nil.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "inherent order",
@@ -4454,7 +4613,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 512,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.3.1 (Lists, Examples 81–84) and introduction to Section 4.3.2 (Sets). Demonstrates ordered lists using @list in the document body (Example 81) and @container: @list in the context (Example 82), highlights JSON-LD 1.1 support for nested lists of lists such as GeoJSON bbox and multi-level polygon coordinates (Examples 83–84), and introduces @set and @container: @set for explicitly unordered collections that always serialize as arrays in compact form.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "lists",
@@ -4502,7 +4664,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 280,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.3.2 (Sets, Examples 85–86) and introductory prose for Section 4.3.3 (Using @set with @type) and Section 4.4 (Nested Properties). Shows unordered collections using @set in the body (Example 85) and @container: @set in the context (Example 86), notes that JSON-LD 1.1 allows combining @set with index container definitions and setting @container: @set on @type, and introduces nested properties grouped under an intermediate @nest object.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "expanded term",
@@ -4550,7 +4715,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 19,
-      "summary": null,
+      "summary": {
+        "text": "Example 87 in Section 4.3.3 (Using @set with @type), showing a JSON-LD 1.1 context defining @type with @container: @set so that a single @type value is compacted as an array.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Example 87: Setting @container: @set on @type { \"@context\": { \"@version\": 1.1, \"@type\": {\"@container\": \"@set\"} }, \"@type\": [\"http:/example.org/type\"] }",
       "extractCut": false
@@ -4565,7 +4733,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 127,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.4 (Nested Properties, Examples 88–89). Illustrates aliasing a property (labels) to @nest so that nested properties (main_label and other_label) are folded into the containing node object during expansion, and explains using @nest in expanded term definitions so compaction nests those properties under the @nest-aliased term.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "nested properties",
@@ -4597,7 +4768,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 185,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note and Examples 90–92 in Section 4.4 (Nested Properties), plus the non-normative marker for Section 4.5 (Embedding). Notes that nested properties are new in JSON-LD 1.1 and shows the un-nested equivalent of Example 89 alongside the expanded input (Example 90), context with @nest term mappings (Example 91), and compacted output nesting main_label and other_label under labels (Example 92).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "main label",
@@ -4637,7 +4811,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 363,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.5 (Embedding, Examples 93–95). Contrasts linking separate node objects by IRI reference (Example 93) with embedding a child node object directly as a property value (Example 94), and shows introducing a blank node identifier (_:b0) when an embedded node must link back to an otherwise unidentified parent node (Example 95).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "blank node",
@@ -4685,7 +4862,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 269,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.5.1 (Identifying Blank Nodes) and introductory paragraph of Section 4.6 (Indexed Values). Explains document-scoped blank node identifiers using the _: scheme to serialize cyclic graphs or mutual references between nodes without global IRIs, warns that blank node identifiers may be relabeled during processing, and introduces Section 4.6 on indexing property values via intermediate maps.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "blank node",
@@ -4733,7 +4913,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 293,
-      "summary": null,
+      "summary": {
+        "text": "Overview of indexing mechanisms in Section 4.6 (Indexed Values), introduction to Section 4.6.1 (Data Indexing), and Example 96 from Section 4.5.1. Summarizes data indexing (@index), language indexing (@language), node identifier indexing (@id), and node type indexing (@type), introduces @container: @index maps for direct key-based lookup without mapping keys to IRIs, and includes Example 96 showing a cyclic knows relationship using blank node identifier _:n1.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "data indexing",
@@ -4781,7 +4964,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 136,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.6.1 (Data Indexing) and opening of Example 97. Explains how marking the athletes term with @container: @index allows arbitrary map keys (such as catcher and pitcher) to be preserved syntactically during expansion and compaction for direct object property access while being ignored semantically in RDF statements.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld processor",
@@ -4817,7 +5003,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 300,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 4.6.1 (Data Indexing, Remainder of Example 97 and Example 98) and introduction to Section 4.6.1.1 (Property-based Data Indexing). Warns that plain data indexes are lost when round-tripping through RDF, describes combining @index and @set in @container and indexing unindexed values under @none in JSON-LD 1.1 (Example 98), and introduces property-based data indexing where an @index property IRI on an @container: @index term preserves map keys semantically.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "buster posey",
@@ -4865,7 +5054,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 182,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.6.1.1 (Property-based Data Indexing, Example 99) and introduction to Section 4.6.2 (Language Indexing). Notes that property-based data indexing applies only to node objects (not value or graph objects), illustrates mapping map keys to schema:jobTitle via @container: @index and @index: schema:jobTitle (Example 99), and introduces @container: @language maps for indexing string values by language tag.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "property-based data",
@@ -4905,7 +5097,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 373,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.6.2 (Language Indexing, Examples 100–102) and introduction to Section 4.6.3 (Node Identifier Indexing). Demonstrates indexing language-tagged strings with @container: @language (Example 100), forcing array values with @container: [@language, @set] (Example 101), indexing non-language-tagged strings with @none in JSON-LD 1.1 (Example 102), and introduces id maps (@container: @id) for indexing node objects by IRI.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ihre majestät",
@@ -4953,7 +5148,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 382,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.6.3 (Node Identifier Indexing, Examples 103–105). Illustrates structuring node objects in an id map using @container: @id where map keys resolve to each node's @id (Example 103), combining @id with @set in @container so compacted map values are always arrays (Example 104), and indexing unidentified node objects under @none or an alias of @none (Example 105).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "crude oil",
@@ -5001,7 +5199,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 182,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Example 105 and Note closing Section 4.6.3 (noting that id maps are new in JSON-LD 1.1), followed by the introductory prose of Section 4.6.4 (Node Type Indexing) explaining type maps (@container: @type and [@type, @set]) where map keys specify the @type of the indexed node objects.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "maps",
@@ -5037,7 +5238,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 344,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.6.4 (Node Type Indexing, Examples 106–108) and introduction to Section 4.7 (Included Nodes). Shows indexing node objects by @type using @container: @type (Example 106), forcing array values with @container: [@type, @set] (Example 107), and indexing untyped nodes under @none or an alias (Example 108), notes that type maps are new in JSON-LD 1.1, and introduces @included blocks for grouping secondary node objects.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "affiliation",
@@ -5085,7 +5289,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 436,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.7 (Included Nodes, Examples 109–111) and introduction to Section 4.8 (Reverse Properties). Demonstrates collecting secondary or disconnected node objects in an @included array alongside primary node properties (Example 109), flattening them into the top-level graph array (Example 110), using a top-level @included block without creating a named graph (Example 111), and introduces @reverse for serializing directed graph edges in the inverse direction.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "gregg kellogg",
@@ -5133,7 +5340,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 687,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.8 (Reverse Properties, Examples 112–114), Section 4.9 (Named Graphs, Examples 115–117), and introduction to Section 4.9.1 (Graph Containers). Shows expressing parent-child relationships via child-to-parent links (Example 112), an inline @reverse map (Example 113), and a reverse term definition in the context (Example 114); demonstrates naming a graph and attaching metadata with @graph and @id (Example 115) or expressing the default graph under a shared context (Examples 116–117); and introduces implicit named graphs using @container: @graph.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "named graph",
@@ -5181,7 +5391,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 31,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note in Section 4.9.1 (Graph Containers) clarifying that the RDF value of a term defined with @container: @graph is the graph name associated with the named graph, while the named graph itself exists separately in the dataset.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Strictly speaking, the value of such a term is not a named graph, rather it is the graph name associated with the named graph, which exists separately within the dataset. Note",
       "extractCut": false
@@ -5196,7 +5409,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 183,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Example 117, Example 118 in Section 4.9.1 (Graph Containers), and introductory prose for Section 4.9.2 (Named Graph Data Indexing). Shows an implicitly named graph using @container: @graph (Example 118) and introduces indexing named graphs by non-IRI keys using @container: [@graph, @index].",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "graph containers",
@@ -5236,7 +5452,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 284,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.9.2 (Named Graph Data Indexing, Examples 119–120). Explains combining @graph and @index (and optionally @set) in @container to index named graphs by arbitrary keys (Example 119), using @none for unindexed graphs while warning that compacting multiple unidentified named graphs under @none merges them (Example 120), and notes that Named Graph Data Indexing is new in JSON-LD 1.1.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "graph data",
@@ -5284,7 +5503,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 326,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.9.3 (Named Graph Indexing, Examples 121–122). Explains using @container: [@graph, @id] (and optionally @set) to index named graphs in a map keyed by their graph IRI identifiers (Example 121) or under @none for unnamed graphs, warning that multiple graphs without an @id under @none are merged on expansion (Example 122).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "named graphs",
@@ -5332,7 +5554,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 292,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note closing Section 4.9.3 (noting that Graph Containers are new in JSON-LD 1.1), Section 4.10 (Remote Document and Context Retrieval), and opening paragraph of Section 5 (Forms of JSON-LD). Summarizes the role of documentLoader in JSON-LD 1.1 API for caching remote contexts, handling custom URL schemes, bundling static contexts, and protecting application privacy, and introduces JSON-LD document transformations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "documentloader implementation",
@@ -5380,7 +5605,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 32,
-      "summary": null,
+      "summary": {
+        "text": "Brief summary of Expanded Document Form in Section 5 (Forms of JSON-LD), defining expansion as applying a context to a JSON-LD document so that @context is no longer needed and pointing to Section 5.1.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Expansion is the process of taking a JSON-LD document and applying a context so that the @context is no longer necessary. This process is described further in § 5.1 Expanded Document Form.",
       "extractCut": false
@@ -5395,7 +5623,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 189,
-      "summary": null,
+      "summary": {
+        "text": "Brief summaries of Compacted, Flattened, and Framed Document Forms in Section 5, introductory prose for Section 5.1 (Expanded Document Form), and the closing lines of Example 122 from Section 4.9.3.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "document form",
@@ -5450,7 +5681,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 590,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.1 (Expanded Document Form, Examples 123–124), Section 5.2 (Compacted Document Form, Examples 125–127), and introduction to Section 5.2.1 (Shortening IRIs). Demonstrates expanding a document to eliminate @context and identifies the profile URI http://www.w3.org/ns/json-ld#expanded, illustrates compacting an expanded document with a supplied context and identifies the profile URI http://www.w3.org/ns/json-ld#compacted, and introduces shortening absolute IRIs during compaction via @vocab, @base, compact IRIs, and terms.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld",
@@ -5498,7 +5732,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 311,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.2.1 (Shortening IRIs, Examples 128–129) and introduction to Section 5.2.2 (Representing Values as Strings). Shows compacting vocabulary-relative IRIs with @vocab (Example 128) and document-relative IRIs with @base (Example 129), and introduces how compaction simplifies single-element arrays and value/node objects into strings when term definitions specify the expected type or language.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "brew eats",
@@ -5546,7 +5783,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 241,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.2.2 (Representing Values as Strings, Example 130) and introductory prose for Section 5.2.3 (Representing Lists as Arrays) and Section 5.2.4 (Reversing Node Relationships). Demonstrates compacting typed values, language-tagged strings, and IRIs into plain strings when they match term definitions in the context (Example 130), and introduces compacting @list objects to arrays and compacting @reverse relationships.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "values",
@@ -5586,7 +5826,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 69,
-      "summary": null,
+      "summary": {
+        "text": "Example 131 in Section 5.2.3 (Representing Lists as Arrays), showing how a context term with @container: @list compacts an expanded @list object into a simple JSON array of strings.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "nick",
@@ -5614,7 +5857,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 199,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.2.4 (Reversing Node Relationships, Example 132) and introduction to Section 5.2.5 (Indexing Values). Shows how a context term defined with @reverse compacts an expanded @reverse map into a direct property (children) on the parent node (Example 132), notes the synergy between reverse properties, framing, and container indexing, and introduces value indexing in Section 5.2.5.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "homer",
@@ -5654,7 +5900,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 190,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.2.5 (Indexing Values, Example 133) and introduction to Section 5.2.6 (Normalizing Values as Objects). Shows how @container: @language compacts an array of language-tagged value objects into a language-keyed map (Example 133), notes other index containers (@id, @type, @index), and introduces setting @type: @none on a term definition so compaction preserves value and node object representations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ihre majestät",
@@ -5694,7 +5943,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 296,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.2.6 (Normalizing Values as Objects, Example 134) and introductory prose for Section 5.2.7 (Representing Singular Values as Arrays) and Section 5.2.8 (Term Selection). Shows how defining a term with @type: @none forces compaction to retain value object and node object wrappers while still compacting datatype IRIs (Example 134), and introduces forcing array representation with @container: @set and splitting property values across specialized terms via term selection.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "term definition",
@@ -5742,7 +5994,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 110,
-      "summary": null,
+      "summary": {
+        "text": "Example 135 in Section 5.2.7 (Representing Singular Values as Arrays), showing how a term defined with @container: [@language, @set] compacts language-tagged strings into a language map whose values are always arrays even when a language has only one string.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ihre majestät",
@@ -5770,7 +6025,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 260,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.2.8 (Term Selection, Example 136) and introduction to Section 5.3 (Flattened Document Form). Demonstrates how compaction selects specific terms (integer, date, english, iri) whose @type or @language definitions match individual values of a shared property IRI while placing unmatched values under the compact IRI vocab:property (Example 136), and introduces flattening, which collects each node's properties into a flat top-level array and assigns blank node identifiers.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "vocab",
@@ -5818,7 +6076,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 266,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.3 (Flattened Document Form, Examples 137–138) and introduction to Section 5.4 (Framed Document Form). Shows flattening an embedded JSON-LD document into a top-level @graph array with blank node identifiers (Examples 137–138), specifies the flattened profile URI http://www.w3.org/ns/json-ld#flattened, and introduces JSON-LD Framing for reshaping flattened graph data according to a frame template.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "flattened document",
@@ -5866,7 +6127,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 196,
-      "summary": null,
+      "summary": {
+        "text": "Section 5.4 (Framed Document Form, Example 139 and opening of Example 140) and introductory lines of Section 6 (Modifying Behavior with Link Relationships). Presents a sample Library-Book-Chapter frame (Example 139) and flattened input graph (Example 140), defines the media type profile URIs http://www.w3.org/ns/json-ld#framed and http://www.w3.org/ns/json-ld#frame, and introduces using HTTP Link Headers (RFC 8288) when retrieving resources.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "framed document",
@@ -5906,7 +6170,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 73,
-      "summary": null,
+      "summary": {
+        "text": "Introductory paragraph in Section 6 (Modifying Behavior with Link Relationships) explaining that when HTTP content negotiation cannot directly serve JSON-LD for a resource, an HTTP Link Header can advertise an alternate location for the JSON-LD representation.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld",
@@ -5934,7 +6201,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 264,
-      "summary": null,
+      "summary": {
+        "text": "Opening of Section 6.1 (Interpreting JSON as JSON-LD) alongside the remainder of Example 140 and Example 141 from Section 5.4. Specifies normative rules for interpreting ordinary application/json or +json documents as JSON-LD by fetching an external context referenced via an HTTP Link Header with rel=\"http://www.w3.org/ns/json-ld#context\" and type=\"application/ld+json\", and includes the framed Library-Book-Chapter output (Example 141).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ordinary json",
@@ -5982,7 +6252,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 272,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 6.1 (Interpreting JSON as JSON-LD) and Section 6.2 (Alternate Document Location). States that responses must not contain multiple context Link Headers, notes the API expandContext option, requires application/ld+json documents to contain all context references in-body (ignoring context Link Headers), and specifies how non-JSON resources advertise a JSON-LD representation using at most one HTTP Link Header with rel=\"alternate\" and type=\"application/ld+json\".",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "link",
@@ -6030,7 +6303,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 92,
-      "summary": null,
+      "summary": {
+        "text": "Examples 142 and 143 in Section 6 (Modifying Behavior with Link Relationships). Example 142 shows an HTTP response serving an application/json document with a Link Header pointing to an external JSON-LD context, and Example 143 shows a text/html response with a rel=\"alternate\" and type=\"application/ld+json\" Link Header pointing to alternate.jsonld.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "primary entrypoint",
@@ -6058,7 +6334,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 282,
-      "summary": null,
+      "summary": {
+        "text": "Section 7 (Embedding JSON-LD in HTML Documents, Examples 144–145) and opening of Section 7.1 (Inheriting Base IRI from HTML's base element). Specifies embedding JSON-LD inside HTML <script type=\"application/ld+json\"> data blocks (Example 144), requires RDF extraction to expand and merge all untargeted JSON-LD script elements into a single RDF Dataset with shared blank node identifiers (Example 145), and states that the HTML Document Base URL establishes the default base IRI.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld script",
@@ -6106,7 +6385,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 145,
-      "summary": null,
+      "summary": {
+        "text": "Section 7.1 (Inheriting Base IRI from HTML's base element, Example 146) and Section 7.2 (Escaping Character Sequences in Script Elements). Shows an HTML <base> element establishing the default base IRI for an embedded JSON-LD script block (Example 146), advises authors to use explicit IRIs or @base because dynamic base URL changes are optional for processors, and warns against unescaped comment-open/close or script-open/close character sequences inside HTML <script> elements.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "base iri",
@@ -6142,7 +6424,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 142,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note in Section 7.2 (Escaping Character Sequences in Script Elements), Section 7.3 (Locating a Specific JSON-LD Script Element), and closing lines of Example 146. Lists HTML entity escapes (&amp;, &lt;, &gt;, &quot;, &apos;) noting they remain escaped after JSON-LD API processing, and specifies that a URL fragment identifier targeting a specific <script> element's id extracts only that standalone JSON-LD block without merging other script elements in the HTML document.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "html document",
@@ -6174,7 +6459,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 35,
-      "summary": null,
+      "summary": {
+        "text": "Example 147 in Section 7.2 (Escaping Character Sequences in Script Elements), showing an HTML <script type=\"application/ld+json\"> block whose description property escapes </script> and --> as HTML character references (&lt;/script&gt; and --&gt;) when embedding HTML-containing JSON-LD inside HTML.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "script",
@@ -6202,7 +6490,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 102,
-      "summary": null,
+      "summary": {
+        "text": "Example 148 in Section 7.3 (Locating a Specific JSON-LD Script Element) and opening of Section 8 (Data Model). Illustrates targeting a specific HTML <script type=\"application/ld+json\"> element by its id attribute (\"gregg\" vs. \"dave\") and introduces the distinction between JSON-LD syntax (RFC 8259) and its data model extending the RDF 1.1 data model.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "script element",
@@ -6230,7 +6521,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 129,
-      "summary": null,
+      "summary": {
+        "text": "Opening bullets of Section 8 (Data Model). Summarizes the JSON-LD data model as an RDF Dataset comprising one default graph (which has no name and may be empty) and zero or more named graphs identified by an IRI or blank node identifier, where each graph is a labeled directed graph whose directed arcs (properties) are labeled with IRIs or blank node identifiers.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "default graph",
@@ -6262,7 +6556,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 552,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 8 (Data Model), including normative notes, Example 149, and the Figure 1 caption. Marks blank node property labels as obsolete, defines graph nodes (IRIs, blank nodes with _: identifiers, typed and native JSON-LD values, language-tagged strings with BCP 47 tags and optional base direction, and RDF lists), prohibits unconnected nodes (Example 149), notes that unmapped properties are ignored and JSON is represented via the JSON-LD internal representation, and introduces Figure 1 illustrating a Linked Data dataset.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "blank node",
@@ -6310,7 +6607,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 413,
-      "summary": null,
+      "summary": {
+        "text": "Example 150 in Section 8 (Data Model) and opening of Section 9 (JSON-LD Grammar) and Section 9.1 (Terms). Shows a JSON-LD serialization of a dataset with a default graph and two named graphs using @graph (Example 150), states the formal top-level document and unique-key requirements of the JSON-LD grammar (including keyword aliasing), and specifies syntactic constraints on terms (forbidding keywords other than @type and empty strings, and discouraging IANA URI schemes, colons, and @ALPHA forms).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "people bob",
@@ -6358,7 +6658,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 347,
-      "summary": null,
+      "summary": {
+        "text": "Opening of Section 9.2 (Node Objects). Defines when a map outside a context is a node object, explains merging of node properties across multiple node objects, lists the permitted keywords (@context, @id, @included, @graph, @nest, @type, @reverse, @index), and specifies the normative value constraints for @context, @id, and @graph.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "node object",
@@ -6421,7 +6724,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 425,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section 9.2 (Node Objects) and Section 9.3 (Frame Objects). Specifies value constraints on @type, @reverse, @included, @index, @nest, and IRI-expanding property keys in node objects, and defines the grammar extensions permitted in frame objects during framing (@default with @null, wildcard or match-none maps/arrays for @id and @type, @embed, boolean flags @explicit/@omitDefault/@requireAll, and value patterns).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "node object",
@@ -6469,7 +6775,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 260,
-      "summary": null,
+      "summary": {
+        "text": "Section 9.4 (Graph Objects) and opening sentence of Section 9.5 (Value Objects). Defines the grammar for graph objects (maps outside a context containing @graph and optionally @index, @id, and @context, including simple graph objects without an explicit @id) and introduces value objects for associating a type, language tag, or base direction with a value.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "named graph",
@@ -6528,7 +6837,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 569,
-      "summary": null,
+      "summary": {
+        "text": "Section 9.5 (Value Objects), Section 9.6 (Value Patterns), Section 9.7 (Lists and Sets), and Section 9.8 (Language Maps). Specifies the normative grammar for value objects (@value with mutually exclusive @type vs. @language/@direction, plus @json literals), framing value patterns, list and set objects (@list and @set with allowed element types), and language maps keyed by BCP 47 language tags or @none.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "language map",
@@ -6576,7 +6888,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 71,
-      "summary": null,
+      "summary": {
+        "text": "Opening of Section 9.9 (Index Maps). Defines index maps for preserving non-semantic index keys when a term is declared with @container set to @index (or [@index, @set]) and begins listing the permitted entry value types.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "index map",
@@ -6619,7 +6934,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 4,
-      "summary": null,
+      "summary": {
+        "text": "Section heading stub for Section 9.8 (Language Maps) split across the page 77 boundary.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "9.8 Language Maps §",
       "extractCut": false
@@ -6634,7 +6952,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 639,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 9.9 (Index Maps) and Sections 9.10 (Property-based Index Maps), 9.11 (Id Maps), 9.12 (Type Maps), and 9.13 (Included Blocks). Completes the allowed value types and named-graph indexing rules for index maps, and specifies the grammar and expansion rules for property-based index maps, id maps (including @graph/@id containers), type maps, and @included blocks.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "node objects",
@@ -6682,7 +7003,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 79,
-      "summary": null,
+      "summary": {
+        "text": "Section 9.14 (Property Nesting) and opening sentence of Section 9.15 (Context Definitions). Defines nested properties as semantically transparent maps (or arrays of maps excluding value objects) that group node properties recursively and are flattened into the containing node object during expansion, and introduces context definitions.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "node object",
@@ -6740,7 +7064,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 4,
-      "summary": null,
+      "summary": {
+        "text": "Section heading stub for Section 9.13 (Included Blocks) on page 78.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "9.13 Included Blocks §",
       "extractCut": false
@@ -6770,7 +7097,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 313,
-      "summary": null,
+      "summary": {
+        "text": "Section 9.15 (Context Definitions) and opening of Section 9.15.1 (Expanded term definition). Specifies the normative grammar for a context definition map and its allowed keyword entries (@base, @direction, @import, @language, @propagate, @protected, @type, @version, @vocab) and non-keyword term mappings, and introduces expanded term definitions.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "term definition",
@@ -6818,7 +7148,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 2147,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section 9.15.1 (Expanded term definition), Section 9.16 (Keywords), and opening of Section 10 (Relationship to RDF). Specifies the grammar constraints on expanded term definitions (including non-circularity and rules for @id, @reverse, @type, @language, @index, @container, @context, @nest, @prefix, @propagate, and @protected), summarizes where every JSON-LD keyword (@base through @vocab) may appear and whether it can be aliased, and details how JSON-LD extends the RDF 1.1 data model (blank node predicates, native lists and JSON scalars, and literal base direction).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "expanded term",
@@ -6866,7 +7199,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 402,
-      "summary": null,
+      "summary": {
+        "text": "Normative and informative notes in Section 10 (Relationship to RDF) and opening of Section 10.1 (Serializing/Deserializing RDF). Encourages relative IRIs, URNs, or Skolem IRIs instead of obsolete blank-node predicates, requires graph-only consumers to read the default graph, and outlines the three-step procedure (expand, flatten, emit triples) for deserializing JSON-LD to RDF.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "serializing rdf",
@@ -6929,7 +7265,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 154,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Section 10.1 (Serializing/Deserializing RDF) and opening of Section 10.2 (The rdf:JSON Datatype). Explains how expanded and flattened JSON-LD maps directly to Turtle triples and how the inverse serialization from RDF can be framed, and introduces the rdf:JSON datatype for embedding JSON literals in RDF graphs.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "rdf",
@@ -6965,7 +7304,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 273,
-      "summary": null,
+      "summary": {
+        "text": "Examples 151–153 in Section 10.1 and normative definition of the rdf:JSON datatype in Section 10.2. Shows a compact JSON-LD document (Example 151), its expanded/flattened form (Example 152), and the resulting Turtle triples (Example 153), and specifies the datatype IRI (http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON), RFC 8259 lexical space, and canonical value-space constraints (no extra whitespace, lexicographic object keys, ECMAScript numeric serialization, and control-character escaping).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "markus lanthaler",
@@ -7009,7 +7351,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 344,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section 10.2 (The rdf:JSON Datatype, including an editorial note on JCS RFC 8785) and Section 10.3 (The i18n Namespace). Defines the lexical-to-value and canonical mappings for rdf:JSON, and describes the non-normative https://www.w3.org/ns/i18n# datatype mechanism (rdfDirection: i18n-datatype) that encodes lowercase BCP 47 language tags and base directions (e.g., i18n:ar-eg_rtl) for RDF round-tripping.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "base direction",
@@ -7057,7 +7402,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 182,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of the Turtle example in Section 10.3 (The i18n Namespace) and opening of Section 10.4 (The rdf:CompoundLiteral class and the rdf:language and rdf:direction properties). Shows Turtle statements using the i18n:ar-eg_rtl datatype and defines the non-normative rdf:CompoundLiteral class with rdf:language and rdf:direction properties used when rdfDirection is set to compound-literal.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "rdf property",
@@ -7116,7 +7464,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 95,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section 10.4 (The rdf:CompoundLiteral class and the rdf:language and rdf:direction properties). Notes lowercase normalization of language tags and gives a Turtle example representing Arabic right-to-left strings via blank node compound literals with rdf:value, rdf:language \"ar-eg\", and rdf:direction \"rtl\".",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "direction",
@@ -7148,7 +7499,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 420,
-      "summary": null,
+      "summary": {
+        "text": "Section 11 (Security Considerations), Section 12 (Internationalization Considerations), and opening of Appendix A / Section A.1 (Linked Data Dataset). Discusses external context retrieval risks (fingerprinting, MITM attacks, caching/documentLoader mitigations, and potential future Subresource Integrity support), explains RDF's lack of native base direction on language-tagged strings alongside Unicode UAX9 and string-meta guidance, and begins the accessible text description of Figure 1's default graph.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "base direction",
@@ -7241,7 +7595,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 197,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Section A.1 (Linked Data Dataset) and opening of Appendix B (Relationship to Other Linked Data Formats), Section B.1 (Turtle), Section B.1.1 (Prefix definitions), and Section B.1.2 (Embedding). Completes the long description of the literals and two named graphs in Figure 1, and introduces the informative comparison between JSON-LD and Turtle, RDFa, and Microdata, starting with prefix mappings and node embedding.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "linked data",
@@ -7311,7 +7668,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 51,
-      "summary": null,
+      "summary": {
+        "text": "Examples 154 and 155 in Section B.1.1 (Prefix definitions), comparing a Turtle @prefix foaf: declaration and Person statements (Example 154) with the equivalent JSON-LD @context prefix definition and node object (Example 155).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "foaf",
@@ -7339,7 +7699,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 117,
-      "summary": null,
+      "summary": {
+        "text": "Example 156 in Section B.1.2 (Embedding) and opening prose of Section B.1.3 (Conversion of native data types). Shows blank-node embedding in Turtle (Example 156) and explains how JSON-LD native numbers and booleans convert to canonical xsd:integer, xsd:double, and xsd:boolean RDF literals for round-tripping.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "typed literals",
@@ -7375,7 +7738,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 83,
-      "summary": null,
+      "summary": {
+        "text": "Informative Note in Section B.1.3 (Conversion of native data types), opening sentence of Section B.1.4 (Lists), and Example 157 from Section B.1.2 (Embedding). Explains why fractional JSON numbers map to xsd:double rather than Turtle's xsd:decimal, introduces list representation across JSON-LD and Turtle, and shows the JSON-LD counterpart of the embedded blank-node example (Example 157).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "foaf",
@@ -7403,7 +7769,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 57,
-      "summary": null,
+      "summary": {
+        "text": "Examples 158 and 159 in Section B.1.3 (Conversion of native data types), comparing JSON-LD arrays of native numbers and booleans (Example 158) with their canonical xsd:integer, xsd:double, and xsd:boolean typed literals in Turtle (Example 159).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "booleans",
@@ -7431,7 +7800,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 107,
-      "summary": null,
+      "summary": {
+        "text": "Examples 160 and 161 in Section B.1.4 (Lists) and introductory prose of Sections B.2 (RDFa) and B.3 (Microdata). Compares a Turtle collection list (Example 160) with a JSON-LD @list object (Example 161), and introduces the RDFa and HTML Microdata comparison examples.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "joe bob",
@@ -7463,7 +7835,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 89,
-      "summary": null,
+      "summary": {
+        "text": "Examples 162 and 163 in Section B.2 (RDFa), showing an HTML RDFa fragment describing three foaf:Person resources (Example 162) and the equivalent JSON-LD document sharing a single @context across a @graph array (Example 163).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "foaf",
@@ -7491,7 +7866,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 320,
-      "summary": null,
+      "summary": {
+        "text": "Examples 164 and 165 in Section B.3 (Microdata) and opening of Appendix C (IANA Considerations). Compares an HTML Microdata description of a book and its print/ebook expressions (Example 164) with a context-free expanded JSON-LD representation using full IRIs (Example 165), and begins the IANA media type registration for application/ld+json including its optional RFC 6906 profile parameter and the #expanded, #compacted, and #context profile URIs.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "microdata",
@@ -7534,7 +7912,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 569,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Appendix C (IANA Considerations: application/ld+json media type registration). Lists the #flattened, #frame, and #framed profile URIs, HTTP Accept header quoting and URI/IRI conversion rules, encoding and security considerations (avoiding eval(), privacy and MITM risks of remote contexts/frames, resource exhaustion from expansion, and malicious IRI schemes), file extension (.jsonld), contact/author metadata, and RDF fragment identifier semantics.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "json-ld document",
@@ -7582,7 +7963,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 120,
-      "summary": null,
+      "summary": {
+        "text": "Prose of Section C.1 (Examples) and opening sentence of Appendix D (Open Issues). Describes three HTTP Accept header examples using the application/ld+json profile parameter (#expanded, #compacted, and quoted combined #flattened #compacted profiles) and introduces the list of open issues at publication time.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "requested resource",
@@ -7614,7 +7998,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 6,
-      "summary": null,
+      "summary": {
+        "text": "Entry in Appendix D (Open Issues) for Issue 108: considering context by reference with metadata (deferred to a future version; privacy and security tracker).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Consider context by reference with metadata.",
       "extractCut": false
@@ -7629,7 +8016,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 9,
-      "summary": null,
+      "summary": {
+        "text": "Entry in Appendix D (Open Issues) for Issue 191: compact IRI expansion support for non-trivial prefix term definitions (deferred to a future version as a specification enhancement).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Compact IRI expansion support for non-trivial prefix term definitions.",
       "extractCut": false
@@ -7644,7 +8034,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 6,
-      "summary": null,
+      "summary": {
+        "text": "Entry in Appendix D (Open Issues) for Issue 280: noting that language maps do not allow a separate base direction (deferred to a future version).",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Language-maps don't allow separate base direction.",
       "extractCut": false
@@ -7659,7 +8052,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 15,
-      "summary": null,
+      "summary": {
+        "text": "Entries in Appendix D (Open Issues) for Issue 328 (@default in @context in JSON-LD core syntax) and Issue 329 (suggestion about @prefix), both deferred to a future version.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "@default in @context in JSON-LD core syntax. Issue 329: Suggestion about `@prefix` Suggestion about @prefix.",
       "extractCut": false
@@ -7674,7 +8070,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 112,
-      "summary": null,
+      "summary": {
+        "text": "Entry in Appendix D for Issue 335 (Type Coercion / Node Conversion via @coerce or similar), opening bullets of Appendix E (Changes since 1.0 Recommendation of 16 January 2014) covering @version and property-scoped @context, and Examples 166–168 from Section C.1 showing HTTP GET requests with application/ld+json profile parameters.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "get ordinary-json-document",
@@ -7710,7 +8109,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 9,
-      "summary": null,
+      "summary": {
+        "text": "Issue tracker label tags (defer-future-version, privacy-tracker, security-tracker, spec:enhancement) extracted from the open-issues list in Appendix D on page 91.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "defer-future-version privacy-tracker security-tracker defer-future-version spec:enhancement defer-future-version defer-future-version defer-future-version defer-future-version",
       "extractCut": false
@@ -7725,7 +8127,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 301,
-      "summary": null,
+      "summary": {
+        "text": "Continuation of Appendix E (Changes since 1.0 Recommendation of 16 January 2014). Summarizes new features introduced since JSON-LD 1.0: @id/@graph/@type containers, @nest property nesting, the abstract internal representation, node identifier and type indexing, @none keys in language and index maps, array @container combinations with @set, @prefix restrictions on compact IRI compaction, and @graph container combinations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "index maps",
@@ -7773,7 +8178,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 618,
-      "summary": null,
+      "summary": {
+        "text": "Appendix F (Changes since JSON-LD Community Group Final Report) and Appendix G (Changes since Candidate Recommendation Release of 12 December 2019). Summarizes changes made after the CG Final Report (nested lists, @type with @set container, deprecating blank-node predicates, relative @vocab mappings, \"@type\": \"@none\", rdf:JSON, HTML frame scripts, @protected, type-scoped contexts, @propagate, @import, @included, alternate link relation, @direction, default json-ld-1.1 mode, and lowercase language tags) and changes since the December 2019 CR (\"@prefix\": false behavior, @index in expanded term definitions, canonical rdf:JSON, and lowercase language tag normalization in RDF).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "node objects",
@@ -7836,7 +8244,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 409,
-      "summary": null,
+      "summary": {
+        "text": "Appendix H (Changes since Proposed Recommendation Release of 7 May 2020), Appendix I (Acknowledgements), and opening of Appendix J.1 (Normative references). Notes the removal of remaining at-risk notes, update of the JCS citation to RFC 8785, and a @embed typo fix in Section 9.3, acknowledges editors, Working Group members, and Community Group contributors, and begins the normative bibliography ([BCP47] through [JSON-LD11-FRAMING]).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "canton consulting",
@@ -7914,7 +8325,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 450,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Appendix J.1 (Normative references, from [JSON-LD11-FRAMING] through [UNICODE]) and opening of Appendix J.2 (Informative references, from [fingerprinting-guidance] through [RFC7049]).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "w3c recommendation",
@@ -7962,7 +8376,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 196,
-      "summary": null,
+      "summary": {
+        "text": "Remainder of Appendix J.2 (Informative references), listing bibliographic entries from [RFC7049] (CBOR) through [YAML] (YAML 1.2).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "w3c recommendation",

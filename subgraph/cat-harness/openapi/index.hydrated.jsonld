@@ -5,7 +5,7 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/openapi",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi",
       "@type": "bootstrap:Subgraph",
       "contentSource": {
         "declaredIn": "default",
@@ -16,7 +16,7 @@
       "holdsGraph": [
         "cat-harness:graphTypology/cat-harness"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/openapi",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi",
       "name": "openapi",
       "path": "openapi/",
       "readmePath": "openapi/README.md"
@@ -28,9 +28,9 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi",
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi",
           "@type": "cat-harness:Schema",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/openapi",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi",
           "module": "openapi/schemas/openapi.ts",
           "name": "openapi",
           "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",

@@ -910,6 +910,102 @@
    * this again over the same data rather than refetching.
    */
   /**
+   * The burn-down feed (bean `hf2q` slice 4), `assets/beans/burndown.json`.
+   *
+   * Written only by a publish build (`gen-docs-pages.ts --burndown-history`,
+   * cat-harness-tools `bean-burndown-feed.ts`), so three states, never two:
+   * `undefined` is not yet asked or still loading, `null` is "this build
+   * carries no history" (the file is absent or unreadable), and an object is
+   * the feed itself, which may say `available: false` with its reason.
+   * The board DRAWS the series and computes nothing from them.
+   */
+  var BURNDOWN = undefined;
+
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function svgEl(name, attrs) {
+    var n = document.createElementNS(SVG_NS, name);
+    for (var k in attrs) if (Object.prototype.hasOwnProperty.call(attrs, k)) n.setAttribute(k, String(attrs[k]));
+    return n;
+  }
+
+  /** The series for bean `id`, or null when the feed has none for it. */
+  function burndownSeries(id) {
+    if (!BURNDOWN || BURNDOWN.available !== true || !Array.isArray(BURNDOWN.series)) return null;
+    for (var i = 0; i < BURNDOWN.series.length; i++) {
+      if (BURNDOWN.series[i].id === id) return BURNDOWN.series[i];
+    }
+    return null;
+  }
+
+  /**
+   * One milestone's open count over the feed's days, as a small line.
+   *
+   * A day before the bean existed is `null` in the feed, and is a GAP here,
+   * never a point at zero: no data is not zero. The line's scale is its own
+   * (0 to its own peak), so a reader compares shapes between rows, and the
+   * label gives the figures.
+   */
+  function sparkline(series, days) {
+    var open = series.open || [];
+    var W = 160, H = 28, PAD = 2;
+    var max = 0, first = null, last = null, firstDay = "", lastDay = "";
+    for (var i = 0; i < open.length; i++) {
+      var v = open[i];
+      if (typeof v !== "number") continue;
+      if (v > max) max = v;
+      if (first === null) { first = v; firstDay = days[i] || ""; }
+      last = v; lastDay = days[i] || "";
+    }
+    if (first === null) return null;
+    var n = Math.max(1, open.length - 1);
+    var x = function (j) { return PAD + (W - 2 * PAD) * (open.length === 1 ? 1 : j / n); };
+    var y = function (v) { return H - PAD - (H - 2 * PAD) * (max === 0 ? 0 : v / max); };
+    var label = "Open beans under " + series.title + ": " + first + " on " + firstDay
+      + ", " + last + " on " + lastDay + " (peak " + max + ").";
+    var svg = svgEl("svg", { class: "fa-workplan-burndown", viewBox: "0 0 " + W + " " + H,
+                             width: W, height: H, role: "img", "aria-label": label, focusable: "false" });
+    var t = svgEl("title", {});
+    t.textContent = label;
+    svg.appendChild(t);
+    var pts = [];
+    var flush = function () {
+      if (pts.length === 1) {
+        svg.appendChild(svgEl("circle", { cx: pts[0][0], cy: pts[0][1], r: 1.5, class: "fa-workplan-burndown-dot" }));
+      } else if (pts.length > 1) {
+        svg.appendChild(svgEl("polyline", { points: pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" "),
+                                            class: "fa-workplan-burndown-line" }));
+      }
+      pts = [];
+    };
+    for (var j = 0; j < open.length; j++) {
+      if (typeof open[j] !== "number") { flush(); continue; }
+      pts.push([x(j), y(open[j])]);
+    }
+    flush();
+    return svg;
+  }
+
+  /** The line under the bars that says what the burn-down column is, or why it is empty. */
+  function burndownNote() {
+    if (BURNDOWN === undefined) return null;
+    if (BURNDOWN === null) {
+      return el("p", { class: "fa-workplan-chart-note" },
+                "No burn-down history in this build: only a publish build reads the bean store's past.");
+    }
+    if (BURNDOWN.available !== true) {
+      return el("p", { class: "fa-workplan-chart-note" },
+                "No burn-down history in this build: " + (BURNDOWN.reason || "the feed gave no reason") + ".");
+    }
+    var days = BURNDOWN.days || [];
+    return el("p", { class: "fa-workplan-chart-note" },
+              "Each line is the count of open beans beneath that goal, on each of the "
+              + days.length + " day(s) the store changed"
+              + (days.length ? " from " + days[0] + " to " + days[days.length - 1] : "")
+              + ", read from " + (BURNDOWN.branch || "the bean branch") + ". Each line has its own scale.");
+  }
+
+  /**
    * The declared milestones, as a part-to-whole bar each.
    *
    * It RENDERS `plan` and computes nothing. The page holds every bean's
@@ -924,6 +1020,7 @@
    */
   function milestonePanel(plan) {
     var sec = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
+    sec.setAttribute("data-fa-milestones", "");
     var fig = el("figure", { class: "fa-workplan-chart" });
     fig.appendChild(el("figcaption", { class: "fa-workplan-chart-title" },
                        "Declared milestones — share of the beans beneath each that are closed"));
@@ -984,6 +1081,13 @@
         li.appendChild(el("span", { class: "fa-workplan-bean-blocked" },
                           m.unclassified + " in neither status set"));
       }
+      var series = burndownSeries(m.id);
+      var spark = series ? sparkline(series, BURNDOWN.days || []) : null;
+      if (spark) {
+        var cell = el("span", { class: "fa-workplan-bar-burndown" });
+        cell.appendChild(spark);
+        li.appendChild(cell);
+      }
       list.appendChild(li);
     }
     fig.appendChild(list);
@@ -999,6 +1103,8 @@
                           + " open beans. The other " + plan.orphanOpen
                           + " sit under no milestone, so the shares above are not a figure for the whole work plan."));
     }
+    var bnote = burndownNote();
+    if (bnote) fig.appendChild(bnote);
     if (plan.duplicateIds > 0) {
       fig.appendChild(el("p", { class: "fa-workplan-chart-note" },
                           plan.duplicateIds + " bean id(s) are held by more than one file, and are counted once each here."));
@@ -1313,6 +1419,24 @@
     } catch (_e) { /* a file:// page or no history API — the search still works */ }
   }
 
+  /**
+   * Fetch the burn-down feed beside the bean index and redraw ONLY the
+   * milestone panel, so a late answer never resets the tree a reader has
+   * already opened. Absent or unreadable is `null`: "no history in this
+   * build", which is what an ordinary (non-publish) build is.
+   */
+  function loadBurndown(host, beanUrl) {
+    var url;
+    try { url = new URL("burndown.json", new URL(beanUrl, document.baseURI)).href; } catch (_e) { return; }
+    fetchJson(url)
+      .then(function (doc) { BURNDOWN = doc && typeof doc === "object" ? doc : null; })
+      .catch(function () { BURNDOWN = null; })
+      .then(function () {
+        var old = host.querySelector("[data-fa-milestones]");
+        if (old && BOARD) old.replaceWith(milestonePanel(BOARD.plan));
+      });
+  }
+
   function mountWorkPlan() {
     var host = document.querySelector("[data-fa-workplan]");
     if (!host) return;
@@ -1371,6 +1495,7 @@
         renderBoard(host);
         mountStamp(host);
         wireBoard(host);
+        if (beanDoc && beanUrl) loadBurndown(host, beanUrl);
       });
     });
   }

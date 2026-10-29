@@ -6,20 +6,20 @@
     "dcterms": "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "Todo": "ical:Vtodo",
-    "Subgraph": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+    "Subgraph": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
     "inSubgraph": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#inSubgraph",
       "@type": "@id"
     },
     "contentSource": {
       "@id": "http://purl.org/dc/terms/source",
       "@context": {
-        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
+        "kind": "https://litlfred.github.io/cat-harness/v0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
-        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
-        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
-        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
-        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+        "keyedBy": "https://litlfred.github.io/cat-harness/v0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/v0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/v0/ns#familyRepository",
+        "declaredIn": "https://litlfred.github.io/cat-harness/v0/ns#sourceDeclaredIn"
       }
     },
     "Person": "schema:Person",
@@ -65,7 +65,7 @@
       "@type": "@id"
     }
   },
-  "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/todos",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/todos",
   "@type": "Subgraph",
   "contentSource": {
     "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/todos",
@@ -120,7 +120,7 @@
         }
       ],
       "source": "https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/todos/todos/items/human-todos-page-says-not-built-yet.md",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/todos"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/todos"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/todos/subagent-roles-for-the-two-judgement-agents.jsonld",
@@ -133,7 +133,7 @@
       "created": "2026-09-19",
       "origin": "agent",
       "target": {
-        "@id": "https://litlfred.github.io/folio-assistant/site/folio-assistant-core/process/publication-workflow/nodes/agents-and-system-actors.jsonld",
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/site/process/publication-workflow/nodes/agents-and-system-actors.jsonld",
         "label": "sec:publication-workflow-agents-and-system-actors"
       },
       "assignee": [
@@ -160,7 +160,7 @@
         }
       ],
       "source": "https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/todos/todos/items/subagent-roles-for-the-two-judgement-agents.md",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/todos"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/todos"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/todos/what-kick-off-means-for-a-ci-watcher.jsonld",
@@ -173,7 +173,7 @@
       "created": "2026-09-19",
       "origin": "agent",
       "target": {
-        "@id": "https://litlfred.github.io/folio-assistant/site/folio-assistant-core/process/publication-workflow/nodes/agents-and-system-actors.jsonld",
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/site/process/publication-workflow/nodes/agents-and-system-actors.jsonld",
         "label": "sec:publication-workflow-agents-and-system-actors"
       },
       "assignee": [
@@ -193,7 +193,7 @@
         "Process_Publication"
       ],
       "source": "https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/todos/todos/items/what-kick-off-means-for-a-ci-watcher.md",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/todos"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/todos"
     }
   ]
 }

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CodeQualityGates",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates",
  "tasks": {
   "Task_VerdictReuse": {
    "id": "Task_VerdictReuse",
    "name": "Verdict reuse: tree already green? (NOT A GATE)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_VerdictReuse",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -105,7 +108,9 @@
    "id": "Task_QaWorkingCopy",
    "name": "QA working copy, built once (NOT A GATE)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_QaWorkingCopy",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "qa-reports",
@@ -114,7 +119,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -204,7 +209,9 @@
    "id": "Task_Hygiene",
    "name": "Import hygiene (HARD) and advisories (WARN-ONLY)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_Hygiene",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -213,7 +220,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -303,7 +310,9 @@
    "id": "Task_TypeScript",
    "name": "TypeScript: lint, types and tests (HARD)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_TypeScript",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -312,7 +321,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -402,7 +411,9 @@
    "id": "Task_E2E",
    "name": "End-to-end + accessibility (HARD)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_E2E",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -411,7 +422,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -501,7 +512,9 @@
    "id": "Task_RepositoryGates",
    "name": "Repository gates (HARD)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_RepositoryGates",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -510,7 +523,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -600,7 +613,9 @@
    "id": "Task_UnrunGates",
    "name": "Registered gates that never run (HARD)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_UnrunGates",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -609,7 +624,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -699,7 +714,9 @@
    "id": "Task_SkillChain",
    "name": "Skill-registration chain (UNMASKED)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_SkillChain",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "platform-gates",
@@ -708,7 +725,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -798,7 +815,9 @@
    "id": "Task_QaPublish",
    "name": "Publish QA results to qa-reports (NOT A GATE)",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_QaPublish",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
     {
      "name": "qa-reports",
@@ -807,11 +826,12 @@
    ],
    "calls": {
     "name": "Publish and keep QA results on qa-reports",
-    "href": "qa-publish.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish",
+    "diagram": "qa-publish.html"
    },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

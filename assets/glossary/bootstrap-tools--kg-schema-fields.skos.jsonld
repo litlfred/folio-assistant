@@ -216,7 +216,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`<iriBase><version>/` — what a program reads."
+          "@value": "`<iriBase>v<major>/` — what a program reads (owner, 2026-10-23: the major, not the full version)."
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.agent",
@@ -235,7 +235,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`<iriBase>v<major>/` — what a person reads."
+          "@value": "`<iriBase>v<major>/` — what a person reads; the same address as {@link agent}."
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.human",

@@ -5,12 +5,48 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-accuracy",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 64,
+      "instructionsPath": "skills/content/authoring-math/formal-accuracy.md",
+      "name": "formal-accuracy",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d21ea4329b0e79fae9d483deae0445064adc8bbe5515b2f20b1f14b25998dcfc",
+        "bytes": 2794,
+        "sha256": "d21ea4329b0e79fae9d483deae0445064adc8bbe5515b2f20b1f14b25998dcfc"
+      },
+      "title": "Formal accuracy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-layer-editing",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The formal-layer half of the harness's editor: the heavy-proof discipline, the routing rows for formal requests, the proof-block workflow and the pre-merge formal audits, for a paper folio with a Lean layer.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 84,
+      "instructionsPath": "skills/content/authoring-math/formal-layer-editing.md",
+      "name": "formal-layer-editing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad9e33f41c723157dbb1ac470f1516ac9141ca26c880b39024e7f49969581b71",
+        "bytes": 3786,
+        "sha256": "ad9e33f41c723157dbb1ac470f1516ac9141ca26c880b39024e7f49969581b71"
+      },
+      "title": "Formal-layer editing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-authoring",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/schema/skills/latex-authoring/input.schema.json",
       "instructionLines": 64,
       "instructionsPath": "skills/content/authoring-math/latex-authoring.md",
@@ -24,12 +60,12 @@
       "title": "latex-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formalization",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formalization",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/schema/skills/lean-formalization/input.schema.json",
       "instructionLines": 95,
       "instructionsPath": "skills/content/authoring-math/lean-formalization.md",
@@ -43,12 +79,84 @@
       "title": "lean-formalization"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-verification",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-toolchain-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 49,
+      "instructionsPath": "skills/content/authoring-math/lean-toolchain-contract.md",
+      "name": "lean-toolchain-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34d8d399dab82adb25471f099474147a35bb3ac730c86c1325a14cac49973178",
+        "bytes": 2385,
+        "sha256": "34d8d399dab82adb25471f099474147a35bb3ac730c86c1325a14cac49973178"
+      },
+      "title": "Lean toolchain — the role's contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-md-authoring",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 129,
+      "instructionsPath": "skills/content/authoring-math/math-md-authoring.md",
+      "name": "math-md-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0bc0c93cb4adbce6669ed2dcd1d1b3c68df78f4a3167c82a40639908c28a417c",
+        "bytes": 3585,
+        "sha256": "0bc0c93cb4adbce6669ed2dcd1d1b3c68df78f4a3167c82a40639908c28a417c"
+      },
+      "title": "Math markdown authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-readability-editing",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The math half of the harness's readability-editing: math-specific style checks, the blueprint and formal-proof index cross-checks, and the mandatory TeX snippet validation after editing a paper folio's blocks.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 68,
+      "instructionsPath": "skills/content/authoring-math/math-readability-editing.md",
+      "name": "math-readability-editing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf1f61c83985a5986dfc7ffa6c933fde535da2aa0b4ea645ae0a7d3145c8ddb7",
+        "bytes": 2701,
+        "sha256": "cf1f61c83985a5986dfc7ffa6c933fde535da2aa0b4ea645ae0a7d3145c8ddb7"
+      },
+      "title": "Math readability editing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/milnor-exposition-standard",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 133,
+      "instructionsPath": "skills/content/authoring-math/milnor-exposition-standard.md",
+      "name": "milnor-exposition-standard",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8b9e76e2f8c65dcc78401171795214550855e08c2131fbfc39b7fec62b690dc",
+        "bytes": 8857,
+        "sha256": "c8b9e76e2f8c65dcc78401171795214550855e08c2131fbfc39b7fec62b690dc"
+      },
+      "title": "The Milnor exposition standard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": true,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/schema/skills/proof-verification/input.schema.json",
       "instructionLines": 69,
       "instructionsPath": "skills/content/authoring-math/proof-verification.md",

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-methodology-evidence.ts",
-    "script_hash": "035f8708b89e"
+    "script_hash": "f1900042513a"
   },
   "subject": {
     "kind": "corpus",
@@ -15,7 +15,7 @@
       "entries": []
     },
     "invalid-front-matter": {
-      "summary": "A node tagged `folio-methodology/v1` whose front matter does not validate against `schemas/methodology.ts`. The schema is `strict()`, so a misspelled key is a finding rather than a silent omission — `applies_when` beside a correct `applies-when` would otherwise validate while the selection question never reached the node. Fails by default.",
+      "summary": "A node tagged `folio-methodology/v1` whose front matter does not validate against `schemas/process/methodology.ts`. The schema is `strict()`, so a misspelled key is a finding rather than a silent omission — `applies_when` beside a correct `applies-when` would otherwise validate while the selection question never reached the node. Fails by default.",
       "count": 0,
       "entries": []
     },

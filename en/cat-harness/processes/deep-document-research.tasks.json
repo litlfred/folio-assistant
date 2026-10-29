@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_DeepDocumentResearch",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
  "tasks": {
   "A_Plan": {
    "id": "A_Plan",
    "name": "Filter the corpus, choose the granularity, decompose the question",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Plan",
    "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
    "skills": [
     {
      "name": "deep-document-research",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "deep-researcher",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
     "title": "Deep researcher",
     "skills": [
      {
@@ -29,7 +32,9 @@
    "id": "A_Search",
    "name": "Retrieve for each sub-question",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Search",
    "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
    "skills": [
     {
      "name": "deep-document-research",
@@ -38,7 +43,7 @@
    ],
    "role": {
     "name": "deep-researcher",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
     "title": "Deep researcher",
     "skills": [
      {
@@ -52,7 +57,9 @@
    "id": "A_Refine",
    "name": "Deduplicate, and keep what is actually relevant",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Refine",
    "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
    "skills": [
     {
      "name": "deep-document-research",
@@ -61,7 +68,7 @@
    ],
    "role": {
     "name": "deep-researcher",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
     "title": "Deep researcher",
     "skills": [
      {
@@ -75,7 +82,9 @@
    "id": "A_Report",
    "name": "Synthesise, cite to a location, and say what was not found",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Report",
    "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
    "skills": [
     {
      "name": "deep-document-research",
@@ -84,7 +93,7 @@
    ],
    "role": {
     "name": "deep-researcher",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
     "title": "Deep researcher",
     "skills": [
      {

@@ -1240,7 +1240,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1,
-      "summary": null,
+      "summary": {
+        "text": "Single-word W3C masthead banner on page 1 of the specification.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "W3C",
       "extractCut": false
@@ -1270,7 +1273,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 133,
-      "summary": null,
+      "summary": {
+        "text": "W3C Recommendation header for PROV-O (30 April 2013), listing document IRIs (this version, latest version, implementation report, and previous PR version), editors (Timothy Lebo, Satya Sahoo, and Deborah McGuinness), seven alphabetical contributors, errata and normative-language notices, and the W3C copyright statement.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "rensselaer polytechnic",
@@ -1306,7 +1312,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 102,
-      "summary": null,
+      "summary": {
+        "text": "Abstract introducing the PROV Ontology (PROV-O), which encodes the PROV Data Model (PROV-DM) in OWL 2 to represent, interchange, and specialize provenance information across heterogeneous systems under the http://www.w3.org/ns/prov# namespace.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov ontology",
@@ -1338,7 +1347,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 45,
-      "summary": null,
+      "summary": {
+        "text": "Boilerplate W3C 'Status of This Document' preamble noting that this section records publication status and pointing to the W3C technical reports index at http://www.w3.org/TR/.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "status",
@@ -1366,7 +1378,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 198,
-      "summary": null,
+      "summary": {
+        "text": "Lists the twelve documents in the W3C PROV family across four Recommendations (PROV-O, PROV-DM, PROV-N, PROV-CONSTRAINTS) and eight Working Group Notes (PROV-OVERVIEW, PROV-PRIMER, PROV-XML, PROV-AQ, PROV-DICTIONARY, PROV-DC, PROV-SEM, PROV-LINKS).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov",
@@ -1410,7 +1425,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 74,
-      "summary": null,
+      "summary": {
+        "text": "Statement that PROV-O has been reviewed by W3C Members and endorsed by the Director as a W3C Recommendation, encouraging wide deployment for provenance interchange on the Web.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "w3c",
@@ -1438,7 +1456,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 105,
-      "summary": null,
+      "summary": {
+        "text": "W3C administrative notices covering public comment submission to public-prov-comments@w3.org, the Working Group implementation report, patent disclosures under the 5 February 2004 W3C Patent Policy, and the Table of Contents up to Section 2.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "w3c patent",
@@ -1541,7 +1562,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 638,
-      "summary": null,
+      "summary": {
+        "text": "Completes the Table of Contents (Sections 3–4 and Appendices A–G) and presents Section 1 (Introduction), explaining PROV-O's OWL 2 RL profile alignment, RFC 2119 conformance keywords, and the namespace prefix table (rdf, rdfs, xsd, owl, prov), before opening Section 2 (PROV-O at a glance).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov ontology",
@@ -1589,7 +1613,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1251,
-      "summary": null,
+      "summary": {
+        "text": "Lists the three PROV-O term categories in Section 2 (Starting Point, Expanded, and Qualified terms) and presents Section 3.1 (Starting Point Terms), explaining how Entity, Activity, and Agent relate via generation, usage, communication, derivation, attribution, association, and delegation, illustrated with the Derek crime-chart Turtle example (Example 1) and Figures 1–2.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "aggregationactivity prov",
@@ -1637,7 +1664,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1968,
-      "summary": null,
+      "summary": {
+        "text": "Section 3.2 (Expanded Terms) organizing 23 additional PROV-O classes and properties into five categories—Agent/Entity subclasses (Person, Organization, SoftwareAgent, Collection, Bundle, Plan) and subproperties, specializationOf/alternateOf abstractions, primary sources/quotations/revisions, lifecycle timestamps/invalidation/start/end, and inverse properties—illustrated across Figure 3 and Examples 2–5.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "derek prov",
@@ -1685,7 +1715,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1150,
-      "summary": null,
+      "summary": {
+        "text": "Section 3.3 (Qualified Terms) explaining the Qualification Pattern that reifies binary Starting Point and Expanded relations into intermediate Influence subclasses (Usage, Generation, Derivation, Association, etc.) linked via qualified* properties and influencer predicates (prov:entity, prov:activity, prov:agent), summarized in Tables 2–3, Figure 4, and Examples 6–8.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "entity prov",
@@ -1733,7 +1766,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 2325,
-      "summary": null,
+      "summary": {
+        "text": "Concludes Section 3.3 with Example 9 (qualifiedAssociation with hadRole and hadPlan) and opens Section 4.1 (Cross reference for Starting Point Terms), providing normative definitions, IRIs, domains, ranges, qualification links, and Turtle examples for Entries 1–12 (Entity, Activity, Agent, wasGeneratedBy, wasDerivedFrom, wasAttributedTo, startedAtTime, used, wasInformedBy, endedAtTime, wasAssociatedWith, and actedOnBehalfOf).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "aggregatedbyregions prov",
@@ -1777,7 +1813,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 2959,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.2 (Cross reference for Expanded Terms), providing normative definitions, IRIs, domains, ranges, inverses, and Turtle examples for Entries 13–35 (Collection, EmptyCollection, Bundle, Person, SoftwareAgent, Organization, Location, alternateOf, specializationOf, generatedAtTime, hadPrimarySource, value, wasQuotedFrom, wasRevisionOf, invalidatedAtTime, wasInvalidatedBy, hadMember, wasStartedBy, wasEndedBy, invalidated, influenced, atLocation, and generated).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prefix prov",
@@ -1825,7 +1864,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 4845,
-      "summary": null,
+      "summary": {
+        "text": "First part of Section 4.3 (Cross reference for Qualified Terms), providing normative definitions, IRIs, class hierarchies, properties, and Turtle examples for Entries 36–59: all 20 Qualified classes (Influence, EntityInfluence, Usage, Start, End, Derivation, PrimarySource, Quotation, Revision, ActivityInfluence, Generation, Communication, Invalidation, AgentInfluence, Attribution, Association, Plan, Delegation, InstantaneousEvent, Role) and the first four properties (wasInfluencedBy, qualifiedInfluence, qualifiedGeneration, qualifiedDerivation).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prefix prov",
@@ -1873,7 +1915,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 746,
-      "summary": null,
+      "summary": {
+        "text": "Continues Section 4.3 cross-reference entries for entity-derivation and attribution qualification properties: Entries 60–63 (prov:qualifiedPrimarySource, prov:qualifiedQuotation, prov:qualifiedRevision, and prov:qualifiedAttribution), each with IRI, definition, domain/range axioms, and a Turtle example.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov",
@@ -1921,7 +1966,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 474,
-      "summary": null,
+      "summary": {
+        "text": "Continues Section 4.3 cross-reference entries for lifecycle and usage qualification properties: Entries 64–66 (prov:qualifiedInvalidation, prov:qualifiedStart, and prov:qualifiedUsage), with IRIs, definitions, domains, ranges, and Turtle examples.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov",
@@ -1969,7 +2017,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 2113,
-      "summary": null,
+      "summary": {
+        "text": "Concludes Section 4.3 with Entries 67–80 covering the remaining qualification properties (qualifiedCommunication, qualifiedAssociation, qualifiedEnd, qualifiedDelegation) and the ten properties linking qualified Influence instances to their targets and metadata (influencer, entity, hadUsage, hadGeneration, activity, agent, hadPlan, hadActivity, atTime, and hadRole).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov",
@@ -2017,7 +2068,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 266,
-      "summary": null,
+      "summary": {
+        "text": "Section 4.4 (Term Index, Table 4), an alphabetical index mapping all 80 PROV-O classes and properties to their cross-reference entry numbers (Entries 1–80).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "entry",
@@ -2065,7 +2119,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 353,
-      "summary": null,
+      "summary": {
+        "text": "Appendix A (PROV-O OWL Profile, non-normative), listing in Table 5 the five PROV-O axioms that step outside the OWL 2 RL profile by using anonymous owl:unionOf domains or ranges (on atLocation, wasInfluencedBy, hadActivity, and hadRole) and summarizing their closest common superclass fallbacks.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "owl",
@@ -2113,7 +2170,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 784,
-      "summary": null,
+      "summary": {
+        "text": "Appendix B (Names of inverse properties, non-normative), explaining why PROV-O defines only two inverse properties in core (prov:generated and prov:invalidated) to avoid query and reasoning overhead, and providing Table 6 with recommended inverse local names across the prov: namespace for every PROV-O object property.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "entity prov",
@@ -2161,7 +2221,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 222,
-      "summary": null,
+      "summary": {
+        "text": "Appendix C (Changes since WD-prov-o-20120724, non-normative), itemizing 20 revisions between the July 2012 Working Draft and Candidate Recommendation, including renaming Source to PrimarySource, removing mentionOf/asInBundle to PROV-LINKS, and fixing the wasInformedBy property chain.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "prov",
@@ -2209,7 +2272,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 187,
-      "summary": null,
+      "summary": {
+        "text": "Appendix D (Changes since CR-prov-o-20121211, non-normative), listing 14 editorial and cross-reference updates between Candidate Recommendation and Proposed Recommendation, including adding the Term Index, reordering cross-reference entries, and aligning prov:value and prov:wasDerivedFrom definitions with PROV-DM.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "updated prov",
@@ -2253,7 +2319,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 22,
-      "summary": null,
+      "summary": {
+        "text": "Appendix E (Changes since PR-prov-o-20130312, non-normative), noting two minor typographical fixes made between the Proposed Recommendation and final Recommendation.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "This section is non-normative. Fixed typo in alternateOf example: :london_forecast_043 became :london_forecast_0413 Changed capitalization in definitions for Organization (new) and Person (new).",
       "extractCut": false
@@ -2268,7 +2337,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 528,
-      "summary": null,
+      "summary": {
+        "text": "Appendix F (Acknowledgements, non-normative), thanking W3C contacts Sandro Hawke and Ivan Herman, external reviewers, all members of the W3C PROV Working Group, and the authors of software tools (Protégé, rapper, SuRF, rdflib, LODSpeaKr, LODE, ReSpec) used to build the ontology and specification.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "invited expert",
@@ -2331,7 +2403,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 154,
-      "summary": null,
+      "summary": {
+        "text": "Appendix G.1 (Normative references), citing the eight normative specifications on which PROV-O depends: IRI (RFC 3987), OWL2-OVERVIEW, PROV-CONSTRAINTS, PROV-DM, PROV-N, RDF-CONCEPTS, RFC 2119, and XMLSCHEMA11-2.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "paolo missier",
@@ -2371,7 +2446,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 234,
-      "summary": null,
+      "summary": {
+        "text": "Appendix G.2 (Informative references), citing twelve informative sources including the Qualified Relation Linked Data pattern, OWL2-PRIMER, RDF-SCHEMA, TriG, and eight companion W3C PROV Notes (PROV-AQ, PROV-DC, PROV-DICTIONARY, PROV-LINKS, PROV-OVERVIEW, PROV-PRIMER, PROV-SEM, PROV-XML).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "w3c note",

@@ -37,7 +37,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Publication metadata header for the W3C Recommendation of the ODRL Information Model 2.2 (15 February 2018), listing canonical version URIs, the implementation report link, editors Renato Iannella (Monegraph) and Serena Villata (INRIA), GitHub issue tracker, errata, translations, and W3C copyright and document license notices.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -56,7 +64,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Abstract introducing the Open Digital Rights Language (ODRL) as a flexible, interoperable policy expression language and summarizing how the ODRL Information Model represents permitted and prohibited actions over assets, stakeholder obligations, temporal or spatial constraints, and duties imposed on permissions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -75,7 +91,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "W3C Status of This Document section stating that the specification was published as a W3C Recommendation by the Permissions & Obligations Expression (POE) Working Group, providing the public comment list and implementation report references, and noting governance under the W3C Patent Policy and the 1 February 2018 W3C Process Document.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -94,7 +118,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "W3C masthead banner label ('W3C') at the top of the specification front matter.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -189,7 +221,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Table of contents for Sections 2–4 and Appendices A–E followed by the non-normative Section 1 Introduction, which motivates machine-readable policy expressions for communicating permitted and prohibited resource uses, stakeholder roles, and associated constraints and duties between content producers and consumers.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -208,7 +248,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 1 covering the aims of the model (Section 1.1), RFC 2119 and JSON-LD conformance rules (Section 1.2), and core ODRL terminology definitions (Section 1.3), followed by the Section 2 overview of the ODRL Information Model (Figure 1), its primary classes (Policy, Set, Offer, Agreement, Asset, AssetCollection, Party, PartyCollection, Action, Rule, Permission, Prohibition, Duty, Constraint, LogicalConstraint), and abstract versus explicit relational properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -244,7 +292,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.1 specification of the Policy class, defining required properties (uid IRI and at least one permission, prohibition, or obligation Rule), optional properties (profile, inheritFrom, conflict), shared policy-level rule properties for compact policies, and the requirement to use either the ODRL Core Vocabulary alone or declared ODRL Profiles.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -263,7 +319,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explanatory note and continuation of Section 2.1 clarifying the distinction between the logical ODRL Information Model and its concrete serialisations in the ODRL Vocabulary & Expression specification, mandatory profile IRI declaration when profile terms are used, and the disjointness rule for Policy subclasses (except Set).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -282,7 +346,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.1.1 definition of the Set Policy subclass, which represents any combination of Rules without granting them, serves as the default Policy subclass when none is specified, and introduces an example use case permitting use of a target movie asset.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -301,7 +373,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.1.2 definition of the Offer Policy subclass, which represents Rules offered by an assigner Party to a wider audience without granting them and requires one assigner Party property.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -320,7 +400,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Normative cardinality note and JSON-LD Examples 1 and 2 (partial) illustrating a Set Policy using Core Vocabulary terms (where Set and Policy @type tokens are equivalent) and an Offer Policy from an assigner organization offering permission to play a movie asset.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -339,7 +427,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.1.3 definition of the Agreement Policy subclass, which represents Rules granted from an assigner Party to an assignee Party and requires both one assigner property and one assignee property of type Party.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -358,7 +454,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Normative cardinality note for the Agreement subclass and description of Example 3, in which an assigner organization grants an individual assignee Party permission to play a target movie asset.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -377,7 +481,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.2 specification of the Asset class and its AssetCollection subclass (alongside the JSON-LD remainder of Example 2 and full Example 3), defining Asset properties (uid, partOf) and AssetCollection properties (source, refinement) and recommending external standards such as Dublin Core for media-specific metadata.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -396,7 +508,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.2.1 specification of the abstract relation property linking an Action to an Asset, requiring ODRL validators to support the target sub-property, permitting additional relation sub-properties in the Common Vocabulary or Profiles, and presenting Example 4 plus the setup for Example 5 using an AssetCollection and a profile-defined summary relation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -415,7 +535,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.2.2 specification of the partOf property on an Asset, which asserts membership in an AssetCollection so that collection-targeted Rules apply to individual member Assets and potential rule conflicts can be detected, illustrated by a Dublin Core document metadata use case.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -434,7 +562,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.2.3 specification of the hasPolicy target policy property—whereby an external metadata expression identifying an Asset links to an ODRL Policy so the Asset is inferred as the target of every Rule in that Policy—accompanied by JSON-LD Examples 5, 6, and the opening of Example 7.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -453,7 +589,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.3 specification of the Party class and its PartyCollection subclass, representing persons, organizations, agents, or groups undertaking functional roles in a Rule, defining Party properties (uid, partOf) and PartyCollection properties (source, refinement), and recommending vCard or FOAF for party metadata.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -472,7 +616,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.3.1 specification of the abstract function property linking a Rule to a Party, requiring ODRL validators to support the assigner (rule issuer) and assignee (rule recipient) sub-properties, with the remainder of Example 7 and the description of Example 8.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -491,7 +643,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Informative note on the validation and evaluation implications of omitting a Party uid identifier, followed by the use-case description for Example 9 showing an Agreement between a vcard:Organization assigner Party and a vcard:Group assignee PartyCollection.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -510,7 +670,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.3.2 specification of the partOf property on a Party for asserting membership in a PartyCollection and detecting potential rule conflicts, accompanied by a vCard membership use case and the JSON-LD listings for Examples 8 and 9.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -529,7 +697,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.3.3 specification of the assignerOf and assigneeOf properties for linking external Party metadata expressions to an ODRL Policy so that the identified Party is inferred as the assigner or assignee for all Rules in that Policy, illustrated by a vCard use case.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -548,7 +724,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.4 opening specification of the Action class representing operations exercised on an Asset under a Permission, Prohibition, or Duty, defining the two top-level Actions (use and transfer) and introducing the optional refinement property.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -567,7 +751,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 2.4 defining Action hierarchy and entailment via the transitive includedIn property and the implies property (and how they trigger policy conflicts), together with JSON-LD Examples 10–12 and the Section 2.5 introduction to Constraints and Logical Constraints (Figure 2).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -603,7 +795,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.5.1 specification of the Constraint class, which compares a leftOperand and a rightOperand (or dereferenced rightOperandReference) via a relational operator, and defines optional uid, dataType, unit, and dynamic status properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -622,7 +822,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.5.2 specification of the LogicalConstraint class, which combines unique existing Constraint instances via mandatory evaluator-supported operand sub-properties (or, xone, and, andSequence) or profile-defined logical operands.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -660,7 +868,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Note on preserving operand list order with JSON-LD @list for sequential logical operands such as andSequence, followed by the Section 2.5.3 specification of the constraint property on a Rule and an example Offer permitting asset distribution until a specified date.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -679,7 +895,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.5.4 specification of the refinement property on an Action, which attaches Constraints or Logical Constraints that must be satisfied to narrow the operational semantics of the Action.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -698,7 +922,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Use-case descriptions and JSON-LD listings for Examples 13 and 14 (plus the heading of Example 15), illustrating a dateTime constraint on a distribute Permission, a 1200 dpi resolution refinement on a print Action, and an exclusive-or (xone) Logical Constraint refining a reproduce Action.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -717,7 +949,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.5.5 specification of the refinement property on an AssetCollection—requiring source rather than uid to identify the collection and filtering individual member Assets by Constraint satisfaction—along with the JSON-LD body of Example 15 and a note on using rdf:value and @id for refined Actions and Constraint references.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -736,7 +976,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.5.6 specification of the refinement property on a PartyCollection—requiring source rather than uid and filtering collection members by Constraint satisfaction—together with JSON-LD Examples 16 (videos under 60 minutes) and 17 (friends aged over 18).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -772,7 +1020,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6 specification of the abstract, pairwise-disjoint Rule superclass (parent of Permission, Prohibition, and Duty), defining its action, relation, function, failure, constraint, and uid properties and summarizing Rule-to-Duty relationships in Figure 3.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -791,7 +1047,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.1 specification of the Permission class, which allows an Action on a required target Asset when all refinements, constraints, and precondition duty rules are fulfilled, with an example use case offering play permission on a game until the end of 2017.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -810,7 +1074,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.2 specification of the Prohibition class, which disallows an Action on a required target Asset when constraints are satisfied and links via remedy to Duties that must be fulfilled if the Prohibition is infringed, accompanied by Example 18 and the opening of Example 19.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -829,7 +1101,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.3 specification of the Duty class representing an obligation to exercise an Action, detailing its optional target, assigner, assignee, and consequence properties, the requirement that the obligated Party be able to exercise and satisfy the Duty, and the prohibition on chaining consequences on consequence Duties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -848,7 +1128,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.4 specification of the policy-level obligation property linking a Policy to a Duty that must be fulfilled when its constraints and action refinements are satisfied, alongside the closing JSON-LD fragment of Example 19.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -867,7 +1155,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Informative note recommending that ODRL implementations allow relaxing expired constraints on an original duty or obligation after a consequence is triggered, followed by the use-case descriptions for Examples 20 and 21 illustrating policy obligations and consequences.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -886,7 +1182,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.5 specification of the duty property on a Permission—expressing precondition Duties that must be agreed to be fulfilled (only once if shared by uid across multiple Permissions) and inheriting function roles when omitted—together with JSON-LD Examples 20 and 21 and the setup for Example 22.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -905,7 +1209,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.6 specification of the consequence sub-property of failure on a Permission duty or Policy obligation, requiring all consequence Duties to be fulfilled alongside the original duty if unfulfilled, with Example 22 and the opening of Example 23.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -924,7 +1236,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.6.7 specification of the remedy sub-property of failure on a Prohibition, defining Duties that must be fulfilled to cure an infringement of the Prohibition (and forbidding remedies from having consequence Duties), illustrated by an anonymization remedy use case.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -943,7 +1263,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.7 specification of Policy Rule Composition, explaining how compound Rules with multiple Assets, Parties, or Actions are expanded into irreducible atomic Rules via three normative validation rules, accompanied by the remainder of Example 23 and Examples 24–27.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -979,7 +1307,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.7.1 specification of Compact Policies (Figure 4), defining how shared action, relation (e.g., target), and function (e.g., assigner, assignee) properties declared at the Policy level are replicated into each Rule and removed from the Policy level during atomic expansion, with Example 28.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -998,7 +1334,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.8 specification of Policy Metadata, recommending Dublin Core terms (dc:creator, dc:description, dc:issued, dc:modified, dc:coverage, dc:replaces, dc:isReplacedBy), requiring processors to treat a Policy with dc:isReplacedBy as void and process its replacement, and presenting Example 29 and the start of Example 30.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1017,7 +1361,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.9 specification of Policy Inheritance via the inheritFrom property, stating rules for multi-level non-circular inheritance and nulling parent constraint status values, detailing validation steps to replicate parent policy-level properties, profiles, conflict strategies, and Rules into the child Policy, and providing the end of Example 30 plus Examples 31 and 32.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1036,7 +1388,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 2.10 opening specification of Policy Conflict Strategy, defining the conflict property and its ConflictTerm values—perm (Permissions override Prohibitions), prohibit (Prohibitions override Permissions), and the default invalid (the entire Policy is void on conflict).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1055,7 +1415,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 2.10 listing the four normative Conflict Strategy validation requirements, Example 33 (expanded inherited Agreement from Section 2.9), and a conflict resolution use case between two Policies over the same Asset, followed by the Section 3 ODRL Profiles heading.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1074,7 +1442,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 3.1 explanation of ODRL Profile Purpose, distinguishing the minimal ODRL Core Vocabulary, the reusable ODRL Common Vocabulary, and community-specific ODRL Profiles that define or adopt additional vocabulary terms.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1093,7 +1469,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 3.2 specification of ODRL Profile Conformance (alongside JSON-LD Examples 34 and 35 from Section 2.10), requiring Policies conforming to one or more Profiles to declare their IRIs via the profile property and requiring ODRL processing systems to halt if any declared Profile IRI is unrecognized.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1112,7 +1496,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 3.3 specification of the ODRL Profile Mechanism, tabulating how to extend the Core Vocabulary with new Policy and Rule subclasses, relation/function/operand sub-properties, and Action, LeftOperand, RightOperand, Operator, and ConflictTerm instances, and requiring SKOS Concept declarations and human-readable labels and definitions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1131,7 +1523,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 3.4 specification of the ODRL Core Profile identifier (http://www.w3.org/ns/odrl/2/core) for explicitly identifying Policies that conform solely to the ODRL Core Vocabulary.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1150,7 +1550,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Non-normative Section 4 on Privacy Considerations, noting that while the core model does not directly express sensitive personal data, ODRL vocabularies and Profiles may define personal-data terms and should guide implementations to inform users how policies are used and shared.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1169,7 +1577,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A acknowledging the contributions of the W3C ODRL Community Group, the earlier ODRL Initiative, and past editors Susanne Guth, Daniel Paehler, and Andreas Kasten.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1188,7 +1604,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix B listing the Candidate Recommendation exit criteria, requiring at least two independent implementations for each of sixteen enumerated ODRL Policy features.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1207,7 +1631,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix C describing the relationship between the W3C POE Working Group deliverables and the earlier W3C ODRL Community Group Version 2.0/2.1 report series from which the ODRL Information Model 2.2 was derived.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1226,7 +1658,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix D changelog itemizing substantive and editorial changes made to the specification across the July 2016 First Public Working Draft, February 2017 Working Draft, September 2017 Candidate Recommendation, and January 2018 Proposed Recommendation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1264,7 +1704,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix E.1 listing the three normative references for the specification: ODRL Vocabulary & Expression 2.2 ([odrl-vocab]), IETF RFC 2119 ([RFC2119]), and IETF RFC 3987 on IRIs ([rfc3987]).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1283,7 +1731,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix E.2 listing eleven informative references: DCMI Metadata Terms ([dcterms]), FOAF ([foaf]), JSON-LD 1.0 ([json-ld]), ODRL 1.1 ([odrl]), ODRL 2.0 Requirements ([odrl2-req]), the five ODRL 2.1 Community Group specifications, and the W3C vCard Ontology ([vcard-rdf]).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     }
   ]

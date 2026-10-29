@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IgAstDeltaReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
  "tasks": {
   "Task_Validity": {
    "id": "Task_Validity",
    "name": "Check the base AST against the IG's inputs",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_Validity",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-ast-delta",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -105,7 +108,9 @@
    "id": "Task_Diff",
    "name": "Diff base → head and render the delta pages",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_Diff",
    "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-ast-delta",
@@ -114,7 +119,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -204,7 +209,9 @@
    "id": "Task_Review",
    "name": "Read the rendered delta",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_Review",
    "lane": "QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Review",
    "skills": [
     {
      "name": "ig-ast-delta",
@@ -213,7 +220,7 @@
    ],
    "role": {
     "name": "qc-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
     "title": "QC reviewer",
     "skills": [
      {
@@ -247,11 +254,6 @@
      {
       "name": "ig-ast-delta",
       "href": "../../../reference/skill-instructions/ig-ast-delta.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",
@@ -294,7 +296,9 @@
    "id": "Task_FileCoupling",
    "name": "Note the missed coupling on the bean",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_FileCoupling",
    "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -303,7 +307,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {

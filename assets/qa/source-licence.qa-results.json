@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-source-licence.ts",
-    "script_hash": "5a0cbfef03ab"
+    "script_hash": "ea8cb0833c24"
   },
   "subject": {
     "kind": "corpus",
@@ -167,7 +167,7 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 27,
+      "count": 31,
       "entries": [
         {
           "entry": "cat-harness/library/arxiv-2505.10399v1",
@@ -260,6 +260,16 @@
           "basis": "https://github.com/ISAITB/gitb/blob/e3cb6c00ef57792b6464b03cea27c8e84a6565bc/LICENCE.txt and NOTICE.md at the ingested commit, read 2026-10-01: 'Copyright (C) 2026 European Union. Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the \"Licence\")'. EUPL-1.2 permits reproduction and distribution of the Work provided the copyright notice and licence notice are kept, so the README is held in full, unmodified, and the notice is reproduced in THIRD-PARTY-NOTICES.md."
         },
         {
+          "entry": "folio-assistant-core/library/c2pa-2026-specification-2-5",
+          "id": "CC-BY-4.0",
+          "basis": "https://github.com/c2pa-org/specifications/blob/f314ed94b9dc3e73e4f1b620ef8a18ee7a0ff859/LICENSE and the opening notice of build/site/specifications/2.5/specs/C2PA_Specification.html.md at the ingested commit, read 2026-10-23: 'This work is licensed under a Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/).' CC-BY-4.0 permits copying and redistribution in any medium or format provided attribution, a link to the licence, and an indication of whether changes were made are given. The specification text is held in full, unmodified, and the attribution and disclaimer notice are reproduced in THIRD-PARTY-NOTICES.md."
+        },
+        {
+          "entry": "folio-assistant-core/library/dspace-7-rest-contract",
+          "id": "BSD-3-Clause",
+          "basis": "https://github.com/DSpace/DSpace/blob/dspace-7_x/LICENSE — the BSD 3-Clause licence ('Copyright (c) 2002-2023, DuraSpace. All rights reserved.') of the DSpace 7.x server repository that DSpace/RestContract/README.md names at line 4 ('The code that implements this contract is on the main branch of the DSpace backend'), read 2026-10-23; DSpace/RestContract itself carries no separate LICENSE file at commit 1c16b57ed2b19343a93bd2b8fb2e40941a3e636b. BSD-3-Clause permits redistribution in source and binary forms with or without modification provided the copyright notice, list of conditions, and disclaimer are retained. The contract Markdown files are held in full, unmodified, and the DuraSpace BSD-3-Clause notice is reproduced in THIRD-PARTY-NOTICES.md."
+        },
+        {
           "entry": "smart-base/library/9789240101197-eng",
           "id": "CC-BY-NC-SA-3.0-IGO",
           "basis": "The PDF's imprint page (p. 4): '© World Health Organization 2024. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
@@ -268,6 +278,16 @@
           "entry": "smart-base/library/9789240116191-eng",
           "id": "CC-BY-NC-SA-3.0-IGO",
           "basis": "The PDF's imprint page (p. 3): '© World Health Organization 2025. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
+        },
+        {
+          "entry": "smart-base/library/9789241549912-eng",
+          "id": "LicenseRef-WHO-All-Rights-Reserved",
+          "basis": "The PDF's imprint page (PDF p. 4): '© World Health Organization 2016 All rights reserved. Publications of the World Health Organization are available on the WHO website (http://www.who.int) or can be purchased from WHO Press, World Health Organization, 20 Avenue Appia, 1211 Geneva 27, Switzerland (tel.: +41 22 791 3264; fax: +41 22 791 4857; email: bookorders@who.int). Requests for permission to reproduce or translate WHO publications – whether for sale or for non-commercial distribution – should be addressed to WHO Press', read 2026-10-26"
+        },
+        {
+          "entry": "smart-base/library/9789241549912-webannexes-eng",
+          "id": "LicenseRef-WHO-All-Rights-Reserved",
+          "basis": "The PDF's imprint page (PDF p. 2): '© World Health Organization 2016 All rights reserved. Publications of the World Health Organization are available on the WHO website (http://www.who.int) or can be purchased from WHO Press, World Health Organization, 20 Avenue Appia, 1211 Geneva 27, Switzerland (tel.: +41 22 791 3264; fax: +41 22 791 4857; email: bookorders@who.int). Requests for permission to reproduce or translate WHO publications – whether for sale or for non-commercial distribution – should be addressed to WHO Press', read 2026-10-26"
         },
         {
           "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
@@ -308,7 +328,7 @@
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
-      "count": 25,
+      "count": 26,
       "entries": [
         {
           "entry": "cat-harness/library/arxiv-2203.02010v1",
@@ -406,6 +426,11 @@
           "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
         },
         {
+          "entry": "smart-base/library/9789241549912-websupplement-eng",
+          "searched": 2,
+          "note": "The d08l provenance sidecar in litlfred/folio-assistant fsh-guts/uploads/ (commit cf2b8bd) records the licence as 'CC BY-NC-SA 3.0 IGO (WHO IRIS open-access policy)'. The PDF itself does not state that licence; its imprint states 'All rights reserved'. iris.who.int is refused by the cloud container's proxy, so the IRIS record's rights field was not re-read here. Recorded as the PDF states it; the owner decides which governs."
+        },
+        {
           "entry": "smart-base/library/smart-trust",
           "searched": 3,
           "note": "Not determined from this repository's records of the IG, and not guessed. Nothing of the IG is copied into this entry, so no licence condition is exercised by it; the IG's own licence is to be read off the published IG (http://smart.who.int/trust) when it is recorded."
@@ -438,5 +463,5 @@
       ]
     }
   },
-  "total": 97
+  "total": 102
 }

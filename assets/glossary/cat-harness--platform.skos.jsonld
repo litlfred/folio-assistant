@@ -7,7 +7,7 @@
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform",
       "@type": "skos:ConceptScheme",
       "skos:prefLabel": "Folio Assistant platform terms (cat-harness)",
       "skos:definition": "Terms the platform introduced in September 2026, each defined where its schema defines it and linked to the W3C concept it corresponds to, rather than copying that concept's definition. These are the platform terms whose source is in cat-harness, so they are minted in cat-harness's namespace (owner, 2026-09-24: a term lives in the namespace of the instance that owns its source). The file sits in core's glossary directory, which is the only one declared; where it sits does not decide whose it is.",
@@ -17,10 +17,10 @@
       "dcterms:license": "CC-BY-4.0"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/associated-harness",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/associated-harness",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -77,10 +77,10 @@
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#AssociatedHarness"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/policy",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/policy",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -142,10 +142,10 @@
       "dcterms:source": "cat-harness/schemas/odrl.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/permission",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/permission",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -201,7 +201,7 @@
       ],
       "skos:broader": [
         {
-          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/policy"
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/policy"
         }
       ],
       "skos:exactMatch": [
@@ -212,10 +212,10 @@
       "dcterms:source": "cat-harness/schemas/odrl.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/task-run",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/task-run",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -277,10 +277,10 @@
       "dcterms:source": "cat-harness/schemas/prov.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/actor",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/actor",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -342,10 +342,10 @@
       "dcterms:source": "cat-harness/skills/process/process-core/role-model.md"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/role",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/role",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -401,7 +401,7 @@
       ],
       "skos:related": [
         {
-          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/actor"
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/actor"
         }
       ],
       "skos:closeMatch": [
@@ -418,10 +418,10 @@
       "dcterms:source": "cat-harness/skills/process/process-core/role-model.md"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/user-story",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/user-story",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -441,10 +441,10 @@
       "dcterms:source": "cat-harness/schemas/user-story.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/test-run",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/test-run",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -459,10 +459,10 @@
       "dcterms:source": "cat-harness/schemas/test-run.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/voice",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/voice",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -477,10 +477,10 @@
       "dcterms:source": "cat-harness/schemas/voices.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/external-schema",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/external-schema",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -495,10 +495,10 @@
       "dcterms:source": "cat-harness/schemas/external-schema.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/kg-qa-report",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/kg-qa-report",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -513,10 +513,10 @@
       "dcterms:source": "cat-harness/schemas/kg-qa.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/todo",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/todo",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -531,10 +531,10 @@
       "dcterms:source": "cat-harness/schemas/todo.ts"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/bean",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/bean",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {
@@ -552,10 +552,10 @@
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/todo-manager.md"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/json-schema",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform/json-schema",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform"
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/platform"
       },
       "skos:prefLabel": [
         {

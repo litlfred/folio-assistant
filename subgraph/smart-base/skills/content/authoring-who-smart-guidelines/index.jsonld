@@ -5,7 +5,18 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+      "@id": "http://smart.who.int/base/skill/classify-and-code-content",
+      "@type": "bootstrap:Skill",
+      "name": "classify-and-code-content",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/12dd69b259ae16a772068b03285983ebe00d8253a89e5fae746fe6fba6aff18d",
+        "bytes": 8690,
+        "sha256": "12dd69b259ae16a772068b03285983ebe00d8253a89e5fae746fe6fba6aff18d"
+      },
+      "title": "classify-and-code-content"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/dak-l1-library",
       "@type": "bootstrap:Skill",
       "name": "dak-l1-library",
       "payload": {
@@ -16,29 +27,29 @@
       "title": "dak-l1-library"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
+      "@id": "http://smart.who.int/base/skill/dak-postprocessing",
       "@type": "bootstrap:Skill",
       "name": "dak-postprocessing",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43b44009f18d3d008e7b52e582f1a8ed9ea67fbe6e741ca909a10598205e2213",
-        "bytes": 12956,
-        "sha256": "43b44009f18d3d008e7b52e582f1a8ed9ea67fbe6e741ca909a10598205e2213"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e1794819e693e3eeee2ea7e098b3805a83337f2ed6565618ff8dfbf1f96a2cf",
+        "bytes": 13015,
+        "sha256": "4e1794819e693e3eeee2ea7e098b3805a83337f2ed6565618ff8dfbf1f96a2cf"
       },
       "title": "dak-postprocessing"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
+      "@id": "http://smart.who.int/base/skill/dak-preprocessing",
       "@type": "bootstrap:Skill",
       "name": "dak-preprocessing",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/82bfbd152c31d9c2182443484fcf144b25e747d8695c8a16b11214a36b9a0416",
-        "bytes": 10136,
-        "sha256": "82bfbd152c31d9c2182443484fcf144b25e747d8695c8a16b11214a36b9a0416"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff671c37f4108583457e3b937952be0f57c47df392c0baf1cd68b3c100e212a9",
+        "bytes": 10497,
+        "sha256": "ff671c37f4108583457e3b937952be0f57c47df392c0baf1cd68b3c100e212a9"
       },
       "title": "dak-preprocessing"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/grade",
+      "@id": "http://smart.who.int/base/skill/grade",
       "@type": "bootstrap:Skill",
       "name": "grade",
       "payload": {
@@ -49,7 +60,7 @@
       "title": "grade"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/guideline-use-case",
+      "@id": "http://smart.who.int/base/skill/guideline-use-case",
       "@type": "bootstrap:Skill",
       "name": "guideline-use-case",
       "payload": {
@@ -60,7 +71,7 @@
       "title": "guideline-use-case"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+      "@id": "http://smart.who.int/base/skill/ig-artifact-ingestion",
       "@type": "bootstrap:Skill",
       "name": "ig-artifact-ingestion",
       "payload": {
@@ -71,18 +82,18 @@
       "title": "ig-artifact-ingestion"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review",
+      "@id": "http://smart.who.int/base/skill/l2-component-edit-review",
       "@type": "bootstrap:Skill",
       "name": "l2-component-edit-review",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9319b99eb03516691c38198194377e30a6a84bb900633c555295c663a7f6d244",
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/78350cc727b6b43279ad6a9c4fa4d9fe9d679d77a79a90cf8f548761b7012ea7",
         "bytes": 8633,
-        "sha256": "9319b99eb03516691c38198194377e30a6a84bb900633c555295c663a7f6d244"
+        "sha256": "78350cc727b6b43279ad6a9c4fa4d9fe9d679d77a79a90cf8f548761b7012ea7"
       },
       "title": "l2-component-edit-review"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+      "@id": "http://smart.who.int/base/skill/l2-dak-authoring",
       "@type": "bootstrap:Skill",
       "name": "l2-dak-authoring",
       "payload": {
@@ -93,7 +104,7 @@
       "title": "l2-dak-authoring"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dependency-choice",
+      "@id": "http://smart.who.int/base/skill/l2-dependency-choice",
       "@type": "bootstrap:Skill",
       "name": "l2-dependency-choice",
       "payload": {
@@ -104,7 +115,7 @@
       "title": "l2-dependency-choice"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l3-dependency-choice",
+      "@id": "http://smart.who.int/base/skill/l3-dependency-choice",
       "@type": "bootstrap:Skill",
       "name": "l3-dependency-choice",
       "payload": {
@@ -115,7 +126,7 @@
       "title": "l3-dependency-choice"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l3-readiness",
+      "@id": "http://smart.who.int/base/skill/l3-readiness",
       "@type": "bootstrap:Skill",
       "name": "l3-readiness",
       "payload": {
@@ -126,7 +137,7 @@
       "title": "l3-readiness"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-brief",
+      "@id": "http://smart.who.int/base/skill/l4-application-brief",
       "@type": "bootstrap:Skill",
       "name": "l4-application-brief",
       "payload": {
@@ -137,7 +148,7 @@
       "title": "l4-application-brief"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-build",
+      "@id": "http://smart.who.int/base/skill/l4-application-build",
       "@type": "bootstrap:Skill",
       "name": "l4-application-build",
       "payload": {
@@ -148,7 +159,7 @@
       "title": "l4-application-build"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-candidates",
+      "@id": "http://smart.who.int/base/skill/recommendation-candidates",
       "@type": "bootstrap:Skill",
       "name": "recommendation-candidates",
       "payload": {
@@ -159,40 +170,40 @@
       "title": "recommendation-candidates"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction",
+      "@id": "http://smart.who.int/base/skill/recommendation-extraction",
       "@type": "bootstrap:Skill",
       "name": "recommendation-extraction",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b23d03ed0fd0884d185f18c32f12ae81075e868ec3b1168bd3b214edcef90e0",
-        "bytes": 22375,
-        "sha256": "1b23d03ed0fd0884d185f18c32f12ae81075e868ec3b1168bd3b214edcef90e0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ee55738b6977a95916f1b41c9e15601fd0464e8d1712dc5921e229949cdda419",
+        "bytes": 23107,
+        "sha256": "ee55738b6977a95916f1b41c9e15601fd0464e8d1712dc5921e229949cdda419"
       },
       "title": "recommendation-extraction"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-scenarios",
+      "@id": "http://smart.who.int/base/skill/recommendation-scenarios",
       "@type": "bootstrap:Skill",
       "name": "recommendation-scenarios",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a5496e16815df388b6b229c864a1f8980f92ae5d83963f82d0a6776920369721",
-        "bytes": 1744,
-        "sha256": "a5496e16815df388b6b229c864a1f8980f92ae5d83963f82d0a6776920369721"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4acb7acf84203be22c92ee090e0c67553c6b00720efd3341cfbe20e2c4714b",
+        "bytes": 1994,
+        "sha256": "1f4acb7acf84203be22c92ee090e0c67553c6b00720efd3341cfbe20e2c4714b"
       },
       "title": "recommendation-scenarios"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
+      "@id": "http://smart.who.int/base/skill/smart-base-tools",
       "@type": "bootstrap:Skill",
       "name": "smart-base-tools",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/853384f97db7fcea6daa522470cfe83862333c633fe5130a15b62ba037aca0bd",
-        "bytes": 8816,
-        "sha256": "853384f97db7fcea6daa522470cfe83862333c633fe5130a15b62ba037aca0bd"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff60241bc3c0b260e421a6e2a3fcb87dbaa79075eab0579200e2bca45000bc06",
+        "bytes": 8822,
+        "sha256": "ff60241bc3c0b260e421a6e2a3fcb87dbaa79075eab0579200e2bca45000bc06"
       },
       "title": "smart-base Toolchain"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
+      "@id": "http://smart.who.int/base/skill/smart-guideline-create",
       "@type": "bootstrap:Skill",
       "name": "smart-guideline-create",
       "payload": {
@@ -203,7 +214,7 @@
       "title": "smart-guideline-create"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+      "@id": "http://smart.who.int/base/skill/smart-guideline-end-to-end",
       "@type": "bootstrap:Skill",
       "name": "smart-guideline-end-to-end",
       "payload": {
@@ -214,18 +225,18 @@
       "title": "smart-guideline-end-to-end"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",
+      "@id": "http://smart.who.int/base/skill/smart-stack-layering",
       "@type": "bootstrap:Skill",
       "name": "smart-stack-layering",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749",
-        "bytes": 9630,
-        "sha256": "810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4759d71ba82ac4fb795bff2a00797a3df1588b8d5923a183678193c767495c8c",
+        "bytes": 9837,
+        "sha256": "4759d71ba82ac4fb795bff2a00797a3df1588b8d5923a183678193c767495c8c"
       },
       "title": "smart-stack-layering"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/toolchain-ownership",
+      "@id": "http://smart.who.int/base/skill/toolchain-ownership",
       "@type": "bootstrap:Skill",
       "name": "toolchain-ownership",
       "payload": {
@@ -236,7 +247,7 @@
       "title": "toolchain-ownership"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/transcription-verbatim",
+      "@id": "http://smart.who.int/base/skill/transcription-verbatim",
       "@type": "bootstrap:Skill",
       "name": "transcription-verbatim",
       "payload": {

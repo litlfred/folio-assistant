@@ -10,13 +10,7 @@
       "name": "catalogue"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/iris-pages.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "iris-pages",
-      "title": "IRIS replica and catalogue pages"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#asset/agent-instructions",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/asset/agent-instructions",
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
@@ -27,7 +21,7 @@
       "title": "AGENTS.md — who-iris"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#asset/readme",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/asset/readme",
       "@type": "bootstrap:Asset",
       "name": "readme",
       "payload": {
@@ -38,86 +32,80 @@
       "title": "who-iris"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/folio",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/folio",
       "@type": "bootstrap:Subgraph",
       "name": "folio"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/glossary",
       "@type": "bootstrap:Subgraph",
       "name": "glossary"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/health",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/health",
       "@type": "bootstrap:Subgraph",
       "name": "health"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/id-lookup",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/id-lookup",
       "@type": "bootstrap:Subgraph",
       "name": "id-lookup"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/library",
-      "@type": "bootstrap:Subgraph",
-      "name": "library"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/qa",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/qa",
       "@type": "bootstrap:Subgraph",
       "name": "qa"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-catalogue",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-catalogue",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-catalogue"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-docs",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-docs",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-docs"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-scripts",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scripts",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-scripts"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-site",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-site",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-site"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-sources",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-sources",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-sources"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-themes",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-themes",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-themes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-tools",
-      "@type": "bootstrap:Subgraph",
-      "name": "who-iris-tools"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-translations",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-translations",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-translations"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-uploads",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-uploads",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-uploads"
     }
   ],
   "hasSubgraph": [
-    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/"
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/"
   ],
   "holdsGraph": [
-    "bootstrap:graphTypology/skills"
+    "cat-harness:graphTypology/library",
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
   ],
   "name": "who-iris",
   "path": "./",

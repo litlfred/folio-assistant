@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_RepoHealth",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth",
  "tasks": {
   "Task_Check": {
    "id": "Task_Check",
    "name": "Run the health checks, keeping the report either way",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Check",
    "lane": "Scheduled log sweep",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -105,16 +108,25 @@
    "id": "Task_Label",
    "name": "Ensure the tracking label exists",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Label",
    "lane": "Scheduled log sweep",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
    "skills": [
     {
      "name": "ci-health",
      "href": "../../../reference/skill-instructions/ci-health.html"
     }
    ],
+   "shared": {
+    "id": "GT_EnsureTrackingLabel",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "label": "repo-health"
+    }
+   },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -204,16 +216,25 @@
    "id": "Task_Close",
    "name": "Close the tracking issue",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Close",
    "lane": "Scheduled log sweep",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
    "skills": [
     {
      "name": "ci-health",
      "href": "../../../reference/skill-instructions/ci-health.html"
     }
    ],
+   "shared": {
+    "id": "GT_CloseTrackingIssue",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "label": "repo-health"
+    }
+   },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -303,16 +324,25 @@
    "id": "Task_Track",
    "name": "Open or EDIT the one tracking issue",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Track",
    "lane": "Scheduled log sweep",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
    "skills": [
     {
      "name": "ci-health",
      "href": "../../../reference/skill-instructions/ci-health.html"
     }
    ],
+   "shared": {
+    "id": "GT_TrackIssue",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "label": "repo-health"
+    }
+   },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

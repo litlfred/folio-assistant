@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_BoardRelocate",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
  "tasks": {
   "A_AskConfirm": {
    "id": "A_AskConfirm",
    "name": "Name what will move, and where it lands",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/A_AskConfirm",
    "lane": "Board renderer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "board-renderer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
     "title": "Board renderer",
     "skills": [
      {
@@ -57,7 +60,9 @@
    "id": "A_Cancel",
    "name": "Leave the content exactly where it is",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/A_Cancel",
    "lane": "Board renderer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
    "skills": [
     {
      "name": "board-windows",
@@ -66,7 +71,7 @@
    ],
    "role": {
     "name": "board-renderer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
     "title": "Board renderer",
     "skills": [
      {
@@ -108,7 +113,9 @@
    "id": "A_MoveContent",
    "name": "Relocate the content to the trashcan",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/A_MoveContent",
    "lane": "Board renderer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
    "skills": [
     {
      "name": "board-diagram-interchange",
@@ -117,7 +124,7 @@
    ],
    "role": {
     "name": "board-renderer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
     "title": "Board renderer",
     "skills": [
      {
@@ -159,7 +166,9 @@
    "id": "A_UpdateLayer",
    "name": "Drop its positions and sweep orphans",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/A_UpdateLayer",
    "lane": "Board renderer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
    "skills": [
     {
      "name": "board-diagram-interchange",
@@ -168,7 +177,7 @@
    ],
    "role": {
     "name": "board-renderer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
     "title": "Board renderer",
     "skills": [
      {
@@ -210,7 +219,9 @@
    "id": "A_ReportMove",
    "name": "Say what moved and where it went",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/A_ReportMove",
    "lane": "Board renderer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
    "skills": [
     {
      "name": "deletion-requires-confirmation",
@@ -219,7 +230,7 @@
    ],
    "role": {
     "name": "board-renderer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-board-renderer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
     "title": "Board renderer",
     "skills": [
      {

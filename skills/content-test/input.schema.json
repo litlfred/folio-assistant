@@ -1,33 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/skills/content-test/input.schema.json",
-  "title": "Content Test Input",
-  "description": "Input schema for end-to-end content testing.",
-  "type": "object",
-  "required": [
-    "targetPath"
-  ],
-  "properties": {
-    "targetPath": {
-      "type": "string"
-    },
-    "testPlan": {
-      "type": "string",
-      "description": "Path to test plan file."
-    },
-    "testData": {
-      "type": "string",
-      "description": "Path to test data directory."
-    },
-    "regressionBaseline": {
-      "type": "string",
-      "description": "Git ref for regression baseline."
+  "title": "Content Test Input (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/input.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/input.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/input.schema.json"
     }
-  },
+  ],
   "staging": {
     "branch": "main",
-    "sha": "b08c961e48d303cf8ca8185be4206f93f85f086b",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
     "pr": "main",
-    "run": "40036055825"
+    "run": "40854353981"
   }
 }

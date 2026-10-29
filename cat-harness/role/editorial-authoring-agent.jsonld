@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/editorial-authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/editorial-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Editorial authoring agent",
+      "title": "Editorial authoring agent",
+      "notation": "editorial-authoring-agent",
+      "description": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/block-density",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/chapter-complexity-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/readability-editing",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-audit",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/md-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/markdown-render-check",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/exposition-swarm-drain",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-review"
+      ]
+    }
+  ]
+}

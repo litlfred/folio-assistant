@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/skills-and-tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/skills-and-tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "skills-and-tools",
+      "title": "Skills and Tools — the skill says what, the Tool says how",
+      "description": "A skill states a capability generically; a Tool node carries the concrete mechanism. Read before writing or editing any skill, and whenever a skill is about to name a vendor, a CLI, a binary or an API endpoint.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/skills-and-tools.md",
+      "instructionLines": 445,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
+    }
+  ]
+}

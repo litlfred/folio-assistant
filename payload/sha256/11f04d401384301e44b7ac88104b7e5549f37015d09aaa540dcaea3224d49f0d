@@ -1,0 +1,730 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2404.04834v4",
+  "blocks": [
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-1-introduction.md",
+      "narrative": null,
+      "content": "Autonomous agents, defined as intelligent entities that autonomously perform specific tasks through\nenvironmental perception, strategic self-planning, and action execution [6, 36, 98], have emerged\nas a rapidly expanding research field since the 1990s [93]. Despite initial advancements, these early\niterations often lack the sophistication of human intelligence [127]. However, the recent advent\nof Large Language Models (LLMs) [65] has marked a turning point. This LLM breakthrough has\ndemonstrated cognitive abilities nearing human levels in planning and reasoning [3, 65], which\naligns with the e",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The opening of the introduction, with the authors' addresses and the ACM permission notice. Autonomous agents, entities that perceive their environment, plan and act, have been studied since the 1990s, but early ones lacked human-like sophistication; LLMs, with planning and reasoning the authors describe as nearing human level, have renewed research interest.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "LLM-Based Multi-Agent Systems for Software Engineering:\nLiterature Review, Vision and the Road Ahead\nJUNDA HE, Singapore Management University, Singapore\nCHRISTOPH TREUDE, Singapore Management University, Singapore\nDAVID LO, Singapore Management University, Singapore\nIntegrating Large Language Models (LLMs) into autonomous agents marks a significant shift in the research\nlandscape by offering cognitive abilities that are competitive with human planning and reasoning. This\npaper explores the transformative potential of integrating Large Language Models into Multi-Agent (LMA)\nsystems for address",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Title, authors and abstract of \"LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead\" by Junda He, Christoph Treude and David Lo (Singapore Management University). LLM-based multi-agent (LMA) systems use the collaborative, specialised abilities of several agents for autonomous problem-solving, robustness and scalability in software engineering. The paper systematically reviews recent primary studies of LMA applications across the software development lifecycle, runs two case studies of a state-of-the-art LMA framework, and proposes a research agenda on enhancing individual agents and optimising their synergy, toward what it calls Software Engineering 2.0.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Autonomous Agent",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-001-21-autonomous-agent.md",
+      "narrative": null,
+      "content": "them as LLM-based agents in this paper).\nNevertheless, the application of singular LLM-based agents encounters limitations, since real-\nworld problems often span multiple domains, requiring expertise from various fields. In response\nto this challenge, developing LLM-Based Multi-Agent (LMA) systems represents a pivotal evolution,\naiming to boost performance via synergistic collaboration. An LMA system harnesses the strengths\nof multiple specialized agents, each with unique skills and responsibilities. These agents work in\nconcert towards a common goal, engaging in collaborative activities like",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The rest of the introduction. Single LLM-based agents are limited because real problems span domains, so LMA systems combine specialised agents that collaborate through debate and discussion, which prior work links to divergent thinking, better factuality and reasoning, and thorough validation. For software engineering the authors name three benefits: autonomous problem-solving by splitting requirements into sub-tasks, mirroring agile practice; robustness and fault tolerance through cross-examination, which counters hallucination much as code review and testing do; and scalability, by adding agents and reallocating tasks as projects grow. The article reviews LMA applications, runs two case studies and proposes a two-phase agenda: enhancing individual agents, then optimising their collaboration.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LLM-Based Multi-Agent Systems",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-23-llm-based-multi-agent-systems.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Literature Review",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-3-literature-review.md",
+      "narrative": null,
+      "content": "3\ndevelopment of autonomous, scalable, and trustworthy LMA systems, paving the way for the next\ngeneration of software engineering\nTo summarize, this study makes the following key contributions:\n• We conduct a systematic review of 71 recent primary studies on the application of LMA systems\nin software engineering.\n• We perform two case studies to illustrate the current capabilities and limitations of LMA systems.\n• We identify the key research gaps and propose a structured research agenda that outlines potential\nfuture directions and opportunities to advance LMA systems for software engineerin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The end of the introduction and the contributions: a systematic review of 71 recent primary studies on LMA systems in software engineering, two case studies of current capabilities and limitations, and a structured research agenda of gaps and future directions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Preliminary",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-2-preliminary.md",
+      "narrative": null,
+      "content": "2.1\nAutonomous Agent\nAn autonomous agent is a computational entity designed for independent and effective operation\nin dynamic environments [98]. Its essential attributes are:\n• Autonomy: Independently manages its actions and internal state without external controls.\n• Perception: Detects the changes in the surrounding environment through sensory mechanisms.\n• Intelligence and Goal-Driven: Aims for specific goals using domain-specific knowledge and\nproblem-solving abilities.\n• Social Ability: Can interact with humans or other agents, manages social relationships to\nachieve goals.\n• Learning Ca",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Preliminaries on autonomous agents: a computational entity operating independently in dynamic environments, with the attributes of autonomy, perception, intelligence and goal-direction, social ability, and learning.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LLM-based Autonomous Agent",
+      "pageStart": 3,
+      "pageEnd": 5,
+      "target": "../sections/sec-005-22-llm-based-autonomous-agent.md",
+      "narrative": null,
+      "content": "Formally speaking, an LLM-based agent can be described by the tuple ⟨𝐿,𝑂, 𝑀, 𝑃,𝐴, 𝑅⟩[24], where:\n• 𝐿symbolizes the Large Language Model, serving as the agent’s cognitive core. It is equipped\nwith extensive knowledge, potentially fine-tuned for specific domains, allowing it to make\ninformed decisions based on observations, feedback, and rewards. Typically, an LLM suited for\nthis role is trained on vast corpora of diverse textual data and comprises billions of parameters,\nsuch as models like ChatGPT1, Claude2, and Gemini3. These models exhibit strong zero-shot and\nfew-shot learning capabi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "LLM-based agents, LMA systems and the review's search strategy. An LLM-based agent is the tuple ⟨L, O, M, P, A, R⟩: the LLM as cognitive core, the objective, memory, perception, action (tool use and communication) and rethink, a reflective step after acting. An LMA system has an orchestration platform, which sets coordination models (cooperative, competitive, hierarchical or mixed), communication mechanisms (centralised, decentralised or hierarchical, exchanging artefacts such as code, commit messages or bug reports) and planning styles (centralised or decentralised planning with decentralised execution), plus agents that are predefined or generated, homogeneous or heterogeneous, viewed as nodes of an interaction graph. The review searched DBLP paper titles with agent keywords (Agent, LLM, Large Language Model, Collaborat) combined with truncated phase-specific SE keywords.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Requirements Engineering",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-006-31-requirements-engineering.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Code Generation",
+      "pageStart": 5,
+      "pageEnd": 7,
+      "target": "../sections/sec-007-32-code-generation.md",
+      "narrative": null,
+      "content": "(3) Quality Assurance: bug, fault, defect, fuzz, test, vulnerab, verificat, validat\n(4) Maintenance: debug, repair, review, refactor, patch, maintenanc\nWe focus on four key phases of the SDLC: requirements engineering, code generation, quality\nassurance, and software maintenance. For each phase, the relevant SE keywords are combined\nusing the OR operator to capture all variations. The final search query for each SDLC phase follows\nthe format: [agent words] AND [SE words].\nFollowing the guide of previous work [99, 128, 168], we design the following inclusion and\nexclusion criteria. In the first",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Selection criteria, snowballing, requirements engineering and code generation. SE keywords cover four phases (requirements, code generation, quality assurance, maintenance); criteria exclude short papers, duplicates, non-research items, surveys, non-LMA or single-agent work, papers before ChatGPT's November 2022 release, non-SE work and papers without experiments, leaving 41 studies on 14 November 2024, with backward and forward snowballing adding 30 more. In requirements engineering, Elicitron simulates diverse users for elicitation, MARE uses five agents across elicitation to specification, and Sami et al. use four agents to generate and prioritise user stories. In code generation the common roles are Orchestrator (PairCoder's Navigator, Self-Organized Agents, CODES's RepoSketcher), Programmer with Reviewer and Tester in iterative feedback loops (INTERVENOR, Self-repair, TGen), and Information Retriever (Agent4PLC, MapCoder, CodexGraph); Agent Forest instead samples many outputs and picks the one most similar to the others.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Software Quality Assurance",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-008-33-software-quality-assurance.md",
+      "narrative": null,
+      "content": "In this subsection, we review related work on testing, vulnerability detection, bug detection, and\nfault localization, with a focus on how LMA systems are being employed to enhance software\nquality assurance processes.\nTesting. Fuzz4All [149] generates testing input for software systems across multiple programming\nlanguages. In this framework, a distillation agent reduces user input while a generation agent\ncreates and mutates inputs. AXNav [123] is designed to automate accessibility testing. It interprets\nnatural language test instructions and executes accessibility tests, such as VoiceOver,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Software quality assurance. Testing: Fuzz4All (distillation and generation agents for fuzzing inputs), AXNav (planner, action and evaluation agents for iOS accessibility tests), WhiteFox (compiler-optimisation fuzzing), plus penetration, user acceptance and GUI testing. Vulnerability detection: GPTLens (auditor agents with a critic that ranks findings and filters false positives), MuCoLD (tester and developer roles reaching consensus) and cross-validation of several LLMs' answers. Bug detection: ICAA, with tool-using agents, a false-positive pruner and code-intention consistency checking. Fault localisation: RCAgent for cloud root-cause analysis and AgentFL's comprehension, navigation and confirmation agents.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Software Maintenance",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-009-34-software-maintenance.md",
+      "narrative": null,
+      "content": "In this subsection, we explore related work on debugging and code review, highlighting how LMA\nsystems contribute to automating and improving software maintenance processes.\nDebugging. Debugging involves identifying, locating, and resolving software bugs. Several frame-\nworks, including MASAI [8], MarsCode [86], AutoSD [64], and others [19, 73, 92, 125], follow a\nstructured process consisting of stages like bug reproduction, fault localization, patch generation,\nand validation. Specialized agents are typically responsible for each stage. FixAgent [70] includes a\ndebugging agent and a program r",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Software maintenance (with Figure 1, contrasting Waterfall and Agile multi-agent development). Debugging frameworks such as MASAI, MarsCode and AutoSD stage the work into reproduction, fault localisation, patch generation and validation with a specialised agent per stage; others include FixAgent, the quiz-based MASTER, AutoCodeRover with spectrum-based localisation, SpecRover, ACFIX for access-control vulnerabilities in smart contracts, DEI for re-ranking patches across agents, SWE-Search with Monte Carlo tree search and a debating discriminator, and RepoUnderstander's repository knowledge graph. Code review systems include Rasheed et al.'s four-agent reviewer and CodeAgent with its QA-Checker supervisor; Lemner et al. predict which test cases need maintenance after code changes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "End-to-end Software Development",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-010-35-end-to-end-software-development.md",
+      "narrative": null,
+      "content": "End-to-end software development encompasses the entire process of creating a software product.\nWhile conventional code generation is often limited to producing isolated components such as\nfunctions, classes, or modules, end-to-end development starts from high-level software requirements\nand progresses through design, implementation, testing, and ultimately delivering a fully functional\nand ready-to-use product.\nIn practice, developers and stakeholders typically adopt established software process models to\nguide collaboration, such as Agile [26] and Waterfall [105]. Similarly, the design of LMA",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "End-to-end software development. Unlike code generation of isolated components, end-to-end work goes from requirements to a delivered product, and LMA designs borrow software process models (FlowGen and Self-Collaboration are excluded because they only generate code segments). Waterfall-style systems such as MetaGPT chain product manager, architect, engineer and QA roles; AgileCoder and AgileGen use Agile roles and sprints, AgileGen adding user involvement and Gherkin requirements. Think-on-Process and MegaAgent generate process instances or agent roles dynamically from the requirements, and Co-Learning and iterative experience refinement reuse experience from earlier projects.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Case Study",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-011-4-case-study.md",
+      "narrative": null,
+      "content": "To demonstrate the practical effectiveness of LMA systems, we conduct two case studies. Specif-\nically, we utilize the state-of-the-art LMA framework, ChatDev [109], to autonomously develop\ntwo classic games: Snake and Tetris. ChatDev structures the software development process into\nthree phases: designing, coding, and testing. ChatDev employs specialized roles, including CEO,\nCTO, programmer, reviewer, and tester. ChatDev’s agents are powered by GPT-3.5-turbo4. The\ntemperature setting controls the randomness and creativity of the GPT-3.5’s responses. Following\nthe original ChatDev setting, we",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The case-study setup: the authors use ChatDev, whose CEO, CTO, programmer, reviewer and tester agents work through designing, coding and testing phases on GPT-3.5-turbo at temperature 0.2, to build two classic games, Snake and Tetris.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Snake Game",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-012-41-snake-game.md",
+      "narrative": null,
+      "content": "For the Snake game, we provide the following prompt to ChatDev to generate the game:\n4https://platform.openai.com/docs/models/gp#gpt-3-5-turbo\n, Vol. 1, No. 1, Article . Publication date: July 2025.\nLLM-Based Multi-Agent Systems for Software Engineering:\nLiterature Review, Vision and the Road Ahead\n11\nFig. 2. Screen shots of the Snake Game generated by ChatDev.\nSnake Game Prompt\n“Design and implement a grid-based snake game displayed on the screen. Initialize the snake\nwith a defined starting position, length, and direction. Enable continuous movement controlled\nby arrow keys. Introduce food t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The Snake case study (Figure 2). Given a detailed prompt (grid, arrow-key control, random food, growth, collision game-over with restart, score and instructions), ChatDev failed on the first attempt and produced a playable game on the second, with a manual covering dependencies and how to run it. The game met every requirement in the prompt, and development averaged 76 seconds and USD 0.019.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p011-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-1.png",
+      "narrative": "draft",
+      "content": "Initial startup graphical user interface of the Snake Game generated by ChatDev, displaying grid boundary, starting snake position, score counter, and start prompt.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p011-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-2.png",
+      "narrative": "draft",
+      "content": "In-game gameplay screenshot of the Snake Game generated by ChatDev, showing snake movement, length growth after food consumption, and updated score.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p011-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-3.png",
+      "narrative": "draft",
+      "content": "Game-over screen of the Snake Game generated by ChatDev, showing collision with boundary/body, final score display, and restart prompt.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tetris Game",
+      "pageStart": 11,
+      "pageEnd": 12,
+      "target": "../sections/sec-013-42-tetris-game.md",
+      "narrative": null,
+      "content": "We present the following prompt to ChatDev to guide the generation of the Tetris game:\nTetris Game Prompt\n“Design and implement a Tetris game. Start with a randomly chosen piece dropping from\nthe top. Allow players to control the tetromino using arrow keys for movement (left, right,\ndown) and rotation. Enable automatic downward movement with an adjustable speed. Handle\ncollisions with the boundaries and existing pieces, locking the tetromino in place when it cannot\nmove further. Check for complete rows after each placement and remove them. End the game\nif new tetrominoes cannot spawn due to a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The Tetris case study (Figure 3) and findings. With the same prompt each time, ChatDev failed for nine attempts and on the tenth produced a playable game that met most requirements but still did not remove completed rows; runs averaged 70 seconds and USD 0.020. The authors conclude that current LMA systems handle moderately complex tasks well and cheaply, but struggle with tasks needing deeper logical reasoning and abstraction, while remaining promising for rapid prototyping.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p012-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-1.png",
+      "narrative": "draft",
+      "content": "Initial starting state GUI of the Tetris Game generated by ChatDev, showing empty well, dropping tetromino piece, and control instructions.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p012-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-2.png",
+      "narrative": "draft",
+      "content": "In-game gameplay screenshot of the Tetris Game generated by ChatDev, showing player controlling tetromino rotation and descent onto accumulated blocks.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p012-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-3.png",
+      "narrative": "draft",
+      "content": "In-game screenshot of the Tetris Game generated by ChatDev, highlighting the implementation limitation where complete rows fail to clear upon placement.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/figure-img-p012-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-4.png",
+      "narrative": "draft",
+      "content": "Game-over screen of the Tetris Game generated by ChatDev, showing full board blocking new tetromino spawning and game over announcement.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Research Agenda",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/sec-014-5-research-agenda.md",
+      "narrative": null,
+      "content": "Previous research has laid the groundwork for the exploration of LMA systems in software en-\ngineering, yet this domain remains in its nascent stages, with many critical challenges awaiting\nresolution. In this section, we outline our perspective on these challenges and suggest research\nquestions that could advance this burgeoning field. As illustrated in Figure 4, we envision two\nphases for the development of LMA systems in software engineering. We discuss each of these\nphases below and suggest a series of research questions that could form the basis of future research\nprojects.\n5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The opening of the research agenda: the field is still young, and the authors envision two phases (Figure 4), each with research questions for future projects.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Phase 1: Enhancing Individual Agent Capabilities",
+      "pageStart": 12,
+      "pageEnd": 17,
+      "target": "../sections/sec-015-51-phase-1-enhancing-individual-agent-capabiliti.md",
+      "narrative": null,
+      "content": "Indeed, the effectiveness of an LMA system is closely linked to the capabilities of its individual\nagents. This first phase is dedicated to improving these agents’ skills, with a particular focus on\nadaptability and the acquisition of specialized skills in SE. The potential of individual LLM-based\nagents in SE is further explored through our initial research questions:\n(1) What SE roles are suitable for LLM-based agents to play and how can their abilities be enhanced to\nrepresent these roles?\n, Vol. 1, No. 1, Article . Publication date: July 2025.\nLLM-Based Multi-Agent Systems for Software Eng",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Phase 1, enhancing individual agents, with Figure 4 (the agenda: role-playing, prompting frameworks, human-agent collaboration, benchmarking, scaling, industry principles, dynamic adaptation, secure data management). Research questions: which SE roles suit LLM-based agents and how to strengthen them, and how to design an effective, flexible and robust prompting language. On role-playing, systems like ChatDev, MetaGPT and AgileCoder simulate generic developers and managers on general-purpose LLMs, but specialised roles such as security auditing need domain expertise that studies find ChatGPT lacks, so domain-specific knowledge must be integrated. On prompting, the authors propose agent-oriented programming paradigms for prompts that balance expressiveness and usability and adapt across models and versions, as a step toward an AI-oriented language with grammar suited to LLMs.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Phase Two: Optimizing Agent Synergy",
+      "pageStart": 17,
+      "pageEnd": 22,
+      "target": "../sections/sec-016-52-phase-two-optimizing-agent-synergy.md",
+      "narrative": null,
+      "content": "In Phase Two, the spotlight turns towards optimizing agent synergy, underscoring the importance\nof collaboration and how to leverage the diverse strengths of individual agents. This phase delves\ninto both the internal dynamics among agents and the role of external human intervention in\nenhancing the efficacy of the LMA system. Key research questions guiding this phase include:\n(3) How to best allocate tasks between humans and LLM-based agents?\n(4) How can we quantify the impact of agent collaboration on overall task performance and outcome\nquality?\n(5) How to scale LMA systems for large-scale",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Phase 2, optimising agent synergy. Research questions cover allocating tasks between humans and agents, quantifying the effect of collaboration, scaling to large projects, applying industrial organisation mechanisms, dynamic adaptation, and security of private data sharing. Each topic gives a current state and opportunity: human-in-the-loop designs exist (AISD, MARE) but intervention points need role-specific guidelines; benchmarks test code generation but not multi-agent collaboration; existing systems struggle with complex projects; Waterfall and Agile designs could draw more on industry principles; most systems use fixed roles and communication patterns rather than adapting; and privacy with partial information calls for techniques such as differential privacy, secure multi-party computation, federated learning and homomorphic encryption, compliance with GDPR and CCPA, privacy by design, and possibly blockchain or distributed ledgers for traceable agent transactions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/sec-017-6-discussion.md",
+      "narrative": null,
+      "content": "6.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A section number only: the start of the Discussion (6.1).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "A Comparison with the Mixture of Experts Paradigm",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/sec-018-61-a-comparison-with-the-mixture-of-experts-para.md",
+      "narrative": null,
+      "content": "Another paradigm that has recently attracted much attention from both academia and industry is\nthe Mixture of Experts (MoE) paradigm [16, 170]. MoE organizes an LLM into multiple specialized\ncomponents known as “experts.\" Each expert is designed to focus on specialized tasks. Further, a\ngating mechanism is employed to dynamically activate the most relevant subset of experts based\non the input. While MoE is promising, LMA systems offer several distinct advantages:\nOne limitation of MoE is its high resource consumption. MoE models contain multiple experts\nwithin a single architecture, which make",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A comparison with Mixture of Experts. MoE routes inputs through a gating mechanism to specialised experts inside one model, but it is resource-intensive to train and its experts do not communicate. LMA systems instead mirror collaborative workflows: agents exchange information and refine outputs iteratively, integrate feedback from compilers, static analysers and tests, and allow human intervention at any stage, so the authors consider them better suited than MoE to the multifaceted challenges of software engineering.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Threat to Validity",
+      "pageStart": 22,
+      "pageEnd": 23,
+      "target": "../sections/sec-019-62-threat-to-validity.md",
+      "narrative": null,
+      "content": "One potential threat to validity lies in the possibility of inadvertently excluding relevant studies\nduring the literature search and selection process. To mitigate this risk, we conducted a compre-\nhensive search on the DBLP database, ensuring coverage of a broad spectrum of studies, including\npreprints. Additionally, we enhanced the search process by combining automated querying with\nforward and backward snowballing, aiming to identify and include all pertinent studies.\n, Vol. 1, No. 1, Article . Publication date: July 2025.\nLLM-Based Multi-Agent Systems for Software Engineering:\nLiterature",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Threats to validity: relevant studies may have been missed in the search and selection, which the authors mitigate by searching DBLP broadly, including preprints, and combining automated queries with forward and backward snowballing.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion and Future Work",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/sec-020-7-conclusion-and-future-work.md",
+      "narrative": null,
+      "content": "This paper explores the evolving role of LMA systems in shaping the future of Software Engineering\n2.0 [90]. To support this vision, we first present a systematic review of recent applications of\nLMA systems across different stages of the software development lifecycle. Our review highlights\nkey advancements in areas such as requirements engineering, code generation, software quality\nassurance, and maintenance. To further understand the current landscape, we conduct two case\nstudies that illustrate the practical uses and challenges of LMA systems. Based on these insights, we\npropose a structur",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Conclusion and future work. The paper reviews LMA applications across requirements, code generation, quality assurance and maintenance, presents two case studies and proposes a research agenda toward Software Engineering 2.0. Near-term work targets specialised SE roles, through domain datasets and pre-training tasks, and better prompting strategies; longer-term work targets agent synergy: human-agent task allocation, scalable methods for large projects, and data privacy and access control while still sharing insights among stakeholders.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2404.04834v4/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 23,
+      "pageEnd": 30,
+      "target": "../sections/sec-021-references.md",
+      "narrative": null,
+      "content": "[1] Sahar Abdelnabi, Amr Gomaa, Sarath Sivaprasad, Lea Schönherr, and Mario Fritz. 2023. Llm-deliberation: Evaluating\nllms with interactive multi-agent negotiation games. arXiv preprint arXiv:2309.17234 (2023).\n[2] Pekka Abrahamsson, Outi Salo, Jussi Ronkainen, and Juhani Warsta. 2017. Agile software development methods:\nReview and analysis. arXiv preprint arXiv:1709.08439 (2017).\n[3] Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia Leoni Aleman, Diogo Almeida,\nJanko Altenschmidt, Sam Altman, Shyamal Anadkat, et al. 2023. Gpt-4 technical report. arXiv preprint ar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The reference list: multi-agent LLM frameworks and negotiation studies, software process models such as Agile and Waterfall, LMA systems for requirements, code generation, testing, vulnerability detection, debugging and code review, LLM and agent surveys, SE benchmarks, and privacy techniques.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    }
+  ]
+}

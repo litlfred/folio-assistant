@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDSCv2.C.displays.json",
+  "title": "Services and Application Types: Registries and Directories Display Values",
+  "description": "Display values for Services and Application Types: Registries and Directories ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "description": "Display values for a specific code fragment by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "C": {
+      "en": "Registries and Directories"
+    },
+    "C1": {
+      "en": "Census and population information systems"
+    },
+    "C2": {
+      "en": "Civil registration and vital statistics (CRVS) systems"
+    },
+    "C3": {
+      "en": "Facility management information systems"
+    },
+    "C4": {
+      "en": "(Health) Facility registries"
+    },
+    "C5": {
+      "en": "Health worker registry"
+    },
+    "C6": {
+      "en": "Identification registries and directories"
+    },
+    "C7": {
+      "en": "Immunization information systems"
+    },
+    "C8": {
+      "en": "Master patient index"
+    },
+    "C9": {
+      "en": "Product catalogues"
+    },
+    "C10": {
+      "en": "Public Key directories"
+    },
+    "C11": {
+      "en": "Terminology and classification systems"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2.C",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:28+00:00"
+}

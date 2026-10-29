@@ -1,16 +1,19 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_JsonLdDrift",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift",
  "tasks": {
   "Task_Check": {
    "id": "Task_Check",
    "name": "Regenerate the context, block, library and site graphs — and diff",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift/node/Task_Check",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift/lane/Lane_Ci",
    "skills": [],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

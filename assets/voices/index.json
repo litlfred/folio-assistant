@@ -28,7 +28,6 @@
         "address-business-analyst",
         "address-clinical-sme",
         "address-code-reviewer",
-        "address-compute-authoring-agent",
         "address-deep-researcher",
         "address-docs-authoring-agent",
         "address-editor",
@@ -38,13 +37,11 @@
         "address-fhir-modeller",
         "address-ingestion-agent",
         "address-integration-watcher",
-        "address-lean-authoring-agent",
         "address-librarian",
         "address-narrative-reviewer",
         "address-onboarding-agent",
         "address-platform-authoring-agent",
         "address-programme-manager",
-        "address-proof-review-agent",
         "address-publication-manager",
         "address-qc-reviewer",
         "address-review-coordinator",
@@ -66,6 +63,9 @@
       "dir": "folio-assistant-sci/skills/voices",
       "present": true,
       "voices": [
+        "address-compute-authoring-agent",
+        "address-lean-authoring-agent",
+        "address-proof-review-agent",
         "milnor"
       ]
     },
@@ -325,14 +325,14 @@
       "id": "address-compute-authoring-agent",
       "title": "Addressing the Compute authoring agent",
       "description": "How to write for a reader acting as Compute authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
-      "instance": "folio-assistant-core",
-      "path": "folio-assistant-core/skills/voices/address-compute-authoring-agent",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/address-compute-authoring-agent",
       "provenance": "house",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-address-compute-authoring-agent",
       "sources": [
         {
-          "title": "Role `compute-authoring-agent` — its persona, in the cat-harness role graph"
+          "title": "Role `compute-authoring-agent` — its persona, in the folio-assistant-sci role graph"
         }
       ],
       "hasInstructions": false,
@@ -349,7 +349,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
+          "citesInstance": "litlfred/folio-assistant-sci",
           "quote": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
         }
       ]
@@ -365,7 +365,7 @@
       "criterion": "voice-overlay-address-deep-researcher",
       "sources": [
         {
-          "title": "Role `deep-researcher` — its persona, in the cat-harness role graph"
+          "title": "Role `deep-researcher` — its persona, in the folio-assistant-core role graph"
         }
       ],
       "hasInstructions": false,
@@ -382,7 +382,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
+          "citesInstance": "litlfred/folio-assistant-core",
           "quote": "Cites to a location, not to a document. Distinguishes what a source says from what it implies, and marks a synthesis as a synthesis rather than letting it read as a quotation."
         }
       ]
@@ -497,7 +497,7 @@
       "criterion": "voice-overlay-address-evidence-agent",
       "sources": [
         {
-          "title": "Role `evidence-agent` — its persona, in the cat-harness role graph"
+          "title": "Role `evidence-agent` — its persona, in the folio-assistant-core role graph"
         }
       ],
       "hasInstructions": false,
@@ -514,7 +514,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
+          "citesInstance": "litlfred/folio-assistant-core",
           "quote": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
         }
       ]
@@ -655,14 +655,14 @@
       "id": "address-lean-authoring-agent",
       "title": "Addressing the Lean authoring agent",
       "description": "How to write for a reader acting as Lean authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
-      "instance": "folio-assistant-core",
-      "path": "folio-assistant-core/skills/voices/address-lean-authoring-agent",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/address-lean-authoring-agent",
       "provenance": "house",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-address-lean-authoring-agent",
       "sources": [
         {
-          "title": "Role `lean-authoring-agent` — its persona, in the cat-harness role graph"
+          "title": "Role `lean-authoring-agent` — its persona, in the folio-assistant-sci role graph"
         }
       ],
       "hasInstructions": false,
@@ -679,7 +679,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
+          "citesInstance": "litlfred/folio-assistant-sci",
           "quote": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
         }
       ]
@@ -761,7 +761,7 @@
       "criterion": "voice-overlay-address-onboarding-agent",
       "sources": [
         {
-          "title": "Role `onboarding-agent` — its persona, in the cat-harness role graph"
+          "title": "Role `onboarding-agent` — its persona, in the folio-assistant-core role graph"
         }
       ],
       "hasInstructions": false,
@@ -778,7 +778,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
+          "citesInstance": "litlfred/folio-assistant-core",
           "quote": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
         }
       ]
@@ -853,14 +853,14 @@
       "id": "address-proof-review-agent",
       "title": "Addressing the Proof review agent",
       "description": "How to write for a reader acting as Proof review agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
-      "instance": "folio-assistant-core",
-      "path": "folio-assistant-core/skills/voices/address-proof-review-agent",
+      "instance": "folio-assistant-sci",
+      "path": "folio-assistant-sci/skills/voices/address-proof-review-agent",
       "provenance": "house",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-address-proof-review-agent",
       "sources": [
         {
-          "title": "Role `proof-review-agent` — its persona, in the cat-harness role graph"
+          "title": "Role `proof-review-agent` — its persona, in the folio-assistant-sci role graph"
         }
       ],
       "hasInstructions": false,
@@ -877,7 +877,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
+          "citesInstance": "litlfred/folio-assistant-sci",
           "quote": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
         }
       ]

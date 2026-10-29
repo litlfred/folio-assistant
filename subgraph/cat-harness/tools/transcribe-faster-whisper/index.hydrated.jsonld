@@ -1,0 +1,60 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/transcribe-faster-whisper/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/transcribe-faster-whisper.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      "install": {
+        "cli": "pip install faster-whisper (model weights download on first use)"
+      },
+      "invoke": {
+        "shell": "python3 -m faster_whisper"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "name": "file",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--language"
+            },
+            "name": "language",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Locale"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "transcript",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "transcribe-faster-whisper",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "python3",
+          "faster-whisper"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
+      "title": "Transcribe audio — faster-whisper (option, not installed)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/transcribe-faster-whisper",
+  "path": "tools/transcribe-faster-whisper/"
+}

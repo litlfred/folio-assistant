@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/business-analyst.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/business-analyst",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "business-analyst",
+      "actorKind": "person",
+      "title": "Business Analyst",
+      "description": "L2 DAK component author who translates clinical guidelines into structured digital artifacts including BPMN processes, data dictionaries, decision logic, and indicators.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.BusinessAnalyst",
+        "lifecycle": [
+          "author",
+          "validate",
+          "test"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/author"
+      ]
+    }
+  ]
+}

@@ -5,14 +5,15 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/scenarios",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/scenarios",
       "@type": "bootstrap:Subgraph",
       "name": "scenarios"
     }
   ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/actors/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/capabilities/"
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/capabilities/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/deployments/"
   ],
   "holdsGraph": [
     "bootstrap:graphTypology/scenarios"

@@ -1,0 +1,129 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2403.16873v1/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2403.16873v1/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/arxiv-2403.16873v1/manifest.jsonld",
+      "title": "How accurately can quantitative imaging methods be ranked without ground truth: An upper bound on no-gold-standard evaluation"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2403.16873v1/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/figure-img-p004-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2403.16873v1/blocks/figure-img-p004-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2403.16873v1/blocks/prose-sec-000.jsonld",
+          "title": "Methods"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/prose-sec-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2403.16873v1/blocks/prose-sec-001.jsonld",
+          "title": "INTRODUCTION"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/prose-sec-002",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2403.16873v1/blocks/prose-sec-002.jsonld",
+          "title": "Theory"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/prose-sec-003",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2403.16873v1/blocks/prose-sec-003.jsonld",
+          "title": "Demonstrating utility of the proposed framework"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/prose-sec-004",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2403.16873v1/blocks/prose-sec-004.jsonld",
+          "title": "Results"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/blocks/prose-sec-005",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2403.16873v1/blocks/prose-sec-005.jsonld",
+          "title": "Discussion and Conclusion"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2403.16873v1/blocks",
+      "path": "library/arxiv-2403.16873v1/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2403.16873v1/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2403.16873v1/images",
+      "path": "library/arxiv-2403.16873v1/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2403.16873v1/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2403.16873v1/sections/sec-000.jsonld",
+          "title": "Methods"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/sections/sec-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2403.16873v1/sections/sec-001.jsonld",
+          "title": "INTRODUCTION"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/sections/sec-002",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2403.16873v1/sections/sec-002.jsonld",
+          "title": "Theory"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/sections/sec-003",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2403.16873v1/sections/sec-003.jsonld",
+          "title": "Demonstrating utility of the proposed framework"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/sections/sec-004",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2403.16873v1/sections/sec-004.jsonld",
+          "title": "Results"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2403.16873v1/sections/sec-005",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2403.16873v1/sections/sec-005.jsonld",
+          "title": "Discussion and Conclusion"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2403.16873v1/sections",
+      "path": "library/arxiv-2403.16873v1/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/arxiv-2403.16873v1",
+  "path": "library/arxiv-2403.16873v1/"
+}

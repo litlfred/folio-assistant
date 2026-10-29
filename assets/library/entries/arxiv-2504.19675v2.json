@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction. Automated subject indexing has traditionally used NLP and machine learning, and accurate subject prediction with LLMs remains elusive; the LLMs4Subjects challenge invited LLM-based solutions on data from TIB's bilingual TIBKAT database. The authors have developed the open-source Annif toolkit since 2017 and entered to provide a strong baseline of traditional methods augmented with some LLM techniques. The block ends partway through the list of novel aspects, beginning with translating the subject vocabulary and records using LLMs.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The rest of the introduction, under a heading the extraction misplaced. The remaining novel aspects are including XTransformer in an ensemble and generating suggestions with separate monolingual pipelines whose results are merged. The system ranked 1st in all-subjects and 2nd in tib-core-subjects quantitatively and 4th qualitatively, which the authors take to show that a mainly traditional approach stays competitive with systems using LLMs more heavily. Code, configurations and data sets are on GitHub, and the trained models on Hugging Face Hub.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Background. The task is extreme multi-label text classification (XMTC): recommend GND subjects for a TIBKAT record from its title and abstract, with two vocabularies, all-subjects (200,035 subjects) and tib-core-subjects (78,741). The record sets had 81,937 / 13,666 / 27,986 train/development/test records for all-subjects and 41,923 / 7,001 / 6,119 for tib-core; the authors ignored the split by document type and language because records were similar across types and often mixed languages. They did not use an LLM to choose subjects, relying on Annif's traditional XMTC algorithms, but used LLMs to pre-process the data and generate synthetic training data.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title, authors and abstract of \"Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs\" by Osma Suominen, Juho Inkinen and Mona Lehtinen (National Library of Finland, University of Helsinki). The paper describes the Annif system in the LLMs4Subjects shared task, which asked for GND subject predictions for records of the bilingual TIBKAT database. It combines traditional NLP and machine-learning methods from the Annif toolkit with LLM-based translation and synthetic data generation, and merges predictions from monolingual models. It ranked first in all-subjects and second in tib-core-subjects quantitatively, and fourth qualitatively.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "System overview. Three Annif backends were used: Omikuji in a Bonsai-style configuration (partitioned label trees); MLLM, a Maui-like lexical matcher of text to vocabulary terms; and XTransformer, a fine-tuned Transformer XMTC model from the PECOS framework based on xlm-roberta-base, whose Annif integration was experimental and refined during the task. Backends were combined in simple ensembles, which average their scores, and neural ensembles, which also train a network to adjust scores, for example to suppress frequent false positives.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Translation and synthetic data. Llama-3.1-8B-Instruct translated every record into German-only and English-only versions, and GPT-4o-mini translated all GND preferred terms into English, since MLLM needs vocabulary and text in the same language (Figure 1 shows these pre-processing steps). Because the training set was small for the vocabulary's size, the same Llama model was given each training record with its subjects and asked to write a similar record with those subjects plus one random extra GND term, which made the output novel rather than a paraphrase and widened subject coverage.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line opening of the Experimental setup section, cut off mid-sentence: the authors first set up, trained and evaluated the three kinds of base projects.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Experimental setup and base projects. Base projects were tuned against the development set using F1@5 and nDCG@10, then combined into ensembles for the submitted output. Separate projects were set up for each vocabulary and language, four combinations in all, each with Bonsai, MLLM and XTransformer, managed with the Data Version Control tool and trained on the LLM-translated monolingual training records. Hyperparameters covered Snowball stemming or Simplemma lemmatisation, bigram features and a min_df of 2 to 5 for Bonsai, and a manual search for XTransformer; the final settings are on GitHub.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Adding synthetic data. Synthetic generation was repeated three times per language and vocabulary. Adding the first synthetic part raised Bonsai's nDCG@10 by about 0.02, and the second and third only modestly (Figure 3), so training stopped at one part original to three parts synthetic. Synthetic data was not used for MLLM or XTransformer; the block is cut off as the reason for MLLM begins.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The end of the synthetic-data discussion and the base-project results. A sentence fragment notes that a project did not improve with synthetic data. In the development-set scores (Table 3), Bonsai was best in every case, followed by XTransformer and MLLM.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Ensemble projects (Figure 2, Table 1). Three ensembles were built: BM simple and BM neural (Bonsai and MLLM) and BMX simple (all three). Weights were tuned with annif hyperopt against development-set nDCG (Table 4): Bonsai carried 80-87% in BM and 47-62% in BMX, XTransformer 21-33%, and MLLM a minor share, matching the base projects' order. The authors explain that MLLM complements the other two, which cannot suggest low-frequency subjects, by matching any GND term that appears in the text. The neural ensembles were trained on development-set records, so their development scores were unrealistically good and only the official test results could judge them.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Test set predictions. Teams could submit up to 10 runs per vocabulary with up to 50 subjects per record. Test records were LLM-translated into German and English, and each of the three ensemble types gave three runs: German, English, and the two merged by summing subject scores and keeping the top 50, for 9 runs per vocabulary. The block ends at the Results heading.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A fragment of the Results section, saying only that the evaluations were performed by the task organisers.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Quantitative and qualitative evaluation. Quantitatively, predictions were scored against TIBKAT annotations by precision, recall and F1 at thresholds 5 to 50, ranked by average recall; run #9, the BMX simple ensemble with merged languages, ranked 1st in all-subjects (0.6295) and 2nd in tib-core-subjects (0.5899). Qualitatively, subject librarians rated the top 20 subjects of tib-core run #9 for 6-10 records from each of 14 subject classifications as correct (Y), technically correct but irrelevant (I) or incorrect; with Y and I counted correct (case 1) or only Y (case 2), and recall measured against TIBKAT subjects plus all suggestions judged correct, Annif ranked 4th in both cases (Table 2), behind DNB-AI-Project, DUTIR831 and RUC Team.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Analysis (with Table 1, the full development and test results). The English variants beat the German ones in all but one case, which the authors attribute possibly to better English translations or to German's compound-rich structure being harder for traditional pipelines. Synthetic records raised Bonsai's nDCG by about 0.03 (the experimental section gives about 0.02 for the first synthetic part). BMX beat BM, so adding XTransformer helped, while the neural ensembles underperformed on the test set because training and evaluation data were structurally similar. Merging the monolingual predictions beat either language alone; without it they would have ranked 2nd and 3rd. The authors suggest their qualitative 4th place reflects predictions that track existing TIBKAT metadata, where LLM-heavier systems were less constrained, and note that no system exceeded 0.35 F1@5, possibly showing inconsistent TIBKAT subject metadata; they propose nDCG@50 for ranking 50-subject outputs.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -303,7 +423,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line opening of the Conclusions, cut off mid-sentence: participation in the task provided valuable insights.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -322,7 +450,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The rest of the conclusions, followed by the acknowledgments and references. Traditional XMTC algorithms (Omikuji Bonsai, MLLM, XTransformer) enhanced with LLM-generated translations and synthetic data gave competitive results, and the authors note that traditional methods need modest computation, energy and latency compared with LLMs. They thank the Finnish Computing Competence Infrastructure, University of Helsinki Scientific Computing Services, ZBW for the XTransformer integration, DNB for hyperparameter advice, and TIB. The references cover the task and dataset papers, LLM subject-assignment experiments, Llama 3, nDCG, Bonsai, Parabel, Maui, Annif and PECOS.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -341,7 +477,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A: Figure 3, the effect of adding synthetic training data on Omikuji Bonsai models, plotting development-set nDCG@10 against the proportion of original to synthetic data (1+0 to 1+3) for each vocabulary and language.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -360,7 +504,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix B: Table 3, development-set F1@5 and nDCG@10 for every base project. Bonsai scores highest in each vocabulary and language (for example nDCG@10 of 0.5532 for all-subjects English and 0.5807 for tib-core English), XTransformer next, and MLLM lowest.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -379,7 +531,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix C: Table 4, the optimised ensemble weights. In the BM ensembles Bonsai takes 0.8070 to 0.8729 and MLLM the rest; in the BMX ensembles Bonsai takes 0.4713 to 0.6197, XTransformer 0.2132 to 0.3323, and MLLM 0.1417 to 0.1964.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -398,7 +558,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix D: LLM usage. Records were translated and synthesised with Llama-3.1-8B-Instruct through the vLLM inference engine on one 80 GB NVIDIA A100 GPU of the University of Helsinki's Turso cluster, and the GND was translated with GPT-4o-mini on Azure OpenAI Service. Throughput was about 4 records per second for translation and 8 for synthesis.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -417,7 +585,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line pointer: the LLM translation and record-synthesis process is illustrated in Figure 4.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -436,7 +612,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line note on the prompt templates that follow: the system prompt is in italics, and tags are replaced with each record's information.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -455,7 +639,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The record-translation prompt: a professional translator of bibliographic metadata is asked to make sure a title and description are in <LANGUAGE>, translating only if needed, leaving text already in that language unchanged, and replying with the text only.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -474,7 +666,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The record-synthesis prompt: a professional metadata manager is shown an example title and description in <LANGUAGE> with its subject keywords, and asked to write a new title and description matching a new keyword set, replying with only those.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -493,7 +693,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The GND-translation prompt, used in batches of 100 terms, followed by Figure 4. The prompt asks a translator of controlled vocabularies to translate German GND preferred terms into English, keep the list structure, and treat sensitive subjects with accuracy and respect, with a four-term example. Figure 4 traces a thesis record on hydraulic engineering at tidal tributaries of the Elbe through translation into monolingual versions and into two synthetic records, each adding one random GND subject (\"Phosphorkomplexe\" and \"Stromlinie <Strömungsmechanik>\").",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     }
   ]

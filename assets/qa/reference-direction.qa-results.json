@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "4d5bfe0038fd"
+    "script_hash": "237f173f99ee"
   },
   "subject": {
     "kind": "reference-direction",
@@ -35,11 +35,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5737,
+          "occurrences": 5910,
           "allowed": 0,
-          "wrongDirection": 4,
-          "wrongDirectionFiles": 3,
-          "exempt": 5733,
+          "wrongDirection": 9,
+          "wrongDirectionFiles": 5,
+          "exempt": 5901,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -49,22 +49,30 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 3,
+      "count": 5,
       "entries": [
         {
-          "file": "cat-harness-tools/scripts/build-instance-site.ts",
+          "file": "cat-harness-tools/scripts/bean-dedupe.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness-tools/scripts/kg-export.ts",
           "target": "smart-base"
         },
         {
-          "file": "cat-harness/cat-harness.json",
-          "target": "who-iris"
+          "file": "fhir-harness/fhir-harness.json",
+          "target": "smart-immunizations"
         },
         {
-          "file": "fhir-harness/processes/content/ig-incremental-build.checklist.md",
+          "file": "fhir-harness/scripts/check-ig-annex-links.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
           "target": "smart-immunizations"
         }
       ]
     }
   },
-  "total": 4
+  "total": 6
 }

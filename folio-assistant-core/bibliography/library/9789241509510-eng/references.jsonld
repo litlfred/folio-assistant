@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/9789241509510-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "The MAPS Toolkit: mHealth Assessment and Planning for Scale",
+      "dcterms:issued": "D:20150922",
+      "dcterms:source": "smart-base/library/9789241509510-eng/manifest.jsonld",
+      "dcterms:hasVersion": "smart-base/library/9789241509510-eng"
+    }
+  ]
+}

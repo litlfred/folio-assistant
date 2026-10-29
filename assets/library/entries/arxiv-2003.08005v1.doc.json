@@ -206,7 +206,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 4967,
-      "summary": null,
+      "summary": {
+        "text": "Introduces and evaluates ScanSSD (Scanning Single Shot Detector) by Mali et al. (RIT) for detecting both displayed and embedded mathematical formulas in 600 dpi PDF page images using purely visual features without font, layout, or character metadata. Describes the TFD-ICDAR2019v2 dataset (re-aligned GTDB annotations across 569 training and 126 testing pages), the sliding-window SSD512 architecture with wide default box aspect ratios {1, 2, 3, 5, 7, 10} and 1x5 rectangular convolution kernels (MATH512), connected-component cropping postprocessing, and uniform pixel-level voting across overlapping windows, achieving formula detection F-scores of 0.796 (IOU >= 0.5) and 0.733 (IOU >= 0.75) and a character-level F-score of 0.925.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "default boxes",
@@ -254,7 +257,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1041,
-      "summary": null,
+      "summary": {
+        "text": "Lists the 34 bibliographic references for the ScanSSD paper, covering formula retrieval and extraction (Tangent-V, PDFFigures 2.0, Infty, LPGA), the ICDAR 2019 CROHME + TFD competition and U-Net baselines, classical and deep-learning formula identification in PDF documents, general object and text detectors (VGG16, R-CNN, Fast/Faster R-CNN, YOLO, SSD, TextBoxes, Focal Loss, ImageNet), and single-shot detector box fusion strategies.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ieee conference",

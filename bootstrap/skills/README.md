@@ -9,7 +9,7 @@ generated: "scripts/subgraph-readmes.ts of the bootstrap toolset (https://github
 
 _No description is declared for `skills`._
 
-Part of [Bootstrap](../README.md) 0.1.0, declared as `skills`, holding `skills`.
+Part of [Bootstrap](../README.md) 0.1.1, declared as `skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_DakL3Ig",
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DakL3Ig",
  "tasks": {
   "Task_MapL2": {
    "id": "Task_MapL2",
    "name": "Map L2 → L3",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DakL3Ig/node/Task_MapL2",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DakL3Ig/lane/Lane_Modeller",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -19,7 +22,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }
@@ -28,7 +31,9 @@
    "id": "CallActivity_L3Fhir",
    "name": "L3 FHIR IG pipeline (fhir-harness)",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DakL3Ig/lane/Lane_Modeller",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -37,11 +42,12 @@
    ],
    "calls": {
     "name": "L3 FHIR IG pipeline",
-    "href": "l3-fhir-pipeline.html"
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
+    "diagram": "l3-fhir-pipeline.html"
    },
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }

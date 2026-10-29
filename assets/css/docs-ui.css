@@ -2590,7 +2590,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * is fixed sage in both schemes … left as-is deliberately … recorded here
  * rather than silently corrected."* It also ends a disagreement nothing had
  * recorded — `cat-harness` declares tone **268** and its mark was sage, two
- * colour vocabularies for one instance, which is the drift `schemas/theme.ts`
+ * colour vocabularies for one instance, which is the drift `schemas/ui/theme.ts`
  * exists to have ended.
  *
  * THE TWO COLOURS ARE THE AVATAR GENERATOR'S OWN TARGETS, not new ones:
@@ -3178,7 +3178,7 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 }
 
 /* Themed: every colour here is a ROLE supplied by themes.css, which is
- * generated from the theme nodes in `schemas/themes.ts`. The fallbacks after
+ * generated from the theme nodes in `schemas/ui/themes.ts`. The fallbacks after
  * each `var()` are the pre-theme neutrals, so a board still renders if
  * themes.css has not loaded — an unstyled sticky reads as broken, and "no
  * theme yet" is a state rather than an error. */
@@ -5396,7 +5396,7 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  *
  * The obvious implementation is "docked stickies use the `card` aspect",
  * and it would work today: the card crop is square on 3 of 3 stickies in
- * `_data/stickies.json`. Three is the whole corpus, and `schemas/theme.ts`
+ * `_data/stickies.json`. Three is the whole corpus, and `schemas/ui/theme.ts`
  * does not REQUIRE a card crop to be square — `ThemeGeometrySchema` takes
  * whatever aspect a theme declares.
  *
@@ -5542,7 +5542,7 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  * pointer-target floor at the default root size.
  *
  * THEMED means the avatar's declared hue, passed in as `--fa-tile-tone` by
- * `harness-tiles.ts` from `schemas/avatars.ts`. It is the mechanism this
+ * `harness-tiles.ts` from `schemas/content/avatars.ts`. It is the mechanism this
  * repository already has: one declared hue, from which both schemes are
  * derived, so no tile can be authored legible in one mode and invisible in
  * the other. A per-instance palette would have been a second colour
@@ -5751,7 +5751,7 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  * presentation of a fact rather than a fact of its own.
  *
  * THEMED means the avatar's declared hue, passed in as `--fa-tile-tone` by
- * `harness-tiles.ts` from `schemas/avatars.ts`: one declared hue from which
+ * `harness-tiles.ts` from `schemas/content/avatars.ts`: one declared hue from which
  * both schemes are derived, so no tab can be authored legible in one mode and
  * invisible in the other.
  * ───────────────────────────────────────────────────────────────────────── */

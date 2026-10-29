@@ -1,16 +1,19 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PublishAlert",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
  "tasks": {
   "A_Label": {
    "id": "A_Label",
    "name": "Ensure the publication-manager label",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Label",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/lane/Lane_Ci",
    "skills": [],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -100,11 +103,13 @@
    "id": "A_Open",
    "name": "Open the tracking issue, naming the failed step",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Open",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/lane/Lane_Ci",
    "skills": [],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -194,11 +199,13 @@
    "id": "A_Comment",
    "name": "Comment on the open issue, naming the step",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Comment",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/lane/Lane_Ci",
    "skills": [],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -287,17 +294,24 @@
   "U_Triage": {
    "id": "U_Triage",
    "name": "Triage the failure: hold or fix forward",
-   "type": "bpmn:UserTask",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/U_Triage",
    "lane": "Publication manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/lane/Lane_PubMgr",
    "skills": [
     {
      "name": "publish-verification",
      "href": "../../../reference/skill-instructions/publish-verification.html"
     }
    ],
+   "calls": {
+    "name": "Ask the person",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
+    "diagram": "ask-the-person.html"
+   },
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {

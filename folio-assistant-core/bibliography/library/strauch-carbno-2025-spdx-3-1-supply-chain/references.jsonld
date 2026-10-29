@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/strauch-carbno-2025-spdx-3-1-supply-chain",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Capturing the Supply Chain as HBOMs, SBOMs and more with SPDX 3.1",
+      "dcterms:creator": [
+        "SBOMs",
+        "3.1, more with SPDX"
+      ],
+      "dcterms:issued": "D:20250913",
+      "dcterms:source": "cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain"
+    }
+  ]
+}

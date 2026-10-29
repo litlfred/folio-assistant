@@ -371,7 +371,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 64,
-      "summary": null,
+      "summary": {
+        "text": "Presents the paper title (\"LLM-supported document separation for printed reviews from zbMATH Open\") and author affiliations for Ivan Pluzhnikov and Bela Gipp (University of Göttingen) and Ankit Satpute, Moritz Schubotz, and Olaf Teschke (FIZ Karlsruhe).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "george august",
@@ -403,7 +406,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 234,
-      "summary": null,
+      "summary": {
+        "text": "Summarizes a pipeline for digitizing and segmenting ~831,000 scanned mathematical documents in zbMATH Open using Mathpix for LaTeX OCR and fine-tuned generative LLMs in a Majority Voting framework for document separation, achieving 97.5% text extraction accuracy (89.1% boundary index accuracy overall) and processing 810,977 documents into machine-readable text (721,288 with LaTeX boundary indexes).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "mathematical documents",
@@ -451,7 +457,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 537,
-      "summary": null,
+      "summary": {
+        "text": "Introduces the problem of converting ~831,000 historical scanned review entries in zbMATH Open (out of over 4.8 million total entries) into machine-readable LaTeX for mathematical information retrieval, noting the challenges of varying historical typesetting and multi-document or multi-page scan layouts illustrated in Figure 1.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "scanned volumes",
@@ -499,7 +508,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 36,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the paper's first contribution: adapting modern generative LLMs to separate mathematical text from OCR output with high accuracy.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "processing",
@@ -527,7 +539,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 90,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the evaluation metrics (BLEU and Edit Distance for OCR engines; accuracy for document splitting) and the practical outcome of converting 810,977 zbMATH Open documents into machine-readable text and 721,288 into LaTeX representations with start and end indexes, outperforming ChatGPT-4o, computer vision, and regex baselines.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "metrics",
@@ -555,7 +570,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 507,
-      "summary": null,
+      "summary": {
+        "text": "Reviews prior work on post-OCR document extraction and layout segmentation using regular expressions (Pitou et al., Pandey et al.), computer vision models including Faster-RCNN, U-Net, Segmentation Transformer, and Document Image Transformer (DiT), and NLP/LLM approaches using LSTM, BERT, and GPT-3.5.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ocr-processed documents",
@@ -603,7 +621,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 8,
-      "summary": null,
+      "summary": {
+        "text": "Notes that generative models can simultaneously correct OCR errors and strip extraneous metadata such as page numbers, making extracted outputs more user-friendly than token-labeling approaches.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "(e.g., page numbers), making the results more user-friendly.",
       "extractCut": false
@@ -618,7 +639,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 27,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 3 on the datasets collected from scanned mathematical literature volumes and the evaluation metrics used in the study.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Datasets and metrics In this study, we utilized a dataset derived from scanned volumes of mathematical literature. The dataset collection and preprocessing process is detailed as follows:",
       "extractCut": false
@@ -633,7 +657,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 231,
-      "summary": null,
+      "summary": {
+        "text": "Describes the primary zbMATH Open dataset of 478 scanned books (254,444 pages, 813,005 documents in English, German, French, and Italian) with metadata fields (Scan_document_id, zbMATH_internal_id, Title, Original_title, Source, illustrated in Table 1), along with the 1,000-sample training set and 478-document test set (one per volume).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "zbmath open",
@@ -677,7 +704,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 14,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Subsection 3.2 on the requirement for a ground-truth dataset to evaluate OCR tools on mathematical literature.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "OCR evaluation dataset An evaluation of the different OCR tools requires a suitable dataset",
       "extractCut": false
@@ -692,7 +722,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 337,
-      "summary": null,
+      "summary": {
+        "text": "Describes the 25-page ground-truth OCR evaluation dataset (22 with mathematical formulas) manually extracted from arXiv STEM articles, and defines the evaluation metrics in Subsection 3.3: BLEU and Edit Distance for LaTeX OCR evaluation, and exact boundary/text accuracy (or \"not reviewed.\" when absent) for document splitting.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ground truth",
@@ -740,7 +773,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 130,
-      "summary": null,
+      "summary": {
+        "text": "Compares four OCR systems (Mathpix, InftyReader, Nougat, and Marker) on the 25-page benchmark in Table 2, showing that Mathpix achieves the highest Average BLEU (0.7237) and lowest Average Edit Distance (0.1733), motivating its selection for full-corpus conversion.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "edit distance",
@@ -772,7 +808,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 340,
-      "summary": null,
+      "summary": {
+        "text": "Reports converting 254,444 scanned zbMATH Open .tiff pages via the Mathpix API into 252,209 JSON LaTeX files (with 2,235 API failures, including 1,408 blank pages and 827 recognition failures), and catalogs common OCR errors in Subsection 4.3 including character confusions, inconsistent line breaks/spacing, spurious LaTeX tags, and omitted characters or words.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ocr systems",
@@ -820,7 +859,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 33,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 5 on using a regular-expression-based extraction pipeline as a baseline for splitting OCR-processed zbMATH Open documents.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "regular expressions",
@@ -863,7 +905,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 271,
-      "summary": null,
+      "summary": {
+        "text": "Details the 8-step regular-expression methodology (Subsection 5.1) that concatenates LaTeX page files between consecutive rows' Scan_document_id values, matches the current and next document titles (or original titles) to bracket the text, and strips extraneous metadata such as page numbers and author headers.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "𝑛𝑒𝑥𝑡 𝑟𝑜𝑤",
@@ -911,7 +956,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 372,
-      "summary": null,
+      "summary": {
+        "text": "Describes excluding 2,028 documents with missing page OCR to leave 810,977 documents (Subsection 5.2), handling OCR and formatting variations via regex normalization (85.5% matched) and a Levenshtein distance threshold of 0.3 times title length (Subsection 5.3, Figure 2), and extracting text for 786,314 entries (97%) though with boundary inaccuracies (Subsection 5.4).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "documents",
@@ -959,7 +1007,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 179,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 6 on generative LLM-based document splitting and outlines the 6-step prompting methodology (Subsection 6.1, illustrated in Figure 3) that supplies the current and next row's title/original title, source, and concatenated LaTeX page content to an LLM.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "𝑛𝑒𝑥𝑡 𝑟𝑜𝑤",
@@ -999,7 +1050,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 247,
-      "summary": null,
+      "summary": {
+        "text": "Explains the selection criteria for open-source instruction-tuned base LLMs fitting within 16 GB VRAM with context windows exceeding 4,000 tokens (32k), summarizing the three selected models in Table 3: CalmExperiment-7B-slerp (7B), Maxine-7B-0401-Stock (7B), and Mistral-Passthrough-8L-10B (10B).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "highest score",
@@ -1043,7 +1097,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 278,
-      "summary": null,
+      "summary": {
+        "text": "Describes fine-tuning the three pre-trained LLMs using LoRA in LLaMA-Factory, selecting a learning rate of 0.0005 and 5 epochs via an 80/20 train/validation split of the 1,000-sample training dataset (with CalmExperiment-7B-slerp achieving the lowest validation loss), and then fine-tuning on all 1,000 training samples.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "fine-tuning",
@@ -1091,7 +1148,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 243,
-      "summary": null,
+      "summary": {
+        "text": "Presents the Majority Voting ensemble over the three fine-tuned LLMs (along with validation and training loss curves in Figures 4 and 5), returning any two-model consensus and defaulting to the best validation model (CalmExperiment-7B-slerp) when all three outputs differ.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "majority voting",
@@ -1135,7 +1195,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 157,
-      "summary": null,
+      "summary": {
+        "text": "Describes the ChatGPT-4o baseline (August 2024 version) tested both zero-shot and with two-shot prompting, using an explicit prompt instruction to return \"Not reviewed\" when review content is absent, as well as testing the un-fine-tuned base models on the modified prompt.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "few-shot learning",
@@ -1167,7 +1230,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 189,
-      "summary": null,
+      "summary": {
+        "text": "Describes the computer-vision baseline using the Document Image Transformer (DiT) trained on PubLayNet and restricted to the \"title\" class to bound document splitting accuracy by title detection recall on scanned pages (illustrated in Figure 6).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "computer",
@@ -1207,7 +1273,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 5,
-      "summary": null,
+      "summary": {
+        "text": "Section 8 heading introducing the evaluation of all document splitting methods on the test set and full-corpus data processing.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Evaluation and all data processing.",
       "extractCut": false
@@ -1222,7 +1291,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 129,
-      "summary": null,
+      "summary": {
+        "text": "Reports that prior to fine-tuning, all three open-source base models achieved 0% accuracy on the test dataset because they generated extraneous text, retained metadata, or omitted the target document.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "models returned",
@@ -1254,7 +1326,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 145,
-      "summary": null,
+      "summary": {
+        "text": "Compares test-set document splitting accuracy in Table 4 across baselines—DiT (48.5% upper bound), ChatGPT-4o (51%), ChatGPT-4o two-shot (52.1%), and Regular Expressions (68.8%)—against the fine-tuned LLMs (Maxine-7B-0401-Stock 93.1%, Mistral-Passthrough-8L-10B 93.7%, CalmExperiment-7B-slerp 96.2%) and Majority Voting (97.5%).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "evaluation",
@@ -1290,7 +1365,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 325,
-      "summary": null,
+      "summary": {
+        "text": "Categorizes the 12 test-set errors made by the Majority Voting method into four causes: OCR formatting errors (2 cases), ambiguity between nearly identical neighboring titles (2 cases), LLM hallucinations on longer documents (4 cases), and metadata inclusion/omission errors (4 cases).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "document text",
@@ -1338,7 +1416,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 778,
-      "summary": null,
+      "summary": {
+        "text": "Tests and refutes two standalone error-detection hypotheses on the 18 test errors of fine-tuned CalmExperiment-7B-slerp—showing neither Mathpix page confidence scores (Hypothesis 1) nor output token probabilities from LLaMA-Factory (Hypothesis 2) reliably predict segmentation errors—and describes Subsection 8.5's whitespace-normalized exact-matching method for recovering start and end character indexes in the raw LaTeX OCR output (succeeding on 90.6% of the test set with 98.4% accuracy, or 89.1% overall while filtering out hallucinations).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "error detection",
@@ -1386,7 +1467,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 123,
-      "summary": null,
+      "summary": {
+        "text": "Reports applying the Majority Voting pipeline to all 810,977 eligible zbMATH Open documents (differing from CalmExperiment-7B-slerp alone in 3.4% of cases) and recovering exact start and end character indexes in the LaTeX scans for 721,288 documents (88.9%).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "majority voting",
@@ -1418,7 +1502,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 289,
-      "summary": null,
+      "summary": {
+        "text": "Concludes by summarizing the Mathpix LaTeX OCR conversion of 252,624 zbMATH Open pages, the 97.5% test accuracy of the three-LLM Majority Voting splitter (and 89.1% overall index accuracy), the public release of code, models, and datasets on GitHub, Zenodo, and Hugging Face, and DFG funding acknowledgments.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "end indexes",
@@ -1466,7 +1553,10 @@
       "labelStart": null,
       "labelEnd": null,
       "words": 1380,
-      "summary": null,
+      "summary": {
+        "text": "Lists the 44 bibliographic references cited in the paper, covering document layout analysis, mathematical OCR, information retrieval, zbMATH digitization, and LLM fine-tuning.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "arxiv preprint",

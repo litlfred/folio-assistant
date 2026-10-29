@@ -74,9 +74,11 @@
   function siteBaseurl() {
     var meta = document.querySelector('meta[name="fa-baseurl"]');
     var v = (meta && meta.getAttribute("content")) || "";
-    if (v) return v.replace(/\/+$/, "");
+    // RELATIVE since bean `g196` (`.`, `../..`): resolved below exactly as
+    // `data-fa-root` is, so callers keep getting an absolute path.
+    if (v && (v.charAt(0) === "/" || /^[a-z][a-z0-9+.-]*:/i.test(v))) return v.replace(/\/+$/, "");
     var data = document.getElementById("fa-navbar-row");
-    var root = data && data.getAttribute("data-fa-root");
+    var root = v || (data && data.getAttribute("data-fa-root"));
     if (root) {
       try {
         var u = new URL(root.replace(/\/*$/, "/"), loadedFrom());

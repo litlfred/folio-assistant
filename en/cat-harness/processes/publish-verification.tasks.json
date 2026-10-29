@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PublishVerification",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification",
  "tasks": {
   "A_Verify": {
    "id": "A_Verify",
    "name": "Run every verifier over the export",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification/node/A_Verify",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification/lane/Lane_Ci",
    "skills": [
     {
      "name": "publish-verification",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

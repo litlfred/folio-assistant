@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "L1 extraction reviewer (person)",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "bindsRole": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

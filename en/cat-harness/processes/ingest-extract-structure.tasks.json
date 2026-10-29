@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_ExtractStructure",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
  "tasks": {
   "Task_ExtractText": {
    "id": "Task_ExtractText",
    "name": "Extract the text layer",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_ExtractText",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -57,7 +60,9 @@
    "id": "Task_Ocr",
    "name": "OCR to ocr/page-*.txt",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Ocr",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -66,7 +71,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -108,7 +113,9 @@
    "id": "Task_Sections",
    "name": "Split into sections/*.md with doc_brief front-matter",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -117,7 +124,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -159,7 +166,9 @@
    "id": "Task_Structure",
    "name": "Write structure.json (TOC, page ranges, metadata)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Structure",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -168,7 +177,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -210,7 +219,9 @@
    "id": "Task_Candidates",
    "name": "Extract claim candidates",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Candidates",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
     {
      "name": "document-intake",
@@ -219,7 +230,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {

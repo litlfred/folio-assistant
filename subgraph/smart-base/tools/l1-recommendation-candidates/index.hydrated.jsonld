@@ -1,0 +1,76 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-recommendation-candidates/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), hint where a reading is uncertain, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph, checked with `kg/src/validate.ts`, with coverage and the proposed (unsigned) exclusions.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run smart-base/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "An ingested `library/<id>/` with page-tagged `sections/*.md` and `structure.json`.",
+            "name": "entry",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "The agent's decisions per candidate location (`l1-recommendation-curation/v1`). Absent: only the work list is written.",
+            "name": "curation",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`recommendation-candidates.json` — every normative sentence, its hints and its decision; cites the run context.",
+            "name": "candidates",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "`l1.json` — L1 3.0 publication, recommendation and remark nodes, every one `inferred`.",
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "`exclusions.proposed.json`, in `l1-coverage`'s shape; none counts until a person signs it.",
+            "name": "exclusions",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "`extraction-warnings.md` — undecided candidates, unsigned exclusions, statements taken from a layout fragment.",
+            "name": "warnings",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "`run-context.json`, cat-harness `folio-run-context/v1`.",
+            "name": "runContext",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "l1-recommendation-candidates",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "http://smart.who.int/base/skill/recommendation-candidates",
+      "title": "L1 guideline → recommendation candidates (L1 3.0)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/l1-recommendation-candidates",
+  "path": "tools/l1-recommendation-candidates/"
+}

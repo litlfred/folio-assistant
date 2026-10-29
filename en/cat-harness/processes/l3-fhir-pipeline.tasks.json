@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_L3Fhir",
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
  "tasks": {
   "Task_AuthorFsh": {
    "id": "Task_AuthorFsh",
    "name": "Author FSH profiles",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_AuthorFsh",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Modeller",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }
@@ -24,7 +27,9 @@
    "id": "Task_Sushi",
    "name": "SUSHI compile → FHIR JSON",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Sushi",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -33,7 +38,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -123,7 +128,9 @@
    "id": "Task_Validate",
    "name": "Validate against profiles",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Validate",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
     {
      "name": "fhir-validation",
@@ -132,7 +139,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -222,7 +229,9 @@
    "id": "Task_QcGates",
    "name": "QC gates",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcGates",
    "lane": "QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Qc",
    "skills": [
     {
      "name": "quality-control",
@@ -231,7 +240,7 @@
    ],
    "role": {
     "name": "qc-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
     "title": "QC reviewer",
     "skills": [
      {
@@ -265,11 +274,6 @@
      {
       "name": "ig-ast-delta",
       "href": "../../../reference/skill-instructions/ig-ast-delta.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",
@@ -312,7 +316,9 @@
    "id": "Task_QcBeans",
    "name": "File QC findings as beans",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcBeans",
    "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -321,7 +327,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -339,7 +345,9 @@
    "id": "Task_IgPublisher",
    "name": "IG Publisher build",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_IgPublisher",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
     {
      "name": "ig-publication",
@@ -348,7 +356,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -438,7 +446,9 @@
    "id": "Task_PublishIg",
    "name": "Publish the IG site",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_PublishIg",
    "lane": "Publication manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr",
    "skills": [
     {
      "name": "content-publish",
@@ -451,7 +461,7 @@
    ],
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {

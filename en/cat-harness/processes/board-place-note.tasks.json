@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_BoardPlaceNote",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
  "tasks": {
   "A_CreateNote": {
    "id": "A_CreateNote",
    "name": "Write the note into the folio — with no coordinate",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/A_CreateNote",
    "lane": "Author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Author",
    "skills": [
     {
      "name": "board-diagram-interchange",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "author",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
     "title": "Author",
     "skills": [
      {
@@ -39,12 +42,16 @@
       "href": "../../../reference/skill-instructions/evidence-appraisal.html"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
       "name": "voice-authoring-guidance",
@@ -57,7 +64,9 @@
    "id": "A_Place",
    "name": "Record x,y for this note on THIS board",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/A_Place",
    "lane": "Layout layer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Layer",
    "skills": [
     {
      "name": "board-diagram-interchange",
@@ -66,9 +75,13 @@
    ],
    "role": {
     "name": "corpus",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"
@@ -84,7 +97,9 @@
    "id": "A_SweepOrphans",
    "name": "Sweep positions whose note is gone",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/A_SweepOrphans",
    "lane": "Layout layer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Layer",
    "skills": [
     {
      "name": "board-diagram-interchange",
@@ -93,9 +108,13 @@
    ],
    "role": {
     "name": "corpus",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"

@@ -52,7 +52,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title, authors and abstract of \"Evaluating Large Language Models for Public Health Classification and Extraction Tasks\" by Joshua Harris and colleagues at the UK Health Security Agency. Six external and seven newly annotated datasets are combined into 16 tasks on health burden, epidemiological risk factors and public health interventions, and eleven open-weight LLMs (7-123 billion parameters) are evaluated with zero-shot prompting. Llama-3.3-70B-Instruct is best on 8 of 16 tasks by micro-F1; every open-weight model scores below 60% on some tasks, such as Contact Classification, and above 80% on others, such as GI Illness Classification. On 11 tasks, three GPT-4 and GPT-4o models give results comparable to Llama-3.3-70B. Figure 1 shows the three evaluation areas and each model family's scores.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -71,7 +79,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction. LLM performance varies widely by model and task, so applying LLMs in public health first needs domain-specific evaluations representative of the tasks, text and knowledge experts meet, and the aim is to learn what drives the variation: the model, the task, the text type or the implementation. This initial work covers automated evaluation (excluding LLM-as-a-judge) of natural language understanding tasks such as classification, using in-context learning only. The evaluations are meant to support continual assessment of new models, identify areas where LLMs could be applied, and give a baseline for future fine-tuning; long-form generation tasks judged by experts, and issues such as bias, are left for further work.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -90,7 +106,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Methods overview. Evaluation methodology depends on the level of generality, the type of task and the outcome of interest (reviewed in Section 6), and the paper aims for a broad, automated assessment of classification and extraction tasks. Its components are seven new datasets annotated with public health specialists from internal, synthetic and external text; six existing datasets from prior work; 16 evaluation tasks across three public health sub-domains (Figure 1); and eleven open-weight models from 7 to 123 billion parameters, with three GPT-4 series models (turbo, 4o and 4o-mini) on a subset of 11 tasks for comparison with leading private models.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -126,7 +150,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The opening of the task and dataset section: because public health spans many fields beyond healthcare, the 16 classification and extraction tasks cover a broad range within three sub-domains, introduced next.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -145,7 +177,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Burden tasks, with Figure 2 (tasks by area) and Table 1 (all 16 tasks with dataset, type, test-set size, text type, average length, example labels and whether annotations are public). Text sources range from academic literature to social media, news and questionnaires. The burden tasks are NCBI Disease Extraction, scored on de-duplicated MeSH and OMIM codes to ease exact-match problems; Gastrointestinal Illness Classification on about 3,000 Yelp restaurant reviews pre-filtered by GI keywords, which makes it adversarial since every \"no\" review contains such a keyword; GI Illness Symptom Extraction from the reviews annotated as possible illness; ICD-10 Description Classification of whether a description refers to an infection or a primarily infectious disease, on a balanced sample annotated by two analysts; and News Headline Classification of GDELT headlines about avian influenza, five at a time with JSON output. An MMLU Virology task was removed after later work questioned that subset's error rate.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -164,7 +204,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Risk-factor tasks. Contact Type Classification uses a new synthetic dataset generated with GPT-4 in the style of mpox contact-tracing questionnaires and manually annotated; it is hard because the model must apply a detailed protocol given in the prompt, and because the text often discusses sexual activity, which many training datasets avoid. Country Disambiguation maps anonymised place-of-birth answers from GP registration forms, which automated matching failed on, to a country or \"unknown\", standardised with the country-converter package. Food Extraction pulls foods from the GI-annotated Yelp reviews and maps them through a FoodEx 2 lookup to 27 labels relevant to foodborne illness. MMLU Medical Genetics and MMLU Nutrition test basic knowledge by multiple choice.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -183,7 +231,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The opening of the interventions section. Interventions are commonly split into pharmaceutical ones, such as vaccination, and non-pharmaceutical ones that reduce behavioural risk factors, such as nutrition advice or hand hygiene. Since guidance is a primary way interventions are communicated, the authors introduce four guidance-related evaluations of increasing difficulty, plus tasks on pharmaceutical interventions and biomedical reasoning. The block ends as the first, Guidance Topic Classification, begins.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -202,7 +258,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The intervention tasks, continued (the extraction places them under a \"Summary\" heading), and the task summary. Guidance Topic Classification assigns UKHSA gov.uk summary pages to one of eight health topics by authoring team. Guidance Recommendation Classification asks yes or no whether a chunk of UKHSA guidance contains a clear actionable recommendation, on 489 annotated chunks. Health Advice Classification labels PubMed sentences as no, weak or strong advice (HealthAdvice, 10,845 sentences), and Health Causal Claims Classification labels PubMed conclusion sentences as no relation, correlational, conditional causal or direct causal. BioDex Drugs Extraction takes the drugs in adverse drug event reports from 1,558 articles chunked to at most 6,000 characters, and PubMedQA answers an abstract's title question yes, no or maybe in the reasoning-required setting. The summary notes the balance of general and public-health-specific tasks and of external and internal datasets.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -221,7 +285,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line opening of the evaluation methodology: the aim is a consistent assessment across tasks, not the highest possible score for each model and task.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -259,7 +331,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The end of a footnoted remark and Table 2 (the extraction places them under a \"Sampling\" heading). Zero-shot evaluations should give a reasonable lower bound on each model's performance, with possibly large gains from more advanced pipelines. Table 2 lists the evaluated models with base model, precision, size, context length, author and host: Flan-T5-xxl, Mistral-7B-Instruct-v0.2, Mistral-Large-Instruct (123B, INT4-AWQ), Stable-Beluga-2 (Llama-2-70B), Llama-3 8B and 70B, Llama-3.1 8B and 70B and Llama-3.3-70B in FP16 and INT4-AWQ, Gemma-2-27b-it and Command-R, all on an internal API, plus gpt-4-turbo, gpt-4o-mini and gpt-4o through the OpenAI API.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -278,7 +358,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Large language models. The table caption explains that open-weight models are hosted internally for comparability and data protection, in FP16 where feasible, with GPT-4 models on a subset of tasks. The eleven open-weight models span 7 to 123 billion parameters across the Llama-2 and 3, Mistral, Command-R, Gemma and Flan-T5 families, and the effect of INT-4 quantization is studied on the Llama-3 family. Models run on an internal API on UKHSA high-performance computing with HuggingFace models, transformers and vLLM, which lets restricted datasets stay on UKHSA systems and keeps quantisation, prompt templates, versions and generation settings under control. GPT-4 Turbo and GPT-4o are accessed through the OpenAI API, but not on all tasks, mainly because of data restrictions; the block ends mid-sentence.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -297,7 +385,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Prompting and sampling (the extraction places them under a \"Results\" heading). Zero-shot results are reported for every task, with few-shot prompting also studied on some harder tasks. The model authors' prompt templates are used where available, which varies prompt content somewhat, for example in system prompts, while keeping the informational content as consistent as possible. Greedy decoding is used throughout for reproducibility.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -316,7 +412,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Dataset splits: a 20-80 validation-test split for every task, with only the validation set used for prompt development so the prompts are not overfitted to the test set used to report performance.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -335,7 +439,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Evaluation metrics, the start of the results, and Table 3. Micro- and macro-F1 are reported, micro-F1 being the headline (for single-label classification it equals accuracy). Extraction uses exact string matching, with outputs outside the label set counted as incorrect; classification uses exact matching after light clean-up, with more advanced standardisation for Country Disambiguation, NCBI Disease Extraction and Food Extraction. Open-weight models are discussed first since they ran on every task. Table 3 gives zero-shot micro-F1 for the eleven open-weight models on the 16 tasks: Llama-3.3-70B has the best mean task rank (2.50), followed by Llama-3.1-70B (2.94) and Llama-3-70B (3.12), and Mistral-Large was run in INT-4 AWQ.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -354,7 +466,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Model results. Llama-3.3-70B-Instruct is the highest or equal highest open-weight model on 8 of the 16 tasks. Flan-T5-xxl, Llama-3-8B, Llama-3.1-8B and Mistral-7B were each worst on at least one task, and the authors note that smaller models seem more fragile to prompt wording, so a low score may reflect misreading the prompt rather than inability. Scaling from Llama-3-8B to Llama-3-70B adds more than 10 percentage points on MMLU Genetics, MMLU Nutrition, Health Advice and Causal Relations, and moving from a Llama-2-70B to a Llama-3-70B base also helps; each Llama 3 70B version has a better mean task rank than the last. Mistral-Large's relatively weak results may stem from its INT-4 quantization.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -390,7 +510,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Task results. Performance varies greatly across tasks: every model scores at least 85% micro-F1 on ICD-10 Description Classification, and above 80% on GI Illness Classification, Country Disambiguation and Food Extraction, but no model exceeds 60% on BioDex Drugs Extraction or Contact Classification with zero-shot prompts.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -409,7 +537,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Few-shot prompting on the hardest tasks (Figures 3 and 4). A 10-shot prompt for Contact Classification, showing how to apply the protocol to difficult edge cases, raises micro-F1 by more than 10 percentage points for every model except Flan-T5-xxl and Llama-3.1-8B. A 7-shot prompt for Health Causal Claims Classification (shown in Figure 7) gives generally similar gains, again except Flan-T5-xxl, which was strong zero-shot, consistent with Chen et al.'s results for GPT-4 and GPT-3.5. Relative rankings shift too: Llama-3-8B is lowest zero-shot but beats Flan-T5-xxl and Mistral-7B few-shot. The authors suggest the gains come from these tasks needing nuanced distinctions between user-defined labels, which matters in public health, where definitions and protocols change over time.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -445,7 +581,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "GPT-4 and GPT-4o comparison (Table 4). GPT-4-Turbo, GPT-4o and GPT-4o-mini were evaluated on 11 of the 16 tasks; they perform well throughout and are the top models on 5 of the 11, outperforming open-weight models notably on MMLU Genetics (0.98 for GPT-4o against 0.86 for Llama-3.3-70B). Across all tasks, though, the best GPT-4 models perform comparably to Llama-3.3-70B-Instruct, which leads on NCBI Disease Extraction, GI Classification and PubMedQA.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -464,7 +608,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Quantization impact (Table 5). Quantization stores parameters at lower precision to save memory but may degrade behaviour. INT-4 Activation-aware Weight Quantization (AWQ), which cuts parameter memory by about 70%, was tested on Llama 3.1 8B, Llama 3.1 70B and Llama 3.3 70B. The impact was limited: the average micro-F1 change against FP16 was −1.3 percentage points for Llama 3.1 8B, the largest degradation, and −0.2 for both 70B models, with the biggest single drop −8.8 points for Llama 3.1 8B on Causal Relations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -483,7 +635,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Discussion. LLMs of all sizes do well on the simpler classification tasks across all three areas and text types, which the authors see as a promising sign that they may already help process some public health text, for example structuring free text into new datasets, handling volumes too large for manual review such as during pandemics, or assuring the quality of manual annotation as a low-risk use. Tasks needing very specific knowledge (Contact Type Classification) or long-document extraction (BioDex) remain poor zero-shot. Further points: few-shot and possibly chain-of-thought prompting help on hard tasks; long extraction suffers from wrong or too many spans; public benchmarks often lack well-defined annotation protocols and contain some anomalous labels; weak scores often come from output-format failures, such as Flan-T5-xxl's invalid JSON on News Headlines, so the evaluations likely underestimate bespoke pipelines; Llama-3.3-70B is comparable to GPT-4 models; INT-4 quantization costs little; fine-tuned models are often competitive; and detailed protocols developed with epidemiologists helped both annotators and prompts.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -502,7 +662,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion, acknowledgments, ethical considerations and references. Evaluating LLMs on public-health-specific tasks and text is a prerequisite for real use, and the initial results suggest they may already help experts extract information from varied free text, supporting surveillance, interventions and research. Performance varies between models and tasks, so each application needs validation, context-specific risk assessment and tests of known limitations such as output fragility and bias; future work covers long-form generation tasks, fine-tuned models and new tasks and models. Ethically, only public, synthetic or anonymised data and lower-risk tasks were used, and the results are said not to be sufficient to endorse deploying software without in-context assessment. The references span LLM surveys and models, medical and domain benchmarks, the evaluation datasets, and quantization and serving tools.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -538,7 +706,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: literature on domain-specific evaluations. LLM evaluation ranges from general capability assessments to task-specific results (Figure 5, which marks where this paper sits), and the authors find limited literature evaluating open-weight LLMs in a standardised way across public-health-specific tasks and data.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -557,7 +733,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A one-line opening, cut off mid-sentence: domain-specific LLM evaluations can take several forms depending on several factors.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -576,7 +760,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Level of generality and types of task. Domain evaluations range from general ones, often built from human exams such as the USMLE or the Bar Exam or as benchmarks like LawBench, MultiMedQA and FinBen, to task-specific ones with newly annotated data, such as neuro-ophthalmic diagnosis or statutory reasoning; general ones suit broad capability comparison and model selection, and specific ones are needed before real deployment or use on private data. Classification and extraction (NLU) tasks can be scored like traditional data science with accuracy, precision, recall and F1, while free-text generation (NLG) is hard to score automatically, for example with ROUGE, so it often relies on human experts, which is costly, subjective and hard to scale; LLM-as-a-judge is being explored, but it is unclear which domains LLMs are qualified to judge, a particular concern for public health.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -595,7 +787,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Outcome of interest. For NLU tasks outcomes range from test-set performance, the focus of this paper, to bias and robustness. Automated evaluations mostly use F1 scores, sometimes with class-level analysis. Bias and fairness matter greatly for public health; beyond general LLM bias benchmarks, task-level bias checks compare predictions or errors across individual or group characteristics, and in the UK must consider protected characteristics under the Equality Act and health equity frameworks such as CORE20PLUS. Such evaluations are best done with the actual text, task and deployment process to be used in production.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -614,7 +814,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Summary of the approach: to cover the most models and areas, the paper focuses on automated, domain-specific evaluations across relevant NLU tasks (Figure 6).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -633,7 +841,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A short opening of the review of existing evaluations: the literature has several domain-specific NLU evaluations relevant to public health, some of which this paper adopts, with Figure 6 summarising the evaluations as automated classification and extraction tasks.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -669,7 +885,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Prior work on disease and health-issue classification and extraction. Zhang et al. found zero-shot GPT-4 reached 0.75 to 0.96 F1 classifying five diseases from health records, beating GPT-3.5 on four, with few-shot chain-of-thought helping further. Guo et al. found GPT-4 beat GPT-3.5 on six social-media health classification tasks with F1 between 0.35 and 0.8. Rare diseases are of particular interest because novel pathogens are poorly covered in pre-training: on RareBench GPT-4 led and the 7B open models trailed, and Shyr et al. found ChatGPT reached 0.41 to 0.47 F1 on the RareDis corpus with relaxed matching, from 0.15 for symptoms to 0.76 for rare diseases, with exact matching scoring much worse.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -688,7 +912,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Prior work on drug and intervention extraction. On BioDEX, few-shot GPT-3.5 and GPT-4 reached about 0.5 F1 on four core adverse drug event attributes, well below expert level, with long papers truncated to fit the context. Agrawal et al. found GPT-3 with a resolver generally exceeded 0.6 F1 on extracting interventions and disambiguating acronyms in clinical notes, while noting exact-match difficulties. Bisercic et al. reported over 90% accuracy on 4 of 5 tasks generating structured JSON from medical reports with one-shot chain-of-thought prompting and output validation. Chen et al. evaluated GPT-4 and GPT-3.5 on the HealthAdvice and CausalRelation datasets, with GPT-4 slightly ahead at 0.65-0.77 macro-F1 using few-shot chain-of-thought.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -707,7 +939,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Relevant subsets of general benchmarks. MMLU has subsets on medical and scientific knowledge, including virology, genetics and nutrition. PubMedQA, now part of MultiMedQA, has a labelled subset of 1,000 articles whose title questions are answered yes, no or maybe from the abstract, useful for testing inference of conclusions from evidence. MMMU has a public health subset, but it is multimodal and outside this paper's scope.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -726,7 +966,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: annotations (Tables 6 and 7). Seven datasets were annotated with public health specialists, with full methods left for later papers. For GI Illness Classification a protocol was applied independently by at least two reviewers to 200 reviews with over 90% agreement and the rest assigned to single reviewers; GI symptom and food extraction were done by one reviewer with a second checking uncertain cases; ICD-10 labels draw on disease experts, the literature and existing labels; news headlines had a single reviewer with spot checks. Contact Type data was labelled by GPT-4 at generation and by two independent reviewers with over 90% agreement; Country Disambiguation had single reviewers with spot checks and some inherently ambiguous labels; Guidance Topic labels follow the authoring UKHSA team; and Guidance Recommendation used two reviewers on 100 examples with over 90% agreement before single-reviewer labelling.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {
@@ -762,7 +1010,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix: example prompts. Figure 7 shows the 7-shot prompt for Health Causal Claims Classification in the Stable-Beluga-2 template, with examples from Yu et al., and Figure 8 the zero-shot prompt for NCBI Disease Extraction in the same template.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
       }
     },
     {

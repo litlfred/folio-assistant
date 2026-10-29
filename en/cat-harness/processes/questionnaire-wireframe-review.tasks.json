@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_QuestionnaireWireframeReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
  "tasks": {
   "Task_Read": {
    "id": "Task_Read",
    "name": "Read the built Questionnaire JSON",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Read",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
    "skills": [
     {
      "name": "fhir-questionnaire-wireframe",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }
@@ -24,7 +27,9 @@
    "id": "Task_Render",
    "name": "Render the wireframe and the LHC-Forms view",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Render",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
    "skills": [
     {
      "name": "fhir-questionnaire-wireframe",
@@ -33,7 +38,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }
@@ -42,7 +47,9 @@
    "id": "Task_Screens",
    "name": "Screenshots, web and mobile",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Screens",
    "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -57,7 +64,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -147,7 +154,9 @@
    "id": "Task_Fidelity",
    "name": "Check field for field",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
    "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
    "skills": [
     {
      "name": "fhir-questionnaire-wireframe",
@@ -156,7 +165,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -246,7 +255,9 @@
    "id": "Call_Review",
    "name": "Design review",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Call_Review",
    "lane": "Business analyst — design review",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -261,11 +272,12 @@
    ],
    "calls": {
     "name": "Wireframe design review",
-    "href": "wireframe-design-review.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
+    "diagram": "wireframe-design-review.html"
    },
    "role": {
     "name": "business-analyst",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
     "title": "Business analyst",
     "skills": [
      {
@@ -335,7 +347,9 @@
    "id": "Task_Stage",
    "name": "Stage the renderings",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Stage",
    "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
    "skills": [
     {
      "name": "feature-staging",
@@ -344,7 +358,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -434,7 +448,9 @@
    "id": "Task_AskReview",
    "name": "Ask for review with deep links",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
    "skills": [
     {
      "name": "staging-review",
@@ -443,7 +459,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }
@@ -452,7 +468,9 @@
    "id": "Task_ReviewStaged",
    "name": "Review the staged form and wireframe",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
    "lane": "Clinical reviewer — the staged form",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
    "skills": [
     {
      "name": "fhir-questionnaire-wireframe",
@@ -461,7 +479,7 @@
    ],
    "role": {
     "name": "clinical-sme",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-clinical-sme",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
     "title": "Clinical / scientific SME",
     "skills": [
      {
@@ -482,11 +500,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html",
-      "via": "reviewer"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
       "via": "reviewer"
      },
      {
@@ -526,7 +539,9 @@
    "id": "Task_Triage",
    "name": "Triage the change request",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Triage",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
    "skills": [
     {
      "name": "content-feedback",
@@ -535,7 +550,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }
@@ -544,7 +559,9 @@
    "id": "Task_Apply",
    "name": "Apply it, bring the other side in line",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Apply",
    "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -553,7 +570,7 @@
    ],
    "role": {
     "name": "fhir-modeller",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
     "title": "FHIR modeller",
     "skills": []
    }

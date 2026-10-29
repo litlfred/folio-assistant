@@ -1,0 +1,43 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Business analyst",
+      "title": "Business analyst",
+      "notation": "business-analyst",
+      "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-impact-analysis",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-template",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/data-modelling",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review"
+      ]
+    }
+  ]
+}

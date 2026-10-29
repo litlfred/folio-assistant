@@ -42,6 +42,11 @@ Subgraph the declaration does not name is never exported by accident.
 
 ## Four properties
 
+Each node's `@id` is a path under the Harness's address, not a `#fragment` of
+the file: [`bootstrap-graph-publication`](bootstrap-graph-publication.md)
+§"Each subject's own address".
+
+
 | property | why |
 |---|---|
 | **The same input gives the same file.** Two builds of one tree are byte-identical. | A check that fails on an unchanged tree gets switched off. |

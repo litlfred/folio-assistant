@@ -1,0 +1,42 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/technical-officer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/technical-officer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "technical-officer",
+      "actorKind": "person",
+      "title": "Technical Officer",
+      "description": "Programme area coordinator and first-pass reviewer who bridges the development team and subject matter experts.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.TechnicalOfficer",
+        "lifecycle": [
+          "review",
+          "feedback"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator"
+      ],
+      "permissionName": [
+        "first-pass-review",
+        "sme-coordination"
+      ]
+    }
+  ]
+}

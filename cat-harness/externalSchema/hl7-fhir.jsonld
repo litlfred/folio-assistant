@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/hl7-fhir.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/hl7-fhir",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "hl7-fhir",
+      "title": "HL7 FHIR",
+      "authority": "HL7",
+      "specVersion": "unpinned",
+      "specUse": "reads",
+      "specUrl": "https://hl7.org/fhir/",
+      "namespace": [
+        "http://hl7.org/fhir/"
+      ]
+    }
+  ]
+}

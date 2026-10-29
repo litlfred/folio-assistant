@@ -93,6 +93,13 @@ for the case the README already states, and it must carry the reason.
 can be the same repository or two; a flat list loses which is which, and the
 whole point of determining them is to know where the declaration lands.
 
+**Never infer `written-to` from push access.** A remote repository is assumed
+read-only (`read-from`) until the Requestor explicitly authorizes writing to
+that repository. When a remote Knowledge Graph is involved, ask which mode the
+Requestor wants — rendering from the remote Knowledge Graph here (with
+materialize-or-reference asked as its own question) or instantiating a harness
+on the remote repository itself (`written-to`).
+
 **A refusal is an outcome.** If the participant declines to settle it, that is
 `outcome: "unsettled"` with what was asked and what is still open — not a
 guess, and not an error. The process has an end for it.

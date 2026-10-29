@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGPublicationSection.schema.json",
+  "title": "Knowledge graph L1: Publication section",
+  "description": "A chapter, annex or numbered section, at any depth. Class IRI: http://smart.who.int/kg/publication-section.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGPublicationSection",
+      "description": "Resource type identifier for KGPublicationSection logical model"
+    },
+    "heading": {
+      "type": "string",
+      "description": "The section heading, verbatim."
+    },
+    "number": {
+      "type": "string",
+      "description": "The section number as printed (\"1.2\", \"Annex 3\")."
+    },
+    "pageRange": {
+      "type": "string",
+      "description": "Pages the section occupies, as printed or physical (\"12-18\")."
+    },
+    "ordinal": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Position among its siblings."
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGPublicationSection"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        }
+      }
+    }
+  ]
+}

@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_MergeTrain",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
  "tasks": {
   "Task_ReadLive": {
    "id": "Task_ReadLive",
    "name": "Read each queued PR's live facts",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_ReadLive",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-queue",
@@ -21,7 +24,7 @@
    ],
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -51,7 +54,9 @@
    "id": "Task_TakeNext",
    "name": "Take the next PR in queue order",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_TakeNext",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-queue",
@@ -66,7 +71,7 @@
    ],
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -96,7 +101,9 @@
    "id": "Task_Admit",
    "name": "Admit it to the train, record the train id",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Admit",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-queue",
@@ -111,7 +118,7 @@
    ],
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -141,7 +148,9 @@
    "id": "Call_HandBack",
    "name": "Hand it back",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_HandBack",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-conflict-patterns",
@@ -150,11 +159,12 @@
    ],
    "calls": {
     "name": "A refused merge-train member",
-    "href": "merge-refusal.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
+    "diagram": "merge-refusal.html"
    },
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -184,7 +194,9 @@
    "id": "Task_SiblingFix",
    "name": "Fix the PR, then re-signal ready",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_SiblingFix",
    "lane": "Sibling session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Sibling",
    "skills": [
     {
      "name": "bean-coordination",
@@ -193,7 +205,7 @@
    ],
    "role": {
     "name": "sibling-session",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-sibling-session",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
     "title": "Sibling session",
     "skills": [
      {
@@ -207,7 +219,9 @@
    "id": "Call_ChecksPresent",
    "name": "Find members with no CI on their head",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_ChecksPresent",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "ci-health",
@@ -216,11 +230,12 @@
    ],
    "calls": {
     "name": "Which open pull requests have no CI run on their head?",
-    "href": "pr-checks-present.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent",
+    "diagram": "pr-checks-present.html"
    },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -310,7 +325,9 @@
    "id": "Call_MergeMembers",
    "name": "Merge each member onto the base",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_MergeMembers",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "prepare-merge",
@@ -319,11 +336,12 @@
    ],
    "calls": {
     "name": "Merge the base branch in",
-    "href": "merge-base.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
+    "diagram": "merge-base.html"
    },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -413,7 +431,9 @@
    "id": "Call_Gates",
    "name": "Run the gate set on the train",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_Gates",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "platform-gates",
@@ -422,11 +442,12 @@
    ],
    "calls": {
     "name": "The gates a change must pass before it can merge",
-    "href": "code-quality-gates.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates",
+    "diagram": "code-quality-gates.html"
    },
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -516,7 +537,9 @@
    "id": "Task_RetryFlaky",
    "name": "Retry a declared-flaky gate once",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_RetryFlaky",
    "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
     {
      "name": "ci-health",
@@ -525,7 +548,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -615,7 +638,9 @@
    "id": "Task_Attribute",
    "name": "Attribute the failure: each member's own CI first",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Attribute",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-queue",
@@ -630,7 +655,7 @@
    ],
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -660,7 +685,9 @@
    "id": "Task_Bisect",
    "name": "Bisect the train",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Bisect",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-queue",
@@ -675,7 +702,7 @@
    ],
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -705,7 +732,9 @@
    "id": "Task_Eject",
    "name": "Eject the culprit, record why",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Eject",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-queue",
@@ -720,7 +749,7 @@
    ],
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -750,7 +779,9 @@
    "id": "Call_EjectHandBack",
    "name": "Hand the culprit back",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_EjectHandBack",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-conflict-patterns",
@@ -759,11 +790,12 @@
    ],
    "calls": {
     "name": "A refused merge-train member",
-    "href": "merge-refusal.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
+    "diagram": "merge-refusal.html"
    },
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -793,7 +825,9 @@
    "id": "Call_MergeToMain",
    "name": "Land each member",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_MergeToMain",
    "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
     {
      "name": "merge-to-main",
@@ -802,11 +836,12 @@
    ],
    "calls": {
     "name": "Merge to main",
-    "href": "merge-to-main.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+    "diagram": "merge-to-main.html"
    },
    "role": {
     "name": "merge-steward",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
     "title": "Merge steward",
     "skills": [
      {
@@ -836,7 +871,9 @@
    "id": "Task_Override",
    "name": "Place it by hand, with a reason",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Override",
    "lane": "Owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Owner",
    "skills": [
     {
      "name": "interaction-modality",
@@ -845,7 +882,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -861,12 +898,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",

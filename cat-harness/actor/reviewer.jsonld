@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "reviewer",
+      "actorKind": "person",
+      "title": "Reviewer",
+      "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider"
+      ],
+      "permissionName": [
+        "review-comments"
+      ]
+    }
+  ]
+}

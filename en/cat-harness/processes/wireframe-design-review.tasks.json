@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_WireframeDesignReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
  "tasks": {
   "D_Intent": {
    "id": "D_Intent",
    "name": "Write the design intent",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/D_Intent",
    "lane": "Designer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Designer",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -21,7 +24,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -31,6 +34,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -93,6 +100,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -101,8 +112,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -123,6 +142,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -183,6 +206,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -219,7 +250,9 @@
    "id": "D_Candidates",
    "name": "Produce >= 2 candidates, web + mobile",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/D_Candidates",
    "lane": "Designer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Designer",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -234,7 +267,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -244,6 +277,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -306,6 +343,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -314,8 +355,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -336,6 +385,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -396,6 +449,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -432,7 +493,9 @@
    "id": "D_Check",
    "name": "Mechanical checks, both viewports",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/D_Check",
    "lane": "Designer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Designer",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -447,7 +510,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -457,6 +520,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -519,6 +586,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -527,8 +598,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -549,6 +628,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -611,6 +694,14 @@
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
      },
      {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
+     },
+     {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
@@ -645,7 +736,9 @@
    "id": "R_Review",
    "name": "Blind review per criterion",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/R_Review",
    "lane": "Feedback providers",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Reviewers",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -660,7 +753,7 @@
    ],
    "role": {
     "name": "feedback-provider",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-feedback-provider",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
     "title": "Feedback provider",
     "skills": [
      {
@@ -682,15 +775,18 @@
    "id": "Call_Adjudicate",
    "name": "Adjudication",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/Call_Adjudicate",
    "lane": "Adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Adjudicator",
    "skills": [],
    "calls": {
     "name": "Criterion adjudication",
-    "href": "criterion-adjudication.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+    "diagram": "criterion-adjudication.html"
    },
    "role": {
     "name": "adjudicator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
     "title": "Adjudicator",
     "skills": [
      {
@@ -710,11 +806,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",
@@ -757,15 +848,18 @@
    "id": "Call_Choose",
    "name": "Choose a candidate",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/Call_Choose",
    "lane": "Adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Adjudicator",
    "skills": [],
    "calls": {
     "name": "Options analysis",
-    "href": "options-analysis.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+    "diagram": "options-analysis.html"
    },
    "role": {
     "name": "adjudicator",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
     "title": "Adjudicator",
     "skills": [
      {
@@ -785,11 +879,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html",
-      "via": "reviewer"
      },
      {
       "name": "narrative-asserts-code",

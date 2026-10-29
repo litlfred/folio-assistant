@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IgAstCache",
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
  "tasks": {
   "Task_Restore": {
    "id": "Task_Restore",
    "name": "Restore the AST from its cache branch and judge it",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Restore",
    "lane": "Site build (agent, stage-local)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Site",
    "skills": [
     {
      "name": "ig-ast-delta",
@@ -19,7 +22,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -109,7 +112,9 @@
    "id": "Task_BuildSite",
    "name": "Build and publish the site from the AST",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_BuildSite",
    "lane": "Site build (agent, stage-local)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Site",
    "skills": [
     {
      "name": "ig-render-jekyll",
@@ -122,7 +127,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {
@@ -212,7 +217,9 @@
    "id": "Task_Dispatch",
    "name": "Dispatch the IG's ig-ast-refresh.yml",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Dispatch",
    "lane": "Publication manager (owner, or the agent the owner delegates to)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_PubMgr",
    "skills": [
     {
      "name": "ig-build-pipeline",
@@ -221,7 +228,7 @@
    ],
    "role": {
     "name": "publication-manager",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
     "title": "Publication manager",
     "skills": [
      {
@@ -267,7 +274,9 @@
    "id": "Task_Export",
    "name": "Build the IG with the Publisher AST exporter",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Export",
    "lane": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Runner",
    "skills": [
     {
      "name": "ig-publisher-fork",
@@ -276,7 +285,7 @@
    ],
    "role": {
     "name": "ig-publisher-service",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
     "title": "IG publisher + validator",
     "skills": [
      {
@@ -290,7 +299,9 @@
    "id": "Task_Seed",
    "name": "Seed the cache branch (ig-cache seed --push)",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Seed",
    "lane": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Runner",
    "skills": [
     {
      "name": "compiled-artefact-cache",
@@ -299,7 +310,7 @@
    ],
    "role": {
     "name": "ig-publisher-service",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
     "title": "IG publisher + validator",
     "skills": [
      {

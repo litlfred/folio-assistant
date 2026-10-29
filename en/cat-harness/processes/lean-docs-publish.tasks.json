@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_LeanDocsPublish",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
  "tasks": {
   "Task_Build": {
    "id": "Task_Build",
    "name": "Build the doc-gen4 render over the warm cache",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Build",
    "lane": "Lean toolchain",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
    "skills": [
     {
      "name": "lean-html-docs",
@@ -15,12 +18,20 @@
    ],
    "role": {
     "name": "lean-toolchain",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-lean-toolchain",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
     "title": "Lean toolchain",
     "skills": [
      {
+      "name": "lean-formalization",
+      "href": "../../../reference/skill-instructions/lean-formalization.html"
+     },
+     {
       "name": "lean-toolchain-contract",
       "href": "../../../reference/skill-instructions/lean-toolchain-contract.html"
+     },
+     {
+      "name": "proof-verification",
+      "href": "../../../reference/skill-instructions/proof-verification.html"
      }
     ]
    }
@@ -29,7 +40,9 @@
    "id": "Task_Publish",
    "name": "Stage the render under the site and rail every page",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
    "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
    "skills": [
     {
      "name": "lean-html-docs",
@@ -38,7 +51,7 @@
    ],
    "role": {
     "name": "build-pipeline",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
     "title": "Build pipeline",
     "skills": [
      {

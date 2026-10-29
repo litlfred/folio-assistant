@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-toolchain-setup/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-toolchain-setup.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+      "install": {
+        "cli": "scripts/setup-lean-toolchain.sh"
+      },
+      "invoke": {
+        "shell": "bun run cat lean:setup-toolchain"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "description": "The linked toolchain name, and the per-repo override that selects it.",
+            "name": "toolchain",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "lean-toolchain-setup",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bash",
+          "curl",
+          "elan"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-environment-setup",
+      "title": "Lean toolchain install"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/lean-toolchain-setup",
+  "path": "tools/lean-toolchain-setup/"
+}

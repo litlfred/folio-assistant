@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_MaterializeRemote",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote",
  "tasks": {
   "Task_Purpose": {
    "id": "Task_Purpose",
    "name": "Declare the purpose: working or archival",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Purpose",
    "lane": "Contributor (human or agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_0",
    "skills": [
     {
      "name": "materialize-remote",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -31,12 +34,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -61,7 +72,9 @@
    "id": "Task_Enumerate",
    "name": "ENUMERATE + SUBSET against the source descriptor",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Enumerate",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -70,7 +83,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -112,7 +125,9 @@
    "id": "Task_Size",
    "name": "SIZE what fraction, and what the whole would cost",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Size",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -121,7 +136,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -163,7 +178,9 @@
    "id": "Task_Restrictions",
    "name": "RESTRICTIONS unknown is an answer, not a green light",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Restrictions",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -172,7 +189,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -214,7 +231,9 @@
    "id": "Task_Copyright",
    "name": "COPYRIGHT per bitstream, and for the derived work",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Copyright",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -223,7 +242,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -265,7 +284,9 @@
    "id": "Task_Retention",
    "name": "RETENTION what expires this copy",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Retention",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -274,7 +295,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -316,7 +337,9 @@
    "id": "Task_SourceLoss",
    "name": "SOURCE LOSS what survives if the origin goes",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_SourceLoss",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -325,7 +348,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -367,7 +390,9 @@
    "id": "Task_Fetch",
    "name": "Fetch, and record fixity",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch",
    "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
     {
      "name": "materialize-remote",
@@ -376,7 +401,7 @@
    ],
    "role": {
     "name": "ingestion-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
     "title": "Ingestion engine",
     "skills": [
      {
@@ -418,7 +443,9 @@
    "id": "Task_Declare",
    "name": "Declare the node `materialized`",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Declare",
    "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_2",
    "skills": [
     {
      "name": "materialize-remote",
@@ -427,9 +454,13 @@
    ],
    "role": {
     "name": "corpus",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"
@@ -445,7 +476,9 @@
    "id": "Task_StayRef",
    "name": "Leave it `referenced`, record why",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_StayRef",
    "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_2",
    "skills": [
     {
      "name": "materialize-remote",
@@ -454,9 +487,13 @@
    ],
    "role": {
     "name": "corpus",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
     "title": "Corpus",
     "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
      {
       "name": "kg-subscription",
       "href": "../../../reference/skill-instructions/kg-subscription.html"

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "kg-viewer",
+      "title": "Rendering the knowledge graph",
+      "description": "Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing. Host-agnostic; the publishing is a separate Tool.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
+      "instructionLines": 271,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
+    }
+  ]
+}

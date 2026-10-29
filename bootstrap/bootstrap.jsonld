@@ -1,7 +1,7 @@
 {
   "@context": {
-    "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
-    "processes": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
+    "processes": "https://litlfred.github.io/bootstrap/v0/processes/ns#",
     "bpmn": "http://www.omg.org/spec/BPMN/20100524/MODEL#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "dcterms": "http://purl.org/dc/terms/",
@@ -85,9 +85,9 @@
   "wasAttributedTo": "https://github.com/litlfred/bootstrap-tools",
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
-  "versionInfo": "0.1.0",
-  "generatedAtTime": "2026-10-23T23:13:30.180Z",
-  "wasDerivedFrom": "git:b08c961e48d303cf8ca8185be4206f93f85f086b",
+  "versionInfo": "0.1.1",
+  "generatedAtTime": "2026-10-29T10:25:50.469Z",
+  "wasDerivedFrom": "git:b4cd6f964aef5d186a865707e9a1b476663f620c",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions",
@@ -1366,7 +1366,7 @@
       "@type": "bootstrap:Skill",
       "label": "bootstrap-graph-publication",
       "title": "Publishing bootstrap's Knowledge Graph",
-      "description": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository.",
+      "description": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository. Also what each subject in it is named: a path under the Harness's address, never a `#fragment` of the file.",
       "source": "skills/bootstrap-graph-publication.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
     },

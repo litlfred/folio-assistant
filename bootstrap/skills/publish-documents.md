@@ -27,8 +27,8 @@ Read from the files, never from a list:
   `iriBase` is a JSON Schema published at that `$id`;
 - every JSON-LD file whose top-level `@id` lies under `iriBase` is published
   at that `@id`. For bootstrap that is the vocabulary (`ns.jsonld`, at
-  `<iriBase><version>/ns`) and the diagram vocabulary (`processes/ns.jsonld`,
-  at `<iriBase><version>/processes/ns`, the namespace every diagram binds);
+  `<iriBase>v<major>/ns`) and the diagram vocabulary (`processes/ns.jsonld`,
+  at `<iriBase>v<major>/processes/ns`, the namespace every diagram binds);
 - the graph export, built when the site is published, at the address its own
   `@id` names ([`bootstrap-graph-publication`](bootstrap-graph-publication.md)).
 
@@ -42,7 +42,7 @@ here to publish, and says so rather than reporting a pass over nothing.
 ## Where each goes
 
 At the path its IRI names, with `iriBase` removed. An extensionless address
-(`…/0.1.0/ns`) gets the document at that extensionless path. A `.jsonld`
+(`…/v0/ns`) gets the document at that extensionless path. A `.jsonld`
 gets a `.json` copy with the same bytes beside it, because many hosts serve
 `.jsonld` as a download. The `.jsonld` stays the real one: it is what the
 `@id` names.

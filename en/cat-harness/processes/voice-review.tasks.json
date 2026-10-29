@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_VoiceReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
  "tasks": {
   "Task_LoadActive": {
    "id": "Task_LoadActive",
    "name": "Load the active voices",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_LoadActive",
    "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
    "skills": [
     {
      "name": "voice-overlay-review",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "narrative-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
     "title": "Narrative reviewer",
     "skills": [
      {
@@ -29,10 +32,6 @@
      {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "translation-manager",
@@ -57,7 +56,9 @@
    "id": "Task_MechanicalHalf",
    "name": "Run the rule's mechanical half",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_MechanicalHalf",
    "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
    "skills": [
     {
      "name": "voice-overlay-review",
@@ -66,7 +67,7 @@
    ],
    "role": {
     "name": "narrative-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
     "title": "Narrative reviewer",
     "skills": [
      {
@@ -80,10 +81,6 @@
      {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "translation-manager",
@@ -108,7 +105,9 @@
    "id": "Task_OpenCitation",
    "name": "Open the rule's citation",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_OpenCitation",
    "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
    "skills": [
     {
      "name": "voice-overlay-review",
@@ -117,7 +116,7 @@
    ],
    "role": {
     "name": "narrative-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
     "title": "Narrative reviewer",
     "skills": [
      {
@@ -131,10 +130,6 @@
      {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "translation-manager",
@@ -159,7 +154,9 @@
    "id": "Task_RuleIsWrong",
    "name": "The RULE is the defect — bean it",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_RuleIsWrong",
    "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
    "skills": [
     {
      "name": "voice-overlay-review",
@@ -168,7 +165,7 @@
    ],
    "role": {
     "name": "narrative-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
     "title": "Narrative reviewer",
     "skills": [
      {
@@ -182,10 +179,6 @@
      {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "translation-manager",
@@ -210,7 +203,9 @@
    "id": "Task_Adjudicate",
    "name": "Adjudicate: prose, scope, or exception",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_Adjudicate",
    "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
    "skills": [
     {
      "name": "voice-overlay-review",
@@ -223,11 +218,12 @@
    ],
    "calls": {
     "name": "Criterion adjudication",
-    "href": "criterion-adjudication.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+    "diagram": "criterion-adjudication.html"
    },
    "role": {
     "name": "narrative-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
     "title": "Narrative reviewer",
     "skills": [
      {
@@ -241,10 +237,6 @@
      {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "translation-manager",
@@ -269,7 +261,9 @@
    "id": "Task_RecordOnSidecar",
    "name": "Record on the block's QA sidecar",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_RecordOnSidecar",
    "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
    "skills": [
     {
      "name": "voice-overlay-review",
@@ -278,7 +272,7 @@
    ],
    "role": {
     "name": "narrative-reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
     "title": "Narrative reviewer",
     "skills": [
      {
@@ -292,10 +286,6 @@
      {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "translation-manager",

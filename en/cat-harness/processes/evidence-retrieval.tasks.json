@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_EvidenceRetrieval",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
  "tasks": {
   "Task_ReviewExisting": {
    "id": "Task_ReviewExisting",
    "name": "Review the guidance already in this content",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
    "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
    "skills": [
     {
      "name": "content-review",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "author",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
     "title": "Author",
     "skills": [
      {
@@ -39,12 +42,16 @@
       "href": "../../../reference/skill-instructions/evidence-appraisal.html"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
       "name": "voice-authoring-guidance",
@@ -57,7 +64,9 @@
    "id": "Task_FramePico",
    "name": "Frame the question as PICO",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_FramePico",
    "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
    "skills": [
     {
      "name": "content-author",
@@ -66,7 +75,7 @@
    ],
    "role": {
     "name": "author",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
     "title": "Author",
     "skills": [
      {
@@ -90,12 +99,16 @@
       "href": "../../../reference/skill-instructions/evidence-appraisal.html"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
       "name": "voice-authoring-guidance",
@@ -108,7 +121,9 @@
    "id": "Task_L1Sources",
    "name": "Search trusted SOURCES — L1",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L1Sources",
    "lane": "Evidence agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
    "skills": [
     {
      "name": "document-intake",
@@ -117,7 +132,7 @@
    ],
    "role": {
     "name": "evidence-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-evidence-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
     "title": "Evidence agent",
     "skills": [
      {
@@ -131,7 +146,9 @@
    "id": "Task_L2L3Content",
    "name": "Search trusted CONTENT — L2 DAKs, L3 IGs",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
    "lane": "Evidence agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
    "skills": [
     {
      "name": "document-intake",
@@ -148,7 +165,7 @@
    ],
    "role": {
     "name": "evidence-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-evidence-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
     "title": "Evidence agent",
     "skills": [
      {
@@ -162,7 +179,9 @@
    "id": "Task_DataRepos",
    "name": "Query data repositories and statistical datasets",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_DataRepos",
    "lane": "Evidence agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
    "skills": [
     {
      "name": "document-intake",
@@ -179,7 +198,7 @@
    ],
    "role": {
     "name": "evidence-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-folio-assistant-core-scenarios-roles-json-evidence-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
     "title": "Evidence agent",
     "skills": [
      {
@@ -193,7 +212,9 @@
    "id": "Task_VerifyAuthority",
    "name": "Verify authority against the observatory / registry API",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
    "lane": "Trusted registries and observatories (external)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Trusted",
    "skills": [
     {
      "name": "registry-authority-contract",
@@ -202,7 +223,7 @@
    ],
    "role": {
     "name": "external-registry",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-external-registry",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
     "title": "External registry",
     "skills": [
      {
@@ -216,7 +237,9 @@
    "id": "Task_RecordUnverified",
    "name": "Open a bean for the unverified citation",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordUnverified",
    "lane": "Work plan — beans (shared)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -225,7 +248,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -243,7 +266,9 @@
    "id": "Task_AppraiseGrade",
    "name": "Appraise and grade the body of evidence",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AppraiseGrade",
    "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
    "skills": [
     {
      "name": "evidence-appraisal",
@@ -252,7 +277,7 @@
    ],
    "role": {
     "name": "author",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
     "title": "Author",
     "skills": [
      {
@@ -276,12 +301,16 @@
       "href": "../../../reference/skill-instructions/evidence-appraisal.html"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
       "name": "voice-authoring-guidance",
@@ -294,7 +323,9 @@
    "id": "Task_RecordGap",
    "name": "Record the evidence gap",
    "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap",
    "lane": "Work plan — beans (shared)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_WorkPlan",
    "skills": [
     {
      "name": "todo-manager",
@@ -303,7 +334,7 @@
    ],
    "role": {
     "name": "work-plan",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
     "title": "Work plan (beans)",
     "skills": [
      {
@@ -321,7 +352,9 @@
    "id": "Task_AttachEvidence",
    "name": "Attach the evidence to the recommendation",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AttachEvidence",
    "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
    "skills": [
     {
      "name": "content-author",
@@ -330,7 +363,7 @@
    ],
    "role": {
     "name": "author",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
     "title": "Author",
     "skills": [
      {
@@ -354,12 +387,16 @@
       "href": "../../../reference/skill-instructions/evidence-appraisal.html"
      },
      {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
       "name": "voice-authoring-guidance",

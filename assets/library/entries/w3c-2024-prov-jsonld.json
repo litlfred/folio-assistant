@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title page, publication metadata, and opening abstract for The PROV-JSONLD Serialization (W3C Member Submission, 25 August 2024), edited by Luc Moreau and Dong Huynh (King's College London), introducing PROV-JSONLD as a JSON serialization of PROV-DM with a JSON-LD semantic mapping for Web and Linked Data interchange.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of the abstract listing companion artifacts (`schema.json`, `context.jsonld`, and `provext.ttl`), the W3C Status of This Document section noting the King's College London Member Submission status and W3C Patent Policy terms, and the start of the Table of Contents (Sections 1–3).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of the Table of Contents covering Section 4 (Schema, subsections 4.1–4.20 for preliminary definitions, core PROV types, bundles, documents, and contexts) and Section 5 (JSON-LD Context, subsections 5.1–5.15).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the Table of Contents (Sections 5.16–6 and Appendices A–E), Section 1 (Conformance) specifying BCP 14 (RFC 2119 and RFC 8174) keyword interpretation, and the start of Section 2 (Introduction) reviewing 2013 W3C PROV serializations (PROV-N, PROV-XML, and PROV-O).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 2 (Introduction) formulating four core serialization requirements—Lightweight, Natural, Semantic, and Efficient—evaluating why existing PROV-JSON, PROV-O RDF, PROV-XML, and PROV-N representations fail to satisfy all four simultaneously, and explaining how JSON-LD contextual mappings address the gap.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion of Section 2 summarizing how PROV-JSONLD satisfies the four requirements via self-contained JSON objects and JSON-LD 1.1 contextual mappings, followed by Section 2.1 (Namespace) and Table 1 defining the `prov`, `provext`, `xsd`, `rdf`, and example namespace prefixes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 3 (Example, non-normative) introducing a subset of the PROV-PRIMER scenario (Figure 1, where agent Derek composes `article1` from `dataSet1`) and explaining how a top-level PROV-JSONLD document structures `@context` and `@graph` arrays of typed (`@type`) and optionally identified (`@id`) PROV expressions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 3 explaining how PROV expressions combine predefined properties (such as `activity` and `agent`), optional multi-valued `type` arrays, and prefixed external attributes (such as `foaf:givenName`), while requiring a single-valued `@type` property for fast parser dispatch.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "First part of Example 1 showing a complete PROV-JSONLD document with its `@context` declarations (`xsd`, `dcterms`, `ex`, `prov`, `foaf`, and the canonical `context.jsonld` URI) and `@graph` entries for `Entity` (`ex:dataSet1`, `ex:article1`), `Derivation`, `Agent` (`ex:derek`), `Association`, `Activity` (`ex:compose`), and the start of `Usage`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Example 1 (`Usage` and `Generation` objects), the introduction to Section 4 (Schema), and the start of Section 4.1 (Preliminary Definitions) specifying the JSON Schema definitions for `DateTime` and `QualifiedName`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 4.1 completing the `QualifiedName` regex pattern with an editor's note on post-processor validation against PROV-N production rules, followed by the JSON Schema definitions for `typed_value` (`@value` and `@type`) and `lang_string` (`@value` and optional `@language`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Section 4.1 defining `ArrayOfValues` and `ArrayOfLabelValues`, and the start of Section 4.2 (`prov:Entity`) specifying the required `@id` and `@type` (`Entity`) properties and optional `type`, `location`, and `label` attributes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "JSON Schema definition for `prov:Entity` (requiring `@type` and `@id`, with optional `type`, `value`, `location`, `label`, and prefixed `patternProperties`), followed by Section 4.3 (`prov:Activity`) specifying required and optional activity properties (`startTime`, `endTime`, `type`, `location`, `label`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the JSON Schema definition for `prov:Activity`, followed by Section 4.4 (`prov:Agent`) and its JSON Schema definition requiring `@type` (`Agent`) and `@id` and permitting `type`, `location`, `label`, and prefixed extension properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.5 (`prov:Derivation`) specifying the schema for derivations—requiring `@type` (`Derivation`), recommending `generatedEntity` and `usedEntity`, and permitting `@id`, `activity`, `generation`, `usage`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -303,7 +423,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.6 (`prov:Attribution`) specifying the JSON Schema for attribution expressions—requiring `@type` (`Attribution`), recommending `entity` and `agent`, and allowing optional `@id`, `type`, `label`, and prefixed attributes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -322,7 +450,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.7 (`prov:Association`) specifying the JSON Schema for activity-agent associations—requiring `@type` (`Association`), recommending `activity` and `agent`, and allowing optional `@id`, `plan`, `location`, `role`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -341,7 +477,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.8 (`prov:Delegation`) specifying the JSON Schema for agent delegation—requiring `@type` (`Delegation`), recommending `delegate` and `responsible`, and allowing optional `@id`, `activity`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -360,7 +504,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.9 (`prov:Usage`) specifying the JSON Schema for activity entity usage—requiring `@type` (`Usage`), recommending `activity` and `entity`, and allowing optional `@id`, `time`, `location`, `role`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -379,7 +531,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.10 (`prov:Generation`) specifying the JSON Schema for entity generation—requiring `@type` (`Generation`), recommending `entity` and `activity`, and allowing optional `@id`, `time`, `location`, `role`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -398,7 +558,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.11 (`prov:Invalidation`) specifying the JSON Schema for entity invalidation—requiring `@type` (`Invalidation`), recommending `entity` and `activity`, and allowing optional `@id`, `time`, `location`, `role`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -417,7 +585,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.12 (`prov:Start`) specifying the JSON Schema for activity start events—requiring `@type` (`Start`), recommending `activity`, and allowing optional `starter`, `trigger`, `@id`, `time`, `location`, `role`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -436,7 +612,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.13 (`prov:End`) specifying the JSON Schema for activity end events—requiring `@type` (`End`), recommending `activity`, and allowing optional `ender`, `trigger`, `@id`, `time`, `location`, `role`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -455,7 +639,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 4.14 (`prov:Communication`) specifying the JSON Schema for activity communication (`@type` `Communication`, recommended `informed` and `informant`, optional `@id`, `type`, `label`, and prefixed properties), and the start of Section 4.15 (`prov:Influence`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -474,7 +666,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Section 4.15 (`prov:Influence`) with its JSON Schema (`@type` `Influence`, recommended `influencer` and `influencee`), followed by the prose of Section 4.16 (`prov:Specialization`) describing `specificEntity`, `generalEntity`, and optional extension properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -493,7 +693,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "JSON Schema definition for `prov:Specialization` (Section 4.16), followed by Section 4.17 (`prov:Alternate`) specifying required `@type` (`Alternate`), recommended `alternate1` and `alternate2`, and optional `@id`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -512,7 +720,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the JSON Schema for `prov:Alternate`, followed by Section 4.18 (`prov:Membership`) and its JSON Schema requiring `@type` (`Membership`), recommending `collection` and `entity` (single or array), and allowing optional `@id`, `type`, `label`, and prefixed properties.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -531,7 +747,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the `prov:Membership` schema and the `QualifiedName+` helper definition (single `QualifiedName` or array), followed by Section 4.19 (`prov:Bundle` and `prov:Document`) and the start of the `prov:Bundle` JSON Schema.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -550,7 +774,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the `prov:Bundle` and `prov:Document` JSON Schemas (requiring `@context` and `@graph`), followed by the prose and opening schema for `prov:Statement` and `prov:StatementOrBundle`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -569,7 +801,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the `prov:Statement` and `prov:StatementOrBundle` union schemas, followed by Section 4.20 (`Context`) introducing the JSON Schema for `@context` arrays.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -588,7 +828,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the `Context` JSON Schema (URI strings or prefix-mapping objects), followed by Section 5 (JSON-LD Context) and Section 5.1 (Introduction: Qualification Pattern) explaining how PROV-O qualifies binary influence relations using intermediate classes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -607,7 +855,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "First part of Figure 2 (adapted from PROV-O), diagramming the RDF Qualification Pattern classes and properties for Usage (a), Generation (b), Invalidation (c), Communication (d), Start (e), End (f), Derivation (g), and Attribution (i).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -626,7 +882,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Figure 2 showing Delegation (h), Attribution (i), and Association (j) qualification patterns, followed by Section 5.2 (Default and generic Context Elements) defining default JSON-LD `@id` mappings for `entity` (`prov:entity`), `activity` (`prov:activity`), and `agent` (`prov:agent`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -645,7 +909,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 5.2 defining context-invariant mappings for `role` (`prov:hadRole`), `type` (`rdf:type`), `label` (`rdfs:label`), and `location` (`prov:atLocation`), followed by Section 5.3 (Entity) mapping `Entity` to `prov:Entity` and its scoped `value` property to `prov:value`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -664,7 +936,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 5.4 (Activity) defining the scoped JSON-LD context for `Activity` (`startTime` to `prov:startedAtTime` and `endTime` to `prov:endedAtTime` with `xsd:dateTime` coercion) and Section 5.5 (Agent) mapping `Agent` to `prov:Agent` with an empty local context.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -683,7 +963,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 5.6 (Derivation) defining the scoped JSON-LD context for `Derivation` (`prov:Derivation`), mapping `generatedEntity` via `@reverse` `prov:qualifiedDerivation` and mapping `usedEntity`, `generation`, `activity`, and `usage` to `prov:entity`, `prov:hadGeneration`, `prov:hadActivity`, and `prov:hadUsage`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -702,7 +990,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 5.7 (Attribution) defining the scoped JSON-LD context for `Attribution` (`entity` mapped via `@reverse` `prov:qualifiedAttribution`) and the start of Section 5.8 (Association) mapping `activity` via `@reverse` `prov:qualifiedAssociation` and `plan` to `prov:hadPlan`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -721,7 +1017,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of the Section 5.8 `Association` context, followed by Section 5.9 (Delegation) defining the scoped JSON-LD context for `Delegation` (`responsible` to `prov:agent`, `delegate` via `@reverse` `prov:qualifiedDelegation`, and `activity` to `prov:hadActivity`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -740,7 +1044,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 5.10 (Usage) defining the scoped JSON-LD context for `Usage` (`activity` via `@reverse` `prov:qualifiedUsage` and `time` to `prov:atTime` as `xsd:dateTime`), followed by the start of Section 5.11 (Generation).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -759,7 +1071,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Section 5.11 (`Generation` context mapping `entity` via `@reverse` `prov:qualifiedGeneration` and `time` to `prov:atTime`), followed by Section 5.12 (Invalidation) mapping `entity` via `@reverse` `prov:qualifiedInvalidation` and `time` to `prov:atTime` (`xsd:dateTime`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -778,7 +1098,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 5.13 (Start) defining the scoped JSON-LD context for `Start` (`activity` via `@reverse` `prov:qualifiedStart`, `trigger` to `prov:entity`, `starter` to `prov:hadActivity`, and `time` to `prov:atTime`), followed by the prose introduction to Section 5.14 (End).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -797,7 +1125,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Section 5.14 (`End` context mapping `activity` via `@reverse` `prov:qualifiedEnd`, `trigger` to `prov:entity`, `ender` to `prov:hadActivity`, and `time` to `prov:atTime`), followed by the prose introduction to Section 5.15 (Communication).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -816,7 +1152,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "JSON-LD context for `Communication` (Section 5.15, mapping `informed` via `@reverse` `prov:qualifiedCommunication` and `informant` to `prov:activity`), followed by Section 5.16 (Influence) mapping `influencee` via `@reverse` `prov:qualifiedInfluence` and `influencer` to `prov:influencer`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -835,7 +1179,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Section 5.17 (Specialization) explaining the `provext` qualification extension for `Specialization` (`specificEntity` via `@reverse` `provext:qualifiedSpecialization` and `generalEntity` to `provext:generalEntity`), followed by the opening of Section 5.18 (Alternate).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -854,7 +1206,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Section 5.18 (`Alternate` context in `provext`, mapping `alternate1` via `@reverse` `provext:qualifiedAlternate` and `alternate2` to `provext:alternate`), followed by the prose of Section 5.19 (Membership) introducing `provext:qualifiedMembership` and `provext:member`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -873,7 +1233,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "JSON-LD context for `Membership` (Section 5.19) using `provext:Membership`, followed by Section 6 (Interoperability Considerations) covering IC1 (relaxing entity/activity presence to `SHOULD` for incomplete provenance) and the start of IC2 (qualifying binary relations).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -892,7 +1260,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Section 6 completing IC2 (`provext` qualification classes for `Specialization`, `Alternate`, and `Membership`), presenting IC3 (document root object carrying `@context`), and introducing IC4 (encoding PROV subtypes and subrelations via `prov:type`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -911,7 +1287,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of IC4 with a JSON-LD snippet illustrating `prov:Person` and `prov:Revision` inside `type`, followed by IC5 specifying two roundtrip interoperability test protocols (Java-to-PROV-JSONLD-to-Java and Java-to-PROV-JSONLD-to-Turtle-to-Java) implemented in ProvToolbox.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -930,7 +1314,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Section 6 (IC5) with GitHub links to the two ProvToolbox JUnit roundtrip test classes, followed by the opening of Appendix A (JSON Schema for PROV-JSONLD) defining `DateTime`, `QualifiedName`, `QualifiedName+`, and `non_prov_properties`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -949,7 +1341,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A listing the full JSON Schema definitions for `typed_value`, `lang_string`, `ArrayOfValues`, and the start of `ArrayOfLabelValues`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -968,7 +1368,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A defining the `Context`, `prov:StatementOrBundle`, and `prov:Statement` union schemas in the consolidated PROV-JSONLD JSON Schema.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -987,7 +1395,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A completing `prov:Statement` and listing the full JSON Schema definitions for `prov:Entity`, `prov:Agent`, and the beginning of `prov:Activity`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1006,7 +1422,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A completing `prov:Activity` and listing the full JSON Schema definitions for `prov:Usage` and `prov:Generation`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1025,7 +1449,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A completing `prov:Generation` and listing the full JSON Schema definitions for `prov:Invalidation` and `prov:Start`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1044,7 +1476,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A listing the full JSON Schema definitions for `prov:End` and `prov:Attribution`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1063,7 +1503,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A listing the full JSON Schema definitions for `prov:Association`, `prov:Delegation`, and the start of `prov:Derivation`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1082,7 +1530,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A completing `prov:Derivation` and listing the full JSON Schema definitions for `prov:Alternate` and the start of `prov:Specialization`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1101,7 +1557,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A completing `prov:Specialization` and listing the full JSON Schema definitions for `prov:Membership` and `prov:Influence`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1120,7 +1584,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix A listing the full JSON Schema definitions for `prov:Communication`, `prov:Bundle`, and the start of `prov:Document`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1139,7 +1611,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Appendix A (`prov:Document` and top-level `$schema`, `$id`, and `$ref` declarations for `https://openprovenance.org/prov-jsonld/schema.json`), followed by the start of Appendix B (JSON-LD Context for PROV-JSONLD) declaring `@version: 1.1`, namespace prefixes, and generic term definitions (`role`, `type`, `label`, `location`).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1158,7 +1638,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix B listing the consolidated JSON-LD 1.1 context definitions for `entity`, `activity`, `agent`, `Activity`, `Entity`, `Agent`, and the start of `Delegation`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1177,7 +1665,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix B listing the consolidated JSON-LD 1.1 scoped contexts for `Delegation`, `Usage`, and `Generation`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1196,7 +1692,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix B listing the consolidated JSON-LD 1.1 scoped contexts for `Invalidation`, `Attribution`, and `Association`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1215,7 +1719,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix B listing the consolidated JSON-LD 1.1 scoped contexts for `Communication`, `Influence`, and the start of `Derivation`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1234,7 +1746,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix B completing `Derivation` and listing the consolidated JSON-LD 1.1 scoped contexts for `Start` and the beginning of `End`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1253,7 +1773,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix B completing `End` and listing the consolidated JSON-LD 1.1 scoped contexts for `Specialization` and `Membership` in the `provext` namespace.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1272,7 +1800,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Appendix B (`Alternate` context in `provext`), followed by the start of Appendix C (PROVEXT: PROV Ontology Extension for PROV-JSONLD) presenting the Turtle OWL 2 ontology header and top object property declarations for `https://openprovenance.org/ns/provext#`.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1291,7 +1827,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix C defining the `provext` OWL object properties (`:qualifiedMembership`, `:qualifiedSpecialization`, `:qualifiedAlternate`, `:member`, `:generalEntity`, `:alternate`) with their domains and ranges, plus the `:Membership`, `:Alternate`, and `:Specialization` OWL classes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1310,7 +1854,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Completion of Appendix C defining OWL property chain axioms (`prov:specializationOf`, `prov:alternateOf`, and `prov:hadMember`), Appendix D (Acknowledgements thanking Pierre-Antoine Champin and Denis Ah-Kang), and the start of Appendix E.1 (Normative references: JSON-LD, JSON-LD 1.1, and JSON-SCHEMA).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1329,7 +1881,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Continuation of Appendix E.1 (Normative references) listing citations for LINKED-DATA, PROV-DM, PROV-N, PROV-O, PROV-XML, RDF-CONCEPTS, RFC 2119, RFC 3987, RFC 8174, RFC 8259, and XMLSCHEMA11-2.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -1348,7 +1908,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix E.2 (Informative references) listing citations for the IPAW'16 PROV-JSONLD poster, the 2013 PROV-JSON Member Submission, PROV-Overview, and the PROV Model Primer.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-26"
       }
     }
   ]

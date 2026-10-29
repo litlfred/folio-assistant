@@ -1,12 +1,15 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_SgEndToEnd",
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd",
  "tasks": {
   "Task_DescribeUseCase": {
    "id": "Task_DescribeUseCase",
    "name": "0 · Describe the use case",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_DescribeUseCase",
    "lane": "Requester (country team / implementer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_User",
    "skills": [
     {
      "name": "guideline-use-case",
@@ -15,7 +18,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -31,12 +34,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -61,7 +72,9 @@
    "id": "Task_IdentifyL1",
    "name": "1 · Identify L1 guidelines and recommendations",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_IdentifyL1",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "dak-l1-library",
@@ -70,7 +83,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -80,6 +93,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -142,6 +159,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -150,8 +171,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -172,6 +201,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -232,6 +265,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -268,7 +309,9 @@
    "id": "Task_AdjL1",
    "name": "Adjudicate the L1 source list",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjL1",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -277,11 +320,12 @@
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -299,10 +343,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -335,11 +375,19 @@
    "id": "Task_IngestKg",
    "name": "2 · Ingest into the L1 KG",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_IngestKg",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "recommendation-extraction",
-     "href": "../../../reference/skill-instructions/recommendation-extraction.html"
+     "href": "../../../reference/skill-instructions/recommendation-extraction.html",
+     "methodologies": [
+      {
+       "name": "terminology-coding",
+       "href": "../../../en/cat-harness/methodologies/smart-base/terminology-coding/"
+      }
+     ]
     },
     {
      "name": "dak-l1-library",
@@ -348,7 +396,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -358,6 +406,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -420,6 +472,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -428,8 +484,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -450,6 +514,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -510,6 +578,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -546,7 +622,9 @@
    "id": "Task_AdjKg",
    "name": "Adjudicate the L1 KG",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjKg",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -554,16 +632,23 @@
     },
     {
      "name": "recommendation-extraction",
-     "href": "../../../reference/skill-instructions/recommendation-extraction.html"
+     "href": "../../../reference/skill-instructions/recommendation-extraction.html",
+     "methodologies": [
+      {
+       "name": "terminology-coding",
+       "href": "../../../en/cat-harness/methodologies/smart-base/terminology-coding/"
+      }
+     ]
     }
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -581,10 +666,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -617,7 +698,9 @@
    "id": "Task_DepsL2",
    "name": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_DepsL2",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "l2-dependency-choice",
@@ -634,7 +717,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -644,6 +727,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -706,6 +793,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -714,8 +805,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -736,6 +835,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -796,6 +899,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -832,7 +943,9 @@
    "id": "Task_AdjDepsL2",
    "name": "Adjudicate L2 dependencies",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjDepsL2",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -845,11 +958,12 @@
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -867,10 +981,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -903,7 +1013,9 @@
    "id": "Task_L2",
    "name": "4 · Create / adapt L2 DAK assets",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_L2",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "l2-dak-authoring",
@@ -938,7 +1050,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -948,6 +1060,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -1010,6 +1126,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -1018,8 +1138,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1040,6 +1168,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1100,6 +1232,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1136,7 +1276,9 @@
    "id": "Task_AdjL2",
    "name": "Review each L2 asset (before / after if adapted)",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjL2",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -1163,11 +1305,12 @@
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -1185,10 +1328,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -1221,7 +1360,9 @@
    "id": "Task_DepsL3",
    "name": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_DepsL3",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "l3-dependency-choice",
@@ -1242,7 +1383,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -1252,6 +1393,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -1314,6 +1459,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -1322,8 +1471,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1344,6 +1501,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1404,6 +1565,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1440,7 +1609,9 @@
    "id": "Task_AdjDepsL3",
    "name": "Adjudicate L3 dependencies",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjDepsL3",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -1453,11 +1624,12 @@
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -1475,10 +1647,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -1511,7 +1679,9 @@
    "id": "Task_L3Ready",
    "name": "Check L3 readiness",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_L3Ready",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "l3-readiness",
@@ -1520,7 +1690,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -1530,6 +1700,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -1592,6 +1766,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -1600,8 +1778,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1622,6 +1808,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1682,6 +1872,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1718,7 +1916,9 @@
    "id": "Task_L3",
    "name": "6 · Produce L3 assets",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_L3",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "l3-fhir-authoring",
@@ -1739,7 +1939,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -1749,6 +1949,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -1811,6 +2015,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -1819,8 +2027,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1841,6 +2057,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -1901,6 +2121,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -1937,7 +2165,9 @@
    "id": "Task_AdjL3",
    "name": "Review each L3 asset (before / after if adapted)",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjL3",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -1968,11 +2198,12 @@
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -1990,10 +2221,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",
@@ -2026,7 +2253,9 @@
    "id": "Task_DescribeApp",
    "name": "7 · L4: describe the consuming application",
    "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_DescribeApp",
    "lane": "Requester (country team / implementer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_User",
    "skills": [
     {
      "name": "l4-application-brief",
@@ -2035,7 +2264,7 @@
    ],
    "role": {
     "name": "user",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
     "title": "User",
     "skills": [
      {
@@ -2051,12 +2280,20 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
       "name": "getting-started",
       "href": "../../../reference/skill-instructions/getting-started.html"
      },
      {
       "name": "interaction-modality",
       "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-subscription",
@@ -2081,7 +2318,9 @@
    "id": "Task_WireframeApp",
    "name": "8a · L4: wireframe the application",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_WireframeApp",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "wireframe-design-review",
@@ -2096,7 +2335,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -2106,6 +2345,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -2168,6 +2411,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -2176,8 +2423,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -2198,6 +2453,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -2258,6 +2517,14 @@
      {
       "name": "sub-kg-lifecycle",
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
@@ -2294,7 +2561,9 @@
    "id": "Task_BuildApp",
    "name": "8b · L4: build the consuming application",
    "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_BuildApp",
    "lane": "Authoring agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent",
    "skills": [
     {
      "name": "l4-application-build",
@@ -2303,7 +2572,7 @@
    ],
    "role": {
     "name": "authoring-agent",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
     "title": "Authoring agent",
     "skills": [
      {
@@ -2313,6 +2582,10 @@
      {
       "name": "agent-permissions",
       "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
      },
      {
       "name": "bean-coordination",
@@ -2375,6 +2648,10 @@
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
       "name": "deletion-requires-confirmation",
       "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
      },
@@ -2383,8 +2660,16 @@
       "href": "../../../reference/skill-instructions/delivery-summary.html"
      },
      {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -2405,6 +2690,10 @@
      {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
       "name": "kg-separation",
@@ -2467,6 +2756,14 @@
       "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
      },
      {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
+     },
+     {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
@@ -2501,7 +2798,9 @@
    "id": "Task_AdjApp",
    "name": "Adjudicate the L4 wireframes and application",
    "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/node/Task_AdjApp",
    "lane": "Human adjudicators",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
    "skills": [
     {
      "name": "content-review",
@@ -2524,11 +2823,12 @@
    ],
    "calls": {
     "name": "Review task",
-    "href": "review-task.html"
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
+    "diagram": "review-task.html"
    },
    "role": {
     "name": "reviewer",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
     "title": "Reviewer / SME",
     "skills": [
      {
@@ -2546,10 +2846,6 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "milnor-exposition-standard",
-      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
      },
      {
       "name": "narrative-asserts-code",

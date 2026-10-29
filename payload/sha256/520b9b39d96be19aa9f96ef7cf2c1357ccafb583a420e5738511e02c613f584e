@@ -1,0 +1,36 @@
+{
+  "name": "@litlfred/folio-assistant-sci",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@unified-latex/unified-latex-util-parse": "^1.8.4",
+    "@unified-latex/unified-latex-util-print-raw": "^1.8.4",
+    "csl-json": "^0.1.0",
+    "mdast-util-gfm-strikethrough": "^2.0.0",
+    "mdast-util-gfm-table": "^2.0.0",
+    "micromark-extension-gfm-strikethrough": "^2.1.0",
+    "micromark-extension-gfm-table": "^2.1.1",
+    "remark": "^15.0.1",
+    "remark-directive": "^4.0.0",
+    "remark-math": "^6.0.0",
+    "unist-util-visit": "^5.1.0",
+    "zod": "^4.6.5"
+  },
+  "checkoutScripts": {
+    "check:lean-dirs": "bun run folio-assistant-sci/scripts/check-lean-dirs.ts",
+    "extract:references": "bun run folio-assistant-sci/scripts/extract-references.ts",
+    "check:extracted-references": "bun run folio-assistant-sci/scripts/extract-references.ts --check",
+    "check:editor-checkers": "bun run folio-assistant-sci/scripts/check-editor-checkers.ts",
+    "latex:validate": "bun run folio-assistant-sci/pipeline/validate-tex.ts",
+    "latex:audit-source": "bun run folio-assistant-sci/pipeline/audit-tex-source.ts"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "15.11.7",
+    "@milkdown/crepe": "7.22.2",
+    "@milkdown/kit": "7.22.2",
+    "@unified-latex/unified-latex-types": "^1.8.4"
+  }
+}

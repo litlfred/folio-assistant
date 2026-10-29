@@ -5,7 +5,29 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-accuracy",
+      "@type": "bootstrap:Skill",
+      "name": "formal-accuracy",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d21ea4329b0e79fae9d483deae0445064adc8bbe5515b2f20b1f14b25998dcfc",
+        "bytes": 2794,
+        "sha256": "d21ea4329b0e79fae9d483deae0445064adc8bbe5515b2f20b1f14b25998dcfc"
+      },
+      "title": "Formal accuracy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-layer-editing",
+      "@type": "bootstrap:Skill",
+      "name": "formal-layer-editing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad9e33f41c723157dbb1ac470f1516ac9141ca26c880b39024e7f49969581b71",
+        "bytes": 3786,
+        "sha256": "ad9e33f41c723157dbb1ac470f1516ac9141ca26c880b39024e7f49969581b71"
+      },
+      "title": "Formal-layer editing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-authoring",
       "@type": "bootstrap:Skill",
       "name": "latex-authoring",
       "payload": {
@@ -16,7 +38,7 @@
       "title": "latex-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formalization",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formalization",
       "@type": "bootstrap:Skill",
       "name": "lean-formalization",
       "payload": {
@@ -27,7 +49,51 @@
       "title": "lean-formalization"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-verification",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-toolchain-contract",
+      "@type": "bootstrap:Skill",
+      "name": "lean-toolchain-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34d8d399dab82adb25471f099474147a35bb3ac730c86c1325a14cac49973178",
+        "bytes": 2385,
+        "sha256": "34d8d399dab82adb25471f099474147a35bb3ac730c86c1325a14cac49973178"
+      },
+      "title": "Lean toolchain — the role's contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-md-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "math-md-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0bc0c93cb4adbce6669ed2dcd1d1b3c68df78f4a3167c82a40639908c28a417c",
+        "bytes": 3585,
+        "sha256": "0bc0c93cb4adbce6669ed2dcd1d1b3c68df78f4a3167c82a40639908c28a417c"
+      },
+      "title": "Math markdown authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-readability-editing",
+      "@type": "bootstrap:Skill",
+      "name": "math-readability-editing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf1f61c83985a5986dfc7ffa6c933fde535da2aa0b4ea645ae0a7d3145c8ddb7",
+        "bytes": 2701,
+        "sha256": "cf1f61c83985a5986dfc7ffa6c933fde535da2aa0b4ea645ae0a7d3145c8ddb7"
+      },
+      "title": "Math readability editing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/milnor-exposition-standard",
+      "@type": "bootstrap:Skill",
+      "name": "milnor-exposition-standard",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8b9e76e2f8c65dcc78401171795214550855e08c2131fbfc39b7fec62b690dc",
+        "bytes": 8857,
+        "sha256": "c8b9e76e2f8c65dcc78401171795214550855e08c2131fbfc39b7fec62b690dc"
+      },
+      "title": "The Milnor exposition standard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification",
       "@type": "bootstrap:Skill",
       "name": "proof-verification",
       "payload": {

@@ -1,0 +1,63 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: grc status Schema API",
+    "description": "JSON Schema for Knowledge graph L1: grc status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-KGGrcStatusVS.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-KGGrcStatusVS",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-KGGrcStatusVS.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-KGGrcStatusVS",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-KGGrcStatusVS.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-KGGrcStatusVS": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-KGGrcStatusVS.schema.json",
+        "title": "Knowledge graph L1: grc status Schema",
+        "description": "JSON Schema for Knowledge graph L1: grc status ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/KGGrcStatus"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "approved",
+              "not-required",
+              "not-reviewed"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Knowledge graph L1: grc status ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-KGGrcStatusVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-KGGrcStatusVS.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/KGGrcStatusVS",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-10-20T16:07:30+00:00"
+      }
+    }
+  }
+}

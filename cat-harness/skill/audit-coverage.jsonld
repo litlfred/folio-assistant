@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/audit-coverage.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/audit-coverage",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "audit-coverage",
+      "title": "Audit coverage — measured, with denominators",
+      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/audit-coverage.md",
+      "instructionLines": 277,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
+    }
+  ]
+}

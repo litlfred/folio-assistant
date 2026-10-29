@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Narrative reviewer",
+      "title": "Narrative reviewer",
+      "notation": "narrative-reviewer",
+      "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-editorial-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-overlay-review"
+      ]
+    }
+  ]
+}

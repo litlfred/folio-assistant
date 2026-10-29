@@ -9,7 +9,7 @@ generated: "scripts/subgraph-readmes.ts of the bootstrap toolset (https://github
 
 bootstrap's [Processes](../schemas/README.md#process): `initialize-harness.bpmn`, the only one an [Actor](../schemas/README.md#actor) starts; `discussion.bpmn`, which it calls to determine the harness and repositories; `human-agent-discussion.bpmn`, the reusable discussion every diagram calls to ask a person anything; `complete-initialization.bpmn`, which checks every initialization step the declarations name; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.
 
-Part of [Bootstrap](../README.md) 0.1.0, declared as `processes`, holding `processes`.
+Part of [Bootstrap](../README.md) 0.1.1, declared as `processes`, holding `processes`.
 
 | file | what it is | used by |
 |---|---|---|

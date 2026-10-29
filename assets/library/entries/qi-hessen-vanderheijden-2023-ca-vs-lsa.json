@@ -18,7 +18,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title block: \"Improving information retrieval through correspondence analysis instead of latent semantic analysis\" by Qianqian Qi, David J. Hessen and Peter G.M. van der Heijden; received 30 May 2023, revised 24 August 2023, accepted 25 August 2023; open access, © the authors 2023.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Abstract. The first dimensions LSA extracts from a document-term matrix mainly show marginal effects, which do not help retrieval; LSA is usually improved by weighting the raw matrix and adjusting the exponent on the singular values. Correspondence analysis (CA) ignores the marginal effects. On four datasets the authors find CA always beats LSA; weighting the raw matrix can improve CA a little, in a data-dependent way, and adjusting the singular-value exponent often improves CA, by an amount that depends on the dataset and the number of dimensions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Only the opening sentence of the Introduction — information retrieval ranks documents by their similarity to a query — followed by the authors' e-mail addresses and affiliations: Department of Methodology and Statistics, Utrecht University, and (for van der Heijden) the Southampton Statistical Sciences Research Institute.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Front matter: published in the Journal of Intelligent Information Systems as a research article, DOI 10.1007/s10844-023-00815-y.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction, continued. LSA remains in wide use and has beaten Word2Vec and ELMo in some studies, and new LSA-based methods keep appearing. Its performance is usually improved by weighting the raw document-term matrix, and Caron (2001) showed that changing the exponent on the singular values also helps; larger exponents emphasise the first dimensions, which helped on standard retrieval sets but hurt question/answer matching, while word-embedding work tends to de-emphasise them, Bullinaria and Levy arguing that the first dimensions carry a large noise component. The authors attribute this to LSA mixing document–term associations with marginal effects of document length and term frequency, which dominate the first dimensions. CA also uses an SVD but removes the margins in preprocessing and keeps only the document–term relationships, so it seems better suited to retrieval, though computing science has used it mostly for two-dimensional plots.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction close and LSA background. Since earlier work found CA better than LSA for clustering and categorisation but no comparison exists for retrieval, the paper compares them on three English and one Dutch dataset. Its three contributions: compare LSA and CA for retrieval; test whether weighting the raw matrix and adjusting the singular-value exponent improve CA; and examine what LSA's first dimensions correspond to and whether CA discards that information, using Euclidean distance, dot and cosine similarity. Section 2.1 defines the weighted matrix a_ij = L(i,j)·G(j)·N(i), with TF-IDF as one instance, and LSA as the SVD of that matrix, whose rank-k truncation is the optimal least-squares approximation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "LSA and CA on a toy example. Out-of-sample documents and terms are projected into LSA's k-dimensional space through V_k and U_k. On a six-document, six-term matrix (cat terms lion, tiger, cheetah; car terms porsche, ferrari; and the ambiguous jaguar), LSA of the raw matrix groups the cat and car terms but fails to group the cat documents or place document 4 and jaguar between the clusters, because it also displays document and term sizes; jaguar, the most frequent term, sits furthest from the origin. CA applies the SVD to the matrix of standardized residuals from the independence model; its coordinates approximate χ²-distances, have weighted sum zero, and obey transition formulas that place row points at weighted averages of column points, which also projects new documents. On the same example CA recovers every structure — both clusters, jaguar and document 4 in between — because its dimensions are orthogonal to the margins.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Methodology overview: this section introduces CA of a weighted document-term matrix, discusses how to study the influence of the initial dimensions, and describes the study design, datasets and evaluation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "CA of a weighted document-term matrix. Because weighting the raw matrix helps LSA, the authors apply the same weightings (for example TF-IDF) to CA's input: first compute the weighted matrix A by equation (1), then run CA on A instead of on the raw counts F. CA's own standardization already removes the margins; the extra weighting is meant to favour terms more indicative of a document's meaning.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Changing the contribution of the initial dimensions. Following Caron, coordinates use the singular values raised to an exponent α: α < 1 de-emphasises the first dimensions, α > 1 emphasises them, and α = 1 is standard; Bullinaria and Levy found α < 1 and dropping initial dimensions improved results similarly, but what those dimensions represent was unclear. The authors apply the same exponent to CA and compare. They explain that α = 0.5 gives a biplot, while the common U₂Σ₂/V₂Σ₂ pairing is not one; they use symmetric coordinates with the same α for documents and terms. On the toy matrix the first dimension's share of α-inertia is 0.623, 0.855 and 0.943 for α = 0.5, 1 and 1.5, and larger α stretches the first dimension relative to the second.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Study design. LSA and CA are compared over k = 1–20, 22–50 in steps of 2 and 60–100 in steps of 10, and α from −6 to 8 in steps of 0.5 or 0.2, giving 40 × 47 = 1,880 combinations. Four inputs are used: the raw matrix (RAW), L1 and L2 row-normalized matrices (NROWL1, NROWL2) and TF-IDF, giving LSA-RAW through CA-TFIDF; plain term matching on the raw matrix (RAW) is the baseline. The block also carries the text of Figure 2, the toy example's LSA-RAW plots at α = 0.5 and 1.5.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Datasets. Three English collections — BBCNews (2,225 documents, five categories), BBCSport (731, five categories) and a 1,000-document subset of 20 Newsgroups (600 training and 400 test documents from comp.graphics, rec.sport.hockey, sci.crypt and talk.politics.guns) — and the Dutch Wilhelmus dataset (186 documents in six categories), built for authorship attribution of the Dutch national anthem, whose author is unknown. The English texts are lower-cased, stripped of punctuation, numbers and stop words, lemmatised, and terms with frequency under 10 dropped; 20 Newsgroups headers are removed; Wilhelmus uses its 300 most frequent tag-lemma pairs. Evaluation uses leave-one-out for Wilhelmus, five-fold cross-validation for BBCSport and an 80/20 split for BBCNews; each held-out document is a query whose relevant documents are the training documents of its category.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Evaluation. Methods are compared by mean average precision (MAP). Query–document similarity is measured by Euclidean distance, dot and cosine similarity; Euclidean results are reported in the paper because Euclidean distance motivates CA, the rest mainly in supplementary material. From the ranked list, precision and recall are computed at every cut-off, pseudo-precision at 11 recall levels (0, 0.1, …, 1) is the maximum precision at or beyond that recall, a query's average precision is the mean of the 11, and MAP is the mean over queries; higher is better.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -303,7 +407,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Results with standard coordinates (α = 1). Figure 3 and Table 5 show both LSA and CA beat raw term matching, and MAP rises with k to a peak and then falls. CA peaks at k = 4 (k = 6 for Wilhelmus) and is clearly best on every dataset — MAP 0.829, 0.785, 0.722 and 0.599 on BBCNews, BBCSport, 20 Newsgroups and Wilhelmus, against at most 0.738, 0.748, 0.636 and 0.521 for the LSA variants — which the authors attribute to CA removing the margins, giving a better information-to-noise ratio and an earlier peak. Weighting helps LSA in a data-dependent way: LSA-NROWL2 is best on average, but on Wilhelmus both row normalisations do slightly worse than LSA-RAW.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -322,7 +434,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Varying α for LSA-RAW at k = 4, 6, 9, 12 and 24 (Figure 4, Table 6). Tuning α improves LSA-RAW, with MAP rising then falling in α, but the gain is minor and CA still wins: on BBCNews at k = 6, MAP goes from 0.652 at α = 1 to 0.658 at α = 0.2, which reduces the weight of the margin-dominated first dimensions, consistent with Bullinaria and Levy. The best α is data dependent and generally grows with k, replicating Caron.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -360,7 +480,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Weighting the raw matrix for CA (Figure 5, Table 7). Weighting sometimes improves CA, but the gains over CA-RAW are small and data dependent: for example CA-TFIDF reaches 0.618 against 0.599 on Wilhelmus but drops to 0.786 from 0.829 on BBCNews. Each weighted CA variant beats the corresponding weighted LSA variant. The authors explain that CA is hard to improve this way because its raw MAP is already high and its standardization is itself a weighting. The block also carries the text of Figure 4 and Table 6, the optimal α and MAP for LSA-RAW beside CA at each k.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -379,7 +507,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Varying α for CA-RAW (Figure 6, Table 8). MAP again rises then falls with α; the gain is data and dimension dependent, and comparing the maxima of Tables 6 and 8 there is hardly any increase. The optimal α for CA is almost always larger than for LSA-RAW and almost always above 1 (Wilhelmus at small k is the exception), so CA benefits from emphasising its first dimensions. The authors infer that in LSA the margins make up much of the first dimensions and are noise for retrieval, which CA removes. Results at each method's optimal k, in the supplement, agree.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -398,7 +534,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Dot and cosine similarity. Both lead to the same conclusions as Euclidean distance, and cosine similarity gives the best MAP of the three. Euclidean results are shown in the main text because they are easier to interpret when varying α and because Euclidean distance is the usual way to interpret CA; the authors say they have never seen CA interpreted through cosine or dot similarity. The block includes Table 8 (optimal α and MAP for CA-RAW at each k).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -417,7 +561,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusions and discussion. LSA and CA differ in the matrix the SVD decomposes: LSA's weighted matrix keeps marginal effects, while CA's standardized residuals remove them and measure departure from statistical independence. Across four LSA variants CA always had higher MAP, even against LSA with a tuned α; weighting CA's input or tuning its α gave only small, data- and dimension-dependent gains, and CA's optimal α is almost always larger than LSA's and above 1, from which the authors infer that margins load LSA's first dimensions. Recommendations: use CA rather than LSA, including for visualisation; use cosine similarity when retrieval matters most; and skip input weighting and α tuning unless peak MAP is essential. They expect replacing LSA with CA to improve LSA-based tasks, and suggest LSA–CA ensembles as future work.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -436,7 +588,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Back matter: Qi posed the problem and ran the experiments, and all three authors discussed and edited the text; Qi is funded by the China Scholarship Council (CSC202007720017), which is also the only competing interest declared. The datasets are available from mlg.ucd.ie (BBCNews, BBCSport), qwone.com (20 Newsgroups) and github.com/mikekestemont/anthem (Wilhelmus). Ethical approval is not applicable, and the article is licensed CC BY 4.0.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     },
     {
@@ -455,7 +615,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The reference list (Aggarwal 2018 to Zhang et al. 2011), covering LSA and its weighting (Deerwester, Dumais, Caron, Bullinaria and Levy), correspondence analysis (Greenacre, Beh and Lombardo), word-embedding post-processing, the datasets used and the authors' own earlier LSA-versus-CA comparison (Qi et al. 2023), followed by Springer Nature's jurisdictional-neutrality note.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-26"
       }
     }
   ]

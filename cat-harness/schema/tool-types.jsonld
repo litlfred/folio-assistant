@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-types.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-types",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "tool-types",
+      "title": "tool-types",
+      "summary": "The shared I/O type vocabulary Tool ports reference.",
+      "module": "schemas/tools/tool-types.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/tools/tool-types-schema.jsonld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

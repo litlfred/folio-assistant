@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "build-docs",
+      "title": "/build-docs",
+      "description": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.",
+      "instructionsPath": "skills/content/folio-paper-adapter/build-docs.md",
+      "instructionLines": 74,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills"
+    }
+  ]
+}

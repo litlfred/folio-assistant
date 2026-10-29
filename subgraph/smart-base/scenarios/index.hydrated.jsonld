@@ -5,7 +5,7 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scenarios",
+      "@id": "http://smart.who.int/base/directory/smart-base-scenarios",
       "@type": "bootstrap:Subgraph",
       "contentSource": {
         "declaredIn": "default",
@@ -16,12 +16,21 @@
       "holdsGraph": [
         "bootstrap:graphTypology/scenarios"
       ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scenarios",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-scenarios",
       "name": "smart-base-scenarios",
       "path": "scenarios/"
     }
   ],
   "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/actors/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "name": "scenarios/actors",
+      "path": "scenarios/actors/"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/capabilities/",
       "@type": "bootstrap:Subgraph",

@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "java-runtime",
+      "name": "Java Runtime",
+      "description": "Java Runtime Environment for running Java-based tools (IG Publisher, validators).",
+      "detection": {
+        "method": "command",
+        "command": "java -version"
+      }
+    }
+  ]
+}

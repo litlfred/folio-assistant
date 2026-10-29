@@ -10,18 +10,23 @@
       "name": "pipeline-plugins"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/agent-instructions",
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary",
+      "@type": "bootstrap:GraphTypology",
+      "name": "glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/agent-instructions",
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5540121105eb3b2f1c002101c1b0e5e98608cdceabf418405a4c78a2630b76c0",
-        "bytes": 3922,
-        "sha256": "5540121105eb3b2f1c002101c1b0e5e98608cdceabf418405a4c78a2630b76c0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/40f23f1229aac06abebd58cd8a1b7437e53ae06f14837baed0431778acb8951f",
+        "bytes": 4319,
+        "sha256": "40f23f1229aac06abebd58cd8a1b7437e53ae06f14837baed0431778acb8951f"
       },
       "title": "AGENTS.md — fhir-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/instance-readme",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/instance-readme",
       "@type": "bootstrap:Asset",
       "name": "instance-readme",
       "payload": {
@@ -32,7 +37,7 @@
       "title": "fhir-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/unkinded-baseline",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/unkinded-baseline",
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
@@ -43,262 +48,69 @@
       "title": "Unkinded families — fhir-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-docs",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-docs"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-pipeline-plugins",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-libraries",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-libraries",
+      "title": "Software libraries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-pipeline-plugins",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-pipeline-plugins"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-plugin-slots",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-plugin-slots",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-plugin-slots"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-translations",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-translations"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-typologies",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-typologies",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-typologies"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-validators",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-validators",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-validators"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-scripts",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-ig-scripts"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-tools",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/glossary",
       "@type": "bootstrap:Subgraph",
-      "name": "fhir-ig-tools"
+      "name": "glossary"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/library",
-      "@type": "bootstrap:Subgraph",
-      "name": "library"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/qa",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/qa",
       "@type": "bootstrap:Subgraph",
       "name": "qa"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/build-ig-site.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "build-ig-site",
-      "title": "Stage one IG as its own just-the-docs Jekyll site"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/check-wireframe-questionnaire.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "check-wireframe-questionnaire",
-      "title": "Check a Questionnaire field for field against the wireframe it was derived from"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-cache-seed-npm.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "fhir-cache-seed-npm",
-      "title": "Seed the FHIR package cache from trusted sources (exact versions)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-package-mirror.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "fhir-package-mirror",
-      "title": "Mirror FHIR packages from packages.fhir.org into a git repository"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fsh-cone.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "fsh-cone",
-      "title": "FSH dependency cone"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-artifact-jsonld.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-artifact-jsonld",
-      "title": "Write one JSON-LD node per IG artefact, and check a built site's nodes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-diff.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-diff",
-      "title": "List and view the delta between two IG ASTs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-export.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-export",
-      "title": "Build an IG and write its AST"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-incremental-build.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-incremental-build",
-      "title": "Rebuild only the cone of a change and merge it into the AST"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-jsonld.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-jsonld",
-      "title": "Export an IG AST as JSON-LD"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-list.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-list",
-      "title": "Summarise one IG AST"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-measure-real-igs.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-measure-real-igs",
-      "title": "Measure the AST export on real IGs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-pages.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-pages",
-      "title": "Write the IG AST viewer: a page per instance holding `ig-ast` directories, and a hub"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-plan.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-plan",
-      "title": "Plan an incremental IG build from a delta of changed files"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-refresh.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-refresh",
-      "title": "Refresh an IG's AST cache on a runner"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-render.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-render",
-      "title": "Render a computed IG AST delta as just-the-docs pages"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-validity.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-ast-validity",
-      "title": "Is this IG AST still valid for the IG's current inputs?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-binary-audit.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-binary-audit",
-      "title": "Measure the IG Publisher's binary outputs on a pages branch"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-cache.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-cache",
-      "title": "FHIR AST cache"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-pages.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-pages",
-      "title": "Generate an IG instance's reader-facing pages from its artefact index"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-repo-site.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-repo-site",
-      "title": "Build an IG repository's own site from its cached AST, with no instance declaration"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-site-data.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ig-site-data",
-      "title": "Populate site.data.fhir for a just-the-docs IG render"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ingest-ig-menu.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ingest-ig-menu",
-      "title": "Ingest an IG's navigation from its sushi-config"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ingest-ig-releases.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "ingest-ig-releases",
-      "title": "Record an IG's GitHub releases as pointers to their binary assets"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/jsonld-vocabularies.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "jsonld-vocabularies",
-      "title": "ValueSet expansions → JSON-LD"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/logical-model-schemas.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "logical-model-schemas",
-      "title": "Logical models → JSON Schema"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/pin-ig-terminology.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "pin-ig-terminology",
-      "title": "Snapshot a published IG's terminology at its pinned version"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/sdc-checks.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "sdc-checks",
-      "title": "Check an IG's built Questionnaires with CSIRO's SDC libraries"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/stage-ig-sites.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "stage-ig-sites",
-      "title": "Stage every IG whose instance records its source, one Jekyll site each"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/strip-library-binaries.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "strip-library-binaries",
-      "title": "Strip binary payloads from Library resources"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/strip-library-content.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "strip-library-content",
-      "title": "Replace inline Library content with URL references"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/terminology-index.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "terminology-index",
-      "title": "Write an IG site's static terminology index from the IG's own cache"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/valueset-schemas.jsonld",
-      "@type": "cat-harness:Tool",
-      "name": "valueset-schemas",
-      "title": "ValueSets → JSON Schema"
     }
   ],
   "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/",
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/scenarios/",
-    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/"
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/"
   ],
   "holdsGraph": [
+    "cat-harness:graphTypology/library",
     "bootstrap:graphTypology/processes",
-    "bootstrap:graphTypology/skills"
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
   ],
   "name": "fhir-harness",
   "path": "./",

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/directory/library-9789240116191-eng-l1-extraction.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "library-9789240116191-eng-l1-extraction",
+      "path": "library/9789240116191-eng/l1-extraction/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/l1-extraction"
+      ],
+      "description": "What the recommendation-extraction skill read out of `9789240116191-eng` (Digital transformation handbook for health product catalogue): the L1 A-Box graph `l1.json`, the L2 scenario candidates `scenarios/scenario-candidates.l2.json`, and the curation, vocabulary and run context behind them. Declared so it is part of the knowledge graph rather than files beside it, and therefore PUBLISHED with its source (owner, 2026-10-12, bean 8pzh item 1: \"a and b\"). A SEPARATE declaration from `library/` though it nests inside it, as `methodologies/processes/` is beside `methodologies/`: a directory entry names one graph, and `l1-extraction` is a different typology. One entry per extracted library entry, never a wildcard: `scripts/l1-extraction-declared.test.ts` fails when an `l1-extraction/` directory on disk is undeclared, or a declaration names one that is not there.",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction"
+    }
+  ]
+}

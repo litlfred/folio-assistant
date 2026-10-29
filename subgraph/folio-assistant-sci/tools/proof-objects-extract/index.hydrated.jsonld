@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-objects-extract/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-objects-extract.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/extract_proof_objects.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--output"
+            },
+            "description": "Where to write proof-objects.json.",
+            "name": "output",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty.",
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "proof-objects-extract",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-status-tracking",
+      "title": "Proof-object extraction"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/proof-objects-extract",
+  "path": "tools/proof-objects-extract/"
+}

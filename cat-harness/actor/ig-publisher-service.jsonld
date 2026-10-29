@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ig-publisher-service.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ig-publisher-service",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "ig-publisher-service",
+      "actorKind": "system",
+      "title": "IG Publisher Service",
+      "description": "System actor providing FHIR IG Publisher build and QA reporting.",
+      "meta": {
+        "provider": "docker",
+        "image": "folio-assistant-smart-guidelines"
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ]
+    }
+  ]
+}

@@ -9,7 +9,7 @@ generated: "scripts/subgraph-readmes.ts of the bootstrap toolset (https://github
 
 The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion [Process](README.md#process). Their published `$id`s do not change when a file moves.
 
-Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas`.
+Part of [Bootstrap](../README.md) 0.1.1, declared as `schemas`, holding `schemas`.
 
 | file | what it is | used by |
 |---|---|---|

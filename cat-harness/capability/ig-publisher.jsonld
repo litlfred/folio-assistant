@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "ig-publisher",
+      "name": "FHIR IG Publisher",
+      "description": "HL7 FHIR Implementation Guide Publisher for building and validating FHIR IGs.",
+      "detection": {
+        "method": "command",
+        "command": "java -jar ${IG_PUBLISHER_JAR:-/opt/ig-publisher/publisher.jar} --version"
+      },
+      "satisfiesStatement": [
+        "req:fhir-validation#ig-publisher-qa"
+      ],
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime"
+      ]
+    }
+  ]
+}

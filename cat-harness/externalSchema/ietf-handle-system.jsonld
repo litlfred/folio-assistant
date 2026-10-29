@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/ietf-handle-system.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/ietf-handle-system",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)",
+      "authority": "IETF",
+      "specVersion": "2003-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.rfc-editor.org/rfc/rfc3650",
+      "namespace": [
+        "https://hdl.handle.net/"
+      ]
+    }
+  ]
+}

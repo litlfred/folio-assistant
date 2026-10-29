@@ -1,0 +1,90 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph: evidence location API",
+    "description": "Where a node or edge came from in its source. Required on anything not mechanically derived.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-KGEvidenceLocation.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-KGEvidenceLocation",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-KGEvidenceLocation.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-KGEvidenceLocation",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-KGEvidenceLocation.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-KGEvidenceLocation": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-KGEvidenceLocation.schema.json",
+        "title": "Knowledge graph: evidence location",
+        "description": "Where a node or edge came from in its source. Required on anything not mechanically derived.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "KGEvidenceLocation",
+            "description": "Resource type identifier for KGEvidenceLocation logical model"
+          },
+          "location": {
+            "type": "string",
+            "description": "file:line, a spreadsheet sheet and cell, or a BPMN element id."
+          },
+          "quote": {
+            "type": "string",
+            "description": "Verbatim text from the source."
+          },
+          "artifact": {
+            "type": "string",
+            "description": "The generated artifact affected, where one exists."
+          },
+          "by": {
+            "type": "string",
+            "description": "Who made the judgement; required when derivation is decided."
+          },
+          "at": {
+            "type": "string",
+            "format": "date",
+            "description": "When the judgement was made; required when derivation is decided."
+          }
+        },
+        "required": [
+          "resourceType",
+          "location"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/base/StructureDefinition/KGEvidenceLocation"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

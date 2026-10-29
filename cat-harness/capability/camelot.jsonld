@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/camelot.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "pr": "main",
+    "run": "40854353981"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/camelot",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "camelot",
+      "name": "camelot-py (table extraction with a confidence score)",
+      "description": "Optional second backend for scripts/pdf-tables.py, preferred when present. Extracts the same cells and column edges as pdfplumber on a ruled grid, and additionally reports a per-table parsing accuracy that lands in the artefact's `confidence` field, which pdfplumber has no equivalent for. Camelot 2.0 moved Ghostscript to an optional extra; the base install is numpy/pandas/opencv-headless/pypdfium2 and needs no egress after install. Install: pip install camelot-py.",
+      "detection": {
+        "method": "command",
+        "command": "python3 -c 'import camelot'"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/python3"
+      ]
+    }
+  ]
+}
