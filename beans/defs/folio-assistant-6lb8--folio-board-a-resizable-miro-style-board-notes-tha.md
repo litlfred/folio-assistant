@@ -2,11 +2,11 @@
 # folio-assistant-6lb8
 $schema: bean/1.0.0
 title: 'FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-09-20T10:37:35Z
-updated_at: 2026-10-05T04:57:13Z
+updated_at: 2026-10-29T08:00:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -589,3 +589,7 @@ are never deleted, so a closed epic reopened reads as churn.
 window fetch remain recorded as partial with their reason: nothing renders a
 tool's output even now, so choosing the vocabulary would be choosing terms with
 no consumer to constrain them.
+
+## Closed 2026-10-29
+
+All five boxes met and all four children closed; q2wm, the last, completed 2026-10-29 (cat-harness#565, cat-harness-tools#627). (Lane B drain thread.)
