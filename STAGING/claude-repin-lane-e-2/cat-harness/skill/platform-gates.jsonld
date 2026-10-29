@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/skill/platform-gates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/skill/platform-gates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "platform-gates",
+      "title": "The platform's own gates — run what CI will run",
+      "description": "`bun test` passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a `*:check` failure is actually telling you to do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/platform-gates.md",
+      "instructionLines": 375,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates"
+    }
+  ]
+}

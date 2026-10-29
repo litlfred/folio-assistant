@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Participant",
+  "definitions": {
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "person",
+            "agent"
+          ]
+        },
+        "id": {
+          "description": "Session id, handle or name, where one is known. Absent is normal for a person.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+  "title": "ParticipantSchema",
+  "description": "Generated from `ParticipantSchema` in schemas/discussion.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  }
+}

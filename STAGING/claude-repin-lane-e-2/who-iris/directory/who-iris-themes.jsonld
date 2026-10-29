@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/who-iris/directory/who-iris-themes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/who-iris/directory/who-iris-themes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "who-iris-themes",
+      "path": "themes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/themes"
+      ],
+      "readmePath": "themes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/who-iris/directory/who-iris-themes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-themes"
+    }
+  ]
+}

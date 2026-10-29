@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/skill/tool-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/skill/tool-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "tool-authoring",
+      "title": "Tool Authoring — from capability to concrete mechanism",
+      "description": "How concrete Tools are authored, structured, packaged, and registered across the separated multi-repository platform: defining Knowledge Graph Tool nodes, implementing TypeScript handlers in the tools repository, registering MCP tools, isolating toolchain dependencies, and validating tool-to-skill alignment.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/tool-authoring.md",
+      "instructionLines": 221,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/tool-authoring"
+    }
+  ]
+}

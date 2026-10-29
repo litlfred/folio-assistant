@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/process/Process_SubKgLifecycle/node/Start_Wanted.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/process/Process_SubKgLifecycle/node/Start_Wanted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "A sub-KG is wanted in this repository",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/process/Process_SubKgLifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/process/Process_SubKgLifecycle#flow/F0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Start_Wanted"
+    }
+  ]
+}

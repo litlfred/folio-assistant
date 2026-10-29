@@ -1,0 +1,61 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/smart-liquid-variables/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/smart-liquid-variables.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 input/scripts/generate_smart_liquid.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The Publisher's `output/`; the script names this its source of truth.",
+            "name": "igOutput",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "Repository root, where `input/` lives. Defaults to `.`.",
+            "name": "igRoot",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`input/includes/smart.liquid`, copied to `output/smart.liquid`.",
+            "name": "include",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "`url__canonical`, `url__page`, `url__json`, `text__display`, `link__html`, `elements__<key>`.",
+            "name": "categories",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "smart-liquid-variables",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "http://smart.who.int/base/skill/dak-postprocessing",
+      "title": "IG metadata → Liquid variables"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/smart-liquid-variables",
+  "path": "tools/smart-liquid-variables/"
+}

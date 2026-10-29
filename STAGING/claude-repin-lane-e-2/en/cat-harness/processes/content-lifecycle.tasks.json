@@ -1,0 +1,517 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Lifecycle",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
+ "tasks": {
+  "Task_Plan": {
+   "id": "Task_Plan",
+   "name": "Plan scope, team, artifacts",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_Plan",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_ProgMgr",
+   "skills": [
+    {
+     "name": "content-plan",
+     "href": "../../../reference/skill-instructions/content-plan.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-retire",
+      "href": "../../../reference/skill-instructions/content-retire.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../reference/skill-instructions/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../reference/skill-instructions/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_SeedBeans": {
+   "id": "Task_SeedBeans",
+   "name": "Seed the work plan",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_SeedBeans",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "shared": {
+    "id": "GT_SeedWorkPlan",
+    "type": "bpmn:GlobalTask"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "CallActivity_Editing": {
+   "id": "CallActivity_Editing",
+   "name": "Editing and HCI validation",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/CallActivity_Editing",
+   "lane": "Editors + authoring agents",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Editors",
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../reference/skill-instructions/content-author.html"
+    },
+    {
+     "name": "content-validate",
+     "href": "../../../reference/skill-instructions/content-validate.html"
+    },
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    }
+   ],
+   "calls": {
+    "name": "Editing and HCI validation",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
+    "diagram": "editing-hci-validation.html"
+   },
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_Test": {
+   "id": "Task_Test",
+   "name": "Integration test and QA sweep",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_Test",
+   "lane": "Validation and QA (mechanical + agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Qa",
+   "skills": [
+    {
+     "name": "content-test",
+     "href": "../../../reference/skill-instructions/content-test.html"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     }
+    ]
+   }
+  },
+  "CallActivity_Publication": {
+   "id": "CallActivity_Publication",
+   "name": "Draft, review and publish",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/CallActivity_Publication",
+   "lane": "Publication manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_PubMgr",
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
+   "calls": {
+    "name": "Draft, review and publish",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
+    "diagram": "draft-to-publication.html"
+   },
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Feedback": {
+   "id": "Task_Feedback",
+   "name": "Triage published feedback",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_Feedback",
+   "lane": "Review team and SMEs",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Review",
+   "skills": [
+    {
+     "name": "content-feedback",
+     "href": "../../../reference/skill-instructions/content-feedback.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_FeedbackBeans": {
+   "id": "Task_FeedbackBeans",
+   "name": "File feedback as beans",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_FeedbackBeans",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    },
+    {
+     "name": "content-feedback",
+     "href": "../../../reference/skill-instructions/content-feedback.html"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_Retire": {
+   "id": "Task_Retire",
+   "name": "Retire or archive",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_Retire",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_ProgMgr",
+   "skills": [
+    {
+     "name": "content-retire",
+     "href": "../../../reference/skill-instructions/content-retire.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-retire",
+      "href": "../../../reference/skill-instructions/content-retire.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../reference/skill-instructions/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../reference/skill-instructions/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_ProgMgr",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-retire",
+      "href": "../../../reference/skill-instructions/content-retire.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../reference/skill-instructions/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../reference/skill-instructions/release-lifecycle.html"
+     }
+    ]
+   }
+  }
+ }
+}

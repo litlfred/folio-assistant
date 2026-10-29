@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/capability/docker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/cat-harness/capability/docker",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "docker",
+      "name": "Docker",
+      "description": "Docker container runtime for building and running containerized skill environments.",
+      "detection": {
+        "method": "command",
+        "command": "docker info"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/docker"
+    }
+  ]
+}

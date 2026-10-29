@@ -1,0 +1,72 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/openapi-ingest-source/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/openapi-ingest-source.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat openapi:ingest"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root holding `cat-openapi.config.json` and the declared `openapi` directory.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--source"
+            },
+            "description": "A local checkout of the documents' repository.",
+            "name": "source",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--ref"
+            },
+            "description": "The branch, tag or commit to read each document at. Default: the checkout's HEAD.",
+            "name": "ref",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`<id>.openapi.json` and `<id>.source.json` per document, in the declared `openapi` directory.",
+            "name": "documents",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "openapi-ingest-source",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "git"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
+      "title": "OpenAPI ingest from source"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/openapi-ingest-source",
+  "path": "tools/openapi-ingest-source/"
+}

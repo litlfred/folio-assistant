@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGOutcome.schema.json",
+  "title": "Knowledge graph L1: Outcome",
+  "description": "An outcome a guideline group chose to judge a key question by, with its importance in this guideline (handbook §7.6). A node because evidence attaches to it and one list is shared by several questions (ANC Web annex 1). Flat: one node per specific outcome. name as first printed; aliases are the other printed forms (e.g. 'EGWG'); category is the printed group heading (e.g. 'Fetal/newborn morbidity'). Class IRI: http://smart.who.int/kg/outcome.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGOutcome",
+      "description": "Resource type identifier for KGOutcome logical model"
+    },
+    "@context": {
+      "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to external JSON-LD context"
+        },
+        {
+          "type": "object",
+          "description": "Inline JSON-LD context",
+          "properties": {
+            "@version": {
+              "type": "number",
+              "const": 1.1
+            },
+            "fhir": {
+              "type": "string",
+              "const": "http://hl7.org/fhir/"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "type": "array",
+          "description": "Array of JSON-LD context objects/URIs",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type identifier for KGOutcome logical model",
+      "examples": [
+        "LogicalModel-KGOutcome"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "The outcome as first printed."
+    },
+    "importance": {
+      "$ref": "./ValueSet-KGOutcomeImportanceVS.schema.json",
+      "description": "How the guideline development group rated an outcome on the 1–9 scale: 7–9 critical, 4–6 important."
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Other printed forms of the outcome (e.g. 'EGWG')."
+    },
+    "category": {
+      "type": "string",
+      "description": "The printed group heading (e.g. 'Fetal/newborn morbidity')."
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGOutcome"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        },
+        "jsonld:valuesets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "const": [
+            "KGOutcomeImportanceVS"
+          ]
+        },
+        "jsonld:contextTemplate": {
+          "type": "object",
+          "const": {
+            "@version": 1.1,
+            "fhir": "http://hl7.org/fhir/",
+            "KGOutcomeImportanceVS": "http://smart.who.int/base/ValueSet-KGOutcomeImportanceVS.jsonld"
+          }
+        }
+      }
+    }
+  ]
+}

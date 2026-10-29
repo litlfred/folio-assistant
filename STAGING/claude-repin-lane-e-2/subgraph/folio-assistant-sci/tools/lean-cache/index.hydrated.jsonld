@@ -1,0 +1,72 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-cache/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "folio-assistant-sci/scripts/lake-cache.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "name": "action",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LakeCacheAction"
+          },
+          {
+            "arg": {
+              "flag": "--lake-root"
+            },
+            "description": "The package whose `.lake/` is acted on.",
+            "name": "lakeRoot",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--package"
+            },
+            "name": "package",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "lean-cache",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bash",
+          "git",
+          "lake"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-cache-restore",
+      "title": "Lake olean cache"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/lean-cache",
+  "path": "tools/lean-cache/"
+}

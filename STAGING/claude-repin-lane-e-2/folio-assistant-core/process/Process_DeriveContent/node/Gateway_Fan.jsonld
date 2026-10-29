@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Per asset kind",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan"
+    }
+  ]
+}

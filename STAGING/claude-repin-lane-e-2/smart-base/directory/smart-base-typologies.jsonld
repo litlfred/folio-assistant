@@ -1,0 +1,29 @@
+{
+  "@context": "http://smart.who.int/base/smart-base.context.jsonld",
+  "@id": "http://smart.who.int/base/directory/smart-base-typologies.jsonld",
+  "partOf": "http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-typologies",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-typologies",
+      "path": "typologies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/typologies"
+      ],
+      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness's typologies/ are. Among them `web-annex` (formerly `dak-annex`): a WHO publication's web annexes, L1 or L2, held as data, a kind of smart-base's own because a web annex is a WHO concept fhir-harness may not name.",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-typologies"
+    }
+  ]
+}

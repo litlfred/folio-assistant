@@ -1,0 +1,65 @@
+{
+  "$ref": "#/definitions/Anchor",
+  "definitions": {
+    "Anchor": {
+      "type": "object",
+      "properties": {
+        "targetLabel": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "page-line",
+            "page",
+            "caption",
+            "section",
+            "quote",
+            "manual",
+            "unplaced"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "candidates": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetLabel",
+        "method",
+        "confidence"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-core/schema/zod/public-comment/AnchorSchema.schema.json",
+  "title": "AnchorSchema",
+  "description": "Generated from `AnchorSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  }
+}

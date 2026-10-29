@@ -1,0 +1,117 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/rewrite-moved-paths/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/rewrite-moved-paths.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "After a move between two layers lands, find every mention `<from>/<prefix>/<rest>` in the scanned tree's tracked files and rewrite it to `<to>/<prefix>/<rest>` only when the file exists under the destination root and not under the source root. Records are never read: beans, todos, memory, proposals, wireframes, QA results, upstream pins, vocab mappings, provenance figures and terminologies, and test fixtures (`DEFAULT_RECORD_GLOBS`; the CLI's `--keep <glob>` adds more, generated trees among them, which their generators rewrite — a glob is not a shell-safe argument type, so it is not a declared input). Reports by default with file and line; `--write` applies; `--check` exits 1 while a rewrite is owed.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat paths:rewrite-moved"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--from-name"
+            },
+            "description": "The moved files' old layer, as paths spell it (e.g. the harness).",
+            "name": "fromName",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--from-root"
+            },
+            "description": "That layer's root on disk.",
+            "name": "fromRoot",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--to-name"
+            },
+            "description": "The layer the files moved to.",
+            "name": "toName",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--to-root"
+            },
+            "description": "That layer's root on disk.",
+            "name": "toRoot",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--prefix"
+            },
+            "description": "A moved directory, repeatable (e.g. `scripts`, `pipeline`).",
+            "name": "prefix",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--scan"
+            },
+            "description": "The git checkout whose tracked files are read; default the source root.",
+            "name": "scan",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--write"
+            },
+            "description": "Apply the rewrites.",
+            "name": "write",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Exit 1 while any rewrite is owed; write nothing.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Rewrites made or owed, each with file and line; mentions left alone; record files not read.",
+            "name": "rewrites",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          }
+        ]
+      },
+      "name": "rewrite-moved-paths",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "git"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-separation",
+      "title": "Rewrite paths that still name a moved file's old layer — never in a record"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/rewrite-moved-paths",
+  "path": "tools/rewrite-moved-paths/"
+}

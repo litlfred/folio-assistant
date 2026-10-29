@@ -1,0 +1,28 @@
+{
+  "@context": "http://smart.who.int/base/smart-base.context.jsonld",
+  "@id": "http://smart.who.int/base/skill/l4-application-build.jsonld",
+  "partOf": "http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/l4-application-build",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l4-application-build",
+      "title": "l4-application-build",
+      "description": "Stage 8b of smart-guideline-end-to-end: build the consuming application against the stage-6 IG build (a clean build, not a publication), from the brief and the chosen stage-8a wireframes, with conformance tests from the IG's examples and test cases and a walk through each L2 user scenario it serves. Read before building an L4 application on a guideline.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l4-application-build.md",
+      "instructionLines": 44,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l4-application-build/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l4-application-build/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

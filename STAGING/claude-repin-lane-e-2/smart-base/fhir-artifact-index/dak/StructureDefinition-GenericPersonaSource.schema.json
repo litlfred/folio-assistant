@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-GenericPersonaSource.schema.json",
+  "title": "Generic Persona Source",
+  "description": "Source reference for Generic Persona - exactly one of the following must be provided:\n- url (url data type): URL to retrieve GenericPersona definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the GenericPersona definition\n- instance: Inline GenericPersona instance data",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "GenericPersonaSource",
+      "description": "Resource type identifier for GenericPersonaSource logical model"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to retrieve GenericPersona definition from input/ or external source"
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URI pointing to the GenericPersona definition"
+    },
+    "instance": {
+      "$ref": "http://smart.who.int/base/StructureDefinition-GenericPersona.schema.json",
+      "description": "Inline GenericPersona instance data"
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/GenericPersonaSource",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+}

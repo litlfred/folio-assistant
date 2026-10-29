@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-sci/directory/sci-sources.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-sci/directory/sci-sources",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "sci-sources",
+      "path": "sources/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas"
+      ],
+      "description": "Source descriptors (`folio-source-descriptor/v1`): how to ENUMERATE Lean mathlib and ask it for a SUBSET, so an agent asked for part of it is not told the API by a human every time. Moved here from large-datasets' `sources/` on 2026-10-01 (owner ruling: large-datasets dissolves into cat-harness; bean `j7ql`), because a descriptor is ABOUT one corpus and the instance that holds or catalogues that corpus owns it — the schema stays in cat-harness. Its far-apart sibling, WHO IRIS, is in who-iris: a mathlib declaration needs its import closure (`subsetIsSelfContained: false`), one identifier system, a local module graph.",
+      "readmePath": "sources/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-lane-e-2/folio-assistant-sci/directory/sci-sources",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-sources"
+    }
+  ]
+}

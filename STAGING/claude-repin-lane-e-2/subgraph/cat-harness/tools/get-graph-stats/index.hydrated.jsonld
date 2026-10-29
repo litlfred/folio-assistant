@@ -1,0 +1,52 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/get-graph-stats/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/get-graph-stats.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Node and edge counts for the content graph by provenance and kind, and whether each root exists. Tells 'nothing matched' from 'that population has not been built'.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/graph.ts"
+        },
+        "mcp": {
+          "tool": "get_graph_stats"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "Rebuild the index from disk first.",
+            "name": "refresh",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "JSON: node and edge counts, by provenance and kind, per root.",
+            "name": "stats",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "get-graph-stats",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/corpus-grep",
+      "title": "Content graph counts"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/get-graph-stats",
+  "path": "tools/get-graph-stats/"
+}

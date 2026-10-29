@@ -1,0 +1,43 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
+      "@type": "bootstrap:Subgraph",
+      "name": "who-iris-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
+      "@type": "bootstrap:Skill",
+      "name": "iris-dspace",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f88572dc0050076ae1dfc4392eb3c308078d0c0132743ed13e840e828be7ac2d",
+        "bytes": 15235,
+        "sha256": "f88572dc0050076ae1dfc4392eb3c308078d0c0132743ed13e840e828be7ac2d"
+      },
+      "title": "IRIS, DSpace and Dublin Core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
+      "@type": "bootstrap:Skill",
+      "name": "iris-oxigraph",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d87efa3ec8500f99616d23e807e0059579f8175374ddd30d580b0781ddf070ea",
+        "bytes": 8515,
+        "sha256": "d87efa3ec8500f99616d23e807e0059579f8175374ddd30d580b0781ddf070ea"
+      },
+      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}

@@ -1,0 +1,59 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-CDSCv2.B.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-CDSCv2"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-CDSCv2.B.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-10-29T09:42:07.006Z",
+  "@graph": [
+    {
+      "id": "#B",
+      "name": "Health system/Provider administration"
+    },
+    {
+      "id": "#B1",
+      "name": "Blood bank information management systems"
+    },
+    {
+      "id": "#B2",
+      "name": "Health finance-related information systems"
+    },
+    {
+      "id": "#B3",
+      "name": "Health program monitoring systems"
+    },
+    {
+      "id": "#B4",
+      "name": "Human resource information systems"
+    },
+    {
+      "id": "#B5",
+      "name": "Learning and training systems"
+    },
+    {
+      "id": "#B6",
+      "name": "Logistics management information systems (LMIS)"
+    },
+    {
+      "id": "#B7",
+      "name": "Patient Administration systems"
+    },
+    {
+      "id": "#B8",
+      "name": "Research information systems"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/AstPlan",
+  "definitions": {
+    "AstPlan": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "ig-ast-plan/v1"
+        },
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coneFraction": {
+          "type": "number"
+        },
+        "rebuild": {
+          "type": "array",
+          "items": {}
+        },
+        "fullBuildBecause": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "decision"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast/AstPlanSchema.schema.json",
+  "title": "AstPlanSchema",
+  "description": "Generated from `AstPlanSchema` in schemas/ig-ast.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  }
+}

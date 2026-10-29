@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-status-update/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-status-update.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/update_proof_status.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--manifest"
+            },
+            "description": "The proof-objects.json to update.",
+            "name": "manifest",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--build-log"
+            },
+            "description": "The Lean build log; stdin when absent.",
+            "name": "buildLog",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "proof-objects.json with statuses updated in place.",
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "proof-status-update",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-status-tracking",
+      "title": "Proof status from a Lean build"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/proof-status-update",
+  "path": "tools/proof-status-update/"
+}

@@ -1,0 +1,936 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(149)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > ul > li:nth-child(149) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(143) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > ul > li:nth-child(149) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(149) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>KG export | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="KG export" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="KG export" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-kg-export",
+    "src": "../../assets/qa/reference-skill-instructions-kg-export/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-kg-export/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=4885e06b0507"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=ffd09062ff20"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=1a18332e77ec" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-228yz98mq02.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-228yz98mq02","here":"/reference/skill-instructions/kg-export.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#it-is-json-ld-and-the-type-id-coercion-is-the-whole-point","label":"It is JSON-LD, and the @type: @id coercion is the whole point"},{"href":"#subject-iris--a-path-not-a-fragment","label":"Subject IRIs — a path, not a #fragment","children":[{"href":"#the-rule","label":"The rule","depth":1},{"href":"#why","label":"Why","depth":1},{"href":"#the-other-exception-vocabulary-terms-keep-","label":"The other exception: vocabulary terms keep #","depth":1},{"href":"#every-id-still-has-to-load","label":"Every @id still has to load","depth":1},{"href":"#today-and-what-is-still-a-fragment","label":"Today, and what is still a fragment","depth":1}],"fold":"5 sub-sections"},{"href":"#declaring-a-term-is-a-decision-not-a-line-of-context","label":"Declaring a term is a decision, not a line of context"},{"href":"#every-key-is-a-declared-term--in-content-documents-too","label":"Every key is a declared term — in content documents too"},{"href":"#a-prefix-is-the-stub--and-a-prefix-that-is-spoken-must-be-bound","label":"A prefix is the stub — and a prefix that is spoken must be bound","children":[{"href":"#naming-a-namespace-document--ns-and-why-owner-2026-09-30","label":"Naming a namespace document — ns, and why (owner, 2026-09-30)","depth":1},{"href":"#one-source-per-layer--and-no-all-layers-union-owner-2026-09-30","label":"One source per layer — and no all-layers union (owner, 2026-09-30)","depth":1}],"fold":"2 sub-sections"},{"href":"#fsh-guts-never-reaches-a-published-graph","label":"fsh-guts NEVER reaches a published graph","children":[{"href":"#this-is-not-a-contradiction-of-basefsh-gutsjsonld","label":"This is not a contradiction of \u003cbase>/fsh-guts.jsonld","depth":1},{"href":"#strip-where-the-document-is-built","label":"Strip where the document is built","depth":1}],"fold":"2 sub-sections"},{"href":"#staging-must-not-claim-to-be-canonical","label":"Staging must not claim to be canonical"},{"href":"#the-graph-carries-its-own-vocabulary","label":"The graph carries its own vocabulary"},{"href":"#a-preview-says-what-it-is-and-links-back--explicitly","label":"A preview says what it is, and links back — explicitly"},{"href":"#naming--artefacts-take-the-repositorys-name-the-config-does-not","label":"Naming — artefacts take the repository’s name, the config does not"},{"href":"#the-edges-are-the-reason-to-publish","label":"The edges are the reason to publish"},{"href":"#a-partial-graph-must-never-pass-for-a-whole-one","label":"A partial graph must never pass for a whole one"},{"href":"#whose-nodes--an-instance-publishes-its-own-and-leaves-a-tombstone","label":"Whose nodes — an instance publishes its own, and leaves a tombstone"},{"href":"#named-subgraphs--one-iri-two-files-framed-from-one-graph","label":"Named subgraphs — one IRI, two files, framed from one graph","children":[{"href":"#identity","label":"Identity","depth":1},{"href":"#two-files-under-the-iri","label":"Two files under the IRI","depth":1},{"href":"#building-the-files","label":"Building the files","depth":1},{"href":"#published-per-pin-in-a-package","label":"Published per pin, in a package","depth":1},{"href":"#membership-is-declared-not-inferred","label":"Membership is declared, not inferred","depth":1},{"href":"#consumers","label":"Consumers","depth":1}],"fold":"6 sub-sections"},{"href":"#payloads--heavy-content-by-content-address","label":"Payloads — heavy content by content address","children":[{"href":"#addressing","label":"Addressing","depth":1},{"href":"#the-link","label":"The link","depth":1},{"href":"#the-media-type-is-in-a-sidecar","label":"The media type is in a sidecar","depth":1},{"href":"#what-is-heavy","label":"What is heavy","depth":1},{"href":"#building-and-checking","label":"Building and checking","depth":1}],"fold":"5 sub-sections"},{"href":"#per-slice-sqlite--a-named-subgraph-as-one-file-a-browser-mounts","label":"Per-slice SQLite — a named subgraph as one file a browser mounts","children":[{"href":"#the-four-pilots-measured","label":"The four pilots, measured","depth":1},{"href":"#what-a-slice-file-holds","label":"What a slice file holds","depth":1},{"href":"#the-manifest-beside-it","label":"The manifest beside it","depth":1},{"href":"#content-addressed-file-fixed-name-manifest","label":"Content-addressed file, fixed-name manifest","depth":1},{"href":"#deterministic-proved","label":"Deterministic, proved","depth":1},{"href":"#built-at-deploy-not-committed--when-the-source-moves-on-most-merges","label":"Built at deploy, not committed — when the source moves on most merges","depth":1},{"href":"#the-client--download-opfs-mount-with-a-fallback","label":"The client — download, OPFS, mount, with a fallback","depth":1},{"href":"#the-search-page--one-page-the-slice-is-a-parameter","label":"The search page — one page, the slice is a parameter","depth":1},{"href":"#adding-a-slice","label":"Adding a slice","depth":1}],"fold":"9 sub-sections"},{"href":"#adding-a-node-type","label":"Adding a node type"},{"href":"#running-it","label":"Running it"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>KG export</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/kg-export.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/kg/kg-core/kg-export.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/kg-export.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/kg-export.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="kg-export--publishing-the-graph-as-linked-data-not-as-a-page"><a href="#kg-export--publishing-the-graph-as-linked-data-not-as-a-page" class="anchor-heading" aria-labelledby="kg-export--publishing-the-graph-as-linked-data-not-as-a-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> KG export — publishing the graph as linked data, not as a page
+  
+  
+</h1><p><strong><code class="language-plaintext highlighter-rouge">agentic-harness</code> has no renderer.</strong> <code class="language-plaintext highlighter-rouge">folio</code> is the only <code class="language-plaintext highlighter-rouge">renderable</code> graph
+kind and it belongs to the content core, so the harness cannot put its
+knowledge graph on a page the way a folio puts a chapter on one. That boundary
+is deliberate and this does not move it.</p><p><strong>The way out is that the export is data.</strong> One JSON document describing the
+graph; drawing it is somebody else’s job, and may be a static viewer, an
+external tool, or nothing at all. Publishing data does not make the harness
+self-documenting — it makes it <em>inspectable</em>, which is the thing that was
+missing.</p><p>Per <a href="../../reference/skill-instructions/skills-and-tools.html"><code class="language-plaintext highlighter-rouge">skills-and-tools</code></a>:</p><div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>this skill</strong></td><td>produce the serialization — generic, no host named</td></tr><tr><td><strong>the Tool</strong></td><td>publish it somewhere — today <code class="language-plaintext highlighter-rouge">pages-publish</code> (GitHub Pages)</td></tr></tbody></table></div><p>A GitLab Pages or object-store Tool satisfies the same skill later. Nothing in
+this skill names a host, and nothing in it should.</p><h2 id="it-is-json-ld-and-the-type-id-coercion-is-the-whole-point"><a href="#it-is-json-ld-and-the-type-id-coercion-is-the-whole-point" class="anchor-heading" aria-labelledby="it-is-json-ld-and-the-type-id-coercion-is-the-whole-point"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It is JSON-LD, and the <code class="language-plaintext highlighter-rouge">@type: @id</code> coercion is the whole point
+  
+  
+</h2><p>Modelled on WHO’s SMART Base repository’s
+<code class="language-plaintext highlighter-rouge">input/scripts/generate_jsonld_vocabularies.py</code>. Four things carry the weight,
+and the first is the one that is cheap to lose and invisible when you do:</p><p><strong>1. Every edge term is declared <code class="language-plaintext highlighter-rouge">{"@type": "@id"}</code>.</strong> Without that coercion,
+<code class="language-plaintext highlighter-rouge">requires</code>, <code class="language-plaintext highlighter-rouge">performedBy</code> and <code class="language-plaintext highlighter-rouge">partOf</code> are <strong>string literals</strong> to any
+JSON-LD processor, and the document is a list of records that merely <em>looks</em>
+linked to a human reading the JSON. Declaring them costs one line each and is
+the difference between 900 records and a traversable graph. A test asserts it.</p><p><strong>2. The document’s <code class="language-plaintext highlighter-rouge">@id</code> is the URL it is served from</strong>, with
+<code class="language-plaintext highlighter-rouge">@type: prov:Entity</code> and a <code class="language-plaintext highlighter-rouge">generatedAt</code> typed <code class="language-plaintext highlighter-rouge">xsd:dateTime</code>. Fetch the <code class="language-plaintext highlighter-rouge">@id</code>,
+get the document. WHO SMART Base’s type-usage note is explicit about this and it is
+what makes the graph mergeable with anyone else’s.</p><p><strong>3. A subject’s IRI is a path under its instance, never a <code class="language-plaintext highlighter-rouge">#fragment</code> of
+the document</strong> — <code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/&lt;kind&gt;/&lt;id&gt;</code>, each served as its own file. This is the rule for every
+IRI an agent mints or authors; the reasons, the one exception and the
+migration are in §”Subject IRIs — a path, not a <code class="language-plaintext highlighter-rouge">#fragment</code>” below. It
+replaces the old point 3 (<em>“Node IRIs are fragments of that document”</em>), which
+is what the exporter still does today.</p><p><strong>4. No <code class="language-plaintext highlighter-rouge">@vocab</code>, and <code class="language-plaintext highlighter-rouge">id</code>/<code class="language-plaintext highlighter-rouge">type</code> are aliased.</strong> Every term carries its full
+namespace IRI, so an undeclared key stays undeclared instead of silently
+minting an IRI nobody chose. The aliases keep the published JSON readable as
+ordinary records for someone who does not know JSON-LD.</p><p><strong>5. Every property name in <code class="language-plaintext highlighter-rouge">@graph</code> is declared in <code class="language-plaintext highlighter-rouge">@context</code>, and the export
+FAILS if one is not.</strong> A name that is neither declared nor an absolute IRI is
+not a property: a processor drops it. Measured before bean <code class="language-plaintext highlighter-rouge">ovkk</code>, 19 declared
+terms against 53 used — <strong>34 names, 3583 occurrences</strong>, every one of them
+visible when the file is read as plain JSON, which is why it went unnoticed for
+as long as the document had no consumer.</p><h2 id="subject-iris--a-path-not-a-fragment"><a href="#subject-iris--a-path-not-a-fragment" class="anchor-heading" aria-labelledby="subject-iris--a-path-not-a-fragment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Subject IRIs — a path, not a <code class="language-plaintext highlighter-rouge">#fragment</code></h2><p><strong>This section owns the rule.</strong> Every other skill that names a subject’s IRI
+points here rather than restating it.</p><p>Owner, 2026-10-23: <em>“hashes not so good… why not <code class="language-plaintext highlighter-rouge">&lt;instance doc&gt;/&lt;kind&gt;/&lt;id&gt;</code>?”</em>
+— and, confirming the reasons below: <em>“yes that is correct. please update
+authoring KG skills appropriately so this doesnt happen again”</em>.</p><h3 id="the-rule"><a href="#the-rule" class="anchor-heading" aria-labelledby="the-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule
+  
+  
+</h3><p>A knowledge-graph <strong>subject</strong> (a skill, a process, a global task, a role, an
+actor, a decision, a directory, a package, a capability, an asset) is named</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;doc dir&gt;/&lt;kind&gt;/&lt;id&gt;
+</code></pre></div></div><p>where <strong><code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;</code></strong> is the directory the instance’s own document is served
+from. That is the URL-space rule (bean <code class="language-plaintext highlighter-rouge">x0hj</code>, carried in the tools layer
+as <code class="language-plaintext highlighter-rouge">sthf</code>): <code class="language-plaintext highlighter-rouge">&lt;baseurl&gt;/&lt;instantiated harness&gt;/&lt;path to rendered content&gt;</code>.
+§”Which base an <code class="language-plaintext highlighter-rouge">@id</code> is minted against” in
+<a href="../../reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a> says which base applies to
+an instance on this site and to an instance with its own <code class="language-plaintext highlighter-rouge">canonicalUrl</code>.
+It is the form Tools already use, <code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/tools/&lt;id&gt;.jsonld</code> (bean <code class="language-plaintext highlighter-rouge">tdir</code>).</p><p><strong>The host has no special case.</strong> Owner, 2026-10-23 (decision 1b, option
+(i) “move all”, on
+<a href="https://github.com/litlfred/cat-harness-tools/issues/603">cat-harness-tools#603</a>):
+<em>“the host (cat-harness) is no longer special. Its document, its Tools and its
+subjects all move under <code class="language-plaintext highlighter-rouge">&lt;site&gt;/cat-harness/</code>“</em>. The reason: <strong>one rule for
+every layer, with subjects beside their document.</strong> So <code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;</code> is
+<code class="language-plaintext highlighter-rouge">&lt;site&gt;/&lt;instance&gt;/</code> for every instance this site publishes, the host
+included:</p><div class="table-wrapper"><table><thead><tr><th></th><th>IRI</th></tr></thead><tbody><tr><td>the host’s document</td><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld</code></td></tr><tr><td>a host subject</td><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export</code></td></tr><tr><td>a host Tool</td><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/cat-harness/tools/beans-cli.jsonld</code></td></tr><tr><td>❌ retired</td><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/cat-harness.jsonld</code>, <code class="language-plaintext highlighter-rouge">…/folio-assistant/tools/&lt;id&gt;.jsonld</code>: the host at the site root</td></tr></tbody></table></div><p>Do not mint, link or write anything at a root-level host path. The old root
+addresses keep a one-release tombstone
+(<a href="../../reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a> §”An <code class="language-plaintext highlighter-rouge">@id</code> that moved keeps
+a tombstone for ONE release”).</p><div class="table-wrapper"><table><thead><tr><th></th><th>IRI</th></tr></thead><tbody><tr><td>✅ ruled</td><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/&lt;instance&gt;/globalTask/GT_SeedWorkPlan</code></td></tr><tr><td>❌ replaced</td><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/&lt;instance&gt;/&lt;instance&gt;.jsonld#globalTask/GT_SeedWorkPlan</code></td></tr><tr><td>❌ unservable</td><td><code class="language-plaintext highlighter-rouge">…/&lt;instance&gt;/&lt;instance&gt;.jsonld/globalTask/GT_SeedWorkPlan</code>: a static host cannot hold a file and a directory under one name</td></tr></tbody></table></div><p><strong>A process’s parts</strong> (owner, 2026-10-23T14:56Z, picking one of three options: <em>“Steps
+and lanes get pages, and flows stay fragments of the process page … Everything
+anyone cites (a step, a role’s lane) is a real resource, and the arrows, which
+only matter inside their diagram, stay on the process page.”</em>):</p><div class="table-wrapper"><table><thead><tr><th>part</th><th>IRI</th><th></th></tr></thead><tbody><tr><td>a step (any flow node)</td><td><code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/process/P/node/T</code></td><td>a subject: its own page and <code class="language-plaintext highlighter-rouge">.jsonld</code></td></tr><tr><td>a lane</td><td><code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/process/P/lane/L</code></td><td>a subject: its own page and <code class="language-plaintext highlighter-rouge">.jsonld</code></td></tr><tr><td>a sequence flow</td><td><code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/process/P#flow/F</code></td><td>a fragment of the process’s page</td></tr></tbody></table></div><p><strong>A flow is the one <code class="language-plaintext highlighter-rouge">#</code> this rule allows for instance data</strong>; the other is the
+vocabulary exception below. It is allowed because nothing cites an arrow on
+its own. Any other part of a subject that people cite is itself a subject and
+takes a path.</p><h3 id="why"><a href="#why" class="anchor-heading" aria-labelledby="why"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why
+  
+  
+</h3><ul><li><strong>A <code class="language-plaintext highlighter-rouge">#fragment</code> never reaches the server.</strong> Dereferencing the subject
+fetches the whole instance graph, and the subject cannot have a page or a
+document of its own.</li><li><strong>A subject is a real resource</strong>: its own page, its own JSON-LD, its own
+history and cache, linkable on its own.</li><li><strong><code class="language-plaintext highlighter-rouge">#</code> already means “a place on this HTML page”.</strong> Using it for identity
+mixes identity with navigation.</li><li><strong>Slash paths nest</strong> (<code class="language-plaintext highlighter-rouge">…/process/P/node/T</code>); fragments do not.</li><li><strong>It is the FHIR convention</strong> the owner already uses: <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;Type&gt;/&lt;id&gt;</code>.</li></ul><h3 id="the-other-exception-vocabulary-terms-keep-"><a href="#the-other-exception-vocabulary-terms-keep-" class="anchor-heading" aria-labelledby="the-other-exception-vocabulary-terms-keep-"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The other exception: vocabulary terms keep <code class="language-plaintext highlighter-rouge">#</code></h3><p><code class="language-plaintext highlighter-rouge">#</code> stays right for <strong>vocabulary and namespace terms</strong> (<code class="language-plaintext highlighter-rouge">…/ns#Term</code>): one
+small document holds every term, and fetching it is what a consumer wants.
+That covers classes, properties, graph-typology individuals, and the SKOS
+glossary’s concepts, which bean <code class="language-plaintext highlighter-rouge">xsqm</code> (<em>“one SKOS”</em>) puts in the layer’s
+namespace. If a thing has instances, a page or a history of its own, it is a
+subject and takes a path.</p><h3 id="every-id-still-has-to-load"><a href="#every-id-still-has-to-load" class="anchor-heading" aria-labelledby="every-id-still-has-to-load"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every <code class="language-plaintext highlighter-rouge">@id</code> still has to load
+  
+  
+</h3><p>The old point 3 had one thing right, and it stays: <em>“An <code class="language-plaintext highlighter-rouge">@id</code> that looks
+dereferenceable and is not is worse than one that is obviously local.”</em> GitHub
+Pages has no redirects, no 303 and no content negotiation. So a path IRI is
+served by <strong>a file of its own</strong>: a small page at <code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/&lt;kind&gt;/&lt;id&gt;</code>
+carrying the node as JSON-LD, plus <code class="language-plaintext highlighter-rouge">&lt;id&gt;.jsonld</code> beside it, as Tools are
+served. Whoever mints the path also publishes the file, in the same change.
+A slash IRI with nothing behind it brings back the twenty-three 404s from the
+README generator that <code class="language-plaintext highlighter-rouge">AGENTS.md</code> records.</p><p><strong>Every rendered link to a subject uses its subject IRI</strong>, meaning its page,
+and never a fragment of the instance document. That covers the ⓘ panel and
+the icons on a rendered BPMN diagram, step tables and role links. Owner,
+2026-10-23T14:57Z: <em>“and things like the info button/icons in the bpmn
+rendering should point to those new IRIs”</em>.</p><p>bootstrap states the same rule for its own graph, in its own terms, in
+<a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-publication.md"><code class="language-plaintext highlighter-rouge">bootstrap-graph-publication</code></a>
+§”Each subject’s own address”.</p><h3 id="today-and-what-is-still-a-fragment"><a href="#today-and-what-is-still-a-fragment" class="anchor-heading" aria-labelledby="today-and-what-is-still-a-fragment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Today, and what is still a fragment
+  
+  
+</h3><p><strong>The tools layer mints paths.</strong> Since
+<a href="https://github.com/litlfred/cat-harness-tools/pull/620">cat-harness-tools#620</a>,
+<code class="language-plaintext highlighter-rouge">makeIri</code> in <code class="language-plaintext highlighter-rouge">scripts/kg-export.ts</code> calls <code class="language-plaintext highlighter-rouge">subjectIri</code>
+(<code class="language-plaintext highlighter-rouge">scripts/lib/subject-iri.ts</code>), which mints <code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/&lt;kind&gt;/&lt;id&gt;</code>, and a
+process flow as <code class="language-plaintext highlighter-rouge">&lt;doc dir&gt;/process/P#flow/F</code>. The glossary export and the
+directory-container <code class="language-plaintext highlighter-rouge">@id</code> (<code class="language-plaintext highlighter-rouge">subgraphIri</code>) go through the same function.</p><p>Two things still mint fragments:</p><ul><li><strong>bootstrap’s own graph.</strong> bootstrap-tools <code class="language-plaintext highlighter-rouge">scripts/export-graph.ts</code>
+publishes it, so <code class="language-plaintext highlighter-rouge">subjectIri</code> keeps <code class="language-plaintext highlighter-rouge">bootstrap.jsonld#&lt;kind&gt;/&lt;id&gt;</code> for a link
+into that document (<code class="language-plaintext highlighter-rouge">FRAGMENT_DOCUMENT_STUBS</code>). The entry goes in the PR that
+moves that publisher to paths.</li><li><strong>own-canonical instances</strong> (the SMART IGs and others), whose subject IRIs do
+not load yet:
+<a href="https://github.com/litlfred/cat-harness-tools/issues/638">cat-harness-tools#638</a>.</li></ul><p>So:</p><ul><li><strong>mint through <code class="language-plaintext highlighter-rouge">subjectIri</code></strong> (or <code class="language-plaintext highlighter-rouge">makeIri</code>, which calls it), never by hand.</li><li><strong>do not add a new hash-IRI minter for subjects</strong>, and do not hand-write a
+<code class="language-plaintext highlighter-rouge">….jsonld#&lt;kind&gt;/&lt;id&gt;</code> IRI in new content.</li><li><strong>remove this subsection</strong> when bootstrap’s publisher and #638 land.</li></ul><h2 id="declaring-a-term-is-a-decision-not-a-line-of-context"><a href="#declaring-a-term-is-a-decision-not-a-line-of-context" class="anchor-heading" aria-labelledby="declaring-a-term-is-a-decision-not-a-line-of-context"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Declaring a term is a decision, not a line of context
+  
+  
+</h2><p>Five questions, in this order. The worked call for each term is in
+<code class="language-plaintext highlighter-rouge">buildContext()</code>, beside the term it justifies.</p><ol><li><strong>Does the fact belong in the graph at all?</strong> Five of the thirty-four were
+DENORMALISED copies of links already present — <code class="language-plaintext highlighter-rouge">implementsSkillNames</code>,
+<code class="language-plaintext highlighter-rouge">satisfiesSkillNames</code>, <code class="language-plaintext highlighter-rouge">graphTypologies</code>, <code class="language-plaintext highlighter-rouge">packagePaths</code>, <code class="language-plaintext highlighter-rouge">laneName</code>. Removed
+rather than declared, once every one of those links was shown to resolve for
+every node. A name beside the link that reaches it is a second answer that
+can go stale; what a consumer must never have to do is recover a fact by
+splitting an IRI.</li><li><strong>Is it a LINK or a literal?</strong> Wrong here is worse than undeclared —
+confidently wrong rather than absent. Under <code class="language-plaintext highlighter-rouge">{"@type": "@id"}</code> the value
+must already BE an IRI: a bare <code class="language-plaintext highlighter-rouge">git-push</code> resolves against the document base
+to <code class="language-plaintext highlighter-rouge">&lt;base&gt;/git-push</code>, which nobody minted and nothing serves. So
+<code class="language-plaintext highlighter-rouge">hasCapability</code> mints its values with <code class="language-plaintext highlighter-rouge">makeIri</code>, and a repo-relative path
+(<code class="language-plaintext highlighter-rouge">instructionsPath</code>, <code class="language-plaintext highlighter-rouge">sourcePath</code>, <code class="language-plaintext highlighter-rouge">maintainsFrom</code>) stays a literal for the
+reverse reason.</li><li><strong>Does the referent exist in this graph?</strong> <code class="language-plaintext highlighter-rouge">roleName</code>, <code class="language-plaintext highlighter-rouge">permissionName</code> and
+<code class="language-plaintext highlighter-rouge">decisionRef</code> stayed names: the role registry, the permission vocabulary and
+the DMN tables are not collected, so 69 coerced IRIs would have resolved to
+nothing. Each becomes a link the day its referent becomes a node — residue
+worth recording, not a reason to assert the edge early.</li><li><strong>Is one name carrying two relations?</strong> Then it is two terms: <code class="language-plaintext highlighter-rouge">source</code> was a
+<code class="language-plaintext highlighter-rouge">.bpmn</code> path on a Process and <code class="language-plaintext highlighter-rouge">bpmn-lane</code> on a lane-derived Role (a node
+kind retired in #1168 B9b: a lane is now a <code class="language-plaintext highlighter-rouge">Lane</code>), so it is
+<code class="language-plaintext highlighter-rouge">sourcePath</code> and <code class="language-plaintext highlighter-rouge">sourceKind</code>. Heterogeneous SHAPE under one relation is a
+different case — <code class="language-plaintext highlighter-rouge">install</code> is a command string from a Capability and a
+dispatch object from a Tool, and stays one term typed <code class="language-plaintext highlighter-rouge">@json</code>, because
+declaring a container term alone keeps the outer key and drops every inner
+one.</li><li><p><strong>Does a published standard already say it?</strong> Then the term IS the
+standard’s property, and nothing is minted. Owner, 2026-09-30 (bean
+<code class="language-plaintext highlighter-rouge">xsqm</code>): <em>“emphasize preexisting standards … now align”</em>. <code class="language-plaintext highlighter-rouge">title</code> and
+<code class="language-plaintext highlighter-rouge">description</code> are Dublin Core’s; <code class="language-plaintext highlighter-rouge">partOf</code>/<code class="language-plaintext highlighter-rouge">inSubgraph</code> are
+<code class="language-plaintext highlighter-rouge">dcterms:isPartOf</code>, <code class="language-plaintext highlighter-rouge">holdsGraph</code> is <code class="language-plaintext highlighter-rouge">dcterms:type</code>, <code class="language-plaintext highlighter-rouge">conformsTo</code> is
+<code class="language-plaintext highlighter-rouge">dcterms:conformsTo</code>; a sequence flow’s <code class="language-plaintext highlighter-rouge">from</code>/<code class="language-plaintext highlighter-rouge">to</code> are BPMN’s own
+<code class="language-plaintext highlighter-rouge">sourceRef</code>/<code class="language-plaintext highlighter-rouge">targetRef</code> and a node’s <code class="language-plaintext highlighter-rouge">incoming</code>/<code class="language-plaintext highlighter-rouge">outgoing</code> BPMN’s
+attributes of those names; a task’s skill is <code class="language-plaintext highlighter-rouge">requires</code>, which is
+<code class="language-plaintext highlighter-rouge">dcterms:requires</code> (the task, the dependent node, requires the skill), and
+a lane’s role (<code class="language-plaintext highlighter-rouge">bindsRole</code>) is BPMN’s own <code class="language-plaintext highlighter-rouge">partitionElementRef</code> (owner,
+2026-10-16). bootstrap’s own graph (bootstrap-tools’ <code class="language-plaintext highlighter-rouge">export-graph.ts</code>)
+uses the same IRIs, so the two graphs agree.</p><p><strong>How, so it cannot drift:</strong> a term that restated a standard keeps its
+gloss in <code class="language-plaintext highlighter-rouge">schemas/content/vocabulary.ts</code> and gains <code class="language-plaintext highlighter-rouge">replacedBy</code>, a CURIE.
+<code class="language-plaintext highlighter-rouge">buildContext()</code> maps each such key through <code class="language-plaintext highlighter-rouge">propertyIri()</code>
+(<code class="language-plaintext highlighter-rouge">schemas/namespaces.ts</code>), which reads that field, so the exporter cannot
+name one IRI while the vocabulary names another. The published vocabulary
+keeps the old term, <code class="language-plaintext highlighter-rouge">owl:deprecated</code> and <code class="language-plaintext highlighter-rouge">dcterms:isReplacedBy</code> the
+standard property: data already holding the old IRI still dereferences to
+a definition that says where to go. The JSON keys are unchanged, so a
+reader of plain JSON sees no difference.</p><p>What stays minted is what no standard says: <code class="language-plaintext highlighter-rouge">performedBy</code>, <code class="language-plaintext highlighter-rouge">inLane</code>,
+<code class="language-plaintext highlighter-rouge">hasSkill</code>, <code class="language-plaintext highlighter-rouge">startNode</code>, and the rest. BPMN spells a lane’s members as
+<code class="language-plaintext highlighter-rouge">flowNodeRef</code> on the LANE; <code class="language-plaintext highlighter-rouge">inLane</code> is the inverse, on the node, and no
+standard names that direction.</p></li></ol><p><strong>No <code class="language-plaintext highlighter-rouge">canonicalUrl</code> and no <code class="language-plaintext highlighter-rouge">--base-url</code> → no absolute IRIs</strong>, reported in
+<code class="language-plaintext highlighter-rouge">problems[]</code> rather than papered over. A fabricated absolute base is the same
+failure as a fabricated link.</p><h2 id="every-key-is-a-declared-term--in-content-documents-too"><a href="#every-key-is-a-declared-term--in-content-documents-too" class="anchor-heading" aria-labelledby="every-key-is-a-declared-term--in-content-documents-too"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every key is a declared term — in content documents too
+  
+  
+</h2><p>Rule 5 above, applied to CONTENT (bean <code class="language-plaintext highlighter-rouge">yh6u</code>): in every document on the
+published content context, a plain key must be a declared term, or a JSON-LD
+processor drops it without a word. Measured before the check existed: 8
+undeclared keys across 392 committed figure blocks — every agent-drafted figure
+narrative was being dropped. <code class="language-plaintext highlighter-rouge">bun run cat check:content-keys</code> now fails on one
+(it judges documents on the content context and on an instance’s own context).</p><p>It does <strong>not</strong> descend into a value typed <code class="language-plaintext highlighter-rouge">@json</code>. Such a value is a JSON
+literal by declaration: its inner keys are data, not properties. That is the
+right home for a nested structure that is ours rather than linked data, and
+<strong>the only way its nulls survive</strong> — the three-state rule lives in them.</p><p><strong>A path is a literal, never an <code class="language-plaintext highlighter-rouge">@id</code>.</strong> A document-relative path coerced to
+<code class="language-plaintext highlighter-rouge">@id</code> resolves against the context’s <code class="language-plaintext highlighter-rouge">@base</code>, not against the document, and so
+names a location the file is not at. <code class="language-plaintext highlighter-rouge">text</code> did exactly that on all 1,323
+committed prose blocks — <code class="language-plaintext highlighter-rouge">../sections/x.md</code> became a well-formed link to
+nowhere — until bean <code class="language-plaintext highlighter-rouge">589f</code> made it, <code class="language-plaintext highlighter-rouge">leanSource</code> and <code class="language-plaintext highlighter-rouge">file</code> literals.
+<code class="language-plaintext highlighter-rouge">check:content-keys</code> now fails if a file path sits under any <code class="language-plaintext highlighter-rouge">@id</code> term.</p><p><strong>The upgrade rule</strong> (owner, 2026-09-23, chosen for the least drift): a path
+term becomes a link — <code class="language-plaintext highlighter-rouge">@type: @id</code> with ABSOLUTE IRIs minted by the one
+function that mints block IRIs — when, and only when, the files it names are
+SERVED at a URL an instance declares. Until then a link is a promise nothing
+keeps, and a literal is the honest record: one reading, resolved by our tools
+against the file that carries it.</p><h2 id="a-prefix-is-the-stub--and-a-prefix-that-is-spoken-must-be-bound"><a href="#a-prefix-is-the-stub--and-a-prefix-that-is-spoken-must-be-bound" class="anchor-heading" aria-labelledby="a-prefix-is-the-stub--and-a-prefix-that-is-spoken-must-be-bound"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A prefix is the stub — and a prefix that is spoken must be bound
+  
+  
+</h2><p>Owner, 2026-09-23: <em>“prefix -&gt; match stub”</em>. Each of our namespaces is
+<code class="language-plaintext highlighter-rouge">&lt;canonical&gt;/&lt;stub&gt;/ns#</code>, so the prefix bound to it is <strong>that same word</strong>:</p><div class="table-wrapper"><table><thead><tr><th>namespace</th><th>prefix</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/bootstrap/v0/ns#</code></td><td><code class="language-plaintext highlighter-rouge">bootstrap</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">…/folio-assistant/cat-harness/ns#</code></td><td><code class="language-plaintext highlighter-rouge">cat-harness</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">…/folio-assistant/&lt;content-core&gt;/ns#</code></td><td>the content core</td></tr></tbody></table></div><p>bootstrap’s row is the exception to the <code class="language-plaintext highlighter-rouge">&lt;canonical&gt;/&lt;stub&gt;/</code> shape, and says
+so: its namespace sits under bootstrap’s own <code class="language-plaintext highlighter-rouge">iriBase</code> and carries the
+release’s MAJOR (bean <code class="language-plaintext highlighter-rouge">r3gy</code> E; owner, 2026-10-23, the major and not the full
+version), because bootstrap is published from its own repository; the exact
+release an agent reads is its pin’s. The prefix is still the
+stub. The address is written once, in <code class="language-plaintext highlighter-rouge">cat-harness/code-lists/own-namespaces.json</code> (read as
+<code class="language-plaintext highlighter-rouge">CAT_BOOTSTRAP_NS</code>), and <code class="language-plaintext highlighter-rouge">iri:sync</code> keeps every literal copy — this table’s
+included — at bootstrap’s declared major.</p><p>One word in three places — path segment, stub, prefix — instead of three
+words that must agree.</p><h3 id="naming-a-namespace-document--ns-and-why-owner-2026-09-30"><a href="#naming-a-namespace-document--ns-and-why-owner-2026-09-30" class="anchor-heading" aria-labelledby="naming-a-namespace-document--ns-and-why-owner-2026-09-30"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming a namespace document — <code class="language-plaintext highlighter-rouge">ns</code>, and why (owner, 2026-09-30)
+  
+  
+</h3><p><strong>A namespace document is published where its identifiers point</strong>, so its file
+name IS its address: <code class="language-plaintext highlighter-rouge">bootstrap/ns.jsonld</code> is what makes
+<code class="language-plaintext highlighter-rouge">…/bootstrap/v0/ns#Node</code> resolve, and <code class="language-plaintext highlighter-rouge">check:node-iris</code> fails the day they
+differ. Renaming the file renames every term.</p><p>The owner asked whether <code class="language-plaintext highlighter-rouge">ns</code> should be a friendlier name (<code class="language-plaintext highlighter-rouge">vocabulary.jsonld</code>,
+<code class="language-plaintext highlighter-rouge">schemas/terms.jsonld</code>) and chose to keep it, on this analysis:</p><ul><li><strong>It is the house rule and the common practice.</strong> Six of this project’s own
+namespaces end in <code class="language-plaintext highlighter-rouge">/ns#</code> — each layer’s, core’s DSpace fields, and both
+process-extension namespaces — and <code class="language-plaintext highlighter-rouge">&lt;canonical&gt;/&lt;stub&gt;/ns#</code> is what “the
+prefix is the stub” rests on. W3C publishes PROV, DCAT, ORG and SHACL under
+<code class="language-plaintext highlighter-rouge">w3.org/ns/</code>.</li><li><strong>Renaming is not local.</strong> Changing the pattern means renaming cat-harness’s
+and core’s namespaces, already published (a MAJOR version each under
+<code class="language-plaintext highlighter-rouge">instance-versioning</code>), and 91 BPMN files binding the process namespaces.</li><li><strong><code class="language-plaintext highlighter-rouge">schemas/</code> would misclassify it.</strong> Here a schema is what a Node is
+<em>checked against</em>; a vocabulary <em>defines words</em>.</li><li><strong>Findability is solved without renaming</strong>: the file’s own <code class="language-plaintext highlighter-rouge">label</code> (“bootstrap
+vocabulary”) is what the generated README file table shows beside it.</li></ul><h3 id="one-source-per-layer--and-no-all-layers-union-owner-2026-09-30"><a href="#one-source-per-layer--and-no-all-layers-union-owner-2026-09-30" class="anchor-heading" aria-labelledby="one-source-per-layer--and-no-all-layers-union-owner-2026-09-30"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One source per layer — and no all-layers union (owner, 2026-09-30)
+  
+  
+</h3><p>Each layer’s vocabulary is ONE document, and every term’s <code class="language-plaintext highlighter-rouge">rdfs:isDefinedBy</code>
+names that document. bootstrap’s is <code class="language-plaintext highlighter-rouge">bootstrap/ns.jsonld</code>, written by
+bootstrap-tools from bootstrap’s own terms and committed; the site copies it,
+and the harness’s full build reads it rather than rebuilding it, so nothing
+can say a thing about a bootstrap term that bootstrap’s file does not
+(<code class="language-plaintext highlighter-rouge">ns-export-skos.test.ts</code> holds them equal, node for node).</p><p>The all-layers union at <code class="language-plaintext highlighter-rouge">&lt;site&gt;/ns/vocabulary.jsonld</code> is <strong>retired</strong>. Asked
+where it should live for findability, the answer came from who reads it: a
+program follows a term’s IRI to its layer document; a person looking for terms
+goes to the Glossary, which lists every term and publishes SKOS for every
+scheme. The union served neither, linked from no page, and was a third copy of
+the same terms — so it is gone, rather than moved. <code class="language-plaintext highlighter-rouge">NS_PREFIXES</code> in <code class="language-plaintext highlighter-rouge">schemas/namespaces.ts</code> is the one
+list; <code class="language-plaintext highlighter-rouge">stubOfNamespace()</code> reads the stub back off an IRI. The abbreviations
+<code class="language-plaintext highlighter-rouge">bs</code>, <code class="language-plaintext highlighter-rouge">cat</code> and <code class="language-plaintext highlighter-rouge">fac</code> were retired the same day, for a measured reason
+rather than taste.</p><p><strong>Why an abbreviation is a defect waiting to happen (bean <code class="language-plaintext highlighter-rouge">zaqn</code>).</strong> The
+content <code class="language-plaintext highlighter-rouge">@context</code> renamed its binding from <code class="language-plaintext highlighter-rouge">folio</code> to <code class="language-plaintext highlighter-rouge">fac</code> and kept writing
+twenty terms as <code class="language-plaintext highlighter-rouge">folio:…</code>. <strong>An unbound prefix is not an error to a JSON-LD
+processor</strong>: it reads <code class="language-plaintext highlighter-rouge">folio</code> as a URI SCHEME, so <code class="language-plaintext highlighter-rouge">folio:Definition</code> expanded
+to an absolute IRI that is well-formed, means nothing, and joins with nothing
+— in 1,737 committed documents. Every gate was green, for two reasons worth
+remembering:</p><ul><li>a <code class="language-plaintext highlighter-rouge">--check</code> drift gate compares the generated copy with its SOURCE, and the
+source was wrong the same way — <strong>a drift gate proves agreement, never
+correctness</strong>;</li><li><code class="language-plaintext highlighter-rouge">check:context-emission</code> asked only whether each <em>bound</em> prefix is spoken.
+The converse — is each <em>spoken</em> prefix bound? — is the direction that
+corrupts data, and nothing asked it.</li></ul><p><strong>The two rules, and what enforces them.</strong> Since bean <code class="language-plaintext highlighter-rouge">folio-assistant-63q4</code>
+every emitted document names its own instance’s generated context,
+<code class="language-plaintext highlighter-rouge">&lt;iriBase&gt;ns/context/v1.jsonld</code>, and <code class="language-plaintext highlighter-rouge">check:context-emission</code> is retired:
+<code class="language-plaintext highlighter-rouge">jsonld:contexts --check</code> (cat-harness-tools <code class="language-plaintext highlighter-rouge">scripts/gen-instance-contexts.ts</code>)
+enforces rule 1 over every <code class="language-plaintext highlighter-rouge">.jsonld</code> in the checkout, failing on a prefix used
+in an IRI position that nothing binds; a context generated from use binds
+nothing unused, which retired the converse. Rule 2 is upheld by construction —
+own prefixes are spelt from the declarations — and is no longer checked
+separately on a document’s own inline bindings:</p><ol><li><strong>Spoken ⇒ bound.</strong> A compact IRI used as a KEY or an <code class="language-plaintext highlighter-rouge">@type</code> value must
+have its prefix bound in that document’s context — inline, or the
+published one by URL, or an array of both. The published context’s own
+term targets are checked too, whether or not a document uses them. Plain
+string VALUES are not read as CURIEs: <code class="language-plaintext highlighter-rouge">label: "def:foo"</code> is an authored
+label, which is exactly the hazard <code class="language-plaintext highlighter-rouge">schemas/kg/jsonld.ts</code> opens with.</li><li><strong>Own namespace ⇒ stub spelling.</strong> A binding onto a <code class="language-plaintext highlighter-rouge">…/&lt;stub&gt;/ns#</code>
+namespace of ours must be spelt <code class="language-plaintext highlighter-rouge">&lt;stub&gt;</code>, and <code class="language-plaintext highlighter-rouge">&lt;stub&gt;</code> must be declared by
+an instance (<code class="language-plaintext highlighter-rouge">&lt;stub&gt;/&lt;stub&gt;.json</code>).</li></ol><p>A context URL the check cannot resolve is <strong>“could not determine”</strong>, counted
+and listed — never read as clean.</p><p><strong>Checking a fix: expand, don’t read.</strong> A compact IRI looks right to a human
+whether or not it is bound. The evidence that closes a prefix defect is a
+document run through a JSON-LD processor, with <strong>zero</strong> expanded IRIs outside
+<code class="language-plaintext highlighter-rouge">http(s):</code>.</p><p><strong>Where a prefix cannot be bound at all, a different spelling is never the
+answer.</strong> CSVW metadata allows only <code class="language-plaintext highlighter-rouge">@language</code> and <code class="language-plaintext highlighter-rouge">@base</code> in its local
+context, so the <code class="language-plaintext highlighter-rouge">fac:</code> keys in <code class="language-plaintext highlighter-rouge">tabular-metadata</code>
+dangled under ANY prefix. The two real answers are absolute IRIs, or not being
+JSON-LD at all. Bean <code class="language-plaintext highlighter-rouge">792y</code> took the second: the record became plain JSON and
+the CSVW document is derived from it. <strong>A file whose extension says <code class="language-plaintext highlighter-rouge">.jsonld</code>
+is making a claim</strong> — a processor will read every colon-key in it as an IRI.</p><h2 id="fsh-guts-never-reaches-a-published-graph"><a href="#fsh-guts-never-reaches-a-published-graph" class="anchor-heading" aria-labelledby="fsh-guts-never-reaches-a-published-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">fsh-guts</code> NEVER reaches a published graph
+  
+  
+</h2><p>Owner, 2026-09-19: <em>“NEVER include fsh-guts, references to fsh-guts stripped
+out of KG before sending to publication.”</em></p><p><strong>Keeping the CONTENT out of the render pipeline is a different property from
+keeping the REFERENCE out of the graph</strong>, and shipping the first while
+believing it covered the second is exactly how this was got wrong. An
+instance’s declared directories become nodes in <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code>, so declaring
+<code class="language-plaintext highlighter-rouge">fsh-guts/</code> — which is required, or no tool can find it and the never-delete
+rule has no destination — put its id, path and description into the published
+document.</p><p><code class="language-plaintext highlighter-rouge">UNPUBLISHED_GRAPH_TYPOLOGIES</code> in <code class="language-plaintext highlighter-rouge">schemas/kg/cat-harness.ts</code> is the one list, read by
+every emitter, so two filters cannot disagree about what is excluded.</p><p><strong>Three emitters had to be filtered, and the third was found only because the
+first two were not enough:</strong></p><div class="table-wrapper"><table><thead><tr><th>emitter</th><th>what leaked</th></tr></thead><tbody><tr><td>graph typologies</td><td>the <code class="language-plaintext highlighter-rouge">fsh-guts</code> GraphTypology node</td></tr><tr><td>declared directories</td><td>the Directory node — id, path, description — and its <code class="language-plaintext highlighter-rouge">holdsGraph</code> edge</td></tr><tr><td><strong>skills</strong></td><td><code class="language-plaintext highlighter-rouge">skill/fsh-guts</code>, plus the <code class="language-plaintext highlighter-rouge">declaresSkill</code> edge from <code class="language-plaintext highlighter-rouge">package/folio-core</code></td></tr></tbody></table></div><p>The skill is excluded on the merits as well as the letter: its subject IS
+where SDLC churn goes, so publishing it advertises the trashcan to every
+consumer of the graph. <strong>An edge to a stripped node is not a compromise —
+it is a dangling reference that still spells the name it was meant to
+remove.</strong></p><p><strong>A directory is excluded when ANY graph it holds is excluded</strong>, not when all
+of them are. <code class="language-plaintext highlighter-rouge">graphs</code> is an array and <code class="language-plaintext highlighter-rouge">schemas/</code> already holds two; an “all”
+test would publish a directory holding both <code class="language-plaintext highlighter-rouge">cat-harness</code> and <code class="language-plaintext highlighter-rouge">fsh-guts</code>,
+naming the path on the way past.</p><h3 id="this-is-not-a-contradiction-of-basefsh-gutsjsonld"><a href="#this-is-not-a-contradiction-of-basefsh-gutsjsonld" class="anchor-heading" aria-labelledby="this-is-not-a-contradiction-of-basefsh-gutsjsonld"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This is not a contradiction of <code class="language-plaintext highlighter-rouge">&lt;base&gt;/fsh-guts.jsonld</code></h3><p>Different documents. That one IS the trashcan’s graph and is fetched by name;
+every other published artefact must carry no path to it. A consumer may go
+there deliberately and must never arrive by following an edge.</p><h3 id="strip-where-the-document-is-built"><a href="#strip-where-the-document-is-built" class="anchor-heading" aria-labelledby="strip-where-the-document-is-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Strip where the document is built
+  
+  
+</h3><p>Not at upload. A strip on the happy path only leaves a graph that <strong>looks</strong>
+clean and is not, and the test must read the built artefact rather than the
+inputs. <code class="language-plaintext highlighter-rouge">scripts/tests/fsh-guts-unpublished.test.ts</code> serialises the whole
+export and asserts the substring is absent — a structural check would have to
+know every field that could carry it, and the one it forgets is the one that
+leaks.</p><p>That test also carries its own cautionary tale: its first version read
+<code class="language-plaintext highlighter-rouge">.graph</code> where the export uses <code class="language-plaintext highlighter-rouge">@graph</code>, filtered <code class="language-plaintext highlighter-rouge">undefined</code>, and passed
+while two nodes were still leaking. It now asserts the node list is non-empty
+before filtering it.</p><h2 id="staging-must-not-claim-to-be-canonical"><a href="#staging-must-not-claim-to-be-canonical" class="anchor-heading" aria-labelledby="staging-must-not-claim-to-be-canonical"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Staging must not claim to be canonical
+  
+  
+</h2><p>CI passes <code class="language-plaintext highlighter-rouge">--base-url</code> for a branch preview. Without it every staged export
+mints <code class="language-plaintext highlighter-rouge">@id</code>s pointing at <code class="language-plaintext highlighter-rouge">main</code>’s published document, and two different graphs
+assert the same IRIs — the preview would claim to <strong>be</strong> the canonical graph.
+That is not cosmetic: an <code class="language-plaintext highlighter-rouge">@id</code> is an assertion of identity, and duplicating one
+is how a merged graph acquires contradictory statements about the same node.</p><h2 id="the-graph-carries-its-own-vocabulary"><a href="#the-graph-carries-its-own-vocabulary" class="anchor-heading" aria-labelledby="the-graph-carries-its-own-vocabulary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The graph carries its own vocabulary
+  
+  
+</h2><p>Graph typologies are <strong>nodes</strong>, not just TypeScript. Follow <code class="language-plaintext highlighter-rouge">holdsGraph</code> from a
+directory and you arrive at a node saying what that kind holds and whether it
+renders. Without them the vocabulary needed to interpret the document lives
+only in code the consumer cannot fetch — which is the difference between a
+self-describing graph and a graph with documentation.</p><p>The schema half is <code class="language-plaintext highlighter-rouge">scripts/harness-schema-export.ts</code>: the declaration’s JSON
+Schema, published at the URL its own <code class="language-plaintext highlighter-rouge">$id</code> names, so a consumer holding an
+a declaration it does not understand has somewhere to go. It is a third
+rendering of <code class="language-plaintext highlighter-rouge">CatHarnessDeclarationSchema</code> beside the JSON-LD — <strong>not a
+second authority</strong>; the Zod is authoritative, per
+<a href="../../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.</p><h2 id="a-preview-says-what-it-is-and-links-back--explicitly"><a href="#a-preview-says-what-it-is-and-links-back--explicitly" class="anchor-heading" aria-labelledby="a-preview-says-what-it-is-and-links-back--explicitly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A preview says what it is, and links back — explicitly
+  
+  
+</h2><p>Passing <code class="language-plaintext highlighter-rouge">--base-url</code> stops the collision: a preview’s nodes get preview IRIs,
+so the two graphs cannot contradict each other. That left the opposite problem —
+the graphs became <strong>unrelatable</strong>, and nothing could say “this PR changes skill
+X”, which is most of what a preview graph is for.</p><p>Three things close it, and all three are stated in the artefact rather than
+left to a convention:</p><div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">@type</code></td><td><code class="language-plaintext highlighter-rouge">[prov:Entity, folio:PreviewGraph]</code> — “am I the real one?” is answerable from the document’s own type</td></tr><tr><td><code class="language-plaintext highlighter-rouge">canonicalDocument</code></td><td>the canonical document’s IRI, at document level</td></tr><tr><td><code class="language-plaintext highlighter-rouge">alternateOf</code></td><td><strong>per node</strong>, <code class="language-plaintext highlighter-rouge">prov:alternateOf</code> → that node’s canonical IRI</td></tr></tbody></table></div><p><strong><code class="language-plaintext highlighter-rouge">prov:alternateOf</code>, never <code class="language-plaintext highlighter-rouge">owl:sameAs</code>.</strong> <code class="language-plaintext highlighter-rouge">sameAs</code> entails identity, so a
+reasoner merges every statement about both nodes — and if the preview changed a
+skill’s description, the merged graph would assert two conflicting descriptions
+of one thing. That is exactly the contradiction distinct IRIs were introduced to
+avoid. <code class="language-plaintext highlighter-rouge">alternateOf</code> says “same underlying thing, different presentation” and
+merges nothing.</p><p><strong>The per-node links are derivable, and are emitted anyway.</strong> <code class="language-plaintext highlighter-rouge">makeIri</code> produces
+an identical fragment whatever the base, so a consumer <em>could</em> swap one base for
+the other. 968 fields instead of one. That is the deliberate trade, on the
+owner’s standing rule: <strong>a downstream consumer must never have to
+string-manipulate or infer a rule to follow a link.</strong> A rule a consumer has to
+know is a rule a consumer can get wrong, and the cost is paid by someone who
+cannot see the code that made the assumption look reasonable. See
+<a href="../../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a> §”Consumer burden
+is a requirement”.</p><p><strong>Vocabulary nodes get no <code class="language-plaintext highlighter-rouge">alternateOf</code>.</strong> Graph typologies are minted under the
+namespace, not the document, so they are byte-identical in both graphs. A
+blanket loop gave them one pointing at a canonical fragment that does not
+exist — a generated broken link is still a broken link, and a test now pins it.</p><h2 id="naming--artefacts-take-the-repositorys-name-the-config-does-not"><a href="#naming--artefacts-take-the-repositorys-name-the-config-does-not" class="anchor-heading" aria-labelledby="naming--artefacts-take-the-repositorys-name-the-config-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming — artefacts take the repository’s name, the config does not
+  
+  
+</h2><p>The <strong>stub</strong> (<code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> → <code class="language-plaintext highlighter-rouge">stub</code>, defaulting to <code class="language-plaintext highlighter-rouge">name</code>) is the
+filename stem of everything this instance publishes: <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code>,
+<code class="language-plaintext highlighter-rouge">&lt;stub&gt;.schema.json</code>. One helper, <code class="language-plaintext highlighter-rouge">artefactStub()</code>, computes it, so the two
+exporters cannot disagree about what this instance is called.</p><p>WHO SMART Base does the same and derives its stub by stripping a prefix
+(<code class="language-plaintext highlighter-rouge">smart-&lt;stub&gt;</code> → <code class="language-plaintext highlighter-rouge">&lt;stub&gt;</code> → <code class="language-plaintext highlighter-rouge">https://smart.who.int/&lt;stub&gt;</code>), so stub, directory and
+published path are one word.</p><p><strong>The declaration file is named for the instance’s <code class="language-plaintext highlighter-rouge">name</code>, not its <code class="language-plaintext highlighter-rouge">stub</code>.</strong>
+It is <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> — so it is still not stub-named, but it is no longer a
+fixed word either, and the argument that used to stand here was reversed on
+2026-09-21.</p><p>That argument ran: a consumer bootstrapping into a repository it knows nothing
+about needs <strong>one fixed filename to open first</strong>, so the declaration stays
+<code class="language-plaintext highlighter-rouge">harness.json</code> exactly as WHO SMART Base’s config stays <code class="language-plaintext highlighter-rouge">dak.json</code>; renaming it
+per-repo buys consistency and costs discovery.</p><p>(The <code class="language-plaintext highlighter-rouge">dak.json</code> half of that quoted argument has since gone too: the DAK
+marker is ours and became <code class="language-plaintext highlighter-rouge">dak.config.json</code> on 2026-09-22. The quote is left
+as it stood, because it is a record of what was argued.)</p><p><strong>The discovery half was answered rather than traded away.</strong> <code class="language-plaintext highlighter-rouge">findDeclarationFile()</code> scans a directory for a <code class="language-plaintext highlighter-rouge">*.json</code> carrying a <code class="language-plaintext highlighter-rouge">name</code>
+whose stem EQUALS that name, so a consumer still opens a declaration without
+being told its filename — it matches on the file agreeing with <strong>itself</strong>
+instead of on a word agreed in advance, and two such files in one directory
+<strong>throw</strong> rather than one being picked silently. What the old objection
+warned of was a resolver deriving the name from the DIRECTORY, which would
+find nothing in a repository cloned under a different name; that is precisely
+what this does not do.</p><p>Everything the declaration <em>describes</em> remains free to be named, for the
+reason given before: by the time you fetch those you have read the
+declaration naming them.</p><h2 id="the-edges-are-the-reason-to-publish"><a href="#the-edges-are-the-reason-to-publish" class="anchor-heading" aria-labelledby="the-edges-are-the-reason-to-publish"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The edges are the reason to publish
+  
+  
+</h2><p>A list of skills is not a graph, and a JSON array of them would not have been
+worth a pipeline. What makes the export worth having is the relations that
+already exist on disk and that <strong>no tool surfaces</strong>:</p><ul><li><strong>activity → skill.</strong> Every BPMN activity may carry
+<code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref="…"/&gt;</code>, so the export can say which process step is
+implemented by which skill.</li><li><strong>activity → role.</strong> A BPMN lane is the role that performs the step.</li><li><strong>skill → package</strong>, and a skill’s <strong>two facets</strong>: its instruction body
+(<code class="language-plaintext highlighter-rouge">&lt;name&gt;.md</code>) and the I/O contract it names in its front matter
+(<code class="language-plaintext highlighter-rouge">input:</code>/<code class="language-plaintext highlighter-rouge">output:</code>, usually <code class="language-plaintext highlighter-rouge">schemas/skills/&lt;name&gt;/</code>).</li></ul><p>That last one is the one to understand before editing the exporter. <strong>A name
+may have an instruction body, an I/O contract, or both — they are facets of one
+skill, not two kinds of skill.</strong> So the graph is keyed by <em>name</em>, which is also
+what a BPMN ref uses. Keying by file instead produces two disconnected node
+sets and loses the relation entirely.</p><p>It is also what makes “declared somewhere, written nowhere” visible: measured
+on <code class="language-plaintext highlighter-rouge">main</code> 2026-09-18, of 135 skills only <strong>11 have both</strong>, 113 are prose with
+no declared I/O, and 11 are an I/O contract with no prose. None of that was
+visible before the export existed.</p><h2 id="a-partial-graph-must-never-pass-for-a-whole-one"><a href="#a-partial-graph-must-never-pass-for-a-whole-one" class="anchor-heading" aria-labelledby="a-partial-graph-must-never-pass-for-a-whole-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A partial graph must never pass for a whole one
+  
+  
+</h2><p>This is the rule, and it was learned by breaking it in the module that states
+it. The first exporter looked in six instruction-body directories, did not know
+about <code class="language-plaintext highlighter-rouge">schemas/skills/</code>, and reported <strong>11 BPMN skill refs as dangling</strong> — they
+resolve fine. A partial graph had been produced and would have been published
+as a complete one.</p><p><strong>Why that is worse than an error.</strong> A consumer of the JSON cannot distinguish
+a skill that is absent from one that was never collected: both are simply not
+in <code class="language-plaintext highlighter-rouge">@graph</code>. Counts look plausible either way and nothing fails. It is the
+<code class="language-plaintext highlighter-rouge">dh4f</code> shape — a clean run over a corpus the tool could not read.</p><p>Three consequences, all of which the implementation carries:</p><ol><li><strong>A source that cannot be read goes in <code class="language-plaintext highlighter-rouge">problems[]</code> and the export exits
+non-zero.</strong> Publishing is blocked, rather than a truncated file being
+deployed.</li><li><strong><code class="language-plaintext highlighter-rouge">counts</code> by type ships with the graph</strong>, so a consumer can see at a glance
+that a corpus it expected is missing, without re-deriving it.</li><li><strong>The invariant is asserted against something outside the exporter’s own
+view.</strong> <code class="language-plaintext highlighter-rouge">scripts/tests/kg-export.test.ts</code> requires every skill a <em>diagram</em>
+names to appear — and <code class="language-plaintext highlighter-rouge">check:workflow-refs</code> independently guarantees those
+refs resolve against the real skill locations. So if the exporter’s notion
+of where skills live ever narrows again, the test fails. An invariant
+checked only against the exporter’s own collection would have passed the
+original bug.</li></ol><h2 id="whose-nodes--an-instance-publishes-its-own-and-leaves-a-tombstone"><a href="#whose-nodes--an-instance-publishes-its-own-and-leaves-a-tombstone" class="anchor-heading" aria-labelledby="whose-nodes--an-instance-publishes-its-own-and-leaves-a-tombstone"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Whose nodes — an instance publishes its own, and leaves a tombstone
+  
+  
+</h2><p><strong>The policy is <a href="../../reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a> §”What each
+instance publishes — graph, address, schema, and what is stripped”</strong>: which
+instance publishes which document where, the owner’s 2026-10-05 ruling
+(option B; bean <code class="language-plaintext highlighter-rouge">4ak5</code> item 2), and when the tombstones are removed. This
+section is the exporter’s side of it.</p><p><code class="language-plaintext highlighter-rouge">buildExport</code> takes <code class="language-plaintext highlighter-rouge">scope</code>, and the CLI <code class="language-plaintext highlighter-rouge">--scope &lt;instance|checkout&gt;</code>:</p><div class="table-wrapper"><table><thead><tr><th>scope</th><th>reads</th><th>for</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">instance</code> (default)</td><td>this instance’s declaration alone</td><td>the published document, its locale variants, its QA sidecar</td></tr><tr><td><code class="language-plaintext highlighter-rouge">checkout</code></td><td>this instance plus every instance stacked on it</td><td>a corpus-wide consumer that says so — the <code class="language-plaintext highlighter-rouge">kg</code> search slice</td></tr></tbody></table></div><p>A tombstone, one per <code class="language-plaintext highlighter-rouge">@id</code> the checkout-scope document mints and the
+instance-scope one does not:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;old&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nl">"deprecated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nl">"isReplacedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;the same node in its owner's document&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">deprecated</code> and <code class="language-plaintext highlighter-rouge">isReplacedBy</code> are <code class="language-plaintext highlighter-rouge">owl:deprecated</code> and
+<code class="language-plaintext highlighter-rouge">dcterms:isReplacedBy</code> in the context, as <code class="language-plaintext highlighter-rouge">ns-export</code> already publishes a
+retired term. A tombstone has no <code class="language-plaintext highlighter-rouge">@type</code> and is in neither <code class="language-plaintext highlighter-rouge">counts</code> nor
+<code class="language-plaintext highlighter-rouge">danglingLinks</code> — a link to a node that left still reads as dangling. A node
+no owner’s document mints (a package, a schema module: those collectors are
+instance-bound) forwards to the owner’s DOCUMENT. The owner’s IRI is minted
+the way the deploy publishes it (<code class="language-plaintext highlighter-rouge">publishedIdentity</code>). Removing them means
+deleting <code class="language-plaintext highlighter-rouge">tombstonesFor</code>, its call, and the two terms.</p><h2 id="named-subgraphs--one-iri-two-files-framed-from-one-graph"><a href="#named-subgraphs--one-iri-two-files-framed-from-one-graph" class="anchor-heading" aria-labelledby="named-subgraphs--one-iri-two-files-framed-from-one-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Named subgraphs — one IRI, two files, framed from one graph
+  
+  
+</h2><p><strong>Contract (bean <code class="language-plaintext highlighter-rouge">c1m4</code>; owner rulings 2026-10-03).</strong> A <em>named subgraph</em> is a
+directory of a declared graph, read as a set of KG nodes: <code class="language-plaintext highlighter-rouge">skills/</code> is one, and
+so is <code class="language-plaintext highlighter-rouge">skills/sdlc/</code>. Asking for “every node of <code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc</code>” must
+take one fetch. Before this contract it could not be done in one step. Today’s
+export is one document per instance, and <code class="language-plaintext highlighter-rouge">skills/sdlc</code> is not a subgraph
+anywhere (measured 2026-10-03; the evidence is on bean <code class="language-plaintext highlighter-rouge">c1m4</code>).</p><h3 id="identity"><a href="#identity" class="anchor-heading" aria-labelledby="identity"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Identity
+  
+  
+</h3><ul><li><strong>The subgraph IRI is a directory IRI in its own namespace:</strong> <code class="language-plaintext highlighter-rouge">&lt;BASE_URL&gt;/subgraph/&lt;HARNESS&gt;/&lt;PATH&gt;/</code>, for example
+<code class="language-plaintext highlighter-rouge">…/subgraph/cat-harness/skills/sdlc/</code>.</li><li>It is kept apart from content-node IRIs on purpose. A subgraph is a <em>view</em> of
+nodes, not one of them, so renaming a file never renames the subgraph, and
+re-homing a node never re-mints the subgraph.</li><li><code class="language-plaintext highlighter-rouge">/hydrated-graph/</code> was rejected. The pointer-only file would then live under
+a path that says “hydrated”.</li><li><strong>The repository’s level is <code class="language-plaintext highlighter-rouge">&lt;BASE_URL&gt;/subgraph/</code></strong> (bean <code class="language-plaintext highlighter-rouge">ax6r</code>). It has
+<code class="language-plaintext highlighter-rouge">index.jsonld</code> only, and its <code class="language-plaintext highlighter-rouge">hasSubgraph</code> are the harness roots this build
+frames. It is the one file a consumer needs to find every root. The workflow
+page starts there.</li></ul><h3 id="two-files-under-the-iri"><a href="#two-files-under-the-iri" class="anchor-heading" aria-labelledby="two-files-under-the-iri"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two files under the IRI
+  
+  
+</h3><p>Both files have root <code class="language-plaintext highlighter-rouge">@id</code> = the directory IRI.</p><div class="table-wrapper"><table><thead><tr><th>file</th><th>what is in it</th><th>who it is for</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">index.jsonld</code></td><td><strong>referenced</strong>: each direct member as a pointer (<code class="language-plaintext highlighter-rouge">@id</code>, <code class="language-plaintext highlighter-rouge">@type</code>, label), and each child subgraph by its IRI</td><td>search, navigation, skeleton loading (<code class="language-plaintext highlighter-rouge">f233</code>)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code></td><td><strong>dereferenced</strong>: every node in the subgraph’s <em>transitive</em> membership, inline and fully hydrated</td><td>“give me all of <code class="language-plaintext highlighter-rouge">skills/sdlc</code>” in one fetch</td></tr></tbody></table></div><p>Rules for the pair:</p><ul><li><strong>The hydrated file carries KG metadata, never heavy content.</strong> Markdown
+bodies, images and binaries are payloads, reached by a <code class="language-plaintext highlighter-rouge">payload</code> link
+(§”Payloads — heavy content by content address”, below).</li><li><strong>The root has <code class="language-plaintext highlighter-rouge">index.jsonld</code> only.</strong> A harness instance is itself a named
+subgraph of the repo KG, and the repo KG is the level above it. A <em>deep</em>
+hydrated file at the root would be the whole graph in one document, which is
+the monolith <code class="language-plaintext highlighter-rouge">f233</code> forbids. The owner ruled “deep, but not at root”; the
+rejected options were shallow everywhere, deep everywhere, and size-capped.</li><li><strong>The GitHub Pages caveat.</strong> Pages does no content negotiation, so the
+directory IRI is documented as resolving to <code class="language-plaintext highlighter-rouge">index.jsonld</code> by explicit path.
+A consumer that dereferences the bare IRI gets whatever Pages serves for the
+directory; <code class="language-plaintext highlighter-rouge">index.jsonld</code> and <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> are always addressable
+by name.</li></ul><h3 id="building-the-files"><a href="#building-the-files" class="anchor-heading" aria-labelledby="building-the-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Building the files
+  
+  
+</h3><ul><li><strong>One source, two frames.</strong> Both files come out of one build step, from the
+same in-memory graph, by JSON-LD <strong>framing</strong>: a pointer frame
+(<code class="language-plaintext highlighter-rouge">@embed: @never</code>) and an embed frame (<code class="language-plaintext highlighter-rouge">@embed: @always</code>).</li><li><strong>Never two hand-synced properties.</strong> No <code class="language-plaintext highlighter-rouge">authorUri</code> beside <code class="language-plaintext highlighter-rouge">author</code>. Two
+properties carrying one fact is the drift <code class="language-plaintext highlighter-rouge">data-modelling</code> §3 exists to stop.</li><li><strong><code class="language-plaintext highlighter-rouge">@context</code> is never inlined.</strong> Every file declares the one shared, cached
+context URL, the way content documents already use
+<code class="language-plaintext highlighter-rouge">ns/content/v1.jsonld</code>.</li><li><strong>Where it is built.</strong> <code class="language-plaintext highlighter-rouge">bun run cat subgraph:jsonld</code>
+(<code class="language-plaintext highlighter-rouge">scripts/gen-subgraph-jsonld.ts</code>) frames kg-export’s in-memory graphs —
+one per framed instance, each from its OWN export, never a stacked
+instance’s node under this document’s tombstoned <code class="language-plaintext highlighter-rouge">@id</code> — and
+writes <code class="language-plaintext highlighter-rouge">docs/subgraph/&lt;HARNESS&gt;/&lt;PATH&gt;/index[.hydrated].jsonld</code>, which Pages
+serves at the subgraph IRI, plus the context at <code class="language-plaintext highlighter-rouge">ns/subgraph/v1.jsonld</code>.
+<code class="language-plaintext highlighter-rouge">subgraph:jsonld:check</code> is the gate. The file shape is
+<code class="language-plaintext highlighter-rouge">schemas/subgraph-manifest.ts</code>.</li></ul><h3 id="published-per-pin-in-a-package"><a href="#published-per-pin-in-a-package" class="anchor-heading" aria-labelledby="published-per-pin-in-a-package"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Published per pin, in a package
+  
+  
+</h3><p><strong>Owner, 2026-10-24 (decision card, option A; bean <code class="language-plaintext highlighter-rouge">mo75</code> G2b).</strong> The files
+are built at publish (<code class="language-plaintext highlighter-rouge">builtAtPublish</code>: <code class="language-plaintext highlighter-rouge">docs/subgraph/</code>), so no commit holds
+them. For a consumer that reads them at a PIN rather than from the Pages site,
+<strong>each pin’s index files are published in a package</strong>: an npm package,
+<code class="language-plaintext highlighter-rouge">&lt;harness&gt;-subgraph-index@0.0.0-pin.&lt;sha&gt;</code>, holding every <code class="language-plaintext highlighter-rouge">index.jsonld</code> and
+<code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> under <code class="language-plaintext highlighter-rouge">&lt;docs&gt;/subgraph/&lt;HARNESS&gt;/</code> at the paths above
+and a <code class="language-plaintext highlighter-rouge">subgraph-index.json</code> manifest (<code class="language-plaintext highlighter-rouge">folio-subgraph-index/v1</code>: repository,
+pin, harness, each file’s sha256). It is attached, with its
+<code class="language-plaintext highlighter-rouge">folio-binary-release/v1</code> record, to the GitHub release <code class="language-plaintext highlighter-rouge">subgraph-index-&lt;sha&gt;</code>.</p><ul><li><strong>Not committed (B, rejected):</strong> a committed copy of a build over other
+instances is stale on the next re-pin.</li><li><strong>Not generated at mount (C, rejected):</strong> reading one file of metadata must
+not need the build toolchain, and one pin must have one set of files.</li><li><strong>Every name is computed</strong> from repository, pin and harness
+(<code class="language-plaintext highlighter-rouge">subgraphIndexPackage</code>, <code class="language-plaintext highlighter-rouge">schemas/subgraph-manifest.ts</code>), so a consumer never
+lists releases.</li><li><strong>Who builds it:</strong> <code class="language-plaintext highlighter-rouge">layer-publish-subgraph-index.yml</code> (the tools layer),
+on each push to <code class="language-plaintext highlighter-rouge">main</code>: <code class="language-plaintext highlighter-rouge">subgraph:jsonld</code>, then the <code class="language-plaintext highlighter-rouge">subgraph-index-package</code>
+Tool. A release that already exists for a pin is never replaced.</li><li><strong>Who reads it:</strong> a hydrated mount (<code class="language-plaintext highlighter-rouge">remote-mount</code>), when the pin’s tree
+holds no file. <a href="../../reference/skill-instructions/remote-mount.html"><code class="language-plaintext highlighter-rouge">remote-mount</code></a> §”Hydrated: the index files
+are published per pin, in a package” has the checks.</li></ul><h3 id="membership-is-declared-not-inferred"><a href="#membership-is-declared-not-inferred" class="anchor-heading" aria-labelledby="membership-is-declared-not-inferred"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Membership is declared, not inferred
+  
+  
+</h3><ul><li>A subgraph’s members are what its <strong>declared membership rule</strong> selects.</li><li>For a directory of a declared graph, the rule is <em>containment</em>: a node is in
+the deepest subgraph directory that contains its source path, and in every
+ancestor of that one, transitively.</li><li><strong>An overlaid instance heads its own tree</strong> (bean <code class="language-plaintext highlighter-rouge">ax6r</code>). kg-export reads
+the corpus of every instance stacked on this one, so the content core’s
+processes and skills are nodes of this graph. Until then they all fell to
+the root, which has no hydrated file, so “every process of this graph”
+could not be fetched at all. A directory belongs to the instance that
+declares it, so those nodes now sit under <code class="language-plaintext highlighter-rouge">&lt;BASE_URL&gt;/subgraph/&lt;that
+instance&gt;/…</code>, framed by this build because this graph publishes them. Their
+<code class="language-plaintext highlighter-rouge">@id</code>s do not change.</li><li><strong>Bootstrap gets no tree here.</strong> <code class="language-plaintext highlighter-rouge">bootstrap</code> and <code class="language-plaintext highlighter-rouge">bootstrap-tools</code> sit
+<em>below</em> this instance, and <code class="language-plaintext highlighter-rouge">pve3</code> (#432) keeps their processes out of its
+graph. They publish through their own graph. Framing a tree for them here
+would re-carry what that ruling excluded, so a consumer that needs their
+subgraphs needs bootstrap to publish them.</li><li>A harness’s own rule, saying which directories are its graph, is its
+<code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code> declaration. <code class="language-plaintext highlighter-rouge">Harness</code> and <code class="language-plaintext highlighter-rouge">Subgraph</code> therefore share
+one base, <code class="language-plaintext highlighter-rouge">GraphNodeDirectoryShape</code>. They do not get two parallel
+“directory with members” types.</li><li>A node whose subgraph cannot be determined goes in <code class="language-plaintext highlighter-rouge">problems[]</code>. It is never
+silently left out (§”A partial graph must never pass for a whole one”).</li></ul><h3 id="consumers"><a href="#consumers" class="anchor-heading" aria-labelledby="consumers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consumers
+  
+  
+</h3><ul><li><strong>Remote materialization reads these same files.</strong> <code class="language-plaintext highlighter-rouge">bun run cat kg:materialize --nodes &lt;subscription&gt; &lt;subgraph-path&gt;</code> fetches one
+subgraph’s <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> at the subscription’s pin. It never does
+a sparse checkout of the subgraph’s directory. The file is validated against
+<code class="language-plaintext highlighter-rouge">SubgraphHydratedSchema</code>, its root <code class="language-plaintext highlighter-rouge">@id</code> must be the subgraph asked for, and
+it is held with a sha256 record. A request for the root is refused, with a
+pointer to <code class="language-plaintext highlighter-rouge">index.jsonld</code>. This is a metadata mode (owner ruling
+2026-10-03). The byte copy (<code class="language-plaintext highlighter-rouge">kg:materialize &lt;subscription&gt; &lt;subgraph&gt;</code>) is
+unchanged and keeps its five gates. See
+<a href="../../reference/skill-instructions/kg-subscription.html"><code class="language-plaintext highlighter-rouge">kg-subscription</code></a>
+§”metadata mode”.</li><li>A subgraph manifest that lists a child IRI but whose child file is missing is
+a dangling link. It is reported, never skipped.</li></ul><h2 id="payloads--heavy-content-by-content-address"><a href="#payloads--heavy-content-by-content-address" class="anchor-heading" aria-labelledby="payloads--heavy-content-by-content-address"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Payloads — heavy content by content address
+  
+  
+</h2><p><strong>Contract (bean <code class="language-plaintext highlighter-rouge">f233</code>; owner ruling 2026-10-03).</strong> The subgraph files are the
+<strong>skeleton</strong>: topology and the metadata a search needs. Heavy content is the
+<strong>muscle</strong>, and it lives outside the graph, one file per distinct body. No
+generator emits a monolithic graph file that inlines bodies.</p><h3 id="addressing"><a href="#addressing" class="anchor-heading" aria-labelledby="addressing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Addressing
+  
+  
+</h3><ul><li><strong>A payload’s IRI is <code class="language-plaintext highlighter-rouge">&lt;BASE_URL&gt;/payload/sha256/&lt;hex&gt;</code></strong>, where <code class="language-plaintext highlighter-rouge">&lt;hex&gt;</code> is the
+lower-case hex SHA-256 of its bytes. Nothing else names it: no extension, no
+source path, no node id.</li><li><strong>It is immutable.</strong> The bytes at an IRI never change, because a change to
+the bytes is a change to the name. A consumer may cache a payload forever.</li><li>Immutable is not “kept forever”. A payload no node links to is an <strong>orphan</strong>:
+the gate fails on it and the generator removes it on write. An old IRI may
+therefore stop resolving once nothing references it; while it resolves, it
+resolves to the same bytes.</li><li><strong>Identical bodies are one file</strong>, linked from every node that has them.</li><li><strong>The bytes are the source file verbatim.</strong> A Markdown body keeps its front
+matter, and its relative links resolve against the node’s own source path
+(<code class="language-plaintext highlighter-rouge">instructionsPath</code>), not against the payload IRI.</li></ul><h3 id="the-link"><a href="#the-link" class="anchor-heading" aria-labelledby="the-link"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The link
+  
+  
+</h3><p>Every node with a payload carries one <code class="language-plaintext highlighter-rouge">payload</code> link, in <strong>both</strong> subgraph
+files. In the index it sits on the pointer; in the hydrated file it sits on the
+whole node, in place of the body:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"@id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;BASE_URL&gt;/payload/sha256/&lt;hex&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nl">"sha256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;hex&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nl">"bytes"</span><span class="p">:</span><span class="w"> </span><span class="mi">12653</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">sha256</code> and <code class="language-plaintext highlighter-rouge">bytes</code> let a consumer verify a fetch, and decide whether to make
+it, without a second request. <code class="language-plaintext highlighter-rouge">sha256</code> is the IRI’s last segment by
+construction, and the schema checks it.</p><h3 id="the-media-type-is-in-a-sidecar"><a href="#the-media-type-is-in-a-sidecar" class="anchor-heading" aria-labelledby="the-media-type-is-in-a-sidecar"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The media type is in a sidecar
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">&lt;hex&gt;.json</code> beside <code class="language-plaintext highlighter-rouge">&lt;hex&gt;</code> carries <code class="language-plaintext highlighter-rouge">$schema: cat-harness-payload/v1</code>,
+<code class="language-plaintext highlighter-rouge">sha256</code>, <code class="language-plaintext highlighter-rouge">bytes</code> and <code class="language-plaintext highlighter-rouge">mediaType</code>. It is a sidecar rather than an extension for
+two reasons:</p><ul><li>the ruled IRI has no extension, and <code class="language-plaintext highlighter-rouge">&lt;hex&gt;.md</code> would be a second address for
+one payload;</li><li>GitHub Pages types a file by its extension, so an extensionless payload is
+served as <code class="language-plaintext highlighter-rouge">application/octet-stream</code> whatever it holds.</li></ul><p>A consumer holding only the IRI appends <code class="language-plaintext highlighter-rouge">.json</code>. The media type is not also on
+the link, because one fact gets one place. It comes from the source file’s
+extension through a declared table; an undeclared extension is a problem, never
+a guess.</p><h3 id="what-is-heavy"><a href="#what-is-heavy" class="anchor-heading" aria-labelledby="what-is-heavy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is heavy
+  
+  
+</h3><p>Decided from measurement on 2026-10-03, over kg-export’s graph for this
+instance. The graph held 3,120 nodes and 2.5 MB of metadata, and no literal
+field was over 4.6 KB. The graph therefore inlined no body already, so “heavy”
+means what its pointers name:</p><div class="table-wrapper"><table><thead><tr><th>node</th><th>field</th><th>files</th><th>bytes</th><th>heavy?</th></tr></thead><tbody><tr><td>Skill</td><td><code class="language-plaintext highlighter-rouge">instructionsPath</code> (.md)</td><td>300</td><td>3.0 MB</td><td><strong>yes</strong> — the instruction body</td></tr><tr><td>Asset</td><td><code class="language-plaintext highlighter-rouge">path</code> (.md; an image would be too)</td><td>3</td><td>12 KB</td><td><strong>yes</strong></td></tr><tr><td>Process / Decision</td><td><code class="language-plaintext highlighter-rouge">sourcePath</code> (.bpmn / .dmn)</td><td>78 / 10</td><td>1.5 MB / 58 KB</td><td>not yet — the topology is already graph nodes, and the XML is its own graph’s source</td></tr><tr><td>Schema</td><td><code class="language-plaintext highlighter-rouge">module</code> (.ts)</td><td>161</td><td>2.5 MB</td><td>no — code, not content</td></tr></tbody></table></div><p>No deep provenance is in the graph today, so none moves. The table that decides
+this is <code class="language-plaintext highlighter-rouge">HEAVY_POINTERS</code> in <code class="language-plaintext highlighter-rouge">schemas/subgraph-manifest.ts</code>, and adding a row
+there is the whole change to make a field heavy.</p><h3 id="building-and-checking"><a href="#building-and-checking" class="anchor-heading" aria-labelledby="building-and-checking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Building and checking
+  
+  
+</h3><ul><li><code class="language-plaintext highlighter-rouge">bun run cat subgraph:jsonld</code> writes the payloads to <code class="language-plaintext highlighter-rouge">docs/payload/sha256/</code> in
+the same run as the subgraph files, from the same graph.</li><li>The docs workflows copy that directory into the site <strong>verbatim</strong>. It is
+excluded from Jekyll, which would render a body’s front matter and Liquid,
+and then the served bytes would not hash to their name.</li><li><code class="language-plaintext highlighter-rouge">subgraph:jsonld:check</code> is the gate. It fails on any of these:
+    <ul><li>a stale or stray file;</li><li>a payload no node references;</li><li>a node whose payload is missing;</li><li>bytes that do not hash to their name;</li><li>a payload without its sidecar, or a sidecar without its payload.</li></ul></li><li>The schema is <code class="language-plaintext highlighter-rouge">PayloadLinkSchema</code> and <code class="language-plaintext highlighter-rouge">PayloadSidecarSchema</code> in
+<code class="language-plaintext highlighter-rouge">schemas/subgraph-manifest.ts</code>.</li></ul><h2 id="per-slice-sqlite--a-named-subgraph-as-one-file-a-browser-mounts"><a href="#per-slice-sqlite--a-named-subgraph-as-one-file-a-browser-mounts" class="anchor-heading" aria-labelledby="per-slice-sqlite--a-named-subgraph-as-one-file-a-browser-mounts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Per-slice SQLite — a named subgraph as one file a browser mounts
+  
+  
+</h2><p><strong>Contract (bean <code class="language-plaintext highlighter-rouge">q8ar</code>; owner ruling 2026-10-03: the official SQLite WASM
+build with an OPFS VFS, pilot slice <code class="language-plaintext highlighter-rouge">beans</code>).</strong> A large graph needs search on
+the client, and a static host cannot run a query. So CI flattens one slice into
+a relational schema and publishes it as <code class="language-plaintext highlighter-rouge">&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, and the
+browser opens that file as it is. There is nothing to parse, because SQLite reads its
+B-tree pages on demand. This is the <strong>skeleton</strong> of <code class="language-plaintext highlighter-rouge">f233</code> in a second
+encoding. It never replaces the JSON-LD files above; it sits beside them for
+the consumer that has to search.</p><p><strong>One builder, one definition per slice.</strong> <code class="language-plaintext highlighter-rouge">scripts/gen-slice-sqlite.ts</code> is the
+<code class="language-plaintext highlighter-rouge">slice-sqlite</code> Tool; its procedure is the <code class="language-plaintext highlighter-rouge">slice-sqlite-publish</code> process. Each
+slice is one <code class="language-plaintext highlighter-rouge">SliceDef</code> in its <code class="language-plaintext highlighter-rouge">SLICES</code> table: the DDL, each stored table’s
+columns and row order, the one FTS5 index and the rows it covers, where the
+payloads live, the <code class="language-plaintext highlighter-rouge">search</code> block the page reads, and a <code class="language-plaintext highlighter-rouge">load</code> that turns the
+source into rows. The engine (build, <code class="language-plaintext highlighter-rouge">VACUUM INTO</code>, digest, manifest,
+<code class="language-plaintext highlighter-rouge">--check</code>) names no slice. Adding a slice is adding a definition, <strong>never a
+copy of the builder</strong>.</p><h3 id="the-four-pilots-measured"><a href="#the-four-pilots-measured" class="anchor-heading" aria-labelledby="the-four-pilots-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four pilots, measured
+  
+  
+</h3><p>Measured 2026-10-03 in this checkout (<code class="language-plaintext highlighter-rouge">bun run cat slice:sqlite -- --out &lt;scratch&gt;</code>;
+browser figures from <code class="language-plaintext highlighter-rouge">slice-sqlite.e2e.ts</code> in Chromium on loopback, first open
+including download and sha256 verification):</p><div class="table-wrapper"><table><thead><tr><th>slice</th><th>source</th><th>file</th><th>source as published</th><th>rows</th><th>payloads</th><th>build</th><th>first open</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">beans</code></td><td><code class="language-plaintext highlighter-rouge">beans/defs/</code></td><td>2.83 MB</td><td>4.82 MB of bean files</td><td>723 beans, 84 edges</td><td>723 bean files, at deploy</td><td>0.26 s</td><td>~190 ms</td></tr><tr><td><code class="language-plaintext highlighter-rouge">todos</code></td><td><code class="language-plaintext highlighter-rouge">assets/todos/index.json</code></td><td>0.07 MB</td><td>18 KB of JSON</td><td>3 todos, 12 relations</td><td>3 todo files, at deploy</td><td>0.22 s</td><td>~110 ms</td></tr><tr><td><code class="language-plaintext highlighter-rouge">library</code></td><td><code class="language-plaintext highlighter-rouge">assets/library/index.json</code> + <code class="language-plaintext highlighter-rouge">entries/&lt;id&gt;.json</code></td><td>2.48 MB</td><td>3.59 MB of JSON</td><td>64 entries, 3,557 blocks</td><td>64 entry files, at deploy</td><td>0.23 s</td><td>~165 ms</td></tr><tr><td><code class="language-plaintext highlighter-rouge">kg</code></td><td>the whole-repo KG export</td><td>3.40 MB</td><td>3.03 MB of JSON-LD</td><td>3,121 nodes, 12,835 edges</td><td>303, already committed</td><td>4.8 s</td><td>~180 ms</td></tr></tbody></table></div><p><strong>All four are under the ~5 MB budget</strong>, so all four shipped. The whole-repo
+slice is the <strong>no-body variant</strong>: nodes, edges, and an FTS5 over names,
+titles, summaries and descriptions, with bodies as payload pointers. It is the
+one slice larger than its JSON source, because it adds a full-text index the
+JSON does not have; it stays under budget because it stores IRIs as fragments
+of the document (<code class="language-plaintext highlighter-rouge">skill/todo-manager</code>, with <code class="language-plaintext highlighter-rouge">&lt;doc&gt;#</code> in <code class="language-plaintext highlighter-rouge">meta.base</code>). The
+budget is <code class="language-plaintext highlighter-rouge">SIZE_BUDGET_BYTES</code>, <strong>reported</strong> in the manifest as <code class="language-plaintext highlighter-rouge">overBudget</code> and
+not gated: the beans slice grows every session, and a gate would turn every
+open PR red on the day it crossed the line, for a change nobody made. Over
+budget means stop and report (the process’s budget gateway), not ship.</p><h3 id="what-a-slice-file-holds"><a href="#what-a-slice-file-holds" class="anchor-heading" aria-labelledby="what-a-slice-file-holds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a slice file holds
+  
+  
+</h3><ul><li><strong>One table per node type, one row per node.</strong> Columns are the fields a
+search filters or sorts on. Each has a B-tree index where a query needs one.
+A JSON-valued field stays a JSON column and is read through JSON1
+(<code class="language-plaintext highlighter-rouge">json_each</code>), rather than becoming another stored table.</li><li><strong>One stored table per relation, never two.</strong> When a relation can be
+declared from either side, as a bean’s <code class="language-plaintext highlighter-rouge">blocking:</code> and <code class="language-plaintext highlighter-rouge">blocked_by:</code> can, the
+table has a <code class="language-plaintext highlighter-rouge">declared_on</code> column saying which side declared each edge, and
+the two directions are <strong>views</strong> over it. Two tables for one relation are two
+answers that can disagree. When a relation is declared on one side only, a
+<code class="language-plaintext highlighter-rouge">declared_on</code> column could hold one value, so it is left out (<code class="language-plaintext highlighter-rouge">todos</code>,
+<code class="language-plaintext highlighter-rouge">library</code>). When the relations are many and share one shape, they share ONE
+table keyed by <code class="language-plaintext highlighter-rouge">rel</code>: the <code class="language-plaintext highlighter-rouge">kg</code> slice’s 36 <code class="language-plaintext highlighter-rouge">@id</code>-typed terms are rows of
+<code class="language-plaintext highlighter-rouge">edges (src, rel, dst)</code>, with <code class="language-plaintext highlighter-rouge">incoming</code> and <code class="language-plaintext highlighter-rouge">dangling</code> as views, because 36
+tables of one shape would be 36 places to change it.</li><li><strong>An FTS5 index over the searchable text.</strong> It is CONTENTLESS
+(<code class="language-plaintext highlighter-rouge">content=''</code>), so it indexes text without storing it. It keeps <strong>full
+detail</strong>, because positions are what make a phrase query work. Both the
+official WASM build and <code class="language-plaintext highlighter-rouge">bun:sqlite</code> compile with <code class="language-plaintext highlighter-rouge">ENABLE_FTS5</code> (measured
+2026-10-03: 3.53.4 and 3.53.0).</li><li><strong>No heavy content.</strong> A row carries <code class="language-plaintext highlighter-rouge">payload_sha256</code>, a pointer to the
+payload at <code class="language-plaintext highlighter-rouge">&lt;BASE_URL&gt;/payload/sha256/&lt;hex&gt;</code> (§”Payloads”). The client fetches
+the payload when a result is opened. Measured on beans, the same 717 rows
+take 7.85 MB with the bodies stored and 2.82 MB without them; the bodies were
+4.58 MB of the larger file. <strong>What the payload is, is a per-slice decision</strong>:
+a bean’s or a todo’s source file verbatim; for the library, the PUBLISHED
+<code class="language-plaintext highlighter-rouge">entries/&lt;id&gt;.json</code>, one payload per entry that every one of its blocks
+points at, never the section files under <code class="language-plaintext highlighter-rouge">library/</code>, because a withheld
+entry (bean <code class="language-plaintext highlighter-rouge">cw35</code>) publishes no verbatim text and the published entry is
+what already applied that rule; for <code class="language-plaintext highlighter-rouge">kg</code>, the KG’s own committed payloads,
+from the same <code class="language-plaintext highlighter-rouge">planPayloads</code> call the subgraph files use. A row with nothing
+heavy has a <code class="language-plaintext highlighter-rouge">NULL</code> pointer, never an invented one.</li><li><strong>A <code class="language-plaintext highlighter-rouge">meta</code> table and <code class="language-plaintext highlighter-rouge">PRAGMA user_version</code></strong> carry the schema version. No
+timestamp and no commit go in the file.</li></ul><h3 id="the-manifest-beside-it"><a href="#the-manifest-beside-it" class="anchor-heading" aria-labelledby="the-manifest-beside-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The manifest beside it
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">&lt;slice&gt;.sqlite3.json</code>, <code class="language-plaintext highlighter-rouge">$schema: folio-slice-sqlite/v1</code>, carries:</p><ul><li><code class="language-plaintext highlighter-rouge">file</code>, the database’s content-addressed name (§”Content-addressed file,
+fixed-name manifest”);</li><li><code class="language-plaintext highlighter-rouge">sha256</code> and <code class="language-plaintext highlighter-rouge">bytes</code> of the file;</li><li><code class="language-plaintext highlighter-rouge">contentDigest</code>, a sha256 over the canonical row dump;</li><li>the row count of each table;</li><li><code class="language-plaintext highlighter-rouge">schemaVersion</code>, <code class="language-plaintext highlighter-rouge">sqliteVersion</code> and <code class="language-plaintext highlighter-rouge">pageSize</code>;</li><li><code class="language-plaintext highlighter-rouge">fts5</code>: the index’s table, the table whose rows it covers, and its columns;</li><li><code class="language-plaintext highlighter-rouge">payloadPath</code>, and <code class="language-plaintext highlighter-rouge">payloads</code>: whether they are written at deploy or
+already published, how many, how many bytes;</li><li>any <code class="language-plaintext highlighter-rouge">duplicateIds</code> the source holds, and any other source <code class="language-plaintext highlighter-rouge">findings</code> in
+words (a todo with no source file, an entry file the index does not list),
+so a gap is reported rather than silently dropped;</li><li><code class="language-plaintext highlighter-rouge">overBudget</code>;</li><li><code class="language-plaintext highlighter-rouge">search</code>: the query, the alias, the column a typed query degrades to, and
+what a payload is, which the one search page reads (§”The search page”).</li></ul><p><code class="language-plaintext highlighter-rouge">assets/slices/index.json</code> (<code class="language-plaintext highlighter-rouge">folio-slice-index/v1</code>) lists every slice built
+into a directory.</p><p>There are two digests because there are two questions. <code class="language-plaintext highlighter-rouge">sha256</code> asks whether
+these are the bytes that were promised; it is what the client verifies a
+download against and keys its cache by. <code class="language-plaintext highlighter-rouge">contentDigest</code> asks whether this is
+the same data, and it stays equal across a SQLite upgrade that changes the
+file’s bytes. The header records the writing library’s version at offset 96.</p><h3 id="content-addressed-file-fixed-name-manifest"><a href="#content-addressed-file-fixed-name-manifest" class="anchor-heading" aria-labelledby="content-addressed-file-fixed-name-manifest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-addressed file, fixed-name manifest
+  
+  
+</h3><p><strong>Bean <code class="language-plaintext highlighter-rouge">wixl</code>, 2026-10-03.</strong> The database was published at <code class="language-plaintext highlighter-rouge">&lt;slice&gt;.sqlite3</code>,
+one path across builds. Behind a CDN with any TTL a client could fetch a fresh
+manifest and a stale database, fail the sha256 check, and fall back: safe for
+correctness, unsafe for availability. So the database is now
+<strong><code class="language-plaintext highlighter-rouge">assets/slices/&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code></strong>, the full lower-case hex of its
+bytes, and the manifest’s <code class="language-plaintext highlighter-rouge">file</code> names it. A fresh manifest names a file no
+cache has seen. A stale manifest names an older file whose bytes still hash to
+what that manifest promises, so the worst case is an older but
+self-consistent database, or a 404 the page reports.</p><p><strong>Why not <code class="language-plaintext highlighter-rouge">payload/sha256/&lt;hex&gt;</code>.</strong> §”Payloads” is the muscle: a node’s body,
+the source file verbatim, linked from a node’s <code class="language-plaintext highlighter-rouge">payload</code> and kept only while
+something links to it. A slice file is the skeleton in a second encoding. It
+is derived and SQLite-version dependent, and no node links to it, so under the
+payload tree’s own orphan rule it would be an orphan. It would also need a
+<code class="language-plaintext highlighter-rouge">&lt;hex&gt;.json</code> sidecar for a media type that its extension already gives. What
+the scheme does take from §”Payloads” is the property that matters,
+<strong>immutable, not kept forever</strong>. It also takes the full hex rather than a
+prefix, so the name’s hash segment is <code class="language-plaintext highlighter-rouge">sha256</code> by construction and can be
+checked against it. Beside its manifest, <code class="language-plaintext highlighter-rouge">file</code> stays a sibling name that the
+client resolves against the manifest’s URL.</p><p><strong>The manifest stays at the fixed <code class="language-plaintext highlighter-rouge">&lt;slice&gt;.sqlite3.json</code></strong> because it is the
+one file that says which build is current, and the page finds it by slice
+name. It needs a <strong>short TTL</strong>. The client’s <code class="language-plaintext highlighter-rouge">no-store</code> bypasses only the
+browser cache; a CDN keeps the manifest for the host’s TTL, and GitHub Pages
+sends <code class="language-plaintext highlighter-rouge">max-age=600</code>, which a repository cannot change. With content addressing
+that TTL bounds availability, not correctness.</p><p><strong>Rotation.</strong> A build writes only the current file and removes any other
+<code class="language-plaintext highlighter-rouge">&lt;slice&gt;.&lt;hex&gt;.sqlite3</code> of the same slice from <code class="language-plaintext highlighter-rouge">--out</code>, along with the legacy
+<code class="language-plaintext highlighter-rouge">&lt;slice&gt;.sqlite3</code> (<code class="language-plaintext highlighter-rouge">rotateSliceFiles</code>). Nothing else in the directory is
+touched. On <code class="language-plaintext highlighter-rouge">gh-pages</code> nothing piles up. <code class="language-plaintext highlighter-rouge">docs-site.yml</code> publishes as a full
+replace and restores each <code class="language-plaintext highlighter-rouge">STAGING/</code> preview as it was. <code class="language-plaintext highlighter-rouge">feature-staging.yml</code>
+empties <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> before copying the build in, and
+<code class="language-plaintext highlighter-rouge">staging-rotate.ts</code> caps the number of previews. <strong>What a CDN can still
+hold:</strong></p><ul><li>for one TTL, a stale manifest together with the older file it names;</li><li>an older file that nothing now names, until it expires;</li><li>a stale manifest whose file the origin no longer serves. The client reports
+this case as a 404 with “reload”, never as an empty result.</li></ul><p>The branch’s git history keeps old blobs, as it always did when one path
+changed bytes.</p><h3 id="deterministic-proved"><a href="#deterministic-proved" class="anchor-heading" aria-labelledby="deterministic-proved"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Deterministic, proved
+  
+  
+</h3><p>Rows go in sorted by key, the page size is fixed, and the published file is
+<code class="language-plaintext highlighter-rouge">VACUUM INTO</code> a fresh path, so no free page or insertion history leaks in. The
+gate builds twice and requires one sha256. Measured 2026-10-03: two separate
+processes gave one sha256 for each of the four slices, and the gate re-proves
+it on every run.</p><h3 id="built-at-deploy-not-committed--when-the-source-moves-on-most-merges"><a href="#built-at-deploy-not-committed--when-the-source-moves-on-most-merges" class="anchor-heading" aria-labelledby="built-at-deploy-not-committed--when-the-source-moves-on-most-merges"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Built at deploy, not committed — when the source moves on most merges
+  
+  
+</h3><p>A slice of a corpus that every session writes, which <code class="language-plaintext highlighter-rouge">beans/</code> is, is <strong>not
+committed</strong>. A committed binary would be stale against every merge ref, so a
+content gate would be red on every open PR. It would also grow the clone on
+every edit. This is the same reasoning that checks <code class="language-plaintext highlighter-rouge">assets/beans/index.json</code>
+only for existence. The deploy builds each slice from the tree it publishes,
+one line per slice in <code class="language-plaintext highlighter-rouge">docs-site.yml</code> and <code class="language-plaintext highlighter-rouge">feature-staging.yml</code>, straight into
+<code class="language-plaintext highlighter-rouge">_site/assets/slices/</code>, and writes the deploy payloads into
+<code class="language-plaintext highlighter-rouge">_site/payload/sha256/</code>.</p><p><strong>The other three are built at deploy too</strong>, although their sources are
+committed generated files that a session does not write by hand. The todo
+index, the library index and entries, and the KG export are regenerated on
+most merges, so the same staleness applies one step removed. And a committed
+binary’s sha256 is stable for one SQLite version only, so a content gate over
+it would go red on a Bun upgrade that changed no data. A slice whose source
+truly does not move may still be committed and gated like any generated file;
+none of the four pilots is that slice.</p><p>Deploy payloads never go into the committed <code class="language-plaintext highlighter-rouge">docs/payload/</code>. Its orphan audit
+admits KG nodes only, and beans, todos and library entries are not KG nodes
+(§”Adding a node type”).</p><p>The gate (<code class="language-plaintext highlighter-rouge">bun run cat slice:sqlite:check</code>, or <code class="language-plaintext highlighter-rouge">--check --slice &lt;name&gt;</code> for one)
+therefore checks, for every slice:</p><ul><li>the builder runs, and a source it cannot read is could-not-determine, red;</li><li>two builds give one sha256;</li><li>the row digest read back <strong>from the file</strong> equals the one computed
+independently from the source, so a dropped or truncated row fails;</li><li>an FTS5 phrase query finds a known row, and a slice with no row to probe is
+red rather than an empty green;</li><li>the payloads pass <code class="language-plaintext highlighter-rouge">auditPayloadTree</code>; for <code class="language-plaintext highlighter-rouge">kg</code>, every pointer names a
+payload the committed tree holds;</li><li>the manifest’s <code class="language-plaintext highlighter-rouge">file</code> is the content-addressed name of the file the build
+wrote.</li></ul><h3 id="the-client--download-opfs-mount-with-a-fallback"><a href="#the-client--download-opfs-mount-with-a-fallback" class="anchor-heading" aria-labelledby="the-client--download-opfs-mount-with-a-fallback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The client — download, OPFS, mount, with a fallback
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">docs/assets/js/slice-sqlite.js</code> gives <code class="language-plaintext highlighter-rouge">openSlice(manifestUrl)</code> →
+<code class="language-plaintext highlighter-rouge">{ mode, info, query(sql, params) }</code>:</p><ol><li>Fetch the manifest with <code class="language-plaintext highlighter-rouge">no-store</code>.</li><li>Look in OPFS for <code class="language-plaintext highlighter-rouge">/&lt;slice&gt;-&lt;sha256&gt;.sqlite3</code>. A hit opens with <strong>no
+download</strong>. A new build has a new name, which is the whole invalidation
+story.</li><li>On a miss, download the file <strong>by the manifest’s <code class="language-plaintext highlighter-rouge">file</code></strong> as an
+ArrayBuffer. <strong>Refuse</strong> it if its sha256 is not the manifest’s. That is a
+<code class="language-plaintext highlighter-rouge">SliceIntegrityError</code>, which no fallback retries: the same URL would give
+the same answer. The page shows it (“the manifest and the database
+disagree … Refused”) and marks <code class="language-plaintext highlighter-rouge">data-slice-error="integrity"</code>. Import it
+into the pool and unlink older builds of that slice.</li><li>Open it. <code class="language-plaintext highlighter-rouge">info.contentAddressed</code> is false only for a pre-<code class="language-plaintext highlighter-rouge">wixl</code> manifest
+that names a fixed path.</li></ol><p><strong>The VFS is <code class="language-plaintext highlighter-rouge">opfs-sahpool</code>, in a Worker</strong> (<code class="language-plaintext highlighter-rouge">slice-sqlite-worker.js</code>), not the
+<code class="language-plaintext highlighter-rouge">opfs</code> VFS. That one needs SharedArrayBuffer, which needs COOP/COEP headers,
+and GitHub Pages cannot send them. When there is no Worker or no OPFS, the
+verified bytes are opened <strong>in memory</strong> with <code class="language-plaintext highlighter-rouge">sqlite3_deserialize</code>. That is no
+parse either, but nothing is persisted. The mode actually used is reported,
+never assumed.</p><p>The WASM build is <strong>vendored</strong> from the pinned <code class="language-plaintext highlighter-rouge">@sqlite.org/sqlite-wasm</code>
+devDependency, at 1.51 MB (<code class="language-plaintext highlighter-rouge">bun run cat slice:sqlite:vendor</code>, gated by
+<code class="language-plaintext highlighter-rouge">:vendor:check</code>). The reason: jsDelivr is unreachable from some builders, and
+a reader’s search should depend on no host but the site’s own.</p><p>Measured in Chromium against a plain static server with no COOP/COEP: first
+open, including download and verification, 110 to 190 ms per slice on
+loopback (table above); reopen from OPFS about 85 ms, with no download.</p><h3 id="the-search-page--one-page-the-slice-is-a-parameter"><a href="#the-search-page--one-page-the-slice-is-a-parameter" class="anchor-heading" aria-labelledby="the-search-page--one-page-the-slice-is-a-parameter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The search page — one page, the slice is a parameter
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">docs/slices/search.html?slice=&lt;name&gt;</code>; with no <code class="language-plaintext highlighter-rouge">slice</code>, it lists what
+<code class="language-plaintext highlighter-rouge">assets/slices/index.json</code> says was built. <strong>One page rather than one per
+slice</strong>, because every per-slice fact the page needs is already in the
+manifest’s <code class="language-plaintext highlighter-rouge">search</code> block, which the builder writes from the same definition
+that built the tables. A page per slice would be a second copy of those facts
+for each slice, free to drift from the schema it queries; this page has no
+slice-specific code that could. A payload is shown by what the manifest says
+it is: <code class="language-plaintext highlighter-rouge">markdown</code> (front matter stripped), or <code class="language-plaintext highlighter-rouge">library-entry</code> (the block of
+the published entry whose id the row names). The parameter is checked against
+a name pattern before it becomes part of a path.</p><p><code class="language-plaintext highlighter-rouge">beans/search.html</code>, the pilot’s own page, is now a forwarding page to
+<code class="language-plaintext highlighter-rouge">?slice=beans</code>, so a link to it still lands.</p><h3 id="adding-a-slice"><a href="#adding-a-slice" class="anchor-heading" aria-labelledby="adding-a-slice"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a slice
+  
+  
+</h3><p>Follow the <code class="language-plaintext highlighter-rouge">slice-sqlite-publish</code> process. In short:</p><ul><li>Add one <code class="language-plaintext highlighter-rouge">SliceDef</code> to <code class="language-plaintext highlighter-rouge">SLICES</code> in <code class="language-plaintext highlighter-rouge">scripts/gen-slice-sqlite.ts</code>. Never copy
+the builder.</li><li>Choose its heavy fields by the table in §”What is heavy”. A heavy field is a
+<code class="language-plaintext highlighter-rouge">payload_sha256</code> column, never a stored column. Choose what the payload IS by
+what the site already publishes, and never publish through a payload what a
+withheld or private source keeps back.</li><li><strong>Measure before wiring.</strong> Build it to a scratch directory and read <code class="language-plaintext highlighter-rouge">bytes</code>.
+Over the ~5 MB budget, try the no-body variant first, then stop and report the
+measurement rather than ship it.</li><li>Decide <strong>committed or built at deploy</strong> by the question above.</li><li>Wire it: one deploy line per workflow, a unit test over a fixture and over
+the real source, and a search in <code class="language-plaintext highlighter-rouge">slice-sqlite.e2e.ts</code>. The manifest, the
+gate and the page come from the definition. A slice whose rows do not match
+its source must fail. It must never pass as whole (§”A partial graph must
+never pass for a whole one”).</li></ul><h2 id="adding-a-node-type"><a href="#adding-a-node-type" class="anchor-heading" aria-labelledby="adding-a-node-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a node type
+  
+  
+</h2><ol><li><strong>Decide it is in this graph.</strong> The <code class="language-plaintext highlighter-rouge">kg</code> graph holds skills, processes,
+roles, capabilities and the directory declaration. <strong>Beans are not in it</strong> —
+<code class="language-plaintext highlighter-rouge">beans/</code> is its own graph typology with its own nodes (<code class="language-plaintext highlighter-rouge">defs</code>, <code class="language-plaintext highlighter-rouge">workflows</code>), and
+folding the work plan into the KG re-merges exactly what was separated.</li><li><strong>Mint its <code class="language-plaintext highlighter-rouge">@id</code> with <code class="language-plaintext highlighter-rouge">makeIri</code>, and give it an <code class="language-plaintext highlighter-rouge">@type</code>.</strong> Both are asserted
+by test. Never hand-build an IRI: <code class="language-plaintext highlighter-rouge">makeIri</code> is the one place every node’s
+IRI is decided, so the move from <code class="language-plaintext highlighter-rouge">#fragment</code> to <code class="language-plaintext highlighter-rouge">&lt;doc
+dir&gt;/&lt;kind&gt;/&lt;id&gt;</code> (§”Subject IRIs — a path, not a <code class="language-plaintext highlighter-rouge">#fragment</code>”) changes
+them all at once.</li><li><strong>Report what you could not read</strong>, in <code class="language-plaintext highlighter-rouge">problems[]</code>. Never <code class="language-plaintext highlighter-rouge">continue</code>
+silently past a parse failure.</li><li><strong>Say which edges it carries, and declare each one in the context</strong> with
+<code class="language-plaintext highlighter-rouge">{"@type": "@id"}</code>. A node type that relates to nothing is a list and
+belongs in a list; an edge that is not declared is a string and might as
+well be one.</li><li><strong>Emit the nodes your edges point at.</strong> Minting <code class="language-plaintext highlighter-rouge">performedBy</code> without
+emitting a Role node left all 328 of them dangling; minting
+<code class="language-plaintext highlighter-rouge">incoming</code>/<code class="language-plaintext highlighter-rouge">outgoing</code> without SequenceFlow nodes left sixty more. The
+export reports <code class="language-plaintext highlighter-rouge">danglingLinks</code> for exactly this, and the four that remain
+are data defects (bean <code class="language-plaintext highlighter-rouge">nup0</code>), not exporter bugs.</li></ol><h2 id="running-it"><a href="#running-it" class="anchor-heading" aria-labelledby="running-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running it
+  
+  
+</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>kg:export                        <span class="c"># → _kg/&lt;stub&gt;.jsonld   (gitignored)</span>
+bun run <span class="nb">cat </span>kg:schema                        <span class="c"># → _kg/&lt;stub&gt;.schema.json</span>
+bun run <span class="nb">cat </span>kg:export <span class="nt">--</span> <span class="nt">--base-url</span> https://… <span class="nt">--out</span> path.jsonld
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">--base-url</code> (or <code class="language-plaintext highlighter-rouge">KG_BASE_URL</code>) overrides the declaration’s <code class="language-plaintext highlighter-rouge">canonicalUrl</code>.
+<code class="language-plaintext highlighter-rouge">--scope instance|checkout</code> picks whose directories are read (see “Whose
+nodes” above); the deploy says <code class="language-plaintext highlighter-rouge">instance</code> aloud.</p><p>The output is a <strong>build artifact</strong>, deliberately not committed: it is a
+snapshot of a tree that changes every commit, so a committed copy is stale by
+construction and invites the drift <code class="language-plaintext highlighter-rouge">5o3a</code> describes. CI regenerates it on every
+publish.</p><blockquote><p><strong>Do not read <code class="language-plaintext highlighter-rouge">.claude/skills/registry.json</code> for this.</strong> It is a runtime
+manifest, not the graph: measured 2026-09-18 it reported <strong>23</strong> skills
+against 126 on disk, because it reads only <code class="language-plaintext highlighter-rouge">.claude/skills/local/*.json</code>.
+Package skills appear in it as bare name lists with no instruction body, and
+processes, the graph-typology registry and the declaration are absent entirely.
+It is also uncommitted and published nowhere. The two coexist; only one is
+the graph.</p></blockquote><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/kg-to-portal.html">KG to public portal</a></td><td>Serialize to JSON-LD</td></tr><tr><td><a href="../../en/cat-harness/processes/slice-sqlite-publish.html">Build and publish a per-slice SQLite file</a></td><td>Write the slice definition; Build it locally and measure the file; Report the measurement; ship nothing; Wire it: gate, deploy line, search, tests; Gate every slice: slice:sqlite:check; Build each slice into _site at deploy</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

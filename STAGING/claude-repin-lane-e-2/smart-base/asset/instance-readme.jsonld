@@ -1,0 +1,22 @@
+{
+  "@context": "http://smart.who.int/base/smart-base.context.jsonld",
+  "@id": "http://smart.who.int/base/asset/instance-readme.jsonld",
+  "partOf": "http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "smart-base",
+      "description": "What this layer holds, where each document came from, and how to re-derive an entry."
+    }
+  ]
+}

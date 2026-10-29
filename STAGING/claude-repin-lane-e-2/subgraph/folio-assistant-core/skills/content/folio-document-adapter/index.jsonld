@@ -1,0 +1,79 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/folio-document-adapter/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-actions",
+      "@type": "bootstrap:Skill",
+      "name": "block-actions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/06c806242f67b44f52fa7062f306261ec30a770f9197f08a86f39670673af56f",
+        "bytes": 8319,
+        "sha256": "06c806242f67b44f52fa7062f306261ec30a770f9197f08a86f39670673af56f"
+      },
+      "title": "Block actions: [edit] and [feedback] on every block"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "document-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/567069b2e02a9b76745f7b465a82bc7c6e5d1a2c12467eaa6e1b9eaea9b6f723",
+        "bytes": 4189,
+        "sha256": "567069b2e02a9b76745f7b465a82bc7c6e5d1a2c12467eaa6e1b9eaea9b6f723"
+      },
+      "title": "document-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing",
+      "@type": "bootstrap:Skill",
+      "name": "document-publishing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5",
+        "bytes": 5630,
+        "sha256": "004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5"
+      },
+      "title": "document-publishing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-structure",
+      "@type": "bootstrap:Skill",
+      "name": "document-structure",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b8b381875663d9398577c7e72b0c36e1dc97b52d7b85e16f673a4e91ad96e1d",
+        "bytes": 2621,
+        "sha256": "3b8b381875663d9398577c7e72b0c36e1dc97b52d7b85e16f673a4e91ad96e1d"
+      },
+      "title": "document-structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements",
+      "@type": "bootstrap:Skill",
+      "name": "normative-statements",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f04e60c96d1504fae5a522cdfd6a6dc8feb3ce6f7ff39e841e8fbc5f3d66d4fa",
+        "bytes": 4366,
+        "sha256": "f04e60c96d1504fae5a522cdfd6a6dc8feb3ce6f7ff39e841e8fbc5f3d66d4fa"
+      },
+      "title": "normative-statements"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
+      "@type": "bootstrap:Skill",
+      "name": "public-comment",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4b41b36ce7f22b692b5475abdcfcf5a559009e8b89b774eaf56885528ef06f9a",
+        "bytes": 19643,
+        "sha256": "4b41b36ce7f22b692b5475abdcfcf5a559009e8b89b774eaf56885528ef06f9a"
+      },
+      "title": "public-comment"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/folio-document-adapter",
+  "path": "skills/content/folio-document-adapter/"
+}

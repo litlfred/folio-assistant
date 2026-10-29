@@ -1,0 +1,38 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2405.14766v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Evaluating Large Language Models for Public Health Classification and Extraction Tasks",
+      "dcterms:creator": [
+        "Harris1, Joshua",
+        "†",
+        "Laurence1, Timothy",
+        "Loman1, Leo",
+        "Grayson1, Fan",
+        "Nonnenmacher1, Toby",
+        "Harry"
+      ],
+      "dcterms:issued": "D:20250220",
+      "dcterms:identifier": "https://arxiv.org/abs/2405.14766",
+      "dcterms:abstract": "Advances in Large Language Models (LLMs) have led to significant interest in their potential to support human experts across a range of domains, including public health. In this work we present automated evaluations of LLMs for public health tasks involving the classification and extraction of free text. We combine six externally annotated datasets with seven new internally annotated datasets to evaluate LLMs for processing text related to: health burden, epidemiological risk factors, and public health interventions. We evaluate eleven open-weight LLMs (7-123 billion parameters) across all tasks using zero-shot in-context learning. We find that Llama-3.3-70B-Instruct is the highest performing model, achieving the best results on 8/16 tasks (using micro-F1 scores). We see significant variation across tasks with all open-weight LLMs scoring below 60% micro-F1 on some challenging tasks, such as Contact Classification, while all LLMs achieve greater than 80% micro-F1 on others, such as GI Illness Classification. For a subset of 11 tasks, we also evaluate three GPT-4 and GPT-4o series models and find comparable results to Llama-3.3-70B-Instruct. Overall, based on these initial results we find promising signs that LLMs may be useful tools for public health experts to extract information from a wide variety of free text sources, and support public health surveillance, research, and interventions. Figure 1: Public Health Large Language Model (LLM) Evaluation Areas [Number of Evalua- tions] and Task Evaluation Micro-F1 Scores by Model. (Left) We divide public health free text processing into three sub-domains: (1) burden, such as reports of disease symptoms, cases, morbidity, or mortality; (2) risk factors, such as environmental, behavioural, or biological contributors; (3) interventions, pharmaceutical and non-pharmaceutical. (Right) Evaluation results (micro-F1 scores) for seven open-weight LLM architectures (highest performing model evaluated from each) across the 16 task",
+      "dcterms:source": "cat-harness/library/arxiv-2405.14766v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2405.14766v2"
+    }
+  ]
+}

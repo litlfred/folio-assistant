@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(304)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > ul > li:nth-child(304) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(143) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(143) > ul > li:nth-child(2) > ul > li:nth-child(304) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(143) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(304) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Two mechanisms and a persona | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Two mechanisms and a persona" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Two mechanisms and a persona" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-upload-routes",
+    "src": "../../assets/qa/reference-skill-instructions-upload-routes/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-upload-routes/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=4885e06b0507"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=ffd09062ff20"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=1a18332e77ec" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-228yz98mq02.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-228yz98mq02","here":"/reference/skill-instructions/upload-routes.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-answer-is-two-not-three-and-the-third-is-a-persona","label":"The answer is two, not three, and the third is a persona"},{"href":"#route-1--a-git-commit-from-a-working-tree","label":"Route 1 — a git commit from a working tree"},{"href":"#route-2--the-forges-web-ui","label":"Route 2 — the forge’s web UI"},{"href":"#the-persona--a-file-handed-to-an-agent-in-a-conversation","label":"The persona — a file handed to an agent in a conversation"},{"href":"#what-the-routes-are-not-responsible-for","label":"What the routes are NOT responsible for"},{"href":"#which-queue--there-are-two-and-they-belong-to-different-instances","label":"Which queue — there are two, and they belong to different instances"},{"href":"#unsettled-and-stated-rather-than-decided","label":"Unsettled, and stated rather than decided"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Two mechanisms and a persona</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/upload-routes.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/library/library-core/upload-routes.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/upload-routes.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/library/library-core/upload-routes.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="two-mechanisms-and-a-persona"><a href="#two-mechanisms-and-a-persona" class="anchor-heading" aria-labelledby="two-mechanisms-and-a-persona"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two mechanisms and a persona
+  
+  
+</h1><p><a href="../../reference/skill-instructions/content-acquisition.html"><code class="language-plaintext highlighter-rouge">content-acquisition</code></a> decides <em>what channel</em> a
+resource comes in on — a file, a link, or a description somebody gives in
+their own words. This skill starts one step later, where the answer was <strong>a
+file</strong>, and asks the question nothing here answered until 2026-09-30: <strong>what
+writes the bytes into the declared queue, and what does the writer owe?</strong></p><p>It ends the moment the file is in the queue. <a href="../../reference/skill-instructions/uploads-watch.html"><code class="language-plaintext highlighter-rouge">uploads-watch</code></a>
+notices it arrived; <a href="../../reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a> and
+<code class="language-plaintext highlighter-rouge">document-intake</code> take it from there.</p><h2 id="the-answer-is-two-not-three-and-the-third-is-a-persona"><a href="#the-answer-is-two-not-three-and-the-third-is-a-persona" class="anchor-heading" aria-labelledby="the-answer-is-two-not-three-and-the-third-is-a-persona"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The answer is two, not three, and the third is a persona
+  
+  
+</h2><p>The routes look like three because that is how they are described: <em>a git
+commit</em>, <em>a file handed to an agent in a conversation</em>, <em>the GitHub web UI</em>.
+Measured against how files have actually reached a queue in this repository,
+<strong>two of those write bytes and the middle one does not</strong>. An agent handed a
+file in a conversation makes a git commit; it is route 1 performed by a
+different actor.</p><p>Saying so is not a tidying-up. It changes what you check: a persona inherits
+every obligation of the mechanism it performs, so the question about an agent
+is never <em>“what are the agent’s rules”</em> but <em>“did the agent discharge the git
+route’s, and what does it owe on top?”</em> Treating it as a third route invites
+a third, shorter list.</p><p><strong>What the persona owes on top is real, and it is the one thing the other two
+carry for free.</strong> A commit records its own author and message; a web upload
+records the account that made it. Neither records <em>“this arrived in a
+conversation, from this person, for this reason”</em> — that fact exists nowhere
+but the session, and the session is ephemeral. If the agent does not write it
+down at the moment of placing the file, it is gone.</p><p><strong>Measured, and the measurement is the argument for the obligation rather than
+against it:</strong> across both declared queues on <code class="language-plaintext highlighter-rouge">origin/main</code> (2026-09-30), <strong>0 of
+56</strong> files carry an intake record — 49 in <code class="language-plaintext highlighter-rouge">uploads/</code>, 7 in
+<code class="language-plaintext highlighter-rouge">cat-harness/uploads/</code>, <code class="language-plaintext highlighter-rouge">0</code> files named <code class="language-plaintext highlighter-rouge">intake.json</code>, <code class="language-plaintext highlighter-rouge">0</code> per-document
+subdirectories, against the <code class="language-plaintext highlighter-rouge">uploads/&lt;document-id&gt;/intake.json</code> convention
+<code class="language-plaintext highlighter-rouge">document-intake</code> documents. So the provenance gap is not the agent route’s
+alone; it is every route’s. What is specific to the agent is that <strong>for the
+other two a commit exists to go back to, and for a conversation nothing does.</strong></p><h2 id="route-1--a-git-commit-from-a-working-tree"><a href="#route-1--a-git-commit-from-a-working-tree" class="anchor-heading" aria-labelledby="route-1--a-git-commit-from-a-working-tree"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Route 1 — a git commit from a working tree
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">git add</code> the file under the queue, commit, push, open a PR.</p><p><strong>What the route does for you: nothing automatically, and everything you run.</strong>
+A working tree is where the pre-commit hook runs and where <code class="language-plaintext highlighter-rouge">bun run cat gates</code>
+runs. That is the whole of route 1’s advantage and it is entirely conditional
+on your running them.</p><p><strong>What you owe.</strong></p><div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>put it in the <strong>declared</strong> queue of the instance that will own it</td><td>see §”Which queue” — there are two, and they are different instances’</td></tr><tr><td>run the generators the file stales</td><td><code class="language-plaintext highlighter-rouge">uploads/README.md</code> is generated and lists <strong>every file</strong>, so any addition stales it. <code class="language-plaintext highlighter-rouge">bun run cat readme:subgraphs</code>, then <code class="language-plaintext highlighter-rouge">bun run cat gates</code> for the rest</td></tr><tr><td>open a PR</td><td>so CI judges it, and so a sibling session can see the queue grew</td></tr><tr><td>record where it came from</td><td>the commit message is the only place this route has for it</td></tr></tbody></table></div><p><strong>You do not owe ingestion.</strong> Placing and ingesting are different acts by
+different skills, and <code class="language-plaintext highlighter-rouge">uploads-watch</code> is explicit that a drop is somebody
+handing over a file, not an instruction to publish it.</p><h2 id="route-2--the-forges-web-ui"><a href="#route-2--the-forges-web-ui" class="anchor-heading" aria-labelledby="route-2--the-forges-web-ui"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Route 2 — the forge’s web UI
+  
+  
+</h2><p>GitHub’s <strong>“Add files via upload”</strong>. Never write the URL by hand — run
+<code class="language-plaintext highlighter-rouge">bun run cat-harness-tools/scripts/upload-url.ts [branch]</code>, which composes it from
+the declaration. A hand-written one 404’d for the owner on 2026-09-20, because
+the declared path <code class="language-plaintext highlighter-rouge">uploads/</code> is relative to the <em>instance</em> and a forge URL
+needs it relative to the <em>repository</em>.</p><p><strong>What the route does for you: strictly less than route 1, and the difference
+is not a matter of care.</strong> There is no working tree, so there is <strong>no
+pre-commit hook and no generator run</strong> — not “you might forget”, but <em>there is
+nowhere for them to run</em>. The commit is minted server-side from the bytes you
+selected and nothing else.</p><p><strong>Two hazards, both measured over this repository’s whole history on
+<code class="language-plaintext highlighter-rouge">origin/main</code>, 2026-09-30.</strong></p><p><strong>It commits to the path you are LOOKING at.</strong> Of <strong>16</strong> <code class="language-plaintext highlighter-rouge">Add files via upload</code>
+commits, <strong>10</strong> put their files at the repository root — outside any declared
+queue — and one landed in <code class="language-plaintext highlighter-rouge">schemas/</code>. Only 5 reached a queue. A file outside the
+declared queue is not “nearly there”: every consumer resolves the queue from the
+declaration, so it reads as absent while sitting on disk. This is bean <code class="language-plaintext highlighter-rouge">eq01</code>,
+which tidied one batch and said in its last line that the habit was not fixed.</p><p><strong>It lets you commit to any branch, including the default one.</strong> <strong>3 of the 16</strong>
+did — <code class="language-plaintext highlighter-rouge">c8349950fa5</code>, <code class="language-plaintext highlighter-rouge">f4ddfc65c8d</code>, <code class="language-plaintext highlighter-rouge">b8549160bb1</code>, each a single-parent commit
+on <code class="language-plaintext highlighter-rouge">main</code>’s first-parent line, each authored <code class="language-plaintext highlighter-rouge">Carl Leitner</code> and committed by
+<code class="language-plaintext highlighter-rouge">GitHub</code>. The other 13 went to a branch and reached <code class="language-plaintext highlighter-rouge">main</code> through a merge,
+where CI ran. A commit straight to <code class="language-plaintext highlighter-rouge">main</code> skips the PR, which is the only place
+CI would have run — so on that route the two bypasses compound: no hook
+<em>locally</em>, and no CI <em>remotely</em>.</p><p><strong>What that costs, measured on the most recent one.</strong> <code class="language-plaintext highlighter-rouge">c8349950fa5</code> added three
+PDFs to <code class="language-plaintext highlighter-rouge">uploads/</code> at 00:17. <code class="language-plaintext highlighter-rouge">uploads/README.md</code> lists every file in the queue
+and is generated, so those three rows were missing from it the moment the
+commit landed, and <code class="language-plaintext highlighter-rouge">readme:subgraphs:check</code> — a blocking step in
+<code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code> — was red on the default branch. It was repaired 27
+minutes later by <code class="language-plaintext highlighter-rouge">606dc86d883</code>, <em>“Regenerate after merging main …”</em>, a commit
+about something else entirely, whose diff to that README is exactly the three
+missing rows. <strong>The repair landed on somebody else’s change</strong>, which is the
+same shape <code class="language-plaintext highlighter-rouge">skill-registration</code> describes: the author who sees the failure is
+whoever opens the next pull request.</p><p><strong>What you owe.</strong> Everything route 1 owes, discharged afterwards from a
+checkout, because the web UI cannot discharge any of it:</p><ol><li>choose the <strong>branch</strong>, not <code class="language-plaintext highlighter-rouge">main</code>, unless you are also going to run the
+generators immediately;</li><li>navigate to the <strong>declared queue directory</strong> before uploading, not to the
+repository root;</li><li>pull, run <code class="language-plaintext highlighter-rouge">bun run cat readme:subgraphs</code> and <code class="language-plaintext highlighter-rouge">bun run cat gates</code>, and push the
+result — or ask an agent to, which is the persona below.</li></ol><h2 id="the-persona--a-file-handed-to-an-agent-in-a-conversation"><a href="#the-persona--a-file-handed-to-an-agent-in-a-conversation" class="anchor-heading" aria-labelledby="the-persona--a-file-handed-to-an-agent-in-a-conversation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The persona — a file handed to an agent in a conversation
+  
+  
+</h2><p>This is route 1, performed by an agent. It inherits every obligation above.
+Three things are the agent’s own:</p><p><strong>Materialise the bytes before anything else.</strong> A file that exists only in the
+conversation exists nowhere the repository can see. Write it into the declared
+queue under a name that will still mean something — the filenames that arrived
+through the web UI include <code class="language-plaintext highlighter-rouge">ChatGPT Image Sep 20, 2026, 08_26_47 AM.png</code> and
+<code class="language-plaintext highlighter-rouge">d1a26515-9bde-455d-84bc-2e5fc196b004.png</code>, and two files with names like those
+turned out to be byte-identical (bean <code class="language-plaintext highlighter-rouge">eq01</code>, sha256 <code class="language-plaintext highlighter-rouge">30dad51dfc691587…</code>).</p><p><strong>Write down what the conversation knows and the commit does not</strong> — who
+provided it, when, what they said it was, and why it was wanted. Put it in the
+commit message at minimum. This is the obligation the other two routes do not
+have, and it is the reason to keep the persona named even though it is not a
+mechanism.</p><p><strong>Do not ingest on your own say-so, and do not delete.</strong> Both are other
+skills’ decisions — <a href="../../reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a> and
+<a href="../../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a>. A
+processed upload still looks spent and still is not.</p><h2 id="what-the-routes-are-not-responsible-for"><a href="#what-the-routes-are-not-responsible-for" class="anchor-heading" aria-labelledby="what-the-routes-are-not-responsible-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the routes are NOT responsible for
+  
+  
+</h2><p>The same three for every route, stated once so no route’s section can quietly
+shorten the list:</p><ul><li><strong>deciding the file belongs in the corpus.</strong> That is acquisition’s question,
+answered before this step.</li><li><strong>ingestion.</strong> A file in the queue is a file in the queue; <code class="language-plaintext highlighter-rouge">library/</code> is a
+judgement call somebody else owns.</li><li><strong>cleaning the queue.</strong> <code class="language-plaintext highlighter-rouge">uploads/</code> is the raw record of what was handed over
+and a derived <code class="language-plaintext highlighter-rouge">library/</code> entry does not replace it.</li></ul><h2 id="which-queue--there-are-two-and-they-belong-to-different-instances"><a href="#which-queue--there-are-two-and-they-belong-to-different-instances" class="anchor-heading" aria-labelledby="which-queue--there-are-two-and-they-belong-to-different-instances"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which queue — there are two, and they belong to different instances
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">origin/main</code> carries <strong><code class="language-plaintext highlighter-rouge">uploads/</code></strong> (declared by the <code class="language-plaintext highlighter-rouge">folio-assistant</code>
+instance at the repository root, 49 files) and <strong><code class="language-plaintext highlighter-rouge">cat-harness/uploads/</code></strong>
+(declared by the <code class="language-plaintext highlighter-rouge">cat-harness</code> instance, 7 files). They are not one directory
+declared twice: they are two instances’ queues that share an id, and the
+generated <code class="language-plaintext highlighter-rouge">uploads/README.md</code> says so in its own first paragraph.</p><p>So <strong>“put it in <code class="language-plaintext highlighter-rouge">uploads/</code>” is not an instruction</strong> — it does not say whose.
+Resolve the queue from the declaration of the instance that will own the
+material, which is what <code class="language-plaintext highlighter-rouge">queueRepoRelative</code> in <code class="language-plaintext highlighter-rouge">scripts/upload-url.ts</code> does and
+what the <code class="language-plaintext highlighter-rouge">upload-url</code> Tool exposes. Pass that instance’s root; do not paste a
+path.</p><h2 id="unsettled-and-stated-rather-than-decided"><a href="#unsettled-and-stated-rather-than-decided" class="anchor-heading" aria-labelledby="unsettled-and-stated-rather-than-decided"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Unsettled, and stated rather than decided
+  
+  
+</h2><p><strong>Which instance owns a given file.</strong> Two declared queues exist and nothing
+states the rule for choosing between them. Bean <code class="language-plaintext highlighter-rouge">eq01</code> was closed on the
+owner’s <em>“only one uploads/ needed”</em> (2026-09-20) and the repository now has
+two — the root one is declared, so it is legitimate by declaration, and the
+decision it contradicts was never revisited. Today the honest answer is: ask,
+or follow whatever the surrounding work already uses.</p><p><strong>Whether an arrival should be refused when it carries no intake record.</strong> 0 of
+56 files carry one. A gate would redden <code class="language-plaintext highlighter-rouge">main</code> on arrival, which is the
+opposite of accepting what somebody offers (<a href="../../reference/skill-instructions/content-acquisition.html"><code class="language-plaintext highlighter-rouge">content-acquisition</code></a>:
+<em>“do not make them follow a process to hand you something they already
+have”</em>). Whether the record is owed by the placer or minted by intake is
+undecided here, deliberately — it is a rule with a cost and the owner has not
+been asked.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/document-ingestion.html">Basic ingestion — an upload to an asset catalogued in library/</a></td><td>Place it in uploads/ by a declared route</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

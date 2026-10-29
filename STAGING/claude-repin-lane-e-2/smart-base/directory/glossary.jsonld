@@ -1,0 +1,30 @@
+{
+  "@context": "http://smart.who.int/base/smart-base.context.jsonld",
+  "@id": "http://smart.who.int/base/directory/glossary.jsonld",
+  "partOf": "http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/repin-lane-e-2",
+    "sha": "5fdf60a8f6fe80eb5d58f4e8145eb3ffa498a8b5",
+    "pr": "claude/repin-lane-e-2",
+    "run": "40850900782"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary"
+      ],
+      "description": "SMART Base's generated glossary (`glossary/generated/smart-base/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and schema fields by `glossary:page`. Moved here from `folio-assistant-core/glossary/generated/smart-base/` on the owner's 2026-10-20 ruling (bean rfev: \"Move to smart-base\") so core holds no base vocabulary.",
+      "readmePath": "glossary/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/glossary"
+    }
+  ]
+}

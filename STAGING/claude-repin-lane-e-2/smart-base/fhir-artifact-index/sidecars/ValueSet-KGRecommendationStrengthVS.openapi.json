@@ -1,0 +1,62 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: recommendation strength Schema API",
+    "description": "JSON Schema for Knowledge graph L1: recommendation strength ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-KGRecommendationStrengthVS.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-KGRecommendationStrengthVS",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-KGRecommendationStrengthVS.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-KGRecommendationStrengthVS",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-KGRecommendationStrengthVS.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-KGRecommendationStrengthVS": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-KGRecommendationStrengthVS.schema.json",
+        "title": "Knowledge graph L1: recommendation strength Schema",
+        "description": "JSON Schema for Knowledge graph L1: recommendation strength ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/KGRecommendationStrength"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "strong",
+              "conditional"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Knowledge graph L1: recommendation strength ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-KGRecommendationStrengthVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-KGRecommendationStrengthVS.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/KGRecommendationStrengthVS",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-10-20T16:07:31+00:00"
+      }
+    }
+  }
+}

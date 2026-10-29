@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-tools",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-tools"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/content-manifest-validate/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-image/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-overfull/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-preflight/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-audit/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-build/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-cache/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-coverage/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-formal-edges/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-html-docs/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-kg-publish/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-render-publish/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-toolchain-setup/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-feature-build/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-latex-build/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-dependency-graph/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-objects-extract/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-status-update/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-install/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-snippet-validate/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-source-audit/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

@@ -1,0 +1,94 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-changeset/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-changeset.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "What changed in a folio between two git refs, block by block: each block added, removed, or changed — and for a changed block, every aspect that applies (renamed, prose, manifest, moved). Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard, not on file paths.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/schemas/changeset.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--folio"
+            },
+            "description": "The folio's `folio` graph directory, relative to the repository — what `<slug>.json` declares for it, usually `folio/`.",
+            "name": "folio",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--base"
+            },
+            "description": "The ref compared against. Default `origin/main`. An unresolvable base is an ERROR, never an empty ChangeSet.",
+            "name": "base",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          },
+          {
+            "arg": {
+              "flag": "--head"
+            },
+            "description": "The ref under review, or `worktree` (the default) for the files on disk, uncommitted edits included.",
+            "name": "head",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where to write the JSON. Absent: stdout.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--text-out"
+            },
+            "description": "Also write `changeset-text.json`: the prose, source and rendered, of every block the ChangeSet lists, on each side that has it. The review page's diff renderers read it (bean `d903`).",
+            "name": "text-out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "A `folio-changeset/v1` document. Its one-line summary goes to stderr.",
+            "name": "changeset",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "folio-changeset",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "git",
+          "tar"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/diff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
+      ],
+      "title": "Folio ChangeSet"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/folio-changeset",
+  "path": "tools/folio-changeset/"
+}

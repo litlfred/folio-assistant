@@ -1,0 +1,49 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/lean/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formal-edges",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \\uses), when `lean-formal-graph` reports source \"scan\", or before trusting a type/value split.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 142,
+      "instructionsPath": "skills/lean/lean-formal-edges.md",
+      "name": "lean-formal-edges",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8264f2a61d27bf2030402c8901d49610993cffd67d6a2260af11ca49a0482cc0",
+        "bytes": 6321,
+        "sha256": "8264f2a61d27bf2030402c8901d49610993cffd67d6a2260af11ca49a0482cc0"
+      },
+      "title": "Lean formal edges (elaborated)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Build and publish the visualiser of a folio's declared `lean` directory: the package's doc-gen4 HTML render, staged under the folio's site and wrapped in the harness navbar and rail. Use when a folio's Lean docs are missing, stale, or published without the harness chrome, or when declaring a `lean` directory and its `coverage.visualiser`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 182,
+      "instructionsPath": "skills/lean/lean-html-docs.md",
+      "name": "lean-html-docs",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2df6629917430d163d778a1c011be14b0d3700977b7527a36e9ca86548cbea01",
+        "bytes": 8045,
+        "sha256": "2df6629917430d163d778a1c011be14b0d3700977b7527a36e9ca86548cbea01"
+      },
+      "title": "Lean HTML docs — the `lean` directory's visualiser"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/lean",
+  "path": "skills/lean/"
+}
