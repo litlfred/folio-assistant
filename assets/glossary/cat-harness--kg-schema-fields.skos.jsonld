@@ -11486,7 +11486,7 @@
           "@value": "What this governs — `typescript`, `bpmn`, `commit-message`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/convention.ts#ConventionSchema.applies",
+      "dcterms:source": "cat-harness/schemas/process/convention.ts#ConventionSchema.applies",
       "skos:note": "candidate"
     },
     {
@@ -11505,7 +11505,7 @@
           "@value": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/convention.ts#ConventionSchema.id",
+      "dcterms:source": "cat-harness/schemas/process/convention.ts#ConventionSchema.id",
       "skos:note": "candidate"
     },
     {
@@ -11524,7 +11524,7 @@
           "@value": "WHY, so a reader can tell whether it still holds."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/convention.ts#ConventionSchema.rationale",
+      "dcterms:source": "cat-harness/schemas/process/convention.ts#ConventionSchema.rationale",
       "skos:note": "candidate"
     },
     {
@@ -11543,7 +11543,7 @@
           "@value": "What the convention actually requires, in one line a reader can act on."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/convention.ts#ConventionSchema.statement",
+      "dcterms:source": "cat-harness/schemas/process/convention.ts#ConventionSchema.statement",
       "skos:note": "candidate"
     },
     {
@@ -12531,7 +12531,7 @@
           "@value": "The aggregate over the placements, unchanged."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#DeploymentDescription.topology",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription.topology",
       "skos:note": "candidate"
     },
     {
@@ -12550,7 +12550,7 @@
           "@value": "The placement's actor, where the problem is in a placement."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#DeploymentProblem.actor",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#DeploymentProblem.actor",
       "skos:note": "candidate"
     },
     {
@@ -12569,7 +12569,7 @@
           "@value": "Where artefacts may be served."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Jurisdiction.publicationBase",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Jurisdiction.publicationBase",
       "skos:note": "candidate"
     },
     {
@@ -12588,7 +12588,7 @@
           "@value": "Where bytes may live."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Jurisdiction.residency",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Jurisdiction.residency",
       "skos:note": "candidate"
     },
     {
@@ -12607,7 +12607,7 @@
           "@value": "How long artefacts are kept, as the jurisdiction states it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Jurisdiction.retention",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Jurisdiction.retention",
       "skos:note": "candidate"
     },
     {
@@ -12626,7 +12626,7 @@
           "@value": "An actor id in `scenarios/actors/`. Never a new actor."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Placement.actor",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Placement.actor",
       "skos:note": "candidate"
     },
     {
@@ -12645,7 +12645,7 @@
           "@value": "Each credential need, mapped to the NAME of the mechanism or secret that supplies it. Never a value: an agent reads names only."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Placement.credentials",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Placement.credentials",
       "skos:note": "candidate"
     },
     {
@@ -12664,7 +12664,7 @@
           "@value": "The identity provider, as `identity.ts` names providers (github, gitlab, google)."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Placement.identity",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Placement.identity",
       "skos:note": "candidate"
     },
     {
@@ -12683,7 +12683,7 @@
           "@value": "Absent is unknown, never the deployment's value."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-description.ts#Placement.reach",
+      "dcterms:source": "cat-harness/schemas/process/deployment-description.ts#Placement.reach",
       "skos:note": "candidate"
     },
     {
@@ -12702,7 +12702,7 @@
           "@value": "Tasks whose only possible runners wait on a fact no placement declares. Kept apart from `unrunnable`: could not determine is neither yes nor no."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport.undetermined",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#DeploymentReport.undetermined",
       "skos:note": "candidate"
     },
     {
@@ -12721,7 +12721,7 @@
           "@value": "The report's own headline: tasks no placement can run. Reported, never a failure."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport.unrunnable",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#DeploymentReport.unrunnable",
       "skos:note": "candidate"
     },
     {
@@ -12740,7 +12740,7 @@
           "@value": "Needed skills no Tool satisfies: the actor exercises them, so they hold nothing up."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.judgement",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict.judgement",
       "skos:note": "candidate"
     },
     {
@@ -12759,7 +12759,7 @@
           "@value": "Index into the description's `placements`, since one actor may be placed twice."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.placement",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict.placement",
       "skos:note": "candidate"
     },
     {
@@ -12778,7 +12778,7 @@
           "@value": "Every needed skill that has Tools has one that works here."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.runnable",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict.runnable",
       "skos:note": "candidate"
     },
     {
@@ -12797,7 +12797,7 @@
           "@value": "One entry per needed skill that has Tools, with each Tool satisfying it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.skills",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict.skills",
       "skos:note": "candidate"
     },
     {
@@ -12816,7 +12816,7 @@
           "@value": "Not runnable, but every failing skill has a Tool whose fit could not be determined. So it is not known to be blocked either."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict.undetermined",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict.undetermined",
       "skos:note": "candidate"
     },
     {
@@ -12835,7 +12835,7 @@
           "@value": "Kinds that may fulfil it (`fulfilmentKindsForBpmnType`). Absent is unconstrained."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ResolverTask.kinds",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#ResolverTask.kinds",
       "skos:note": "candidate"
     },
     {
@@ -12854,7 +12854,7 @@
           "@value": "The lane's role id. Absent means the lane names no role."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ResolverTask.role",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#ResolverTask.role",
       "skos:note": "candidate"
     },
     {
@@ -12873,7 +12873,7 @@
           "@value": "Skills the task needs. Empty or absent: no Tool is needed."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ResolverTask.skills",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#ResolverTask.skills",
       "skos:note": "candidate"
     },
     {
@@ -12892,7 +12892,7 @@
           "@value": "Placements whose actor may take the lane's role and is of an allowed kind."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict.candidates",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict.candidates",
       "skos:note": "candidate"
     },
     {
@@ -12911,7 +12911,7 @@
           "@value": "No candidate is known to run it, and at least one might: an OS or runtime nobody declared."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict.undetermined",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict.undetermined",
       "skos:note": "candidate"
     },
     {
@@ -12930,7 +12930,7 @@
           "@value": "No candidate can run it: no one may take the role, or no Tool works for any who may."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict.unrunnable",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict.unrunnable",
       "skos:note": "candidate"
     },
     {
@@ -12949,7 +12949,7 @@
           "@value": "Why, when it is not `works`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict.reason",
+      "dcterms:source": "cat-harness/schemas/process/deployment-resolver.ts#ToolVerdict.reason",
       "skos:note": "candidate"
     },
     {
@@ -29175,7 +29175,7 @@
           "@value": "Absolute path of its `scenarios` directory."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.dir",
+      "dcterms:source": "cat-harness/schemas/process/scenario-overlay.ts#ScenarioLayer.dir",
       "skos:note": "candidate"
     },
     {
@@ -29194,7 +29194,7 @@
           "@value": "The instance's declared name."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.instance",
+      "dcterms:source": "cat-harness/schemas/process/scenario-overlay.ts#ScenarioLayer.instance",
       "skos:note": "candidate"
     },
     {
@@ -30464,7 +30464,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Network reach — see `ActorDefinition.reach` in `assistant-types.ts`, and `schemas/actor-reach.ts` for how it composes with the deployment's."
+          "@value": "Network reach — see `ActorDefinition.reach` in `assistant-types.ts`, and `schemas/process/actor-reach.ts` for how it composes with the deployment's."
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg/skill-package.ts#ActorDefinitionSchema.reach",
@@ -39777,7 +39777,7 @@
           "@value": "The role this story is told as."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/user-story.ts#UserStorySchema.role",
+      "dcterms:source": "cat-harness/schemas/process/user-story.ts#UserStorySchema.role",
       "skos:note": "candidate"
     },
     {
@@ -39796,7 +39796,7 @@
           "@value": "Why, when it is not obvious from the want — \"so that …\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/user-story.ts#UserStorySchema.soThat",
+      "dcterms:source": "cat-harness/schemas/process/user-story.ts#UserStorySchema.soThat",
       "skos:note": "candidate"
     },
     {
@@ -39815,7 +39815,7 @@
           "@value": "What the reader wants to do, in their terms — \"I want to …\"."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "dcterms:source": "cat-harness/schemas/process/user-story.ts#UserStorySchema.want",
       "skos:note": "candidate"
     },
     {

@@ -88,7 +88,7 @@ misrepresents the standard.
 
 ## The skills this layer publishes
 
-<!-- cat-harness:skills:begin -->
+<!-- skills:index:begin -->
 
 _23 skills in 1 directory, generated from each skill's front matter. `bun run cat readme:sync` rewrites this list and `readme:sync:check` fails when it is stale. Skills this repository inherits are listed by the repositories that publish them._
 
@@ -120,4 +120,4 @@ _23 skills in 1 directory, generated from each skill's front matter. `bun run ca
 | [`toolchain-ownership`](skills/content/authoring-who-smart-guidelines/toolchain-ownership.md) | Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. |
 | [`transcription-verbatim`](skills/content/authoring-who-smart-guidelines/transcription-verbatim.md) | Check L1 authored from pictures (a schedule poster, a slide deck: a source with no usable text layer) against the image narratives and transcriptions it names: every statement verbatim in one of… |
 
-<!-- cat-harness:skills:end -->
+<!-- skills:index:end -->

@@ -477,7 +477,7 @@ that names the id and both layers, and the higher declaration is used. The
 warning is the move's to-do: remove the lower copy. A redeclaration that
 changes or drops anything the lower one said is still refused.
 
-`schemas/scenario-overlay.ts` applies it (`checkoutRoleGraph`,
+`schemas/process/scenario-overlay.ts` applies it (`checkoutRoleGraph`,
 `checkoutActors`, `checkoutCapabilities`, `checkoutPolicies`; the
 exception is `onlyAdds`); the layers are the checkout's
 instances that depend on the role's owner, deepest first. Resolved alone, the

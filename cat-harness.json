@@ -6,9 +6,9 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "b1c2b15680c5b2ff6457af86d571e549bdb59ee6",
+    "sha": "5723804889168c3dcbcfe87b06d255d5a9d017ea",
     "pr": "main",
-    "run": "40881023675"
+    "run": "40892309544"
   },
   "@graph": [
     {
@@ -24009,12 +24009,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_Success"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/actor-reach",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/actor-reach",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/actor-reach"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/computation-witness",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/computation-witness",
@@ -24025,24 +24019,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/constraints",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/constraints"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/convention",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/convention",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/convention"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/deployment-description",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/deployment-resolver",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/formal-ref",
@@ -24075,12 +24051,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/refactor-strategy"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/scenario-overlay",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload",
@@ -24091,12 +24061,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/user-story",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/user-story"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping-fhir",
@@ -24693,10 +24657,22 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/translation-tools"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/actor-reach",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/actor-reach",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/actor-reach"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-workflow",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-workflow",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/convention",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/convention",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/convention"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-methodology-context",
@@ -24709,6 +24685,18 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/decision-request",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/decision-request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/deployment-description",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/deployment-resolver",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/methodology",
@@ -24727,6 +24715,18 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/role-graph",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/role-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/scenario-overlay",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/user-story",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/user-story"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adversarial-checklist",

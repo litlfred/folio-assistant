@@ -206,19 +206,12 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/actor-reach.test.ts",
-      "instance": "cat-harness",
-      "name": "actor-reach.test",
-      "graphNode": "undeclared",
-      "summary": "Reach composition — and specifically the ASYMMETRY, which is the part a",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/actor-reach.ts",
       "instance": "cat-harness",
       "name": "actor-reach",
-      "graphNode": "schema",
-      "summary": "**Network reach is a property of an ACTOR**, and how it composes with the",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./process/actor-reach.js`",
+      "summary": "Moved to `./process/actor-reach.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -979,8 +972,9 @@
       "module": "cat-harness/schemas/convention.ts",
       "instance": "cat-harness",
       "name": "convention",
-      "graphNode": "schema",
-      "summary": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./process/convention.js`",
+      "summary": "Moved to `./process/convention.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -1029,19 +1023,12 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/deployment-description.test.ts",
-      "instance": "cat-harness",
-      "name": "deployment-description.test",
-      "graphNode": "undeclared",
-      "summary": "Deployment descriptions (bean `23a3`): the schema refuses what it must, and",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/deployment-description.ts",
       "instance": "cat-harness",
       "name": "deployment-description",
-      "graphNode": "schema",
-      "summary": "**Deployment descriptions**: which declared actors run where, in one",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./process/deployment-description.js`",
+      "summary": "Moved to `./process/deployment-description.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -1053,19 +1040,12 @@
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/deployment-resolver.test.ts",
-      "instance": "cat-harness",
-      "name": "deployment-resolver.test",
-      "graphNode": "undeclared",
-      "summary": "The deployment resolver (bean `v3zw`): who may run a task, with which Tool,",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/deployment-resolver.ts",
       "instance": "cat-harness",
       "name": "deployment-resolver",
-      "graphNode": "schema",
-      "summary": "**The deployment resolver**: for each task of a process, who may run it in",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./process/deployment-resolver.js`",
+      "summary": "Moved to `./process/deployment-resolver.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -2580,11 +2560,35 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/process/actor-reach.test.ts",
+      "instance": "cat-harness",
+      "name": "actor-reach.test",
+      "graphNode": "undeclared",
+      "summary": "Reach composition — and specifically the ASYMMETRY, which is the part a",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/process/actor-reach.ts",
+      "instance": "cat-harness",
+      "name": "actor-reach",
+      "graphNode": "schema",
+      "summary": "**Network reach is a property of an ACTOR**, and how it composes with the",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/process/assistant-workflow.ts",
       "instance": "cat-harness",
       "name": "assistant-workflow",
       "graphNode": "schema",
       "summary": "Assistant Workflow — Content lifecycle state machine.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/process/convention.ts",
+      "instance": "cat-harness",
+      "name": "convention",
+      "graphNode": "schema",
+      "summary": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
       "isTest": false
     },
     {
@@ -2601,6 +2605,38 @@
       "name": "decision-request",
       "graphNode": "schema",
       "summary": "A decision handed to a person, as a shape rather than as a habit.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/process/deployment-description.test.ts",
+      "instance": "cat-harness",
+      "name": "deployment-description.test",
+      "graphNode": "undeclared",
+      "summary": "Deployment descriptions (bean `23a3`): the schema refuses what it must, and",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "instance": "cat-harness",
+      "name": "deployment-description",
+      "graphNode": "schema",
+      "summary": "**Deployment descriptions**: which declared actors run where, in one",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/process/deployment-resolver.test.ts",
+      "instance": "cat-harness",
+      "name": "deployment-resolver.test",
+      "graphNode": "undeclared",
+      "summary": "The deployment resolver (bean `v3zw`): who may run a task, with which Tool,",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "instance": "cat-harness",
+      "name": "deployment-resolver",
+      "graphNode": "schema",
+      "summary": "**The deployment resolver**: for each task of a process, who may run it in",
       "isTest": false
     },
     {
@@ -2641,6 +2677,29 @@
       "name": "role-graph",
       "graphNode": "schema",
       "summary": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/process/scenario-overlay.ts",
+      "instance": "cat-harness",
+      "name": "scenario-overlay",
+      "graphNode": "schema",
+      "summary": "Roles, actors and capabilities EXTENDED BY ID from a higher instance's own",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/process/user-story.test.ts",
+      "instance": "cat-harness",
+      "name": "user-story.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/process/user-story.ts",
+      "instance": "cat-harness",
+      "name": "user-story",
+      "graphNode": "schema",
+      "summary": "User stories — what a reader acting in a role is trying to do.",
       "isTest": false
     },
     {
@@ -2892,8 +2951,9 @@
       "module": "cat-harness/schemas/scenario-overlay.ts",
       "instance": "cat-harness",
       "name": "scenario-overlay",
-      "graphNode": "schema",
-      "summary": "Roles, actors and capabilities EXTENDED BY ID from a higher instance's own",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./process/scenario-overlay.js`",
+      "summary": "Moved to `./process/scenario-overlay.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -4174,18 +4234,12 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/user-story.test.ts",
-      "instance": "cat-harness",
-      "name": "user-story.test",
-      "graphNode": "undeclared",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/user-story.ts",
       "instance": "cat-harness",
       "name": "user-story",
-      "graphNode": "schema",
-      "summary": "User stories — what a reader acting in a role is trying to do.",
+      "graphNode": "none",
+      "reason": "a one-release re-export at the old path; import from `./process/user-story.js`",
+      "summary": "Moved to `./process/user-story.ts` (bean `f8wp`, placement PR8).",
       "isTest": false
     },
     {
@@ -8839,87 +8893,6 @@
         "z"
       ],
       "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/actor-reach.ts#ActorReachSchema",
-      "name": "ActorReachSchema",
-      "module": "cat-harness/schemas/actor-reach.ts",
-      "kind": "zod-enum",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/actor-reach.ts#EffectiveReach",
-      "name": "EffectiveReach",
-      "module": "cat-harness/schemas/actor-reach.ts",
-      "kind": "type-alias",
-      "doc": "A reach fact as a consumer receives it — declared, or admittedly not.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/actor-reach.ts#ReachConflict",
-      "name": "ReachConflict",
-      "module": "cat-harness/schemas/actor-reach.ts",
-      "kind": "interface",
-      "doc": "An actor claiming reach its deployment cannot grant.",
-      "fields": [
-        {
-          "name": "actorId",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "actor",
-          "type": "NetworkReach",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "deployment",
-          "type": "NetworkReach",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "reason",
-          "type": "string",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/kg/cat-harness.ts#NetworkReach"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/actor-reach.ts#ReachUnknown",
-      "name": "ReachUnknown",
-      "module": "cat-harness/schemas/actor-reach.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
     },
     {
       "id": "cat-harness/schemas/computation-witness.ts#ComputationWitnessConformanceSchema",
@@ -20559,1003 +20532,6 @@
       "external": [
         "z"
       ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/convention.ts#Convention",
-      "name": "Convention",
-      "module": "cat-harness/schemas/convention.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/convention.ts#ConventionSchema",
-      "name": "ConventionSchema",
-      "module": "cat-harness/schemas/convention.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`."
-        },
-        {
-          "name": "statement",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "What the convention actually requires, in one line a reader can act on."
-        },
-        {
-          "name": "rationale",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "WHY, so a reader can tell whether it still holds."
-        },
-        {
-          "name": "applies",
-          "type": "z.array(z.string().min(1)).default([])",
-          "optional": true,
-          "array": true,
-          "doc": "What this governs — `typescript`, `bpmn`, `commit-message`."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/convention.ts#ConventionScope",
-      "name": "ConventionScope",
-      "module": "cat-harness/schemas/convention.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#ActorFacts",
-      "name": "ActorFacts",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "interface",
-      "doc": "The actor facts a description is checked against.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "reach",
-          "type": "NetworkReach",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/kg/cat-harness.ts#NetworkReach"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#Audience",
-      "name": "Audience",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#CredentialAction",
-      "name": "CredentialAction",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "name": "DeploymentDescription",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "interface",
-      "doc": "One deployment of an instance.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "topology",
-          "type": "Topology",
-          "optional": false,
-          "array": false,
-          "doc": "The aggregate over the placements, unchanged."
-        },
-        {
-          "name": "publicationHost",
-          "type": "PublicationHost",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "modes",
-          "type": "OperatingMode[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "placements",
-          "type": "Placement[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "jurisdiction",
-          "type": "Jurisdiction",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "liveData",
-          "type": "LiveData",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#Jurisdiction",
-        "cat-harness/schemas/deployment-description.ts#LiveData",
-        "cat-harness/schemas/deployment-description.ts#OperatingMode",
-        "cat-harness/schemas/deployment-description.ts#Placement",
-        "cat-harness/schemas/kg/cat-harness.ts#PublicationHost",
-        "cat-harness/schemas/kg/cat-harness.ts#Topology"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#DeploymentDescriptionSchema",
-      "name": "DeploymentDescriptionSchema",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "topology",
-          "type": "TopologySchema.strict()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "publicationHost",
-          "type": "z.enum(PUBLICATION_HOSTS).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "modes",
-          "type": "z.array(z.enum(OPERATING_MODES))",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "placements",
-          "type": "z.array(PlacementSchema)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "jurisdiction",
-          "type": "JurisdictionSchema.optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "liveData",
-          "type": "z.enum(LIVE_DATA)",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#JurisdictionSchema",
-        "cat-harness/schemas/deployment-description.ts#PlacementSchema",
-        "cat-harness/schemas/kg/cat-harness.ts#TopologySchema"
-      ],
-      "unresolved": [
-        "PUBLICATION_HOSTS"
-      ],
-      "external": [
-        "LIVE_DATA",
-        "OPERATING_MODES",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#DeploymentProblem",
-      "name": "DeploymentProblem",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "interface",
-      "doc": "One way a description is not well formed.",
-      "fields": [
-        {
-          "name": "deployment",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "DeploymentProblemKind",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "actor",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The placement's actor, where the problem is in a placement."
-        },
-        {
-          "name": "message",
-          "type": "string",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#DeploymentProblemKind"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#DeploymentProblemKind",
-      "name": "DeploymentProblemKind",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "id-not-filename",
-        "duplicate-id",
-        "unknown-actor",
-        "contradicts-actor",
-        "exceeds-deployment"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#Jurisdiction",
-      "name": "Jurisdiction",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "interface",
-      "doc": "What a jurisdiction requires of what is published and kept.",
-      "fields": [
-        {
-          "name": "publicationBase",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where artefacts may be served."
-        },
-        {
-          "name": "audience",
-          "type": "Audience",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "retention",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "How long artefacts are kept, as the jurisdiction states it."
-        },
-        {
-          "name": "residency",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where bytes may live."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#Audience"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#JurisdictionSchema",
-      "name": "JurisdictionSchema",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "publicationBase",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "audience",
-          "type": "z.enum(AUDIENCES).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "retention",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "residency",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "AUDIENCES",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#LiveData",
-      "name": "LiveData",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#LoadedDeployment",
-      "name": "LoadedDeployment",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "interface",
-      "doc": "A description as read, with the file it came from.",
-      "fields": [
-        {
-          "name": "path",
-          "type": "string",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DeploymentDescription"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#DeploymentDescription"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#MechanismNameSchema",
-      "name": "MechanismNameSchema",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "zod-scalar",
-      "doc": "A secret or mechanism name: letters, digits, `_`, `-`, `.`. It refuses a",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#OperatingMode",
-      "name": "OperatingMode",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#Placement",
-      "name": "Placement",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "interface",
-      "doc": "One declared actor, placed in one deployment.",
-      "fields": [
-        {
-          "name": "actor",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "An actor id in `scenarios/actors/`. Never a new actor."
-        },
-        {
-          "name": "host",
-          "type": "PlacementHost",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "reach",
-          "type": "NetworkReach",
-          "optional": true,
-          "array": false,
-          "doc": "Absent is unknown, never the deployment's value."
-        },
-        {
-          "name": "compute",
-          "type": "Compute",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "toolSurface",
-          "type": "ToolSurface",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "modelProvenance",
-          "type": "ModelProvenance",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "identity",
-          "type": "{ provider: string }",
-          "optional": true,
-          "array": false,
-          "doc": "The identity provider, as `identity.ts` names providers (github, gitlab, google)."
-        },
-        {
-          "name": "credentials",
-          "type": "Partial<Record<CredentialAction, string>>",
-          "optional": true,
-          "array": false,
-          "doc": "Each credential need, mapped to the NAME of the mechanism or secret that"
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#CredentialAction",
-        "cat-harness/schemas/deployment-description.ts#PlacementHost",
-        "cat-harness/schemas/kg/cat-harness.ts#Compute",
-        "cat-harness/schemas/kg/cat-harness.ts#ModelProvenance",
-        "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
-        "cat-harness/schemas/kg/cat-harness.ts#ToolSurface"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#PlacementHost",
-      "name": "PlacementHost",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-description.ts#PlacementSchema",
-      "name": "PlacementSchema",
-      "module": "cat-harness/schemas/deployment-description.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "actor",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "host",
-          "type": "z.enum(PLACEMENT_HOSTS).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "reach",
-          "type": "z.enum(NETWORK_REACHES).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "compute",
-          "type": "z.enum(COMPUTES).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "toolSurface",
-          "type": "z.enum(TOOL_SURFACES).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "modelProvenance",
-          "type": "z.enum(MODEL_PROVENANCES).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "identity",
-          "type": "z.object({ provider: z.string().min(1) }).strict().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "credentials",
-          "type": "z.partialRecord(z.enum(CREDENTIAL_ACTIONS), MechanismNameSchema).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#MechanismNameSchema"
-      ],
-      "unresolved": [
-        "COMPUTES",
-        "MODEL_PROVENANCES",
-        "NETWORK_REACHES",
-        "TOOL_SURFACES"
-      ],
-      "external": [
-        "CREDENTIAL_ACTIONS",
-        "PLACEMENT_HOSTS",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport",
-      "name": "DeploymentReport",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "deployment",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "tasks",
-          "type": "TaskVerdict[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "unrunnable",
-          "type": "{ process: string; task: string; why: string }[]",
-          "optional": false,
-          "array": true,
-          "doc": "The report's own headline: tasks no placement can run. Reported, never a failure."
-        },
-        {
-          "name": "undetermined",
-          "type": "{ process: string; task: string; why: string }[]",
-          "optional": false,
-          "array": true,
-          "doc": "Tasks whose only possible runners wait on a fact no placement declares."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-resolver.ts#TaskVerdict"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
-      "name": "PlacementVerdict",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "placement",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "Index into the description's `placements`, since one actor may be placed twice."
-        },
-        {
-          "name": "actor",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "host",
-          "type": "Placement[\"host\"]",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "reach",
-          "type": "EffectiveReach",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "skills",
-          "type": "{ skill: string; tools: ToolVerdict[] }[]",
-          "optional": false,
-          "array": true,
-          "doc": "One entry per needed skill that has Tools, with each Tool satisfying it."
-        },
-        {
-          "name": "judgement",
-          "type": "string[]",
-          "optional": false,
-          "array": true,
-          "doc": "Needed skills no Tool satisfies: the actor exercises them, so they hold nothing up."
-        },
-        {
-          "name": "runnable",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "Every needed skill that has Tools has one that works here."
-        },
-        {
-          "name": "undetermined",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "Not runnable, but every failing skill has a Tool whose fit could not be"
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/actor-reach.ts#EffectiveReach",
-        "cat-harness/schemas/deployment-description.ts#Placement",
-        "cat-harness/schemas/deployment-resolver.ts#ToolVerdict"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#ResolverActor",
-      "name": "ResolverActor",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "doc": "The actor facts the resolver reads. `roles` empty or absent is unconstrained.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "ActorKind",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "roles",
-          "type": "readonly string[]",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "reach",
-          "type": "DeploymentDescription[\"topology\"][\"network\"]",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-        "cat-harness/schemas/kg/skill-package.ts#ActorKind"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#ResolverTask",
-      "name": "ResolverTask",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "doc": "One task of a process, as a caller reads it from the BPMN.",
-      "fields": [
-        {
-          "name": "process",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "task",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The lane's role id. Absent means the lane names no role."
-        },
-        {
-          "name": "kinds",
-          "type": "readonly ActorKind[]",
-          "optional": true,
-          "array": false,
-          "doc": "Kinds that may fulfil it (`fulfilmentKindsForBpmnType`). Absent is unconstrained."
-        },
-        {
-          "name": "skills",
-          "type": "readonly string[]",
-          "optional": true,
-          "array": false,
-          "doc": "Skills the task needs. Empty or absent: no Tool is needed."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/kg/skill-package.ts#ActorKind"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#ResolverTool",
-      "name": "ResolverTool",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "doc": "The Tool facts the resolver reads.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "satisfies",
-          "type": "readonly string[]",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "requires",
-          "type": "{ os?: readonly string[]; runtime?: readonly string[]; network?: boolean }",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict",
-      "name": "TaskVerdict",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "process",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "task",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "candidates",
-          "type": "PlacementVerdict[]",
-          "optional": false,
-          "array": true,
-          "doc": "Placements whose actor may take the lane's role and is of an allowed kind."
-        },
-        {
-          "name": "unrunnable",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "No candidate can run it: no one may take the role, or no Tool works for any who may."
-        },
-        {
-          "name": "undetermined",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "No candidate is known to run it, and at least one might: an OS or runtime nobody declared."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#ToolFit",
-      "name": "ToolFit",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "type-alias",
-      "doc": "Whether one Tool works for one placement.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "works",
-        "needs-network",
-        "could-not-determine"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict",
-      "name": "ToolVerdict",
-      "module": "cat-harness/schemas/deployment-resolver.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "tool",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "fit",
-          "type": "ToolFit",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "reason",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Why, when it is not `works`."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/deployment-resolver.ts#ToolFit"
-      ],
-      "unresolved": [],
-      "external": [],
       "exported": true
     },
     {
@@ -43627,6 +42603,87 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/process/actor-reach.ts#ActorReachSchema",
+      "name": "ActorReachSchema",
+      "module": "cat-harness/schemas/process/actor-reach.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/actor-reach.ts#EffectiveReach",
+      "name": "EffectiveReach",
+      "module": "cat-harness/schemas/process/actor-reach.ts",
+      "kind": "type-alias",
+      "doc": "A reach fact as a consumer receives it — declared, or admittedly not.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/actor-reach.ts#ReachConflict",
+      "name": "ReachConflict",
+      "module": "cat-harness/schemas/process/actor-reach.ts",
+      "kind": "interface",
+      "doc": "An actor claiming reach its deployment cannot grant.",
+      "fields": [
+        {
+          "name": "actorId",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actor",
+          "type": "NetworkReach",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "deployment",
+          "type": "NetworkReach",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/cat-harness.ts#NetworkReach"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/actor-reach.ts#ReachUnknown",
+      "name": "ReachUnknown",
+      "module": "cat-harness/schemas/process/actor-reach.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/process/assistant-workflow.ts#StageSkillBinding",
       "name": "StageSkillBinding",
       "module": "cat-harness/schemas/process/assistant-workflow.ts",
@@ -43760,6 +42817,76 @@
         "cat-harness/schemas/process/assistant-workflow.ts#StageSkillBinding",
         "cat-harness/schemas/process/assistant-workflow.ts#StageTransition"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/convention.ts#Convention",
+      "name": "Convention",
+      "module": "cat-harness/schemas/process/convention.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/convention.ts#ConventionSchema",
+      "name": "ConventionSchema",
+      "module": "cat-harness/schemas/process/convention.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`."
+        },
+        {
+          "name": "statement",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the convention actually requires, in one line a reader can act on."
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHY, so a reader can tell whether it still holds."
+        },
+        {
+          "name": "applies",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "What this governs — `typescript`, `bpmn`, `commit-message`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/convention.ts#ConventionScope",
+      "name": "ConventionScope",
+      "module": "cat-harness/schemas/process/convention.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -44291,6 +43418,933 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#ActorFacts",
+      "name": "ActorFacts",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "interface",
+      "doc": "The actor facts a description is checked against.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "NetworkReach",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/cat-harness.ts#NetworkReach"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#Audience",
+      "name": "Audience",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#CredentialAction",
+      "name": "CredentialAction",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "name": "DeploymentDescription",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "interface",
+      "doc": "One deployment of an instance.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "topology",
+          "type": "Topology",
+          "optional": false,
+          "array": false,
+          "doc": "The aggregate over the placements, unchanged."
+        },
+        {
+          "name": "publicationHost",
+          "type": "PublicationHost",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "modes",
+          "type": "OperatingMode[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "placements",
+          "type": "Placement[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "Jurisdiction",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "liveData",
+          "type": "LiveData",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/cat-harness.ts#PublicationHost",
+        "cat-harness/schemas/kg/cat-harness.ts#Topology",
+        "cat-harness/schemas/process/deployment-description.ts#Jurisdiction",
+        "cat-harness/schemas/process/deployment-description.ts#LiveData",
+        "cat-harness/schemas/process/deployment-description.ts#OperatingMode",
+        "cat-harness/schemas/process/deployment-description.ts#Placement"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescriptionSchema",
+      "name": "DeploymentDescriptionSchema",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "topology",
+          "type": "TopologySchema.strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "publicationHost",
+          "type": "z.enum(PUBLICATION_HOSTS).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "modes",
+          "type": "z.array(z.enum(OPERATING_MODES))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "placements",
+          "type": "z.array(PlacementSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "jurisdiction",
+          "type": "JurisdictionSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "liveData",
+          "type": "z.enum(LIVE_DATA)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/cat-harness.ts#TopologySchema",
+        "cat-harness/schemas/process/deployment-description.ts#JurisdictionSchema",
+        "cat-harness/schemas/process/deployment-description.ts#PlacementSchema"
+      ],
+      "unresolved": [
+        "PUBLICATION_HOSTS"
+      ],
+      "external": [
+        "LIVE_DATA",
+        "OPERATING_MODES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#DeploymentProblem",
+      "name": "DeploymentProblem",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "interface",
+      "doc": "One way a description is not well formed.",
+      "fields": [
+        {
+          "name": "deployment",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "DeploymentProblemKind",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The placement's actor, where the problem is in a placement."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-description.ts#DeploymentProblemKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#DeploymentProblemKind",
+      "name": "DeploymentProblemKind",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "id-not-filename",
+        "duplicate-id",
+        "unknown-actor",
+        "contradicts-actor",
+        "exceeds-deployment"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#Jurisdiction",
+      "name": "Jurisdiction",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "interface",
+      "doc": "What a jurisdiction requires of what is published and kept.",
+      "fields": [
+        {
+          "name": "publicationBase",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where artefacts may be served."
+        },
+        {
+          "name": "audience",
+          "type": "Audience",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "retention",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "How long artefacts are kept, as the jurisdiction states it."
+        },
+        {
+          "name": "residency",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where bytes may live."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-description.ts#Audience"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#JurisdictionSchema",
+      "name": "JurisdictionSchema",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "publicationBase",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "audience",
+          "type": "z.enum(AUDIENCES).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "retention",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "residency",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "AUDIENCES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#LiveData",
+      "name": "LiveData",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#LoadedDeployment",
+      "name": "LoadedDeployment",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "interface",
+      "doc": "A description as read, with the file it came from.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DeploymentDescription"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#MechanismNameSchema",
+      "name": "MechanismNameSchema",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "zod-scalar",
+      "doc": "A secret or mechanism name: letters, digits, `_`, `-`, `.`. It refuses a",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#OperatingMode",
+      "name": "OperatingMode",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "name": "Placement",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "interface",
+      "doc": "One declared actor, placed in one deployment.",
+      "fields": [
+        {
+          "name": "actor",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "An actor id in `scenarios/actors/`. Never a new actor."
+        },
+        {
+          "name": "host",
+          "type": "PlacementHost",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "NetworkReach",
+          "optional": true,
+          "array": false,
+          "doc": "Absent is unknown, never the deployment's value."
+        },
+        {
+          "name": "compute",
+          "type": "Compute",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "toolSurface",
+          "type": "ToolSurface",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "modelProvenance",
+          "type": "ModelProvenance",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "identity",
+          "type": "{ provider: string }",
+          "optional": true,
+          "array": false,
+          "doc": "The identity provider, as `identity.ts` names providers (github, gitlab, google)."
+        },
+        {
+          "name": "credentials",
+          "type": "Partial<Record<CredentialAction, string>>",
+          "optional": true,
+          "array": false,
+          "doc": "Each credential need, mapped to the NAME of the mechanism or secret that"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/cat-harness.ts#Compute",
+        "cat-harness/schemas/kg/cat-harness.ts#ModelProvenance",
+        "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
+        "cat-harness/schemas/kg/cat-harness.ts#ToolSurface",
+        "cat-harness/schemas/process/deployment-description.ts#CredentialAction",
+        "cat-harness/schemas/process/deployment-description.ts#PlacementHost"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#PlacementHost",
+      "name": "PlacementHost",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-description.ts#PlacementSchema",
+      "name": "PlacementSchema",
+      "module": "cat-harness/schemas/process/deployment-description.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "actor",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "host",
+          "type": "z.enum(PLACEMENT_HOSTS).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "z.enum(NETWORK_REACHES).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "compute",
+          "type": "z.enum(COMPUTES).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "toolSurface",
+          "type": "z.enum(TOOL_SURFACES).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "modelProvenance",
+          "type": "z.enum(MODEL_PROVENANCES).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "identity",
+          "type": "z.object({ provider: z.string().min(1) }).strict().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "credentials",
+          "type": "z.partialRecord(z.enum(CREDENTIAL_ACTIONS), MechanismNameSchema).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-description.ts#MechanismNameSchema"
+      ],
+      "unresolved": [
+        "COMPUTES",
+        "MODEL_PROVENANCES",
+        "NETWORK_REACHES",
+        "TOOL_SURFACES"
+      ],
+      "external": [
+        "CREDENTIAL_ACTIONS",
+        "PLACEMENT_HOSTS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#DeploymentReport",
+      "name": "DeploymentReport",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "deployment",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tasks",
+          "type": "TaskVerdict[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unrunnable",
+          "type": "{ process: string; task: string; why: string }[]",
+          "optional": false,
+          "array": true,
+          "doc": "The report's own headline: tasks no placement can run. Reported, never a failure."
+        },
+        {
+          "name": "undetermined",
+          "type": "{ process: string; task: string; why: string }[]",
+          "optional": false,
+          "array": true,
+          "doc": "Tasks whose only possible runners wait on a fact no placement declares."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict",
+      "name": "PlacementVerdict",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "placement",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Index into the description's `placements`, since one actor may be placed twice."
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "host",
+          "type": "Placement[\"host\"]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "EffectiveReach",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skills",
+          "type": "{ skill: string; tools: ToolVerdict[] }[]",
+          "optional": false,
+          "array": true,
+          "doc": "One entry per needed skill that has Tools, with each Tool satisfying it."
+        },
+        {
+          "name": "judgement",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Needed skills no Tool satisfies: the actor exercises them, so they hold nothing up."
+        },
+        {
+          "name": "runnable",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Every needed skill that has Tools has one that works here."
+        },
+        {
+          "name": "undetermined",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Not runnable, but every failing skill has a Tool whose fit could not be"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/actor-reach.ts#EffectiveReach",
+        "cat-harness/schemas/process/deployment-description.ts#Placement",
+        "cat-harness/schemas/process/deployment-resolver.ts#ToolVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#ResolverActor",
+      "name": "ResolverActor",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "doc": "The actor facts the resolver reads. `roles` empty or absent is unconstrained.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "ActorKind",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "roles",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "DeploymentDescription[\"topology\"][\"network\"]",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/skill-package.ts#ActorKind",
+        "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#ResolverTask",
+      "name": "ResolverTask",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "doc": "One task of a process, as a caller reads it from the BPMN.",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The lane's role id. Absent means the lane names no role."
+        },
+        {
+          "name": "kinds",
+          "type": "readonly ActorKind[]",
+          "optional": true,
+          "array": false,
+          "doc": "Kinds that may fulfil it (`fulfilmentKindsForBpmnType`). Absent is unconstrained."
+        },
+        {
+          "name": "skills",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "Skills the task needs. Empty or absent: no Tool is needed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg/skill-package.ts#ActorKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#ResolverTool",
+      "name": "ResolverTool",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "doc": "The Tool facts the resolver reads.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "satisfies",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requires",
+          "type": "{ os?: readonly string[]; runtime?: readonly string[]; network?: boolean }",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict",
+      "name": "TaskVerdict",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "candidates",
+          "type": "PlacementVerdict[]",
+          "optional": false,
+          "array": true,
+          "doc": "Placements whose actor may take the lane's role and is of an allowed kind."
+        },
+        {
+          "name": "unrunnable",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "No candidate can run it: no one may take the role, or no Tool works for any who may."
+        },
+        {
+          "name": "undetermined",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "No candidate is known to run it, and at least one might: an OS or runtime nobody declared."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#ToolFit",
+      "name": "ToolFit",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "type-alias",
+      "doc": "Whether one Tool works for one placement.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "works",
+        "needs-network",
+        "could-not-determine"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/deployment-resolver.ts#ToolVerdict",
+      "name": "ToolVerdict",
+      "module": "cat-harness/schemas/process/deployment-resolver.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "tool",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fit",
+          "type": "ToolFit",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why, when it is not `works`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/deployment-resolver.ts#ToolFit"
+      ],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -45290,6 +45344,184 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/process/scenario-overlay.ts#CapabilityRecord",
+      "name": "CapabilityRecord",
+      "module": "cat-harness/schemas/process/scenario-overlay.ts",
+      "kind": "type-alias",
+      "doc": "A capability probe, as its JSON file declares it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/scenario-overlay.ts#RoleExtensionRecord",
+      "name": "RoleExtensionRecord",
+      "module": "cat-harness/schemas/process/scenario-overlay.ts",
+      "kind": "interface",
+      "doc": "Who added what to a role, for a report that must name the instance.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/scenario-overlay.ts#ScenarioLayer",
+      "name": "ScenarioLayer",
+      "module": "cat-harness/schemas/process/scenario-overlay.ts",
+      "kind": "interface",
+      "doc": "A higher instance's `scenarios/` directory, as an overlay layer.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's declared name."
+        },
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Absolute path of its `scenarios` directory."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/user-story.ts#UserStory",
+      "name": "UserStory",
+      "module": "cat-harness/schemas/process/user-story.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/user-story.ts#UserStoryGraph",
+      "name": "UserStoryGraph",
+      "module": "cat-harness/schemas/process/user-story.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/user-story.ts#UserStoryGraphSchema",
+      "name": "UserStoryGraphSchema",
+      "module": "cat-harness/schemas/process/user-story.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "stories",
+          "type": "z.array(UserStorySchema).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/user-story.ts#UserStorySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process/user-story.ts#UserStorySchema",
+      "name": "UserStorySchema",
+      "module": "cat-harness/schemas/process/user-story.ts",
+      "kind": "zod-object",
+      "doc": "One user story: as <role>, I want <want>.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9-]+$/, \"a story id is lower-case kebab\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "RoleRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The role this story is told as."
+        },
+        {
+          "name": "want",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the reader wants to do, in their terms — \"I want to …\"."
+        },
+        {
+          "name": "soThat",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why, when it is not obvious from the want — \"so that …\"."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/process/role-graph.ts#RoleRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/refactor-strategy.ts#LeanVersionRange",
       "name": "LeanVersionRange",
       "module": "cat-harness/schemas/refactor-strategy.ts",
@@ -45494,82 +45726,6 @@
       "refs": [
         "cat-harness/schemas/refactor-strategy.ts#RefactorStrategy"
       ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/scenario-overlay.ts#CapabilityRecord",
-      "name": "CapabilityRecord",
-      "module": "cat-harness/schemas/scenario-overlay.ts",
-      "kind": "type-alias",
-      "doc": "A capability probe, as its JSON file declares it.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/scenario-overlay.ts#RoleExtensionRecord",
-      "name": "RoleExtensionRecord",
-      "module": "cat-harness/schemas/scenario-overlay.ts",
-      "kind": "interface",
-      "doc": "Who added what to a role, for a report that must name the instance.",
-      "fields": [
-        {
-          "name": "instance",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "skills",
-          "type": "string[]",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer",
-      "name": "ScenarioLayer",
-      "module": "cat-harness/schemas/scenario-overlay.ts",
-      "kind": "interface",
-      "doc": "A higher instance's `scenarios/` directory, as an overlay layer.",
-      "fields": [
-        {
-          "name": "instance",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The instance's declared name."
-        },
-        {
-          "name": "dir",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "Absolute path of its `scenarios` directory."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -59469,7 +59625,7 @@
         "folio:lean-modules",
         "folio:simulators",
         "folio:workflows",
-        "cat-harness:skills",
+        "skills:index",
         "A generated README section, named by its marker."
       ],
       "refs": [],
@@ -66779,108 +66935,6 @@
       "refs": [],
       "unresolved": [],
       "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/user-story.ts#UserStory",
-      "name": "UserStory",
-      "module": "cat-harness/schemas/user-story.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/user-story.ts#UserStoryGraph",
-      "name": "UserStoryGraph",
-      "module": "cat-harness/schemas/user-story.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/user-story.ts#UserStoryGraphSchema",
-      "name": "UserStoryGraphSchema",
-      "module": "cat-harness/schemas/user-story.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "stories",
-          "type": "z.array(UserStorySchema).default([])",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/user-story.ts#UserStorySchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/user-story.ts#UserStorySchema",
-      "name": "UserStorySchema",
-      "module": "cat-harness/schemas/user-story.ts",
-      "kind": "zod-object",
-      "doc": "One user story: as <role>, I want <want>.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().regex(/^[a-z0-9-]+$/, \"a story id is lower-case kebab\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "RoleRefSchema",
-          "optional": false,
-          "array": false,
-          "doc": "The role this story is told as."
-        },
-        {
-          "name": "want",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "What the reader wants to do, in their terms — \"I want to …\"."
-        },
-        {
-          "name": "soThat",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Why, when it is not obvious from the want — \"so that …\"."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/process/role-graph.ts#RoleRefSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
       "exported": true
     },
     {
@@ -78473,22 +78527,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/actor-reach.ts#ReachConflict",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
-      "via": "actor",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/actor-reach.ts#ReachConflict",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
-      "via": "deployment",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessConformanceSchema",
       "to": "cat-harness/schemas/computation-witness.ts#Scalar",
       "via": "assertions",
@@ -80303,238 +80341,6 @@
       "kind": "field",
       "optional": false,
       "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#ActorFacts",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
-      "via": "reach",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "to": "cat-harness/schemas/deployment-description.ts#Jurisdiction",
-      "via": "jurisdiction",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "to": "cat-harness/schemas/deployment-description.ts#LiveData",
-      "via": "liveData",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "to": "cat-harness/schemas/deployment-description.ts#OperatingMode",
-      "via": "modes",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "to": "cat-harness/schemas/deployment-description.ts#Placement",
-      "via": "placements",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#PublicationHost",
-      "via": "publicationHost",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#Topology",
-      "via": "topology",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescriptionSchema",
-      "to": "cat-harness/schemas/deployment-description.ts#JurisdictionSchema",
-      "via": "jurisdiction",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescriptionSchema",
-      "to": "cat-harness/schemas/deployment-description.ts#PlacementSchema",
-      "via": "placements",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentDescriptionSchema",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#TopologySchema",
-      "via": "topology",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#DeploymentProblem",
-      "to": "cat-harness/schemas/deployment-description.ts#DeploymentProblemKind",
-      "via": "kind",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Jurisdiction",
-      "to": "cat-harness/schemas/deployment-description.ts#Audience",
-      "via": "audience",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#LoadedDeployment",
-      "to": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Placement",
-      "to": "cat-harness/schemas/deployment-description.ts#CredentialAction",
-      "via": "credentials",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Placement",
-      "to": "cat-harness/schemas/deployment-description.ts#PlacementHost",
-      "via": "host",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Placement",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#Compute",
-      "via": "compute",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Placement",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#ModelProvenance",
-      "via": "modelProvenance",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Placement",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
-      "via": "reach",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#Placement",
-      "to": "cat-harness/schemas/kg/cat-harness.ts#ToolSurface",
-      "via": "toolSurface",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-description.ts#PlacementSchema",
-      "to": "cat-harness/schemas/deployment-description.ts#MechanismNameSchema",
-      "via": "credentials",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#DeploymentReport",
-      "to": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict",
-      "via": "tasks",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
-      "to": "cat-harness/schemas/actor-reach.ts#EffectiveReach",
-      "via": "reach",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
-      "to": "cat-harness/schemas/deployment-description.ts#Placement",
-      "via": "host",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
-      "to": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict",
-      "via": "skills",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#ResolverActor",
-      "to": "cat-harness/schemas/deployment-description.ts#DeploymentDescription",
-      "via": "reach",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#ResolverActor",
-      "to": "cat-harness/schemas/kg/skill-package.ts#ActorKind",
-      "via": "kind",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#ResolverTask",
-      "to": "cat-harness/schemas/kg/skill-package.ts#ActorKind",
-      "via": "kinds",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#TaskVerdict",
-      "to": "cat-harness/schemas/deployment-resolver.ts#PlacementVerdict",
-      "via": "candidates",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/deployment-resolver.ts#ToolVerdict",
-      "to": "cat-harness/schemas/deployment-resolver.ts#ToolFit",
-      "via": "fit",
-      "kind": "field",
-      "optional": false,
-      "array": false
     },
     {
       "from": "cat-harness/schemas/formalization-types.ts#CategoryGlossaryEntry",
@@ -83921,6 +83727,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/process/actor-reach.ts#ReachConflict",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
+      "via": "actor",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/actor-reach.ts#ReachConflict",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
+      "via": "deployment",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/process/assistant-workflow.ts#StageSkillBinding",
       "to": "cat-harness/schemas/conduct/assistant-types.ts#Conformance",
       "via": "skills",
@@ -84039,6 +83861,238 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#ActorFacts",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
+      "via": "reach",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#PublicationHost",
+      "via": "publicationHost",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#Topology",
+      "via": "topology",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "to": "cat-harness/schemas/process/deployment-description.ts#Jurisdiction",
+      "via": "jurisdiction",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "to": "cat-harness/schemas/process/deployment-description.ts#LiveData",
+      "via": "liveData",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "to": "cat-harness/schemas/process/deployment-description.ts#OperatingMode",
+      "via": "modes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "to": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "via": "placements",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescriptionSchema",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#TopologySchema",
+      "via": "topology",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescriptionSchema",
+      "to": "cat-harness/schemas/process/deployment-description.ts#JurisdictionSchema",
+      "via": "jurisdiction",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescriptionSchema",
+      "to": "cat-harness/schemas/process/deployment-description.ts#PlacementSchema",
+      "via": "placements",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#DeploymentProblem",
+      "to": "cat-harness/schemas/process/deployment-description.ts#DeploymentProblemKind",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Jurisdiction",
+      "to": "cat-harness/schemas/process/deployment-description.ts#Audience",
+      "via": "audience",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#LoadedDeployment",
+      "to": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#Compute",
+      "via": "compute",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#ModelProvenance",
+      "via": "modelProvenance",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#NetworkReach",
+      "via": "reach",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "to": "cat-harness/schemas/kg/cat-harness.ts#ToolSurface",
+      "via": "toolSurface",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "to": "cat-harness/schemas/process/deployment-description.ts#CredentialAction",
+      "via": "credentials",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "to": "cat-harness/schemas/process/deployment-description.ts#PlacementHost",
+      "via": "host",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-description.ts#PlacementSchema",
+      "to": "cat-harness/schemas/process/deployment-description.ts#MechanismNameSchema",
+      "via": "credentials",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#DeploymentReport",
+      "to": "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict",
+      "via": "tasks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict",
+      "to": "cat-harness/schemas/process/actor-reach.ts#EffectiveReach",
+      "via": "reach",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict",
+      "to": "cat-harness/schemas/process/deployment-description.ts#Placement",
+      "via": "host",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict",
+      "to": "cat-harness/schemas/process/deployment-resolver.ts#ToolVerdict",
+      "via": "skills",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#ResolverActor",
+      "to": "cat-harness/schemas/kg/skill-package.ts#ActorKind",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#ResolverActor",
+      "to": "cat-harness/schemas/process/deployment-description.ts#DeploymentDescription",
+      "via": "reach",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#ResolverTask",
+      "to": "cat-harness/schemas/kg/skill-package.ts#ActorKind",
+      "via": "kinds",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#TaskVerdict",
+      "to": "cat-harness/schemas/process/deployment-resolver.ts#PlacementVerdict",
+      "via": "candidates",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/deployment-resolver.ts#ToolVerdict",
+      "to": "cat-harness/schemas/process/deployment-resolver.ts#ToolFit",
+      "via": "fit",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/process/role-graph.ts#ActorDef",
@@ -84215,6 +84269,30 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/user-story.ts#UserStoryGraphSchema",
+      "to": "cat-harness/schemas/process/user-story.ts#UserStorySchema",
+      "via": "stories",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/process/user-story.ts#UserStorySchema",
+      "to": "cat-harness/schemas/process/role-graph.ts#RoleDefSchema",
+      "via": "role",
+      "kind": "id-ref",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/process/user-story.ts#UserStorySchema",
+      "to": "cat-harness/schemas/process/role-graph.ts#RoleRefSchema",
+      "via": "role",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/refactor-strategy.ts#RefactorStrategy",
@@ -87758,30 +87836,6 @@
       "via": "asset",
       "kind": "field",
       "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/user-story.ts#UserStoryGraphSchema",
-      "to": "cat-harness/schemas/user-story.ts#UserStorySchema",
-      "via": "stories",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/user-story.ts#UserStorySchema",
-      "to": "cat-harness/schemas/process/role-graph.ts#RoleDefSchema",
-      "via": "role",
-      "kind": "id-ref",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/user-story.ts#UserStorySchema",
-      "to": "cat-harness/schemas/process/role-graph.ts#RoleRefSchema",
-      "via": "role",
-      "kind": "field",
-      "optional": false,
       "array": false
     },
     {

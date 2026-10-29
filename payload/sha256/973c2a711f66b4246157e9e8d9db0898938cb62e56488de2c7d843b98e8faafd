@@ -25,7 +25,7 @@ exception to the rule above: they live in `cat-harness/schemas/materialization-s
 
 ## The skills this layer publishes
 
-<!-- cat-harness:skills:begin -->
+<!-- skills:index:begin -->
 
 _30 skills in 8 directories, generated from each skill's front matter. `bun run cat readme:sync` rewrites this list and `readme:sync:check` fails when it is stale. Skills this repository inherits are listed by the repositories that publish them._
 
@@ -99,4 +99,4 @@ _30 skills in 8 directories, generated from each skill's front matter. `bun run 
 |---|---|
 | [`review`](skills/review/review.md) | Where to start when a person or an agent reviews a document folio larger than one chapter, such as a DAK or an L1 digital transformation handbook. |
 
-<!-- cat-harness:skills:end -->
+<!-- skills:index:end -->

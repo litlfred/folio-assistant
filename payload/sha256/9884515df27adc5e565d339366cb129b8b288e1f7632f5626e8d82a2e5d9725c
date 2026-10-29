@@ -77,7 +77,7 @@ be inherited", because the IG depends on this layer.
 
 ## The skills this layer publishes
 
-<!-- cat-harness:skills:begin -->
+<!-- skills:index:begin -->
 
 _16 skills in 3 directories, generated from each skill's front matter. `bun run cat readme:sync` rewrites this list and `readme:sync:check` fails when it is stale. Skills this repository inherits are listed by the repositories that publish them._
 
@@ -112,4 +112,4 @@ _16 skills in 3 directories, generated from each skill's front matter. `bun run 
 | [`ig-site-links`](skills/fhir-ig-base/ig-site-links.md) | What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages,… |
 | [`ig-site-theme`](skills/fhir-ig-base/ig-site-theme.md) | How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. |
 
-<!-- cat-harness:skills:end -->
+<!-- skills:index:end -->

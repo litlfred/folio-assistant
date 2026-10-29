@@ -25,7 +25,7 @@ carries where it came from and can be checked against this copy.*
 
 ## The skills this layer publishes
 
-<!-- cat-harness:skills:begin -->
+<!-- skills:index:begin -->
 
 _13 skills in 1 directory, generated from each skill's front matter. `bun run cat readme:sync` rewrites this list and `readme:sync:check` fails when it is stale. Skills this repository inherits are listed by the repositories that publish them._
 
@@ -47,4 +47,4 @@ _13 skills in 1 directory, generated from each skill's front matter. `bun run ca
 | [`publish-site`](skills/publish-site.md) | Give an instance a site: its Knowledge Graph rendered for publication at its site address, and the address answering. |
 | [`root-readme`](skills/root-readme.md) | Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. |
 
-<!-- cat-harness:skills:end -->
+<!-- skills:index:end -->

@@ -66,7 +66,7 @@ is [`docs/style-guide.md`](docs/style-guide.md).
 
 ## The skills this layer publishes
 
-<!-- cat-harness:skills:begin -->
+<!-- skills:index:begin -->
 
 _2 skills in 1 directory, generated from each skill's front matter. `bun run cat readme:sync` rewrites this list and `readme:sync:check` fails when it is stale. Skills this repository inherits are listed by the repositories that publish them._
 
@@ -77,4 +77,4 @@ _2 skills in 1 directory, generated from each skill's front matter. `bun run cat
 | [`iris-dspace`](skills/iris-dspace.md) | How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. |
 | [`iris-oxigraph`](skills/iris-oxigraph.md) | How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. |
 
-<!-- cat-harness:skills:end -->
+<!-- skills:index:end -->

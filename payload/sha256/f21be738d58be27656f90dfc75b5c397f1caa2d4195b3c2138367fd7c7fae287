@@ -44,7 +44,7 @@ reason to say so, not a reason to file it under the nearest one.
 
 ## The skills this layer publishes
 
-<!-- cat-harness:skills:begin -->
+<!-- skills:index:begin -->
 
 _68 skills in 7 directories, generated from each skill's front matter. `bun run cat readme:sync` rewrites this list and `readme:sync:check` fails when it is stale. Skills this repository inherits are listed by the repositories that publish them._
 
@@ -151,4 +151,4 @@ _68 skills in 7 directories, generated from each skill's front matter. `bun run 
 | [`lean-formal-edges`](skills/lean/lean-formal-edges.md) | Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. |
 | [`lean-html-docs`](skills/lean/lean-html-docs.md) | Build and publish the visualiser of a folio's declared `lean` directory: the package's doc-gen4 HTML render, staged under the folio's site and wrapped in the harness navbar and rail. |
 
-<!-- cat-harness:skills:end -->
+<!-- skills:index:end -->

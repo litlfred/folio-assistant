@@ -34,7 +34,7 @@ is a consequence of declared facts, not a preference.
 
 ## Reach is a property of the ACTOR, and `unknown` is a third state
 
-`schemas/actor-reach.ts`. Three things worth holding in mind:
+`schemas/process/actor-reach.ts`. Three things worth holding in mind:
 
 1. **One vocabulary, two levels.** An actor's `reach` uses the same scale as
    the deployment's `network` (`folio-assistant-g7vb`) — `internet`,
