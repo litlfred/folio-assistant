@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 69,
+      "count": 68,
       "unit": "open beans"
     }
   },
@@ -7883,14 +7883,14 @@
     {
       "id": "folio-assistant-hfiu",
       "title": "CI: a layer PR merges only after a green folio-assistant run with the change pinned",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ksek",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:43:02Z",
-      "updatedAt": "2026-10-29T08:10:00Z",
+      "updatedAt": "2026-10-29T10:25:00Z",
       "preview": "Rule: a PR to a mounted layer (cat-harness, cat-harness-tools, folio-assistant-core, fhir-harness, bootstrap-tools, smart-*) does not merge until folio-assistant has run its PR gates with that layer pinned to the PR's commit (mount:remote --staging) and they are green. Otherwise the layer goes green alone and the re-pin turns folio-assistant main red. Status, 2026-10-23: another agent is building ",
       "file": "beans/defs/folio-assistant-hfiu--ci-a-layer-pr-merges-only-after-a-green-folio-assi.md"
     },
@@ -16451,8 +16451,8 @@
         "share": 0.9102564102564102
       }
     ],
-    "orphanOpen": 3,
-    "openTotal": 69,
+    "orphanOpen": 2,
+    "openTotal": 68,
     "coveredOpen": 63,
     "duplicateIds": 0
   }

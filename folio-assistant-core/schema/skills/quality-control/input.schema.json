@@ -45,7 +45,7 @@
   "definitions": {
     "stagingLinks": {
       "title": "Staging links",
-      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
       "type": "object",
       "required": [
         "branch",
@@ -123,8 +123,8 @@
   "$id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/input.schema.json",
   "staging": {
     "branch": "main",
-    "sha": "b4cd6f964aef5d186a865707e9a1b476663f620c",
+    "sha": "5b117f8802a7a1a81221d04f178c628bf402cf71",
     "pr": "main",
-    "run": "40854353981"
+    "run": "40860839323"
   }
 }

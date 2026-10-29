@@ -21,7 +21,7 @@
     },
     "health-result-is-from-the-current-producer": {
       "summary": "A committed health result was written by a version of its producer that no longer exists, so the remedies it states are the old code's remedies — which is how a reader is told to do something the repository has since established cannot work (bean `7umv`). Examined 4.",
-      "count": 4,
+      "count": 3,
       "entries": [
         {
           "where": "cat-harness-tools/health/repository.health-report.json",
@@ -29,10 +29,6 @@
         },
         {
           "where": "folio-assistant-core/test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at c870fc970a83; the checker is now 2fe437a0f36e. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
-        },
-        {
-          "where": "test/health/results/repository.health-report.json",
           "detail": "written by `test/health/run.ts` at c870fc970a83; the checker is now 2fe437a0f36e. Re-run `bun run cat health` and commit, or the remedies in it are the old producer's."
         },
         {
@@ -72,5 +68,5 @@
       "entries": []
     }
   },
-  "total": 4
+  "total": 3
 }

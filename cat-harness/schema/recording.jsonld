@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/recording.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "5b117f8802a7a1a81221d04f178c628bf402cf71",
+    "pr": "main",
+    "run": "40860839323"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/recording",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "recording",
+      "title": "recording",
+      "summary": "A recorded meeting or talk as a library entry, and its transcripts. Bean",
+      "module": "schemas/library/recording.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

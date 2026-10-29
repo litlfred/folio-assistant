@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1641,
+          "total": 1642,
           "instance": 25,
           "namedId": 126,
-          "none": 1490
+          "none": 1491
         },
         {
           "status": "scrapped",
@@ -121,7 +121,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 62,
+      "count": 61,
       "entries": [
         {
           "severity": "warning",
@@ -251,7 +251,7 @@
           "parent": "folio-assistant-ksek",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.81
+          "cosine": 0.804
         },
         {
           "severity": "warning",
@@ -311,7 +311,7 @@
           "parent": "folio-assistant-vke6",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.729
+          "cosine": 0.728
         },
         {
           "severity": "warning",
@@ -455,16 +455,6 @@
         },
         {
           "severity": "warning",
-          "bean": "folio-assistant-hfiu",
-          "title": "CI: a layer PR merges only after a green folio-assistant run with the change pinned",
-          "status": "in-progress",
-          "parent": "folio-assistant-ksek",
-          "basis": "none",
-          "group": "folio-assistant-fnx4",
-          "cosine": 0.732
-        },
-        {
-          "severity": "warning",
           "bean": "folio-assistant-iirv",
           "title": "cat-harness / cat-harness-tools separation",
           "status": "in-progress",
@@ -491,7 +481,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.891
+          "cosine": 0.886
         },
         {
           "severity": "warning",
@@ -651,7 +641,7 @@
           "parent": "folio-assistant-7x5n",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.76
+          "cosine": 0.759
         },
         {
           "severity": "warning",
@@ -1245,45 +1235,6 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-fnx4",
-          "size": 2,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-fnx4",
-          "nearest_epic_title": "KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer",
-          "mean_cosine": 0.645,
-          "terms": [
-            "mounted layers",
-            "layers mount",
-            "smart-base submodule",
-            "remote mounts",
-            "folio-assistant submodule",
-            "shared layers",
-            "smart-ra",
-            "litlfred fhir-package-mirror"
-          ],
-          "beans": [
-            "folio-assistant-hfiu",
-            "folio-assistant-n3h9"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-ksek",
-              "beans": 1
-            }
-          ],
-          "known_processes": [
-            {
-              "process": "Process_GettingStarted",
-              "beans": 1
-            },
-            {
-              "process": "Process_MaterializeRemote",
-              "beans": 1
-            }
-          ]
-        },
-        {
-          "severity": "warning",
           "group": "folio-assistant-fs43",
           "size": 2,
           "size_class": "small",
@@ -1328,7 +1279,7 @@
           "size_class": "small",
           "nearest_epic": "folio-assistant-ksek",
           "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.851,
+          "mean_cosine": 0.845,
           "terms": [
             "post-merge regen",
             "undefined-variable plugin",
@@ -1551,6 +1502,39 @@
         },
         {
           "severity": "warning",
+          "group": "folio-assistant-fnx4",
+          "size": 1,
+          "size_class": "singleton",
+          "nearest_epic": "folio-assistant-fnx4",
+          "nearest_epic_title": "KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer",
+          "mean_cosine": 0.559,
+          "terms": [
+            "smart-base submodule",
+            "smart-ra",
+            "remote mounts",
+            "folio-assistant submodule",
+            "litlfred fhir-package-mirror",
+            "smart-core",
+            "smart-hiv",
+            "layers mount"
+          ],
+          "beans": [
+            "folio-assistant-n3h9"
+          ],
+          "filed_under": [],
+          "known_processes": [
+            {
+              "process": "Process_GettingStarted",
+              "beans": 1
+            },
+            {
+              "process": "Process_MaterializeRemote",
+              "beans": 1
+            }
+          ]
+        },
+        {
+          "severity": "warning",
           "group": "folio-assistant-slw1",
           "size": 1,
           "size_class": "singleton",
@@ -1604,5 +1588,5 @@
       ]
     }
   },
-  "total": 88
+  "total": 87
 }
