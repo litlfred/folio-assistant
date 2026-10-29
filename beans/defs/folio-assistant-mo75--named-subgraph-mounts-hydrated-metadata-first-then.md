@@ -2,11 +2,11 @@
 # folio-assistant-mo75
 $schema: bean/1.0.0
 title: 'NAMED SUBGRAPH MOUNTS: hydrated metadata first, then a chosen set (nested ids, node sets, concern names) — the nn8e follow-up'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-29T08:45:00Z
+updated_at: 2026-10-29T09:45:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -59,3 +59,5 @@ _2026-10-24T15:04:00Z_: G3 done and end-to-end shown (owner chose all four recom
 _2026-10-29T07:55:00Z_ — Claimed by Lane E of the 2026-10-29 drain ("Fix KG mounts and publication", https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo), taking over from the README regen thread.
 
 _2026-10-29T08:45:00Z_ — Lane E (https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo): concern names done, cat-harness-tools#798 (d76fa26) + cat-harness#664 (b396d93): an id that is a concern code expands to the members each grouping kind declares at the pin, locked as `<dir id>/<code>`. Choice written back done, cat-harness-tools#799 (e6f5b51) + cat-harness#666 (c7c5bdd): `mount:remote --choose <harness>[:<instance>] --directories … --tools …` writes `overrides.<instance>`, pin and consent untouched. Every box is ticked; the bean stays open only for the owner's pick on Tool closures narrowing other entries (A/B/C, re-asked in the Lane E thread).
+
+_2026-10-29T09:45:00Z_ (drain lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). Owner chose **"B. Every touched entry"** (card, 09:15Z). cat-harness-tools#819 (f9144ee) shrinks every other entry a Tool closure reaches, unless that entry names `directories` or mounts whole; cat-harness#677 (0e66e4a) puts the rule in the remote-mount skill. Closed.
