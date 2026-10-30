@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-30T11:41:00Z
+updated_at: 2026-10-30T12:10:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -255,4 +255,6 @@ Opened [`litlfred/smart-ra#99`](https://github.com/litlfred/smart-ra/pull/99) (`
   - Adjudicator (`fr`, `es`, `zh`, `ru`, `ar`): `conversation://6788c201-7800-4606-ae76-d8302cbbd034` (`TOOLS_USED: none`) — **`VERDICT: pass`** for all 5 languages (`fr`, `es`, `zh`, `ru`, `ar`) with 0 semantic drift findings.
 - **Verification:** `gen-library-jsonld --check --doc crdm-walkthrough-2026-10-06` (`7 node(s) up to date`) and `bun run cat check:l1-complete library/crdm-walkthrough-2026-10-06` (all 9 requirements `met`, 0 defects).
 
+_2026-10-30T12:10:00Z_ — Translations merged: [`litlfred/smart-ra#99`](https://github.com/litlfred/smart-ra/pull/99) (`4bdc30f`) adds `transcript/{ar,es,fr,ru,zh}.json`, 139 segments each, aligned to `en.json`, with `translated_from.segments_sha256` and `state: draft`, plus their `blocks/transcript-*.jsonld` and the manifest references. The PR body reports a round-trip QA by untainted back-translators and an adjudicator (`ktt2`) with verdict `pass`. That QA is recorded in the PR body only, not as a file in the library. Checked before merging with cat-harness-tools main `audioTranscripts()`, which reported `met`: 139 segments, en source plus five translations, all draft. Spot-checked fr and zh against en. Merged under the owner's merge-and-repin window, session https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS.
 
+**Left:** item 3, a person confirms `en`, and the translations, in `bun run cat narratives`. No agent can do that, so the bean stays `in-progress`, waiting on a person.
