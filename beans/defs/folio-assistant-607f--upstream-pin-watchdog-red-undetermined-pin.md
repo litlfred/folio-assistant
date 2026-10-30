@@ -2,11 +2,11 @@
 # folio-assistant-607f
 $schema: bean/1.0.0
 title: 'UPSTREAM PIN WATCHDOG: red since 2026-10-20 on an undetermined pin, so #1481 has gone stale'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-30T11:55:00Z
-updated_at: 2026-10-30T12:19:00Z
+updated_at: 2026-10-30T19:50:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -35,5 +35,7 @@ process and a person's decision).
 
 ## Done when
 
-- [ ] The watchdog run is green.
-- [ ] #1481's body shows this week's state.
+- [x] The watchdog run is green.
+- [x] #1481's body shows this week's state.
+
+_2026-10-30T19:50:00Z_ — Completed. cat-harness-tools#862 and cat-harness#714 merged 12:19Z, and folio-assistant's lock already pins both layers past them. A manual dispatch of `upstream-pins.yml` ([run 41116320251](https://github.com/litlfred/folio-assistant/actions/runs/41116320251)) resolved all 8 pins with 0 unknown, all current (Bun is now 1.4.4), so the job closed #1481 itself as "every pin current". Session https://claude.ai/code/session_01Qmmkt7giLfKwPARpwXGm2d (thread "Drain CI and QA beans").
