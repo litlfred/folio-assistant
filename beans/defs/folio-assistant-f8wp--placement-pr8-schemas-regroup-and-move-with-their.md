@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T17:15:00Z
+updated_at: 2026-10-30T17:20:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -21,12 +21,14 @@ Blocked by stage 1a and PR6 (library sources regroup after the library split).
 ## Done when
 - [x] `tsc` passes in a scratch run with the barrel REMOVED
 - [x] `kg-export` has the same Schema node count and ids
-- [ ] `uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one
+- [x] `uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one
 - [x] the residual gate exists in CI and was watched red on a planted upward reference
 
 _2026-10-01_ — Stage D of the smart-* separation (bean kg83, #1767, PR #1795) MOVED three of this bean's 28 above-harness schemas already: cat-harness/schemas/dak.ts, dak-content-type.ts and dak.test.ts to smart-base/schemas/ (plus content-type.test.ts as smart-base/schemas/content-types-stack.test.ts, since it registers the full stack). dak-blocks.ts did NOT move: core's block-kinds.ts names the dak adapter and DAK_BLOCK_KINDS, so it waits on a registration extension point, bean 1335. Do not re-do these three here.
 
 _2026-10-15T16:49Z_ — Block lifted: `apcg` is completed (PR #1898 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
 
@@ -91,20 +93,8 @@ _2026-10-30T14:58Z_ — Unblocked and moved `vocab-mapping-fhir.ts` (`@graphNode
 - Verified `check:import-direction --all` (0 wrong-direction), `check:reference-direction` (0 new findings), `check:schema-nodes`, `eslint`, `tsc --noEmit`, `kg-export.test.ts`, `glossary-export.test.ts`, and `vocab-mapping-fhir.test.ts` (15 pass in `fhir-harness`, 7 pass in `cat-harness-tools`).
 
 
-_2026-10-15T16:49Z_ — Block lifted: `apcg` is completed (PR #1898 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
-
-_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
-
-_2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
-
-## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
-
-Re-measured: not started. `cat-harness/schemas/` is flat (287 `.ts` files; only `skills/` and `block-qa-schema/` subfolders). Of the 19 audit rows, 4 are in their target.
-
-## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
-
-Same ruling as `8fq9`: **do it now, one concern group per PR** to keep churn down.
-
-_2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: none yet; next after 8fq9 groups.
-
 _2026-10-30T17:15:00Z_ — https://github.com/litlfred/cat-harness-tools/pull/881 (box 4, residual gate) merged (2515e19) and https://github.com/litlfred/smart-base/pull/218 (shim repoint) merged (8451680). https://github.com/litlfred/cat-harness-tools/pull/875 has merged, so the `refactor-strategy.ts` one-release shim in cat-harness can go. `lean-packages.ts` and `formalization-types.ts` still wait on `saqd`. Box 3 (`uml:overview:check`) is still open. The concern groups are final; the 8lcl thread takes them from here. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").
+
+_2026-10-30T17:20:00Z_ — Verified and pinned Done-when Box 3 (`uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one) in `litlfred/cat-harness-tools#941`:
+- `cat-harness/schemas/schemas.json` (`concern-groups/v1`) declares the 8 concern groups (`conduct`, `content`, `kg`, `library`, `process`, `sdlc`, `tools`, `ui`), and `sectionsOf(HARNESS_ROOT)` resolves `schemas` with `ConcernGroupsSchema` (`concern-groups/v1`) + the JSON Schemas (51 classes, 0 `undetermined`) and emits one `.puml`/`.mmd` pair per declared directory/sub-subgraph in `instanceDirectories(HARNESS_ROOT)` (60 sections = 120 `.puml`/`.mmd` files), and none for undeclared subdirectories.
+- Exported `overviewFilesFor` in `cat-harness-tools/scripts/gen-uml-overview.ts` and added unit tests in `cat-harness-tools/scripts/tests/ui/uml-overview-orphans.test.ts` (6 pass, 0 fail, 134 `expect()` calls) pinning both a throwaway fixture with declared vs undeclared sub-subgraphs (plus `umlOrphans` flagging undeclared `.puml`/`.mmd` pairs) and the live `cat-harness` instance.
