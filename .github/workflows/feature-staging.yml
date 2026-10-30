@@ -355,6 +355,13 @@ jobs:
       # from a branch-kept graph. One of them is `render:bpmn` (other instances'
       # diagrams), which draws through Chromium, so the browser is installed
       # before this step rather than only before the later render.
+      # PlantUML 1.2026.9 needs Java 21 (its ELK classes are class file 65);
+      # ubuntu-latest's PATH java is 17, which broke every publish from
+      # 2026-10-30 13:23Z (#2744). The major is read from the plantuml
+      # tool-release declaration, so a later bump moves it too.
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
+
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
