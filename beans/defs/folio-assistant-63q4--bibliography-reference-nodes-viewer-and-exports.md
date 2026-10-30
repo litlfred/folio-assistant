@@ -2,11 +2,11 @@
 # folio-assistant-63q4
 $schema: bean/1.0.0
 title: 'Bibliography: Reference KG nodes, a path-limited bibliography viewer (like the glossary), exports in BibTeX / CSL-JSON / RIS / Dublin Core, per asset and per subgraph'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-14T17:45:00Z
-updated_at: 2026-10-29T07:55:00Z
+updated_at: 2026-10-30T12:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -127,3 +127,5 @@ _2026-10-24T14:50:30+02:00_: Completed the standalone reference form/editor in t
 _2026-10-26T10:23:00Z_: Both [`litlfred/folio-assistant-core#189`](https://github.com/litlfred/folio-assistant-core/pull/189) and [`litlfred/cat-harness-tools#641`](https://github.com/litlfred/cat-harness-tools/pull/641) merged on `main`. All 9 `## Todo` items are merged on `main`; only the held `qou#7798` (`qou-l7pj`) box in `## Progress` remains.
 
 _2026-10-29T07:55:00Z_ — who-iris#52 (813 documents name who-iris's own @context) merged 0cc5562 (Lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). The qou#7798 box stays held: qou is a math repo, and any PR there waits on the owner.
+
+_2026-10-30T12:00Z_ — All nine Todo boxes are merged (folio-assistant-core#189, cat-harness-tools#641, who-iris#52). The one held box, qou#7798, moves to the qou bean qou-l7pj. Its hold reason (folio-assistant#2529) merged on 10-15, so it now waits only on the owner's qou review rule. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)

@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-29T07:55:00Z
+updated_at: 2026-10-30T12:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -50,3 +50,5 @@ _2026-10-24 12:35Z_ — BUILT AND MERGED. cat-harness#523 (3941401): shared core
 _2026-10-26T14:22:00Z_ — Progress update: `litlfred/cat-harness#609` (`6c5ff04`, `software-library/1.1.0` vendored bundle schema), `litlfred/cat-harness-tools#773` (`e3bb65e`, `libraries:derive` / `libraries:check` vendored bundle support), and `litlfred/folio-assistant-sci#93` (`8d6daa5`, `folio-assistant-sci/libraries/` 17 nodes) merged on `main`.
 
 _2026-10-29T07:55:00Z_ — Lane E (https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo): fhir-harness#172 (11 nodes, 4 vendored) merged c518a22; cat-harness#660 (38 nodes, closes cat-harness#607) merged 1aa4479; cat-harness-tools#797 (a nested package with its own lockfile, e.g. `schemas/block-qa-schema`, is its own package) merged 8fb3515. Left: bootstrap-tools#44 (waits on the ujiv layering card: bootstrap-tools may not name cat-harness's kind); folio-assistant-core and who-iris (need a bun.lock first); after the index re-pin, name `libraries:check` in code-quality-gates.yml and drop the tools `OWN_SCRIPT_EXEMPTIONS` entry.
+
+_2026-10-30T12:00Z_ — `libraries:check` is wired: folio-assistant `.github/workflows/code-quality-gates.yml`, step "software libraries are current". Still open: bootstrap-tools#44 (layering choice a/b/c, put to the owner) and folio-assistant-core / who-iris, which need a bun.lock first. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)

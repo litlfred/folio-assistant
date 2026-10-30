@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-10-24T11:25:00Z
+updated_at: 2026-10-30T12:00:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -72,3 +72,5 @@ Five gaps remain:
 5. A spec-kit `SC-` to plan-case link.
 
 Answers Q2-Q5 are recorded there. Q1 (spec-kit or CRDM) is open.
+
+_2026-10-30T12:00Z_ — The 10-24 note saying "Q1 (spec-kit or CRDM) is open" is stale: the owner chose the spec-kit split on 10-29, and the spec is cat-harness#686. The spec waits on the owner for two [NEEDS CLARIFICATION] markers (FR-009 id form, FR-011 ARG-Designer comparability). (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)

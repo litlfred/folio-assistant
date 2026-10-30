@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T12:53:43Z
-updated_at: 2026-10-26T11:05:00Z
+updated_at: 2026-10-30T12:00:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -685,3 +685,5 @@ _Read from `origin/gh-pages` f1ede3c (git trees and blobs, HTML only)._
 - `STAGING/claude-repin-lane-e-2/` is now the one preview on current code. Its pages carry no slug, no SHA and no build time (checked on `smart-trust/artifact/ActorDefinition-Holder-testing.html`); the banner reads `staging.json`.
 - **A preview can never share pages with the root as built.** The root was rebuilt from current code at 10:36Z, yet lane-e-2 and the root share 1 of 9,342 HTML pages. The diff is the inline staging-banner script (about 50 lines at the top of every preview page), which root pages do not have. The script is constant, so previews can share with each other, but not with the root. Moving it to a shared `assets/js/staging-banner.js` would not fix this either: the `<script src>` tag itself still differs from the root page. The ~77 MB projection should count preview-to-preview sharing only.
 - Preview-to-preview sharing is still not measurable: it needs a second preview built on current code. The `Re-measure STAGING` row stays open.
+
+_2026-10-30T12:00Z_ — Measured on gh-pages aa92ccd. The two newest previews share 4,694 of 11,897 HTML pages, but they were built from different code, so this is not yet the same-code re-measure. There are two causes whatever the code. (1) About 20% of graph pages embed the preview IRI (`kg-export --base-url` in feature-staging.yml, deliberate). (2) About 45% of pages reference the content-hashed `rail-<hash>.js`, so every railed page changes when the rail does. Owner calls are pending on both. Side finding: smart-base node IRIs differ between the two previews. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)

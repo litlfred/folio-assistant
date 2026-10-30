@@ -5,7 +5,7 @@ title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendati
 status: in-progress
 type: task
 created_at: 2026-09-20T15:07:23Z
-updated_at: 2026-10-29T07:40:00Z
+updated_at: 2026-10-30T12:00:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -151,3 +151,5 @@ First run on the composed index: every harness reports, and several layers have 
 ## Progress 2026-10-29
 
 cat-harness-tools#766 (harness:state, boxes 1-2) merged 2026-10-29. Left: the cat-harness Tool definition and the folio-assistant site-build line; box 3 stays paused with todos/stickies. (Lane B drain thread.)
+
+_2026-10-30T12:00Z_ — Boxes 1-2 are in draft PRs cat-harness#711 (Tool definition) and folio-assistant#2724 (deploy line), tracked by issue cat-harness#712. Order: merge #711, re-pin, merge #2724. Box 3 stays paused (95sk R29). (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
