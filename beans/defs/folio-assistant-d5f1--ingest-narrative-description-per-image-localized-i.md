@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-30T11:10:00Z
+updated_at: 2026-10-30T11:13:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -384,3 +384,5 @@ _2026-10-28T13:02:00Z_ — Batch AD opened as [`litlfred/smart-base#182`](https:
 _2026-10-30T11:05:00Z_ — Batch AE opened as [`litlfred/smart-base#188`](https://github.com/litlfred/smart-base/pull/188) (`25b2f13`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the first 34 English-only images (`img-p001-1` through `img-p041-1` + 34 figure blocks; 1 `page-scan` entry `img-p004-1` untouched) in `9789241509510-eng` in `smart-base/library/`. Remaining in `smart-base/library/` (71 across 3 entries): `9789241549912-eng` (2), `9789241549912-webannexes-eng` (1), `9789241509510-eng` (68).
 
 _2026-10-30T11:10:00Z_ — Merge sweep: batches J–T in `litlfred/cat-harness` (`#622`, `#623`, `#626`, `#627`, `#644`, `#645`, `#647`, `#649`, `#650`, `#652`, `#654`), batches U–V in `litlfred/folio-assistant-sci` (`#98`, `#100`), batch W in `litlfred/who-iris` (`#86`), batches Y–AA in `litlfred/smart-immunizations` (`#82`, `#83`, `#84`), and batches X, AB–AD in `litlfred/smart-base` (`#174`, `#178`, `#180`, `#182`) are all merged on `main` (2026-10-29). Batch AE (`litlfred/smart-base#188`) is open.
+
+_2026-10-30T11:13:00Z_ — Batch AF opened as [`litlfred/smart-base#189`](https://github.com/litlfred/smart-base/pull/189) (`c29a593`, stacked on `#188` `25b2f13`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the next 34 English-only images (images 35–68 of 102: `img-p041-2` through `img-p081-1` + 34 figure blocks) in `9789241509510-eng` in `smart-base/library/`. Remaining in `smart-base/library/` (37 across 3 entries): `9789241549912-eng` (2), `9789241549912-webannexes-eng` (1), `9789241509510-eng` (34).
