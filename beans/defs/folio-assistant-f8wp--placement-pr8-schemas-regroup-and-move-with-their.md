@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-29T15:05:00Z
+updated_at: 2026-10-30T13:10:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -22,7 +22,7 @@ Blocked by stage 1a and PR6 (library sources regroup after the library split).
 - [x] `tsc` passes in a scratch run with the barrel REMOVED
 - [x] `kg-export` has the same Schema node count and ids
 - [ ] `uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one
-- [ ] the residual gate exists in CI and was watched red on a planted upward reference
+- [x] the residual gate exists in CI and was watched red on a planted upward reference
 
 _2026-10-01_ — Stage D of the smart-* separation (bean kg83, #1767, PR #1795) MOVED three of this bean's 28 above-harness schemas already: cat-harness/schemas/dak.ts, dak-content-type.ts and dak.test.ts to smart-base/schemas/ (plus content-type.test.ts as smart-base/schemas/content-types-stack.test.ts, since it registers the full stack). dak-blocks.ts did NOT move: core's block-kinds.ts names the dak adapter and DAK_BLOCK_KINDS, so it waits on a registration extension point, bean 1335. Do not re-do these three here.
 
@@ -70,6 +70,8 @@ _2026-10-29T14:30:00Z_ — The approved table is moved, one concern group per PR
 _2026-10-29T14:45:00Z_ — Boxes 1 and 2 checked. Box 1: in the composed index at every layer's main (cat-harness f01a70c), `schemas/index.ts` deleted, tsc is 0 / 0 / 0 errors in cat-harness, cat-harness-tools and core; no file in any layer imports the barrel (`@litlfred/cat-harness/schemas` bare or `schemas/index`). Box 2: every group PR's kg-export kept the Schema node count and ids (180 after 1r0p added its two). Box 3 (`uml:overview:check`) is not applicable in a composed index; it runs in folio-assistant's code-quality gates. Box 4, the residual gate, is next. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-29T15:05Z_ — Group 16 (fsh-guts to `schemas/kg/`) merged on the owner's 15:01Z card: litlfred/cat-harness#704 (25e56b9) and litlfred/cat-harness-tools#853 (e1b694c). Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
+
+_2026-10-30T13:10Z_ — Box 4 (the residual gate, `residual.py` from `placement-concern-groups-2026-10-01.md` §5) opened in `litlfred/cat-harness-tools#881` (`claude/f8wp-residual-gate`): extends `scripts/check-process-bindings.ts` (`bun run cat check:process-bindings`) from `<…:skill ref>` on BPMN activities to all five cross-layer KG joins (`activity-skill`, `call-activity`, `lane-role`, `role-skill`, `actor-role`). Watched red (`exit 1`) across the 11-instance composed index on the 2 remaining `cat-harness/scenarios/roles.json` → `ig-ast-delta` (`qc-reviewer`, `build-pipeline`) upward bindings before baselining them in `scripts/process-bindings.baseline.ts` (tracked under `folio-assistant-4fv8`), and watched red in a two-instance fixture test (`scripts/tests/process/check-process-bindings.test.ts`, 17 pass / 0 fail) with planted upward references across all five joins.
 
 
 _2026-10-15T16:49Z_ — Block lifted: `apcg` is completed (PR #1898 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
