@@ -64,6 +64,7 @@ on:
       # and `publish-gh-pages.sh` among them.
       - 'cat-harness-tools/scripts/**'
       - 'cat-harness/schemas/**'
+      - 'cat-harness-tools/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
       # bootstrap-tools writes bootstrap's graph and vocabulary for the preview
@@ -533,10 +534,10 @@ jobs:
               # three generators; `api/` is TypeDoc over the schema entry
               # points. Matching the SOURCES, not the generated directory, so
               # a regeneration that lands in the same commit is still covered.
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/schemas/|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
                 ref=yes; why="the branch touches schemas, skills or the reference generators"
               fi
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness-tools/schemas/'; then
                 api=yes
               fi
               # A RE-PIN is a change to every mounted instance's skills and
@@ -1673,6 +1674,18 @@ jobs:
         # whatever this says; `Judge the built-site checks` fails the run after.
         continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+
+      # The deploy's link pass (fa#2741), so a preview shows the links the
+      # site will ship. Reported, not blocking.
+      - name: Repoint and check every link in the built site
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          set -o pipefail
+          bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
+            --base-path "/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST — the deploy's pass, mirrored here because
       # `check:invocation-parity` requires it and because a preview whose

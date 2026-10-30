@@ -13,7 +13,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { fshGutsDirectory } from "../../cat-harness/schemas/fsh-guts.ts";
+import { fshGutsDirectory } from "../../cat-harness-tools/schemas/kg/fsh-guts.ts";
 
 /** The index checkout's root — where `.github/workflows/` lives. */
 const INDEX = resolve(import.meta.dir, "..", "..");
