@@ -8,7 +8,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-10-30T12:00:00Z
+updated_at: 2026-10-30T12:45:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -556,3 +556,5 @@ The two modes, both buildable after `mftp` (#2194):
 cat-harness-tools#687, cat-harness#501 and bootstrap#29 merged 2026-10-29. The unticked boxes (7u3g, folio:bean on initialize-harness.bpmn, derived vs dynamic, slot, bootstrap's own config) remain, so the bean stays open. (Lane B drain thread.)
 
 _2026-10-30T12:00Z_ — Triage. (a) "7u3g fixed" withdrawn: 7u3g was scrapped (cat-harness#541). (b) "folio:bean on initialize-harness.bpmn" withdrawn: later rulings forbid work-plan elements there, and bootstrap-tools `schemas/graph.test.ts` enforces it. (c) derived vs dynamic is settled by bean nama (`derivedFrom`). Open: (d) the LHS slot, which touches stickies and so is likely paused with 95sk; (e) bootstrap.config.json, put to the owner. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
+
+_2026-10-30T12:45Z_ — Owner, 2026-10-30 12:39Z (card "A. Apply all"): box (e), bootstrap carrying its own `bootstrap.config.json`, is withdrawn. bootstrap is self-definitional and has no tools. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)

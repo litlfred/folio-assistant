@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-29T12:20:00Z
-updated_at: 2026-10-29T12:20:00Z
+updated_at: 2026-10-30T12:45:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -20,3 +20,5 @@ fnx4's own "Done when" box "first real subscription: `litlfred/ihris`" is unchec
 
 ## Done when
 - [ ] an instance declares a `subscriptions` entry for `litlfred/ihris` and it materialises
+
+_2026-10-30T12:45Z_ — Owner, 2026-10-30 12:39Z (card "A. Apply all"): go ahead with the litlfred/ihris subscription. Gap G11 is settled by moving slice 7 to slice 5's snapshot-directory layout. This needs a session with litlfred/ihris attached. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
