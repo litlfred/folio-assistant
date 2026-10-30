@@ -36,3 +36,5 @@ On 2026-10-30, 11 IRIS publications moved from smart-base into who-iris. None of
 
 ## Done when
 No who-iris node is keyed `item/isbn:` or `item/govdoc:`, and every node has a Handle.
+
+_2026-10-30T19:45Z (thread "Drain ingest beans", https://claude.ai/code/session_01Qmmkt7JwQ9cqR2roBLdqKQ)_. iris.who.int re-probed: still refused here. Ready-to-paste agy prompt: project files `ingest-drain-2026-10-30/agy-prompts.md` §1.

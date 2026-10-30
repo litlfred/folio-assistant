@@ -20,3 +20,5 @@ The owner or agy runs ScanSSD on a machine with ordinary internet, over a page s
 - [ ] its benchmark scores against the committed truth boxes.
 
 Opened on the owner's card "A. Apply all", 2026-10-30 12:39Z (thread "Finish leftovers from closed lanes"). (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
+
+_2026-10-30T19:45Z (thread "Drain ingest beans", https://claude.ai/code/session_01Qmmkt7JwQ9cqR2roBLdqKQ)_. Re-probed: drive.google.com and huggingface.co still refused here. Handed to agy with a precise output format: project files `ingest-drain-2026-10-30/agy-prompts.md` §3 (`test/fixtures/formula-regions/<set>/{detections,truth}.json` on cat-harness-tools). A cloud thread writes the arm once that PR lands.
