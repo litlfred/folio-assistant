@@ -197,6 +197,14 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes (fhir-harness#124)
+        # Each IG instance's fhir-artifact-index/ (index, menu, releases),
+        # written from the IG's cached AST and its sushi-config.yaml by
+        # `ig-index:build` (fhir-harness), before any page step reads it.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
       - name: Build the mounted IG instances' pages before the QA working copy (bean hupw)
         # The same step code-quality-gates' QA working-copy job runs after the
         # mount. `check:wireframes`, one of qa:refresh's writers, resolves the
@@ -288,7 +296,10 @@ jobs:
       # pair. The --check form is the PR gate (code-quality-gates.yml); this is
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
-        run: bun run cat-harness-tools/scripts/gen-docs-pages.ts
+        # `--burndown-history` (bean tk99, owner 2026-10-24 option C): fetch the
+        # bean store's history and write `assets/beans/burndown.json`, the
+        # board's burn-down feed. Publish only; never committed.
+        run: bun run cat-harness-tools/scripts/gen-docs-pages.ts --burndown-history
 
       # The /qa/ page (docs/qa/index.html) is written by the state visualiser
       # from the QA results this build fetched. It was committed and never
@@ -619,11 +630,16 @@ jobs:
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
+          bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site
           # The viewer at its declared route, `<locale>/<stub>/kg/`, and a
           # forwarding page at `<stub>/` where the site holds none (o7eq).
           bun run cat-harness-tools/scripts/kg-viewer.ts             --site ./_site
+          cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
+          # The host's document sits under its own directory, like every layer's
+          # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
+          # and its `.json` alias forwards with it.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # bootstrap's OWN graph, as its own document.
@@ -703,7 +719,8 @@ jobs:
           # any declared instance is published by neither.
           bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site
 
-          bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
@@ -716,7 +733,7 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
