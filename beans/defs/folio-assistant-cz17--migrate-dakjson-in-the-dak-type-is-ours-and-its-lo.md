@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:36:56Z
-updated_at: 2026-10-29T07:35:00Z
+updated_at: 2026-10-30T12:30:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -67,8 +67,10 @@ element shape when the LM lands; do not invent it early.
 1. **Fill in the element shape** once the LM is final, replacing `unknown` and
    turning the passthrough from a safety net into a narrowing choice.
 2. **Wire `dak` into the type registry** so a repo carrying `dak.json` is
-   recognised as a DAK instance — blocked on bean `79t3`'s two open questions
-   (the marker naming convention, and precedence when two markers disagree).
+   recognised as a DAK instance. No longer blocked: `79t3` closed 2026-10-24
+   (owner, "Close it as done"). The marker convention is settled as
+   `contentTypes.dak` in `index.config.json` (cat-harness#521), and two
+   markers that disagree are reported, not silently resolved (79t3's Done when).
 3. **Formalise `sushi` and `ig`** as the other two content types a
    `smart-*` repo declares. `ig` is half-there: `l3-fhir` exists as a
    translation content type with `fsh` and `fhir-json` formats, but nothing
