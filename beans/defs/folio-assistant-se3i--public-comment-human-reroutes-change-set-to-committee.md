@@ -2,11 +2,11 @@
 # folio-assistant-se3i
 $schema: bean/1.0.0
 title: 'PUBLIC COMMENT: a person can re-route a change set to a different committee by hand'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T11:55:00Z
-updated_at: 2026-10-30T12:42:30Z
+updated_at: 2026-10-30T17:45:00Z
 parent: folio-assistant-rwmf
 pr: https://github.com/litlfred/folio-assistant-core/pull/232
 ---
@@ -38,3 +38,5 @@ Today the committee roll-up is derived; there is no human override.
   - `scripts/public-comment-changesets.ts`: Added `rerouteChangeSet`, `cs-committee: <TWG> — <reason>` on GitHub for committee/editor members, and CLI `reroute <CS-012> --to <TWG> --why "<reason>" --by <login>`, refusing agents and rendering the committee + move history on the change-set's primary issue.
   - `scripts/public-comment-site.ts`: Updated `dashboardHtml` to display the overridden committee (`rerouted`), underlying comment counts, and expandable `move history` (`from → to · who, when — why`).
   - `processes/content/public-comment.bpmn`: Added `<bpmn:userTask id="Task_RerouteChangeSet" name="Re-route a change-set to another committee, with a reason">` in `Lane_Committee` and regenerated `public-comment.checklist.md`, `.pot` files, and extracted glossaries.
+
+- _2026-10-30T17:45:00Z_ — Completed. [litlfred/folio-assistant-core#232](https://github.com/litlfred/folio-assistant-core/pull/232) merged at 16:41Z, and all four Done-when boxes are met by it. (Thread "Fix publish failure and orphan beans", https://claude.ai/code/session_01Qmmkt5bHqcmhAXH3s3z4s5)
