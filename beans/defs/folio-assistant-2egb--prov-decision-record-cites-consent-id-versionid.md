@@ -2,7 +2,7 @@
 # folio-assistant-2egb
 $schema: bean/1.0.0
 title: 'PROV decision record cites Consent id + versionId (PCF8)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
@@ -22,3 +22,4 @@ Repo: cat-harness, cat-harness-tools. Depends on: B4, PCF6.
 ## Progress
 - 2026-10-30: Added `ProvConsentRefSchema` (`{ id, versionId }`, both required non-empty), `cat-harness:consent` and `cat-harness:consentBased`, `ProvConsentDecisionRecordSchema`, and `missing-consent` chain verification in `cat-harness/schemas/content/prov.ts` (plus PROV-JSONLD emission in `cat-harness/schemas/kg/prov-jsonld.ts` and unit tests in `cat-harness/schemas/content/prov.test.ts`), and wired Consent `id` + `versionId` citations and QA/QC verification in `cat-harness-tools` (`src/workflow/prov-record.ts`, `src/workflow/instance.ts`, `scripts/prov-qaqc.ts`, `scripts/tests/prov-record.test.ts`). Updated PRs `litlfred/cat-harness#753` (`https://github.com/litlfred/cat-harness/pull/753`) and `litlfred/cat-harness-tools#919` (`https://github.com/litlfred/cat-harness-tools/pull/919`).
 - 2026-10-30 19:21Z: schema half landed in [cat-harness-tools#975](https://github.com/litlfred/cat-harness-tools/pull/975) (876295d, port of cat-harness#753, closed). Waits on [cat-harness-tools#919](https://github.com/litlfred/cat-harness-tools/pull/919) (prov-record, DSA thread). Follow-up to standard terms: folio-assistant-yy40.
+- 2026-10-30 ~19:25Z: [cat-harness-tools#919](https://github.com/litlfred/cat-harness-tools/pull/919) merged (f05c874) after merging main in (import paths only, after 8lcl). Merge window extended by owner 19:21Z to ~22:38Z.
