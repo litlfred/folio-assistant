@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-30T13:32:00Z
+updated_at: 2026-10-30T14:15:00Z
 parent: folio-assistant-9umr
 ---
 
@@ -59,3 +59,9 @@ parent: folio-assistant-iirv
 - **litlfred/cat-harness#728** (`claude/pzwb-delivery-summary-split`): slims `skills/sdlc/sdlc-core/delivery-summary.md` to the generic SDLC delivery summary (restart command, file blob/commit/diff/viewer links, staging-review deep-link rule) with zero upward references, and updates `test/results/kg-qa/skills/sdlc/sdlc-core/delivery-summary.kg-qa.json`.
 - Verified in composed checkout: `skill:register:declarations:check` (383 skills across 34 packages), `skills:docs:check`, `readme:sync -- --dir folio-assistant-core --check`, `readme:sync -- --dir cat-harness --check`, `check:agents-xref` (0 unresolved), and `placement-pr1-content-up.test.ts` + `placement-pr0-mechanisms.test.ts` + `skill-manifest-coverage.test.ts` (39 pass, 0 fail).
 - Remaining on `pzwb` (box 2): the editorial / onboarding / board skill splits noted on 2026-10-29 (`getting-started`, `repo-conversion`, `board-windows`, `board-diagram-interchange`, and the editorial SPLIT rows), where harness code/roles/chrome still reference the harness copies. Every topic in `cat-harness/skills/skills.json` already holds at least one package (`kg` 3, `library` 2, `ui` 2, `conduct` 2, `process` 3, `authoring` 2, `tools` 1, `sdlc` 3).
+
+## 2026-10-30 — `authoring-core` paper editorial `SPLIT` skills (`chapter-complexity-review`, `block-density`, `one-voice-audit`, `one-voice-integration-watcher`) + upward-ref cleanup opened
+
+- **litlfred/folio-assistant-sci#120** (`claude/pzwb-paper-editorial-splits`): authors `skills/content/authoring-math/paper-chapter-complexity.md` (the paper-folio half of `chapter-complexity-review` and `block-density`: mathematical vs. narrative `LOGICAL_SRC`/`LOGICAL_TGT`/`NARRATIVE_SRC` block-kind sets, cross-paper `<paper-dir>:<label>` filtering, >5-row table extraction from formal statement blocks) and `skills/content/authoring-math/paper-voice-audit.md` (the paper-folio half of `one-voice-audit` and `one-voice-integration-watcher`: `.lean` proof docstring voice rules, mathematical hedging phrases, `pdflatex` Unicode math replacements, conditional-theorem banner and precision-proposition exceptions, paper watcher triggers and specialist dispatch), registers both in `skills/content/authoring-math/package-manifest.json`, extends `editorial-authoring-agent` and `integration-watcher` in `scenarios/roles.json`, and syncs `AGENTS.md`.
+- **litlfred/cat-harness#738** (`claude/pzwb-authoring-core-splits`): slims `chapter-complexity-review.md`, `block-density.md`, `one-voice-audit.md`, and `one-voice-integration-watcher.md` to their generic editorial/watcher rules, removes the remaining upward prose skill-id mentions in `one-voice-style-guide.md` and `readability-editing.md` (Ruling B of 2026-10-24), drops the stale `cat-harness/voices/technical-writer.json` reference in `technical-documentation.md` (proposal §0 & §5), and refreshes `source_hash` in the 7 `.kg-qa.json` sidecars under `test/results/kg-qa/skills/authoring/authoring-core/`.
+- Verified in composed checkout: `skill:register:declarations:check` (385 skills across 34 packages), `skills:docs:check`, `readme:sync -- --dir folio-assistant-sci --check`, `readme:sync -- --dir cat-harness --check`, `check:agents-xref` (0 unresolved), `check:process-bindings` (0 wrong-direction), `kg:detangle:direction` (0 wrong-direction), and `placement-pr1-content-up.test.ts` + `placement-pr0-mechanisms.test.ts` + `skill-manifest-coverage.test.ts` + `voices-viz.test.ts` (62 pass, 0 fail).
