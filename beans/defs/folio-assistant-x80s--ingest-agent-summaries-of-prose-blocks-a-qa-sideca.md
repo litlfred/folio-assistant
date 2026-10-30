@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-30T11:03:00Z
+updated_at: 2026-10-30T11:10:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -178,3 +178,5 @@ _2026-10-28T12:44:00Z_ — batch 45 opened as `litlfred/smart-base#179` (`4c9777
 _2026-10-28T12:59:00Z_ — batch 46 opened as `litlfred/smart-base#181` (`f9fadc23`): 62 English draft summaries across `smart-base/library/9789240116191-eng` (all 62 prose blocks: `prose-page-001` through `prose-page-062`, covering the WHO *Digital transformation handbook for health product catalogue*); `drafted_by.model` is `not-disclosed` with session `conversation://bc87c25b-304b-4891-a4fc-afa485df4926`. Backlog in `smart-base/library/` 856 → 794 of 1074 prose blocks when combined with `#173`, `#175`, `#176`, `#177`, and `#179` (1074 → 1012 against `main` alone; 280 drafts await human confirmation across `#173`, `#175`, `#176`, `#177`, `#179`, and `#181`).
 
 _2026-10-30T11:03:00Z_ — batch 47 opened as `litlfred/smart-base#187` (`9d139480`): 72 English draft summaries across `smart-base/library/9789240120747-eng` (all 72 prose blocks: `prose-page-001` through `prose-page-072`, covering the WHO *Digital transformation handbook for reporting substandard and falsified medical products*); `drafted_by.model` is `not-disclosed` with session `conversation://0d4dcedf-f347-4704-8854-0793d442cfd1`. Backlog in `smart-base/library/` 794 → 722 of 1074 prose blocks against `main` (with `#173`, `#175`, `#176`, `#177`, `#179`, and `#181` now merged on `main`; 352 drafts await human confirmation).
+
+_2026-10-30T11:10:00Z_ — Merge sweep: batches 19–37 in `litlfred/cat-harness` (`#621`, `#624`, `#628`–`#636`, `#641`–`#643`, `#646`, `#648`, `#651`, `#653`, `#655`), batches 38–40 in `litlfred/folio-assistant-sci` (`#99`, `#101`, `#102`), and batches 41–46 in `litlfred/smart-base` (`#173`, `#175`, `#176`, `#177`, `#179`, `#181`) are all merged on `main` (2026-10-29). Batch 47 (`litlfred/smart-base#187`) is open.

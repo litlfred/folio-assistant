@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-26T14:16:00Z
+updated_at: 2026-10-30T11:10:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -151,3 +151,5 @@ Re-measured sequentially in an isolated checkout at latest `main` of `folio-assi
 Opened `litlfred/cat-harness-tools#787` (`fix/oqe3-subgraph-readmes-and-library-coverage`) to clear the two `cat-harness-tools` defects uncovered in the 2026-10-26 measurement above:
 1. **`scripts/subgraph-readmes.ts` (`readme:subgraphs:check`):** removed the dead `requireCurrentWorkingCopy(REPO, GATE)` call. Since `f3bh`, `harnessInstances()` skips every stored (`qa`) directory (`!isStored(d) && !contentIsOffCheckout(d)`), so `readme:subgraphs` and `readme:subgraphs:check` never read `test/results/` and no longer trigger `qa:refresh` when `test/results/` is absent.
 2. **`scripts/audit-coverage.ts` (`audit:coverage:require-all` / `strict`):** taught `scriptsFor()` to follow `run-script.ts <name>` hops (used by `run-gates.py`), taught `gateCoverage()` to resolve `cat-harness-tools/` script paths against `TOOLS_ROOT` and merge `checkoutScripts`, and included `SCRIPT_EXEMPTIONS` entries with `kind === "covered-by"` and `reason.startsWith("RUN BY THE LAYER CHECKS:")` (`libraries:check`, `@covers software-library`) on non-content roots so `software-library` is reported as `covered` rather than a false `kinds-typed-only` finding.
+
+_2026-10-30T11:10:00Z_ — Progress update: `litlfred/cat-harness-tools#618` (`2026-10-23T16:37:32Z`), `#622` (`2026-10-23T16:37:38Z`), and `#787` (`2026-10-29T07:26:25Z`) are all merged on `main`, and `folio-assistant` re-pinned `cat-harness` and `cat-harness-tools` on `main` (`#2681`–`#2721`). Box 1 remains to be re-verified with a clean `test/results/`-absent run on the current re-pinned `main`.

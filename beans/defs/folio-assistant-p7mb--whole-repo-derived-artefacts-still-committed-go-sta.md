@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-24T17:40:00Z
+updated_at: 2026-10-30T11:10:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -73,3 +73,5 @@ Read the full job log of `litlfred/cat-harness` `post-merge-regen.yml` run `4008
 - **Opened PRs**:
   - [`litlfred/cat-harness-tools#771`](https://github.com/litlfred/cat-harness-tools/pull/771): scopes `treeMoveTracker` to `opts.instance` (`process.env.INSTANCE`), watches `publish-check.ts`-routed checks on their check invocation, classifies Step-1-failed / Step-2-current / 0-caller-committed-move checks (including `COVERED`-folded checks) as `builtAtPublishChecks`, adds `--write` to `"external-schemas"`, repairs stale `subject.path` in `migrate-qa-attestations.ts`, and accepts string `scheme` in `check-term-mapping.ts` `termState`.
   - [`litlfred/cat-harness#606`](https://github.com/litlfred/cat-harness/pull/606): declares `docs/en/cat-harness/{bean,software-library,attestations/folio-assistant-core,attestations/smart-base}/` in `cat-harness.json` `builtAtPublish` (`because: "checkout"`), untracks `docs/en/cat-harness/bean/index.html`, handles move-in-flight role extensions (`lean-toolchain`) in `schemas/scenario-overlay.ts`, and refreshes the 7 stale committed artefacts (`external-schemas/omg-bpmn-2.0.json`, `docs/assets/folio/index.json`, `docs/assets/prov/merge-train--train-6.prov.jsonld`, and 6 `docs/assets/glossary/*.skos.jsonld` files).
+
+_2026-10-30T11:10:00Z_ — Progress update: `litlfred/cat-harness-tools#590` (`2026-10-23T15:51:09Z`), `#614` (`2026-10-23T16:37:25Z`), `#771` (`2026-10-29T07:26:28Z`), and `litlfred/cat-harness#606` (`2026-10-29T07:27:15Z`) all merged on `main`. Box 4 remains open: `post-merge-regen.yml` on `cat-harness` `main` (runs `40897480812` and `40900325607`) currently hits the 2h0m job timeout in step 11 (`Run post-merge regen in the composed index`).
