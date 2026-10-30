@@ -5,7 +5,7 @@ title: 'Separation stage 1c: cat-harness content holds no code — block manifes
 status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T14:50:00Z
+updated_at: 2026-10-30T16:10:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -71,3 +71,5 @@ _2026-10-30T15:45Z_ — Owner card, option A: the 2026-10-09 chrome-subgraph lay
 - Gate `check:content-code-free` is green with 322 allowed files and nothing added.
 
 Remaining: `schemas/` (moves with 8lcl), `tools/index.ts`, `tools/lib.ts`, `skills/framework/types.ts` (sci imports it), openapi/archimate/folio-render, test fixtures, `_plugins/*.rb`.
+
+_2026-10-30T16:10Z_ — Follow-up PR `litlfred/cat-harness-tools#921` opened to re-key the 2 moved `webpage` witnesses in `scripts/declared-path-baseline.json` (`.ts` -> `.json` after `cat-harness#751`) and clear the `check:declared-paths` findings on `scripts/check-content-code-free.ts` and `scripts/tests/content-code-free.test.ts` from `#916`.
