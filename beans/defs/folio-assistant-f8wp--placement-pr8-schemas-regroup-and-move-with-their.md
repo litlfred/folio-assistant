@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T13:10:00Z
+updated_at: 2026-10-30T14:58:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -83,6 +83,12 @@ _2026-10-30T14:20Z_ — Audited all 7 remaining above-harness top-level schemas 
   - `computation-witness.ts`: backs `cat-harness/validators/computation-witness.json`, `cat-harness/tools/witness-conformance`, `cat-harness-tools/scripts/witness-{conformance,parity}.ts`, and `folio-assistant-core/typologies/computation-witness.json`; stays in `cat-harness`.
   - `vocab-mapping-fhir.ts`: imported by `cat-harness-tools/scripts/{kg-export,fsh-guts-export,vocab-mappings}.ts` and `folio-assistant-core/schemas/glossary.ts` (`STANDARD_PREFIXES`, `expandCurie`, `toConceptMap`); blocked until generic CURIE prefix table and `vocab-mappings:check` ConceptMap projection are decoupled from lower-layer callers.
   - `lean-packages.ts` & `formalization-types.ts`: blocked on `saqd` moving their remaining `cat-harness-tools` importers (`pipeline/lean-formal-ref.ts`, `pipeline/migrate-lean-refs.ts`, `pipeline/render-latex.ts`, `scripts/check-mirror-drift.ts`, `scripts/gen-content-graph-uml.ts`, `scripts/generate-schema-manifest.ts`, `scripts/tests/report.ts`) to `folio-assistant-sci`.
+
+_2026-10-30T14:58Z_ — Unblocked and moved `vocab-mapping-fhir.ts` (`@graphNode schema`) to `fhir-harness/schemas/vocab-mapping-fhir.ts` across `litlfred/cat-harness#743`, `litlfred/fhir-harness#202`, `litlfred/cat-harness-tools#908`, and `litlfred/folio-assistant-core#244`:
+- Hoisted the generic CURIE prefix table (`STANDARD_PREFIXES`) and expander (`expandCurie`) into `cat-harness/schemas/content/vocab-mapping.ts`, re-exporting them from `cat-harness/schemas/vocab-mapping-fhir.ts` (`@graphNode none` one-release shim).
+- Moved `vocab-mapping-fhir.ts`, its FHIR R4/R5 `ConceptMap` round-trip/loss/element-path tests (`schemas/vocab-mapping-fhir.test.ts`), and the HL7 ConceptMap fixtures (`test/support/conceptmap/`) to `fhir-harness`.
+- Repointed `cat-harness-tools` (`scripts/kg-export.ts`, `scripts/fsh-guts-export.ts`, `scripts/vocab-mappings.ts`, and `scripts/tests/*`) and `folio-assistant-core` (`schemas/glossary.ts`) to `@litlfred/cat-harness/schemas/content/vocab-mapping`, keeping the generic `vocab-mappings:check` and `applyVocabMapping` tests in `cat-harness-tools/scripts/tests/vocab-mapping-fhir.test.ts`.
+- Verified `check:import-direction --all` (0 wrong-direction), `check:reference-direction` (0 new findings), `check:schema-nodes`, `eslint`, `tsc --noEmit`, `kg-export.test.ts`, `glossary-export.test.ts`, and `vocab-mapping-fhir.test.ts` (15 pass in `fhir-harness`, 7 pass in `cat-harness-tools`).
 
 
 _2026-10-15T16:49Z_ — Block lifted: `apcg` is completed (PR #1898 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
