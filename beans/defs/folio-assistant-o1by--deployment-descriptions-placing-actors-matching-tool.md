@@ -2,11 +2,11 @@
 # folio-assistant-o1by
 $schema: bean/1.0.0
 title: 'DEPLOYMENT DESCRIPTIONS: place declared actors per deployment, and resolve which Tool runs which task'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-24T08:45:00Z
-updated_at: 2026-10-30T12:34:00Z
+updated_at: 2026-10-30T19:17:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -21,3 +21,5 @@ _2026-10-24T11:20:00Z_ — Proposal merged: litlfred/cat-harness#514 (d747cdd). 
 _2026-10-26T13:20:00Z_ — Progress update: `23a3` (`litlfred/cat-harness#546`), `jog4` (`litlfred/cat-harness#547`), `4y2i` (`litlfred/cat-harness#546` + `#547`), and the `v3zw` schema resolver (`litlfred/cat-harness#549`) have merged on `main`; `litlfred/cat-harness-tools#780` (`v3zw` corpus command) is open and `61tg`'s online comparison run remains.
 
 _2026-10-30T12:34:00Z_ — `v3zw` completed (`litlfred/cat-harness-tools#780` merged at `02605686` and verified in the composed index). Only `61tg`'s online comparison run remains.
+
+_2026-10-30T19:17:00Z_ — Completed. All five children (23a3, v3zw, jog4, 4y2i, 61tg) are completed; 61tg finished at 16:05Z. Closed on the owner's card "A. Close o1by, end lane" (thread "Drain process and BPMN beans", https://claude.ai/code/session_01Qmmkt9AjLspebqhgy6hrcK).
