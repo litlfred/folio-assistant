@@ -5,7 +5,7 @@ title: 'SWE-Router (2607.00053v1): routing in multi-turn agentic SE — cost-awa
 status: completed
 type: task
 created_at: 2026-10-02T23:15:27Z
-updated_at: 2026-10-09T17:15:20Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -35,3 +35,6 @@ Resolved on branch `claude/p1sk-swe-router-ingest` (commit `15e17891e6748fec5943
    - `bun run typecheck`: clean (0 errors).
    - Library test suite (`scripts/tests/library-document.test.ts`, `library-links.test.ts`, `library-graph-instance.test.ts`, `library-withheld.test.ts`, `library-refscan-reproducible.test.ts`, `library-withheld-view.test.ts`): 40 passed, 0 failed.
    - Skill test suite (`scripts/tests/skill-contracts.test.ts`, `skill-coverage.test.ts`, `skill-governance.test.ts`, `skill-manifest-coverage.test.ts`, `skill-refs.test.ts`, `skill-topics.test.ts`): 30 passed, 0 failed.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 15e17891 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -13,6 +13,7 @@ parent: folio-assistant-f6gq
 First layer of f6gq: bootstrap-tools has no climbs of its own, so it is the bottom.
 
 ## Done when
+
 - [x] cat-harness depends on @litlfred/bootstrap-tools at the SAME commit its index.config.json mounts, and a check fails when the two pins differ (one version, two delivery routes) — settled by the owner ruling: there is one route, the mount, and `mount:remote:check` fails when the tree differs from the lock
 - [x] the 40 imports of ../../bootstrap-tools/ become @litlfred/bootstrap-tools/ — cat-harness main `45aee82c`: no `../bootstrap-tools/` import remains in any .ts/.js; 12 use `@litlfred/bootstrap-tools/…` (e.g. `schemas/vocabulary.ts:40`); package.json declares the dependency and workspaces
 - [x] cat-harness's tests: no new failure against main — nothing left to change, so no new failure by construction

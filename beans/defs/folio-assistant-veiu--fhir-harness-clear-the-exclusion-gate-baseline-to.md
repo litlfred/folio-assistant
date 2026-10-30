@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-10-03T08:54:49Z
-updated_at: 2026-10-04T14:02:31Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-wm63
 ---
 
@@ -45,3 +45,6 @@ litlfred/fhir-harness#14 (merged e250a4a):
 - **Item 2:** the CODE was already an overlay (d313). Directory, hub page, markers and placeholder are flags, and `ingest:ig:check:smart-base` in the index manifest passes `dak`, `dak-api.html`, `DAK_API_HUB_*` and `DAK_API_CONTENT`. What remained was wording, and it is gone from ingest-ig-artifacts.ts, ig-api-views.ts, the artefact-index schema (including one validation message), the loaders, the typology summary and the site template.
 - **Evidence:** 285 tests pass. The exclusion gate grades 0 hits against baseline 0, and prose mentions fell from 84 to 60; the rest are measurement provenance and the skill's own refusal list.
 All five Done-when items are checked.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-04); fhir-harness#12 merged 2026-10-09, fhir-harness#13 merged 2026-10-09, fhir-harness#14 merged 2026-10-09, smart-base#20 merged 2026-10-09. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

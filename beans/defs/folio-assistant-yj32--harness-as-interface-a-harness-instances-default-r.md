@@ -10,7 +10,6 @@ updated_at: 2026-10-05T04:57:14Z
 parent: folio-assistant-rwmf
 ---
 
-
 Owner, 2026-09-20, verbatim — this is the largest architectural statement in
 the session and paraphrasing it would lose the parts that constrain the design:
 

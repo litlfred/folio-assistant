@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T15:52:14Z
-updated_at: 2026-10-09T18:18:44Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -23,3 +23,6 @@ Recorded from the qou orphaned-content census, 2026-10-04 (ORPH report; session 
 - Test evidence:
   - `bun test scripts/tests/block-reference-resolves.test.ts` (17 passed, 0 failed, 65 expect calls).
   - `bun run typecheck` passed cleanly with 0 errors.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 3438be17 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

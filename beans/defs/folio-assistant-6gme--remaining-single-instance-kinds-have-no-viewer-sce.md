@@ -17,6 +17,7 @@ folio-assistant-46ob
 Measured live: Scenarios ×3, and one row each for Policies, UML, Test plan, Tool releases, Vocab mapping, Voice vendors, Waivers, Substrate snapshots, Basic CDN site (C@T Harness), Lean packages (folio-assistant-sci; a doc-gen4 viewer exists as the `lean-html-docs` skill), Skills (Bootstrap tools only — other harnesses' skills link).
 
 Triage each: link an existing page (UML has rendered diagrams; Lean has doc-gen4), build, or exempt.
+
 ## How the row is decided (read before fixing)
 
 A navbar row says **no viewer yet** when no harness declares a visualiser over that kind (`visualisers` in a harness declaration, resolved by `cat-harness-tools/scripts/viewer-declarations.ts` → `harness-tiles.ts` `inertNote`). The other notes are not gaps: **no viewer by design** (`renderExemption.of: ["visualiser"]`), **staging only**, **viewer not published**.
@@ -25,6 +26,8 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 1. **Declare a viewer** that already exists elsewhere (cheapest; often a scope fix).
 2. **Build a viewer** (a Tool + page writer + `builtAtPublish` entry).
 3. **Exempt it**: `renderExemption.of: ["visualiser"]` on the instance, when the kind is internal plumbing a reader never browses — the row then reads "no viewer by design".
+
+_2026-10-23T13:45:00Z_ — Status synced from `todo` to `in-progress` to match the folio-assistant copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
 
 ## 2026-10-20 — ten rows closed (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
@@ -42,6 +45,7 @@ Nothing on disk renders it; declaring its kind-description page would not be a v
 Default if no answer: 1, when next picked up.
 
 ## Out of this session's push scope — what each needs
+
 - **bootstrap-tools Skills:** auto-docs reads only instances stacked ON cat-harness (`known-skills.ts` `stackedOn: root`); bootstrap-tools is below. Either widen auto-docs to dependencies (isolation-policy call) or exempt.
 - **smart-base External schemas:** `gen-external-schemas-viz.ts` reads only its own harness's registry; needs a per-instance page.
 - **smart-base / smart-immunizations L1 extraction:** no Tool renders `l1-extraction`.
@@ -54,6 +58,7 @@ Default if no answer: 1, when next picked up.
 **"Build route listing"**: a publish-time page listing the site's routes (with a Tool and a builtAtPublish entry), not an exemption.
 
 ## 2026-10-22 — `basic-cdn-site` route listing landed and deployed on `gh-pages`
+
 - `basic-cdn-site` viewer (`site-viewer` / `cat-harness-tools/scripts/gen-site-viz.ts`, `cat-harness-tools#494`) and declaration (`cat-harness/cat-harness.json` `visualisers` `"id": "site"` + `builtAtPublish` `docs/en/cat-harness/site/`, `cat-harness#390`) landed on `main` and are live on `gh-pages` (`ec00fd2438`).
 - Of the 13 rows named in this bean's title/body, **11 are now live** (`scenarios` ×3, `policies`, `UML`, `test plan`, `tool releases`, `vocab mapping`, `voice vendors`, `waivers`, `substrate snapshots`, `basic CDN site`). Only 2 cross-repo items remain: `folio-assistant-sci` `lean` and `bootstrap-tools` `skills`.
 

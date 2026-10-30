@@ -6,7 +6,7 @@ status: scrapped
 type: task
 priority: normal
 created_at: 2026-10-02T07:57:50Z
-updated_at: 2026-10-09T17:07:13Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-n3ni
 ---
 
@@ -51,3 +51,6 @@ Owner, verbatim: *"2"*, then *"do smart-base and smart-[trust]. also start movin
 
 ## Scrapped 2026-10-09 — superseded (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 A rehearsal of separation stage E on litlfred/smart-trust. The real separation has since landed: #2320 (smart-* forks remote-mounted, owner-merged 2026-10-08) and the cat-harness/cat-harness-tools split (#2518 repairing CI). Its two open items — a gate-derived tools file list, and Q4 chrome — belong to that real arc now (0mpw, iirv), not to a rehearsal.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `scrapped` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: scrapped, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); folio-assistant#2320 merged 2026-10-08, folio-assistant#2518 merged 2026-10-10. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

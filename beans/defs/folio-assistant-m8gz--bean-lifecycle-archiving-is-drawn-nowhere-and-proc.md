@@ -151,3 +151,20 @@ _2026-10-26T13:20:00Z_ — Progress update: `litlfred/cat-harness#416` (`2026-10
 All done-when boxes met. cat-harness-tools#723 (check:bean-calls) merged 2026-10-29; the OPEN/CLOSE diagrams and test updates landed earlier (cat-harness#528, tools#784). (Lane B drain thread.)
 
 _2026-10-29T07:40:00Z_ — **Completed.** `litlfred/cat-harness-tools#723` (`check:bean-calls`, run inside `check:workflow-refs`) merged as `3c34be3`; every done-when box is ticked. The drain loop built on OPEN/CLOSE is bean `bssi`. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Owner ruling, 2026-10-20 (thread "BPMN engine status")
+
+**First question settled: a per-activity op** (`<cat-harness.processes:bean op="archive"/>`), not a call into `Process_BeanLifecycle`. The sweep (`beans archive`) stays the floor, and the op is the exception, as `todo-manager` § Archiving already argues.
+
+Progress: cat-harness-tools#449 adds the op. It moves a completed or scrapped bean into `defs/archive/` with the reason once its process has finished, and notes why otherwise (e8m3, `check:bean-archive`). The same PR fixes `bean-link` looking in a flat `beans/` and so missing the `beans/defs/` store, which meant every engine claim, note and resolve recorded nothing. Still open: which diagram(s) carry an archive step, whether `Process_BeanLifecycle` is called or retired, and the `todo-manager` text. Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
+
+_2026-10-24T08:15:00Z_ — **Owner ruled: call it, and consolidate (option A).** Measured on main: 19 `claim` ops in 18 diagrams, 13 `resolve` in 11, 3 `archive` in 3 — 7 processes open a bean they never close and 8 close one without archiving. Ruling: split `Process_BeanLifecycle` into a reusable OPEN (check, create, whose, claim / leave alone) and CLOSE (outcome: complete + archive / scrap with reasons / record blocker), called by every bean-touching process at its start and end; the per-diagram claim/resolve/archive ops are removed (the 109 `note` ops stay where the work happens); `Process_BeanLifecycle` becomes OPEN → work → CLOSE; a check flags a diagram that touches a bean without calling both. Archive stays an activity op (the 2026-10-20 ruling), on one shared activity inside CLOSE. No engine change. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.
+
+## Closed 2026-10-29
+
+All done-when boxes met. cat-harness-tools#723 (check:bean-calls) merged 2026-10-29; the OPEN/CLOSE diagrams and test updates landed earlier (cat-harness#528, tools#784). (Lane B drain thread.)
+
+_2026-10-29T07:40:00Z_ — **Completed.** `litlfred/cat-harness-tools#723` (`check:bean-calls`, run inside `check:workflow-refs`) merged as `3c34be3`; every done-when box is ticked. The drain loop built on OPEN/CLOSE is bean `bssi`. Session https://claude.ai/code/session_01UbCbH19GrhqDNakmbgQTF3.

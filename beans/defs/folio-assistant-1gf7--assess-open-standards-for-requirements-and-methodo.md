@@ -5,7 +5,7 @@ title: 'ASSESS: open standards for requirements, and methodologies that fit the 
 status: completed
 type: task
 created_at: 2026-09-23T19:34:01Z
-updated_at: 2026-10-09T18:43:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-2upx
 ---
 
@@ -36,3 +36,17 @@ The bootstrap Requirement is deliberately free of outside concepts. This bean as
   - `bun test scripts/tests/requirements-standards-assessment.test.ts` — 10 pass, 0 fail (76 assertions covering front-matter conformance, bootstrap schema decoupling, ReqIF SpecObject round-trip, EARS pattern classification, ISO 29148 verification mapping, and ISO 25010 NFR validation).
   - `bun scripts/check-methodology-evidence.ts` — 23 methodology nodes valid, exit 0.
   - `bun run typecheck` — clean typecheck, exit 0.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] a survey of open requirements standards and notations (interchange formats, statement templates, quality models), each with licence, maturity and fit to the bootstrap fields
+- [ ] a recommendation: which to map in which layer, and whether the markdown front-matter format should change
+- [ ] nothing adopted into bootstrap — any mapping lives above it, per the no-outside-concept rule
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit f66e2e5c is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

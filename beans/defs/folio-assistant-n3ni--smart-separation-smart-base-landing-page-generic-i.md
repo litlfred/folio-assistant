@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T08:10:21Z
-updated_at: 2026-10-09T17:07:12Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -42,3 +42,6 @@ Stages B, C and D are ticked on evidence: r939 (#1782), y4t4 (#1783) and kg83 (#
 
 ## Closed 2026-10-09 on landed evidence (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 E: each fork carries the harness with data under `smart-base/` (litlfred/smart-base ed1e7cb "smart-base lives at smart-base/"). F: folio-assistant mounts smart-base/trust/immunizations from the forks (index.config.json, owner consent 2026-10-07/08); cutover landed as #2320 (child hupw, closed today).
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); folio-assistant#2320 merged 2026-10-08. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

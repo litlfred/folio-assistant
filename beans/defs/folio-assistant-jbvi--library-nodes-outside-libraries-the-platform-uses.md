@@ -58,3 +58,17 @@ _2026-10-30T12:15Z_ — Follow-ups completed/opened:
 - Opened `litlfred/folio-assistant-core#231`: adds `bun.lock` (plus `mdast-util-math` and `@types/mdast` in `package.json`, imported by `scripts/codemod-refterm.ts`), declares `folio-assistant-core-libraries` (`path: "libraries/"`, typology `software-library`), and generates 22 `software-library/1.0.0` nodes and `libraries/README.md`.
 - Opened `litlfred/who-iris#92`: adds `bun.lock`, declares `who-iris-libraries` (`path: "libraries/"`, typology `software-library`), and generates 5 `software-library/1.0.0` nodes and `libraries/README.md`.
 - Only `bootstrap-tools#44` (blocked on owner decision for the `ujiv` layering choice a/b/c) and merging the two new PRs remain.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: ## Done when
+
+```text
+- [ ] a proposal names the kind, the layer that owns it (cat-harness for the kind; the using layer for each node), and what each node carries: name, version range, licence, used-by and shim
+- [ ] it says how it relates to `software.json`, `THIRD-PARTY-NOTICES.md` and `external-schemas`, and whether any of them becomes derived from it
+- [ ] the owner picks before anything is built
+
+Session https://claude.ai/code/session_01FUCxDH4Xeea4eUzZ5TaPL5.
+```

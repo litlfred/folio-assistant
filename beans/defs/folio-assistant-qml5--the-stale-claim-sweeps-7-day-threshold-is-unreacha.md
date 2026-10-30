@@ -7,7 +7,7 @@ type: bug
 priority: normal
 parent: folio-assistant-ahvw
 created_at: 2026-10-02T06:39:03Z
-updated_at: 2026-10-09T15:51:00Z
+updated_at: 2026-10-16T06:30:00Z
 ---
 
 Measured 2026-09-22 against `origin/main` @ `937c8d84`, by a dispatched sweep
@@ -108,3 +108,6 @@ All three architectural decisions have been decided, documented, and codified in
    Documented in `bean-coordination.md` §"The store on `main` is the one every sibling
    reads (STRICT)": beans must land ahead of code, or be tracked via tip-keyed graph
    branches (`cat/cat-harness/beans`), preventing PR-local isolation.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09) — Closed 2026-10-09: All three architectural decisions have been decided, documented, and codified in. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

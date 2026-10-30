@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-10-10T06:02:54Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-2yyh
 ---
 
@@ -157,3 +157,6 @@ The user said 'go' to opening the qou PR. Before removing anything, re-verified 
 
 ## Done 2026-10-10
 litlfred/qou#7545 was merged (rebase, 210c6bd) on the owner's 'merge and go'. All eight PDFs were removed from qou/uploads after a full-digest match against their kept copies.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-10); commit 88da63c is on folio-assistant main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

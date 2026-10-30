@@ -39,3 +39,8 @@ What this stage authorises has happened, so its question is moot; what I cannot 
 ## Reasons for Scrapping
 
 Superseded by `iai8` (Owner ruling 2026-10-16, item 8: "8b"). What this stage was to authorise has happened: `iai8` seeded litlfred/cat-harness and litlfred/cat-harness-tools (PR #2517, merged 2026-10-08), and the owner has since consented to pins past the seed (`trust.consent` in `index.config.json`, 2026-10-09). The owner chose to scrap this bean rather than to supply the dated quote its first box asks for, so the box stays unticked and the bean closes as superseded, not completed. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+
+## Reasons for Scrapping
+
+Superseded by `iai8` (Owner ruling 2026-10-16, item 8: "8b"). What this stage was to authorise has happened: `iai8` seeded litlfred/cat-harness and litlfred/cat-harness-tools (PR #2517, merged 2026-10-08), and the owner has since consented to pins past the seed (`trust.consent` in `index.config.json`, 2026-10-09). The owner chose to scrap this bean rather than to supply the dated quote its first box asks for, so the box stays unticked and the bean closes as superseded, not completed. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

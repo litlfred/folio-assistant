@@ -5,7 +5,7 @@ title: 'Merge refused: #1977 owed CI not green on its head'
 status: completed
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-15T16:49:44Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -44,3 +44,8 @@ Evidence, re-read from GitHub on 2026-10-06 rather than taken from a note:
 - No check on the head concluded failure.
 
 _2026-10-15T16:49Z_ — Block on `7x5n` lifted: this bean is completed (#1977 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+
+_2026-10-15T16:49Z_ — Block on `7x5n` lifted: this bean is completed (#1977 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

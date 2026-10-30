@@ -5,7 +5,7 @@ title: 'VACUOUS CLEAN: devils-advocate ''clean (all rebutted)'' is satisfied by 
 status: completed
 type: bug
 created_at: 2026-10-02T23:49:21Z
-updated_at: 2026-10-09T12:09:00Z
+updated_at: 2026-10-14T14:10:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -113,3 +113,23 @@ DeepSeek-V3-0324 with different system prompts.
   - `bun run build` in `schemas/block-qa-schema`: built clean.
   - `bun run typecheck` (`tsc --noEmit -p tsconfig.json`) in worktree: 0 errors.
 
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [x] `clean` split into `clean-rebutted` and `no-objection-raised` — `schemas/block-qa.ts:635`, `block-qa.schema.json:245` (legacy `clean` kept as a synonym)
+- [x] `no-objection-raised` does NOT satisfy the sidecar skip at `:150-154` — `devils-advocate-watcher.md:150-158`
+- [x] the skip rule says which verdicts it honours, positively — "honours **only** `clean-rebutted` and `survivable-objection`" (`:151`)
+- [x] `agent_model` required where a verdict rests on lens agreement, OR the
+      skill states that same-family agreement is not corroboration — `:167-173`, `:282`
+- [x] `consensus-grounded-subject-evaluation.md` cited from the DA rollup — `:170`, `:282`
+- [x] a sweep for other rollups defined as a universal over possibly-empty
+      findings — this is a class, not one line — the class rule is `skills/conventions/no-clean-run-over-an-empty-set.json`
+
+## Summary of Changes
+
+Found already done during the 2026-10-14 bean drain (session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs): the verdict split, the positive skip rule, the same-family caveat with `reviewer.agent_model`, the methodology citation and the class rule all exist in cat-harness. Closed with the evidence ticked in place.
+```

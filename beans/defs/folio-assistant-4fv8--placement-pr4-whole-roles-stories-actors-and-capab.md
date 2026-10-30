@@ -5,7 +5,7 @@ title: 'Placement PR4: whole roles, stories, actors and capabilities move up to 
 status: todo
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-15T16:49:43Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pzwb
@@ -24,3 +24,8 @@ Blocked by PR2 and PR3: the role→skill edges naming moved skills and diagrams 
 - [ ] `check:raci`, `check:actor-reach`, `check:voices`, `kg:audit:check` green
 
 _2026-10-15T16:49Z_ — Block lifted: `63wl` is completed (PR #1875 merged 2026-10-02). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+
+_2026-10-15T16:49Z_ — Block lifted: `63wl` is completed (PR #1875 merged 2026-10-02). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

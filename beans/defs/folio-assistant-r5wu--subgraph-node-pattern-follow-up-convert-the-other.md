@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T08:58:19Z
-updated_at: 2026-10-09T15:47:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -37,3 +37,6 @@ Every publisher above either follows the pattern (its row in subgraph-node.test.
   - Total: 133 pass, 0 fail.
   - `bun run typecheck` (tsc --noEmit): passes clean with 0 errors.
   - Staleness gates: `glossary-export.ts --check`, `gen-jsonld-context.ts --check`, and `gen-site-jsonld.ts --check` all pass clean.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 5dbddae8 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -44,3 +44,8 @@ _2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 mer
 _2026-10-26T13:20:00Z_ — Progress update: Placement PR9 (`p9bu`) is now `completed` (`2026-10-24T08:52:36Z`; `cat-harness-tools#683`, `cat-harness#498`, `fhir-harness#148`, `smart-base#149`). PR2 (`pzwb`), PR7 (`8fq9`, 8/9 test groups merged), and PR8 (`f8wp`) are `in-progress`; PR4 (`4fv8`) remains `todo` (blocked by `pzwb`).
 
 _2026-10-29T09:30Z_ — Lane A (session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo): `check:reference-direction` showed 8 wrong-direction occurrences in 4 files. litlfred/cat-harness#681 (merged) fixes the 3 cat-harness → cat-harness-tools ones by giving each reference its URL. The 5 left are cat-harness-tools → folio-assistant-core, all in `scripts/bean-dedupe.ts`, which hard-codes core as a bean store. They clear when that tool reads its stores from a declaration; that is the bean-dedupe work in cat-harness-tools#460 (Lane E). Placement PR8 (`f8wp`) schema groups 1 to 8 are merged too.
+
+
+_2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

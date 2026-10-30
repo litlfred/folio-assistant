@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-02T23:49:21Z
-updated_at: 2026-10-12T09:36:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -78,3 +78,5 @@ Asked in the drain session (ml9h) with options gate / advisory / scrap; the owne
 - `bun run cat workflow:instances` (cat-harness-tools#148, merged as 2ee9ba6) computes the gap between workflow instances and merges, and lists the CI gates that read the graph. A finding exits 0; unknown exits 2. It is not wired into CI.
 - vlhk is annotated.
 All three done-when items are met: the rule is advisory, vlhk is annotated, and the count is a command.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-12); commit 2ee9ba6 is on cat-harness-tools main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

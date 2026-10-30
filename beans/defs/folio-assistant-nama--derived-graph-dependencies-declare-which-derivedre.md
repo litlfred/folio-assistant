@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-10T08:00:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -47,3 +47,5 @@ It asks three decisions: the edge's direction, re-layering the IG pages and arte
 3. An edge across a missing `needs` path (the chrome case) is a ratchet: a baselined layering gap, where new gaps fail and cleared ones shrink the baseline.
 
 Next: the schema change (`derivedFrom` on ContentDirectorySchema, using computedFrom's resolver), then check:derived-from with its baseline, then the declarations and re-layering. The node schemas are bean lehh.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-10) — Closed 2026-10-10 on landed evidence: - Both child beans completed: `lehh` (derived node schemas for `ig-ast`, `lake-cache`, `gh-pages`) and `0b8c` (`derive:publish` and `check:derived-from`). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

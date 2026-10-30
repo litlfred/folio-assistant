@@ -97,7 +97,7 @@ deliverable.
 
 An epic's placement is a claim about which goal pays for it, and a milestone is
 a statement of what its owner believes that goal needs next.
-[`role-model.md`](../../cat-harness/skills/process/process-core/role-model.md)
+[`role-model.md`](../../../cat-harness/skills/process/process-core/role-model.md)
 §`judgementOnly` is the rule: the `stakeholder` role *"carries no skills
 deliberately: sign-off is a judgement, not a procedure, and a skill here would
 suggest an agent could supply it."* **Approving 17 re-parents is exactly that

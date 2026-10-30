@@ -13,6 +13,7 @@ parent: folio-assistant-vuip
 Owner, 2026-10-10: *"you can work onthe litlfred/smart-* go ahead and harness them with index.config.json and make sure they stop the ghpages currrent redering pipleine and use to the harnessed one"* (fhir-harness, smart-base harness). Repositories: *"smart-base, smart-base-clinical, smart-core, smart-immunizations, smart-hiv and smart-trust smart-ra"*.
 
 ## State measured 2026-10-10
+
 - **Push-triggered gh-pages builds:**
   - smart-hiv: `ghbuild.yml` on push
   - smart-base-clinical: `ghbuild.yml` on push
@@ -23,9 +24,11 @@ Owner, 2026-10-10: *"you can work onthe litlfred/smart-* go ahead and harness th
 - **Another session** (session_017QXvm7c7RDYFguWzSxhrMb, "Epic separation status review") is working on smart-base, smart-trust and smart-immunizations (claude/seed-smart-base, 48a6 rollout). It was messaged before any push to those three.
 
 ## Decided (session 2026-10-10)
+
 Agent-run publishing, as for who-iris: an `index.config.json` remote-mounting smart-base (whose closure brings in fhir-harness, core and the harness layers), no submodule, and one parameterised build tool driven by a Routine. Each repository's gh-pages Actions deploy is switched off.
 
 ## Done when, per repository
+
 - [ ] `index.config.json` declares the instance and its remote mounts, with consent recorded
 - [ ] no push- or PR-triggered workflow writes gh-pages
 - [ ] the harnessed site is built from an empty directory and published by an agent; its Pages run succeeds
@@ -58,6 +61,7 @@ Adding the three HL7 tarballs to litlfred/fhir-package-mirror, with their SHA512
 **Seeding source.** The three forks have no gh-pages branch, and WHO's published copies are on refused hosts. So the artefact index must come from a local IG Publisher build, which needs the packages above.
 
 ## 2026-10-10 — staging previews are agent-run (owner's decision)
+
 Owner, 2026-10-10, choosing between agent-run previews, PR previews in Actions, and no previews: **"Agent-run previews"**.
 
 The one agent-run build tool this epic delivers also publishes a branch preview at `STAGING/<branch>/`, the path smart-ra's public-comment links expect for the AFTER side. It runs on request, or from a Routine. Nothing in Actions builds a preview on its own.
@@ -94,6 +98,7 @@ Still open:
 - [ ] the Routine environment allows cloning the litlfred repos and `bun install`/`bun run` (owner setting)
 
 ## 2026-10-11 — smart-ra onto the mounts
+
 - smart-ra#37 (merged): index.config.json mounts the 7 layers plus folio-assistant-sci beside the submodule. sci is needed because core's block kinds name its `paper` adapter (bean bzwk).
 - smart-ra#38 (merged): qa-sweep.yml checks out without submodules and mounts from the lock. CI green, 933 sidecars pass.
 - smart-ra#39 (open): composite action `.github/actions/mount-layers`. qa-sweep-nightly, section-title-audit, public-comment and public-comment-check move onto it.
@@ -101,6 +106,7 @@ Still open:
 - Found: section-title-audit reports 0 titles on dpi-h-ra (its sections are SectionRefs with no inline title). This is pre-existing, and the workflow is dispatch-only.
 
 ## 2026-10-11 — smart-ra fully on the mounts (no submodule)
+
 - smart-ra#39 (merged): every workflow uses `.github/actions/mount-layers`.
 - smart-ra#40 (merged): the site is built by `build-instance-site`, using package.json scripts and `--site-step site:node-kinds`. Result: 8778 pages, 0 unresolved links. staging.yml is removed.
   - Repins: cat-harness-tools bbfc3c5 (#107: --site-step, the review page root link) and cat-harness e890428 (#133: the Tool's siteStep).
@@ -111,6 +117,7 @@ Still open:
 - Still open: the first agent-run publish of smart-ra's root site and of its previews. The command is in AGENTS.md "The site", with `--publish --remote`.
 
 ## 2026-10-11 06:41 — first agent-run root publish of smart-ra
+
 - The owner chose "2": publish the root now.
 - smart-ra#42 (merged) made the RA mapper a site step (`tools/ra-mapper/build-site.sh`, `site:mapper`). Without it the root publish would have dropped `mapper/`. ra-mapper.yml, an Actions deploy, is removed.
 - Published from smart-ra main 6b42948 with the AGENTS.md command:
@@ -126,6 +133,7 @@ _2026-10-16T10:45:00Z_ — Parented to `vuip` (GOAL 1) by subject: it had no par
 "No push- or PR-triggered workflow writes gh-pages", for **smart-base: met, with one sanctioned exception** — `publish-context.yml` runs on push to main and writes only `ns/context/v1.jsonld` (bean `63q4`, owner 2026-10-15). Every other gh-pages writer is `workflow_dispatch` / `workflow_call` only. smart-base#114/#115 (DAK hub dead links, view-page tabs) merged and upstreamed as WorldHealthOrganization/smart-base#335 (781a8b99). smart-base#99 stays open: needs a ghbuild job log, host blocked here.
 
 ## 2026-10-23 — IG mode verified; smart-base submodule removal staged (thread "smart IG harnessing", https://claude.ai/code/session_01AW61nue34oLGoENwjCNcSA)
+
 - **IG mode: exists.** It is not a flag on build-instance-site. fhir-harness declares the `site-publisher-ig` slot (`pipeline-plugins/site-publisher-ig.json`); `stage-local.ts` reaches it, and `fhir-harness/scripts/stage-local-ig.ts` builds an IG repository's folio site by calling `buildInstanceSite` with the `ig-site:ast`, `ig-site:compose` and `ig-site:publisher-pages` steps (thin artefact pages from the cached AST). build-instance-site also has `site.build.profile: "ig-repo-site"`. smart-trust and smart-immunizations gh-pages carry `folio-build.json` and 1,404 / 1,955 thin artefact pages. The AST comes from the `cat/fhir-harness/fhir-ast/smart.who.int.*` cache branches, so a fresh AST still needs 53rv.
 - **smart-base submodule.** Nothing in smart-base's workflows uses `folio-assistant/` any more (site-publish.yml mounts from index.lock.json). Only `.claude/mount-platform.sh`, CLAUDE.md and one BPMN comment did. Branch `claude/n3h9-drop-folio-assistant-submodule` (local, not pushed) removes the gitlink and `.gitmodules` and makes the hook replay `index.lock.json` with cat-harness-tools' `mount-from-lock.ts`, as site-publish.yml does. Tested here: 6 layers mount OK in 69 s, and `render-processes.ts` runs with `NODE_PATH=cat-harness-tools/node_modules`.
 - **SUSHI** on that branch: 14 errors, all from the 3 packages this environment cannot download (`hl7.terminology#7.3.0`, `hl7.fhir.uv.crmi#2.0.0`, `hl7.fhir.uv.sdc#4.0.0`; bean 53rv). The change touches no `input/` or `sushi-config.yaml`. Not committed: waiting on the owner (SUSHI-before-commit rule).
@@ -177,3 +185,48 @@ Owner setting still open: the Routine environment allowing clone of the litlfred
 - **smart-base-clinical AST: blocked.** `ig-ast-refresh` run 41051844061 failed twice, deterministically (attempts at 11:58Z and 12:15Z, about 2 minutes each), in "Build the IG and export its AST". The only readable annotation is "404 Not Found"; the job log and the `ast-build-log` artifact are refused from this container (blob host 403).
   - Suspected cause: `smart.who.int.base#1.0.0` (sushi-config dependency), which is neither on npm nor in fhir-package-mirror. The template `who.template.root#current` is the other candidate.
   - Needs someone who can read the job log (the owner, in the browser), or the package published or mirrored. Without an AST there is no site, so smart-base-clinical's checklist item 3 stays open.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: ## 2026-10-10 — staging previews are agent-run (owner's decision)
+
+```text
+Owner, 2026-10-10, choosing between agent-run previews, PR previews in Actions, and no previews: **"Agent-run previews"**.
+
+The one agent-run build tool this epic delivers also publishes a branch preview at `STAGING/<branch>/`, the path smart-ra's public-comment links expect for the AFTER side. It runs on request, or from a Routine. Nothing in Actions builds a preview on its own.
+
+Until the tool exists, an agent starts `staging.yml` by hand (workflow_dispatch) for any PR that needs a preview.
+
+Done when, added:
+- [ ] the build tool takes `--staging <branch>` and writes only `STAGING/<branch>/`, keeping the root site and the other previews
+- [ ] smart-ra: a public-comment change set can be reviewed on an agent-built `STAGING/<branch>/` preview
+```
+
+Where: ## 2026-10-11 — environment migrated: four repositories on remote mounts, and an agent-run publish
+
+```text
+Owner, 2026-10-10: *"keep going. keep migrating environment"*. On 2026-10-11: *"repin as needed. merge all ready green next 4hrs, continue"*.
+
+**Remote mounts, no submodule.** These follow who-iris's pattern: the instance declaration at the root, plus `index.config.json`. Each mounts smart-base (its 22 declared directories), fhir-harness, folio-assistant-core, cat-harness, cat-harness-tools, bootstrap and bootstrap-tools, at each repository's main of 2026-10-10:
+- smart-hiv#2: `smart-hiv.json`
+- smart-base-clinical#2: `smart-base-clinical.json`
+- smart-core#2: `smart-core.json`
+
+Each was verified from an empty directory: remote-mount exits 0 and all seven layers mount. The declarations declare no directories yet (dh4f), and the IG content is seeded later (53rv).
+
+**smart-ra (dpi-h-ra), step 1: smart-ra#37.** The same mounts sit beside the folio-assistant submodule. Step 2 moves its six workflows onto the mounts and removes the submodule.
+
+**The build tool.** `build-instance-site` is in place:
+- implementation: cat-harness-tools #58, #62, #64, #67;
+- Tool node and `ScriptName` type: cat-harness #104;
+- `publish-site --into/--keep`: bootstrap-tools #16.
+
+who-iris is pinned to it (who-iris #32, #33, #34). Its publish Routine now makes one `build-instance-site` call. It was first used from this session (gh-pages 2951fee; Pages run 38072524836, success). The Routine itself is blocked: its session's permission check refuses cloning the pinned layers.
+
+Still open:
+- [ ] smart-ra step 2: workflows onto the mounts, submodule removed
+- [ ] an IG mode for build-instance-site (fhir-harness stage-ig-sites), after 53rv's packages land
+- [ ] the Routine environment allows cloning the litlfred repos and `bun install`/`bun run` (owner setting)
+```

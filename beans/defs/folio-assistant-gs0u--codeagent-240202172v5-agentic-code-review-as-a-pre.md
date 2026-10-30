@@ -5,7 +5,7 @@ title: 'CodeAgent (2402.02172v5): agentic code review as a PRE-MERGE gate — ex
 status: completed
 type: task
 created_at: 2026-10-02T23:15:27Z
-updated_at: 2026-10-09T17:27:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -24,3 +24,6 @@ Ingest + critical analysis. 35pp. Bears on bean nok9 (MERGE GATE: agentic advers
   - `bun scripts/check-l1-complete.ts library/arxiv-2402.02172v5` -> exit 0 (L1 complete, 10 children declared, 135 describable images all inspected, 19 vector figures inspected).
   - `bun run typecheck` -> exit 0 (`tsc --noEmit -p tsconfig.json`).
   - `bun test scripts/tests/library-*.test.ts scripts/tests/skill-*.test.ts` -> 120 passed (all 16 test files pass; the single remaining failure in `library-readmes.test.ts` is pre-existing upstream in `library/kg-folio-asst-2026-09-30/README.md`).
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit bc4905e4 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

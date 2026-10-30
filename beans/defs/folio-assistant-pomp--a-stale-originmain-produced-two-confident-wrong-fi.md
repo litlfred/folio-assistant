@@ -165,3 +165,43 @@ _2026-10-24T08:45:00Z_ — The lookup is the open-work-lookup Tool: definition i
 ## Summary of Changes
 
 Merged 2026-10-24 11:23Z by the owner: litlfred/cat-harness#520 (fb62124: skill `bean-drain` with input/output schemas, Tool definitions drain-queue, bean-claim-check, open-work-lookup, pointers from bean-coordination, idle-backlog, issue-working, AGENTS.md) and litlfred/cat-harness-tools#706 (9b133fa: `beans:drain-queue`, `beans:claim-check`, `lookup:open-work`, 20 tests). Issue litlfred/cat-harness#515. The drain as a BPMN process is bean bssi, waiting on m8gz. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.
+
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Closed 2026-10-24 (owner choice B)
+
+Ruling: no tool. The owner closed this bean on 2026-10-24 rather than build an "exists on main or any open PR head" checker, so the "if a tool" item does not apply. The two occurrences stay recorded in this bean.
+
+
+## Reopened 2026-10-24 08:20Z (owner choice B): build the lookup
+
+The owner tapped "B: Reopen pomp, full lookup" on 2026-10-24 08:20Z. The 2026-10-22
+answer was *"wait"* until a second session hits case 3. Today one did:
+
+| time (UTC) | what |
+|---|---|
+| 07:46:28 | agy's first f1e1 commit (branch feat/f1e1-host-and-multiuser-identity) |
+| 07:47:35 | agy opens cat-harness-tools#686 |
+| 07:49:20 | agy opens cat-harness#502 |
+| 07:50:08 | a cloud thread's first f1e1 commit (claude/f1e1-agent-hosts) |
+| 07:50:22 | cloud opens cat-harness-tools#688 (merged 08:04) |
+| 07:50:29 | cloud opens cat-harness#503 |
+| 07:52:57 | agy's first f1e1 commit on the bean branch |
+
+The bean branch said nothing new about f1e1 until 07:52:57, and its status had read
+`in-progress` since 2026-10-16, so neither a status check nor a bean-log check would
+have stopped the second start. The duplicate existed only on an open PR's head: case 3.
+`gh api` on the four PRs is the measurement.
+
+So the "if a tool" item applies again: a Tool that answers *does `<path>`, a pattern,
+or a bean id appear on main or on any open PR head, and where?* (bean n7x7 uses it as
+the claim check's last step).
+
+_2026-10-24T08:30:00Z_ — Reopened and claimed by https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg, plain commit on both copies.
+
+_2026-10-24T08:45:00Z_ — The lookup is the open-work-lookup Tool: definition in litlfred/cat-harness#520, implementation in litlfred/cat-harness-tools#706. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.
+
+## Summary of Changes
+
+Merged 2026-10-24 11:23Z by the owner: litlfred/cat-harness#520 (fb62124: skill `bean-drain` with input/output schemas, Tool definitions drain-queue, bean-claim-check, open-work-lookup, pointers from bean-coordination, idle-backlog, issue-working, AGENTS.md) and litlfred/cat-harness-tools#706 (9b133fa: `beans:drain-queue`, `beans:claim-check`, `lookup:open-work`, 20 tests). Issue litlfred/cat-harness#515. The drain as a BPMN process is bean bssi, waiting on m8gz. Session https://claude.ai/code/session_01MMQkmKdyvbBnE6dR9xMAmg.

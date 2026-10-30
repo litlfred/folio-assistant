@@ -5,7 +5,7 @@ title: 'STATE BRANCH P5: adjust skills and processes — content-context-and-sta
 status: completed
 type: task
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-09T15:08:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -32,3 +32,6 @@ Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
   - `docs/proposals/workflow-state-in-beans.md`: added §0.1 Addendum documenting that Option A's co-location is preserved on the state branch.
   - `AGENTS.md`: verified and updated bean section pointers to mention branch store push.
   - Verification: `bun run typecheck` (0 errors), `bun test scripts/tests/claim-branch-store.test.ts` (9 pass), `bun test schemas/subgraph-source.test.ts` (25 pass), `bun test scripts/tests/subgraphs.test.ts` (14 pass).
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 9481791a is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

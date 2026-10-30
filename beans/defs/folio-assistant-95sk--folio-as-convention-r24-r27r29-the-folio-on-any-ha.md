@@ -60,3 +60,15 @@ The owner chose A ("read it like R27"), then refined it at 09:01:
 So, for R28:
 - A document a reader **creates** goes in `folio/`. It may be of **any kind that some knowledge graph in the instance's dependency chain describes**, including the mounted layers. So the set of creatable kinds is whatever the loaded graphs declare, not a list fixed here.
 - A document a reader **links to** becomes a `referenced` node in `library/` (catalogue by reference, through `ingest-document.ts`'s referenced rung), as option A said.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] R24: a second harness instance renders the folio pull-down with no code of its own *(who-iris: met via `folio-mount.ts`. FHIR IG pages: fhir-harness#155, merged 2026-10-24 as 49da9cc; live once folio-assistant re-pins fhir-harness and republishes. Tick when `smart-base/index.html` on gh-pages carries `data-fa-folio-mount`.)*
+- [x] R27: a materialised asset is written under `folio/`, and the glass reads it from there *(met as the owner ruled on 2026-09-21: the folio is the reader's REPOSITORY, of which `library/` and `uploads/` are declared parts. Bytes under `folio/` itself were rejected, because `corpus-grep` reads `library/` only and `folio/` is renderable. See `folio-board-requirements.md` §"R27 and question 1". Gated by `check-catalogue.ts`. Ticked 2026-10-24.)*
+- [ ] R28: creating or linking a document writes it under `folio/` *(creating: done, cat-harness-tools#711 merged as b7b21e5, `bun run cat folio:create`. Linking: an agent can already record a link as a referenced `library/` node through `ingest-document.ts`. Still missing: the reader's "link a document" action on the glass.)*
+```

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T15:56:22Z
-updated_at: 2026-10-09T16:03:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -212,3 +212,6 @@ _2026-09-29_ — **Re-parented `1xhc` → `ahvw`** by subject, per todo-manager 
   - `bun run typecheck`: Passed clean with 0 TypeScript errors.
   - `bun test scripts/tests/workflow-interpreter.test.ts scripts/tests/workflow-roles.test.ts scripts/tests/workflow-subprocess.test.ts scripts/tests/workflow-events.test.ts`: 116 pass.
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 346fcb43 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

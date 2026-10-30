@@ -5,7 +5,7 @@ title: 'f017 follow-up: review the remaining input sites that block ~57 checks f
 status: completed
 type: task
 created_at: 2026-10-06T22:53:13Z
-updated_at: 2026-10-09T17:16:51Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-xpcu
 ---
 
@@ -45,3 +45,16 @@ Each site needs reading, then one of: an annotation with the right verdict, a `t
   - `scripts/staging-stamp.ts:61` & `:81`: reduced from 13 blocked tasks each to 0 (completely unblocked).
   - `scripts/kg-export.ts`: sites previously blocking 12 tasks each reduced to 0 (completely unblocked).
   - All annotated blocker sites in kind-validator, staging-stamp, and kg-export verified `ok` by `input-hash-coverage.ts --sites`.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] each listed blocker is annotated, traced or refactored, with its reason
+- [ ] the coverage report's blocked count is re-measured and recorded here
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit dfeb31e6 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

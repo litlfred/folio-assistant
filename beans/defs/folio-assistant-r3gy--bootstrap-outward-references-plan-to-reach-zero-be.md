@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-29T18:18:26Z
-updated_at: 2026-10-09T17:41:06Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -135,3 +135,6 @@ Both clauses of `## Done when` re-run in the composed index checkout (folio-assi
 - `bun test bootstrap-tools/schemas/graph.test.ts` → 84 pass, 0 fail. Its `ALLOW` list holds only the bootstrap-tools repository URL and the README notice link text (the published-address entries decision 1 keeps); `PENDING` is empty.
 - Decision 1 is applied: `bootstrap/bootstrap.json` `iriBase` is `https://litlfred.github.io/bootstrap/` and its links name `github.com/litlfred/bootstrap`.
 Not part of this bean: the exported `bootstrap.jsonld` `@id` (bean `40fl`). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 28283d2b is on folio-assistant main, commit c16e4613 is on bootstrap-tools main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-09T14:40:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -171,3 +171,6 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
   - `bun run typecheck`: clean (0 errors).
   - Pushed to `origin/claude/0hi8-local-rendering-server`.
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 40422da2 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

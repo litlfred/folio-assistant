@@ -5,7 +5,7 @@ title: 'TCAndon-Router (2601.04544v1): adaptive reasoning router — does it ref
 status: completed
 type: task
 created_at: 2026-10-02T23:15:27Z
-updated_at: 2026-10-09T17:15:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -40,3 +40,6 @@ Verification evidence:
 - `bun test scripts/tests/library-*.test.ts scripts/tests/skill-*.test.ts`: 121 pass, 0 fail across 17 test files (835 expect calls).
 - `bun run typecheck`: clean exit 0 (`tsc --noEmit -p tsconfig.json`).
 - Git commit: `333ab0d4` on `claude/ptdp-tcandon-router-ingest`, pushed to origin.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 333ab0d4 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:56Z
-updated_at: 2026-10-12T16:05:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -81,3 +81,6 @@ cat-harness#161 (525ce60), the minimal folio renderer, is merged. This closes wh
 ## Summary of Changes (2026-10-12, lane C)
 - cat-harness#161 (525ce60): `folio/render/file-list.ts`, a skill, a generated `folio/index.md`, and `folio/render/` declared as subgraph `folio-render`. This is the minimal just-the-docs rendering describing folio.
 - cat-harness-tools#144 (merged): the folio viewer's 'list' view, reading the same `folioFileList`. This is the owner's "list view from fancy folio".
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-12); cat-harness#161 merged 2026-10-12, cat-harness-tools#144 merged 2026-10-12. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

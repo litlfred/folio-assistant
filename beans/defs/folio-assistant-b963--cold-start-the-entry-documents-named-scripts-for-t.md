@@ -8,7 +8,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-10-10T06:15:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -396,3 +396,6 @@ Written down because `check:bean-issue-links` found it missing, and the defect i
 ## Closed 2026-10-10 on landed evidence
 
 Core Done-when criteria landed in PR #589 and PR #604: `check:command-paths` shipped, added to gates, and passes on main over entry documents and skills; nine occurrences in entry documents confirmed repointed.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-10); folio-assistant#589 merged 2026-09-20, folio-assistant#604 merged 2026-09-20. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

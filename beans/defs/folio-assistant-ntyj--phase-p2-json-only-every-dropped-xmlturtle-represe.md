@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-09T17:09:07Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -59,3 +59,6 @@ The second IG landed: `qrnz` is completed, and smart-immunizations is ingested a
 
 ## Closed 2026-10-09 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 https://github.com/litlfred/fhir-harness/pull/8 merged (d8d4de5): `p2-refusals.ts --combine <dir> <dir> --out <file>` — one qa-results/v1 record, every refusal tagged by IG plus a `by-ig` family. Run on the pinned forks: **2,852 refused** — smart.who.int.trust 678 XML + 678 Turtle, smart.who.int.immunizations 748 + 748; 0 not published in either. `--check` reproduces; one IG alone is refused.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09) — Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render: In the owner's words: *"each phase needs to render equivalent to existing IG standard render"*. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

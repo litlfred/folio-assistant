@@ -28,3 +28,8 @@ D1: all cat-harness code -> cat-harness-tools. One agent at a time.
 Remaining: 8lcl and vj2p, now PRs to litlfred/cat-harness and litlfred/cat-harness-tools. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-15T16:49Z_ — Block lifted: `a4of` is completed (PR #2317 merged 2026-10-06). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+
+_2026-10-15T16:49Z_ — Block lifted: `a4of` is completed (PR #2317 merged 2026-10-06). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

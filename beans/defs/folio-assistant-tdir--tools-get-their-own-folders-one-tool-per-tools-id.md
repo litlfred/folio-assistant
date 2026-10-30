@@ -116,6 +116,7 @@ gate — promoted once every litlfred instance is migrated).
 `3sbm` (tool releases), `p0za` (auto-discovery), `1nu0` (Tools viewer).
 
 ## Progress 2026-10-21 (evidence re-measured on `main` `3d586f5794`)
+
 - 5 of 6 Done-when criteria are landed and verified on `main`:
   - All 7 tool-declaring instances (`cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `fhir-harness`, `smart-base`, `folio-assistant-sci`, `who-iris` — 235 Tools total) use `<tools dir>/<id>/<id>.ts` via `loadToolFolders`, and `bun run cat check:tools` + `check-tools-inline.test.ts` (3/3 pass) report 0 inline barrels.
   - `kg-export` (`writeToolDocuments`, `cat-harness-tools/scripts/kg-export.ts:3773-3815`) emits each instance's Tools as `<dir>/tools/<id>.jsonld` at `toolIri(docIri, id)` (`cat-harness/schemas/tool-folders.ts`, `tool-folders.test.ts` 4/4 pass).

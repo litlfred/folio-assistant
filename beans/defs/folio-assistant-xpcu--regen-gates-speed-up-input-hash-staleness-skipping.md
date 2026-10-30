@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: high
 created_at: 2026-10-01T17:26:24Z
-updated_at: 2026-10-10T08:00:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -96,3 +96,6 @@ All 4 child beans completed and landed on main:
 3. `94zs`: `regen --changed` and narrowed fixpoint.
 4. `8qyc`: un-barriered skill registration and KG audit folds.
 Parallel task pool and input-hash caching are active in CI.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-10) — Closed 2026-10-10 on landed evidence: All 4 child beans completed and landed on main:. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -154,3 +154,17 @@ smart-base.
 The epic stays open: six children are still open (2ipj, a9tx, cydz, fm9n,
 h3tx, qvxh), and `check:bean-rollup` refuses a completed parent over open
 children. Only the smart-ig box is settled.
+
+
+## smart-ig dropped, 2026-10-23
+
+Owner, 2026-10-23: "F c, dont need smart-ig as a layer". smart-l1 and
+smart-dak became document kinds on 2026-10-01 (#1767), and smart-ig is not
+made a layer or a document kind. An IG such as smart-trust or
+smart-immunizations instantiates smart-base directly. The stack is
+core → fhir-harness → smart-base, with the L1 and DAK document kinds in
+smart-base.
+
+The epic stays open: six children are still open (2ipj, a9tx, cydz, fm9n,
+h3tx, qvxh), and `check:bean-rollup` refuses a completed parent over open
+children. Only the smart-ig box is settled.

@@ -114,3 +114,11 @@ _2026-10-24T09:20:00Z_ — **Completed** by the Claude drain thread (session htt
 - litlfred/cat-harness#499 (2e668b2), which adds the Tool nodes gitlab-mr-files and gitlab-mr-request-review and their selection records.
 
 Sovereign compute, the other half of this bean's title, continues as deployment descriptions: bean `o1by` (proposal litlfred/cat-harness#514) with `4y2i` and `61tg` under it.
+
+
+_2026-10-24T09:20:00Z_ — **Completed** by the Claude drain thread (session https://claude.ai/code/session_01CLVaA6b8XQ5xhvqNZCqc4R). The owner chose "A. Fill both gaps". Both GitLab gaps are now filled with API-backed scripts, so step 3's portability claim is whole:
+- litlfred/cat-harness#491, which adds the argv-safe GitLab username type.
+- litlfred/cat-harness-tools#677 (91ad794), which adds `gitlab:mr-files` (changed files from the MR changes API) and `gitlab:request-review` (it adds a reviewer and keeps the existing ones). The owner chose "B. Merge both now" despite the shared corpus-test timeouts, whose cause the CI speed thread owns.
+- litlfred/cat-harness#499 (2e668b2), which adds the Tool nodes gitlab-mr-files and gitlab-mr-request-review and their selection records.
+
+Sovereign compute, the other half of this bean's title, continues as deployment descriptions: bean `o1by` (proposal litlfred/cat-harness#514) with `4y2i` and `61tg` under it.

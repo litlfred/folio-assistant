@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:08Z
-updated_at: 2026-10-09T18:05:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -23,3 +23,6 @@ Implemented generic orphan detection across declared graph kinds (`beans`, QA si
   - `bun test scripts/tests/orphan-detector-audit.test.ts` (12 pass, 0 fail): verified vacuity guard (empty candidate set returns `unknown`), positive detection of missing bean parents/blocking targets, missing sidecar subjects, unreadable sidecars, missing attestation subjects, clean resolution, and integration with kg-audit.
   - `bun run typecheck` passed with 0 errors.
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit e0f5de8c is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

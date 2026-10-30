@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T06:29:03Z
-updated_at: 2026-10-09T13:16:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -89,3 +89,6 @@ Work completed and merged in PR #2259 (commit `5efdb2a4e631`):
 - Round 1 and Round 2 measurements complete; owner chose Option 1 for revision stamping in `gen-ig-pages.ts`.
 - Tests pass: `bun test cat-harness/scripts/tests/fsh-cone.test.ts` (18 pass, 0 fail, 63 assertions).
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 5efdb2a4 is on folio-assistant main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

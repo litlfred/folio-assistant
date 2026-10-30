@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T18:50:39Z
-updated_at: 2026-10-11T06:23:23Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -40,3 +40,6 @@ Owner asked lane A to dispatch more to lane B; assigned to lane B (session_01QmR
 ## Summary of Changes
 
 Done by drain lane B on the owner's ruling (two tools): cat-harness#129 (rendered-doc schema), cat-harness-tools#101 (--ref for openapi-ingest-source, new openapi-ingest-rendered), cat-harness#130 (the two Tool nodes). All merged 2026-10-11.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-11); cat-harness#129 merged 2026-10-11, cat-harness#130 merged 2026-10-11, cat-harness-tools#101 merged 2026-10-11. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

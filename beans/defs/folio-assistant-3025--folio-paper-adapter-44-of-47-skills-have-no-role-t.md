@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:49:49Z
-updated_at: 2026-10-09T21:56:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -138,3 +138,21 @@ Verified and closed:
 3. Unbound count for `folio-paper-adapter` is **0 of 47 (0 %)**, matching `content-lifecycle`'s 0 %.
 4. Added test suite `cat-harness/scripts/tests/paper-adapter-roles.test.ts` asserting all 47 skills are accounted for and the roles carry personas; verified with `bun test scripts/tests/paper-adapter-roles.test.ts` (2 pass, 0 fail; 21 expect() calls). `bun run typecheck` clean.
 5. Merged to `main` in commit `d8ea1f5d` and pushed to remote origin.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+_2026-10-09T19:53:43Z_ — Claimed by claude/3025-paper-adapter-roles — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); commit d8ea1f5d is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

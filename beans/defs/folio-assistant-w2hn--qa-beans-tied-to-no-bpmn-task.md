@@ -15,9 +15,11 @@ Owner, 2026-10-24: *"should be QA report, way to find beans that are not a part 
 Follows `v49e` (cat-harness-tools#684), which measured 1,084 of 1,094 beans in no workflow instance.
 
 ## Default taken (owner may overrule)
+
 A bean counts as tied to a task when (a) a workflow instance names it (`bean`, or a step's history), or (b) the bean names a BPMN process or activity id that exists in a declared diagram (inferred, and shown as such). Anything else is **unlinked**: a WARNING, never a failure.
 
 ## Done when
+
 - [x] a QA report lists unlinked open beans, with the link basis (instance / named id / none) for every bean
 - [x] unlinked beans are grouped (reusing `pipeline/lsi.ts` / `scripts/lsi-epics.ts`), and each large group is shown as a candidate undocumented process with its beans
 - [x] severity is warning; the report never fails a build

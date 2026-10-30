@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T21:10:28Z
-updated_at: 2026-10-10T16:21:17Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -302,3 +302,6 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 ## Summary of Changes
 
 Closed on the owner's ruling; no further code.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-10) — Owner ruling (2026-10-10, drain session ml9h): **Close.** Live filtering shipped and dragging was scrapped; zoom/pan and alternate layouts are dropped. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

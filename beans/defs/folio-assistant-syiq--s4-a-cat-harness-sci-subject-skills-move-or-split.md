@@ -67,3 +67,66 @@ Open: `lean-verification` can't move alone, because the Lean toolchain cluster h
 All PR pairs merged. The owner chose **B, move it all now** for the Lean toolchain cluster (12:26Z): folio-assistant-sci#89 + cat-harness#566. The cluster is the lean-toolchain role and its contract skill, the lean-mcp actor, the lean-toolchain, lean-mcp and lean-atlas capabilities, `req:lean-verification`, the lean-build and lean-toolchain-setup tools, and the contract test.
 
 Merged: cat-harness #557, #558, #559, #560, #561, #562, #563, #566; folio-assistant-sci #83, #84, #85, #86, #87, #88, #89. Every row in the table above is now moved or split. Tracked in cat-harness#529. Session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [x] every listed row moved/split per its verdict
+- [x] gates green; merged
+
+_2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured against cat-harness main: 34 of the 48 rows are still at their original path (was 47 on 2026-10-09). Only 2 are plain MOVEs (`authoring-core/editor.md`, `graph-management/edge-kinds-and-blast-radius.md`); 22 are SPLITs and 10 AMBIGUOUS, each needing a per-file edit.
+
+_2026-10-24T09:40:00Z_ — Claimed by https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx (agy released it at 09:06Z).
+
+## 2026-10-24 — owner ruling on the 7 unsettled rows (choice A)
+
+The owner chose **A, keep and split all 7** at 09:47Z: content-graph, corpus-grep, integration-watch, narrative-asserts-code, devils-advocate-watcher, editor and edge-kinds-and-blast-radius stay in cat-harness. Only their maths or Lean passages move to folio-assistant-sci, and sci links down to them. The audit marked editor and edge-kinds-and-blast-radius as plain MOVEs, but both are used generically (editor is a role skill named by `schemas/assistant-workflow.ts`; edge-kinds is the deliberately domain-free form), so they are splits too.
+
+First pair: `milnor-exposition-standard` (ruling Q3), folio-assistant-sci#72 + cat-harness#530, tracked in cat-harness#529. Session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx
+
+## 2026-10-24 — progress, and owner ruling B on the name-only rows
+
+- Milnor (Q3) moved: sci#72 + cat-harness#530, merged.
+- compute- and detangler-integration-watcher (Q1): sci#77 merged, cat-harness#540 open.
+- Dispatch tables inverted (block-density, canonical-watcher, one-voice-integration-watcher, todo-review): sci#78 + cat-harness#544.
+- scientific-accuracy split; the formal-layer half is sci `formal-accuracy`: sci#79 + cat-harness#545.
+- The owner chose **B** at 11:22Z: no science skill name stays in cat-harness prose, "generalize if/as needed". Nine pages were rewritten generically, and 15 sci skills record the lineage: sci#80 + cat-harness#550.
+
+Remaining: 8 science-subject splits (content-profiles, md-authoring, readability-editing, content-test, graph-rendering, lean-verification.json, delivery-summary, html-rendering-qc), uses-editorial-review and markdown-render-check (Q2/Q3 splits), and the 7 kept by ruling A (split their maths passages out).
+
+## Progress 2026-10-24 (second half)
+
+Merged: cat-harness#540 (compute and detangler watchers), folio-assistant-sci#82 (math-render-check).
+
+Every row now has a PR, except `lean-verification`:
+
+| Skill | cat-harness | sci |
+|---|---|---|
+| content-test | #557 | #83 `lean-content-test` |
+| md-authoring | #558 | #84 `math-md-authoring` |
+| html-rendering-qc | #559 | #85 (into `math-render-check`) |
+| readability-editing | #560 | #86 `math-readability-editing` |
+| delivery-summary | #561 (wording only) | none |
+| graph-rendering | #562 | #87 (into `lean-formal-graph`) |
+| ruling A: editor, devils-advocate-watcher, content-graph, corpus-grep, integration-watch | #563 | #88 `formal-layer-editing`, `devils-advocate-paper`, `proof-gap-audit` §K |
+
+No change needed: content-profiles (it describes the profile mechanism, with the paper as its example), narrative-asserts-code (it already hands Lean to sci) and edge-kinds-and-blast-radius (it quotes the maths sources only as lineage).
+
+Open: `lean-verification` can't move alone, because the Lean toolchain cluster hangs off it (toolchain contract and test, lean-toolchain, lean-mcp and lean-atlas capabilities, the lean-build and lean-toolchain-setup tools, the lean-mcp actor, the lean-toolchain role). The owner has been asked: A, a separate bean (recommended); B, move it now; C, keep it.
+
+## Completed 2026-10-24T13:41Z
+
+All PR pairs merged. The owner chose **B, move it all now** for the Lean toolchain cluster (12:26Z): folio-assistant-sci#89 + cat-harness#566. The cluster is the lean-toolchain role and its contract skill, the lean-mcp actor, the lean-toolchain, lean-mcp and lean-atlas capabilities, `req:lean-verification`, the lean-build and lean-toolchain-setup tools, and the contract test.
+
+Merged: cat-harness #557, #558, #559, #560, #561, #562, #563, #566; folio-assistant-sci #83, #84, #85, #86, #87, #88, #89. Every row in the table above is now moved or split. Tracked in cat-harness#529. Session https://claude.ai/code/session_01WJw1NBGSTLWvBnyQzJHXjx
+```

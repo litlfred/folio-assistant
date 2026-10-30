@@ -28,3 +28,18 @@ Branch: litlfred/cat-harness `claude/crdm-wireframes` (15caa582, merged with mai
 - [ ] The first CRDM request that changes a rendered surface runs `Call_Wireframe`, and its proposal holds the chosen candidate.
 
 **2026-10-20 — completed.** The wiring is merged (cat-harness#210). The last box, the first CRDM request that uses `Call_Wireframe`, is something to observe, not work to do, and the owner chose to close ("1-3 as recommended", 09:27Z). Session: https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: ## Done when
+
+```text
+- [ ] The owner merges `claude/crdm-wireframes` into cat-harness main.
+- [ ] After #201 lands, `schemas/staging.test.ts` passes with the wireframe-design-review output's inline `stagingLinks` copy.
+- [ ] The next regen at folio-assistant's pins refreshes the derived subgraph JSON-LD and payloads the branch left to it.
+- [ ] The first CRDM request that changes a rendered surface runs `Call_Wireframe`, and its proposal holds the chosen candidate.
+
+**2026-10-20 — completed.** The wiring is merged (cat-harness#210). The last box, the first CRDM request that uses `Call_Wireframe`, is something to observe, not work to do, and the owner chose to close ("1-3 as recommended", 09:27Z). Session: https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP
+```

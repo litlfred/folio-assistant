@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-22T14:30:00Z
+updated_at: 2026-10-23T13:45:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -766,3 +766,6 @@ The remaining parity/MVP checkboxes were settled by the owner's 2026-10-11..2026
 - **IG QA page (`fhir-harness/scripts/ig-qa-page.ts`):** owner 2026-10-12.
 - **IG search (`fhir-harness/scripts/ig-search.ts`):** owner 2026-10-15 (layout "C" + *"index whole pages"*).
 - **Live across all SMART IG sites:** `litlfred/smart-trust`, `litlfred/smart-base`, `litlfred/smart-immunizations`, `litlfred/smart-anc`, `litlfred/smart-hiv`, `litlfred/smart-ips-pilgrimage`, and `litlfred/ihris`.
+
+
+_2026-10-23T13:45:00Z_ — Status synced from `in-progress` to `completed` to match the folio-assistant copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).

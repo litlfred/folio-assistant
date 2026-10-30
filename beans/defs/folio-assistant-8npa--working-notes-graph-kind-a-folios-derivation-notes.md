@@ -8,7 +8,7 @@ tags:
     - graph-kind
     - from-qou
 created_at: 2026-10-04T16:54:09Z
-updated_at: 2026-10-09T14:01:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -30,3 +30,6 @@ Done when: the kind is in graph-kind-registry.ts with holds/renderable decided, 
 - Kind `notes` registered in `BASE_GRAPH_TYPOLOGIES` (`schemas/graph-typology-registry.ts`) with `holds: "context"`, `renderable: false`, `perInstance: true`, `validatorNotApplicable` documented.
 - Documented in `skills/kg/kg-core/directory-conventions.md`.
 - Verified with `bun run typecheck`, `bun test schemas/graph-typology-node.test.ts`, and validator resolution.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 50f081b4 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

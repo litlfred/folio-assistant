@@ -58,3 +58,10 @@ _2026-10-24T09:24:00Z_ — Claude drain thread: cat-harness-tools#688 (agent hos
 ## Closed 2026-10-29
 
 All gaps met. cat-harness-tools#686 (profiles, multi-account form, ambiguous-multi-user) and cat-harness#502 (skill text) merged 2026-10-29 onto #688/#503, per the owner ruling of 2026-10-24 08:21Z. (Lane B drain thread.)
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: owner ruling 2026-10-10; cat-harness-tools#157 (28c6dc4) and cat-harness#178 merged; parts still open. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## Closed 2026-10-29
+
+All gaps met. cat-harness-tools#686 (profiles, multi-account form, ambiguous-multi-user) and cat-harness#502 (skill text) merged 2026-10-29 onto #688/#503, per the owner ruling of 2026-10-24 08:21Z. (Lane B drain thread.)

@@ -13,6 +13,7 @@ parent: folio-assistant-f6gq
 Layer of f6gq beside core; needs pxtk. The largest: ~740 imports in 286 files.
 
 ## Done when
+
 - [x] the imports become package imports — cat-harness-tools `b61b9fd`: 1,048 specifiers rewritten to `@litlfred/cat-harness/…` / `@litlfred/bootstrap-tools/…`; the only `../` left is a generated string (`adapters/mcp-server/server.ts:130`)
 - [x] the pin check — satisfied by the owner ruling below: the mount pin is the pin (`mount:remote:check`)
 - [x] tests: no new failure — `b61b9fd` reports the same failure set before and after

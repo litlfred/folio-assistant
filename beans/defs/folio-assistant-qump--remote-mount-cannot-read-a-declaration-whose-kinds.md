@@ -37,6 +37,7 @@ lock already records each instance's declaration digest, so the second read can 
 checked against the first.
 
 ## Done when
+
 - [x] from an EMPTY directory: clone who-iris, clone cat-harness at the lock ref, run
       `remote-mount.ts` — it mounts, with no sibling checkout anywhere above it
 - [x] a test with a fixture whose root declaration uses a kind only a mounted layer registers

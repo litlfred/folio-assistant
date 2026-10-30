@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-30T17:24:45Z
-updated_at: 2026-10-09T14:06:13Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -59,3 +59,6 @@ Remaining unaffected by construction: sites filtering a kind nothing declares fr
   - `scripts/gen-subgraph-jsonld.ts:506`: change `decl?.directories.find` to `instanceDirectories(inst).find` so from-within directories receive their declared graph typologies and title instead of falling back to empty.
   - `scripts/gen-translation-status.ts:184` in `translationsDirOf`: use `instanceDirectories(root)` instead of `decl?.directories`.
   - Triaged all remaining `decl?.directories` call sites (`check-declared-dirs.ts`, `check-derived-from.ts`, `subscribed-harnesses.ts`, `repositoryMirrors`, `ensure-landing-sticky.ts`, `gen-library-viz.ts`, `upload-url.ts`, `declaration-claims.ts`), verifying each deliberately inspects the authored file.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit df35cf56 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

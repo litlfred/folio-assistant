@@ -5,7 +5,7 @@ title: 'QA: agentic audit of large redundant rendered content that can load from
 status: completed
 type: task
 created_at: 2026-10-01T16:16:36Z
-updated_at: 2026-10-09T18:45:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -39,3 +39,18 @@ Owner, 2026-10-01, verbatim: "(need audit of large redundant rendered cotnet tha
   - 12/12 tests passing covering repeated block detection, KG file matching, classification logic, vacuity guard, and sidecar schema validation.
 - Clean typecheck (`tsc --noEmit -p tsconfig.json` with 0 errors).
 - Measured run over platform `docs/`: 234 pages audited, 6,664,692 bytes total, average 28,482 bytes/page, largest page `cat-harness/auto-docs/index/docs/index.html` (1,579,559 bytes), identifying 30 candidates (16 move, 2 keep_serverside, 12 unsure), recording findings in `test/results/kg-qa/rendered-content-bloat.kg-qa.json`.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] a mechanical measurer over a built `_site/`: per-page bytes, repeated blocks, and blocks whose content matches a committed KG file, written as a QA sidecar (`kg-qa`-shaped, never a printed verdict)
+- [ ] an agentic review step that classifies each candidate as move / keep server-side / unsure, with a reason, against the visualizer skill
+- [ ] run once on the smart-trust site and the platform docs site, with the findings recorded here
+- [ ] wired as a QA axis or workflow step, so it is not a one-off script
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 9fc125f1 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

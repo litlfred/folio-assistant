@@ -13,6 +13,7 @@ parent: folio-assistant-f6gq
 Second layer of f6gq; needs pxtk. cat-harness needs `exports` (or deep-import-safe layout) and a pin agreeing with core's index.config.json.
 
 ## Done when
+
 - [x] core's 228 cross-repository imports become package imports — 260 measured and rewritten in litlfred/folio-assistant-core#80; merged as core a2342ad, on cat-harness-tools#198 (f246be6, exports derived from declared code subgraphs). Downstream pins must move core past a2342ad and tools past f246be6 together (noted on folio-assistant#2529)
 - [x] the pin check, as in pxtk — settled by the owner ruling: the mount pin is the pin (`mount:remote:check`); nothing further to build
 - [x] core's tests: no new failure — measured in the index with #198 mounted: 791 pass / 6 fail, the same six as main; tsc 0; `check:import-direction` (now grading package specifiers) 0 from core

@@ -30,3 +30,8 @@ _2026-10-21T17:10Z_ — Block lifted (`folio-assistant-ybsz` completed) and `smb
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured: unchanged. Only box left is `w1gy` (fresh-clone QA); closes with it.
+
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured: unchanged. Only box left is `w1gy` (fresh-clone QA); closes with it.

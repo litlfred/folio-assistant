@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-09T17:07:12Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-n3ni
 ---
 
@@ -79,3 +79,6 @@ From #2326's author (0mpw), relayed by the coordinator:
 
 ## Closed 2026-10-09 on landed evidence (not authorship; session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 https://github.com/litlfred/folio-assistant/pull/2320 merged by the owner 2026-10-08: smart-trust, smart-base, smart-immunizations retired with verified fsh-guts archives (97d73c90, db93ce92, 5b947632); smart-ig left by owner ruling. Re-derived today: `main`'s tree carries no smart-* directory, and `index.config.json` mounts all three from litlfred forks with owner consent recorded (10-07/08). The PR's own checklist ticks gates green locally. `main`'s CI is red today for a LATER cause (cat-harness separation, fixed by #2518), not this cutover.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); folio-assistant#2518 merged 2026-10-10. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

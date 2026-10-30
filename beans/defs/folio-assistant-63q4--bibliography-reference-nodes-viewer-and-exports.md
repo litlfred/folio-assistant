@@ -70,6 +70,7 @@ Owner ruling on qou, same day: **"1 + 2"**. Keep CSL-JSON as the source and gene
 Core's AGENTS.md rule decides it: *a schema describing what a folio HOLDS or where it CAME FROM belongs in core*, and cat-harness-tools may not import core. So the Reference schema, the DC→Reference projection, the generator and the viewer are **folio-assistant-core**'s, beside `dublin-core.ts` and `glossary-page.ts`. cat-harness-tools contributes only the pure BibTeX formatter (split out of the `export-bibtex` script). The original layering below is kept for the record.
 
 ## Progress
+
 - [x] **merged** cat-harness-tools#214: `pipeline/bibtex-format.ts`, pure `cslToBibtex`. Byte-identical to `export-bibtex` over all 914 qou references.
 - [x] **merged** folio-assistant-core#87: `schemas/reference.ts` (`folio-reference/v1`, `referenceToJsonLd` as dcterms/bibo/fabio, `dublinCoreToReference`, `toCslJson`/`toBibtex`/`toRis`/`toJsonLdGraph`), the `references` typology and its validator.
 - [x] **merged** folio-assistant-core#88: `scripts/bibliography-page.ts`, the `bibliography-page` Tool, and the `bibliography` visualiser (`coversKinds: [references, catalogue]`, per-directory sub-graphs). It reads every `references` and `catalogue` directory; on the current index it lists who-iris's three items, each with its held library copy. Pages: whole KG plus one per sub-graph, each with `references.{bib,csl.json,ris,jsonld}`. Each entry has its own BibTeX/RIS/CSL-JSON download.
@@ -88,6 +89,7 @@ Core's AGENTS.md rule decides it: *a schema describing what a folio HOLDS or whe
 - [x] `check:bibliography`: waits on cat-harness#194 (B1). The pages read other instances, so they are built at publish, not committed. The gate is `publish-check.ts bibliography:page` once #194 lists `bibliography:page` as a writer of `docs/folio-assistant-core/`.
 
 ## JSON-LD context design (owner, 2026-10-14: "1 3")
+
 No `usedLater` / forward-declared prefixes anywhere — the redesign removes them by construction.
 - **Per-instance contexts, GENERATED at publish**: `ns/<instance>/v1.jsonld` is built from the prefixes the instance's documents actually use (committed + publish-built), FLATTENED with the contexts of its `needs` dependencies, terms `@protected` so a higher layer cannot silently redefine a lower one's term. A declared-but-unused prefix cannot exist, so the emission check becomes a resolution check (every prefix spoken resolves to a declared namespace IRI).
 - **Declared data**: each `<instance>.json` carries its prefix → namespace-IRI table (bibo/fabio in core). Read as data by tools, so no tools→core import.
@@ -105,6 +107,7 @@ No `usedLater` / forward-declared prefixes anywhere — the redesign removes the
 - **qou:** `qou-l7pj`.
 
 ## Todo
+
 - [x] `folio-reference/v1` schema + context prefixes (`bibo`, `fabio`) + validator node (cat-harness)
 - [x] `gen-reference-jsonld`: CSL-JSON (module or per-entry files) → `references/<key>.jsonld` (`litlfred/folio-assistant-core#189` @ `051f788`)
 - [x] DC → Reference projection; who-iris declares its records as a reference source (core, who-iris)
@@ -116,6 +119,7 @@ No `usedLater` / forward-declared prefixes anywhere — the redesign removes the
 - [x] Later: add a reference from the viewer (✍ editor or form) as a standalone node (`litlfred/folio-assistant-core#189` @ `5c95e11`, `litlfred/cat-harness-tools#641` @ `3abda72`)
 
 ## Related
+
 - `4dx7` (sci cite-key warnings, folio-assistant-sci#25/#27), `7eak` (DC renderings), `7deg` (DC in core), `8iqc` (library bibliographic QA), qou `8tlx` (bib migration plan), `qou-l7pj` (qou per-entry split).
 
 _2026-10-20T09:40:00Z_: Audited the open boxes against the index pins of folio-assistant#2600 (88a067d). Ticked as landed: cat-harness-tools#260 with cat-harness#250, cat-harness#229, the per-instance contexts (FORWARD_DECLARED and check-context-emission are retired), `check:bibliography`, the `folio-reference/v1` schema, the DC projection, and reference-list extraction (sci#30). Ticked as superseded: the sci READMEs (both exist). Still open: per-key `references/<key>.jsonld`; library items as Reference nodes (nothing reads `authors_raw`); the per-asset route and exports; the BibTeX header, still hardcoded at `cat-harness-tools/pipeline/export-bibtex.ts:93`; DC XML export; `cites-resolve` reading the Reference nodes rather than the registry; add-from-viewer; and qou#7798, unchecked because qou is not reachable from this session. (https://claude.ai/code/session_01LM4btvYuBEuq57QqgwCrtu)
@@ -129,3 +133,42 @@ _2026-10-26T10:23:00Z_: Both [`litlfred/folio-assistant-core#189`](https://githu
 _2026-10-29T07:55:00Z_ — who-iris#52 (813 documents name who-iris's own @context) merged 0cc5562 (Lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). The qou#7798 box stays held: qou is a math repo, and any PR there waits on the owner.
 
 _2026-10-30T12:00Z_ — All nine Todo boxes are merged (folio-assistant-core#189, cat-harness-tools#641, who-iris#52). The one held box, qou#7798, moves to the qou bean qou-l7pj. Its hold reason (folio-assistant#2529) merged on 10-15, so it now waits only on the owner's qou review rule. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: ## Progress
+
+```text
+- [x] **merged** cat-harness-tools#214: `pipeline/bibtex-format.ts`, pure `cslToBibtex`. Byte-identical to `export-bibtex` over all 914 qou references.
+- [x] **merged** folio-assistant-core#87: `schemas/reference.ts` (`folio-reference/v1`, `referenceToJsonLd` as dcterms/bibo/fabio, `dublinCoreToReference`, `toCslJson`/`toBibtex`/`toRis`/`toJsonLdGraph`), the `references` typology and its validator.
+- [x] **merged** folio-assistant-core#88: `scripts/bibliography-page.ts`, the `bibliography-page` Tool, and the `bibliography` visualiser (`coversKinds: [references, catalogue]`, per-directory sub-graphs). It reads every `references` and `catalogue` directory; on the current index it lists who-iris's three items, each with its held library copy. Pages: whole KG plus one per sub-graph, each with `references.{bib,csl.json,ris,jsonld}`. Each entry has its own BibTeX/RIS/CSL-JSON download.
+- [x] **merged** folio-assistant-core#89: `citationsToHtml` links each citation to the bibliography page (`--bibliography-url`, `\cite[note]{}`).
+- [x] **merged** folio-assistant-sci#30: 264 extracted reference nodes from 7 library papers (`provenance: extracted`).
+- [x] **merged** cat-harness-tools#220 + folio-assistant-core#90: the three readers that regex-scanned `references.ts` (source-ledger index, audit-tex Rule A, core `relevance.ts`) read per-entry files too, through `pipeline/reference-entries.ts`. Parity on qou proven (ids 914=914; Rule A ⊇ old; 31 relevance corrections).
+- [x] **merged** folio-assistant-core#95 / folio-assistant-sci#32: `@graphNode schema` on `reference.ts` and `editor-checker.ts` (`check-schema-nodes` had them as no-tag).
+- [ ] qou#7798 (per-entry split, `qou-l7pj`): HELD (owner, 2026-10-14) until folio-assistant#2529 re-pins the index; the index still pins cat-harness-tools `a9e699c` / core `a5a5837`, and current core does not load under the pinned cat-harness `9537edc`. Then: qou pin bump (3 sha sites, run-validate before = 76 issues at `c56b73b`), `qou.json` `references` declaration, merge.
+- [ ] Generated READMEs for sci `extracted-references/` and `editor-checkers/`: `readme:subgraphs` needs a QA working copy (`qa:refresh`) not buildable in a session container.
+- [x] **merged** folio-assistant-core#100: reference JSON-LD gets the folio `@base`, so `references/<key>` joins `cito:cites`; `dcterms:source`/`hasVersion` IRI-coerced; unused `schema:` dropped.
+- [x] **merged** folio-assistant-sci#34: generated READMEs for `extracted-references/`, `editor-checkers/`, `validators/` + rows in `scripts/`, `typologies/`.
+- [x] **merged** cat-harness#234 + folio-assistant-core#106: `jsonldPrefixes` declaration (cat-harness: doco, cito, prov, skos, dcterms; core: bibo, fabio).
+- [ ] cat-harness-tools#260 (`jsonld:contexts`: generated per-instance contexts + resolution check) and cat-harness#250 (declare `rdfs`): CI running. Index run: 11 instances, 9,817 docs, no conflicts; deo/oa/csvw/hl7-fhir appear nowhere.
+- [ ] cat-harness#229 (stacked on #194): `bibliography:page` joins the `docs/folio-assistant-core/` builtAtPublish entry.
+- [ ] Follow-up after #194: per-instance contexts built at publish; emitters switch from `ns/content/v1.jsonld` to their instance's `ns/context/v1.jsonld`; then retire `FORWARD_DECLARED` and `check-context-emission`. Two cat-harness subgraph pages name `folio-assistant-core:` (a layering finding) — expected to leave the committed corpus with #194.
+- [ ] `check:bibliography`: waits on cat-harness#194 (B1). The pages read other instances, so they are built at publish, not committed. The gate is `publish-check.ts bibliography:page` once #194 lists `bibliography:page` as a writer of `docs/folio-assistant-core/`.
+```
+
+Where: ## Todo
+
+```text
+- [ ] `folio-reference/v1` schema + context prefixes (`bibo`, `fabio`) + validator node (cat-harness)
+- [ ] `gen-reference-jsonld`: CSL-JSON (module or per-entry files) → `references/<key>.jsonld` (cat-harness-tools)
+- [ ] DC → Reference projection; who-iris declares its records as a reference source (core, who-iris)
+- [ ] Library items → Reference nodes (manifest + `authors_raw`); the `8iqc` bibliographic-missing findings feed this
+- [ ] Reference-list extraction for library papers: candidate nodes, `provenance: extracted` (sci profile first)
+- [ ] `bibliography-page` Tool + visualiser declaration, routed full / subgraph / asset (cat-harness-tools, core)
+- [ ] Exports: BibTeX (de-hardcoded), CSL-JSON, RIS, DC XML/JSON-LD; whole, subgraph, single asset
+- [ ] `citationsToHtml` links citations to the viewer; `cites-resolve` reads the nodes
+- [ ] Later: add a reference from the viewer (✍ editor or form) as a standalone node
+```

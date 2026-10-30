@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T11:10:26Z
-updated_at: 2026-10-09T13:35:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -224,3 +224,6 @@ _2026-09-29_ — **Re-parented `yj32` → `ahvw`** by subject, per todo-manager 
     - `normalising on WRITE repairs a file that was already wrong`
   - All committed instances verified free of machine-specific paths (`grep -c /home/user beans/workflows/*.json` = 0).
   - The remaining four items are documented and tracked as design constraints on `v49e` (`folio-assistant-v49e`), which is scoped as a specification for the future workflow view.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09) — Closed 2026-10-09: - **Status**: Completed on verified evidence. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

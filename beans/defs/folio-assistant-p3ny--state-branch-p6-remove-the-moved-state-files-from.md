@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-10T06:15:00Z
+updated_at: 2026-10-16T07:00:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -53,3 +53,8 @@ _2026-10-06_ — **OWNER'S EXPLICIT GO** (session_012qoycyCSGidZqW245vXhze): "re
 ## Closed 2026-10-10 on landed evidence
 
 Landed in `8f55441e5a8350f343bafb034431ad9ba6865c56` (PR #2140) by `litlfred`: cut over `beans/` and `fsh-guts/` to branch-mounted subgraphs on `cat/cat-harness/beans` and `cat/cat-harness/fsh-guts`, untracked on `main`, and added to `.gitignore`.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-10); commit 8f55441e is on folio-assistant main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T07:00:00Z_ — Block lifted (owner ruling 2026-10-16, items 1 and 9): `h8ig` is completed and this bean is completed; the folio-assistant copy has no such edge. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

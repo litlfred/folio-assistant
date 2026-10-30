@@ -17,10 +17,12 @@ Why: kg-separation lesson 5 says every cross-repository import MUST be a package
 The platform has three definitions of a standalone checkout in force — aggregate monorepo, sibling clones (seed-ready / check:standalone), remote mounts inside the checkout (index.config / mount:remote) — and package imports are the one shape that works in all three. The ruling settling which layout is canonical is still the owner's.
 
 ## Done when
+
 - [x] every child below is completed or scrapped with reasons (`pxtk`, `7pvn`, `k6g5`, `cruz` all `completed`)
 - [ ] a check fails a new cross-repository `../` import in any layer (ratchet: may only fall)
 
 ## 2026-10-12 — the layout question put to the owner (session https://claude.ai/code/session_017fFnGmbJcfqqrHXz9oqxdG, task 7)
+
 The open ruling this bean records is now a proposal, NOT decided: cat-harness `docs/proposals/checkout-layout-2026-10-12.md` (cat-harness#182, merged). It frames three layouts as four options:
 1. remote mounts inside the checkout everywhere, with this bean's package imports (recommended);
 2. sibling clones;
@@ -38,3 +40,14 @@ Status unchanged: todo, waiting on the ruling.
 _2026-10-16T10:45:00Z_ — Parented to `vuip` (GOAL 1) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
 
 **2026-10-16 — rolled up to completed.** All four children (7pvn, cruz, k6g5, pxtk) are completed, and `check:bean-rollup` fails an open epic with no open child. Session: https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: ## Done when
+
+```text
+- [ ] every child below is completed or scrapped with reasons
+- [ ] a check fails a new cross-repository `../` import in any layer (ratchet: may only fall)
+```

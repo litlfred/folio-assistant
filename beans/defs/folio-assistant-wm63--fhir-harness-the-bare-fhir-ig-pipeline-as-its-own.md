@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-10T08:00:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -84,3 +84,6 @@ Non-WHO IG: done — #2078 merged 2026-10-04 (HL7 IPS demo, note beans/notes/fol
 - Exclusions gate cleared: #2062.
 - CI and bootstrap gates cleared on coordinator main: #2518 landed cleanly on main.
 - All 3 children completed (`veiu`, `mfhc`, `izx8`).
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-10); folio-assistant#2062 merged 2026-10-04, folio-assistant#2078 merged 2026-10-04, folio-assistant#2518 merged 2026-10-10. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

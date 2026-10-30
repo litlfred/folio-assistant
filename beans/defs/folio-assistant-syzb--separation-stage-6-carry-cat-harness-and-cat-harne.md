@@ -30,3 +30,8 @@ The submodule cutover this stage describes was replaced by the owner's rulings o
 **Carried forward, not done:** `cat-harness/docs/concepts/architecture/migration-plan.md` §Phase II still has no pointer to `kg-separation` (grep, 2026-10-09). Recorded on the parent `iirv`. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-16T10:30:00Z_ — Dead block removed: `blocked_by: w1gy`, since this bean is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `scrapped` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: scrapped, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); folio-assistant#2470 merged 2026-10-07, folio-assistant#2517 merged 2026-10-08, cat-harness#52 merged 2026-10-09, cat-harness-tools#16 merged 2026-10-09. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:30:00Z_ — Dead block removed: `blocked_by: w1gy`, since this bean is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

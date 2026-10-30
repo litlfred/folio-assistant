@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T11:38:54Z
-updated_at: 2026-10-09T15:35:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -45,3 +45,16 @@ The loader still reads it:
 - `bun test scripts/tests/input-sites.test.ts scripts/tests/staging-cone.test.ts content/pipeline/contributions-root.test.ts scripts/tests/associated-harness-config.test.ts scripts/tests/render-discovery.test.ts content/pipeline/pipeline-plugins.test.ts`: 84 pass, 6 skip, 0 fail (141 expect calls).
 - `bun run typecheck`: clean pass (`tsc --noEmit -p tsconfig.json`, exit code 0).
 - Branch pushed cleanly to `origin/claude/j00t-retire-contributes`.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] The field, its loader branch and the example entry are gone, or the owner rules to keep it as an extension point.
+- [ ] RendererContribution is decided. No renderer is contributed today: either renderers get a node graph like checkers have, or the shape goes along with the field.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit ec68a7a0 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

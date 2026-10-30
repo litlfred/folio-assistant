@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T08:58:14Z
-updated_at: 2026-10-21T18:48:00Z
+updated_at: 2026-10-23T13:45:00Z
 parent: folio-assistant-ioa4
 ---
 
@@ -22,3 +22,6 @@ parent: folio-assistant-ioa4
 
 ## Closed 2026-10-21
 - Landed on `litlfred/smart-immunizations` `main` (`litlfred/smart-immunizations#3`, `2026-10-06T14:58:22Z`, and `litlfred/smart-immunizations#57`, `3fbab2cd53`, mounted in `folio-assistant` at `smart-immunizations/library/`): all 3 retrievable IRIS PDFs (`9789240099456-eng` DAK, `9789240016514-eng` (31), `who-2019-ncov-digital-certificates-vaccination-20211-eng` (28)) are ingested into `smart-immunizations/library/` and pass `check:l1-complete`; the remaining cited references (`(15)`, `(26)`, `(32)`, `(29)`, `(24)`, `(30)`, `(22)`) are recorded in `smart-kg-l1-dak-references.json` (9 `publication` nodes) and `smart-immunizations/library/README.md` (*"Cited but not held, each recorded in the graph with its URL"*) with why not (network-restricted host fetches tracked separately in `folio-assistant-53rv`).
+
+
+_2026-10-23T13:45:00Z_ — Status synced from `in-progress` to `completed` to match the folio-assistant copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).

@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T06:15:42Z
-updated_at: 2026-10-09T15:38:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -215,3 +215,6 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
      - `bun test scripts/tests/adjudication-marker.test.ts` (cat-harness): 41 pass, 0 fail (56 expect calls)
      - `bun test folio-assistant-core/schemas/adjudication.test.ts`: 21 pass, 0 fail (35 expect calls)
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09) — Closed 2026-10-09: - Repository / Worktrees: `folio-assistant-core` and `cat-harness`. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

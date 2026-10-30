@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-09T14:05:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -129,3 +129,16 @@ Closed on evidence (bean-coordination.md):
      - `bun test scripts/tests/staging-host-reporting.test.ts`: 10/10 passing (18 assertions)
      - `bun run typecheck`: clean pass (exit 0)
      - Pushed to `claude/1lfx-staging-host-report` on remote.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+Back to **todo**, scope reduced. Not blocked on anything but the question
+above, and that question does not block any sibling bean.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 63472f99 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

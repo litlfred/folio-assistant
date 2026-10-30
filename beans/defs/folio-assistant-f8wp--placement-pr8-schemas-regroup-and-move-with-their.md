@@ -70,3 +70,20 @@ _2026-10-29T14:30:00Z_ — The approved table is moved, one concern group per PR
 _2026-10-29T14:45:00Z_ — Boxes 1 and 2 checked. Box 1: in the composed index at every layer's main (cat-harness f01a70c), `schemas/index.ts` deleted, tsc is 0 / 0 / 0 errors in cat-harness, cat-harness-tools and core; no file in any layer imports the barrel (`@litlfred/cat-harness/schemas` bare or `schemas/index`). Box 2: every group PR's kg-export kept the Schema node count and ids (180 after 1r0p added its two). Box 3 (`uml:overview:check`) is not applicable in a composed index; it runs in folio-assistant's code-quality gates. Box 4, the residual gate, is next. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-29T15:05Z_ — Group 16 (fsh-guts to `schemas/kg/`) merged on the owner's 15:01Z card: litlfred/cat-harness#704 (25e56b9) and litlfred/cat-harness-tools#853 (e1b694c). Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
+
+
+_2026-10-15T16:49Z_ — Block lifted: `apcg` is completed (PR #1898 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured: not started. `cat-harness/schemas/` is flat (287 `.ts` files; only `skills/` and `block-qa-schema/` subfolders). Of the 19 audit rows, 4 are in their target.
+
+## OWNER, 2026-10-24 08:06Z (structured question in the separation drain thread, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Same ruling as `8fq9`: **do it now, one concern group per PR** to keep churn down.
+
+_2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: none yet; next after 8fq9 groups.

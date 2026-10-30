@@ -30,7 +30,7 @@ Set `status: in-progress`, add a Log line, then commit and push.
 
 ## 1. Dry run
 
-    reset; cd ~/space_cats/qou && git fetch && git ls-remote --heads origin 'lake-cache/*' 'cat/folio-assistant-sci/lake-cache/*'
+reset; cd ~/space_cats/qou && git fetch && git ls-remote --heads origin 'lake-cache/*' 'cat/folio-assistant-sci/lake-cache/*'
 
 Expect 16 `lake-cache/*` heads and 0 under `cat/folio-assistant-sci/lake-cache/`. Measured
 2026-10-24 07:40Z: `Qq-v4-24-0-e2e-test`, `qou-docgen4-v4-24-0`, `qou-v4-24-0`,
@@ -42,7 +42,7 @@ If the list differs, stop and record the difference here.
 
 ## 2. Rename
 
-    for b in $(git ls-remote --heads origin 'lake-cache/*' | awk '{print $2}' | sed 's#refs/heads/##'); do gh api -X POST "repos/litlfred/qou/branches/${b//\//%2F}/rename" -f new_name="cat/folio-assistant-sci/lake-cache/${b#lake-cache/}" -q .name; done
+for b in $(git ls-remote --heads origin 'lake-cache/*' | awk '{print $2}' | sed 's#refs/heads/##'); do gh api -X POST "repos/litlfred/qou/branches/${b//\//%2F}/rename" -f new_name="cat/folio-assistant-sci/lake-cache/${b#lake-cache/}" -q .name; done
 
 A failure on one branch: record it and go on with the rest.
 
@@ -84,6 +84,7 @@ cat/folio-assistant-sci/lake-cache/qou-v4-24-0
 ```
 
 ## Log
+
 - 2026-10-24T09:59:15+02:00 — Claimed (`status: in-progress`) by Antigravity (`44190586-6f7e-4f91-bace-14f09541fa6a`). Running Steps 1–3 in background subagent.
 - 2026-10-24T10:03:45+02:00 — Renamed all 16 `lake-cache/*` branches on `litlfred/qou` to `cat/folio-assistant-sci/lake-cache/*` via the GitHub rename API (`POST /repos/litlfred/qou/branches/{branch}/rename`), verified 16 heads under `cat/folio-assistant-sci/lake-cache/` and 0 under `lake-cache/`, and verified redirect (`lake-cache%2Fqou-v4-24-0` -> `cat/folio-assistant-sci/lake-cache/qou-v4-24-0`). Marked `status: completed`.
 - 2026-10-24T08:12Z — Cross-checked from the cloud: `git ls-remote` on litlfred/qou shows 16 `cat/folio-assistant-sci/lake-cache/*` and 0 `lake-cache/*` heads; the redirect answers the new name. Closes the way for `32f6` (closed) and `oycs`. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.

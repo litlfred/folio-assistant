@@ -9,6 +9,7 @@ parent: folio-assistant-ksek
 created_at: 2026-10-23T16:21:05Z
 updated_at: 2026-10-24T15:11:00Z
 ---
+
 Owner, 2026-10-23 ("1y"). No PR workflow skipped drafts, and drafts were most of the runner queue: about 59 queued runs that day on the account's shared runners, and 14 of cat-harness's 18 open PRs were drafts. Agents still need quick feedback on a draft, so a draft runs the cheap tier: typecheck, lint, and whatever each workflow already treats as fast or "prepare". The expensive tier (sharded tests and gates, e2e, staging deploys, the comparison with main) runs only when the PR is not a draft. `ready_for_review` is a trigger, so the full tier runs as soon as a PR is marked ready.
 
 Safety rule: a green result from a draft-only run must never be the newest run on a head that merge-guard judges after the PR is marked ready. Each workflow that skips its full tier on drafts therefore also triggers on `ready_for_review`. A `types:` list used to make `workflow-events.ts` classify a workflow as `conditional` rather than `required`, which would have weakened merge-guard check 5 and merge-steward. Now a `types:` list that keeps all three of GitHub's default types (opened, synchronize, reopened) is still `required`.
@@ -28,7 +29,7 @@ Done when the cat-harness-tools PR, the folio-assistant PR and the 11 caller PRs
 
 ## 2026-10-23: caller PRs opened and marked ready (umbrella issue cat-harness-tools#625)
 
-cat-harness-tools#616 merged. Each caller adds `ready_for_review` and `draft-fast-tier: true`: bootstrap#24 bootstrap-tools#36 cat-harness#450 folio-assistant-core#184 folio-assistant-sci#59 fhir-harness#135 smart-base#136 who-iris#79 smart-ra#90 smart-immunizations#72 smart-immunizations-uganda#11 
+cat-harness-tools#616 merged. Each caller adds `ready_for_review` and `draft-fast-tier: true`: bootstrap#24 bootstrap-tools#36 cat-harness#450 folio-assistant-core#184 folio-assistant-sci#59 fhir-harness#135 smart-base#136 who-iris#79 smart-ra#90 smart-immunizations#72 smart-immunizations-uganda#11
 
 On each one, the draft run was cancelled when the ready_for_review run started, as designed.
 
@@ -38,4 +39,5 @@ On each one, the draft run was cancelled when the ready_for_review run started, 
 - 2y: folio-assistant#2653 makes merge-main skip draft PRs (no bot merge, no dispatch) and picks them up on `ready_for_review` when labelled.
 
 ## Completed (2026-10-24)
+
 All 15 PRs are merged (`litlfred/cat-harness-tools#616`, `litlfred/cat-harness-tools#629`, `litlfred/folio-assistant#2645`, `litlfred/folio-assistant#2653`, and all 11 caller PRs: `bootstrap#24`, `bootstrap-tools#36`, `cat-harness#450`, `folio-assistant-core#184`, `folio-assistant-sci#59`, `fhir-harness#135`, `smart-base#136`, `who-iris#79`, `smart-ra#90`, `smart-immunizations#72`, `smart-immunizations-uganda#11`), with fast-tier-only draft runs followed by full runs on `ready_for_review` verified across the callers.

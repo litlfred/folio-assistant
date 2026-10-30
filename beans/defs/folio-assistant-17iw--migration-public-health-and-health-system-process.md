@@ -13,12 +13,15 @@ parent: folio-assistant-uhkv
 Owner, 2026-10-24 (bean `2ipj`): *"eventually we will have WHO/who-iris. leave in smart-base for now, but bean up migration once WHO/who-iris is live"*.
 
 ## What moves
+
 The public-health and health-system process catalogues (BusinessProcessWorkflow + BPMN, with persona ActorDefinitions), drawn from the DTH handbooks ingested in smart-base's library. The clinical catalogue is not in scope: it goes to smart-base-clinical (owner, 2026-10-10).
 
 ## Blocked until
+
 `WorldHealthOrganization/who-iris` exists and is live. Do not create or push to it, or open PRs there, without the owner's explicit permission (WHO repos rule).
 
 ## Done when
+
 - [ ] the catalogues and their library sources are in WHO/who-iris, and smart-base keeps a tombstone or redirect for each moved path
 - [ ] the recommendation-scenario extraction (`smart-base/scripts/l1-recommendation-scenarios.ts`) reads the domain catalogue from its new home
 - [ ] pins and `index.config.json` name who-iris where the catalogues are read

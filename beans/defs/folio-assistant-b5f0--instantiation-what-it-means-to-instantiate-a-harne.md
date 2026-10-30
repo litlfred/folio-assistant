@@ -558,3 +558,24 @@ cat-harness-tools#687, cat-harness#501 and bootstrap#29 merged 2026-10-29. The u
 _2026-10-30T12:00Z_ — Triage. (a) "7u3g fixed" withdrawn: 7u3g was scrapped (cat-harness#541). (b) "folio:bean on initialize-harness.bpmn" withdrawn: later rulings forbid work-plan elements there, and bootstrap-tools `schemas/graph.test.ts` enforces it. (c) derived vs dynamic is settled by bean nama (`derivedFrom`). Open: (d) the LHS slot, which touches stickies and so is likely paused with 95sk; (e) bootstrap.config.json, put to the owner. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
 
 _2026-10-30T12:45Z_ — Owner, 2026-10-30 12:39Z (card "A. Apply all"): box (e), bootstrap carrying its own `bootstrap.config.json`, is withdrawn. bootstrap is self-definitional and has no tools. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [x] the initiation process ASKS which mode, with materialize-or-reference as its own question — never inferred from having push access to the remote (`litlfred/bootstrap#29` @ `39477d48`, `litlfred/cat-harness#501` @ `9be87b05`)
+- [x] instantiating on a remote repository writes nothing there without the user's explicit permission for that repository (`litlfred/bootstrap#29` @ `39477d48`, `litlfred/cat-harness#501` @ `9be87b05`)
+
+## Progress 2026-10-24
+- `litlfred/cat-harness#501` (`9be87b05`): Wrote the create-or-repair rule (`"A process may CREATE or REPAIR the declaration (<name>.json) or config (<name>.config.json). It never maintains it."`) into `skills/kg/kg-core/content-context-and-state-graphs.md`, and updated `skills/conduct/conduct-core/getting-started.md` with the remote mode question (`materialize-or-reference` locally vs `put a harness on` the remote) and explicit remote write permission rule.
+- `litlfred/cat-harness-tools#687` (`320cfee8`): Documented `ensure-landing-sticky.ts`'s write at its call site as a one-time repair (`!already`), never ongoing state maintenance.
+- `litlfred/bootstrap#29` (`39477d48`): Updated `skills/confirm-harness.md` and `skills/discussion.md` so remote repositories are assumed read-only (`read-from`), asking which mode (`read-from` locally with materialize-or-reference as its own question vs `written-to` putting a harness on the remote) and requiring explicit user permission before writing to any remote repository.
+- Note on §4 (`initialize-harness.bpmn` `<folio:bean>`): Later owner rulings (`iwtn` 2026-09-23, `12s9` 2026-09-24, `bpmn-processes.md` 2026-09-26) and `bootstrap-tools/schemas/graph.test.ts` enforce that `bootstrap/` is self-definitional and carries no work-plan (`<bean>`) or `Tool` elements (`initialize-harness.bpmn:18` states this directly, while `folio-assistant-core/processes/conduct/getting-started.bpmn` carries `<cat-harness.processes:bean op="claim" />` on `Task_SeedPlan`).
+
+## Progress 2026-10-29
+
+cat-harness-tools#687, cat-harness#501 and bootstrap#29 merged 2026-10-29. The unticked boxes (7u3g, folio:bean on initialize-harness.bpmn, derived vs dynamic, slot, bootstrap's own config) remain, so the bean stays open. (Lane B drain thread.)
+```

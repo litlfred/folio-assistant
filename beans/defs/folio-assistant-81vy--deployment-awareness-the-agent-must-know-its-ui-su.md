@@ -5,7 +5,7 @@ title: 'DEPLOYMENT AWARENESS: the agent must know its UI surface — gh-pages, l
 status: completed
 type: task
 created_at: 2026-09-20T17:17:15Z
-updated_at: 2026-10-09T13:33:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -105,3 +105,6 @@ Closed on evidence (bean-coordination.md):
      - `bun run typecheck`: clean pass (exit 0)
      - `bun test scripts/tests/skill-manifest-coverage.test.ts`: 6/6 tests pass
      - Committed and pushed to `claude/81vy-deployment-awareness` on remote.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 213622e8 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

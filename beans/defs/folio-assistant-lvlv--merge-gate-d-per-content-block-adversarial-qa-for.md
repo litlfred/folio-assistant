@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-09T17:02:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-9v5a
 ---
 
@@ -47,3 +47,21 @@ Landed on branch `claude/lvlv-content-block-adversarial-qa` (commit `91aee02e`).
    - `scripts/tests/adversarial-review-gate.test.ts` (22 tests, 0 fail).
    - `scripts/tests/audit-coverage.test.ts` (32 tests, 0 fail).
    - `bun run typecheck` (0 errors).
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] a per-kind adversarial checklist exists for tool, schema, skill and process, extending `code-node-review` and `devils-advocate-watcher` rather than forking them
+- [ ] `audit:coverage` reports adversarial review as a column per kind (reviewed / stale / never)
+- [ ] the backfill order is risk-ranked (fan-in, gate-adjacency, last-changed), not file order
+- [ ] one batch has been run and its sidecars are committed, with the cost per node measured
+- [ ] the backfill does not create a bean per finding (beans are not sidecars)
+
+_2026-10-09T15:33:36Z_ — Claimed by claude/lvlv-content-block-adversarial-qa — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 91aee02e is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

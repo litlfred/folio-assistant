@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-10-09T19:25:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -422,3 +422,5 @@ it superseded beside a correction, deliberately, so a reader sees the question
 was answered rather than dropped — which means the naive rule reports the
 repaired bean forever. It needs the same attribution guard the `chain` rule
 already has, and that guard is the hard part, not the parent comparison.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); folio-assistant#960 merged 2026-09-22, folio-assistant#961 merged 2026-09-22. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

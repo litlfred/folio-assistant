@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T06:15:59Z
-updated_at: 2026-10-09T17:10:48Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-qvxh
 ---
 
@@ -33,3 +33,6 @@ smart-kg (fork of WorldHealthOrganization/smart-kg) is a T-Box only: L1 (16 clas
 https://github.com/litlfred/smart-base/pull/16 merged (c4f8abe): l1.json's five sections carry modelledBy (4× `sgkg-l1#publication-section`, references `sgkg-l1#citation`); dth.json already cited 7. `gen-document-kinds.ts --check` green in a composed root, exits 1 on an injected `sgkg-l1#noSuchClass`; its test 17 pass.
 
 Noted, not acted on: the triage reported the smart-kg pin (66a9b13) lagging the fork's own `kg/` L1 3.0 work (3f5e477). Moving the pin is `pin-smart-kg.ts` from a checkout at the new commit — a separate change, owned by ioa4's L1 work.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09) — Closed 2026-10-09 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL): https://github.com/litlfred/smart-base/pull/16 merged (c4f8abe): l1.json's five sections carry modelledBy (4× `sgkg-l1#publication-sect. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

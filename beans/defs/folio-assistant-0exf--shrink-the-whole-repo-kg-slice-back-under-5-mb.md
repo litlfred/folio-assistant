@@ -13,6 +13,7 @@ parent: folio-assistant-whlc
 Owner, 2026-10-24 10:28Z (CI-speed thread card, "A. Raise to 10 MB"): raise the slice budget to 10 MB now and open a bean to shrink the slice later. The whole-repo KG slice measured 8,331,264 bytes in folio-assistant#2681 against the 5 MB budget of bean q8ar. The raise is cat-harness-tools#734 (issue #733).
 
 ## Done when
+
 - [x] measure which node kinds and payload pointers grew since the q8ar pilots, by bytes
 - [x] cut or split the slice (e.g. move heavy kinds to their own slice) so it is back under 5 MB, or record why it should not be (cat-harness-tools#756)
 - [x] put SIZE_BUDGET_BYTES back to what the owner then decides (6 MB, cat-harness-tools#816, df0a333)
@@ -34,3 +35,15 @@ _2026-10-24T15:00:00Z_ — cat-harness-tools#756 merged (120ab6d). The slice is 
 _2026-10-29T07:55:00Z_ — Claimed by Lane E (https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). Box 3 re-asked of the owner there.
 
 _2026-10-29T09:18:00Z_ (drain lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). Owner chose "B. 6 MB" (card, 09:15Z). cat-harness-tools#816 merged as df0a333. Closed.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: ## Done when
+
+```text
+- [ ] measure which node kinds and payload pointers grew since the q8ar pilots, by bytes
+- [ ] cut or split the slice (e.g. move heavy kinds to their own slice) so it is back under 5 MB, or record why it should not be
+- [ ] put SIZE_BUDGET_BYTES back to what the owner then decides
+```

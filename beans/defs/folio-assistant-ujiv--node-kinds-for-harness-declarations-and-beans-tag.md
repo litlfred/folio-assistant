@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T06:21:38Z
-updated_at: 2026-10-16T10:10:00Z
+updated_at: 2026-10-29T12:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -75,3 +75,17 @@ _2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `in-prog
 _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
 
 _2026-10-29T09:20:00Z_ (drain lane E, https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo). **Owner, 2026-10-29T09:15Z: "A. Don't tag bootstrap."** `bootstrap.json` is the one declaration that carries no `cat-harness-declaration/1.0.0` tag, because the tag names a layer above bootstrap. bootstrap#7 and bootstrap-tools#14 will not merge; they are commented and left for the owner to close.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: completed). Evidence: reopened 2026-10-10 on measurement (no bean carried $schema, no beans:retag); cat-harness#89/#90 and cat-harness-tools#36 merged since. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+_2026-10-29T12:00:00Z_ — Owner, 2026-10-29, on the bootstrap pair: "A. Don't tag bootstrap". This confirms the 2026-10-10 decision (cat-harness-tools#63). The draft PRs bootstrap#7 and bootstrap-tools#14 are closed unmerged. `declarations-retag.ts` already leaves the instances below the harness untagged, so no code change follows. Status stays `completed`; cat-harness#88 closed. Session https://claude.ai/code/session_01JfAupma139twp8D7kEeUYJ.
+```

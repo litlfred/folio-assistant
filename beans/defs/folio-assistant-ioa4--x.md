@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T08:57:58Z
-updated_at: 2026-10-21T18:48:00Z
+updated_at: 2026-10-23T13:45:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -17,3 +17,6 @@ Related: 8pzh (L1 extraction from PDFs), pebe (smart-kg pin), slw1 (uploads → 
 (This bean was first created by a malformed probe titled "x" and repurposed here rather than left as a stray; nothing referenced it in between.)
 
 _2026-10-21T18:48:00Z_ — Completed: all 3 child beans (`folio-assistant-5uyl`, `folio-assistant-piw1`, `folio-assistant-jj2w`) are completed and landed on `main` (`smart-immunizations/library/smart-kg-l1-dak-references.json`, `smart-base/skills/dak-l1-library` + `Task_L1Library` in `l2-dak-authoring.bpmn`, and `smart-base/schemas/l1-*.ts` Zod schemas + validator).
+
+
+_2026-10-23T13:45:00Z_ — Status synced from `in-progress` to `completed` to match the folio-assistant copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).

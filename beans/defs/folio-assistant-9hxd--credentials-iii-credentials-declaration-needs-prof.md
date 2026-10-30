@@ -22,3 +22,6 @@ _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front m
 Asked where the index's own workflows' credential needs live (data file in .github / index declares an instance / move workflows to instances): **"Defer"**. Stays todo; not to be built until re-asked.
 
 _2026-10-24T08:25:00Z_ — Owner re-asked (structured question Q4, 08:19Z, options: data file in .github / index declares an instance / move workflows to instances / defer): **"D": keep deferred**. Stays todo, not to be built and not in any drain queue until the owner re-opens it. Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
+
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-10-04T07:12:15Z
-updated_at: 2026-10-09T16:17:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -46,3 +46,18 @@ A claim pushed to `main` today is a commit on a branch every session already fet
   - Staleness solved: `claimOnBranchStore` re-reads the tip directly from the branch ref using `store.readFile()`, rather than trusting potentially stale local mount state.
   - Real concurrency measurement: `THE REAL CONFLICT: a sibling writes BETWEEN our read and our write — expect catches it` in `cat-harness/scripts/tests/claim-branch-store.test.ts` validates that a concurrent sibling write triggers an `expect` conflict detection, protecting claims from being lost or silently clobbered.
   - Test evidence: `bun test cat-harness/scripts/tests/claim-branch-store.test.ts` passes 9/9 clean (136 expect calls).
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] `beans:claim` writes through `StateStore`/`branch-store push` when the graph is cut over, and still pushes to the default branch while it is not
+- [ ] the `fell-back` state has an answer that does not assume the PR branch can hold the bean
+- [ ] staleness: a claim read against a mount says how old the mount is, or re-reads the tip — decided, not left implicit
+- [ ] measured as `2h76` measured its sibling case: two sessions claiming the same bean, and neither claim lost nor both reported success
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit da3d5dfa is on folio-assistant main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

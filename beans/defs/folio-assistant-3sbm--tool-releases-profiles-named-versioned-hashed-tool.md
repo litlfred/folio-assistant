@@ -20,3 +20,6 @@ Session: https://claude.ai/code/session_01FWGdsHong3XHiU7CMRWmfo
 
 
 - [x] design doc drafted: cat-harness/docs/proposals/tool-releases-2026-10-07.md (decisions T1–T4 for the owner)
+
+## 2026-10-12: owner ruling "1c"
+- The OCR `--dpi` setting is to be recorded on the **per-run record that cites the run context**: the tool-releases proposal's step 7, once that record is built. **Not now**: nothing records `--dpi` until step 7 exists.

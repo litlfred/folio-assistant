@@ -5,7 +5,7 @@ title: 'ACTOR FACTS: a declared actor fact with no consuming process'
 status: completed
 type: task
 created_at: 2026-09-20T03:12:36Z
-updated_at: 2026-10-09T18:53:30Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -53,3 +53,17 @@ a field ends an ambiguity; it does not create a consumer.**
   - Unconsumed (17):
     - Capabilities (6): `fhir-validator`, `git-push`, `ig-publisher`, `jekyll`, `lean-toolchain`, `sushi-compiler`
     - Permissions (11): `approval-authority`, `clinical-validation`, `content-authoring`, `first-pass-review`, `perform-task`, `project-governance`, `qa-reporting`, `release-authorization`, `release-management`, `review-comments`, `sme-coordination`
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] the count it reports is recorded, so later runs can be compared
+
+_2026-10-09T16:41:16Z_ — Claimed by claude/bkje-actor-fact-consumer — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed 2026-10-09; its test scripts/tests/actor-facts-audit.test.ts is on cat-harness-tools main (it moved there with the code). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T12:46:47Z
-updated_at: 2026-10-10T15:46:50Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -43,3 +43,6 @@ If no, then the mount is the relation, and the subscription plan for these forks
 ## Summary of Changes
 
 Closed on the owner's ruling (mount only). No code change: #2320 already landed the remote mounts, and no subscription was recorded.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-10); folio-assistant#2320 merged 2026-10-08. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T21:29:44Z
-updated_at: 2026-10-09T16:40:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -77,3 +77,6 @@ Which graph each instance publishes, where, under which IRI and schema, and what
   3. `cat-harness/skills/kg/kg-core/instance-publication.md` documents publication rules.
   4. Tests: `cat-harness-tools/schemas/instance-versioning.test.ts` passes (56 pass, 0 fail across all publication states, exact versioning, and draft census).
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09) — Closed 2026-10-09: - Verifiable Evidence:. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

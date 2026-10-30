@@ -6,7 +6,7 @@ status: completed
 type: epic
 priority: high
 created_at: 2026-09-22T08:35:00Z
-updated_at: 2026-10-10T08:00:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -44,3 +44,20 @@ A `voices` rule carries `{ libraryId, sectionId, pages, quote }` and `check:voic
   - `toc_source` is `outline` where the PDF has one, with `none` falling to `granularity: page` otherwise (8 entries).
   
   The ladder was applied mechanically, and nothing was unprobeable, so nothing is `undetermined`. The 9 WHO publications cover the seven this bean names.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] `smart-base/` declared, with `library`, `methodology`, `voices` and `scenarios` graphs
+- [ ] the seven WHO publications ingested, rung chosen mechanically, anything unprobeable reported `undetermined` rather than guessed
+- [ ] DIIG adopted as a methodology subgraph per `methodology-adoption`, refusals stated
+- [ ] the digital-transformation processes executable as BPMN
+- [ ] one or more voice profiles, every rule citing an ingested section
+- [ ] `qou/uploads/` cleared once the bytes have a home
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: all six boxes ticked 2026-10-10, re-measured on litlfred/smart-base main (folio-assistant store copy). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

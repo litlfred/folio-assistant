@@ -45,3 +45,20 @@ Still to show: the first stale-cache refresh on a runner, and the first release 
 - 2026-10-24 12:40Z: fhir-harness#161 merged (`ae07c25`), inside the owner's merge window. CI is green after `fb77e45` regenerated the stale ig-ast schemas. Open: the first stale-cache refresh on a runner, once an IG repins fhir-harness.
 
 _2026-10-29T08:00:00Z_ — Checked. **Release guard:** the only release path in the litlfred forks is smart-base `release.yml`, which hands off to WHO's smart-html release (a full IG Publisher build that never reads the cached AST), so no release step has an AST for `build-kind --require-full` to judge yet. **Stale-cache refresh:** smart-base's ig-ast-refresh ran on the 07:21Z push (run 40834892898) and failed before export because `https://build.fhir.org/ig/WorldHealthOrganization/smart-ig-template/branches/main/package.tgz` returned 404, which is upstream and not this layer. smart-base passes `pre-export`, so it always builds in full anyway; the first incremental refresh needs an IG without pre-export (smart-trust or smart-immunizations). Still open. Session https://claude.ai/code/session_01Qmmkt87nxnLXyraNsmmpKH.
+
+
+_2026-10-23T14:20:00Z_ — **The open P2 tension is settled.** Owner, 2026-10-23: *"excise XML and ttl everywhere for now"*. So dropping XML and Turtle is not a difference the "render equivalent to the standard IG render" invariant counts. fhir-harness branch `claude/excise-xml-ttl-links` (69344b4) also stops linking the Publisher's `.xml` and `.ttl` copies. Thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
+
+## Scoped and built, 2026-10-24 (owner, option C)
+
+a9tx is completed, so this is unblocked. The owner chose C: the stamp, a release guard, and faster refreshes. It is in litlfred/fhir-harness#161 (issue #160), a draft:
+- `ig-ast-refresh.yml` rebuilds a stale cache with `IncrementalBuildCli`, and falls back to a full build when it cannot. A `force` run, a `pre-export` caller, and a missing or cannot-tell cache always build in full. `ast-export-ref` is pinned to `ce950d2`.
+- `ig-ast.ts build-kind <ast> --require-full` is the release guard. It exits 1 on an incremental AST.
+- `folio-build.json` carries `ast.kind`.
+
+Still to show: the first stale-cache refresh on a runner, and the first release step that calls the guard.
+
+## Log
+- 2026-10-24 11:55Z: claimed by the "Publisher AST" thread; fhir-harness#161 opened.
+
+- 2026-10-24 12:40Z: fhir-harness#161 merged (`ae07c25`), inside the owner's merge window. CI is green after `fb77e45` regenerated the stale ig-ast schemas. Open: the first stale-cache refresh on a runner, once an IG repins fhir-harness.

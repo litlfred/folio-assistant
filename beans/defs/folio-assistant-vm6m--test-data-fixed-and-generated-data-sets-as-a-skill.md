@@ -60,3 +60,16 @@ _2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/
 _2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `FixedTestDataSetSchema` (`test-data-fixed/1.0.0`, `testDataFixed` typology) and `GeneratedTestDataSetSchema` (`test-data-generated/1.0.0`, `testDataGenerated` typology) in `cat-harness/schemas/test-data.schema.ts`, BPMN process `cat-harness/processes/curate-test-data.bpmn` with `callActivity` `specialize-for-content-type`, and the `test-data-curation` skill family (`test-data-curation.md` + `fhir-data-templating.md`).
 
 _2026-10-26T10:23:00Z_ — Completed: [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) merged on `cat-harness` `main`.
+
+
+_2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `FixedTestDataSetSchema` (`test-data-fixed/1.0.0`, `testDataFixed` typology) and `GeneratedTestDataSetSchema` (`test-data-generated/1.0.0`, `testDataGenerated` typology) in `cat-harness/schemas/test-data.schema.ts`, BPMN process `cat-harness/processes/curate-test-data.bpmn` with `callActivity` `specialize-for-content-type`, and the `test-data-curation` skill family (`test-data-curation.md` + `fhir-data-templating.md`).
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+status: in-progress
+```

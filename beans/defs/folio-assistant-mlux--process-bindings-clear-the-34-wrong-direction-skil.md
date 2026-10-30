@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T10:38:18Z
-updated_at: 2026-10-09T19:25:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -66,3 +66,5 @@ After #1968 merged, `check:process-bindings --shrink` dropped 32 entries. The ba
 Owner, option 1 of 3: `skill-ref-resolves` DEFERS to this gate rather than re-implementing direction. Its summary in `schemas/kg-qa.ts` now says it checks existence only and names `check:process-bindings` for direction. `bpmn-processes` says the same. A second instance-aware implementation was option 2, rejected as two answers to one question.
 
 Remaining: veiu's l2-dak-authoring entry (#1964), then BASELINE is [].
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 3cca9e77 is on folio-assistant main, commit d2432b18 is on folio-assistant main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

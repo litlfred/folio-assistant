@@ -34,3 +34,27 @@ _2026-10-29T08:40Z_ — Correction: slice 2 is reverted (litlfred/cat-harness#66
 _2026-10-29T15:05Z_ — The last three rows moved with their code, and are merged on the owner's 15:01Z card ("A. Merge all five"). litlfred/folio-assistant-sci#113 (150054214) adds the paper-preferences, paper-preview and check-dependencies Tools, with their MCP modules in `adapters/paper/tools/`. litlfred/cat-harness#706 (d6158d5) removes the definitions. litlfred/cat-harness-tools#855 (af72448) removes `src/tools/{preferences,preview,check-deps}.ts`. In the composed index, `registerServedToolGroups` registers all three from sci. kg:audit has 3 fewer critical findings and no new ones. **Left before ticking:** confirm the MCP tool set and gates at the next folio-assistant re-pin, then close litlfred/cat-harness#507. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-30T12:34:00Z_ — Verified in the composed `folio-assistant` checkout on `main` (`index.lock.json` pinning `cat-harness@209dc64ed37b`, `cat-harness-tools@eeacfdc828c8`, `folio-assistant-sci@150054214b2d`, `folio-assistant-core@9f78bd3d3a96`, `fhir-harness@251042b1390a`): all 23 tool rows from `placement-audit-2026-10-01.json` live on their target layers (18 in `folio-assistant-sci/tools/`, 3 in `folio-assistant-core/tools/`, 2 in `fhir-harness/tools/`, 0 remaining in `cat-harness/tools/` or `smart-base/tools/`); `registerServedToolGroups` over `folio-assistant-sci` registers all 18 tool groups (35 MCP tool names, including `check_dependencies`, `paper_preferences`, `paper_preview` from `folio-assistant-sci/adapters/paper/tools/`) with 0 failures; `tool-groups.test.ts`, `tool-invoke-paths.test.ts`, `tools-checkout.test.ts`, `mcp-project.test.ts`, `mcp-graph-tools.test.ts` pass; `kg:detangle:direction` reports 0 wrong-direction edges. Closed `litlfred/cat-harness#507`. Completed.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+status: in-progress
+```
+
+Where: (three-way hunk)
+
+```text
+- [ ] rows moved; MCP server lists the same tool set; gates green; merged
+
+_2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
+
+Re-measured against main: 20 of 23 tool rows still declared in `cat-harness/tools/` (lean-cache and glossary-build moved; fsh-cone and valueset-schemas are declared nowhere now). Slice 1 opened: litlfred/cat-harness#508 + litlfred/folio-assistant-sci#67 move 11 Tools whose skills already live in sci (latex-preflight, latex-overfull, tex-snippet-validate, tex-source-audit, lean-coverage, lean-audit, content-manifest-validate, paper-latex-build, proof-dependency-graph, proof-objects-extract, proof-status-update); merge #508 first. Tracking issue litlfred/cat-harness#507. Left: lean-build + lean-toolchain-setup (tied to the harness's `lean-toolchain-contract` skill and test), paper-preferences / paper-preview / check-dependencies (MCP-served), headless-render-qc (harness skill), folio-block-qa-summary / folio-block-screenshots (to core).
+
+_2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/cat-harness#508, litlfred/folio-assistant-sci#67, litlfred/folio-assistant-core#203.
+```

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T13:52:13Z
-updated_at: 2026-10-09T20:12:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-nama
 ---
 
@@ -63,3 +63,6 @@ All Done-when items verified landed on main:
 4. `ig-docs` and `uml-overview` route-keyed branch storage landed on main via child beans `lbz8` (commit `8f55441e5a83`, PR #1996) and `xsrv` (PR #1996), carrying storage declarations on directory entries without central `special-branches.json` rows.
 5. `check:kind-validators` passes for `ig-ast`, `lake-cache`, `basic-cdn-site`, and `cdn-site`.
 
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `in-progress` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: in-progress). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 8f55441e is on folio-assistant main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -5,7 +5,7 @@ title: 'PROCESS WALK: deterministically set an agent''s context from the KG at e
 status: completed
 type: task
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-09T20:15:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -69,3 +69,15 @@ Without determinism there is nothing to compare against.
   - `bun test src/workflow/`: 3 passed, 0 failed (105ms)
   - `bun test scripts/tests/workflow-*.test.ts`: 96 passed, 0 failed
   - `bun run typecheck`: clean TypeScript validation (exit code 0)
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+- [ ] the bean(s) carried at a task are part of that context
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 92ce3e14 is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+```

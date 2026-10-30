@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-09T17:11:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -66,3 +66,6 @@ beans adjacent is deliberate: the distinction is the interesting part.
     - `bun test scripts/tests/audit-output-paths.test.ts`: 19 passed, 0 failed, 113 expect() calls. Verified runners do not default into graph dirs, default to `build/benchmarks/`, and path guard rejects graph destinations (`beans/`, `todos/`, `test/results/`).
     - `bun test scripts/tests/skill-manifest-coverage.test.ts scripts/tests/skill-contracts.test.ts scripts/tests/skill-docs-links.test.ts scripts/tests/skill-governance.test.ts scripts/tests/skill-topics.test.ts`: 33 passed, 0 failed.
     - `bun run typecheck`: clean (exit 0).
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-09); commit 4898da1d is on cat-harness main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

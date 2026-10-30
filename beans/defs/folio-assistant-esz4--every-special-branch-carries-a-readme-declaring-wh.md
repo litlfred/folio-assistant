@@ -5,7 +5,7 @@ title: Every special branch carries a README declaring what it is, how and when 
 status: completed
 type: feature
 created_at: 2026-10-03T08:19:43Z
-updated_at: 2026-10-12T10:15:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -146,3 +146,6 @@ evidence it is obliged to re-read before quoting the owner.
 - **Reachable as KG:** the declarations and the schema'd manifest are the KG. `branch:readme --print <branch>` answers "what is this branch" from them.
 - **Found on its first run:** the todos manifests' `source.sha` was a revision expression; lane A fixed it (937f843f5e / cfbb5544).
 - **Follow-up if wanted:** checking the cat-harness repo's own standalone branches, because the command reads only the checkout it runs in.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-12); commit 4e341b5 is on folio-assistant main, commit 63417923 is on cat-harness-tools main. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

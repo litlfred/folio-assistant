@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ready-to-close
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-09T17:41:06Z
+updated_at: 2026-10-23T13:45:00Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-mgxw
@@ -46,3 +46,6 @@ Every instance has been cut over by the amended mechanism (owner, 2026-10-06), c
 ## Summary of Changes
 
 Owner, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6), asked to confirm as one batch the removal of all 10 in-tree instance copies (each archived in `fsh-guts/separated/` with a note naming its live repository): **"Confirm batch"**. With the 2026-10-09 evidence above (remote mounts pinned with consent, no `.gitmodules`, in-tree copies retired to fsh-guts), all three boxes hold. Read-only subscriptions remain "skip for now" (bean `qzsq`) — that box is met by the amended mechanism, not by a subscription.
+
+
+_2026-10-23T13:45:00Z_ — Status synced from `todo` to `completed` to match the folio-assistant copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).

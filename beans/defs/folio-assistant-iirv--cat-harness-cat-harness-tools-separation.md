@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-09T17:46:42Z
+updated_at: 2026-10-12T18:30:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -58,3 +58,14 @@ Done-when, re-read against the new design:
 - Box 3 **not met**: 1721 code files under the mounted cat-harness (`find` for .ts/.js/.py/.sh), and `check:reference-direction` counts 4229 wrong-direction name occurrences with cat-harness as the source (imports are 0).
 - Carried forward from `syzb`: `cat-harness/docs/concepts/architecture/migration-plan.md` §Phase II still has no pointer to `kg-separation`.
 Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+
+## 2026-10-12 — cutover is now measured, not assumed (session https://claude.ai/code/session_017fFnGmbJcfqqrHXz9oqxdG, owner tasks 6 and 7)
+- **`separation:cutover:check`** (Tool `separation-cutover-check`): the gate after stage 13 in `processes/kg/kg-separation.bpmn` (`GW_CutoverComplete`). It checks six conditions: mounts, declarations, monorepo-paths, import-direction, reference-direction, and site. It answers for one separated repository; findings in mounted layers are listed but not counted.
+- **`check:declaration-resolution`**: every path a declaration names resolves, covering directories, assets, visualisers and needs.
+- **Registry defect fixed:** kinds are now read from the checkout under inspection (lesson 6/19).
+- PRs: definitions in cat-harness#182 (merged); implementations in cat-harness-tools#170.
+- **cat-harness-tools as a lone checkout is NOT cut over by this measure:**
+  - its `needs` (cat-harness, bootstrap-tools) do not resolve without the index;
+  - 90 wiring references remain into `folio-assistant/`.
+  - Both bear on done-when box 2.

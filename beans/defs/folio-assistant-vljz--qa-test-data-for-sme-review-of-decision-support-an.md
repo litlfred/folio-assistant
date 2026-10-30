@@ -61,3 +61,16 @@ state both halves; the contrast is the point.
 _2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `SmeReviewCaseVerdictSchema` (`sme-review-case-verdict/1.0.0`, `smeReviewCases` typology) with discriminated union on `subject` (`decision-support` case vs `indicator-definition` cohort + expected value) and required `reviewer` + `reviewedAt`, BPMN process `cat-harness/processes/sme-test-data-review.bpmn` with `lane_sme` (`actor:sme-reviewer`), role `cat-harness/roles/sme-reviewer.json` (`judgementOnly: true`), and skill `cat-harness/skills/qa/qa-core/sme-test-data-review.md`.
 
 _2026-10-26T10:23:00Z_ — Completed: [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) merged on `cat-harness` `main`.
+
+
+_2026-10-24_ — Opened [`litlfred/cat-harness#534`](https://github.com/litlfred/cat-harness/pull/534) (`fcc8cd9`): added `SmeReviewCaseVerdictSchema` (`sme-review-case-verdict/1.0.0`, `smeReviewCases` typology) with discriminated union on `subject` (`decision-support` case vs `indicator-definition` cohort + expected value) and required `reviewer` + `reviewedAt`, BPMN process `cat-harness/processes/sme-test-data-review.bpmn` with `lane_sme` (`actor:sme-reviewer`), role `cat-harness/roles/sme-reviewer.json` (`judgementOnly: true`), and skill `cat-harness/skills/qa/qa-core/sme-test-data-review.md`.
+
+## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
+
+These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
+
+Where: (three-way hunk)
+
+```text
+status: in-progress
+```

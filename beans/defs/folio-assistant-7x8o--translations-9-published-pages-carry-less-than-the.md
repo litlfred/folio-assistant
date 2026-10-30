@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-10-11T06:23:24Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -218,3 +218,6 @@ Re-translated per the owner's ruling: cat-harness#128 (merged) — docs/start/zh
 ## Summary of Changes
 
 zh/getting-started re-translated by an agent on the owner's ruling, unofficial: cat-harness#128 (page + translations/zh/start/getting-started.po, derives at 149 entries) and cat-harness-tools#99 (drops it from UNCATALOGED; relaxes the 'some pair is refused' test). Both merged 2026-10-11; they reach folio-assistant with the next re-pin.
+
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-11); folio-assistant#99 merged 2026-08-10, cat-harness#128 merged 2026-10-11, cat-harness-tools#99 merged 2026-10-11. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
