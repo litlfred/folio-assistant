@@ -2,17 +2,17 @@
 # folio-assistant-bbza
 $schema: bean/1.0.0
 title: 'S5-b: tool implementations land on their layer — folio-specific to core, maths to sci (23 rows)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-29T15:05:00Z
+updated_at: 2026-10-30T12:34:00Z
 parent: folio-assistant-7x5n
 ---
 
 Story S5 (txue), with 70lx. Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(tool placement; S5 70lx carries implementations)': cat-harness -> sci 18, -> core 3, -> fhir-harness 1; smart-base -> fhir-harness 1. MCP rulings: generic MCP skills -> cat-harness/skills/tools/mcp/, folio-specific MCP -> folio-assistant-core/skills/tools/mcp/ and folio-assistant-core/tools/; folio-init SPLIT (mer2).
 ## Done when
-- [ ] rows moved; MCP server lists the same tool set; gates green; merged
+- [x] rows moved; MCP server lists the same tool set; gates green; merged
 
 ## State 2026-10-09
 Re-derived from `placement-audit-2026-10-01.json` against the post-split mount: **23 of 23** rows tagged `unplanned (tool placement; S5 70lx carries implementations)` are still at their original path. Blocker `70lx` is completed. `cat-harness/skills/folio-core/` still holds the MCP skills the MCP ruling places under `skills/tools/mcp/`. Not started; now cross-repository. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
@@ -32,3 +32,5 @@ _2026-10-29T08:05Z_ — ~~Every tool row is now off cat-harness.~~ (corrected 08
 _2026-10-29T08:40Z_ — Correction: slice 2 is reverted (litlfred/cat-harness#667, litlfred/folio-assistant-sci#106). A composed-index `check:tools` reported 3 missing paths. `resolveImplementingPath` looks in the declaring instance and in the instances that need it. cat-harness-tools needs cat-harness, but nothing needs sci, so from sci the `src/tools/{preferences,preview,check-deps}.ts` modules are unreachable, and the MCP server would have stopped serving them. **Left:** paper-preferences, paper-preview and check-dependencies, which move only together with their implementations (a sci code home, or a needs edge). headless-render-qc stays in sci, because it is `invoke.shell` only. litlfred/cat-harness#507 is reopened.
 
 _2026-10-29T15:05Z_ — The last three rows moved with their code, and are merged on the owner's 15:01Z card ("A. Merge all five"). litlfred/folio-assistant-sci#113 (150054214) adds the paper-preferences, paper-preview and check-dependencies Tools, with their MCP modules in `adapters/paper/tools/`. litlfred/cat-harness#706 (d6158d5) removes the definitions. litlfred/cat-harness-tools#855 (af72448) removes `src/tools/{preferences,preview,check-deps}.ts`. In the composed index, `registerServedToolGroups` registers all three from sci. kg:audit has 3 fewer critical findings and no new ones. **Left before ticking:** confirm the MCP tool set and gates at the next folio-assistant re-pin, then close litlfred/cat-harness#507. Lane A, session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
+
+_2026-10-30T12:34:00Z_ — Verified in the composed `folio-assistant` checkout on `main` (`index.lock.json` pinning `cat-harness@209dc64ed37b`, `cat-harness-tools@eeacfdc828c8`, `folio-assistant-sci@150054214b2d`, `folio-assistant-core@9f78bd3d3a96`, `fhir-harness@251042b1390a`): all 23 tool rows from `placement-audit-2026-10-01.json` live on their target layers (18 in `folio-assistant-sci/tools/`, 3 in `folio-assistant-core/tools/`, 2 in `fhir-harness/tools/`, 0 remaining in `cat-harness/tools/` or `smart-base/tools/`); `registerServedToolGroups` over `folio-assistant-sci` registers all 18 tool groups (35 MCP tool names, including `check_dependencies`, `paper_preferences`, `paper_preview` from `folio-assistant-sci/adapters/paper/tools/`) with 0 failures; `tool-groups.test.ts`, `tool-invoke-paths.test.ts`, `tools-checkout.test.ts`, `mcp-project.test.ts`, `mcp-graph-tools.test.ts` pass; `kg:detangle:direction` reports 0 wrong-direction edges. Closed `litlfred/cat-harness#507`. Completed.
