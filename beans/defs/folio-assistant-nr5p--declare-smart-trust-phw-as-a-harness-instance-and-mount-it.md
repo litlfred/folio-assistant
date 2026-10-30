@@ -16,3 +16,13 @@ Repo: litlfred/smart-trust-phw, folio-assistant. Depends on: —.
 
 ## Done when
 - `mount:remote:check` reports phw `mounted`; its artefact index builds.
+
+## Progress (2026-10-30)
+
+- **PR (`litlfred/smart-trust-phw`)**: https://github.com/litlfred/smart-trust-phw/pull/4 (`feat/pcf1-pcf3-harness-and-ihe-deps`, head `9d78dac501a6aae9e428e84b6d58de80d2488d4f`)
+- **PR (`litlfred/folio-assistant`)**: https://github.com/litlfred/folio-assistant/pull/2761 (`feat/nr5p-mount-smart-trust-phw`, head `3694751de6`)
+- **AST cache branch seeded**: `cat/fhir-harness/fhir-ast/smart.who.int.trust-phw` on `litlfred/smart-trust-phw` (61 resources, 103 edges, valid for `9d78dac501a6aae9e428e84b6d58de80d2488d4f`).
+- **Verification**:
+  - `bun run cat mount:remote:check` in `folio-assistant` reports `smart-trust-phw` `mounted` (2 directories verified).
+  - `bun run cat ig-index:build -- --only smart-trust-phw` builds `smart-trust-phw/fhir-artifact-index/index.json` (61 resources, 44 bound DAK API sidecars), `menu.json` (5 groups), `package.tgz` (61 resources), and `releases.json`.
+  - `bun run cat smart-trust-phw:pages` renders 372 IG pages under `smart-trust-phw/docs/`, and `bun run cat smart-base:document-kinds` writes `smart-trust-phw/document-kinds/dak.coverage.smart-trust-phw.json`.

@@ -16,3 +16,14 @@ Repo: smart-trust-phw. Depends on: —.
 
 ## Done when
 - SUSHI (0 errors) and IG build pass with the deps, or the R4-in-R5 failure is reported as could-not-determine with its message.
+
+## Progress (2026-10-30)
+
+- **PR (`litlfred/smart-trust-phw`)**: https://github.com/litlfred/smart-trust-phw/pull/4 (`feat/pcf1-pcf3-harness-and-ihe-deps`, head `9d78dac501a6aae9e428e84b6d58de80d2488d4f`)
+- **Changes**:
+  - Pinned `ihe.iti.pcf` (`1.1.0`, `https://profiles.ihe.net/ITI/PCF/ImplementationGuide/ihe.iti.pcf`, `id: IHE_ITI_PCF`) and `ihe.iti.vhl` (`1.0.0-comment`, `https://profiles.ihe.net/ITI/VHL/ImplementationGuide/ihe.iti.vhl`, `id: IHE_ITI_VHL`) under `dependencies:` in `sushi-config.yaml`.
+  - Added canonical URL aliases in `input/fsh/Aliases.fsh` for IHE PCF 1.1.0 and IHE VHL 1.0.0-comment profiles, actors, operations, and value sets; referenced by canonical URL only (no `Parent:` inheritance across R4/R5).
+  - Updated `input/fsh/actors/actors.fsh`, `input/pagecontent/system-actors.md`, and `input/pagecontent/dependencies.md` to reference canonical `https://profiles.ihe.net/ITI/VHL/index.html` and `https://profiles.ihe.net/ITI/PCF/index.html`.
+- **Verification**:
+  - `sushi .`: **0 Errors, 7 Warnings** (loads `ihe.iti.pcf#1.1.0` with 18 resources and `ihe.iti.vhl#1.0.0-comment` with 37 resources).
+  - IG Publisher + `AstExportCli`: completes with exit 0 (61 resources, 103 edges; no R4-in-R5 conformance failure).
