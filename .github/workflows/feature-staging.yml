@@ -1674,6 +1674,18 @@ jobs:
         continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --search-index borrowed
 
+      # The deploy's link pass (fa#2741), so a preview shows the links the
+      # site will ship. Reported, not blocking.
+      - name: Repoint and check every link in the built site
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          set -o pipefail
+          bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
+            --base-path "/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
+
       # MINIFY LAST — the deploy's pass, mirrored here because
       # `check:invocation-parity` requires it and because a preview whose
       # bytes differ from the release's is not a preview of it. The reasoning
