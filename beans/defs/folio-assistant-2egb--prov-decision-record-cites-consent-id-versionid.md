@@ -2,11 +2,11 @@
 # folio-assistant-2egb
 $schema: bean/1.0.0
 title: 'PROV decision record cites Consent id + versionId (PCF8)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T15:46:00Z
+updated_at: 2026-10-30T16:44:00Z
 parent: folio-assistant-negd
 blocked_by:
     - folio-assistant-a7c1
@@ -17,4 +17,7 @@ IHE PCF adoption, owner card 2026-10-30 15:44Z "A: Approve, take all advice": PC
 Repo: cat-harness, cat-harness-tools. Depends on: B4, PCF6.
 
 ## Done when
-- Every consent-based decision names its Consent.
+- [x] Every consent-based decision names its Consent.
+
+## Progress
+- 2026-10-30: Added `ProvConsentRefSchema` (`{ id, versionId }`, both required non-empty), `cat-harness:consent` and `cat-harness:consentBased`, `ProvConsentDecisionRecordSchema`, and `missing-consent` chain verification in `cat-harness/schemas/content/prov.ts` (plus PROV-JSONLD emission in `cat-harness/schemas/kg/prov-jsonld.ts` and unit tests in `cat-harness/schemas/content/prov.test.ts`), and wired Consent `id` + `versionId` citations and QA/QC verification in `cat-harness-tools` (`src/workflow/prov-record.ts`, `src/workflow/instance.ts`, `scripts/prov-qaqc.ts`, `scripts/tests/prov-record.test.ts`). Updated PRs `litlfred/cat-harness#753` (`https://github.com/litlfred/cat-harness/pull/753`) and `litlfred/cat-harness-tools#919` (`https://github.com/litlfred/cat-harness-tools/pull/919`).
