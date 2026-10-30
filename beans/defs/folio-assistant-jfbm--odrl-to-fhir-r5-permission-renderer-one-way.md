@@ -2,11 +2,11 @@
 # folio-assistant-jfbm
 $schema: bean/1.0.0
 title: 'One-way renderer: ODRL Agreement to FHIR R5 Permission (output only)'
-status: in-progress
+status: completed
 type: task
 priority: low
 created_at: 2026-10-30T19:24:00Z
-updated_at: 2026-10-30T20:30:00Z
+updated_at: 2026-10-30T21:44:00Z
 parent: folio-assistant-negd
 ---
 
@@ -21,8 +21,8 @@ Mapping (from the 14:15Z analysis in this thread): permission/prohibition to `ru
 
 ## Implementation & Verification (2026-10-30)
 
-- **Code PR:** `litlfred/fhir-harness#229` (`schemas/odrl-to-fhir-r5-permission.ts`, `schemas/odrl-to-fhir-r5-permission.test.ts`, `skills/content/fhir-ig-authoring/pcf-consent.md`, `test/support/pcf/hl7.fhir.r5.core#5.0.0/`).
-- **Worked FSH Example PR:** `litlfred/smart-trust-phw#10` (`input/fsh/examples/DSAPermissionExample.fsh`).
+- **Code PR:** `litlfred/fhir-harness#229` (merged at `de6a1232ed7515c9d7aa13384f7b4b31f208b144`) (`schemas/odrl-to-fhir-r5-permission.ts`, `schemas/odrl-to-fhir-r5-permission.test.ts`, `skills/content/fhir-ig-authoring/pcf-consent.md`, `test/support/pcf/hl7.fhir.r5.core#5.0.0/`).
+- **Worked FSH Example PR:** `litlfred/smart-trust-phw#10` (merged at `81ae030df92eb2b328d37b7d25f9e3e0ea8ffd91`) (`input/fsh/examples/DSAPermissionExample.fsh`).
 - **Verification (`42 pass, 0 fail` across 4 test files):**
   1. Both worked DSA examples (`DSA-042` v1 from `folio-assistant-core#249` and `DSAPermissionExample` / Agreement 42 v3 from `smart-trust-phw#10`) render to a FHIR R5 `Permission` that validates against `hl7.fhir.r5.core#5.0.0/StructureDefinition-Permission.json` with **0 errors**, and `fhirR5PermissionToFsh` compiles with SUSHI (`fhirVersion: 5.0.0`) with **0 Errors and 0 Warnings**.
   2. Every ODRL 2.2, DCAT 3, or SPDX term with no exact `Permission` home (`@type`, `profile`, `inheritFrom`, `conflict: "odrl:invalid"`, `spdx:checksum`, `isA`, exclusive `lt`/`gt` bounds, `elapsedTime`, BPMN scope, negative purposes, conflicting rule periods, `refinement`, `remedy`, `consequence`, and duties/duty constraints) is explicitly listed in `dropped: DroppedOdrlTerm[]`.
