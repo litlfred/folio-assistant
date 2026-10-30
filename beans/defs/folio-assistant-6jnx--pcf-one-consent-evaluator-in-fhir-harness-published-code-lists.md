@@ -2,7 +2,7 @@
 # folio-assistant-6jnx
 $schema: bean/1.0.0
 title: 'PCF follow-up: one Consent evaluator in fhir-harness; read PurposeOfUse and Consent from published packages'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T16:55:00Z
@@ -34,3 +34,4 @@ _2026-10-30T17:56:00Z_ — Implemented across [litlfred/cat-harness#781](https:/
   - `FhirConsentSchema`, `FhirStrictConsentSchema`, `FhirSearchsetBundleSchema`, `FhirOperationOutcomeSchema`, and required code lists (`consent-state-codes`, `consent-provision-type`, `consent-data-meaning`, `search-entry-mode`, `issue-severity`, `issue-type`) are built at runtime from `hl7.fhir.r4.core#4.0.1` `StructureDefinition-{Consent,Bundle,OperationOutcome}.json` and `CodeSystem-*.json`. All hand-written `interface FhirConsent*` declarations and hand-written `Consent`/`Bundle` Zod object shapes are removed.
   - `isConsentExpired` and `parseFhirPeriodBound` exist once in `fhir-harness/schemas/pcf-consent.ts` and are imported/re-exported by `schemas/iti-108-consent-client.ts`.
   - Unmodified published package files from `hl7.terminology.r4#5.3.0`, `hl7.fhir.r4.core#4.0.1`, and all 23 `ihe.iti.pcf#1.1.0/example/Consent-*.json` examples are committed under `fhir-harness/test/support/pcf/` (with sha256 manifest `test/support/pcf/provenance.json`, plus `cat-harness/test/fixtures/hl7.terminology.r4#5.3.0/`); `describe.skipIf` is removed from `schemas/pcf-consent.test.ts` so the 23-example sweep runs unskipped in CI (30 pass, 0 skip, 0 fail).
+- 2026-10-30 ~18:52Z: merged [cat-harness-tools#972](https://github.com/litlfred/cat-harness-tools/pull/972) (ae83f0c, port of cat-harness#781 after 8lcl moved odrl.ts; #781 closed) and [fhir-harness#222](https://github.com/litlfred/fhir-harness/pull/222) (01b7f8d, import repointed to @litlfred/cat-harness-tools; 30 tests pass incl. the ihe.iti.pcf#1.1.0 example sweep). Note: the published hierarchy confirms CLINTRL and POPHLTH under TREAT; the hand copy's error was CAREMGT under TREAT.
