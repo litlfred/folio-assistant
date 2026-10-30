@@ -2,11 +2,11 @@
 # folio-assistant-se3i
 $schema: bean/1.0.0
 title: 'PUBLIC COMMENT: a person can re-route a change set to a different committee by hand'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T11:55:00Z
-updated_at: 2026-10-30T11:55:00Z
+updated_at: 2026-10-30T12:20:30Z
 parent: folio-assistant-rwmf
 ---
 
