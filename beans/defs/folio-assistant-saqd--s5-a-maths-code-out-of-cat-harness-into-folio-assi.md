@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-30T14:48:00Z
+updated_at: 2026-10-30T16:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -48,3 +48,10 @@ _2026-10-30T14:48:00Z_ — **Group 4 up (`litlfred/folio-assistant-sci#122` + `l
   - *4 shared pipeline/checker modules* (`pipeline/build.ts`, `pipeline/validate.ts`, `pipeline/qa-checkers-extended.ts`, `pipeline/qa-checkers-uses.ts`): imported by `cat-harness-tools` (`qa-sweep.ts`, `server.ts`, `export-static.ts`, etc.).
   - *1 shared document+math ingestion script* (`scripts/extract-candidates.py`): contains `who-l1` extractor and is referenced by `folio-assistant-core/skills/library/ingestion/document-intake.md`.
   - *7 `qou`-specific scripts* (`scripts/bib-papers-list.txt`, `scripts/lean-build-bg.sh`, `scripts/lean_auto_discharge.py`, `scripts/session-status.sh`, `scripts/simplify-links.py`, `scripts/setup-sage.sh`, `scripts/docker-latex-build/run-build.ts` + `scripts/lean-compile-audit.sh`): contain `qou` hardcoding and require owner ruling per `saqd`.
+
+_2026-10-30T16:20:00Z_ — **Group 5 up (`litlfred/folio-assistant-sci#124` + `litlfred/cat-harness-tools#924`):**
+- Moves the 2 `plugin-slots.ts` leaf implementations (`pipeline/latex-preflight.ts` + `pipeline/latex-known-macros.json` + `pipeline/latex-known-macros.test.ts` and `scripts/lean-coverage.ts` + `scripts/tests/lean-coverage-resolve.test.ts`) from `cat-harness-tools` to `folio-assistant-sci` and updates `folio-assistant-sci/pipeline/plugin-slots.ts` to import local `./latex-preflight.js` and `../scripts/lean-coverage.js`.
+- Moves the 2 clean `folio-assistant-sci` Tool target scripts (`scripts/lean-audit.ts`, replacing `glob` with `Bun.Glob`, and `scripts/setup-lean-toolchain.sh` + `.bat`) plus `scripts/math-heat.ts` + `scripts/tests/math-heat.test.ts` (which dynamically imports `lean-coverage.ts` and `lean-audit.ts`) from `cat-harness-tools` to `folio-assistant-sci`, updating `folio-assistant-sci/tools/{latex-preflight,lean-coverage,lean-audit,lean-toolchain-setup}`, `folio-assistant-sci/skills/content/folio-paper-adapter/{lean-completeness-audit,latex-build-cache}.md`, `cat-harness-tools/package.json`, `cat-harness-tools/libraries/glob.library.json`, `cat-harness-tools/scripts/gen-bat-wrappers.sh`, `cat-harness-tools/scripts/tests/lean-decl-starts-are-shared.test.ts`, `cat-harness-tools/scripts/tests/folio-root-is-asked.test.ts`, and `cat-harness-tools/test/pr-tests-mains.json`.
+- Leaves `scripts/gen-content-graph-uml.ts` and `pipeline/content-graph-analysis.py` in `cat-harness-tools`: their Tool definitions (`content-graph-uml`, `content-graph-analysis`) stay in `cat-harness/tools/` per `placement-audit-2026-10-01.json` (lines 612, 638, signal `D2: tool definition stays in cat-harness as JSON; implementation → cat-harness-tools (D1)`), and `content-graph-analysis.py` hardcodes `quantum-observable-universe` (awaiting owner ruling on `qou`-specific files).
+- **Merge order:** merge `litlfred/folio-assistant-sci#124` first, then `litlfred/cat-harness-tools#924`.
+- **Remaining 19 MOVE rows after Groups 1–5 + `#114`/`#858`:** 2 `cat-harness/tools/` targets (`scripts/gen-content-graph-uml.ts`, `pipeline/content-graph-analysis.py`), 3 `qa-criteria-registry.ts` checker modules (`pipeline/qa-checkers-{render,triviality,vacuity}.ts`), 2 `lean-formal-ref` modules (`pipeline/lean-formal-ref.ts`, `pipeline/lean-signature.ts`), 4 shared pipeline/checker modules (`pipeline/build.ts`, `pipeline/validate.ts`, `pipeline/qa-checkers-extended.ts`, `pipeline/qa-checkers-uses.ts`), 1 shared document+math ingestion script (`scripts/extract-candidates.py`), and 7 `qou`-specific scripts.
