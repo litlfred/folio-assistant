@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ready-to-close
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-23T13:45:00Z
+updated_at: 2026-10-30T15:05:00Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-mgxw
@@ -49,3 +49,5 @@ Owner, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2
 
 
 _2026-10-23T13:45:00Z_ — Status synced from `todo` to `completed` to match the folio-assistant copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
+
+_2026-10-30T15:05Z_ — Prerequisite G11 is settled: cat-harness-tools#889 (9f93a9e) moved slice 7 to slice 5's snapshot-directory layout. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
