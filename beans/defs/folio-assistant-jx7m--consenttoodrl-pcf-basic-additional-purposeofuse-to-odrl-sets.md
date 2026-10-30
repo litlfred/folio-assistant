@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T16:02:30Z
+updated_at: 2026-10-30T16:26:45Z
 parent: folio-assistant-negd
 ---
 
@@ -15,4 +15,7 @@ IHE PCF adoption, owner card 2026-10-30 15:44Z "A: Approve, take all advice": PC
 Repo: fhir-harness. Depends on: B1, B2.
 
 ## Done when
-- PCF's own example Consents translate and decide() gives permit/deny/unknown as PCF Volume 1 says.
+- [x] PCF's own example Consents translate and decide() gives permit/deny/unknown as PCF Volume 1 says.
+
+## Progress
+- 2026-10-30: Implemented `consentToOdrl()`, `decide()`, `evaluatePcfPolicy()`, `isConsentExpired()`, `consentPolicyUid()`, `extractConsentCitation()`, `detectPcfProfile()`, and the four IHE PCF 1.1.0 Volume 1 §1:53.2.1 implicit-policy ODRL `Set`s (`Policy-basic-normal`, `Policy-all-normal`, `Policy-break-glass-only`, `Policy-deny`) in `fhir-harness/schemas/pcf-consent.ts`, with unit tests covering all four implicit-policy `Set`s and all 23 IHE PCF 1.1.0 example `Consent` shapes in `fhir-harness/schemas/pcf-consent.test.ts`. Opened PR `litlfred/fhir-harness#207` (`https://github.com/litlfred/fhir-harness/pull/207`).
