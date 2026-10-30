@@ -2,11 +2,11 @@
 # folio-assistant-h11k
 $schema: bean/1.0.0
 title: 'BLOCK TRANSLATION GAPS: math placeholders, inline-markup placeholders, manifest extraction, locale render path'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-30T12:45:00Z
-updated_at: 2026-10-30T13:59:00Z
+updated_at: 2026-10-30T19:50:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -29,3 +29,5 @@ Opened on the owner's card "A. Apply all", 2026-10-30 12:39Z (thread "Finish lef
 - **G3:** `cleanMarkdownWithTokens` emits `{code0}`, `{code1}`, … for inline code spans and `<a0>…</a0>`, `<a1>…</a1>`, … for markdown links; `formatPot` flags `{code\d+}` with `#, python-brace-format`; `injectMarkdown` restores `{codeN}`, `<aN>…</aN>`, `{lqd_…}`, and standalone `![alt](src)` wrappers (with legacy fallback for pre-G3 `.po` catalogues).
 - **G4:** `extractFromManifest` (with `parseManifestSource`) extracts `title`, `caption`, `narrative`, `defaultView.title`, `views[i].title`, `abstract`, `sections[i].title` (and `subsections`), and `chapters[i].partTitle` with `msgctxt`, and is wired into `src/tools/translation.ts` (`translation_extract`, `translation_validate`), `pipeline/translation-block-qa.ts` (`measureBlock`, `buildReport`), and `scripts/translation/simulate-translation.ts`.
 - **G5:** `translateBlockFields`, `translateManifestText`, and `translateBlockEntry` translate block/chapter/section manifests and `.md` narrative bodies via `resolvePoSources` + `mergePoSources` + `parsePo` + `injectMarkdown` in `pipeline/render-markdown.ts` (`renderBlockMarkdown`, `renderSectionMarkdown`, `renderChapterMarkdown`, `buildDocumentMarkdown`), `pipeline/render-latex.ts` (`renderBlock`, `renderSection`, `renderChapter`), and `pipeline/build.ts` (`buildPaper`).
+
+_2026-10-30T19:50Z_ — Merged: cat-harness-tools#898 → main `79dbb38`, on the owner's card "A. Merge now" (thread "Drain ingest beans", https://claude.ai/code/session_01Qmmkt7JwQ9cqR2roBLdqKQ). bun test was still running at merge; aftermath to be fixed per the owner's merge rule.
