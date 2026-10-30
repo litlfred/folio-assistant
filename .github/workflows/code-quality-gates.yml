@@ -315,7 +315,7 @@ jobs:
         run: |
           set -uo pipefail
           targets=""
-          for d in cat-harness-tools/scripts .github/scripts cat-harness-tools/pipeline cat-harness/schemas cat-harness-tools/src cat-harness-tools/adapters; do
+          for d in cat-harness-tools/scripts .github/scripts cat-harness-tools/pipeline cat-harness-tools/schemas cat-harness-tools/src cat-harness-tools/adapters; do
             [ -d "$d" ] && targets="$targets $d"
           done
           if [ -z "$targets" ]; then

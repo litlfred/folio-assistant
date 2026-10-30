@@ -4,11 +4,12 @@
 # find any entry points" and wrote nothing. The `| tail` that followed hid the
 # exit code, so the step went green and the site linked an api/ that was never
 # published. Read the layer's own tsconfig, and fail when nothing is written.
+# The schemas code lives in cat-harness-tools since bean 8lcl (2026-10-30).
 set -euo pipefail
 rev=()
 [ -n "${REV:-}" ] && rev=(--gitRevision "$REV")
 npx --yes typedoc@0.28.20 \
-  --tsconfig cat-harness/tsconfig.json \
+  --tsconfig cat-harness-tools/schemas/tsconfig.json \
   "${rev[@]}" \
   --out "$OUT" \
   --entryPointStrategy expand \
@@ -17,7 +18,7 @@ npx --yes typedoc@0.28.20 \
   --skipErrorChecking \
   --logLevel Error \
   --name "$NAME" \
-  cat-harness/schemas
+  cat-harness-tools/schemas
 if [ ! -f "$OUT/index.html" ]; then
   echo "::error::TypeDoc wrote no $OUT/index.html"
   exit 1

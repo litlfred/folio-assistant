@@ -64,6 +64,7 @@ on:
       # and `publish-gh-pages.sh` among them.
       - 'cat-harness-tools/scripts/**'
       - 'cat-harness/schemas/**'
+      - 'cat-harness-tools/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
       # bootstrap-tools writes bootstrap's graph and vocabulary for the preview
@@ -533,10 +534,10 @@ jobs:
               # three generators; `api/` is TypeDoc over the schema entry
               # points. Matching the SOURCES, not the generated directory, so
               # a regeneration that lands in the same commit is still covered.
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/schemas/|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
                 ref=yes; why="the branch touches schemas, skills or the reference generators"
               fi
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness-tools/schemas/'; then
                 api=yes
               fi
               # A RE-PIN is a change to every mounted instance's skills and
