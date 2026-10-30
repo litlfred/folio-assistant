@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-30T17:16:00Z
+updated_at: 2026-10-30T17:47:17Z
 parent: folio-assistant-7x5n
 ---
 
@@ -72,3 +72,9 @@ _2026-10-30T17:16:00Z_ — **Group 7 up (`litlfred/folio-assistant-sci#129`, `li
 - **Remaining 14 MOVE rows after Groups 1–7 + `#114`/`#858`:** 2 `cat-harness/tools/` targets (`scripts/gen-content-graph-uml.ts`, `pipeline/content-graph-analysis.py`), 4 shared pipeline/checker modules (`pipeline/build.ts`, `pipeline/validate.ts`, `pipeline/qa-checkers-extended.ts`, `pipeline/qa-checkers-uses.ts`), 1 shared document+math ingestion script (`scripts/extract-candidates.py`), and 7 `qou`-specific scripts.
 
 _2026-10-30T17:23:00Z_ — The qou-specific scripts moved to qou (https://github.com/litlfred/qou/pull/7811, merged by the owner) and were removed from tools (https://github.com/litlfred/cat-harness-tools/pull/939). Maths QA checkers (Lean vacuity x4, render-math-mode-envelope, proof-not-machine-trivial): remover https://github.com/litlfred/cat-harness-tools/pull/947 must merge BEFORE receiver https://github.com/litlfred/folio-assistant-sci/pull/130, because a contributed node beside a declared source_file throws CriterionSourceCollisionError. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie.
+
+_2026-10-30T17:47:17Z_ — **Group 8 up (`litlfred/folio-assistant-sci#136` + `litlfred/cat-harness-tools#953`):**
+- Splits the 23 Lean/LaTeX paper QA checkers out of `cat-harness-tools/pipeline/qa-checkers-uses.ts` (`uses-formal-coverage`, `lean-ref-owns-decl`) and `cat-harness-tools/pipeline/qa-checkers-extended.ts` (`compute-*` x4, `canonical-*` x9, `proof-*` x8) into `folio-assistant-sci/pipeline/qa-checkers-uses.ts` and `folio-assistant-sci/pipeline/qa-checkers-extended.ts`, contributed via 23 `folio-qa-checker/v1` nodes in `folio-assistant-sci/qa-checkers/` (per owner ruling Q4).
+- Retains the generic editorial/document checkers in `cat-harness-tools/pipeline/qa-checkers-uses.ts` (`uses-editorial-hygiene`) and `cat-harness-tools/pipeline/qa-checkers-extended.ts` (`profile-conformance`, `bib-*`, `detangler-*`, `foreshadows-point-forward`, `voice-title-scholarly`), and marks the 23 moved criteria `checker_contributed: true` in `cat-harness-tools/pipeline/qa-criteria-registry.ts`.
+- Moves the unit tests for the 23 checkers (`lean-ref-owns-decl.test.ts`, `checker-missing-evidence.test.ts`, `qa-canonical-no-numerology.test.ts`, `qa-checkers-lp-dual.test.ts`, and the `checkProofNoAxiomGrowth` + `checkProofConditionalClassBanner` sentinel cases in `qa-checkers-stub-sentinels.test.ts`) from `cat-harness-tools/scripts/tests/` to `folio-assistant-sci/scripts/tests/`.
+- **Merge order:** none of the 23 criteria declared an explicit `source_file` in `QA_CRITERIA_REGISTRY`, so `litlfred/folio-assistant-sci#136` can merge first without `CriterionSourceCollisionError`, followed by `litlfred/cat-harness-tools#953`.
