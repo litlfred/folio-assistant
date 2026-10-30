@@ -26,7 +26,7 @@ import { relative, resolve } from "node:path";
 import { describe, expect, it } from "bun:test";
 import { parse } from "yaml";
 
-import { healthReportPath } from "../../cat-harness/schemas/health-report.ts";
+import { healthReportPath } from "../../cat-harness-tools/schemas/sdlc/health-report.ts";
 
 /** This index repository's root, where the workflow runs and its upload path is resolved. */
 const INDEX = resolve(import.meta.dir, "..", "..");

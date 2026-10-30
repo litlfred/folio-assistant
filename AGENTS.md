@@ -4,7 +4,7 @@
 
 > *This file is rendered by `bun run cat index:render` from [`index.config.json`](index.config.json) and the declarations of the instances it names, and `bun run cat index:render:check` fails when it is not current. Do not edit it here — change how agents work in the skill that governs it, or in the `AGENTS.md` of the instance it is about. Where a skill and any `AGENTS.md` disagree, **the skill wins** and the file is wrong.*
 
-This checkout is an **index**: [`index.config.json`](index.config.json) names 11 instance(s) and the checkout declares none of its own. This file is read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot and others; `CLAUDE.md` and `GEMINI.md` are one-line stubs pointing here.
+This checkout is an **index**: [`index.config.json`](index.config.json) names 12 instance(s) and the checkout declares none of its own. This file is read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot and others; `CLAUDE.md` and `GEMINI.md` are one-line stubs pointing here.
 
 ## Cold start
 
@@ -63,6 +63,7 @@ Each augments its own README rather than restating it. In the order the index li
 | `folio-assistant-core` | [AGENTS.md](folio-assistant-core/AGENTS.md) | [README](folio-assistant-core/README.md) | Folio Assistant Core |
 | `smart-base` | [AGENTS.md](smart-base/AGENTS.md) | [README](smart-base/README.md) | SMART Base |
 | `smart-trust` | [AGENTS.md](smart-trust/AGENTS.md) | [README](smart-trust/README.md) | WHO SMART Trust |
+| `smart-trust-phw` | [AGENTS.md](smart-trust-phw/AGENTS.md) | [README](smart-trust-phw/README.md) | GDHCN Trust Network - Personal Health Wallet |
 | `bootstrap` | [AGENTS.md](bootstrap/AGENTS.md) | [README](bootstrap/README.md) | Bootstrap |
 | `bootstrap-tools` | [AGENTS.md](bootstrap-tools/AGENTS.md) | [README](bootstrap-tools/README.md) | Bootstrap tools |
 | `who-iris` | [AGENTS.md](who-iris/AGENTS.md) | [README](who-iris/README.md) | WHO IRIS |

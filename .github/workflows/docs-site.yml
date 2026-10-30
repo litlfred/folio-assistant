@@ -71,6 +71,7 @@ on:
       # stale render — exactly the "move the wiring with the script" failure.
       - 'cat-harness/processes/**'
       - 'cat-harness/schemas/**'
+      - 'cat-harness-tools/schemas/**'
       # The schema viewer is generated, so a change to the generator or to the
       # reader behind it changes the published page while touching nothing
       # under `docs/` — without these paths the site would serve a stale one.
@@ -166,14 +167,14 @@ jobs:
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
 
       - name: Install deps
         run: bun install --frozen-lockfile
@@ -248,6 +249,13 @@ jobs:
       # from a branch-kept graph. One of them is `render:bpmn` (other instances'
       # diagrams), which draws through Chromium, so the browser is installed
       # before this step rather than only before the later render.
+      # PlantUML 1.2026.9 needs Java 21 (its ELK classes are class file 65);
+      # ubuntu-latest's PATH java is 17, which broke every publish from
+      # 2026-10-30 13:23Z (#2744). The major is read from the plantuml
+      # tool-release declaration, so a later bump moves it too.
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
+
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
@@ -431,6 +439,10 @@ jobs:
             echo "short_sha: \"${GITHUB_SHA:0:7}\""
             echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
+            # Where this commit's CI results appear. The site renders in
+            # parallel with CI and does not wait for it (owner, 2026-10-23),
+            # so it links to the results instead of stating them.
+            echo "checks_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}/checks\""
           } > cat-harness/docs/_data/build.yml
           cat cat-harness/docs/_data/build.yml
 
@@ -469,7 +481,7 @@ jobs:
           # Retried: Maven Central answers 429 under load, and one unretried
           # 429 failed a whole preview build on 2026-10-05 (#2238).
           curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
-            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2026.9/plantuml-1.2026.9.jar
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "/${REPO_NAME}" \
             --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
 
@@ -492,7 +504,7 @@ jobs:
       # 6 h limit (#2550's sed worked around that). Measured on the composed
       # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
       # against 137 s. It runs as the runner user, so `_site/` needs no chown.
-      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
+      - uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec # v1.334.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -576,15 +588,10 @@ jobs:
       # reference with no second edit, which is the same rule
       # `check:schema-nodes` enforces for the graph itself.
       - name: Generate TypeScript API reference (TypeDoc)
-        run: |
-          npx --yes typedoc \
-            --out ./_site/api \
-            --entryPointStrategy expand \
-            --readme none \
-            --hideGenerator \
-            --skipErrorChecking \
-            --name "folio-assistant API" \
-            cat-harness/schemas 2>&1 | tail -20
+        uses: ./.github/actions/typedoc-api
+        with:
+          out: ./_site/api
+          name: folio-assistant API
 
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
@@ -880,6 +887,11 @@ jobs:
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
+          # "Work out at publish time"): bootstrap's setup check, offline and
+          # dry-run, one `<harness>.json` per harness plus `index.json`. Built
+          # from the tree being deployed and never committed.
+          bun run cat harness:state --out ./_site/assets/harnesses
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
@@ -927,6 +939,9 @@ jobs:
       # first encounter with this step.
       - name: Every maintained artefact is in the published tree
         id: artefacts
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: bun run cat check:maintained-artefacts ./_site
 
       # No page carries a block-level tag as escaped TEXT.
@@ -945,6 +960,10 @@ jobs:
       # why nothing readable from a checkout could catch it — only the built page
       # shows what the markdown converter did.
       - name: No escaped block-level markup in the published tree
+        id: escaped
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: bun run cat check:escaped-markup ./_site
 
       # The QA witnesses, published at the path the badges already point at.
@@ -968,6 +987,10 @@ jobs:
       # `assets/qa/availability.json` naming the source. A silent shrink was
       # the defect — this step used to print a smaller count and stay green.
       - name: Publish the QA witnesses and results
+        id: qa_assets
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: |
           mkdir -p ./_site/assets/qa
           # Guarded: with no corpus and nothing generated there is no
@@ -1022,6 +1045,10 @@ jobs:
       # failure here too: at this point in the job there IS a build, so not
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
+        id: tiles
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       # One search index per scope — each instance, each target locale, the
@@ -1032,16 +1059,43 @@ jobs:
       - name: Split the search index per scope
         run: bun run cat-harness-tools/scripts/search-split.ts --dir ./_site
 
-      # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
+      # VERIFY BEFORE DEPLOYING — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
       # triggers an alert to the publisher manager ... before deployment".
       # `processes/publish-verification.bpmn`. The verifier set runs over the
-      # built tree; exit 1 (a finding) and exit 2 (could not tell) both stop
-      # the job here, so nothing below deploys, and the alert step at the end
-      # carries the report to the publication manager.
+      # built tree; exit 1 (a finding) and exit 2 (could not tell) are both
+      # failures.
+      #
+      # It no longer STOPS the deploy. Owner, 2026-10-23: "gh-pages rendering
+      # is parallel NOT DEPENDENDT on CI. gh-pages should render wether all CI
+      # succeeeds or not." So every built-site check in this job is
+      # `continue-on-error`, the site deploys, and `Judge the built-site
+      # checks` after the push turns any failure back into a red run — which
+      # is what still reaches the publication manager's alert. The precedent
+      # is the Liquid check (bean `8pyz`, "CI is in CI not part of render").
       - name: Verify the export before deploying
         id: verify
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
+
+      # EVERY LINK, against the tree that ships (fa#2741). The tiles check
+      # above reads the navbar only; a link check of the published site found
+      # 262 missing targets nobody had been told about. `--fix` first repoints
+      # the two kinds with one right answer: a missing translation goes to the
+      # untranslated page or diagram, and a source file the site does not
+      # publish goes to that file on GitHub at the pinned commit. The rest is
+      # reported in the step summary. It is NOT judged below yet: about a
+      # hundred dead links remain to fix by hand, and judging it now would turn
+      # every publish red and open a publication-manager alert each time. It
+      # joins the judged checks once the count reaches zero.
+      - name: Repoint and check every link in the built site
+        id: dead_links
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
+            --base-path "/${{ github.event.repository.name }}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            --report "$RUNNER_TEMP/dead-links.tsv" | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
       # on purpose. CI builds with `bundle exec jekyll build` and the gem set
@@ -1086,11 +1140,12 @@ jobs:
       - name: Write the build stamp for client-side readers
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          CHECKS_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}/checks
         run: |
           MARKERS=$(git rev-parse --path-format=absolute --git-path branch-mounts)
           MOUNTS=$(jq -n '[inputs | select(.id and .tip) | {(.id): .tip}] | add // {}' "$MARKERS"/*.json 2>/dev/null) || MOUNTS='{}'
-          jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" \
-            --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, mounts: $mounts}' > ./_site/build.json
+          jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" --arg checksUrl "$CHECKS_URL" \
+            --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, checksUrl: $checksUrl, mounts: $mounts}' > ./_site/build.json
           cat ./_site/build.json
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
@@ -1238,6 +1293,31 @@ jobs:
         id: previews
         run: bun run cat-harness-tools/scripts/restore-staging.ts --verify --state ./.staging-restored.json
 
+      # THE BUILT-SITE CHECKS, JUDGED AFTER THE PUSH. Each ran above with
+      # `continue-on-error`, so a finding never stopped the deploy (owner,
+      # 2026-10-23: gh-pages renders whether CI succeeds or not). Here a
+      # finding fails the run, so it is red and the alert below fires, with the
+      # site already live.
+      - name: Judge the built-site checks
+        if: ${{ !cancelled() }}
+        env:
+          ARTEFACTS: ${{ steps.artefacts.outcome }}
+          ESCAPED: ${{ steps.escaped.outcome }}
+          QA_ASSETS: ${{ steps.qa_assets.outcome }}
+          TILES: ${{ steps.tiles.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+        run: |
+          failed=0
+          for pair in "maintained artefacts=$ARTEFACTS" "escaped markup=$ESCAPED" "QA witnesses and results=$QA_ASSETS" "navbar tiles=$TILES" "verify the export=$VERIFY"; do
+            name="${pair%%=*}"; outcome="${pair#*=}"
+            echo "$name: ${outcome:-not reached}"
+            if [ "$outcome" = "failure" ]; then
+              echo "::error::built-site check failed: $name (the site deployed regardless)"
+              failed=1
+            fi
+          done
+          exit "$failed"
+
       # THE ONE ALERT — `processes/publish-alert.bpmn`. Owner, 2026-09-23:
       # "every step post 'push the publish button' should be same". Any failure
       # in this job — an incomplete export, the verifier set, the deploy, a lost
@@ -1252,6 +1332,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ARTEFACTS: ${{ steps.artefacts.outcome }}
+          ESCAPED: ${{ steps.escaped.outcome }}
+          QA_ASSETS: ${{ steps.qa_assets.outcome }}
+          TILES: ${{ steps.tiles.outcome }}
+          DEAD_LINKS: ${{ steps.dead_links.outcome }}
           VERIFY: ${{ steps.verify.outcome }}
           DEPLOY: ${{ steps.deploy.outcome }}
           PREVIEWS: ${{ steps.previews.outcome }}
@@ -1264,6 +1348,10 @@ jobs:
             echo "| step | outcome |"
             echo "|---|---|"
             echo "| every maintained artefact present | ${ARTEFACTS:-not reached} |"
+            echo "| no escaped block-level markup | ${ESCAPED:-not reached} |"
+            echo "| QA witnesses and results | ${QA_ASSETS:-not reached} |"
+            echo "| navbar tiles resolve | ${TILES:-not reached} |"
+            echo "| every link resolves | ${DEAD_LINKS:-not reached} |"
             echo "| verify the export before deploying | ${VERIFY:-not reached} |"
             echo "| deploy to gh-pages | ${DEPLOY:-not reached} |"
             echo "| staging previews survived | ${PREVIEWS:-not reached} |"

@@ -91,7 +91,7 @@ describe("folio-staging passes render-log only paths it accepts", () => {
   // path in the workflow is checked here by render-log's own rule; a `$VAR`
   // path is checked at run time by the same function.
   test("every literal --path is safe", async () => {
-    const { isSafeRenderPath } = await import("../../cat-harness/schemas/render-log.js");
+    const { isSafeRenderPath } = await import("../../cat-harness-tools/schemas/ui/render-log.js");
     const yml = readFileSync(WORKFLOW, "utf-8");
     const literals = [...yml.matchAll(/render-log\.ts"[^\n]*(?:\n[^\n]*?){0,3}--path "([^"$]*)"/g)].map((m) => m[1]);
     expect(literals.length).toBeGreaterThan(0);

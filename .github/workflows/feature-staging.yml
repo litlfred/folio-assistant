@@ -64,6 +64,7 @@ on:
       # and `publish-gh-pages.sh` among them.
       - 'cat-harness-tools/scripts/**'
       - 'cat-harness/schemas/**'
+      - 'cat-harness-tools/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
       # bootstrap-tools writes bootstrap's graph and vocabulary for the preview
@@ -305,7 +306,7 @@ jobs:
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
       - name: Cache remote mounts (beans cis1, cis4)
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
@@ -319,7 +320,7 @@ jobs:
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
 
       - name: Install deps
         run: bun install --frozen-lockfile
@@ -355,6 +356,13 @@ jobs:
       # from a branch-kept graph. One of them is `render:bpmn` (other instances'
       # diagrams), which draws through Chromium, so the browser is installed
       # before this step rather than only before the later render.
+      # PlantUML 1.2026.9 needs Java 21 (its ELK classes are class file 65);
+      # ubuntu-latest's PATH java is 17, which broke every publish from
+      # 2026-10-30 13:23Z (#2744). The major is read from the plantuml
+      # tool-release declaration, so a later bump moves it too.
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
+
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
@@ -526,10 +534,10 @@ jobs:
               # three generators; `api/` is TypeDoc over the schema entry
               # points. Matching the SOURCES, not the generated directory, so
               # a regeneration that lands in the same commit is still covered.
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/schemas/|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
                 ref=yes; why="the branch touches schemas, skills or the reference generators"
               fi
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness-tools/schemas/'; then
                 api=yes
               fi
               # A RE-PIN is a change to every mounted instance's skills and
@@ -829,7 +837,7 @@ jobs:
           # Retried: Maven Central answers 429 under load, and one unretried
           # 429 failed a whole preview build on 2026-10-05 (#2238).
           curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
-            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2026.9/plantuml-1.2026.9.jar
           CF=(); [ -f "$RUNNER_TEMP/pr-files.txt" ] && CF=(--changed-files "$RUNNER_TEMP/pr-files.txt")
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
             --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs "${CF[@]}" > ./_ig-list.txt
@@ -892,7 +900,7 @@ jobs:
       # 6 h limit (#2550's sed worked around that). Measured on the composed
       # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
       # against 137 s. It runs as the runner user, so `_site/` needs no chown.
-      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
+      - uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec # v1.334.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -933,6 +941,10 @@ jobs:
       # its production publish was refused ("indexes 1003 page(s) while 4189
       # offer a search box"). A check only the release runs fails after merge.
       - name: The search index this build made covers its pages
+        id: search_index
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --only search-index
 
       - name: Serve the published search index, or none
@@ -996,6 +1008,10 @@ jobs:
       # `id="fa-nav-open"` twice while `gates` stayed green. Placed after the
       # mount so instance-rendered pages are checked too.
       - name: No page carries a duplicate id
+        id: duplicate_ids
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat check:duplicate-ids ./_site
 
       # The deploy's own built-site checks, run on the PREVIEW so they fail on the pull
@@ -1013,6 +1029,10 @@ jobs:
       # here. `check:maintained-artefacts` is the other one; it runs below, after
       # the exports that write what it looks for.
       - name: No escaped block-level markup in the preview
+        id: escaped
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat check:escaped-markup ./_site
 
 
@@ -1092,22 +1112,11 @@ jobs:
       # not what anybody is reviewing.
       - name: Generate TypeDoc API reference
         if: steps.carry.outputs.api == 'yes'
-        env:
-          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
-          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
-        run: |
-          npx --yes typedoc \
-            --gitRevision "$STAGING_BRANCH" \
-            --out ./_site/api \
-            --entryPointStrategy expand \
-            --readme none \
-            --hideGenerator \
-            --skipErrorChecking \
-            --name "folio-assistant API (staging: $STAGING_SLUG)" \
-            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
-            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
-            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
-            cat-harness/schemas/lean-packages.ts 2>&1 | tail -10
+        uses: ./.github/actions/typedoc-api
+        with:
+          out: ./_site/api
+          name: "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})"
+          git-revision: ${{ steps.slug.outputs.branch }}
 
       # Add a staging banner to every HTML page so a reviewer never
       # mistakes staged content for the published site.
@@ -1280,6 +1289,16 @@ jobs:
             fi
           fi
 
+          # Where this build's CI results will appear. The preview renders in
+          # parallel with CI and never waits for it (owner, 2026-10-23), so the
+          # banner links to the results instead of stating them. A pin of
+          # staging-banner.ts without `--checks-url` ignores the flag.
+          if [ "$PR" != "n/a" ]; then
+            CHECKS_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}/checks"
+          else
+            CHECKS_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}/checks"
+          fi
+
           # shellcheck disable=SC2086  # MAIN_PAGES_ARG is a deliberate two-token flag or empty
           bun run cat-harness-tools/scripts/staging-banner.ts \
             --site ./_site \
@@ -1292,6 +1311,7 @@ jobs:
             --issues-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues" \
             ${ISSUE:+--issue "$ISSUE"} \
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --checks-url "$CHECKS_URL" \
             --main-site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
             $MAIN_PAGES_ARG
 
@@ -1414,6 +1434,11 @@ jobs:
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
           bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
+          # "Work out at publish time"): bootstrap's setup check, offline and
+          # dry-run, one `<harness>.json` per harness plus `index.json`. Built
+          # from the tree being deployed and never committed.
+          bun run cat harness:state --out ./_site/assets/harnesses
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
@@ -1573,6 +1598,10 @@ jobs:
       # a shortfall against what the source held fails the step, and
       # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
+        id: qa_assets
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: |
           mkdir -p ./_site/assets/qa
           if [ -d cat-harness/test/results/witnesses ]; then
@@ -1619,9 +1648,17 @@ jobs:
       # beside `check:escaped-markup` (straight after the mount) found 6 of 8
       # missing — measured on this PR's first run (bean `63es`).
       - name: Every maintained artefact is in the preview
+        id: artefacts
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat check:maintained-artefacts ./_site
 
       - name: Check the navbar tiles resolve against the built site
+        id: tiles
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       # The same pre-deploy verification the deploy runs (bean `vigi`,
@@ -1632,7 +1669,23 @@ jobs:
       # or a declared-empty one (the step above), so its coverage is the
       # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
+        id: verify
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+
+      # The deploy's link pass (fa#2741), so a preview shows the links the
+      # site will ship. Reported, not blocking.
+      - name: Repoint and check every link in the built site
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          set -o pipefail
+          bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
+            --base-path "/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST — the deploy's pass, mirrored here because
       # `check:invocation-parity` requires it and because a preview whose
@@ -1731,6 +1784,9 @@ jobs:
             await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
             let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // CI runs beside the preview, not before it: link where its
+            // results appear rather than waiting for them (owner, 2026-10-23).
+            body += `\n\n**CI results:** https://github.com/${owner}/${repo}/pull/${context.issue.number}/checks — the preview does not wait for them.\n`;
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
@@ -1991,6 +2047,9 @@ jobs:
             await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
             let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // CI runs beside the preview, not before it: link where its
+            // results appear rather than waiting for them (owner, 2026-10-23).
+            body += `\n\n**CI results:** https://github.com/${owner}/${repo}/pull/${context.issue.number}/checks — the preview does not wait for them.\n`;
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
@@ -2011,6 +2070,32 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
             }
+
+      # THE BUILT-SITE CHECKS, JUDGED AFTER THE PREVIEW IS UP. Each ran above
+      # with `continue-on-error`, so a finding never held back the preview
+      # (owner, 2026-10-23: "gh-pages should render wether all CI succeeeds or
+      # not"). Here a finding fails this PR's check, so it still shows red.
+      - name: Judge the built-site checks
+        if: ${{ !cancelled() }}
+        env:
+          SEARCH_INDEX: ${{ steps.search_index.outcome }}
+          DUPLICATE_IDS: ${{ steps.duplicate_ids.outcome }}
+          ESCAPED: ${{ steps.escaped.outcome }}
+          QA_ASSETS: ${{ steps.qa_assets.outcome }}
+          ARTEFACTS: ${{ steps.artefacts.outcome }}
+          TILES: ${{ steps.tiles.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+        run: |
+          failed=0
+          for pair in "search index coverage=$SEARCH_INDEX" "duplicate ids=$DUPLICATE_IDS" "escaped markup=$ESCAPED" "QA witnesses and results=$QA_ASSETS" "maintained artefacts=$ARTEFACTS" "navbar tiles=$TILES" "verify the export=$VERIFY"; do
+            name="${pair%%=*}"; outcome="${pair#*=}"
+            echo "$name: ${outcome:-not reached}"
+            if [ "$outcome" = "failure" ]; then
+              echo "::error::built-site check failed: $name (the preview deployed regardless)"
+              failed=1
+            fi
+          done
+          exit "$failed"
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
   # MERGED closes the question; CLOSED-UNMERGED does not.
@@ -2120,7 +2205,7 @@ jobs:
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
       - name: Cache remote mounts (bean cis1)
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
@@ -2134,7 +2219,7 @@ jobs:
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
 
       - name: Install deps
         working-directory: source
@@ -2498,7 +2583,7 @@ jobs:
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
       - name: Cache remote mounts (bean cis1)
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
@@ -2512,7 +2597,7 @@ jobs:
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: 1.3.14
+          bun-version: 1.4.4
 
       - name: Install deps
         working-directory: source

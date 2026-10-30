@@ -233,7 +233,7 @@ describe("one bad member no longer reds the whole run (bean `03nl`)", () => {
     const mount = steps.find((s) => /mount-from-lock\.(?:sh|ts)\b/.test(s.run ?? ""));
     expect(mount).toBeDefined();
     const bun = steps.find((s) => (s.uses ?? "").startsWith("oven-sh/setup-bun")) as { with?: Record<string, unknown> };
-    expect(bun.with?.["bun-version"]).toBe("1.3.14");
+    expect(bun.with?.["bun-version"]).toBe("1.4.4");
     const decide = steps.find((s) => s.name?.startsWith("Decide whether this run"))!;
     expect(decide.run).toContain("cat-harness-tools/scripts/merge-main-comment.ts --aggregate verdicts");
     // A download that finds nothing must not stop it: "no verdict for #N" is
