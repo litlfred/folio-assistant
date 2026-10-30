@@ -2,11 +2,11 @@
 # folio-assistant-y0o0
 $schema: bean/1.0.0
 title: 'pcf-consent skill (model, translate, decide) (PCF9)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T15:46:00Z
+updated_at: 2026-10-30T16:31:30Z
 parent: folio-assistant-negd
 blocked_by:
     - folio-assistant-jx7m
