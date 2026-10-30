@@ -2,10 +2,10 @@
 # folio-assistant-y9r6
 $schema: bean/1.0.0
 title: 'Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T18:45:00Z
+updated_at: 2026-10-30T19:55:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -19,9 +19,9 @@ Stage 1c of the split plan — FR-7, content holds no code. Owner D2 (2026-10-01
 Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0–6, decisions D1–D6, "Owner rulings, 2026-10-01") and `placement-proposal.md` (PR0–PR9, §6 "Owner rulings, 2026-09-30").
 
 ## Done when
-- [ ] new gate `check:content-code-free` (no tracked `.ts/.js/.py/.sh` under `cat-harness/`) watched red first, then green, and wired in CI
-- [ ] every node and page `.jsonld` byte-identical (`jsonld-gen-check`)
-- [ ] `knownSkills` identical; `kg-export` node count identical; `check:tools` and `tool-coverage` green
+- [x] new gate `check:content-code-free` (no tracked `.ts/.js/.py/.sh` under `cat-harness/`) watched red first, then green, and wired in CI
+- [x] every node and page `.jsonld` byte-identical (`jsonld-gen-check`)
+- [x] `knownSkills` identical; `kg-export` node count identical; `check:tools` and `tool-coverage` green
 
 ## Completed on landed evidence
 Landed on main in PR #1702 (rqao (#1168): the JSON skill definitions and conventions leave .claude/, split by theme).
@@ -79,3 +79,5 @@ _2026-10-30T16:55Z_ — The `skills/framework/types.ts` shim is gone: folio-assi
 _2026-10-30T18:45:00Z_ — `check:content-code-free` now reports 0 code files under cat-harness and the baseline list is empty: `schemas/`, `tools/index.ts`, `tools/lib.ts` and the openapi/archimate schemas moved with 8lcl, and the last test fixture moved in cat-harness-tools#971 / cat-harness#789. Box 1 is met. folio-render and the 3 Jekyll plugins stay by owner card "A. Keep them, allowed by rule". Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".
+
+_2026-10-30T19:55Z_ — All three boxes measured met; completed. Box 1: `check:content-code-free` on cat-harness-tools main 9673b1f reports 0 code files under cat-harness, baseline `files: []`, and is in `run-gates.py --list --instance cat-harness-tools`. Its unit test still asserted a non-empty list; fixed in cat-harness-tools#979. Box 2: two sibling layouts (pre-y9r6 = cat-harness 854d7ac6 + tools cc82c060^1; now = both mains), `gen-site-jsonld` in each gives 156/156 `.jsonld` byte-identical; none of #746 #748 #749 #751 #752 #759 #773 #787 #789 #792 changed a tracked `.jsonld`. Box 3: `knownSkills` 249 = 249 (the two names that differ come from #747 and #755); `kg-export` 6222 -> 6198 nodes, every added or removed `@id` traced to other work (#747 #771 #741 #762 #773 #743 #755 #756), and every converted node keeps its `@id`; `check:tools` exit 0; `tool-coverage` identical before and after (186 uncovered). cat-harness-tools#921 was closed as superseded (main already had its changes via #952 and #929). Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
