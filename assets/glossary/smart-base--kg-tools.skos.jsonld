@@ -134,6 +134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-tools/immz-schedule-app-local",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Start the schedule-check web form from litlfred/awho-mcp on this machine: a HAPI FHIR server in Docker on 127.0.0.1, the WHO SMART Immunizations IG loaded, then a country adaptation IG after it (its decision-logic tables replace WHO's, and its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. Re-running reuses a server already loaded from the same commits; `--down` stops both."
+        }
+      ],
+      "skos:notation": "immz-schedule-app-local",
+      "dcterms:source": "smart-base/tools/immz-schedule-app-local/immz-schedule-app-local.ts#immz-schedule-app-local",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns#glossary/kg-tools/l1-extraction-pages",
       "@type": "skos:Concept",
       "skos:inScheme": {

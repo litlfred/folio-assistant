@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 65,
+      "count": 64,
       "unit": "open beans"
     }
   },
@@ -844,7 +844,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-30T11:41:00Z",
+      "updatedAt": "2026-10-30T12:10:00Z",
       "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
@@ -2810,14 +2810,14 @@
     {
       "id": "folio-assistant-607f",
       "title": "UPSTREAM PIN WATCHDOG: red since 2026-10-20 on an undetermined pin, so #1481 has gone stale",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T11:55:00Z",
-      "updatedAt": "2026-10-30T11:55:00Z",
+      "updatedAt": "2026-10-30T12:19:00Z",
       "preview": "`upstream-pins.yml` failed on its 2026-10-20 and 2026-10-27 runs at the step\n\"Refuse to report success on an undetermined pin\". Because of that, issue\n[#1481](https://github.com/litlfred/folio-assistant/issues/1481), which the job edits\nin place, was last updated 2026-10-13 and no longer shows the current state.\n\nLikely cause: a pinned dependency moved during the repo split, so the check can't\nres",
       "file": "beans/defs/folio-assistant-607f--upstream-pin-watchdog-red-undetermined-pin.md"
     },
@@ -6197,14 +6197,14 @@
     {
       "id": "folio-assistant-d5f1",
       "title": "INGEST: narrative description per image, localized, including images extracted from PDFs",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-30T11:22:00Z",
+      "updatedAt": "2026-10-30T12:05:00Z",
       "preview": "## What\n\nGenerate a narrative description for every image, localized to the folio's\nlanguages.\n\n## The half that is easy to miss\n\n**This applies to an image EXTRACTED FROM A PDF, not only to an uploaded one.**\nMost images in this corpus arrive inside a paper, and a figure nobody has\ndescribed is a figure no grep and no agent can reach.\n\n## Provenance is not optional\n\nEvery description carries its ",
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
@@ -8562,7 +8562,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T07:53:21Z",
-      "updatedAt": "2026-10-30T12:00:00Z",
+      "updatedAt": "2026-10-30T12:15:00Z",
       "preview": "On 2026-10-24 at 07:53Z the owner chose \"B + bean for library nodes\" on the 0uu2 card about `cat-harness-tools/types/`. That choice keeps `types/` and declares it, and asks for this bean.\n\n## The gap\n\nNo node kind exists for an outside library the platform depends on, such as bpmn-moddle, dmn-moddle, playwright or katex. What the graph knows about them is scattered:\n- `package.json` dependencies, ",
       "file": "beans/defs/folio-assistant-jbvi--library-nodes-outside-libraries-the-platform-uses.md"
     },
@@ -12380,14 +12380,14 @@
     {
       "id": "folio-assistant-se3i",
       "title": "PUBLIC COMMENT: a person can re-route a change set to a different committee by hand",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T11:55:00Z",
-      "updatedAt": "2026-10-30T11:55:00Z",
+      "updatedAt": "2026-10-30T12:20:30Z",
       "preview": "From [#197](https://github.com/litlfred/folio-assistant/issues/197) — the last open ask on that issue, from @Chine-E on 2026-10-16:\n\n> I need the ability for a human to manually re-route a change set if a human\n> decides that the change set should be handled by a different committee.\n\nEverything else #197 asked for landed under epic `q4jm` (beans `xtpc`, `v26p`, `uphx`, `423d`).\nToday the committe",
       "file": "beans/defs/folio-assistant-se3i--public-comment-human-reroutes-change-set-to-committee.md"
     },
@@ -14136,7 +14136,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:02Z",
-      "updatedAt": "2026-10-29T07:35:00Z",
+      "updatedAt": "2026-10-30T12:25:00Z",
       "preview": "Stage 5 of the split plan: QA from scratch. Fresh clones of bootstrap, bootstrap-tools, cat-harness, cat-harness-tools as siblings in an empty directory: `bun install --frozen-lockfile`, `tsc`, `bun test`, closure, the rehearsal, every `:check` in `cat-harness-tools/package.json`; link audit (0 broken, 0 leaving except declared URLs); names-outside audit (every remaining mention of folio-assistant",
       "file": "beans/defs/folio-assistant-w1gy--separation-stage-5-qa-both-new-repositories-from-f.md"
     },
@@ -14762,7 +14762,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-10-30T11:48:00Z",
+      "updatedAt": "2026-10-30T12:10:30Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
@@ -16488,8 +16488,8 @@
         "total": 645,
         "closed": 622,
         "open": 23,
-        "inProgress": 8,
-        "todo": 14,
+        "inProgress": 10,
+        "todo": 12,
         "draft": 1,
         "unclassified": 0,
         "share": 0.9643410852713178
@@ -16501,18 +16501,18 @@
         "status": "in-progress",
         "epics": 2,
         "total": 78,
-        "closed": 71,
-        "open": 7,
+        "closed": 72,
+        "open": 6,
         "inProgress": 3,
-        "todo": 4,
+        "todo": 3,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.9102564102564102
+        "share": 0.9230769230769231
       }
     ],
     "orphanOpen": 2,
-    "openTotal": 65,
-    "coveredOpen": 60,
+    "openTotal": 64,
+    "coveredOpen": 59,
     "duplicateIds": 0
   }
 }

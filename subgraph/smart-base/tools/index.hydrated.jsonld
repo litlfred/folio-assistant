@@ -338,6 +338,99 @@
       "path": "tools/extract-dak/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/immz-schedule-app-local/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/immz-schedule-app-local.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Start the schedule-check web form from litlfred/awho-mcp on this machine: a HAPI FHIR server in Docker on 127.0.0.1, the WHO SMART Immunizations IG loaded, then a country adaptation IG after it (its decision-logic tables replace WHO's, and its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. Re-running reuses a server already loaded from the same commits; `--down` stops both.",
+          "install": {
+            "cli": "git clone https://github.com/litlfred/awho-mcp && cd awho-mcp && python3 -m pip install -e ."
+          },
+          "invoke": {
+            "shell": "awho-mcp/scripts/local_up.sh --who-ig <dir> [--country-ig <dir>] [--fhir-port <n>] [--web-port <n>] [--down]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--who-ig"
+                },
+                "description": "A checkout of the WHO SMART Immunizations IG, relative to the working directory (the folder holding the checkouts, e.g. `~/space_cats`).",
+                "name": "who-ig",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--country-ig"
+                },
+                "description": "A country adaptation IG checkout, e.g. `smart-immunizations-uganda`, relative to the working directory. Without it the app follows WHO's own schedule.",
+                "name": "country-ig",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--fhir-port"
+                },
+                "description": "The HAPI port on 127.0.0.1. Default 8081.",
+                "name": "fhir-port",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Port"
+              },
+              {
+                "arg": {
+                  "flag": "--web-port"
+                },
+                "description": "The form's port on 127.0.0.1. Default 8090.",
+                "name": "web-port",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Port"
+              },
+              {
+                "arg": {
+                  "flag": "--down"
+                },
+                "description": "Stop the form and the server.",
+                "name": "down",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The form, on 127.0.0.1. It stores nothing; each check is one inline `$apply` round.",
+                "name": "url",
+                "render": {
+                  "as": "url",
+                  "reason": "a reader opens the running app; the scheme is checked before it reaches an href"
+                },
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              }
+            ]
+          },
+          "name": "immz-schedule-app-local",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "docker",
+              "python3",
+              "git"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/l4-application-build",
+          "title": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/immz-schedule-app-local",
+      "path": "tools/immz-schedule-app-local/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-extraction-pages/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [

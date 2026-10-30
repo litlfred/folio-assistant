@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-30T12:00:00Z
+updated_at: 2026-10-30T12:15:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -52,3 +52,9 @@ _2026-10-26T14:22:00Z_ — Progress update: `litlfred/cat-harness#609` (`6c5ff04
 _2026-10-29T07:55:00Z_ — Lane E (https://claude.ai/code/session_01Qmmkt6hTCZSkeyx315exLo): fhir-harness#172 (11 nodes, 4 vendored) merged c518a22; cat-harness#660 (38 nodes, closes cat-harness#607) merged 1aa4479; cat-harness-tools#797 (a nested package with its own lockfile, e.g. `schemas/block-qa-schema`, is its own package) merged 8fb3515. Left: bootstrap-tools#44 (waits on the ujiv layering card: bootstrap-tools may not name cat-harness's kind); folio-assistant-core and who-iris (need a bun.lock first); after the index re-pin, name `libraries:check` in code-quality-gates.yml and drop the tools `OWN_SCRIPT_EXEMPTIONS` entry.
 
 _2026-10-30T12:00Z_ — `libraries:check` is wired: folio-assistant `.github/workflows/code-quality-gates.yml`, step "software libraries are current". Still open: bootstrap-tools#44 (layering choice a/b/c, put to the owner) and folio-assistant-core / who-iris, which need a bun.lock first. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
+
+_2026-10-30T12:15Z_ — Follow-ups completed/opened:
+- `cat-harness-tools` `OWN_SCRIPT_EXEMPTIONS` entry for `libraries:check` was already dropped on `main` in `litlfred/cat-harness-tools#808` (`63b3a5c`).
+- Opened `litlfred/folio-assistant-core#231`: adds `bun.lock` (plus `mdast-util-math` and `@types/mdast` in `package.json`, imported by `scripts/codemod-refterm.ts`), declares `folio-assistant-core-libraries` (`path: "libraries/"`, typology `software-library`), and generates 22 `software-library/1.0.0` nodes and `libraries/README.md`.
+- Opened `litlfred/who-iris#92`: adds `bun.lock`, declares `who-iris-libraries` (`path: "libraries/"`, typology `software-library`), and generates 5 `software-library/1.0.0` nodes and `libraries/README.md`.
+- Only `bootstrap-tools#44` (blocked on owner decision for the `ujiv` layering choice a/b/c) and merging the two new PRs remain.

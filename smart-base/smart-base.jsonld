@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-30T12:08:40.721Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5876c6ca9f281845137812300eef008619e822c2",
-  "sourceCommitSha": "5876c6ca9f281845137812300eef008619e822c2",
-  "sourceCommitAt": "2026-10-30T13:45:10+02:00",
+  "generatedAt": "2026-10-30T12:42:35.333Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f205d13162e880c531c1b2f8b9d7a42f768252ca",
+  "sourceCommitSha": "f205d13162e880c531c1b2f8b9d7a42f768252ca",
+  "sourceCommitAt": "2026-10-30T12:15:42Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -386,7 +386,7 @@
     "Role": 1,
     "Subgraph": 28,
     "Asset": 3,
-    "Tool": 13
+    "Tool": 14
   },
   "@graph": [
     {
@@ -5385,6 +5385,90 @@
       ]
     },
     {
+      "@id": "http://smart.who.int/base/tools/immz-schedule-app-local.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "immz-schedule-app-local",
+      "title": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG",
+      "description": "Start the schedule-check web form from litlfred/awho-mcp on this machine: a HAPI FHIR server in Docker on 127.0.0.1, the WHO SMART Immunizations IG loaded, then a country adaptation IG after it (its decision-logic tables replace WHO's, and its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. Re-running reuses a server already loaded from the same commits; `--down` stops both.",
+      "install": {
+        "cli": "git clone https://github.com/litlfred/awho-mcp && cd awho-mcp && python3 -m pip install -e ."
+      },
+      "invoke": {
+        "shell": "awho-mcp/scripts/local_up.sh --who-ig <dir> [--country-ig <dir>] [--fhir-port <n>] [--web-port <n>] [--down]"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "who-ig",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A checkout of the WHO SMART Immunizations IG, relative to the working directory (the folder holding the checkouts, e.g. `~/space_cats`).",
+            "required": true,
+            "arg": {
+              "flag": "--who-ig"
+            }
+          },
+          {
+            "name": "country-ig",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A country adaptation IG checkout, e.g. `smart-immunizations-uganda`, relative to the working directory. Without it the app follows WHO's own schedule.",
+            "required": false,
+            "arg": {
+              "flag": "--country-ig"
+            }
+          },
+          {
+            "name": "fhir-port",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Port",
+            "description": "The HAPI port on 127.0.0.1. Default 8081.",
+            "required": false,
+            "arg": {
+              "flag": "--fhir-port"
+            }
+          },
+          {
+            "name": "web-port",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Port",
+            "description": "The form's port on 127.0.0.1. Default 8090.",
+            "required": false,
+            "arg": {
+              "flag": "--web-port"
+            }
+          },
+          {
+            "name": "down",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Stop the form and the server.",
+            "required": false,
+            "arg": {
+              "flag": "--down"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
+            "description": "The form, on 127.0.0.1. It stores nothing; each check is one inline `$apply` round.",
+            "render": {
+              "as": "url",
+              "reason": "a reader opens the running app; the scheme is checked before it reaches an href"
+            }
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "docker",
+          "python3",
+          "git"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "http://smart.who.int/base/skill/l4-application-build"
+      ]
+    },
+    {
       "@id": "http://smart.who.int/base/tools/l1-extraction-pages.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "l1-extraction-pages",
@@ -7681,8 +7765,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "5876c6ca9f281845137812300eef008619e822c2",
+    "sha": "f205d13162e880c531c1b2f8b9d7a42f768252ca",
     "pr": "main",
-    "run": "41050336082"
+    "run": "41054014401"
   }
 }
