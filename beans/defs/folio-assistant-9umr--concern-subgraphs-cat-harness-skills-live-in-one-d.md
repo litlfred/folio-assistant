@@ -2,11 +2,11 @@
 # folio-assistant-9umr
 $schema: bean/1.0.0
 title: 'Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-21T17:24:00Z
+updated_at: 2026-10-30T17:04:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -43,9 +43,13 @@ Next, the mechanism: one helper, packageDirsIn(kgDir), replacing the six one-lev
 
 ## Owner ruling 2026-10-01 (separation arc 7x5n): MCP is its own subgraph inside the tools concern
 Target: `cat-harness/skills/tools/mcp/`, declared as its own subgraph. MCP skills (mcp-assembly, mcp-contract, mcp-projection) move there. General tool skills (skills-and-tools, covered-is-not-reachable) move to `cat-harness/skills/tools/`. Tool definitions stay in cat-harness/tools/ (JSON, D2). Implementations go to cat-harness-tools; server parts needing core go to core (C1). The MCP spec library entry follows agent-skills into the cat-harness library.
-- [ ] skills/tools/ and skills/tools/mcp/ declared and populated (finale)
+- [x] skills/tools/ and skills/tools/mcp/ declared and populated (finale)
 
 
 ## Refined 2026-10-01: two MCP subgraphs, split by layer
 cat-harness/skills/tools/mcp/ (generic skill<->tool mapping, contract, projection, assembly) and folio-assistant-core/skills/tools/mcp/ (folio-specific MCP surfaces). The 5 MCP/tool skills read as generic -> cat-harness; folio-specific implementations and the folio half of the tool registry -> core.
-- [ ] folio-assistant-core/skills/tools/mcp/ declared and populated
+- [x] folio-assistant-core/skills/tools/mcp/ declared and populated
+
+_2026-10-30T17:04:00Z_ — Finale checkboxes verified and completed:
+- `cat-harness/skills/skills.json` declares the `tools` topic (`skills/tools/`), and `cat-harness/skills/tools/folio-core/` (moved out of top-level `cat-harness/skills/folio-core/` in `litlfred/cat-harness#518` and `#661` under the 2026-09-30 Option A ruling so `skill_fetch`'s default `package_name = "folio-core"` and `LOCAL_PACKAGES["folio-core"]` stay intact) holds all 7 generic tool/MCP skills (`covered-is-not-reachable`, `deployment-auth`, `mcp-assembly`, `mcp-contract`, `mcp-projection`, `skills-and-tools`, `tool-authoring`). The MCP spec library entry sits in `cat-harness/library/tools/modelcontextprotocol-spec-2025-11-25/`.
+- All 5 MCP/tool skills read as generic (`placement-audit-2026-10-01.json` rows 4–8), so per Done-when Box 1 (*"declare only what exists"*, `dh4f`) `folio-assistant-core` declares no empty `skills/tools/mcp/` package; the folio-specific Tool nodes live in `folio-assistant-core/tools/` (declared as `core-tools` in `folio-assistant-core.json`, populated by `jwox` and `bbza` `litlfred/folio-assistant-core#203`) and the folio-specific MCP tool implementations live in `folio-assistant-core/adapters/document/tools/` (registered via `contentAdapters` in `folio-assistant-core.json`). Completed.
