@@ -1,0 +1,24 @@
+name: "PlantUML's declared Java runtime"
+description: |
+  Put the Java that the `plantuml` tool release declares as its runtime first on
+  PATH and in JAVA_HOME (issue #2744).
+
+  PlantUML 1.2026.9 bundles ELK classes compiled for Java 21 (class file 65).
+  `ubuntu-latest` puts Java 17 on PATH, so every diagram with an ELK layout
+  threw `UnsupportedClassVersionError`, `uml:overview` exited 1 inside
+  `derive:publish`, and no publish deployed from 2026-10-30 13:23Z.
+
+  The major version is read from the declaration
+  (`cat-harness/tool-releases/plantuml-*.json`, its `temurin-jre@<major>…`
+  runtime), never written here, so the next PlantUML bump that changes its
+  runtime moves this with it. The JDK comes from the runner image
+  (`JAVA_HOME_<major>_X64`, Temurin on GitHub's Ubuntu images); if the image
+  has none, the step fails and says which one it needed.
+
+  Runs after the instances are mounted (it reads cat-harness's declaration).
+runs:
+  using: composite
+  steps:
+    - name: Select the Java major the plantuml release declares
+      shell: bash
+      run: bash "$GITHUB_ACTION_PATH/select-java.sh"
