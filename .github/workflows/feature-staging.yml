@@ -1104,22 +1104,11 @@ jobs:
       # not what anybody is reviewing.
       - name: Generate TypeDoc API reference
         if: steps.carry.outputs.api == 'yes'
-        env:
-          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
-          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
-        run: |
-          npx --yes typedoc \
-            --gitRevision "$STAGING_BRANCH" \
-            --out ./_site/api \
-            --entryPointStrategy expand \
-            --readme none \
-            --hideGenerator \
-            --skipErrorChecking \
-            --name "folio-assistant API (staging: $STAGING_SLUG)" \
-            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
-            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
-            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
-            cat-harness/schemas/lean-packages.ts 2>&1 | tail -10
+        uses: ./.github/actions/typedoc-api
+        with:
+          out: ./_site/api
+          name: "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})"
+          git-revision: ${{ steps.slug.outputs.branch }}
 
       # Add a staging banner to every HTML page so a reviewer never
       # mistakes staged content for the published site.

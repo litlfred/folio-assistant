@@ -580,15 +580,10 @@ jobs:
       # reference with no second edit, which is the same rule
       # `check:schema-nodes` enforces for the graph itself.
       - name: Generate TypeScript API reference (TypeDoc)
-        run: |
-          npx --yes typedoc \
-            --out ./_site/api \
-            --entryPointStrategy expand \
-            --readme none \
-            --hideGenerator \
-            --skipErrorChecking \
-            --name "folio-assistant API" \
-            cat-harness/schemas 2>&1 | tail -20
+        uses: ./.github/actions/typedoc-api
+        with:
+          out: ./_site/api
+          name: folio-assistant API
 
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).

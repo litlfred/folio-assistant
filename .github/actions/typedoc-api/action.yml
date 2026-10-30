@@ -1,0 +1,25 @@
+name: TypeScript API reference (TypeDoc)
+description: >
+  Builds the TypeScript API reference for the mounted cat-harness schemas
+  into <out>. One step for the published site and for staging previews, so
+  the two cannot drift (fa#2739).
+inputs:
+  out:
+    description: Output directory, e.g. ./_site/api
+    required: true
+  name:
+    description: Title of the reference
+    required: true
+  git-revision:
+    description: Revision the source links point at (TypeDoc's default is the current commit)
+    required: false
+    default: ""
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        OUT: ${{ inputs.out }}
+        NAME: ${{ inputs.name }}
+        REV: ${{ inputs.git-revision }}
+      run: bash "$GITHUB_ACTION_PATH/typedoc.sh"
