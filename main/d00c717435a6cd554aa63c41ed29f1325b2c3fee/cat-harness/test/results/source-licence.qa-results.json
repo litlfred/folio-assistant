@@ -1,0 +1,291 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness-tools/scripts/check-source-licence.ts",
+    "script_hash": "471d883f6c78"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "library-source-licences"
+  },
+  "families": {
+    "deprecated-id": {
+      "summary": "A valid expression naming an id the pinned SPDX License List marks deprecated. Still names a licence; prefer the current id when the record is next touched. Reported, not gated.",
+      "count": 0,
+      "entries": []
+    },
+    "malformed": {
+      "summary": "A licence record that claims something it cannot back — including a `stated` id that is not a valid SPDX licence expression over the pinned License List. This is the only family that fails the check.",
+      "count": 0,
+      "entries": []
+    },
+    "non-canonical-case": {
+      "summary": "A valid id written in a case other than the List's (ids match case-insensitively). The List's spelling is the one its URLs use. Reported, not gated.",
+      "count": 0,
+      "entries": []
+    },
+    "not-recorded": {
+      "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
+      "count": 43,
+      "entries": [
+        {
+          "entry": "cat-harness/library/agent-skill-best-practices---gemini-cli"
+        },
+        {
+          "entry": "cat-harness/library/agent-skills---google-antigravity-docs"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-0909.4061v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2202.02427v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2312.07755v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2504.07199v3"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2504.19675v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2504.21474v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2508.05192v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2508.21620v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2602.12670v4"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2605.03537v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2606.04382v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2607.14456v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2607.20636v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2607.25032v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2608.08453v1"
+        },
+        {
+          "entry": "cat-harness/library/best-practices---google-antigravity-docs"
+        },
+        {
+          "entry": "cat-harness/library/deerwester-1990-indexing-by-lsa"
+        },
+        {
+          "entry": "cat-harness/library/dusengumuremyi-2026-ai-mediated-raci"
+        },
+        {
+          "entry": "cat-harness/library/equipping-agents-for-the-real-world-with-agent-skills-anthro"
+        },
+        {
+          "entry": "cat-harness/library/gurel-tat-2017-swot-analysis"
+        },
+        {
+          "entry": "cat-harness/library/kg-folio-asst-2026-09-30"
+        },
+        {
+          "entry": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa"
+        },
+        {
+          "entry": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa"
+        },
+        {
+          "entry": "cat-harness/library/rfc2119-key-words-requirement-levels"
+        },
+        {
+          "entry": "cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words"
+        },
+        {
+          "entry": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
+        },
+        {
+          "entry": "cat-harness/library/skill-authoring-best-practices---claude-platform-docs"
+        },
+        {
+          "entry": "cat-harness/library/skills-in-openai-api"
+        },
+        {
+          "entry": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation"
+        },
+        {
+          "entry": "folio-assistant-core/library/arxiv-2510.21603v1"
+        },
+        {
+          "entry": "folio-assistant-sci/library/milnorlink"
+        },
+        {
+          "entry": "smart-base/library/9789240010567-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240081949-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240093362-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240120747-eng"
+        },
+        {
+          "entry": "smart-base/library/9789241509510-eng"
+        },
+        {
+          "entry": "smart-base/library/9789241511766-eng"
+        },
+        {
+          "entry": "smart-base/library/who-rhr-1806-eng"
+        },
+        {
+          "entry": "who-iris/library/9789241548960-eng"
+        },
+        {
+          "entry": "who-iris/library/who-pub-tps-931"
+        },
+        {
+          "entry": "who-iris/library/wpr-rdo-2020-003-eng"
+        }
+      ]
+    },
+    "stated": {
+      "summary": "The licence is known, and the record says where it is stated.",
+      "count": 18,
+      "entries": [
+        {
+          "entry": "cat-harness/library/hmans-2026-beans-readme",
+          "id": "Apache-2.0",
+          "basis": "https://github.com/hmans/beans/blob/99260bf1a6bec3e395b629406b737f6418653a17/LICENSE — the repository's LICENSE at the ingested commit is the Apache License, Version 2.0, read 2026-10-01; the README's own 'License' section says the same. The repository has no NOTICE file. The text is held in full, unmodified; the Apache-2.0 licence text itself is this repository's root LICENSE, and the attribution is in THIRD-PARTY-NOTICES.md."
+        },
+        {
+          "entry": "cat-harness/library/mcp-2026-specification-2026-07-28",
+          "id": "Apache-2.0 AND MIT",
+          "basis": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/046fa30efd374370afb87ef830bd788eac5f217e/LICENSE — the repository's LICENSE at the ingested commit, read 2026-10-01: 'The MCP project is undergoing a licensing transition from the MIT License to the Apache License, Version 2.0 (\"Apache-2.0\"). All new code and specification contributions to the project are licensed under Apache-2.0. ... Contributions made by authors who originally licensed their work under the MIT License and who have not yet granted explicit permission to relicense remain licensed under the MIT License.' Both permit copying with the notice kept, so the specification text is held in full; which pages are which cannot be told from the files, so both notices are reproduced in THIRD-PARTY-NOTICES.md. The CC-BY-4.0 clause in the same file applies to documentation EXCLUDING specifications, so it does not apply here."
+        },
+        {
+          "entry": "cat-harness/library/omg-2013-bpmn-2-0-2",
+          "id": "LicenseRef-OMG-Specification",
+          "basis": "The specification's own permission notice, PDF page 2: a fully-paid, non-exclusive, non-transferable licence to use, copy and distribute the specification, on condition (2) that copies are for informational purposes and \"will not be copied or posted on any network computer or broadcast in any media\". Hence this entry records the source and holds none of its text (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/omg-2024-dmn-1-5",
+          "id": "LicenseRef-OMG-Specification",
+          "basis": "The specification's own permission notice, PDF page 2: a fully-paid, non-exclusive, non-transferable licence to use, copy and distribute the specification, on condition (2) that copies are for informational purposes and \"will not be copied or posted on any network computer or broadcast in any media\". Hence this entry records the source and holds none of its text (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/omg-2024-spdx-3-0",
+          "id": "Community-Spec-1.0 AND CC-BY-3.0",
+          "basis": "PDF page ii, 'Use of Specification - Terms, Conditions & Notices': 'This work is licensed under the Community Specification License 1.0 (Community-Spec-1.0). Pre-existing portions of this work from copyright holders who have not subsequently contributed under the Community-Spec-1.0 are provided under Creative Commons Attribution License 3.0 Unported (CC-BY-3.0). Copies of these licenses are reproduced in their entirety herein.' Community-Spec-1.0 §1.1 grants a licence 'to reproduce, prepare derivative works of, publicly display, publicly perform, and distribute'; §1.2 requires attribution including 'the material's name, version number, and source from where the materials were retrieved'. Both licences permit holding the text, so the entry holds it (unlike omg-2024-dmn-1-5, whose OMG notice forbids network posting)."
+        },
+        {
+          "entry": "cat-harness/library/skills-in-openai-api-notebook",
+          "id": "MIT",
+          "basis": "https://raw.githubusercontent.com/openai/openai-cookbook/main/LICENSE — the repository's LICENSE, 'MIT License, Copyright (c) 2025 OpenAI', read 2026-09-30"
+        },
+        {
+          "entry": "cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain",
+          "id": "CC-BY-SA-3.0",
+          "basis": "Every slide's footer reads 'Licensed under CC-BY-SA-3.0' (title slide onward). The deck states no other licence."
+        },
+        {
+          "entry": "cat-harness/library/w3c-2013-prov-o",
+          "id": "LicenseRef-W3C-Document-License",
+          "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2011-2013 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply\", where 'document use' links to http://www.w3.org/Consortium/Legal/copyright-documents (the W3C Document License; no SPDX id). It permits copying and distributing the document's contents, or portions of them, in any medium for any purpose, provided every copy carries a link to the original, the pre-existing copyright notice, and the document's status; it grants NO right to modify. So this entry holds the text verbatim and changes no wording: the link, notice and status are in its own front-matter sections and repeated in `note`. Splitting it into per-section files is a reading of 'portions' and of 'any medium', recorded here so the owner can overrule it (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/w3c-2018-odrl-model-2-2",
+          "id": "W3C-20150513",
+          "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2018 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability, trademark and permissive document license rules apply\", where 'permissive document license' links to https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document (the W3C Software and Document License, SPDX W3C-20150513). That licence permits copying, modifying and distributing the work provided the notice, any pre-existing notices, and a statement of changes go with every copy; the notice is in `note`, so this entry holds the text in full (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/w3c-2020-json-ld-1-1",
+          "id": "W3C-20150513",
+          "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2010-2020 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability, trademark and permissive document license rules apply\", where 'permissive document license' links to https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document (the W3C Software and Document License, SPDX W3C-20150513). That licence permits copying, modifying and distributing the work provided the notice, any pre-existing notices, and a statement of changes go with every copy; the notice is in `note`, so this entry holds the text in full (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/w3c-2024-prov-jsonld",
+          "id": "LicenseRef-W3C-Document-License",
+          "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2016-2024 World Wide Web Consortium. W3C® liability, trademark and W3C Document License rules apply.\", where 'W3C Document License' links to the W3C Document License (https://www.w3.org/copyright/document-license/; no SPDX id). It permits copying and distributing the document's contents, or portions of them, in any medium for any purpose, provided every copy carries a link to the original, the pre-existing copyright notice, and the document's status; it grants NO right to modify. So this entry holds the text verbatim and changes no wording: the link, notice and status are on its first two page sections (page-001, page-002) and repeated in `note`. Splitting it into per-page files is a reading of 'portions' and of 'any medium', recorded here so the owner can overrule it, as for w3c-2013-prov-o (issue #1614)."
+        },
+        {
+          "entry": "fhir-harness/library/cucumber-2024-gherkin-reference",
+          "id": "MIT",
+          "basis": "https://github.com/cucumber/docs/blob/3c93e6cee4c6164f40ed69dfe84ac440c2983120/LICENSE — the repository's LICENSE at the ingested commit, 'The MIT License (MIT) / Copyright (c) Cucumber Ltd', read 2026-10-01. The text is held in full; the notice MIT requires is reproduced in THIRD-PARTY-NOTICES.md."
+        },
+        {
+          "entry": "fhir-harness/library/hl7-2023-fhir-r5-testplan",
+          "id": "CC0-1.0",
+          "basis": "https://github.com/HL7/fhir/blob/eca054db690594b98b3cf81ff52634f2bbc69822/source/license.html — the specification's own licence page at the v5.0.0 commit, read 2026-10-01: 'We dedicate the FHIR specification to the public domain using CC0 1.0 ... This specification is licensed under Creative Commons \"No Rights Reserved\" (CC0).' The repository's LICENSE file says the same: 'the FHIR specification itself is covered under a different license, as software licenses are not appropriate', pointing to that page. The resource's source files are held in full."
+        },
+        {
+          "entry": "fhir-harness/library/isaitb-2026-interoperability-test-bed-readme",
+          "id": "EUPL-1.2",
+          "basis": "https://github.com/ISAITB/gitb/blob/e3cb6c00ef57792b6464b03cea27c8e84a6565bc/LICENCE.txt and NOTICE.md at the ingested commit, read 2026-10-01: 'Copyright (C) 2026 European Union. Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the \"Licence\")'. EUPL-1.2 permits reproduction and distribution of the Work provided the copyright notice and licence notice are kept, so the README is held in full, unmodified, and the notice is reproduced in THIRD-PARTY-NOTICES.md."
+        },
+        {
+          "entry": "smart-base/library/9789240101197-eng",
+          "id": "CC-BY-NC-SA-3.0-IGO",
+          "basis": "The PDF's imprint page (p. 4): '© World Health Organization 2024. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
+        },
+        {
+          "entry": "smart-base/library/9789240116191-eng",
+          "id": "CC-BY-NC-SA-3.0-IGO",
+          "basis": "The PDF's imprint page (p. 3): '© World Health Organization 2025. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
+        },
+        {
+          "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
+          "id": "CC-BY-3.0-IGO",
+          "basis": "The article's own footer, p. e215: \"Copyright © 2021 World Health Organization; licensee Elsevier. This is an Open Access article published under the CC BY 3.0 IGO license.\""
+        },
+        {
+          "entry": "smart-base/library/who-dpi-h-reference-architecture-draft-v1",
+          "id": "CC-BY-NC-SA-3.0-IGO",
+          "basis": "The owner (litlfred), 2026-10-01, in session chat: 'CC BY-NC-SA 3.0 IGO, = the draft Reference Architecture.  i am responsible'. The PDF itself states no licence: all 254 pages were searched for licence/Creative Commons/CC BY/copyright/© on 2026-10-01, and the only matches are about third-party works (SNOMED CT, Archi, World Bank) cited inside it."
+        }
+      ]
+    },
+    "unknown": {
+      "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
+      "count": 5,
+      "entries": [
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2406.01940v2",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2601.22554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2602.16554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/codata-2022",
+          "searched": 2,
+          "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
+        },
+        {
+          "entry": "smart-base/library/smart-trust",
+          "searched": 3,
+          "note": "Not determined from this repository's records of the IG, and not guessed. Nothing of the IG is copied into this entry, so no licence condition is exercised by it; the IG's own licence is to be read off the published IG (http://smart.who.int/trust) when it is recorded."
+        }
+      ]
+    }
+  },
+  "total": 66
+}

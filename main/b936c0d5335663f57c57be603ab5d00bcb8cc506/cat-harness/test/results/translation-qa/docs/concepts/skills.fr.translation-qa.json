@@ -1,0 +1,109 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:fr/skills",
+  "block": "Skills & roles",
+  "locale": "fr",
+  "paths": {
+    "md": "docs/concepts/skills.md"
+  },
+  "po": "translations/fr/concepts/skills.po",
+  "source_hashes": {
+    "md": "5c8d1b17ba24",
+    "po": "858b42991d04"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "5c8d1b17ba24",
+          "po": "858b42991d04"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T15:44:09.032Z",
+        "reviewed_sha": "b936c0d5335663f57c57be603ab5d00bcb8cc506",
+        "severity": "minor",
+        "metrics": {
+          "translated": 145,
+          "total": 146,
+          "pct": 99
+        },
+        "notes": "1 of 146 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "5c8d1b17ba24",
+          "po": "858b42991d04"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T15:44:09.035Z",
+        "reviewed_sha": "b936c0d5335663f57c57be603ab5d00bcb8cc506",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "TBD — absent from: \"✅ compétences de cycle de vie, d'agent, du lot de plateforme et de folio-documen\""
+          },
+          {
+            "text": "ICD-11 — absent from: \"Gouvernance terminologique (CIM-11, SNOMED CT, LOINC).\""
+          },
+          {
+            "text": "UN — absent from: \"Localisation pour les langues prises en charge par l'ONU.\""
+          }
+        ],
+        "metrics": {
+          "checked": 145,
+          "missing": 3,
+          "missing_strict": 0,
+          "missing_acronyms": 3,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "3 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/fr/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how. 1 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "5c8d1b17ba24",
+          "po": "858b42991d04"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T15:44:09.037Z",
+        "reviewed_sha": "b936c0d5335663f57c57be603ab5d00bcb8cc506",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 12,
+          "translated": 145
+        },
+        "notes": "12 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-06T15:44:09.038Z"
+}

@@ -1,0 +1,1423 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/check-library-qa.ts",
+    "script_hash": "0d4e26476027"
+  },
+  "subject": {
+    "kind": "library",
+    "id": "library-entries"
+  },
+  "families": {
+    "bibliographic-missing": {
+      "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
+      "count": 63,
+      "entries": [
+        {
+          "entry": "agent-skill-best-practices---gemini-cli",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "agent-skills---google-antigravity-docs",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-0909.4061v2",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2202.02427v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2312.07755v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2504.07199v3",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2504.19675v2",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Osma Suominen; Juho Inkinen; Mona Lehtinen"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2504.21474v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2508.05192v2",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Felix Neubauer; Jürgen Pleiss; Benjamin Uekermann"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2508.21620v2",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Agustinus Kristiadi"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Xiangyi Li; Yimin Liu; Wenbo Chen; Bingran You; Zonglin Di; Yifeng He; Shengh..."
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2605.03537v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Eric H. C. Chow"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2606.04382v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Kwok Leong Tang"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2607.14456v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Harris Borman; Herman Wandabwa; Fusun Yu; Sandeepa Kannangara; Justin Liu; An..."
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2607.20636v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Kavya Ravichandran"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Giuseppe Destefanis"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Chi Zhang; Yimin Liu; Xinze Chen; Ping Ji"
+            }
+          ]
+        },
+        {
+          "entry": "best-practices---google-antigravity-docs",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "deerwester-1990-indexing-by-lsa",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "dusengumuremyi-2026-ai-mediated-raci",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "dusengumuremyi anthon"
+            }
+          ]
+        },
+        {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "gurel-tat-2017-swot-analysis",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "pc"
+            }
+          ]
+        },
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "kg-folio-asst-2026-09-30",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "landauer-foltz-laham-1998-intro-lsa",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "(Darrell Laham)"
+            },
+            {
+              "field": "structure.json metadata.docinfo.CreationDate",
+              "value": "1998"
+            }
+          ]
+        },
+        {
+          "entry": "mcp-2026-specification-2026-07-28",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "omg-2024-spdx-3-0",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "rfc2119-key-words-requirement-levels",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "sammut-bonnici-galea-2015-swot-analysis",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "skills-in-openai-api",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "w3c-2013-prov-o",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "w3c-2018-odrl-model-2-2",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "w3c-2020-json-ld-1-1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "w3c-2024-prov-jsonld",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "wang-rangaiah-2026-mcdm-aggregation",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Prof. GP Rangaiah"
+            }
+          ]
+        },
+        {
+          "entry": "cucumber-2024-gherkin-reference",
+          "instance": "fhir-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "hl7-2023-fhir-r5-testplan",
+          "instance": "fhir-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "isaitb-2026-interoperability-test-bed-readme",
+          "instance": "fhir-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2510.21603v1",
+          "instance": "folio-assistant-core",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Kuicai Dong; Shurui Huang; Fangda Ye; Wei Han; Zhi Zhang; Dexun Li; Wenjun Li..."
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2406.01940v2",
+          "instance": "folio-assistant-sci",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "arxiv-2601.22554v1",
+          "instance": "folio-assistant-sci",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Thomas Zhu; Pietro Monticone; Jeremy Avigad; Sean Welleck"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2602.16554v1",
+          "instance": "folio-assistant-sci",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Yuanjie Ren; Jinzheng Li; Yidi Qi"
+            }
+          ]
+        },
+        {
+          "entry": "codata-2022",
+          "instance": "folio-assistant-sci",
+          "missing": [
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "milnorlink",
+          "instance": "folio-assistant-sci",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240010567-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240081949-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240093362-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240120747-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789241509510-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789241511766-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "mehl-2021-who-smart-guidelines",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Garrett Mehl"
+            }
+          ]
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Aguilera Millacura, Felipe (Consultant WDC)"
+            }
+          ]
+        },
+        {
+          "entry": "who-rhr-1806-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789241548960-eng",
+          "instance": "who-iris",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "catalogue/records/9789241548960-eng.dc.json dc.contributor.author",
+              "value": "World Health Organization"
+            },
+            {
+              "field": "catalogue/records/9789241548960-eng.dc.json dc.publisher",
+              "value": "World Health Organization"
+            },
+            {
+              "field": "catalogue/records/9789241548960-eng.dc.json dc.date.issued",
+              "value": "2014"
+            }
+          ]
+        },
+        {
+          "entry": "who-pub-tps-931",
+          "instance": "who-iris",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "catalogue/records/who-pub-tps-931.dc.json dc.contributor.author",
+              "value": "World Health Organization. Technical Publications Unit"
+            },
+            {
+              "field": "catalogue/records/who-pub-tps-931.dc.json dc.publisher",
+              "value": "World Health Organization"
+            },
+            {
+              "field": "catalogue/records/who-pub-tps-931.dc.json dc.date.issued",
+              "value": "1993"
+            },
+            {
+              "field": "structure.json metadata.docinfo.CreationDate",
+              "value": "2001"
+            }
+          ]
+        },
+        {
+          "entry": "wpr-rdo-2020-003-eng",
+          "instance": "who-iris",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "catalogue/records/wpr-rdo-2020-003-eng.dc.json dc.contributor.author",
+              "value": "World Health Organization. Regional Office for the Western Pacific"
+            },
+            {
+              "field": "catalogue/records/wpr-rdo-2020-003-eng.dc.json dc.publisher",
+              "value": "WHO Regional Office for the Western Pacific"
+            },
+            {
+              "field": "catalogue/records/wpr-rdo-2020-003-eng.dc.json dc.date.issued",
+              "value": "2020"
+            }
+          ]
+        }
+      ]
+    },
+    "block-no-content": {
+      "summary": "Prose blocks the library viewer renders as '(no content carried)' while the entry holds words. A heading-only section (summary status `empty`) is not counted: its text is in its subsections. `withheld` says when the publication gate suppressed the verbatim text by design — the remedy then is a summary, which a withheld entry may publish.",
+      "count": 2,
+      "entries": [
+        {
+          "entry": "9789241548960-eng",
+          "instance": "who-iris",
+          "blocks": 243,
+          "of": 250,
+          "words": 54435,
+          "field": "blocks/*.jsonld text -> sections/*.md",
+          "withheld": "item/63e14c27-7448-41ec-be08-a96a25a47db6 ORIGINAL \"9789241548960_eng.pdf\": copyright refused, restrictions refused",
+          "summarised": 0
+        },
+        {
+          "entry": "who-pub-tps-931",
+          "instance": "who-iris",
+          "blocks": 121,
+          "of": 121,
+          "words": 25714,
+          "field": "blocks/*.jsonld text -> sections/*.md",
+          "withheld": "item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 ORIGINAL \"WHO_PUB_TPS_93.1.pdf\": copyright refused, restrictions refused",
+          "summarised": 0
+        }
+      ]
+    },
+    "could-not-determine": {
+      "summary": "A file the judgement needs exists and would not parse, or a PDF source has no extraction to read. Never a pass — the one family `--check` fails on.",
+      "count": 0,
+      "entries": []
+    },
+    "summary-backlog": {
+      "summary": "Prose blocks with no current agent summary, per entry. A count, advisory: the drain is slow on purpose.",
+      "count": 61,
+      "entries": [
+        {
+          "entry": "agent-skill-best-practices---gemini-cli",
+          "instance": "cat-harness",
+          "backlog": 3,
+          "prose": 3
+        },
+        {
+          "entry": "agent-skills---google-antigravity-docs",
+          "instance": "cat-harness",
+          "backlog": 4,
+          "prose": 4
+        },
+        {
+          "entry": "arxiv-0909.4061v2",
+          "instance": "cat-harness",
+          "backlog": 74,
+          "prose": 74
+        },
+        {
+          "entry": "arxiv-2202.02427v1",
+          "instance": "cat-harness",
+          "backlog": 20,
+          "prose": 20
+        },
+        {
+          "entry": "arxiv-2504.07199v3",
+          "instance": "cat-harness",
+          "backlog": 19,
+          "prose": 19
+        },
+        {
+          "entry": "arxiv-2504.19675v2",
+          "instance": "cat-harness",
+          "backlog": 26,
+          "prose": 26
+        },
+        {
+          "entry": "arxiv-2504.21474v1",
+          "instance": "cat-harness",
+          "backlog": 9,
+          "prose": 9
+        },
+        {
+          "entry": "arxiv-2508.05192v2",
+          "instance": "cat-harness",
+          "backlog": 12,
+          "prose": 12
+        },
+        {
+          "entry": "arxiv-2508.21620v2",
+          "instance": "cat-harness",
+          "backlog": 20,
+          "prose": 20
+        },
+        {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "backlog": 81,
+          "prose": 81
+        },
+        {
+          "entry": "arxiv-2605.03537v1",
+          "instance": "cat-harness",
+          "backlog": 19,
+          "prose": 19
+        },
+        {
+          "entry": "arxiv-2606.04382v1",
+          "instance": "cat-harness",
+          "backlog": 24,
+          "prose": 24
+        },
+        {
+          "entry": "arxiv-2607.14456v1",
+          "instance": "cat-harness",
+          "backlog": 24,
+          "prose": 24
+        },
+        {
+          "entry": "arxiv-2607.20636v1",
+          "instance": "cat-harness",
+          "backlog": 141,
+          "prose": 141
+        },
+        {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "backlog": 13,
+          "prose": 13
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "backlog": 20,
+          "prose": 20
+        },
+        {
+          "entry": "best-practices---google-antigravity-docs",
+          "instance": "cat-harness",
+          "backlog": 4,
+          "prose": 4
+        },
+        {
+          "entry": "deerwester-1990-indexing-by-lsa",
+          "instance": "cat-harness",
+          "backlog": 34,
+          "prose": 34
+        },
+        {
+          "entry": "dusengumuremyi-2026-ai-mediated-raci",
+          "instance": "cat-harness",
+          "backlog": 6,
+          "prose": 6
+        },
+        {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "backlog": 12,
+          "prose": 12
+        },
+        {
+          "entry": "gurel-tat-2017-swot-analysis",
+          "instance": "cat-harness",
+          "backlog": 13,
+          "prose": 13
+        },
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "backlog": 14,
+          "prose": 14
+        },
+        {
+          "entry": "kg-folio-asst-2026-09-30",
+          "instance": "cat-harness",
+          "backlog": 13,
+          "prose": 13
+        },
+        {
+          "entry": "landauer-foltz-laham-1998-intro-lsa",
+          "instance": "cat-harness",
+          "backlog": 41,
+          "prose": 41
+        },
+        {
+          "entry": "mcp-2026-specification-2026-07-28",
+          "instance": "cat-harness",
+          "backlog": 542,
+          "prose": 542
+        },
+        {
+          "entry": "omg-2024-spdx-3-0",
+          "instance": "cat-harness",
+          "backlog": 400,
+          "prose": 400
+        },
+        {
+          "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
+          "instance": "cat-harness",
+          "backlog": 21,
+          "prose": 21
+        },
+        {
+          "entry": "rfc2119-key-words-requirement-levels",
+          "instance": "cat-harness",
+          "backlog": 6,
+          "prose": 6
+        },
+        {
+          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+          "instance": "cat-harness",
+          "backlog": 8,
+          "prose": 8
+        },
+        {
+          "entry": "sammut-bonnici-galea-2015-swot-analysis",
+          "instance": "cat-harness",
+          "backlog": 9,
+          "prose": 9
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "backlog": 32,
+          "prose": 32
+        },
+        {
+          "entry": "skills-in-openai-api",
+          "instance": "cat-harness",
+          "backlog": 1,
+          "prose": 1
+        },
+        {
+          "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "backlog": 12,
+          "prose": 12
+        },
+        {
+          "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
+          "instance": "cat-harness",
+          "backlog": 1,
+          "prose": 1
+        },
+        {
+          "entry": "w3c-2013-prov-o",
+          "instance": "cat-harness",
+          "backlog": 26,
+          "prose": 26
+        },
+        {
+          "entry": "w3c-2018-odrl-model-2-2",
+          "instance": "cat-harness",
+          "backlog": 57,
+          "prose": 57
+        },
+        {
+          "entry": "w3c-2020-json-ld-1-1",
+          "instance": "cat-harness",
+          "backlog": 139,
+          "prose": 139
+        },
+        {
+          "entry": "w3c-2024-prov-jsonld",
+          "instance": "cat-harness",
+          "backlog": 71,
+          "prose": 71
+        },
+        {
+          "entry": "wang-rangaiah-2026-mcdm-aggregation",
+          "instance": "cat-harness",
+          "backlog": 39,
+          "prose": 39
+        },
+        {
+          "entry": "cucumber-2024-gherkin-reference",
+          "instance": "fhir-harness",
+          "backlog": 21,
+          "prose": 21
+        },
+        {
+          "entry": "hl7-2023-fhir-r5-testplan",
+          "instance": "fhir-harness",
+          "backlog": 15,
+          "prose": 15
+        },
+        {
+          "entry": "isaitb-2026-interoperability-test-bed-readme",
+          "instance": "fhir-harness",
+          "backlog": 26,
+          "prose": 26
+        },
+        {
+          "entry": "arxiv-2510.21603v1",
+          "instance": "folio-assistant-core",
+          "backlog": 22,
+          "prose": 22
+        },
+        {
+          "entry": "arxiv-2406.01940v2",
+          "instance": "folio-assistant-sci",
+          "backlog": 49,
+          "prose": 49
+        },
+        {
+          "entry": "arxiv-2601.22554v1",
+          "instance": "folio-assistant-sci",
+          "backlog": 17,
+          "prose": 17
+        },
+        {
+          "entry": "arxiv-2602.16554v1",
+          "instance": "folio-assistant-sci",
+          "backlog": 15,
+          "prose": 15
+        },
+        {
+          "entry": "milnorlink",
+          "instance": "folio-assistant-sci",
+          "backlog": 20,
+          "prose": 20
+        },
+        {
+          "entry": "9789240010567-eng",
+          "instance": "smart-base",
+          "backlog": 182,
+          "prose": 182
+        },
+        {
+          "entry": "9789240081949-eng",
+          "instance": "smart-base",
+          "backlog": 66,
+          "prose": 66
+        },
+        {
+          "entry": "9789240093362-eng",
+          "instance": "smart-base",
+          "backlog": 48,
+          "prose": 48
+        },
+        {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "backlog": 78,
+          "prose": 78
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "backlog": 62,
+          "prose": 62
+        },
+        {
+          "entry": "9789240120747-eng",
+          "instance": "smart-base",
+          "backlog": 72,
+          "prose": 72
+        },
+        {
+          "entry": "9789241509510-eng",
+          "instance": "smart-base",
+          "backlog": 106,
+          "prose": 106
+        },
+        {
+          "entry": "9789241511766-eng",
+          "instance": "smart-base",
+          "backlog": 144,
+          "prose": 144
+        },
+        {
+          "entry": "mehl-2021-who-smart-guidelines",
+          "instance": "smart-base",
+          "backlog": 2,
+          "prose": 2
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "backlog": 129,
+          "prose": 129
+        },
+        {
+          "entry": "who-rhr-1806-eng",
+          "instance": "smart-base",
+          "backlog": 20,
+          "prose": 20
+        },
+        {
+          "entry": "9789241548960-eng",
+          "instance": "who-iris",
+          "backlog": 243,
+          "prose": 243
+        },
+        {
+          "entry": "who-pub-tps-931",
+          "instance": "who-iris",
+          "backlog": 121,
+          "prose": 121
+        },
+        {
+          "entry": "wpr-rdo-2020-003-eng",
+          "instance": "who-iris",
+          "backlog": 33,
+          "prose": 33
+        }
+      ]
+    },
+    "title-implausible": {
+      "summary": "A title that is present but not believable: a single short token, a doubled word, no recorded meta.title_source, or not the title the authority order (Dublin Core dc.title → referenced.json identity.title → PDF Info /Title or text heading → slug) gives from the entry's files today. Only titles that passed title-missing are judged here.",
+      "count": 1,
+      "entries": [
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "title": "beans",
+          "field": "manifest.jsonld title",
+          "why": "a single short token"
+        }
+      ]
+    },
+    "title-missing": {
+      "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title` and `meta.title_source`: `slug` means no source offered one, which the owner's ruling of 2026-10-01 says is shown as the slug and flagged here, never filled from the page-1 parse.",
+      "count": 5,
+      "entries": [
+        {
+          "entry": "kg-folio-asst-2026-09-30",
+          "instance": "cat-harness",
+          "title": "kg-folio-asst-2026-09-30",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
+        },
+        {
+          "entry": "codata-2022",
+          "instance": "folio-assistant-sci",
+          "title": "codata-2022",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
+        },
+        {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "title": "9789240101197-eng",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "title": "9789240116191-eng",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "title": "who-dpi-h-reference-architecture-draft-v1",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
+        }
+      ]
+    },
+    "title-self-declared": {
+      "summary": "The title is the source's own word for itself (PDF Info /Title, or a text/notebook heading) and no catalogue record or referenced.json corroborates it. Listed so that 'nothing to check it against' cannot read as 'checked'. Only entries that passed title-missing are listed.",
+      "count": 30,
+      "entries": [
+        {
+          "entry": "agent-skill-best-practices---gemini-cli",
+          "instance": "cat-harness",
+          "title": "Agent Skill best practices | Gemini CLI",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "agent-skills---google-antigravity-docs",
+          "instance": "cat-harness",
+          "title": "Agent Skills | Google Antigravity Docs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2202.02427v1",
+          "instance": "cat-harness",
+          "title": "Lightweight Compositional Embeddings for Incremental Streaming Recommendation",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2312.07755v1",
+          "instance": "cat-harness",
+          "title": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2504.19675v2",
+          "instance": "cat-harness",
+          "title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2508.05192v2",
+          "instance": "cat-harness",
+          "title": "AI-assisted JSON Schema Creation and Mapping",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2508.21620v2",
+          "instance": "cat-harness",
+          "title": "Introduction to the Analysis of Probabilistic Decision-Making Algorithms",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2605.03537v1",
+          "instance": "cat-harness",
+          "title": "A Skill-Based AI Agentic Pipeline for Library of Congress Subject Indexing",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2606.04382v1",
+          "instance": "cat-harness",
+          "title": "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2607.14456v1",
+          "instance": "cat-harness",
+          "title": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2607.20636v1",
+          "instance": "cat-harness",
+          "title": "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "title": "Authoring Agent Skills: A Software-Engineering Approach",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "title": "Equipping agents for the real world with Agent Skills \\ Anthropic",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "title": "beans",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "mcp-2026-specification-2026-07-28",
+          "instance": "cat-harness",
+          "title": "Model Context Protocol Specification, version 2026-07-28",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "sammut-bonnici-galea-2015-swot-analysis",
+          "instance": "cat-harness",
+          "title": "\"SWOT analysis\" in: Wiley Encyclopedia of Management Online",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "title": "Skill authoring best practices - Claude Platform Docs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "title": "Skills in OpenAI API",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "w3c-2013-prov-o",
+          "instance": "cat-harness",
+          "title": "PROV-O: The PROV Ontology",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "w3c-2018-odrl-model-2-2",
+          "instance": "cat-harness",
+          "title": "ODRL Information Model 2.2",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "w3c-2020-json-ld-1-1",
+          "instance": "cat-harness",
+          "title": "JSON-LD 1.1",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "cucumber-2024-gherkin-reference",
+          "instance": "fhir-harness",
+          "title": "Gherkin Reference",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "hl7-2023-fhir-r5-testplan",
+          "instance": "fhir-harness",
+          "title": "FHIR R5 (5.0.0) — TestPlan resource",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "isaitb-2026-interoperability-test-bed-readme",
+          "instance": "fhir-harness",
+          "title": "Interoperability Test Bed",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "arxiv-2510.21603v1",
+          "instance": "folio-assistant-core",
+          "title": "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2602.16554v1",
+          "instance": "folio-assistant-sci",
+          "title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "milnorlink",
+          "instance": "folio-assistant-sci",
+          "title": "Link Groups",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "mehl-2021-who-smart-guidelines",
+          "instance": "smart-base",
+          "title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        }
+      ]
+    }
+  },
+  "total": 162
+}

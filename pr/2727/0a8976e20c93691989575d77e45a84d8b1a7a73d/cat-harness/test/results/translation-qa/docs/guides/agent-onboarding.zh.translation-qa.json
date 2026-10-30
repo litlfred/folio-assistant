@@ -1,0 +1,99 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:zh/agent-onboarding",
+  "block": "Agent onboarding",
+  "locale": "zh",
+  "paths": {
+    "md": "docs/guides/agent-onboarding.md"
+  },
+  "po": "translations/zh/guides/agent-onboarding.po",
+  "source_hashes": {
+    "md": "3bc342701ee9",
+    "po": "fcf8ffc4d9e0"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "3bc342701ee9",
+          "po": "fcf8ffc4d9e0"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "76615e41da68",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-30T12:17:01.123Z",
+        "reviewed_sha": "cdc2d253113625faa2edfd7a3ecb3eb362064e35",
+        "metrics": {
+          "translated": 81,
+          "total": 81,
+          "pct": 100
+        }
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "3bc342701ee9",
+          "po": "fcf8ffc4d9e0"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "76615e41da68",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-30T12:17:01.126Z",
+        "reviewed_sha": "cdc2d253113625faa2edfd7a3ecb3eb362064e35",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "ANY — absent from: \"在开始工作前先进行申领，以免两个会话认领同一项任务；绝不要关闭同伴正在处理中的 bean（已完成的 bean 依据证据关闭，而不是依据作者身份）；并且绝不要删除\""
+          }
+        ],
+        "metrics": {
+          "checked": 81,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/zh/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "3bc342701ee9",
+          "po": "fcf8ffc4d9e0"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "76615e41da68",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-30T12:17:01.128Z",
+        "reviewed_sha": "cdc2d253113625faa2edfd7a3ecb3eb362064e35",
+        "metrics": {
+          "echoed": 0,
+          "translated": 81
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-30T12:17:01.129Z"
+}

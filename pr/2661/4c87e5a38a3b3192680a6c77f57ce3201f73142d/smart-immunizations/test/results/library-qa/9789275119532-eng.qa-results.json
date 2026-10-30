@@ -1,0 +1,34 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/check-l1-complete.ts",
+    "script_hash": "aa2fa9ec00c9"
+  },
+  "subject": {
+    "kind": "library-document",
+    "id": "library/9789275119532-eng"
+  },
+  "families": {
+    "notDerivable": {
+      "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
+      "count": 1,
+      "entries": [
+        {
+          "requirement": "audio-transcripts",
+          "detail": "no arm builds this yet — bean 1r0p"
+        }
+      ]
+    },
+    "unmet": {
+      "summary": "L1 requirements this entry does not satisfy. A DEFECT in the entry, fixable by re-running the ingest rung that produces the artefact.",
+      "count": 1,
+      "entries": [
+        {
+          "requirement": "image-descriptions",
+          "detail": "16 describable image(s) with no narrative, 0 with an undetermined role. The text declares at least 2 captioned figure(s); which of them correspond to placed images is NOT established. The vector arm recovered 38 positioned label(s) across 1 page(s) that declare a figure — see vector-labels.json; which labels belong to which figure is NOT established (bean a8wy). The vector figure arm rendered 1 caption page(s), 0 inspected; of the 2 bare figure(s), 0 shown by an inspected render, 1 named on a render nobody has inspected (Fig. 12), 1 on no render (Fig. 10) — see vector-figures.json (bean ay3x)."
+        }
+      ]
+    }
+  },
+  "total": 2
+}

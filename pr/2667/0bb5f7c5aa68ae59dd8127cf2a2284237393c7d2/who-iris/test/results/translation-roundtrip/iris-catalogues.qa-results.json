@@ -1,0 +1,93 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "who-iris/scripts/translation-roundtrip-report.ts",
+    "script_hash": "1d77e50d02ea"
+  },
+  "subject": {
+    "kind": "translation-catalogues",
+    "id": "who-iris"
+  },
+  "criterion": "translation-semantic-roundtrip",
+  "method": {
+    "skill": "untainted-verification",
+    "run": "2026-10-10",
+    "session": "https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco",
+    "back_translator": "roundtrip-back-translator: saw msgstr only; one Read, one Write",
+    "adjudicator": "roundtrip-adjudicator: saw msgid, translator note and back-translation; never msgstr",
+    "model": "not-disclosed",
+    "supersedes_note": "folio-assistant-lffo's 580/580 was self-checked by the translating agent; this run is independent",
+    "reruns": [
+      "2026-10-11: indexes 15 and 17 in all five locales, after the owner ruled that 'bean' is never translated as 'task' (a Task is its own term) and stays untranslated. Same two-agent protocol, on those 10 strings only (folio-core-2mb0).",
+      "2026-10-11, second ruling: 'bean' is translated after all, as each language's ordinary word for a bean or kernel (ar حبة, es grano, fr grain, ru зерно, zh 豆); DSpace 'Bundle' as 'File Set' (all five); ru 'item' as «единица хранения»; 'CDN edge' as the CDN's edge server (es, fr, ru); ru 12's catalogue made folio-assistant's own; zh 'size' as 大小, not 容量. 39 strings re-run; the adjudicator was given these rulings as a glossary.",
+      "2026-10-20, third ruling (owner: fix all 34 remaining warnings): 'ingest' is one fixed term per locale (ru «принятый на хранение», zh 摄取); fr DSpace 'item' is «item»; 'kind' is fr «genre (kind)», ru «вид (kind)», zh 种类（kind）; zh 'directory' is 文件目录, distinct from 目录 'catalogue'; state names are labels (ru «ссылочное», zh 已引用; es 'State' «Estado de materialización»); zh 'captured' is 捕获, not 采集 'harvested'; and the 12 sense drifts (ar 11, 39, 76, 80, 91; es 23, 95; fr 100; ru 25, 26, 76, 101) are corrected. 34 strings re-run; the adjudicator was given all rulings as a glossary."
+    ]
+  },
+  "catalogues": {
+    "translations/ar/site/iris-site.po": "f70eaedbaddc0611fb9b639efba45bd5bda00ea3803e7a21ca0633a85923d983",
+    "translations/ar/glossary/who-iris--who-terms.po": "27c5c521b1f97332aa687b7d7c425d165deccb819313cd709d2944a188bbcd8a",
+    "translations/es/site/iris-site.po": "2ca8b622084b68cb35097cf124bd4cafb7c801ec96349e90263e04e55be8e5b2",
+    "translations/es/glossary/who-iris--who-terms.po": "f2a145e691d1c46bb68085d58f70c684ca885c430643820050134ce5c606cdc4",
+    "translations/fr/site/iris-site.po": "c3f8105f3ec4c5e60eacb1c280b1711454f975f474aeb807ebdc6310343740e2",
+    "translations/fr/glossary/who-iris--who-terms.po": "123a972e129ac3e18063da7b8c2c3547f0d71a758df1674835117111c60781de",
+    "translations/ru/site/iris-site.po": "d9017e0f49ef6130f7ab41368c47cf7f0780a7d1995ef63a3e0db65b11948b7d",
+    "translations/ru/glossary/who-iris--who-terms.po": "531deaaae266676f7db5110dd1545e466525f078fc40d54f975181bb1c346650",
+    "translations/zh/site/iris-site.po": "b9140b2e6b43401bfbd0bceb89b895f850bf3792b5585340be4d2bd12a0c6a31",
+    "translations/zh/glossary/who-iris--who-terms.po": "ed4c506ac2e3d79fecebe3feebbe90fb098e8d64da2699fc7f73a32dff7b7a72"
+  },
+  "totals": {
+    "ar": {
+      "pass": 120,
+      "warn": 0,
+      "fail": 0
+    },
+    "es": {
+      "pass": 120,
+      "warn": 0,
+      "fail": 0
+    },
+    "fr": {
+      "pass": 120,
+      "warn": 0,
+      "fail": 0
+    },
+    "ru": {
+      "pass": 120,
+      "warn": 0,
+      "fail": 0
+    },
+    "zh": {
+      "pass": 120,
+      "warn": 0,
+      "fail": 0
+    }
+  },
+  "families": {
+    "roundtrip-ar": {
+      "summary": "ar: 120 pass, 0 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 0,
+      "entries": []
+    },
+    "roundtrip-es": {
+      "summary": "es: 120 pass, 0 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 0,
+      "entries": []
+    },
+    "roundtrip-fr": {
+      "summary": "fr: 120 pass, 0 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 0,
+      "entries": []
+    },
+    "roundtrip-ru": {
+      "summary": "ru: 120 pass, 0 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 0,
+      "entries": []
+    },
+    "roundtrip-zh": {
+      "summary": "zh: 120 pass, 0 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 0
+}

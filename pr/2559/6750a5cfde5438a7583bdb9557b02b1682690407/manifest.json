@@ -1,0 +1,58 @@
+{
+  "$schema": "qa-reports-manifest/v1",
+  "key": "pr/2559/6750a5cfde5438a7583bdb9557b02b1682690407",
+  "source": "6750a5cfde5438a7583bdb9557b02b1682690407",
+  "pr": 2559,
+  "written_at": "2026-10-15T20:30:16.383Z",
+  "checkout": "381b78d105904508420b11ded99d10d64046d696",
+  "producer": {
+    "run": "https://github.com/litlfred/folio-assistant/actions/runs/38800190812",
+    "gates": "failure"
+  },
+  "completeness": {
+    "mode": "computed",
+    "files": 1375,
+    "families": {
+      "kg:audit:all": 633,
+      "kg:detangle": 73,
+      "translation:block-qa": 36,
+      "qa-sweep:docs": 258,
+      "check:l1-complete": 113,
+      "p2:refusals": 1,
+      "lsi:index:cat-harness:skills": 2,
+      "lsi:index:library": 8,
+      "lsi:audit": 1,
+      "docs:pages": 217,
+      "viewer:nav:audit": 1,
+      "eval:crdm-detect": 1,
+      "root-scan-census": 1,
+      "skill:register": 1,
+      "term:mapping": 1,
+      "check:harness-state": 1,
+      "check:wireframes": 1,
+      "check:source-licence": 1,
+      "check:layout-norms": 1,
+      "check:rendered-labels": 1,
+      "check:lane-documentation": 1,
+      "check:methodology-evidence": 1,
+      "check:avatar-coverage": 1,
+      "kg:export": 1,
+      "check:reference-direction": 1,
+      "kg-export:bootstrap": 1,
+      "audit:coverage": 1,
+      "readme:subgraphs": 1
+    }
+  },
+  "roots": [
+    "cat-harness/test/results",
+    "fhir-harness/test/results",
+    "folio-assistant-core/test/results",
+    "folio-assistant-sci/test/results",
+    "smart-base/test/results",
+    "smart-immunizations-uganda/test/results",
+    "who-iris/test/results"
+  ],
+  "payloadTree": "e897081842cd35f4eac1e80f796dda79673e323c",
+  "files": 1375,
+  "bytes": 14404543
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "scientific-accuracy",
+    "path": "skills/authoring/authoring-core/scientific-accuracy.md"
+  },
+  "source_hash": "4dbf4fc21dda",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "voice.active",
+          "detail": "the harness config could not be read, so which voices judge skills is undetermined"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 1
+  }
+}

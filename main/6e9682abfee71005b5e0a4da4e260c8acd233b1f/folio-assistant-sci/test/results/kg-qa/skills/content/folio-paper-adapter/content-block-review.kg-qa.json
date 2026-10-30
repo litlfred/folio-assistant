@@ -1,0 +1,55 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "content-block-review",
+    "path": "skills/content/folio-paper-adapter/content-block-review.md"
+  },
+  "source_hash": "716dc9a3d0bd",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.ts",
+          "detail": "folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.ts changed since folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "agent-skill-authoring",
+          "detail": "never reviewed against the agent-skill-authoring voice (12 skill rule(s)) — `bun run voice:review`"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 2,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

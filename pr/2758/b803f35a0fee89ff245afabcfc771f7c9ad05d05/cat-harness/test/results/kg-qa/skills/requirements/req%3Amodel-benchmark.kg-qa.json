@@ -1,0 +1,66 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:model-benchmark",
+    "path": "skills/requirements/model-benchmark.json"
+  },
+  "source_hash": "sha256:2fc84a3318df4551bdfc1673aac79decbdcbab19437aeb1cc3a0e72dfb2e604b",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:model-benchmark/system-names-model",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#system-names-model` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/side-by-side",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#side-by-side` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/cost-unknown-not-zero",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#cost-unknown-not-zero` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/independent-run-leaves-beans",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#independent-run-leaves-beans` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/run-asked-for",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#run-asked-for` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/findings-become-cases",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#findings-become-cases` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/plan-cites-proposed-criteria",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#plan-cites-proposed-criteria` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:model-benchmark/report-in-qa-reports",
+          "detail": "no skill or capability declares `satisfies: req:model-benchmark#report-in-qa-reports` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

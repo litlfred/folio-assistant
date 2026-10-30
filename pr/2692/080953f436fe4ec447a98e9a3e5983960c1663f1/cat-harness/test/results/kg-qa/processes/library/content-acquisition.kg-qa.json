@@ -1,0 +1,164 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_ContentAcquisition",
+    "path": "processes/library/content-acquisition.bpmn"
+  },
+  "source_hash": "sha256:b5b8e8f278845b0fb77d8dcdd503256073b3db63f92e02139f568d6dd274033f",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Route",
+          "detail": "names skill \"uploads-watch\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Ask",
+          "detail": "needs skill \"content-acquisition\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "A_PointToUpload",
+          "detail": "needs skill \"content-acquisition\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "A_Accept",
+          "detail": "needs skill \"content-acquisition\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "A_Route",
+          "detail": "needs skill \"uploads-watch\", but its lane's role \"ingestion-agent\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Ask",
+          "detail": "task \"Say what is needed, and ask for a link OR a description\" requires skill \"content-acquisition\", which role \"ingestion-agent\" (named by lane \"Agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_PointToUpload",
+          "detail": "task \"Point at the upload target [scripts/upload-url.ts]\" requires skill \"content-acquisition\", which role \"ingestion-agent\" (named by lane \"Agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Accept",
+          "detail": "task \"Accept it, and record where it came from\" requires skill \"content-acquisition\", which role \"ingestion-agent\" (named by lane \"Agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Route",
+          "detail": "task \"Route it, and watch the queue\" requires skill \"uploads-watch\", which role \"ingestion-agent\" (named by lane \"Agent\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 15,
+    "fail": 3,
+    "n/a": 9,
+    "unknown": 0
+  }
+}
