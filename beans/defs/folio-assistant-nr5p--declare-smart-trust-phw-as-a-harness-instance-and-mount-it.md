@@ -2,11 +2,11 @@
 # folio-assistant-nr5p
 $schema: bean/1.0.0
 title: 'Declare smart-trust-phw as a harness instance and mount it (PCF1)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T16:02:30Z
+updated_at: 2026-10-30T17:00:00Z
 parent: folio-assistant-negd
 ---
 
@@ -26,3 +26,4 @@ Repo: litlfred/smart-trust-phw, folio-assistant. Depends on: —.
   - `bun run cat mount:remote:check` in `folio-assistant` reports `smart-trust-phw` `mounted` (2 directories verified).
   - `bun run cat ig-index:build -- --only smart-trust-phw` builds `smart-trust-phw/fhir-artifact-index/index.json` (61 resources, 44 bound DAK API sidecars), `menu.json` (5 groups), `package.tgz` (61 resources), and `releases.json`.
   - `bun run cat smart-trust-phw:pages` renders 372 IG pages under `smart-trust-phw/docs/`, and `bun run cat smart-base:document-kinds` writes `smart-trust-phw/document-kinds/dak.coverage.smart-trust-phw.json`.
+- 2026-10-30 ~17:00Z: [smart-trust-phw#4](https://github.com/litlfred/smart-trust-phw/pull/4) merged as 20682ab, after merging main in to combine AGENTS.md with [#3](https://github.com/litlfred/smart-trust-phw/pull/3). Merge window (owner, 2026-10-30 11:13Z, extended to ~19:38Z). Its red check was the main side, which has no harness until this PR.

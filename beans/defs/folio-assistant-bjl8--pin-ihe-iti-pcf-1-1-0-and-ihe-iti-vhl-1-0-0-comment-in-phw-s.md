@@ -2,11 +2,11 @@
 # folio-assistant-bjl8
 $schema: bean/1.0.0
 title: 'Pin ihe.iti.pcf 1.1.0 and ihe.iti.vhl 1.0.0-comment in phw sushi-config; reference by canonical URL only (PCF3)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T16:02:30Z
+updated_at: 2026-10-30T17:00:00Z
 parent: folio-assistant-negd
 ---
 
@@ -27,3 +27,4 @@ Repo: smart-trust-phw. Depends on: —.
 - **Verification**:
   - `sushi .`: **0 Errors, 7 Warnings** (loads `ihe.iti.pcf#1.1.0` with 18 resources and `ihe.iti.vhl#1.0.0-comment` with 37 resources).
   - IG Publisher + `AstExportCli`: completes with exit 0 (61 resources, 103 edges; no R4-in-R5 conformance failure).
+- 2026-10-30 ~17:00Z: [smart-trust-phw#4](https://github.com/litlfred/smart-trust-phw/pull/4) merged as 20682ab, after merging main in to combine AGENTS.md with [#3](https://github.com/litlfred/smart-trust-phw/pull/3). Merge window (owner, 2026-10-30 11:13Z, extended to ~19:38Z). Its red check was the main side, which has no harness until this PR.
