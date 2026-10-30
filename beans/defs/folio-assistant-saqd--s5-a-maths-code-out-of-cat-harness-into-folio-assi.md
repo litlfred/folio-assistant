@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-30T13:01:00Z
+updated_at: 2026-10-30T13:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -34,3 +34,5 @@ _2026-10-30T13:01:00Z_ — Re-measured the 49 MOVE + 10 AMBIGUOUS rows targeting
 - **1 MOVE row (`pipeline/_folio-chapter-profiles.qou.ts`) in open PRs:** `litlfred/folio-assistant-sci#114` + `litlfred/cat-harness-tools#858` (removes the quarantined `qou` chapter profile defaults and their slot).
 - **Group 2 up (`litlfred/folio-assistant-sci#116` + `litlfred/cat-harness-tools#875`):** moves the remaining 5 zero-importer pipeline MOVE rows (`pipeline/conjectural-propagation-audit.ts`, `pipeline/generate-lean-stubs.ts`, `pipeline/lean-atlas-ingest.ts`, `pipeline/proof-narrative-lean-equiv-sweep.ts`, `pipeline/refactor-strategies/` + `pipeline/refactor-strategy.ts`, and their tests `narrative-lean-equiv.test.ts` and `refactor-strategy.test.ts`) from `cat-harness-tools/pipeline/` to `folio-assistant-sci/pipeline/`.
 - **Remaining after Group 2 + `#114`/`#858`:** 29 MOVE rows (17 in `cat-harness-tools/scripts/`, 12 in `cat-harness-tools/pipeline/` including `qa-checkers-{render,triviality,uses,vacuity,extended}.ts`, `lean-formal-ref.ts`, `lean-signature.ts`, `latex-preflight.ts`, `language-trap-audit.ts`, `build.ts`, `validate.ts`, `content-graph-analysis.py`) and 10 AMBIGUOUS rows.
+
+_2026-10-30T13:20:00Z_ — **Group 3 up (`litlfred/folio-assistant-sci#118` + `litlfred/cat-harness-tools#886`):** moves the 4 clean leaf `scripts/` MOVE rows (`scripts/check-duplicate-decls.ts` + `scripts/tests/check-duplicate-decls.test.ts`, `scripts/check-self-discharging-instances.ts` + `scripts/tests/check-self-discharging-instances.test.ts`, `scripts/docker-latex-build/run-build.ts` completing `scripts/docker-latex-build/`, and `scripts/refresh-authors-note.ts`) from `cat-harness-tools/scripts/` to `folio-assistant-sci/scripts/`. Remaining after Groups 2 & 3 + `#114`/`#858`: 25 MOVE rows (13 in `cat-harness-tools/scripts/`, 12 in `cat-harness-tools/pipeline/`) and 10 AMBIGUOUS rows.
