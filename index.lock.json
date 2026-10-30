@@ -27,6 +27,11 @@
       "ref": "016ec53221a5e2c1bf104ca4a1e888b2f42b49bc"
     },
     {
+      "harness": "smart-trust-phw",
+      "repository": "litlfred/smart-trust-phw",
+      "ref": "9d78dac501a6aae9e428e84b6d58de80d2488d4f"
+    },
+    {
       "harness": "bootstrap",
       "repository": "litlfred/bootstrap",
       "ref": "3ce2b5d641779ca78432971abb919e6e3afdc60a"
@@ -407,6 +412,52 @@
         "by": "litlfred",
         "on": "2026-10-30",
         "ref": "016ec53221a5e2c1bf104ca4a1e888b2f42b49bc",
+        "approver": "declared"
+      }
+    },
+    {
+      "instance": "smart-trust-phw",
+      "repository": "litlfred/smart-trust-phw",
+      "sha": "9d78dac501a6aae9e428e84b6d58de80d2488d4f",
+      "upstreamRoot": "",
+      "path": "smart-trust-phw",
+      "via": "smart-trust-phw",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "smart-trust-phw.json",
+        "sha256": "536c7c98f263851ac143abcc9d47450fa83fa71e3e66b5ef7a53608a5de807f7"
+      },
+      "directories": [
+        {
+          "id": "smart-trust-phw-artifact-index",
+          "path": "smart-trust-phw/fhir-artifact-index",
+          "upstreamPath": "fhir-artifact-index",
+          "treeDigest": "6310dfa5d149ebdd0a7684a308378a2acaee6c21eb4400742c08e96a3d538381",
+          "files": 2
+        },
+        {
+          "id": "smart-trust-phw-document-kinds",
+          "path": "smart-trust-phw/document-kinds",
+          "upstreamPath": "document-kinds",
+          "treeDigest": "2ed3ef0102446021cacedd445e17f6052c144ba1853bb8e7a68b2ac56ead67d1",
+          "files": 1
+        }
+      ],
+      "assets": [
+        {
+          "src": "AGENTS.md",
+          "sha256": "3d785828e8a2dd9794d95b57d1111f5636942973d660b915896a6564c52cc20a"
+        },
+        {
+          "src": "README.md",
+          "sha256": "2de048f90dfaf77b331a3c07ffd0181ed956d1e3ed2dc932171ca3eef0459107"
+        }
+      ],
+      "trust": {
+        "basis": "consent",
+        "by": "litlfred",
+        "on": "2026-10-30",
+        "ref": "9d78dac501a6aae9e428e84b6d58de80d2488d4f",
         "approver": "declared"
       }
     },

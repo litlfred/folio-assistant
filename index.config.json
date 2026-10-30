@@ -1,7 +1,7 @@
 {
   "$schema": "folio-index-config/v1",
   "title": "folio-assistant",
-  "description": "**A content-agnostic agent skills framework.** Author rigorous content with an LLM — documents and policy guidance, scientific papers & books, WHO SMART Guidelines, and FHIR Implementation Guides — backed by an optional MCP server, typed content-object model, and a per-content-type skill system.",
+  "description": "**A content-agnostic agent skills framework.** Author rigorous content with an LLM \u2014 documents and policy guidance, scientific papers & books, WHO SMART Guidelines, and FHIR Implementation Guides \u2014 backed by an optional MCP server, typed content-object model, and a per-content-type skill system.",
   "instances": [
     {
       "name": "cat-harness",
@@ -155,6 +155,34 @@
               "on": "2026-10-30",
               "ref": "016ec53221a5e2c1bf104ca4a1e888b2f42b49bc",
               "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin; main tip 016ec53 (DSA trust-network processes #81). Window: litlfred 2026-10-30 11:13Z 'merge and repin window open for 4 horus', extended 14:44Z 'merge window +3 hrs' (to ~18:13Z)."
+            }
+          }
+        }
+      },
+      "contentType": "document"
+    },
+    {
+      "name": "smart-trust-phw",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-trust-phw",
+          "ref": "9d78dac501a6aae9e428e84b6d58de80d2488d4f",
+          "overrides": {
+            "smart-trust-phw": {
+              "path": "smart-trust-phw",
+              "directories": [
+                "smart-trust-phw-artifact-index",
+                "smart-trust-phw-document-kinds"
+              ]
+            }
+          },
+          "note": "WHO SMART Guidelines Personal Health Wallet (PHW) on the GDHCN Trust Network (bean nr5p, #2702): litlfred/smart-trust-phw#4 declares smart-trust-phw and pins IHE PCF 1.1.0 & VHL 1.0.0-comment.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-30",
+              "ref": "9d78dac501a6aae9e428e84b6d58de80d2488d4f",
+              "evidence": "Owner card 2026-10-30 15:44Z 'A: Approve, take all advice' on PCF1-PCF4 (issue #2702, epic folio-assistant-negd, bean folio-assistant-nr5p; smart-trust-phw#4 head 9d78dac). Window: litlfred 2026-10-30 11:13Z 'merge and repin window open for 4 horus', extended 14:44Z 'merge window +3 hrs' (to ~18:13Z)."
             }
           }
         }
