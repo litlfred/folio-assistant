@@ -2,17 +2,17 @@
 # folio-assistant-saqd
 $schema: bean/1.0.0
 title: 'S5-a: maths code out of cat-harness into folio-assistant-sci''s code (#223 partition; 49 MOVE + 10 split)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-30T17:47:17Z
+updated_at: 2026-10-31T00:05:00Z
 parent: folio-assistant-7x5n
 ---
 
 Story S5 (txue), with/after 70lx. Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(#223 code partition; S5)', instance=cat-harness, target folio-assistant-sci: MOVE 49, AMBIGUOUS 10 (owner Q4: SPLIT — generic pipeline -> cat-harness-tools, Lean/LaTeX checkers -> sci code plugged into it). Plus smart-base 3, fhir-harness 2, core 1. One agent at a time.
 ## Done when
-- [ ] rows moved/split; typecheck program conserved; gates green; merged
+- [x] rows moved/split; typecheck program conserved; gates green; merged
 
 ## State 2026-10-09
 Re-derived from `placement-audit-2026-10-01.json` against the post-split mount: of the **73** rows tagged `unplanned (#223 code partition; S5)`, **67** are still at their original path. Blocker `70lx` is completed, so this is unblocked; it is now cross-repository work (litlfred/cat-harness[-tools] → litlfred/folio-assistant-sci). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
@@ -78,3 +78,18 @@ _2026-10-30T17:47:17Z_ — **Group 8 up (`litlfred/folio-assistant-sci#136` + `l
 - Retains the generic editorial/document checkers in `cat-harness-tools/pipeline/qa-checkers-uses.ts` (`uses-editorial-hygiene`) and `cat-harness-tools/pipeline/qa-checkers-extended.ts` (`profile-conformance`, `bib-*`, `detangler-*`, `foreshadows-point-forward`, `voice-title-scholarly`), and marks the 23 moved criteria `checker_contributed: true` in `cat-harness-tools/pipeline/qa-criteria-registry.ts`.
 - Moves the unit tests for the 23 checkers (`lean-ref-owns-decl.test.ts`, `checker-missing-evidence.test.ts`, `qa-canonical-no-numerology.test.ts`, `qa-checkers-lp-dual.test.ts`, and the `checkProofNoAxiomGrowth` + `checkProofConditionalClassBanner` sentinel cases in `qa-checkers-stub-sentinels.test.ts`) from `cat-harness-tools/scripts/tests/` to `folio-assistant-sci/scripts/tests/`.
 - **Merge order:** none of the 23 criteria declared an explicit `source_file` in `QA_CRITERIA_REGISTRY`, so `litlfred/folio-assistant-sci#136` can merge first without `CriterionSourceCollisionError`, followed by `litlfred/cat-harness-tools#953`.
+
+## 2026-10-31 — completed (thread "Finish GOAL 1 placement beans", session https://claude.ai/code/session_01Qmmkt6Hy5kLsKxGLMzk88s)
+
+Every row of the #223 partition is now resolved. Table: `/mnt/project-files/goal1-placement-2026-10-30/saqd-remaining-rows.md`.
+- **Groups 6–8:** group 6 landed as sci#130 + tools#947; the duplicate PRs sci#128 and tools#942 were closed. Group 7: sci#129, sci#142, core#258, tools#946. Group 8: sci#136, tools#953.
+- **Group 9:** tools#994 removed the vocab-mapping-fhir shim. smart-base#234 + tools#996 moved smart-base-transform.py to smart-base.
+- **Reclassified as CODE (they stay in cat-harness-tools):** gen-content-graph-uml, artefact-verification.json, content-graph, markdown-ast, profile-check, qa-criteria-registry and translation (cat-harness#795). content-graph-analysis.py stays too, with its qou default paper dropped (tools#1000).
+- **q-usage → sci:** sci#143 + tools#1002.
+- **Splits:**
+  - build.ts and validate.ts: the Lean overlay and the Lean constraint context go to sci through plugin slots (sci#144 + tools#1003).
+  - extract-candidates.py: the math extractor goes to sci and the WHO L1 extractor to smart-base (sci#146, smart-base#238 + tools#1018).
+  - qa-checkers-voice: the wall/framework checkers go to sci (sci#146 + tools#1019).
+- **STAY, with reasons in the split PRs:** lean-lexer.ts, render-latex.ts, render-value.ts, and the schemas lean-packages.ts and formalization-types.ts (row 10). Each is generic, or it is Lean grammar used by STAY code.
+- **Typecheck:** clean in cat-harness-tools on every PR.
+- **Gates:** each PR's local checks are recorded on it. The index re-pin is the CI thread's.
