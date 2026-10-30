@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T22:54:31Z
-updated_at: 2026-10-02T22:49:41Z
+updated_at: 2026-10-30T13:50:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -23,7 +23,7 @@ Owner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at leas
 - [x] 6 materialise an asset on demand
 - [x] 7 instantiate a harness from a subscription, so it appears in the navbar
 - [x] 8 process, skill and scenarios registered
-- [ ] first real subscription: `litlfred/ihris`
+- [ ] first real subscription: `litlfred/ihris` (in PRs `litlfred/cat-harness-tools#889` and `litlfred/cat-harness#730`, tracked by child bean `folio-assistant-tmo5`)
 
 Slice 7 (branch claude/magical-archimedes-4qkfxp-kg-instantiate): `bun run cat kg:instantiate <subscription> <harness>` writes `<harness>.config.json` and the harness's state directories (under `<harness>/`) from the cached snapshot; refuses unchosen, undeclared, unmet-needs and name-taken cases; could-not-determine for a missing snapshot or unregistered kinds. harness-tiles draws the tile from the snapshot (scripts/subscribed-harnesses.ts), check-instance-config counts the config as claimed, subscriptions-viz marks it instantiated. Proven on fixtures only; check:instance-render does not cover a subscribed harness until its subgraphs are materialised. No real config committed: the first real subscription is the owner's step.
 
@@ -46,3 +46,5 @@ Live-checked 2026-10-01 against litlfred/ihris@8a5a05b831e5 in a scratch instanc
 
 ## Holder 2026-10-02 23:00Z
 Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B, epic 7x5n): main merged into #1756, regenerated, gates, then ready. The original session (01SiFEMu) last pushed 2026-10-01T07:00Z.
+
+_2026-10-30T13:50Z_ — Gap G11 settled and first real subscription (`litlfred/ihris`) opened in `litlfred/cat-harness-tools#889` (`da968f6`) and `litlfred/cat-harness#730` (`0a71ca8`); see child bean `folio-assistant-tmo5`.
