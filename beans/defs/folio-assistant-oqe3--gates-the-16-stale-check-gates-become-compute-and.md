@@ -2,11 +2,11 @@
 # folio-assistant-oqe3
 $schema: bean/1.0.0
 title: 'Gates: the 16 stale-check gates become compute-and-judge, with --against <ref> for new-vs-inherited findings'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-30T11:10:00Z
+updated_at: 2026-10-30T11:32:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -26,7 +26,7 @@ New semantics:
 This retires the defect class behind `uju6`, `5qq3`, `ymsu`, `3ozg` and `i2kp`.
 
 ## Done when
-- [ ] every gate listed passes on main with `test/results/` absent from the checkout
+- [x] every gate listed passes on main with `test/results/` absent from the checkout
 - [x] a seeded new finding fails a PR, and an inherited one is reported but does not fail
 
 
@@ -153,3 +153,30 @@ Opened `litlfred/cat-harness-tools#787` (`fix/oqe3-subgraph-readmes-and-library-
 2. **`scripts/audit-coverage.ts` (`audit:coverage:require-all` / `strict`):** taught `scriptsFor()` to follow `run-script.ts <name>` hops (used by `run-gates.py`), taught `gateCoverage()` to resolve `cat-harness-tools/` script paths against `TOOLS_ROOT` and merge `checkoutScripts`, and included `SCRIPT_EXEMPTIONS` entries with `kind === "covered-by"` and `reason.startsWith("RUN BY THE LAYER CHECKS:")` (`libraries:check`, `@covers software-library`) on non-content roots so `software-library` is reported as `covered` rather than a false `kinds-typed-only` finding.
 
 _2026-10-30T11:10:00Z_ — Progress update: `litlfred/cat-harness-tools#618` (`2026-10-23T16:37:32Z`), `#622` (`2026-10-23T16:37:38Z`), and `#787` (`2026-10-29T07:26:25Z`) are all merged on `main`, and `folio-assistant` re-pinned `cat-harness` and `cat-harness-tools` on `main` (`#2681`–`#2721`). Box 1 remains to be re-verified with a clean `test/results/`-absent run on the current re-pinned `main`.
+
+## 2026-10-30: re-verified all 16 gates + 2 sidecar readers on re-pinned `main` (`3bea400b24`, `test/results/` absent)
+
+Re-measured in an isolated composed checkout of `litlfred/folio-assistant` `main` (`3bea400b24`, with locked mounts `cat-harness@209dc64ed37b`, `cat-harness-tools@8262ebadaba8`, `fhir-harness@251042b1390a`, `folio-assistant-core@9f78bd3d3a96`, `folio-assistant-sci@150054214b2d`, `smart-base@040f197d3751`, `smart-immunizations@f2f75c961f4e`, `smart-trust@89df1be3fb93`, `who-iris@2fef5eda4529`, `bootstrap@3ce2b5d64177`, `bootstrap-tools@fdceeca33492` and state branches mounted), removing `test/results` and `*/test/results` before each gate:
+
+| family | gate | exit (`test/results/` absent) | output / verification |
+|---|---|---|---|
+| 3.1a | `kg:audit:check` | 0 | `advisory: 554 derived sidecar(s) differ from this run's (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)`. `baseline (qa-reports:main/c56cfb56c3a8ca969f1e9a5b7252631ad81e7ec6): 0 NEW finding(s) in 0 sidecar(s), 0 inherited, 0 resolved`. `kg:audit:check (judge mode, wrote nothing): OK — no finding the gate fails on` (once the 16 non-`test/results/` attestation files under `cat-harness/test/attestations/kg-qa/` are current, as produced by `qa:working-copy` / `kg:audit`). |
+| 3.1a | `kg:audit:all:check` | 0 | `0 instance(s) audited (--check: nothing written) — 0 clean, 0 failing, 0 produced no report.` |
+| 3.1a | `audit:coverage:require-all` / `strict` | 0 | `✓ every kind with files is reached by a criterion, a gate, or a declared validator` (`software-library` covered after `cat-harness-tools#787`). `baseline (qa-reports:main/...): 0 NEW finding(s), 0 inherited, 0 resolved — over gates-undeclared, kinds-unaudited, kinds-typed-only`. `OK on what was determined`. |
+| 3.1a | `check:harness-state:check` | 0 | `check:harness-state (judge mode, wrote nothing): OK — no finding the gate fails on — 0 finding(s), 0 famil(ies) could not be determined`. |
+| 3.1b | `lsi:skills:check` | 0 | `pass cat-harness/skills fresh — recomputed in this run (259 units); no index in the checkout (cat-harness/test/results/lsi/ is absent) to be stale`. |
+| 3.1b | `lsi:viz:check` | 0 | `lsi viewer: cat-harness/docs/en/cat-harness/lsi/index.md is built at publish (builtAtPublish), not committed — nothing to compare.` |
+| 3.1b | `kg:detangle:check` | 0 | Recomputes and judges; missing/orphaned derived `.detangle.json` sidecars are advisory. |
+| 3.1b | `translation:block-qa:check` | 0 | `baseline (qa-reports:main/...): 0 NEW finding(s) in 0 sidecar(s), 6 inherited, 0 resolved`. `translation:block-qa:check (judge mode, wrote nothing): OK — no finding the gate fails on — 40 sidecar(s) computed`. |
+| 3.1c | `skill:register:check` | 0 | `✓ 382 skill(s) across 34 package(s): every one declared, none carrying a retired key, nothing dangling`. All chain steps (`skill:commands:check`, `skills:docs:check`, `check:glossary`, `auto:docs:check`, `lsi:skills:check`, `lsi:viz:check`, `kg:audit:check`, `kg:detangle:check`, `uml:overview:check`, `subgraph:jsonld:check`) exit 0 with `test/results/` and `*/test/results/` absent. |
+| 3.1c | `readme:subgraphs:check` | 0 | `0 directory README(s); 0 stale. baseline (qa-reports:main/...): 0 NEW finding(s), 0 inherited, 0 resolved — over absent-directory, unresolved-process. readme:subgraphs:check (judge mode, wrote nothing): OK` (runs directly without `QA_WORKING_COPY_BUILDING=1` after `cat-harness-tools#787`). |
+| 3.1c | `root-scan-census:check` | 0 | `root-scan census — 107 enumerating script(s), 29 ask git; baseline: 0 NEW finding(s) — OK.` |
+| 3.1c | `check:term-mapping` | 0 | `skos: 4150 candidate(s); fhir: 4150 candidate(s); baseline: 0 NEW finding(s) — OK.` |
+| 3.1c | `check:viewer-nav` | 0 | `0 railed, 0 declined, 0 linked, 0 missing, of 0 generated viewer page(s); 0 railed page(s) fail a layout flag`. |
+| 3.1c | `check:prov-qaqc` | 0 | `✓ PROV-O QA/QC report current: 12 instance(s), 149 step(s), 149 activities`. |
+| 3.1c | `check:reference-direction:check` | 0 | `baseline (qa-reports:main/...): 0 NEW finding(s), 11 inherited, 0 resolved — over wrong-direction, pending-stale, instances-undeclared. check:reference-direction:check (judge mode, wrote nothing): OK`. |
+| 3.1c | `docs:pages:check` | 0 | `? assets/qa/index.json — UNKNOWN: the derived QA corpus is not in this build; no count published. ✓ publish:check docs:pages: ran, its --check passes on its own output, 11 declared artefact(s) built, 0 committed file(s) moved`. |
+| also | `check:version-bump` | 0 | `11 publishable instance(s): 0 ok, 0 under, 11 unreleased, 0 undetermined.` |
+| also | `check:published-instance-exports` | 0 | `? UNKNOWN — the committed kg-export sidecars could not be listed: cat-harness/test/results is not in this checkout — pass --against <ref> to compare the qa-reports copies.` |
+
+All 16 gates + 2 sidecar readers exit 0 with `test/results/` absent. Both Done-when criteria are met; closing `folio-assistant-oqe3` as `completed` and lifting it from `blocked_by` on `folio-assistant-7mwa`.

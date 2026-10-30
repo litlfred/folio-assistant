@@ -6,10 +6,9 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-23T13:53:00Z
+updated_at: 2026-10-30T11:32:00Z
 parent: folio-assistant-3fva
 blocked_by:
-    - folio-assistant-oqe3
     - folio-assistant-tfqf
 ---
 
@@ -40,3 +39,5 @@ The per-instance `test/results/` dirs (`folio-assistant-sci`, `fhir-harness`, `s
 _2026-10-16T06:30:00Z_ — Blocker `2ae2` (scrapped; replaced by `tfqf` and `8wj1`) swapped for those two, both still in progress. Owner ruling 2026-10-16 (item 3). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-23T13:53:00Z_ — Block lifted: `folio-assistant-8wj1` is completed (`cat-harness-tools#563`, `#564`, `#568` and `folio-assistant-core#177` merged).
+
+_2026-10-30T11:32:00Z_ — Block lifted: `folio-assistant-oqe3` is completed (all 16 gates + 2 sidecar readers verified exiting 0 with `test/results/` absent on `folio-assistant` `main` `3bea400b24` following `cat-harness-tools#618`, `#622`, `#787` and the `folio-assistant` `#2681`–`#2726` re-pins).
