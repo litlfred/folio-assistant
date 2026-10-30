@@ -2,13 +2,13 @@
 # folio-assistant-b5f0
 $schema: bean/1.0.0
 title: 'INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-10-30T12:45:00Z
+updated_at: 2026-10-30T19:45:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -183,12 +183,12 @@ Two gaps, both measured:
       diverge immediately)
 - [x] **owner:** is `<name>.config.json` process-WRITTEN at initialization? If
       yes, it is `state`, and the naming needs to say so (§2)
-- [ ] `7u3g` fixed — the entry-point process is listable — BEFORE initialization
+- [x] (withdrawn 2026-10-30, see triage) `7u3g` fixed — the entry-point process is listable — BEFORE initialization
       is made mandatory anywhere (§3)
-- [ ] `initialize-harness.bpmn` carries `<folio:bean>` on every activity that
+- [x] (withdrawn 2026-10-30, see triage) `initialize-harness.bpmn` carries `<folio:bean>` on every activity that
       touches the work plan, and its tools are declared (§4)
-- [ ] settle whether the missing axis is `derived` rather than `dynamic` (§5)
-- [ ] instantiation PRODUCES a slot rather than permitting one; the root
+- [x] (withdrawn 2026-10-30, see triage) settle whether the missing axis is `derived` rather than `dynamic` (§5)
+- [x] instantiation PRODUCES a slot rather than permitting one; the root
       instance declares its own (§6, with `nvbr`/`603s`)
 
 ## Cross-references
@@ -402,7 +402,7 @@ makes the rename a day's work rather than a sweep of 121 files.
 
 - [x] The 21 non-test literals are routed through `DECLARATION_FILENAME`
       FIRST, as a separable change that is correct under either filename
-- [ ] `bootstrap/` carries its own config, and `hfkl` records that the
+- [x] (withdrawn by owner 2026-10-30 12:39Z) `bootstrap/` carries its own config, and `hfkl` records that the
       bootstrap exception is about a visualiser and not about this
 - [x] The `folio-assistant-*` instances are migrated once `hso8` is answered
 - [x] `AGENTS.md`, `zkgs`'s Done-when and `603s`'s recorded answer are
@@ -581,3 +581,5 @@ cat-harness-tools#687, cat-harness#501 and bootstrap#29 merged 2026-10-29. The u
 ```
 
 _2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".
+
+_2026-10-30T19:45Z_ — Owner card 2026-10-30 19:42Z, option "A. Tick it and close b5f0". Box (d) ticked on evidence measured at cat-harness-tools 9673b1f / cat-harness 17c66fa6: every instance listed in `index.config.json` gets its own left-navbar section with no opt-in (`harnessTiles()` over `instantiatedHarnessNames()`, `schemas/kg/harness-config.ts:861`; a section needs only `readDeclaration`, stickies only set theme). The published landing shows 11 sections for 12 instances (smart-trust-phw mounted after the 13:28Z build). nvbr and 603s were completed 2026-10-01 / 2026-10-04 (they predate the 2026-10-08 store cutover). "Root declares its own": the cat-harness root declares `stickies: ["cat-harness"]`; folio-assistant's root is now an index with no declaration. A rule that every instance contributes a landing sticky moves under 95sk's paused stickies/todos merge. Boxes a, b, c, e were withdrawn earlier (triage 12:00Z, owner 12:39Z). Completed. Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
