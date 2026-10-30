@@ -2,7 +2,7 @@
 # folio-assistant-ygge
 $schema: bean/1.0.0
 title: 'folio-assistant-sci resolves @litlfred/cat-harness in a sibling layout (w1gy F17)'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-30T20:15:00Z
@@ -20,3 +20,5 @@ Owner decision 2026-10-30 20:07Z (card "A. Apply all three", option A for F17): 
 - [ ] sci's own tests unchanged in the composed index
 
 Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
+
+_2026-10-30T20:13:30Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

@@ -2,7 +2,7 @@
 # folio-assistant-k4sp
 $schema: bean/1.0.0
 title: 'Run SUSHI on smart-trust-phw main with all packages and fix any errors'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T19:36:00Z
@@ -18,3 +18,5 @@ Repo: smart-trust-phw.
 - [ ] SUSHI runs on phw main with every package in `sushi-config.yaml` loaded.
 - [ ] It reports 0 errors, or each remaining error is fixed in a PR (FSH or `sushi-config.yaml`), with no package swapped for another version.
 - [ ] If a package is truly unavailable, it is added to [fhir-package-mirror](https://github.com/litlfred/fhir-package-mirror) so cloud sessions can run SUSHI too.
+
+_2026-10-30T20:13:30Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
