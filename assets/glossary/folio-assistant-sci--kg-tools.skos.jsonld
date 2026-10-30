@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of folio-assistant-sci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools/check-dependencies",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Dependency probe"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks."
+        }
+      ],
+      "skos:notation": "check-dependencies",
+      "dcterms:source": "folio-assistant-sci/tools/check-dependencies/check-dependencies.ts#check-dependencies",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools/content-manifest-validate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -331,6 +351,46 @@
       ],
       "skos:notation": "paper-latex-build",
       "dcterms:source": "folio-assistant-sci/tools/paper-latex-build/paper-latex-build.ts#paper-latex-build",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools/paper-preferences",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Rendering preferences"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode."
+        }
+      ],
+      "skos:notation": "paper-preferences",
+      "dcterms:source": "folio-assistant-sci/tools/paper-preferences/paper-preferences.ts#paper-preferences",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools/paper-preview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open a render"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open."
+        }
+      ],
+      "skos:notation": "paper-preview",
+      "dcterms:source": "folio-assistant-sci/tools/paper-preview/paper-preview.ts#paper-preview",
       "skos:note": "candidate"
     },
     {

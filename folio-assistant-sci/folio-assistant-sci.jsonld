@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-29T15:44:53.675Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dfc77dc94a6ad979535584ad8774e79a7572de73",
-  "sourceCommitSha": "dfc77dc94a6ad979535584ad8774e79a7572de73",
-  "sourceCommitAt": "2026-10-29T15:21:41Z",
+  "generatedAt": "2026-10-30T11:35:57.025Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c56cfb56c3a8ca969f1e9a5b7252631ad81e7ec6",
+  "sourceCommitSha": "c56cfb56c3a8ca969f1e9a5b7252631ad81e7ec6",
+  "sourceCommitAt": "2026-10-30T11:19:19Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -387,7 +387,7 @@
     "Role": 4,
     "Subgraph": 25,
     "Asset": 3,
-    "Tool": 22
+    "Tool": 25
   },
   "@graph": [
     {
@@ -2980,6 +2980,51 @@
       "description": "The checkout scripts this instance's code runs, under `checkoutScripts`. Each command is relative to the downstream checkout root; a downstream that mounts this instance reads them with `bun run cat`."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/check-dependencies.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "check-dependencies",
+      "title": "Dependency probe",
+      "description": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat check-deps",
+        "mcp": {
+          "tool": "check_dependencies"
+        },
+        "inProcess": {
+          "module": "adapters/paper/tools/check-deps.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "required_only",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Report only the dependencies without which the harness cannot run.",
+            "required": false,
+            "arg": {
+              "flag": "--required-only"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per-dependency: present, absent, or could not be determined."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/verify-local-substrate"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/content-manifest-validate.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "content-manifest-validate",
@@ -4091,6 +4136,182 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-validation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preferences.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "paper-preferences",
+      "title": "Rendering preferences",
+      "description": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "paper_preferences"
+        },
+        "inProcess": {
+          "module": "adapters/paper/tools/preferences.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreferenceAction",
+            "required": false,
+            "arg": {
+              "flag": "--action"
+            }
+          },
+          {
+            "name": "render_format",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderFormat",
+            "required": false,
+            "arg": {
+              "flag": "--render-format"
+            }
+          },
+          {
+            "name": "render_scope",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderScope",
+            "required": false,
+            "arg": {
+              "flag": "--render-scope"
+            }
+          },
+          {
+            "name": "latex_engine",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LatexEngine",
+            "required": false,
+            "arg": {
+              "flag": "--latex-engine"
+            }
+          },
+          {
+            "name": "math_renderer",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MathRenderer",
+            "required": false,
+            "arg": {
+              "flag": "--math-renderer"
+            }
+          },
+          {
+            "name": "auto_preview",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--auto-preview"
+            }
+          },
+          {
+            "name": "formula_dpi",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi",
+            "required": false,
+            "arg": {
+              "flag": "--formula-dpi"
+            }
+          },
+          {
+            "name": "default_chapter",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--default-chapter"
+            }
+          },
+          {
+            "name": "print_mode",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PrintMode",
+            "required": false,
+            "arg": {
+              "flag": "--print-mode"
+            }
+          },
+          {
+            "name": "compact_inline_refs",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--compact-inline-refs"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "preferences",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
+            "description": "The preferences after the call."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-pdf",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-docs"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preview.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "paper-preview",
+      "title": "Open a render",
+      "description": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "paper_preview"
+        },
+        "inProcess": {
+          "module": "adapters/paper/tools/preview.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "format",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreviewFormat",
+            "required": false,
+            "arg": {
+              "flag": "--format"
+            }
+          },
+          {
+            "name": "list",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--list"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "opened",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
+            "description": "What was opened, or the list of candidates."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/rendering-auditor",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
       ]
     },
     {
@@ -5444,8 +5665,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "dfc77dc94a6ad979535584ad8774e79a7572de73",
+    "sha": "c56cfb56c3a8ca969f1e9a5b7252631ad81e7ec6",
     "pr": "main",
-    "run": "40900768066"
+    "run": "41047245791"
   }
 }

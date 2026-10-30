@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pages-independent-of-ci/tool-types/ReadmeSection.schema.json",
+  "title": "ReadmeSection",
+  "type": "string",
+  "enum": [
+    "folio:toc",
+    "folio:lean-coverage",
+    "folio:lean-modules",
+    "folio:simulators",
+    "folio:workflows"
+  ],
+  "description": "A generated README section, named by its marker.",
+  "staging": {
+    "branch": "claude/pages-independent-of-ci",
+    "sha": "41b575afec5346ebbb5f85c0bd50d2bba6afb5b6",
+    "pr": "2658/merge",
+    "run": "40014447753"
+  }
+}

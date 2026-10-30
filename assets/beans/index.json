@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 67,
+      "count": 64,
       "unit": "open beans"
     }
   },
@@ -844,7 +844,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-29T11:00:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
@@ -1937,14 +1937,14 @@
     {
       "id": "folio-assistant-46ob",
       "title": "Missing viewers: 100 navbar rows read 'no viewer yet' across 47 kinds on the live site",
-      "status": "todo",
+      "status": "completed",
       "type": "epic",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-22T14:30:00Z",
+      "updatedAt": "2026-10-29T15:50:18Z",
       "preview": "## The ask, owner 2026-10-15 (verbatim)\n\n> bean up for missing viewers\n\nContext: the owner's screenshot of `/en/cat-harness/library/` showed \"no viewer yet\" on Processes and other declared sub-graphs.\n\n## Measured\n\nFrom the deployed `gh-pages` (folio-assistant `ac9cba167`, 2026-10-15T16:46Z), page `en/cat-harness/library/index.html`, parsing the rendered rail: **210 rows, 100 of them \"no viewer ye",
       "file": "beans/defs/folio-assistant-46ob--missing-viewers-100-navbar-rows-read-no-viewer-yet.md"
     },
@@ -2289,7 +2289,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T14:30:00Z",
-      "updatedAt": "2026-10-29T07:35:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "## Parent\n\nfolio-assistant-n3h9\n\nRelated: folio-assistant-p7mb (build derived artefacts at publish).\n\nOwner, 2026-10-23: \"fhir-artifact-index/ → shouldn't that be a part of fhir-harness?\" and \"1 and implement\" (plan, then implement). Plan: litlfred/fhir-harness#124. Thread \"fhir-harness IG viewers\".\n\n## Why\n\nsmart-trust and smart-base commit `fhir-artifact-index/` (index, menu, releases; 1.3 to 1.",
       "file": "beans/defs/folio-assistant-4u5d--ig-artifact-index-built-at-publish-by-fhir-harness.md"
     },
@@ -2436,14 +2436,14 @@
     {
       "id": "folio-assistant-565h",
       "title": "Re-measure the navbar's 'no viewer yet' rows after the next publish",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-46ob",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-29T12:20:00Z",
-      "updatedAt": "2026-10-29T12:20:00Z",
+      "updatedAt": "2026-10-29T16:20:00Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\n## Why\n\nEvery viewer child of 46ob is completed, but 3 rows still read \"no viewer yet\" on the live site, because the fixes are not yet published. This is the work 46ob stays open for, recorded as an open child so `check:bean-rollup` sees it.\n\n## Done when\n- [ ] the next folio-assistant publish has deployed\n- [ ] `en/cat-harness/library/index.html` on gh-pages is re",
       "file": "beans/defs/folio-assistant-565h--re-measure-the-navbar-viewers-after-the-next-publish.md"
     },
@@ -4335,7 +4335,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T17:59:01Z",
-      "updatedAt": "2026-10-24T08:50:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "Carried over from `j2if` on 2026-09-23, on the owner's choice \"Move to split, close\". The source of truth for the wording is `cat-harness/docs/architecture/folio-board-requirements.md` §\"The folio is a convention, not a page — R24 to R29\". Quoted here so this bean can be read on its own:\n\n| | requirement | state 2026-09-23 |\n|---|---|---|\n| **R24** | the folio visualisation is `cat-harness`'s, and",
       "file": "beans/defs/folio-assistant-95sk--folio-as-convention-r24-r27r29-the-folio-on-any-ha.md"
     },
@@ -6176,7 +6176,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-28T12:50:00Z",
+      "updatedAt": "2026-10-30T11:13:00Z",
       "preview": "## What\n\nGenerate a narrative description for every image, localized to the folio's\nlanguages.\n\n## The half that is easy to miss\n\n**This applies to an image EXTRACTED FROM A PDF, not only to an uploaded one.**\nMost images in this corpus arrive inside a paper, and a figure nobody has\ndescribed is a figure no grep and no agent can reach.\n\n## Provenance is not optional\n\nEvery description carries its ",
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
@@ -6499,9 +6499,7 @@
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
-      "blocking": [
-        "folio-assistant-t5zb"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T13:20:00Z",
       "updatedAt": "2026-10-29T12:45:00Z",
@@ -7053,14 +7051,14 @@
     {
       "id": "folio-assistant-fm9n",
       "title": "Data dictionary web annex: in the KG, loaded dynamically (not the full workbook)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T16:13:16Z",
-      "updatedAt": "2026-10-29T07:35:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "Owner 2026-10-10: dictionary.html should carry the data dictionary as a web annex. It should be in the KG and loaded dynamically, not as the full Excel. Existing infra:\n- cat-harness-tools/scripts/tabular-records.py (stdlib xlsx reader, writes library/<slug>/tabular.jsonld: sheets, headers, shape);\n- CSVW (tabular-csvw.test.ts);\n- docs/assets/js/kg-render.js (three-state fetch + render);\n- docs/as",
       "file": "beans/defs/folio-assistant-fm9n--data-dictionary-web-annex-in-the-kg-loaded-dynamic.md"
     },
@@ -10779,7 +10777,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-26T14:16:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "Arc `3fva`, proposal §2.3 and §4 item 3.1. Blocked on the qa-store bean. Can be dispatched to 3 agents, one per family.\n\n- 3.1a: `kg:audit:check`, `kg:audit:all:check`, `audit:coverage:require-all/strict`, `check:harness-state:check`\n- 3.1b: `lsi:skills:check`, `lsi:viz:check`, `kg:detangle:check`, `translation:block-qa:check`\n- 3.1c: `skill:register:check`, `readme:subgraphs:check`, `root-scan-ce",
       "file": "beans/defs/folio-assistant-oqe3--gates-the-16-stale-check-gates-become-compute-and.md"
     },
@@ -10977,7 +10975,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T07:55:00Z",
-      "updatedAt": "2026-10-24T17:40:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
@@ -12755,11 +12753,9 @@
       "priority": "low",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-e0uk"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-24T13:20:00Z",
-      "updatedAt": "2026-10-24T13:20:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "Phase 2 of the owner's option D (card 2026-10-24 13:15Z). After the index (folio-assistant-e0uk), give repos that publish `user_invocable` skills or define agents (today cat-harness 33, folio-assistant-sci 15, folio-assistant-core 2) the rest of the agent surface: `gen-skill-commands.ts` commands, agents + memory, per-vendor agent files (31ni), and an `.mcp.json` where the MCP skill server runs st",
       "file": "beans/defs/folio-assistant-t5zb--agent-advice-per-repo-phase-2-commands-agents-and-me.md"
     },
@@ -14724,7 +14720,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-10-28T12:59:00Z",
+      "updatedAt": "2026-10-30T11:10:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
@@ -16121,13 +16117,6 @@
       ]
     },
     {
-      "blocker": "folio-assistant-e0uk",
-      "blocked": "folio-assistant-t5zb",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
       "blocker": "folio-assistant-f16o",
       "blocked": "folio-assistant-xp5j",
       "declaredOn": [
@@ -16395,12 +16384,6 @@
       "detail": "blocks `folio-assistant-4fv8` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
     },
     {
-      "kind": "blocker-closed",
-      "bean": "folio-assistant-e0uk",
-      "blocks": "folio-assistant-t5zb",
-      "detail": "is completed but still blocks `folio-assistant-t5zb`, which is todo"
-    },
-    {
       "kind": "blocking-unknown",
       "bean": "folio-assistant-ojcx",
       "blocks": "folio-assistant-txut",
@@ -16416,13 +16399,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 325,
-        "closed": 294,
-        "open": 31,
-        "inProgress": 21,
+        "closed": 295,
+        "open": 30,
+        "inProgress": 20,
         "todo": 10,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.9046153846153846
+        "share": 0.9076923076923077
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16461,13 +16444,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 643,
-        "closed": 619,
-        "open": 24,
+        "closed": 621,
+        "open": 22,
         "inProgress": 10,
-        "todo": 13,
+        "todo": 11,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.9626749611197511
+        "share": 0.9657853810264385
       },
       {
         "id": "folio-assistant-npuo",
@@ -16486,8 +16469,8 @@
       }
     ],
     "orphanOpen": 2,
-    "openTotal": 67,
-    "coveredOpen": 62,
+    "openTotal": 64,
+    "coveredOpen": 59,
     "duplicateIds": 0
   }
 }

@@ -1,0 +1,301 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_RefreshMaterialized",
+ "tasks": {
+  "Task_Fixity": {
+   "id": "Task_Fixity",
+   "name": "ARCHIVAL verify fixity — never re-fetch",
+   "type": "bpmn:ServiceTask",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_Upstream": {
+   "id": "Task_Upstream",
+   "name": "WORKING what changed upstream",
+   "type": "bpmn:ServiceTask",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_Local": {
+   "id": "Task_Local",
+   "name": "What changed LOCALLY since",
+   "type": "bpmn:ServiceTask",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_Adjudicate": {
+   "id": "Task_Adjudicate",
+   "name": "Adjudicate the conflict",
+   "type": "bpmn:CallActivity",
+   "lane": "Contributor (human or agent)",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    },
+    {
+     "name": "adjudication"
+    }
+   ],
+   "calls": {
+    "name": "Adjudication",
+    "href": "adjudication.html"
+   },
+   "role": {
+    "name": "user",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_Reconcile": {
+   "id": "Task_Reconcile",
+   "name": "Reconcile the two by hand",
+   "type": "bpmn:Task",
+   "lane": "Contributor (human or agent)",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_Apply": {
+   "id": "Task_Apply",
+   "name": "Re-materialize, re-asking the five gates — and record the new fixity",
+   "type": "bpmn:ServiceTask",
+   "lane": "Corpus — L1 source knowledge graph",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  },
+  "Task_KeepLocal": {
+   "id": "Task_KeepLocal",
+   "name": "Keep the local edit, and re-pin so it stops being asked",
+   "type": "bpmn:ServiceTask",
+   "lane": "Corpus — L1 source knowledge graph",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  },
+  "Task_RecordConflict": {
+   "id": "Task_RecordConflict",
+   "name": "Record the conflict, decide nothing, and do NOT re-pin",
+   "type": "bpmn:ServiceTask",
+   "lane": "Corpus — L1 source knowledge graph",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,1140 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_BeanLifecycle",
+ "tasks": {
+  "Task_CheckExists": {
+   "id": "Task_CheckExists",
+   "name": "Check before you create (exact-title search)",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_Create": {
+   "id": "Task_Create",
+   "name": "Create the bean (agent CLI, not an engine op)",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_LeaveAlone": {
+   "id": "Task_LeaveAlone",
+   "name": "Leave it alone (coordinate instead)",
+   "type": "bpmn:Task",
+   "lane": "Sibling session or human (not yours to close)",
+   "skills": [
+    {
+     "name": "bean-coordination"
+    }
+   ],
+   "role": {
+    "name": "sibling-session",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-sibling-session",
+    "title": "Sibling session",
+    "skills": [
+     {
+      "name": "bean-coordination"
+     }
+    ]
+   }
+  },
+  "Task_Claim": {
+   "id": "Task_Claim",
+   "name": "Claim it (status: in-progress)",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "bean-coordination"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_Work": {
+   "id": "Task_Work",
+   "name": "Work, keeping the body current (this is 'edit')",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_Complete": {
+   "id": "Task_Complete",
+   "name": "Complete (no unchecked todos left)",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_Scrap": {
+   "id": "Task_Scrap",
+   "name": "Scrap with reasons NEVER delete",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  },
+  "Task_RecordBlocker": {
+   "id": "Task_RecordBlocker",
+   "name": "Record the blocker and hand back",
+   "type": "bpmn:Task",
+   "lane": "Agent (this session)",
+   "skills": [
+    {
+     "name": "bean-coordination"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "bean-coordination"
+     },
+     {
+      "name": "before-after-preview"
+     },
+     {
+      "name": "blocked-build-dependencies"
+     },
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "branch-archaeology"
+     },
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-graph"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "continual-progress"
+     },
+     {
+      "name": "coordinate"
+     },
+     {
+      "name": "crdm-detect"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "delivery-summary"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "gate-tree-mutation"
+     },
+     {
+      "name": "generalise-the-fix"
+     },
+     {
+      "name": "github-state-inspection"
+     },
+     {
+      "name": "graph-detanglement"
+     },
+     {
+      "name": "issue-working"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "pr-description"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "prepare-merge-auto"
+     },
+     {
+      "name": "related-work-coordination"
+     },
+     {
+      "name": "session-context"
+     },
+     {
+      "name": "session-state-machine"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     },
+     {
+      "name": "watch"
+     },
+     {
+      "name": "wireframe-design-review"
+     },
+     {
+      "name": "workflow-state"
+     }
+    ]
+   }
+  }
+ }
+}
