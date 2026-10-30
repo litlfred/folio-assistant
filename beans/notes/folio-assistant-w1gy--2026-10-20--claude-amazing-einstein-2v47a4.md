@@ -116,7 +116,10 @@ No commit or push was made. The scratch clones had their push URLs disabled. The
 
 ## Fix commits
 
-None yet. The bean asks for every fix to be a commit in the new repository, listed here. That is outstanding.
+- `litlfred/cat-harness#382` (merged): `F3`, `F8`, `F13`.
+- `litlfred/cat-harness#511` & `litlfred/folio-assistant-sci#68` (merged): `F10`.
+- `litlfred/bootstrap` & `litlfred/bootstrap-tools` (merged on `main`): `F9`.
+- `litlfred/cat-harness#717` (`8363264c`, open): `F1` (`bun.lock` sibling `../bootstrap-tools` workspace on `bun 1.3.14`), `F4` (`folio/index.md` regenerated), `F5` (`test/README.md` replaced with subdirectory table), and 10 stale directory READMEs regenerated (`0/45` stale).
 
 ## QA — litlfred/cat-harness-tools (separation stage 5, bean `folio-assistant-w1gy`)
 
@@ -252,4 +255,8 @@ No commit or push was made, and nothing under `/home/user/` was modified. The in
 
 ## Fix commits
 
-None yet. Per the bean, each fix must be a commit in this repository, listed here.
+- `litlfred/cat-harness#382` (merged): `F3` (dead `check:adversarial-review` script), `F8` (two wrong-direction comments), `F13` (`url-space.ts` `@graphNode`).
+- `litlfred/cat-harness#511` & `litlfred/folio-assistant-sci#68` (merged): `F10` (`LICENSE`, `LICENSE-CONTENT.md`, `NOTICE`, `package.json#license`).
+- `litlfred/bootstrap` & `litlfred/bootstrap-tools` (merged on `main` by `3ce2b5d` / `fdceeca`): `F9` (`harness-pr-checks.yml` comment no longer names `cat-harness-tools`; `bootstrap-tools` `bun test` is 312 pass / 0 fail and `rehearse-standalone.ts` passes 14/14).
+- `litlfred/cat-harness#717` (`8363264c`, open): `F1` (`bun.lock` sibling `../bootstrap-tools` workspace on `bun 1.3.14`), `F4` (`folio/index.md` regenerated), `F5` (`test/README.md` replaced with subdirectory table for `attestations/`, `fixtures/`, `plans/`, `results/`), and 10 stale directory READMEs regenerated via `subgraph-readmes.ts --repo` (0/45 stale).
+- `litlfred/cat-harness-tools#867` (`c9f8e73`, open): `F5` companion (`test/README.md` regenerated to list moved `*.e2e.ts` and `test-server.mjs`), `bun.lock` regenerated on `bun 1.3.14` (`lockfileVersion: 1` + `../bootstrap-tools` `bpmn-js: 18.31.0`), and `scripts/rehearse-bootstrap-standalone.ts` fallback to `bootstrap-tools/node_modules` in the sibling layout (14/14 pass).

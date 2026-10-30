@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-29T07:35:00Z
+updated_at: 2026-10-30T12:25:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -52,3 +52,20 @@ On folio-assistant-sci having no LICENSE or NOTICE while it carries the MIT clau
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/folio-assistant-sci#68, litlfred/cat-harness#511 (licence, owner review).
 
 _2026-10-29T07:35Z_ — F10 merged: litlfred/folio-assistant-sci#68 and litlfred/cat-harness#511. Lane A (session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo) merged them under the owner's 2026-10-29 07:20Z rule, "merge all ready and then deal with aftermath", which supersedes the 10-24 "do not auto-merge". Still open: F1 (bun.lock nested bootstrap-tools) and F5 (test/README.md links to moved e2e files), plus the sci#68 witness gate (`readme:subgraphs` finds an uncommitted `guides-writing-a-paper/the-end-to-end-workflow.kg.json`).
+
+## 2026-10-30 — re-measured in fresh sibling clones; PRs opened for F1, F4, F5, and sibling bootstrap rehearsal
+
+Fresh sibling clones of `bootstrap` (`3ce2b5d`), `bootstrap-tools` (`fdceeca`), `cat-harness` (`e60e8283`), and `cat-harness-tools` (`8262eba`) under pinned `bun 1.3.14`:
+
+- **bootstrap & bootstrap-tools:** `F9` (`harness-pr-checks.yml:8` comment naming `cat-harness-tools`) is already fixed on `main` in both repositories. `bun install --frozen-lockfile`, `tsc`, `bun test` (312 pass / 0 fail across 25 files), `check:closure`, `check:node-iris`, `check:concepts`, `subgraph-readmes --check` (0 stale in both), and `bootstrap-tools/scripts/rehearse-standalone.ts` (14/14 pass) are all green.
+- **cat-harness (`litlfred/cat-harness#717`, commit `8363264c`):**
+  - `F1` (`bun.lock`): regenerated in the sibling layout on `bun 1.3.14` (`"../bootstrap-tools"` workspace key and current `bootstrap-tools` manifest); `bun install --frozen-lockfile` passes (226 installs across 244 packages, 0 changes).
+  - `F5` (`test/README.md`): replaced the stale generated `cat-harness-tests` table (86 dead relative links to moved `*.e2e.ts` and `test-server.mjs` files) with a concise README of the four subdirectories `cat-harness/test/` holds (`attestations/`, `fixtures/`, `plans/`, `results/`); all relative links resolve inside `cat-harness`.
+  - `F4` (`folio/index.md`): regenerated via `bun run folio:render`; `bun run folio:render:check` passes.
+  - `readme:subgraphs`: regenerated the 10 stale directory READMEs (`docs/`, `docs/guides/`, `docs/process/`, `docs/proposals/`, `docs/source/`, `processes/`, `site-chrome/`, `test/attestations/`, `tools/`, `validators/`) via `subgraph-readmes.ts --repo`; `subgraph-readmes.ts --repo <cat-harness> --check` passes with 0 stale across all 45 directory READMEs.
+  - Verified in the sibling layout: `bun install --frozen-lockfile` (0 changes), `tsc` (0 errors), `bun test` (1258 pass / 0 fail across 100 files), `folio:render:check` (current), `check:schema-nodes` (pass), `check:declared-assets` (0 findings), `readme:audit` (0 dead), `check:subgraphs` (0 dangling links).
+- **cat-harness-tools (`litlfred/cat-harness-tools#867`, commit `c9f8e73`):**
+  - `F5` companion (`test/README.md`): regenerated `test/README.md` via `subgraph-readmes.ts --repo` from `cat-harness-tools-tests` so it lists all moved `*.e2e.ts` and `test-server.mjs` files.
+  - `bun.lock`: regenerated on `bun 1.3.14` (`"lockfileVersion": 1` and `../bootstrap-tools` `bpmn-js: 18.31.0`) so `bun install --frozen-lockfile` passes under the pinned `bun 1.3.14` in the sibling layout (525 installs across 542 packages, 0 changes).
+  - `scripts/rehearse-bootstrap-standalone.ts`: falls back to `bootstrap-tools/node_modules` when the parent directory has no `node_modules`, so `check:bootstrap-standalone` passes all 14 checks in the sibling layout.
+  - Verified in the sibling layout: `bun install --frozen-lockfile` (0 changes), `tsc` (0 errors), `check:bootstrap-standalone` (14/14 pass).
