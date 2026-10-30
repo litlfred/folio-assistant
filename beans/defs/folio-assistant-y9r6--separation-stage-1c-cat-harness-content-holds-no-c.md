@@ -60,3 +60,14 @@ _2026-10-30T15:35Z_ — Step 4a landed: cat-harness#749 (155d495). The 8 remaini
 _2026-10-30T15:55Z_ — Step 6 gate landed as a one-way ratchet: cat-harness-tools#915 adds `check:content-code-free`, which is red with no list (551 files) and green with `scripts/content-code-free-baseline.json`. About 470 of the listed files are `schemas/` (8lcl). The first done-when box ticks when the list is empty. Site JS: the owner is leaning to option C (move the whole `site-chrome/` subgraph, plus `docs/assets/js`, to cat-harness-tools) and the plan is with them for a decision.
 
 _2026-10-30T15:45Z_ — Owner card, option A: the 2026-10-09 chrome-subgraph layout stays. cat-harness-tools#916: a `.js`/`.mjs` under `site-chrome/assets/`, `site-chrome/_includes/` or `docs/assets/` is a browser asset and is allowed by rule (list 551 -> 533). This supersedes the D5 bullet: site chrome does not move. Step 5 is closed.
+
+## 2026-10-30 ~16:00Z — step 4b done, list 533 -> 322
+
+- cat-harness#751 (2dc3fba): 8 docs/source webpage manifests are JSON (`block-manifest/v1`, builder `webpage`).
+- cat-harness#752 (d73c888): 7 translation manifests are `translation-node/v1` JSON; `tools/harness-state` is JSON.
+- tools#918 (a972f2f): `translate-kg-viewer` writes the JSON form, validated by `TranslationNodeSchema`.
+- tools#917 (63a4a2c): stale `schemas/fsh-guts.ts` partition rule removed (f8wp aftermath).
+- f8wp shim PRs merged under owner card "A. Merge both now": tools#893, #901, #908; cat-harness#734, #741, #743; core#241, #244; sci#119, #121; fhir#201, #202. That took 195 schema shims off the list.
+- Gate `check:content-code-free` is green with 322 allowed files and nothing added.
+
+Remaining: `schemas/` (moves with 8lcl), `tools/index.ts`, `tools/lib.ts`, `skills/framework/types.ts` (sci imports it), openapi/archimate/folio-render, test fixtures, `_plugins/*.rb`.
