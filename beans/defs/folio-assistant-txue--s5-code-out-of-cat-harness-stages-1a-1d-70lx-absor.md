@@ -2,13 +2,13 @@
 # folio-assistant-txue
 $schema: bean/1.0.0
 title: 'S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y9r6, vj2p'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-21T17:56:00Z
+updated_at: 2026-10-30T18:45:00Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-rfuq
@@ -33,3 +33,5 @@ _2026-10-15T16:49Z_ — Block lifted: `a4of` is completed (PR #2317 merged 2026-
 _2026-10-15T16:49Z_ — Block lifted: `a4of` is completed (PR #2317 merged 2026-10-06). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-30T18:45:00Z_ — vj2p completed; 8lcl landed apart from its generated-JSON-Schema box; y9r6 box 1 met (0 code files under cat-harness). Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.

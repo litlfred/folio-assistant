@@ -5,7 +5,7 @@ title: 'Separation stage 1c: cat-harness content holds no code — block manifes
 status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T16:10:00Z
+updated_at: 2026-10-30T18:45:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -75,3 +75,5 @@ Remaining: `schemas/` (moves with 8lcl), `tools/index.ts`, `tools/lib.ts`, `skil
 _2026-10-30T16:10Z_ — Follow-up PR `litlfred/cat-harness-tools#921` opened to re-key the 2 moved `webpage` witnesses in `scripts/declared-path-baseline.json` (`.ts` -> `.json` after `cat-harness#751`) and clear the `check:declared-paths` findings on `scripts/check-content-code-free.ts` and `scripts/tests/content-code-free.test.ts` from `#916`.
 
 _2026-10-30T16:55Z_ — The `skills/framework/types.ts` shim is gone: folio-assistant-sci#125 (48991b5) and folio-assistant-core#252 (cddb02f) import `schemas/conduct/assistant-types` directly, and cat-harness#759 (f9a353e) deletes it. Lane A was split by the coordinator: this thread keeps y9r6, 8lcl, txue and vj2p. Left on the list outside `schemas/`: `tools/index.ts` and `tools/lib.ts` (they go with the `schemas/tools` loader in 8lcl), the openapi and archimate Zod schemas (8lcl), `tools/cat-harness-schema` (instance-dependent), one test fixture, and the folio file-list renderer plus 3 Jekyll plugins (owner card posted: keep by rule, or move).
+
+_2026-10-30T18:45:00Z_ — `check:content-code-free` now reports 0 code files under cat-harness and the baseline list is empty: `schemas/`, `tools/index.ts`, `tools/lib.ts` and the openapi/archimate schemas moved with 8lcl, and the last test fixture moved in cat-harness-tools#971 / cat-harness#789. Box 1 is met. folio-render and the 3 Jekyll plugins stay by owner card "A. Keep them, allowed by rule". Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.

@@ -2,11 +2,11 @@
 # folio-assistant-8lcl
 $schema: bean/1.0.0
 title: 'Separation stage 1b: Zod moves to cat-harness-tools; generated JSON Schema stays in cat-harness'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-16T06:55:00Z
+updated_at: 2026-10-30T18:45:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-f8wp
@@ -38,3 +38,5 @@ _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-
 
 
 _2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+_2026-10-30T18:45:00Z_ — The coordinated move landed under owner card "A. One coordinated move". All Zod code left cat-harness for cat-harness-tools: cat-harness-tools#952 (c98abe5), cat-harness#773 (6dff1e1). Re-pinned downstream: core#265, sci#133, fhir#215, smart-base#225, folio-assistant#2774 (b61e856), qou#7813. cat-harness#787 (ad64a09) sets `needs: ["bootstrap"]`; the fixture followed its tests in cat-harness-tools#971 (d96004f) and cat-harness#789 (b4bffd0), which also drops zod from cat-harness's dependencies. Boxes: 1 (no `schemas/*.ts` here) met, but the generated JSON Schema with `$id` is NOT done; 3 met; 4 met, import-direction green; 2 (docs/reference byte-identical, kind-validators unchanged) and 5 (gates green) not measured. Stays in-progress for the JSON Schema half. Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
