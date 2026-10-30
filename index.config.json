@@ -309,7 +309,11 @@
     }
   ],
   "site": {
-    "landing": "folio-assistant-core"
+    "landing": "folio-assistant-core",
+    "workflows": {
+      "publish": "docs-site.yml",
+      "stage": "feature-staging.yml"
+    }
   },
   "mountApprovers": [
     "litlfred"
