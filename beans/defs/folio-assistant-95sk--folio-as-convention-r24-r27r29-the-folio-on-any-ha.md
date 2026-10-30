@@ -2,10 +2,10 @@
 # folio-assistant-95sk
 $schema: bean/1.0.0
 title: 'FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and reader documents in folio/, cross-library references — wait on the split'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-23T17:59:01Z
-updated_at: 2026-10-30T17:13:00Z
+updated_at: 2026-10-30T19:50:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -29,7 +29,7 @@ They are declarations and paths that only mean something once the repo is split 
 - [x] R24: a second harness instance renders the folio pull-down with no code of its own *(who-iris: met via `folio-mount.ts`. FHIR IG pages: fhir-harness#155, merged 2026-10-24 as 49da9cc; live on `gh-pages` after `folio-assistant#2681` re-pinned `fhir-harness`: `smart-base/index.html` on `gh-pages` carries `data-fa-folio-mount`.)*
 - [x] R27: a materialised asset is written under `folio/`, and the glass reads it from there *(met as the owner ruled on 2026-09-21: the folio is the reader's REPOSITORY, of which `library/` and `uploads/` are declared parts. Bytes under `folio/` itself were rejected, because `corpus-grep` reads `library/` only and `folio/` is renderable. See `folio-board-requirements.md` §"R27 and question 1". Gated by `check-catalogue.ts`. Ticked 2026-10-24.)*
 - [x] R28: creating or linking a document writes it under `folio/` *(creating: `cat-harness-tools#711` merged as `b7b21e5`, extended in `cat-harness-tools#945` so `readDocumentKinds` / `loadedDocumentKinds` resolve kinds across mounted layers and dependency chains; linking: `bun run cat folio:create --link <url> --slug <slug> --title <title>` writes `<library>/<slug>/referenced.json` + `manifest.jsonld` in `cat-harness-tools#945`, and the reader's "Link a document" action on the glass (`[data-fa-glass-action="link-document"]`) is added in `cat-harness#765`.)*
-- [ ] R29: a todo or sticky can carry a reference into another instance's KG, and the reference resolves
+- [ ] R29: a todo or sticky can carry a reference into another instance's KG, and the reference resolves *(split out to `folio-assistant-r29x`, paused by the owner 2026-10-24)*
 
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
@@ -61,3 +61,7 @@ So, for R28:
 - A document a reader **creates** goes in `folio/`. It may be of **any kind that some knowledge graph in the instance's dependency chain describes**, including the mounted layers. So the set of creatable kinds is whatever the loaded graphs declare, not a list fixed here.
 - A document a reader **links to** becomes a `referenced` node in `library/` (catalogue by reference, through `ingest-document.ts`'s referenced rung), as option A said.
 
+
+## 2026-10-30 — closed; R29 split out (thread "Finish GOAL 1 placement beans", session https://claude.ai/code/session_01Qmmkt6Hy5kLsKxGLMzk88s)
+
+R28 is fully met: `cat-harness#765` merged (17c66fa) and `cat-harness-tools#945` merged (80fee57), after it was brought up to date with the 8lcl schema paths and its fixtures stopped naming higher IG layers. R24, R27 and R28 are ticked. R29 stays paused by the owner, so it moves to its own bean, `folio-assistant-r29x`, and this bean is completed.
