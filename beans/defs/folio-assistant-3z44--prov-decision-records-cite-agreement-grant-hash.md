@@ -2,7 +2,7 @@
 # folio-assistant-3z44
 $schema: bean/1.0.0
 title: 'PROV decision records cite agreement + grant; hash-chained log (DSA B4)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-30T14:05:00Z

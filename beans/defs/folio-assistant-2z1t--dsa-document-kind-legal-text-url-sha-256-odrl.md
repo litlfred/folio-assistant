@@ -2,7 +2,7 @@
 # folio-assistant-2z1t
 $schema: bean/1.0.0
 title: 'dsa document kind: legal text URL + SHA-256, ODRL Agreement, DCAT record, hash check (DSA B3)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-30T14:05:00Z

@@ -2,7 +2,7 @@
 # folio-assistant-yy40
 $schema: bean/1.0.0
 title: 'B4 audit trail: cite agreement with standard terms (prov:used + DCAT spdx:checksum + VC id)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T19:20:41Z
