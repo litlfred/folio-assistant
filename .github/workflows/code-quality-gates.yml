@@ -717,11 +717,26 @@ jobs:
         run: bun run smart:pages
 
       - name: Record the tree this run tests (bean qbco)
-        # The check run's summary is an API field. A later push to `main`
-        # whose tree is this one reads it here and reuses this run's verdict
-        # (`verdict-reuse.sh`); nothing else reads it.
+        id: tested-tree
+        # A later push to `main` whose tree is this one reuses this run's
+        # verdict (`verdict-reuse.sh`); nothing else reads the record. The
+        # record is the NAME of the artifact uploaded next, which the
+        # artifacts API lists. The step summary is for people only: GitHub
+        # does not expose it as the check run's `output.summary`, which read
+        # empty on every producer check run (#2456, 2026-10-30), so no
+        # verdict had ever been reused.
         run: |
-          echo "tested-tree: $(git rev-parse 'HEAD^{tree}') (commit $(git rev-parse HEAD))" | tee -a "$GITHUB_STEP_SUMMARY"
+          tree=$(git rev-parse 'HEAD^{tree}')
+          echo "tested-tree: $tree (commit $(git rev-parse HEAD))" | tee -a "$GITHUB_STEP_SUMMARY" "$RUNNER_TEMP/tested-tree.txt"
+          echo "tree=$tree" >> "$GITHUB_OUTPUT"
+
+      - name: Publish the tested-tree record (bean qbco)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: tested-tree-${{ steps.tested-tree.outputs.tree }}
+          path: ${{ runner.temp }}/tested-tree.txt
+          if-no-files-found: error
+          retention-days: 3
 
       - name: Snapshot the checkout before the build (bean jtfk)
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
