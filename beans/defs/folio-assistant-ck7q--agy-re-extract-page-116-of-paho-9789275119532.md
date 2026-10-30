@@ -2,7 +2,7 @@
 # folio-assistant-ck7q
 $schema: bean/1.0.0
 title: 'agy: re-extract page 116 of PAHO 9789275119532_eng.pdf for smart-immunizations (img-p116-1 was committed empty)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T18:20:00Z
@@ -28,3 +28,5 @@ _2026-10-30T18:45:30Z_ — Implemented in [litlfred/smart-immunizations#98](http
 - **Step 2:** Diagnosed why `img-p116-1.png` was originally written as 0 bytes in `#12`: page 116 `xref=365` uses a 1-channel `DeviceN(1,DeviceCMYK,Black)` colorspace (`pix.n == 1`, `pix.alpha == 0`), which bypassed `if pix.n - pix.alpha >= 4:` in `cat-harness-tools/scripts/pdf-images.py` and caused MuPDF's `pix.save()` to throw `code=4: pixmap must be grayscale or rgb to write as png` after creating the empty file on disk. Converted `DeviceN` to `csRGB` and extracted `library/9789275119532-eng/images/img-p116-1.png` (`228x150` 8-bit RGB PNG, 3,653 bytes, `sha256: eae714c1d0a134d1c0bf99c5a465046b0bd2f0f7c053c566c996f8180febe87c`). Inspection showed it is the back-cover ISBN EAN-13 barcode (`9 789275 119532`) placed at `Rect(678.32, 501.85, 787.55, 573.41)` directly below `ISBN: 978-92-75-11953-2` on page 116 (coverage `0.015597`, alone on the page).
 - **Step 3:** Recorded verdict `role: "decorative"`, `saw: "an ISBN barcode on the back cover"`, `draft: "The back-cover ISBN barcode for 978-92-75-11953-2 (9 789275 119532)."` for `9789275119532-eng/img-p116-1` in `library/image-verdicts.json` (matching `smart-base` `9789240101197-eng/img-p078-1`), applied with `apply-image-verdicts.ts` (preserving the Batch Z `fr`/`es`/`ar`/`ru`/`zh` draft narratives on all 16 images).
 - **Step 4:** Ran `gen-library-jsonld.ts --prune --doc 9789275119532-eng` and `bun run cat library:readmes` (`images | 15` -> `images | 16` in `library/9789275119532-eng/README.md`), verified `check-l1-complete.ts`, `check-catalogue.ts`, `check-materialized-fixity.ts`, `pdf-images.test.py`, and `document-image.test.ts` all pass.
+
+_2026-10-30T21:24:15Z_ — `litlfred/smart-immunizations#98` merged (`809b48f915` at `2026-10-30T19:33:54Z`), closing `smart-immunizations#76`. Marked `completed`.

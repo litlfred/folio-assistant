@@ -2,7 +2,7 @@
 # folio-assistant-q7dh
 $schema: bean/1.0.0
 title: 'check:dsa-hash: validate against official ODRL/DCAT/DCMI contexts, declare it as a Tool'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T20:40:00Z
@@ -21,3 +21,5 @@ Follow-up to bean `2z1t` (litlfred/folio-assistant-core#249, merged 2026-10-30 2
 - The term check reads only official contexts; a made-up term fails it.
 - `kg:audit` shows neither finding for the DSA steps and skills.
 - No new schema fields are invented.
+
+_2026-10-30T21:24:15Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
