@@ -24,36 +24,6 @@
     "cat-harness": {
       "name": "@litlfred/cat-harness",
       "version": "0.1.0",
-      "dependencies": {
-        "@anthropic-ai/sdk": "^0.127.0",
-        "@litlfred/bootstrap-tools": "0.1.0",
-        "@unified-latex/unified-latex-util-arguments": "^1.8.4",
-        "@unified-latex/unified-latex-util-parse": "^1.8.4",
-        "@unified-latex/unified-latex-util-print-raw": "^1.8.4",
-        "bpmn-moddle": "^10.2.0",
-        "csl-json": "^0.1.0",
-        "dmn-moddle": "^12.1.0",
-        "fast-xml-parser": "^5.10.1",
-        "glob": "^13.0.6",
-        "jsonld": "8",
-        "liquidjs": "^10.29.0",
-        "lunr": "2.3.9",
-        "mdast-util-directive": "^3.1.0",
-        "mdast-util-gfm-strikethrough": "^2.0.0",
-        "mdast-util-gfm-table": "^2.0.0",
-        "mdast-util-math": "^3.0.0",
-        "micromark-extension-gfm-strikethrough": "^2.1.0",
-        "micromark-extension-gfm-table": "^2.1.1",
-        "oxigraph": "^0.5.11",
-        "remark": "^15.0.1",
-        "remark-directive": "^4.0.0",
-        "remark-gfm": "^4.0.1",
-        "remark-html": "^16.0.1",
-        "remark-math": "^6.0.0",
-        "unist-util-visit": "^5.1.0",
-        "yaml": "^2.9.1",
-        "zod": "^4.6.5",
-      },
       "devDependencies": {
         "@axe-core/playwright": "^4.13.0",
         "@hpcc-js/wasm-graphviz": "1.6.1",
@@ -133,6 +103,7 @@
         "zod": "^4.6.5",
       },
       "devDependencies": {
+        "@types/fhir": "0.0.44",
         "ajv": "^6.15.0",
       },
     },
@@ -150,6 +121,7 @@
         "mdast-util-directive": "^3.1.0",
         "mdast-util-gfm-strikethrough": "^2.0.0",
         "mdast-util-gfm-table": "^2.0.0",
+        "mdast-util-math": "^3.0.0",
         "micromark-extension-gfm-strikethrough": "^2.1.0",
         "micromark-extension-gfm-table": "^2.1.1",
         "remark": "^15.0.1",
@@ -162,6 +134,7 @@
       },
       "devDependencies": {
         "@types/jsonld": "^1.5.15",
+        "@types/mdast": "^4.0.4",
         "bun-types": "latest",
         "playwright": "1.63.0",
         "typescript": "6.0.3",
@@ -172,12 +145,24 @@
       "version": "0.1.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.12.0",
+        "@unified-latex/unified-latex-util-parse": "^1.8.4",
+        "@unified-latex/unified-latex-util-print-raw": "^1.8.4",
+        "csl-json": "^0.1.0",
+        "mdast-util-gfm-strikethrough": "^2.0.0",
+        "mdast-util-gfm-table": "^2.0.0",
+        "micromark-extension-gfm-strikethrough": "^2.1.0",
+        "micromark-extension-gfm-table": "^2.1.1",
+        "remark": "^15.0.1",
+        "remark-directive": "^4.0.0",
+        "remark-math": "^6.0.0",
+        "unist-util-visit": "^5.1.0",
         "zod": "^4.6.5",
       },
       "devDependencies": {
         "@happy-dom/global-registrator": "15.11.7",
         "@milkdown/crepe": "7.22.2",
         "@milkdown/kit": "7.22.2",
+        "@unified-latex/unified-latex-types": "^1.8.4",
       },
     },
     "who-iris": {
@@ -683,6 +668,8 @@
     "@types/esrecurse": ["@types/esrecurse@4.3.1", "", {}, "sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw=="],
 
     "@types/estree": ["@types/estree@1.0.9", "", {}, "sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg=="],
+
+    "@types/fhir": ["@types/fhir@0.0.44", "", {}, "sha512-RhqRUNcUFeQSbEK9cOEYQ98sfsUFFRCUKbgozHvryiUfEAPiXuhgk2wqYV3MoD1T1qHp0gztrHDywU68bN7KYQ=="],
 
     "@types/hast": ["@types/hast@3.0.5", "", { "dependencies": { "@types/unist": "*" } }, "sha512-rp/ezSWaD1m44dPKICGhiskI13nVr7qTloFwDa/IYkhhf5nzwP+zIQcIJh3WIFSBOy/H1PzB40jPjMDksN4F+g=="],
 
@@ -2121,12 +2108,6 @@
     "@expo/prebuild-config/expo-modules-autolinking": ["expo-modules-autolinking@57.0.16", "", { "dependencies": { "@expo/require-utils": "^57.0.6", "@expo/spawn-async": "^1.8.0", "chalk": "^4.1.0", "commander": "^7.2.0" }, "bin": { "expo-modules-autolinking": "bin/expo-modules-autolinking.js" } }, "sha512-OJh6rMMIIZ/dfwOk2FufJjjsUSw5Boy1Y5Tl+zbBmua/FcD03eEg097dkYIf3iBHVkQ6q9eR08qT88qxvnelow=="],
 
     "@expo/ws-tunnel/ws": ["ws@8.22.0", "", { "peerDependencies": { "bufferutil": "^4.0.1", "utf-8-validate": ">=5.0.2" }, "optionalPeers": ["bufferutil", "utf-8-validate"] }, "sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg=="],
-
-    "@litlfred/cat-harness/bun-types": ["bun-types@1.4.3", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-tinRJNGOmUN+tEAsn2y2e942n9JHRHR42iUYzDH75NmhJqVBokGSQkkfSFdNWwsANIdrK6ACH9t01M452YyTwg=="],
-
-    "@litlfred/cat-harness-tools/bun-types": ["bun-types@1.4.3", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-tinRJNGOmUN+tEAsn2y2e942n9JHRHR42iUYzDH75NmhJqVBokGSQkkfSFdNWwsANIdrK6ACH9t01M452YyTwg=="],
-
-    "@litlfred/folio-assistant-core/bun-types": ["bun-types@1.4.3", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-tinRJNGOmUN+tEAsn2y2e942n9JHRHR42iUYzDH75NmhJqVBokGSQkkfSFdNWwsANIdrK6ACH9t01M452YyTwg=="],
 
     "@milkdown/core/unified": ["unified@11.0.5", "", { "dependencies": { "@types/unist": "^3.0.0", "bail": "^2.0.0", "devlop": "^1.0.0", "extend": "^3.0.0", "is-plain-obj": "^4.0.0", "trough": "^2.0.0", "vfile": "^6.0.0" } }, "sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA=="],
 
