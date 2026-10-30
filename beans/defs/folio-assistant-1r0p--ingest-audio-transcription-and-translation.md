@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-30T11:10:00Z
+updated_at: 2026-10-30T11:41:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -235,7 +235,24 @@ Owner chose option A on 2026-10-29: build the arm and file the English transcrip
 - Merged: litlfred/smart-ra#96 (re-pin all remote layers to main tips, `2026-10-29T10:57:20Z`) and litlfred/smart-ra#94 (`2026-10-29T10:57:41Z`) add `library/crdm-walkthrough-2026-10-06/` with `transcript/en.json` (139 segments, draft) on `smart-ra` `main`.
 
 **Left for Done-when:**
-1. Translations into ar, zh, fr, ru and es (agy). Each goes in `transcript/<lang>.json` with `translated_from: {lang: en, segments_sha256}` and the source's segment times. `recording-transcript.py segments-sha256` prints the digest.
-2. Round-trip QA (`ktt2`) for each translation.
-3. A human confirms en.
+1. ~~Translations into ar, zh, fr, ru and es (agy). Each goes in `transcript/<lang>.json` with `translated_from: {lang: en, segments_sha256}` and the source's segment times. `recording-transcript.py segments-sha256` prints the digest.~~ Done in [`litlfred/smart-ra#99`](https://github.com/litlfred/smart-ra/pull/99) (`0f7714aac`).
+2. ~~Round-trip QA (`ktt2`) for each translation.~~ Done (`pass` across all 5 languages; see below).
+3. A human confirms `en` (and merges [`litlfred/smart-ra#99`](https://github.com/litlfred/smart-ra/pull/99)).
+
+## 2026-10-30: `ar`, `es`, `fr`, `ru`, `zh` translations + untainted round-trip QA (`litlfred/smart-ra#99`)
+
+Opened [`litlfred/smart-ra#99`](https://github.com/litlfred/smart-ra/pull/99) (`0f7714aac` on branch `fix/1r0p-transcript-translations`):
+
+- **Source `segments_sha256` (`transcript/en.json`, 139 segments):** `ed224c2bc8748e3a8164fa2cf46f450f22d430c2ed42a7435d7a83812a846f90` (via `recording-transcript.py segments-sha256`).
+- **Translations authored (`library/crdm-walkthrough-2026-10-06/transcript/{ar,es,fr,ru,zh}.json`):**
+  - 139 timed segments each, 1-for-1 `start_ms` / `end_ms` alignment with `en.json`.
+  - `translated_from: { "lang": "en", "segments_sha256": "ed224c2bc8748e3a8164fa2cf46f450f22d430c2ed42a7435d7a83812a846f90" }`.
+  - `state: "draft"`, `drafted_by: { kind: "agent", id: "claude-code", model: "not-disclosed", session: "conversation://4e43c8a3-23a2-4f5e-8fc4-cad1bee809b0" }`, `drafted_at: "2026-10-30"`.
+- **Library JSON-LD:** `blocks/transcript-{ar,es,fr,ru,zh}.jsonld` and updated `manifest.jsonld` (`6 entries`) generated via `gen-library-jsonld.ts --entry library/crdm-walkthrough-2026-10-06`.
+- **Untainted Round-Trip QA (`folio-assistant-ktt2`, `untainted-verification`):**
+  - Back-translator (`fr`, `es`, `zh`): `conversation://40eea24b-58e9-4224-b3a6-f92e12b385c7` (`TOOLS_USED: none`) — caught a French word (`nouvelle`) and quantifier phrasing (`dos o tres comentarios más`) in `es.json`, fixed prior to adjudication.
+  - Back-translator (`ru`, `ar`): `conversation://c7855c93-469e-4653-a650-2f2f18e85123` (`TOOLS_USED: none`).
+  - Adjudicator (`fr`, `es`, `zh`, `ru`, `ar`): `conversation://6788c201-7800-4606-ae76-d8302cbbd034` (`TOOLS_USED: none`) — **`VERDICT: pass`** for all 5 languages (`fr`, `es`, `zh`, `ru`, `ar`) with 0 semantic drift findings.
+- **Verification:** `gen-library-jsonld --check --doc crdm-walkthrough-2026-10-06` (`7 node(s) up to date`) and `bun run cat check:l1-complete library/crdm-walkthrough-2026-10-06` (all 9 requirements `met`, 0 defects).
+
 
