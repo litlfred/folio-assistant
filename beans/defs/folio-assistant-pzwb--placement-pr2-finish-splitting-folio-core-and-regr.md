@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-29T08:05:00Z
+updated_at: 2026-10-30T13:32:00Z
 parent: folio-assistant-9umr
 ---
 
@@ -21,7 +21,7 @@ Waits on PR1 (`ybwt`, not yet on main — link when it lands).
 ## Done when
 - [x] no `cat-harness/skills/folio-core/` directory remains (cat-harness#518, merged a334cf9, 2026-10-24: moved to `skills/tools/folio-core/` under a new `tools` topic)
 - [ ] every topic in `skills/skills.json` holds at least one package; the harness holds no skill placed above it by proposal §1.2
-- [ ] `knownSkills(checkout)` equals PR1's set plus `block-change-summary`
+- [x] `knownSkills(checkout)` equals PR1's set plus `block-change-summary` (litlfred/folio-assistant-core#240 + litlfred/cat-harness#728)
 - [ ] `skill:register:check`, `kg:audit:check`, `check:agents-xref`, `bun run cat gates` green
 
 ## State 2026-10-09 — still open after the cutover
@@ -52,3 +52,10 @@ Where: (three-way hunk)
 updated_at: 2026-10-24T11:36:00Z
 parent: folio-assistant-iirv
 ```
+
+## 2026-10-30 — `delivery-summary` → `block-change-summary` split opened
+
+- **litlfred/folio-assistant-core#240** (`claude/pzwb-block-change-summary`): authors `skills/content/content-lifecycle-ext/block-change-summary.md` (extracted from §2 of `delivery-summary.md`), registers it in `skills/content/content-lifecycle-ext/package-manifest.json`, extends `authoring-agent` in `scenarios/roles.json`, and syncs `AGENTS.md`.
+- **litlfred/cat-harness#728** (`claude/pzwb-delivery-summary-split`): slims `skills/sdlc/sdlc-core/delivery-summary.md` to the generic SDLC delivery summary (restart command, file blob/commit/diff/viewer links, staging-review deep-link rule) with zero upward references, and updates `test/results/kg-qa/skills/sdlc/sdlc-core/delivery-summary.kg-qa.json`.
+- Verified in composed checkout: `skill:register:declarations:check` (383 skills across 34 packages), `skills:docs:check`, `readme:sync -- --dir folio-assistant-core --check`, `readme:sync -- --dir cat-harness --check`, `check:agents-xref` (0 unresolved), and `placement-pr1-content-up.test.ts` + `placement-pr0-mechanisms.test.ts` + `skill-manifest-coverage.test.ts` (39 pass, 0 fail).
+- Remaining on `pzwb` (box 2): the editorial / onboarding / board skill splits noted on 2026-10-29 (`getting-started`, `repo-conversion`, `board-windows`, `board-diagram-interchange`, and the editorial SPLIT rows), where harness code/roles/chrome still reference the harness copies. Every topic in `cat-harness/skills/skills.json` already holds at least one package (`kg` 3, `library` 2, `ui` 2, `conduct` 2, `process` 3, `authoring` 2, `tools` 1, `sdlc` 3).
