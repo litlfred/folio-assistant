@@ -2,11 +2,11 @@
 # folio-assistant-61tg
 $schema: bean/1.0.0
 title: 'TOPOLOGY: self-sovereign — own infrastructure, inward-facing, wallets and DAK intake'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-10-30T13:25:00Z
+updated_at: 2026-10-30T16:40:00Z
 parent: folio-assistant-o1by
 ---
 
@@ -101,3 +101,15 @@ Still owed: the same run with the network on, in the same clean layout, for a li
 _2026-10-26T13:20:00Z_ — The air-gapped deployment description (`scenarios/deployments/self-sovereign.json` with `liveData: "may-hold-credentials"`, verified by `schemas/deployment-examples.test.ts` including the `attestation-service` reach refusal) merged in `litlfred/cat-harness#547` (`0a2a4c0f`, `2026-10-26T11:23:55Z`).
 
 _2026-10-30T13:25:00Z_ — Defect half fixed: `gates --list` no longer produces the QA working copy, so it writes nothing into the mounted layers (litlfred/cat-harness-tools#879, merged 1f34762; issue #878). It now prints the copy's state. Still open from the same run: `render:bpmn:check` writes 104 files under `cat-harness/docs/assets`, which is `publish:check` running the writer by design; whether a check may write into a mount it cannot re-clone is a question for this bean's topology, not a bug fix. (https://claude.ai/code/session_01Qmmkt6TFC8Yd4jePf6WnBv)
+
+## Online vs offline comparison, 2026-10-30 (Claude drain thread)
+
+Two identical fresh layouts were made from smart-trust-demo main (f7542bc), with every layer laid from `index.lock.json`. The same 16-command battery ran in each: one under `unshare -rn` with loopback only, and one with the network on.
+
+- **Exit codes and results are identical**, command for command. That covers the content gates too: `check:tools`, `check:reference-direction`, `render:bpmn:check`, `index:render:check` and `gates:list`. Their logs differ only in absolute paths and timings.
+- **Only two lines differ, as expected.** `auth:login --all` notes that GitHub could not be reached (ECONNREFUSED), and the session-start sweep says "origin/main fetch failed (offline?)". Both exit 0.
+- **So nothing in this stack needs the network once the layers are laid**, which is the self-sovereign claim.
+- **The write defect still shows in smart-trust-demo, because its pin is older than the fix.** It pins cat-harness-tools at 137a56a, which predates #879. So `gates:list` still writes 644 files into five mounts, and `mount:remote:check` afterwards reports all five as modified. A re-pin of smart-trust-demo to cat-harness-tools main picks up the fix.
+- **`render:bpmn:check` writes 109 files by design** (104 under `cat-harness/docs/assets`, plus 5 bootstrap SVGs). Whether a check may write into a mount that cannot be re-cloned is put to the owner in the drain thread.
+
+The logs are in the session (/tmp/claude-0/off3/{offline,online}).
