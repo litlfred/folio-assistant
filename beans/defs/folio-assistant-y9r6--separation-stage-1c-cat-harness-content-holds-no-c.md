@@ -2,13 +2,11 @@
 # folio-assistant-y9r6
 $schema: bean/1.0.0
 title: 'Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-30T14:50:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-8lcl
 ---
 
 Stage 1c of the split plan — FR-7, content holds no code. Owner D2 (2026-10-01), option 1: convert to JSON data, validated by the tools on read.
@@ -50,3 +48,5 @@ plus 21 under `docs/assets/`. `check:content-code-free` does not exist.
 Still blocked by `8lcl` and, in practice, by `70lx` (reopened the same day).
 
 _2026-10-16T06:30:00Z_ — Confirmed open (Owner ruling 2026-10-16, item 5); the folio-assistant store copy is reopened to match. The block on `vj2p` stays. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-30T14:50Z_ — Claimed by Lane A (session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo). Owner card 2026-10-30 14:43Z, option A: take y9r6 now and lift its block on 8lcl (8lcl moves `schemas/`; this bean moves content code only). Measured on cat-harness main: 78 docs block manifests (70 prose, 8 webpage), 167 `defineTool` files under `tools/`, 9 skill `.ts`, 7 translation manifests, 11 site-chrome JS, plus openapi/archimate/folio-render. Plan: loaders accept `.json` first, then one PR pair per group, then `check:content-code-free` watched red then green.
