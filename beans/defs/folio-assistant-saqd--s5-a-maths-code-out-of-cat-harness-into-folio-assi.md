@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-30T17:09:00Z
+updated_at: 2026-10-30T17:16:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -63,3 +63,10 @@ _2026-10-30T17:09:00Z_ — **Group 6 up (`litlfred/folio-assistant-sci#128` + `l
 - Registers the 6 criteria (`render-math-mode-envelope`, `proof-not-machine-trivial`, `lean-no-vacuous-instance-data`, `lean-no-definitional-laundering`, `lean-docstring-honesty`, `proof-no-placeholder-stub`) as `folio-qa-checker/v1` nodes in `folio-assistant-sci/qa-checkers/` and marks them `checker_contributed: true` in `cat-harness-tools/pipeline/qa-criteria-registry.ts` (retiring `TRIVIALITY_CHECKER_FILE`).
 - Updates `folio-assistant-sci/pipeline/contribution-nodes.test.ts`, `folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md`, `folio-assistant-sci/qa-checkers/README.md`, and `cat-harness-tools/pipeline/pipeline-plugins.test.ts`.
 - **Merge order:** merge `litlfred/folio-assistant-sci#128` first, then `litlfred/cat-harness-tools#942`.
+
+_2026-10-30T17:16:00Z_ — **Group 7 up (`litlfred/folio-assistant-sci#129`, `litlfred/folio-assistant-core#258`, `litlfred/cat-harness-tools#946`):**
+- Moves the 2 `lean-formal-ref` modules (`pipeline/lean-formal-ref.ts`, `pipeline/lean-signature.ts`) and their unit tests (`scripts/tests/lean-signature.test.ts` and the `lean-formal-ref` resolution suites in `scripts/tests/lean-ref-coverage.test.ts`) from `cat-harness-tools` to `folio-assistant-sci`, registering `./lean-formal-ref.js` in `folio-assistant-sci/pipeline/plugin-slots.ts`.
+- Updates `folio-assistant-core/scripts/folio-site-blocks.ts` (+ `folio-site-blocks.test.ts`) to import `configureLeanPackages`/`leanPackagesConfigured` from `@litlfred/cat-harness/schemas/lean-packages.js` and `resolveCanonicalFormal`/`formalRefResolverConfigured` from `@litlfred/cat-harness/schemas/formal-ref.js` (lazily invoking `optionalPipelinePlugin("lean-lexer")` so `folio-assistant-sci` registers `LEAN_FORMAL_REF_RESOLVER`).
+- Exports `fileDeclaresName` from `cat-harness-tools/pipeline/lean-lexer.ts` and updates `cat-harness-tools/scripts/check-lake-targets.ts` to import it from `../pipeline/lean-lexer.ts`.
+- **Merge order:** merge `litlfred/folio-assistant-sci#129` and `litlfred/folio-assistant-core#258` first, then `litlfred/cat-harness-tools#946`.
+- **Remaining 14 MOVE rows after Groups 1–7 + `#114`/`#858`:** 2 `cat-harness/tools/` targets (`scripts/gen-content-graph-uml.ts`, `pipeline/content-graph-analysis.py`), 4 shared pipeline/checker modules (`pipeline/build.ts`, `pipeline/validate.ts`, `pipeline/qa-checkers-extended.ts`, `pipeline/qa-checkers-uses.ts`), 1 shared document+math ingestion script (`scripts/extract-candidates.py`), and 7 `qou`-specific scripts.
