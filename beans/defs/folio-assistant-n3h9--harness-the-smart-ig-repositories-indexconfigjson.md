@@ -66,7 +66,7 @@ Until the tool exists, an agent starts `staging.yml` by hand (workflow_dispatch)
 
 Done when, added:
 - [x] the build tool takes `--staging <branch>` and writes only `STAGING/<branch>/`, keeping the root site and the other previews
-- [ ] smart-ra: a public-comment change set can be reviewed on an agent-built `STAGING/<branch>/` preview
+- [x] smart-ra: a public-comment change set can be reviewed on an agent-built `STAGING/<branch>/` preview (2026-10-30: STAGING/pr-93/, Pages 41053277898 success)
 
 ## 2026-10-11 — environment migrated: four repositories on remote mounts, and an agent-run publish
 
@@ -160,13 +160,13 @@ Measured from each fork's default branch and gh-pages through the REST API.
 
 Owner setting still open: the Routine environment allowing clone of the litlfred repos and `bun` (not attempted).
 
-## 2026-10-30 12:30Z — fixes after the measurement (same thread)
+## 2026-10-30 12:22Z — fixes after the measurement (same thread)
 
 - **smart-ra#101 (merged, 95229fa)**: `site.build.pre` now runs `ig-index:build` before `check:archimate`. Since the repin to smart-base 415d637 (smart-ra#96), every smart-ra site build was refused at the coverage gate. The cause: smart-base stopped committing `fhir-artifact-index/index.json` (smart-base 091a6c1, fhir-harness#124), so the ig-pages writer for the mounted smart-base had nothing to render. Verified by a dry-run from a cleared index: 16089 pages, 0 unresolved. The PR's harness checks show failures only because they ran after the merge (`refs/pull/101/merge` gone).
   - smart-trust and smart-immunizations mount smart-base the same way and will likely hit the same gate on their next publish. Neither runs `ig-index:build` for mounted IG instances. The general fix belongs in build-instance-site: run mounted instances' `builtAtPublish` writers.
 - **smart-ra public-comment preview: done.** It is agent-built at `STAGING/pr-93/` (gh-pages 62c4195), from external PR smart-ra#93 (Chine-E, a 1-line prose change to the executive summary) merged onto main.
   - The preview carries `changeset.json` (1 prose change), `review/`, and the public-comment dashboard (`en/folio-assistant-core/public-comments/folio/dpi-h-ra/`, 2744 comments).
-  - The link is on smart-ra#93. Pages run 41053277898 was queued at the time of writing.
+  - The link is on smart-ra#93. Pages run 41053277898 succeeded.
   - Seen: stage-local found "no open pull request" for the local branch name `pr-93`, because the fork's head ref is `patch-3`. So the review page has no PR review comments.
 - **smart-base-clinical#5 (merged, c3d594e)**:
   - `site: {landing: smart-base, agentRun: true}`;
