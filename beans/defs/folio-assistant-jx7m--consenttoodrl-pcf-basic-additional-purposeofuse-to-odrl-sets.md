@@ -2,11 +2,11 @@
 # folio-assistant-jx7m
 $schema: bean/1.0.0
 title: 'consentToOdrl(): PCF Basic + Additional PurposeOfUse to ODRL Sets, plus four implicit-policy Sets (PCF5)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T16:26:45Z
+updated_at: 2026-10-30T16:56:00Z
 parent: folio-assistant-negd
 ---
 
@@ -19,3 +19,4 @@ Repo: fhir-harness. Depends on: B1, B2.
 
 ## Progress
 - 2026-10-30: Implemented `consentToOdrl()`, `decide()`, `evaluatePcfPolicy()`, `isConsentExpired()`, `consentPolicyUid()`, `extractConsentCitation()`, `detectPcfProfile()`, and the four IHE PCF 1.1.0 Volume 1 §1:53.2.1 implicit-policy ODRL `Set`s (`Policy-basic-normal`, `Policy-all-normal`, `Policy-break-glass-only`, `Policy-deny`) in `fhir-harness/schemas/pcf-consent.ts`, with unit tests covering all four implicit-policy `Set`s and all 23 IHE PCF 1.1.0 example `Consent` shapes in `fhir-harness/schemas/pcf-consent.test.ts`. Opened PR `litlfred/fhir-harness#207` (`https://github.com/litlfred/fhir-harness/pull/207`).
+- 2026-10-30 16:5xZ: [fhir-harness#207](https://github.com/litlfred/fhir-harness/pull/207) merged as c1614f4 (owner card 16:47Z "A. Merge mine now, fix after"). Follow-up for the hand-copied code lists and duplicate evaluator: bean folio-assistant-6jnx.
