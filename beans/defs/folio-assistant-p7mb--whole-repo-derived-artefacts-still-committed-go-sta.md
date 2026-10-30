@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-30T13:19:00Z
+updated_at: 2026-10-30T19:45:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -79,3 +79,5 @@ _2026-10-30T11:10:00Z_ — Progress update: `litlfred/cat-harness-tools#590` (`2
 _2026-10-30T13:19:00Z_ — Diagnosed the 2h0m timeout in `post-merge-regen.yml` (`job 123530439008` of run `40897480812`, `job 123540518890` of run `40900325607`) and opened `litlfred/cat-harness-tools#885`:
 1. **Recursive 25-minute `qa:refresh` rebuilds inside `uml:overview:check`**: At cancellation (1h58m, >125,000 spawned PIDs), the active process tree was `post-merge:regen` → `uml:overview:check` (`publish-check.ts uml:overview`) → `gen-uml-overview.ts` → `requireCurrentWorkingCopy` → `ensureWorkingCopy` → `qa:refresh` → `skill:register`. Because `fa/cat-harness` is a gitignored mount in the composed index, `trackedQaFiles` saw 0 git-tracked files and ran `qa:refresh` in `computed` mode across all 25 `QA_WRITERS` (~25m), and later checks in the same pass (`docs:pages:check` touching `*/test/results/witnesses/**`) invalidated `build/regen-cache/qa-working-copy.json`, causing `uml:overview:check` to re-run `qa:refresh` on every pass. Fixed by setting `QA_WORKING_COPY_BUILDING=1` (`BUILDING_ENV`) in `checkPostMergeRegen`'s `baseRunner` (since `post-merge:regen` already checks and repairs every QA writer as its own pair over the mounted instances' committed `test/results/` working copy).
 2. **Redundant full-suite re-execution in `regenToFixpoint`**: Because ~18 `builtAtPublish` checks fail in Step 1 (`dryRun: true`) on a fresh checkout, `checkPostMergeRegen` always enters `regenToFixpoint`, which previously had no `skip` or `narrow` hooks — re-running all ~65 clean checks (including multi-minute `translation:block-qa:check` and `kg:audit:all:check`) in Pass 1 and Pass 2+, and disabling the barren-pass check (`lastChange === undefined`). Fixed by passing `skip` and `narrow` hooks to `regenToFixpoint` so Pass 1 skips pairs whose own check/residual passed in the audit pass, Pass 2+ skips passing pairs unless a committed file moved in the previous pass that hits their declared inputs, and `narrow.begin` measures per-pass moves so barren passes settle immediately.
+
+_2026-10-30T19:45:00Z_ — litlfred/cat-harness-tools#885 merged as `171242a` (owner card 19:40Z), with a type fix (skip:false decisions carry a why). post-merge:regen no longer recurses into qa:refresh and fixpoint passes skip pairs that already passed. Still open: the negative control (two clean post-merge regen runs on a layer main after unrelated merges), once folio-assistant re-pins cat-harness-tools past `171242a`. Session https://claude.ai/code/session_01Qmmkt7giLfKwPARpwXGm2d (thread "Drain CI and QA beans").

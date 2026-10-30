@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-30T14:35:00Z
+updated_at: 2026-10-30T19:45:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -168,3 +168,5 @@ Investigated the two dry-run findings from `litlfred/folio-assistant#2646` (runs
    - Indexed non-HTML templates with YAML front matter (`.liquid`, `.json`, such as `assets/js/harness-data.liquid` -> `assets/js/harness-data.js` and `assets/harness/tiles.json`) as `role: "data"` in `scripts/docs-rendered-impact.ts`.
    - Fixed `readTree` in `scripts/check-derived-from.ts` to resolve `d.scope === "repository"` directory paths against `repoRoot` (`beans/`, `todos/`, `test/health/results/`) rather than `<instance>/<path>` (`cat-harness/beans/`), so `coneByFile` carries `cat-harness/beans` when `beans/defs/*` changes.
 3. **Also in `litlfred/cat-harness-tools#903`:** synced `beans/defs/cat-tools-tk99--programme-progress-an-epic-burn-down-and-a-math-pr.md` to `status: completed` (`updated_at: 2026-10-29T07:38:35Z`) from `folio-assistant-hf2q` (`9bea5ab737`).
+
+_2026-10-30T19:45:00Z_ — litlfred/cat-harness-tools#903 merged as `aabd721` (owner card 19:40Z), after merging main and resolving import conflicts. Still open: the three live checks above, which need folio-assistant re-pinned past `aabd721` and a bean-only push to observe. Session https://claude.ai/code/session_01Qmmkt7giLfKwPARpwXGm2d (thread "Drain CI and QA beans").
