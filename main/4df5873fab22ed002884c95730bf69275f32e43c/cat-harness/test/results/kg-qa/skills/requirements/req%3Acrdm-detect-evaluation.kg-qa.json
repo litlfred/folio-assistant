@@ -1,0 +1,46 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:crdm-detect-evaluation",
+    "path": "skills/requirements/crdm-detect-evaluation.json"
+  },
+  "source_hash": "sha256:0183b0a0232720b065c4c27828437af4ea2c1e52746b46e08bc935196d72e540",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:crdm-detect-evaluation/runs-over-declared-corpus",
+          "detail": "no skill or capability declares `satisfies: req:crdm-detect-evaluation#runs-over-declared-corpus` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:crdm-detect-evaluation/numbers-recorded",
+          "detail": "no skill or capability declares `satisfies: req:crdm-detect-evaluation#numbers-recorded` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:crdm-detect-evaluation/not-self-judged",
+          "detail": "no skill or capability declares `satisfies: req:crdm-detect-evaluation#not-self-judged` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}
