@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T18:45:00Z
+updated_at: 2026-10-30T20:37:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-f8wp
 ---
 
 Stage 1b of the split plan: the 205 Zod `schemas/*.ts` move to `cat-harness-tools/schemas/`; `cat-harness/schemas/` gets **generated** JSON Schema (one per declared node kind, `$id` under `iriBase`), as bootstrap does (`xsqm` ruling 1). `bunfig.toml` preload follows.
@@ -44,3 +42,5 @@ _2026-10-30T18:45:00Z_ — The coordinated move landed under owner card "A. One 
 _2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".
 
 _2026-10-30T20:15Z_ — Generated JSON Schema half opened: cat-harness#794 (55 `schemas/kinds/<kind>.schema.json`, `$id` = `releaseIri(<iriBase>v<major>/, path)` as in bootstrap) and cat-harness-tools#995 (`kind:json-schemas` writer + `kind:json-schemas:check` gate). The gate was red first (55 missing), then green (70 kinds: 55 with a file, 15 listed with the reason none applies); bootstrap-tools `check:node-iris` passes on the files. Box 2 met: `docs/reference/**` regenerates with an empty diff, and `check:kind-validators` reads 71/58/13 before the move, on main and on the branch. Box 5: 24 related gates and 18 test files give the same results on main and the branch; the full index run is #995 CI. Owner card pending on the three design choices. Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
+
+_2026-10-30T20:37:00Z_ — Block lifted: `folio-assistant-f8wp` is completed (all 4 Done-when boxes verified and merged on `main`, `cat-harness-tools#941` `9673b1f`).

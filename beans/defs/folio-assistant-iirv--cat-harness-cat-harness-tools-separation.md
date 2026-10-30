@@ -69,3 +69,5 @@ Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
   - its `needs` (cat-harness, bootstrap-tools) do not resolve without the index;
   - 90 wiring references remain into `folio-assistant/`.
   - Both bear on done-when box 2.
+
+_2026-10-30T20:37:00Z_ — Placement PR2–PR9 (`pzwb`, `63wl`, `4fv8`, `tlat`, `apcg`, `8fq9`, `f8wp`, `p9bu`) and `vj2p` are now all `completed`, and both `check:import-direction` and `check:reference-direction` report **0 wrong-direction** across `cat-harness` (and across all 12 instances in `folio-assistant` at `27d72c8d91`). Remaining open children under `iirv`: `8lcl` (generated JSON Schema half in flight in `cat-harness#794` + `cat-harness-tools#995`), `w1gy`, and `ygge`.

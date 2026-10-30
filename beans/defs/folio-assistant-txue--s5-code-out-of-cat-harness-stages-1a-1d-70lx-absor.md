@@ -8,10 +8,8 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-30T18:45:00Z
+updated_at: 2026-10-30T20:37:00Z
 parent: folio-assistant-7x5n
-blocked_by:
-    - folio-assistant-rfuq
 ---
 
 D1: all cat-harness code -> cat-harness-tools. One agent at a time.
@@ -39,3 +37,5 @@ _2026-10-30T18:45:00Z_ — vj2p completed; 8lcl landed apart from its generated-
 _2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".
 
 _2026-10-30T19:41Z_ — rfuq direction work merged (tools#938 129349e, core#256 058c880, cat-harness#763 27c1eae, fhir-harness#213): 0 wrong-direction edges across 11 instances. rfuq stays open only on its pzwb-gated placement box, so the block edge stays until rfuq completes. txue now waits on 8lcl (generated JSON Schema) and y9r6 (boxes 2-3). Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
+
+_2026-10-30T20:37:00Z_ — Block lifted: `folio-assistant-rfuq` is completed (all placement PR2–PR9 beans `pzwb`, `63wl`, `4fv8`, `tlat`, `apcg`, `8fq9`, `f8wp`, `p9bu` are completed and merged on `main`, and import/reference/process-binding direction gates are all at 0 wrong-direction edges).

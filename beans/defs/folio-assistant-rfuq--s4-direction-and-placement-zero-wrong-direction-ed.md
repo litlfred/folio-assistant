@@ -2,11 +2,11 @@
 # folio-assistant-rfuq
 $schema: bean/1.0.0
 title: 'S4 direction and placement: zero wrong-direction edges; placement PR2-PR9; 9umr finale'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-30T17:04:00Z
+updated_at: 2026-10-30T20:37:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -15,7 +15,7 @@ Absorbs zlmp, yj6r, zhg2, r3gy, 2j2r, iirv pzwb/63wl/4fv8/tlat/apcg/8fq9/f8wp/p9
 ## Done when
 - [x] import-direction and reference-direction at 0 wrong-direction edges (litlfred/cat-harness-tools#938, litlfred/cat-harness#763, litlfred/folio-assistant-core#256, litlfred/fhir-harness#213)
 - [x] 2j2r readers follow the checkout
-- [ ] placement PR2..PR9 merged
+- [x] placement PR2..PR9 merged (`pzwb`, `63wl`, `4fv8`, `tlat`, `apcg`, `8fq9`, `f8wp`, `p9bu` all completed and merged on `main`)
 - [x] 9umr: last five tool skills out of folio-core (litlfred/cat-harness#518, litlfred/cat-harness#661; folio-assistant-9umr completed)
 
 
@@ -49,3 +49,14 @@ _2026-10-30T17:04:00Z_ — Boxes 1 and 4 satisfied:
 - **Box 1 (`import-direction and reference-direction at 0 wrong-direction edges`):** Measured across all 11 declared instances in a composed checkout: `bun run cat check:import-direction` reports **0** wrong-direction imports across all 11 instances (3,114 files). Eliminated all remaining wrong-direction references across the 11 instances (`bean-dedupe.ts`, `gen-library-viz.ts`, `gen-schema-viz.ts`, `gen-translation-status.ts`, `viewer-declarations.ts`, `site-coverage.ts`, `kg-export.ts`, and `.github/workflows/layer-pr-checks.yml` in **litlfred/cat-harness-tools#938**; `skills/ui/ui-core/render-order.md` + `test/results/reference-direction.qa-results.json` recording `wrongDirection: 0` in **litlfred/cat-harness#763**; `skills/content/folio-document-adapter/folio-content-lifecycle.md` in **litlfred/folio-assistant-core#256**; and `fhir-harness.json`, `scripts/check-artifact-index.ts`, `scripts/check-ig-annex-links.ts`, `skills/fhir-ig-base/ig-build-pipeline.md` in **litlfred/fhir-harness#213**). With those four PRs, `bun run cat check:reference-direction` reports **0 wrong-direction in 0 files** (5,969 exempt, 0 multi-destination unlisted, 0 undetermined), `check:reference-direction -- --check` is OK, and `kg:detangle:direction` reports **0** wrong-direction edges.
 - **Box 4 (`9umr: last five tool skills out of folio-core`):** `cat-harness/skills/folio-core/` was moved to `cat-harness/skills/tools/folio-core/` under the declared `tools` topic in `litlfred/cat-harness#518` and `#661` (holding `covered-is-not-reachable`, `deployment-auth`, `mcp-assembly`, `mcp-contract`, `mcp-projection`, `skills-and-tools`, `tool-authoring`), and `folio-assistant-9umr` is now `completed`.
 - **Remaining (Box 3, `placement PR2..PR9 merged`):** PR3 (`63wl`), PR5 (`tlat`), PR6 (`apcg`), PR7 (`8fq9`), and PR9 (`p9bu`) are `completed`; PR2 (`pzwb`, Batch 3 merged in `cat-harness#758` + `folio-assistant-core#250`, only final gate verification checkbox remaining), PR4 (`4fv8`, all moves merged in `fhir-harness#210`, `smart-base#217`, `folio-assistant-core#242`, `folio-assistant-sci#117`, `cat-harness#747`, only final gate verification checkbox remaining), and PR8 (`f8wp`, only `uml:overview:check` checkbox remaining) are in final verification.
+
+_2026-10-30T20:37:00Z_ — Box 3 (`placement PR2..PR9 merged`) satisfied and `folio-assistant-rfuq` completed:
+- **PR2 (`folio-assistant-pzwb`):** `completed` (`folio-assistant-core#240` + `cat-harness#728`, `folio-assistant-sci#120` + `cat-harness#738`, `folio-assistant-core#250` + `cat-harness#758`; all 4 Done-when boxes verified in composed `folio-assistant` checkout at `27d72c8d91`).
+- **PR3 (`folio-assistant-63wl`):** `completed` (PR #1875).
+- **PR4 (`folio-assistant-4fv8`):** `completed` (`folio-assistant-core#246`, `folio-assistant-sci#123`, `fhir-harness#203` & `#204`, `cat-harness-tools#912` & `#999`, `cat-harness#747`; `process-bindings.baseline.ts` shrunk to 0).
+- **PR5 (`folio-assistant-tlat`):** `completed` (PR #1886).
+- **PR6 (`folio-assistant-apcg`):** `completed` (PR #1898).
+- **PR7 (`folio-assistant-8fq9`):** `completed` (all 9 test concern groups regrouped in `cat-harness-tools`).
+- **PR8 (`folio-assistant-f8wp`):** `completed` (all 8 schema concern groups regrouped and moved with `8lcl`, residual gate merged in `cat-harness-tools#881`, `uml:overview:check` sub-subgraph test merged in `cat-harness-tools#941`).
+- **PR9 (`folio-assistant-p9bu`):** `completed` (`cat-harness-tools#683`, `cat-harness#498`, `fhir-harness#148`, `smart-base#149`).
+- Re-verified on `litlfred/folio-assistant` `main` (`27d72c8d91`): `check:import-direction` reports **0 wrong-direction** across all 12 instances (3,105 files), `check:reference-direction -- --check` reports **0 wrong-direction in 0 files** (6,034 exempt), `check:process-bindings` reports **0 wrong-direction (baseline 0)**, and `kg:detangle:direction` reports **0 wrong-direction edges**.

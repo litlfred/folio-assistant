@@ -2,11 +2,11 @@
 # folio-assistant-f8wp
 $schema: bean/1.0.0
 title: 'Placement PR8: schemas regroup and move with their importers; library sources by group; residual gate'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T17:20:00Z
+updated_at: 2026-10-30T20:37:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -98,3 +98,8 @@ _2026-10-30T17:15:00Z_ — https://github.com/litlfred/cat-harness-tools/pull/88
 _2026-10-30T17:20:00Z_ — Verified and pinned Done-when Box 3 (`uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one) in `litlfred/cat-harness-tools#941`:
 - `cat-harness/schemas/schemas.json` (`concern-groups/v1`) declares the 8 concern groups (`conduct`, `content`, `kg`, `library`, `process`, `sdlc`, `tools`, `ui`), and `sectionsOf(HARNESS_ROOT)` resolves `schemas` with `ConcernGroupsSchema` (`concern-groups/v1`) + the JSON Schemas (51 classes, 0 `undetermined`) and emits one `.puml`/`.mmd` pair per declared directory/sub-subgraph in `instanceDirectories(HARNESS_ROOT)` (60 sections = 120 `.puml`/`.mmd` files), and none for undeclared subdirectories.
 - Exported `overviewFilesFor` in `cat-harness-tools/scripts/gen-uml-overview.ts` and added unit tests in `cat-harness-tools/scripts/tests/ui/uml-overview-orphans.test.ts` (6 pass, 0 fail, 134 `expect()` calls) pinning both a throwaway fixture with declared vs undeclared sub-subgraphs (plus `umlOrphans` flagging undeclared `.puml`/`.mmd` pairs) and the live `cat-harness` instance.
+
+_2026-10-30T20:37:00Z_ — Completed:
+- `litlfred/cat-harness-tools#941` (Done-when Box 3, `uml:overview:check` sub-subgraph `.puml`/`.mmd` coverage and `uml-overview-orphans.test.ts` falsifier 3) merged to `main` (`9673b1f`).
+- All 8 concern groups (`conduct`, `content`, `kg`, `library`, `process`, `sdlc`, `tools`, `ui`) and the Zod schema tree moved from `cat-harness/schemas/` to `cat-harness-tools/schemas/` in `8lcl` (`litlfred/cat-harness-tools#952` `c98abe5` + `litlfred/cat-harness#773` `6dff1e1`), with `lean-packages.ts` and `formalization-types.ts` now in `cat-harness-tools/schemas/` awaiting `saqd` for their move to `folio-assistant-sci`.
+- Verified in the composed `litlfred/folio-assistant` checkout at `27d72c8d91`: `uml-overview-orphans.test.ts` passes 7/7 tests (135 `expect()` calls), `check:process-bindings` reports 0 wrong-direction (baseline 0 after `cat-harness-tools#999` `83f7f87`), `check:import-direction` reports 0 wrong-direction across all 12 instances, and `check:reference-direction -- --check` reports 0 wrong-direction in 0 files. All 4 Done-when boxes are satisfied (`[4/4]`).
