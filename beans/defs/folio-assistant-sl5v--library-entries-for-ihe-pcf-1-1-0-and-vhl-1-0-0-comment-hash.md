@@ -2,11 +2,11 @@
 # folio-assistant-sl5v
 $schema: bean/1.0.0
 title: 'Library entries for IHE PCF 1.1.0 and VHL 1.0.0-comment (hashed, Dublin Core, CC BY 4.0) (PCF2)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T16:26:00Z
+updated_at: 2026-10-30T17:58:00Z
 parent: folio-assistant-negd
 blocked_by:
     - folio-assistant-nr5p
@@ -32,3 +32,4 @@ Repo: smart-trust-phw `library/`. Depends on: PCF1.
   - Falsification test (1-byte mutation of `library/ihe-iti-pcf-1-1-0/ihe-iti-pcf-1-1-0.md`) → `::error::materialized content was edited in place: library/ihe-iti-pcf-1-1-0/ihe-iti-pcf-1-1-0.md` (`exit 1`); restored and re-verified (`exit 0`).
   - `bun run folio-assistant-core/scripts/check-catalogue.ts .` → `✓ every node validates; every metadataRef, libraryId, localPath and parent path resolves` (`exit 0`).
   - `bun run cat-harness-tools/scripts/check-l1-complete.ts library/ihe-iti-pcf-1-1-0 library/ihe-iti-vhl-1-0-0-comment` → all 14 L1 completeness checks pass for both entries (`exit 0`).
+- 2026-10-30 ~17:57Z: [smart-trust-phw#5](https://github.com/litlfred/smart-trust-phw/pull/5) merged as 9165534 (merge window to ~19:38Z).

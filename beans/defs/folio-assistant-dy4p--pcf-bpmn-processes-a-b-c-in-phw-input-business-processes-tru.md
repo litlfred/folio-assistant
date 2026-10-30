@@ -2,11 +2,11 @@
 # folio-assistant-dy4p
 $schema: bean/1.0.0
 title: 'PCF BPMN processes A/B/C in phw input/business-processes, trust-anchor neutral (PCF4)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T16:26:00Z
+updated_at: 2026-10-30T17:58:00Z
 parent: folio-assistant-negd
 blocked_by:
     - folio-assistant-sl5v
@@ -32,3 +32,4 @@ Repo: smart-trust-phw. Depends on: PCF2.
   - `bun run cat-harness-tools/scripts/bpmn-render.ts input/business-processes -o input/images` → `3 file(s), 3 diagram(s), 0 failure(s)` (`exit 0`).
   - `processesFrom()` (`smart-base/scripts/dak-swimlanes.ts`) and `markdownTable()` (`smart-base/scripts/l1-scenario-vocabulary.ts`) parse all 3 processes (`PHW.A`, `PHW.B`, `PHW.C`) and their figures (`PHW.A.svg`, `PHW.B.svg`, `PHW.C.svg`) from `input/pagecontent/business-processes.md`.
   - `bun run smart-base/scripts/dak-pdf.ts . -o /tmp/fix-pcf24/test-phw-dak.html --html-only` → 54 sections rendered with 0 BPMN omissions (`exit 0`).
+- 2026-10-30 ~17:57Z: [smart-trust-phw#5](https://github.com/litlfred/smart-trust-phw/pull/5) merged as 9165534 (merge window to ~19:38Z).
