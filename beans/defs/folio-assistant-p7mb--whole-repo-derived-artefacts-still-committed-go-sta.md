@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-30T19:45:00Z
+updated_at: 2026-10-30T21:29:30Z
 parent: folio-assistant-1xhc
 ---
 
@@ -81,3 +81,19 @@ _2026-10-30T13:19:00Z_ — Diagnosed the 2h0m timeout in `post-merge-regen.yml` 
 2. **Redundant full-suite re-execution in `regenToFixpoint`**: Because ~18 `builtAtPublish` checks fail in Step 1 (`dryRun: true`) on a fresh checkout, `checkPostMergeRegen` always enters `regenToFixpoint`, which previously had no `skip` or `narrow` hooks — re-running all ~65 clean checks (including multi-minute `translation:block-qa:check` and `kg:audit:all:check`) in Pass 1 and Pass 2+, and disabling the barren-pass check (`lastChange === undefined`). Fixed by passing `skip` and `narrow` hooks to `regenToFixpoint` so Pass 1 skips pairs whose own check/residual passed in the audit pass, Pass 2+ skips passing pairs unless a committed file moved in the previous pass that hits their declared inputs, and `narrow.begin` measures per-pass moves so barren passes settle immediately.
 
 _2026-10-30T19:45:00Z_ — litlfred/cat-harness-tools#885 merged as `171242a` (owner card 19:40Z), with a type fix (skip:false decisions carry a why). post-merge:regen no longer recurses into qa:refresh and fixpoint passes skip pairs that already passed. Still open: the negative control (two clean post-merge regen runs on a layer main after unrelated merges), once folio-assistant re-pins cat-harness-tools past `171242a`. Session https://claude.ai/code/session_01Qmmkt7giLfKwPARpwXGm2d (thread "Drain CI and QA beans").
+
+_2026-10-30T21:29:30Z_ — Verified `post-merge-regen.yml` after `litlfred/cat-harness-tools#885` (`171242a`, merged `19:40Z`) and `litlfred/folio-assistant` Waves G–J (`164908f486`..`578dcc34cd`, pinning `cat-harness-tools` `15939bf565e3`..`f918daaf96ec` past `171242a`):
+1. **2h0m timeout resolved**: On `litlfred/cat-harness` `main`, `post-merge-regen.yml` run `41121961586` (`job 124289948751` on `0878dd400a`, using `cat-harness-tools@main` past `171242a`) completed Step 11 (`Run post-merge regen in the composed index`) in **45m20s** (`20:26:10Z` → `21:11:30Z`) instead of timing out at 2h0m. Run `41126532155` (`job 124306395572` on `dec5d9fccb`) and `litlfred/folio-assistant` `post-merge-regen.yml` run `41120272036` (`job 124289152013` on `110d1d59f6`) are currently in progress.
+2. **Findings from `litlfred/cat-harness` run `41121961586` (`job 124289948751`, repair branch `automation/post-merge-regen-0878dd400a` commit `5db6e479e7d4`)**:
+   - Step 11 exited `1` (`status: "unrepaired"`):
+     - `staleChecks` (20): `check:glossary`, `kind:register:check`, `node-kinds:check`, `subgraph:jsonld:check`, `slice:sqlite:check`, `check:harness-state:check`, `translation:pot:check`, `translation:obsolete:check`, `translate-bpmn:check`, `landing:sticky:check`, `beans:notes:check`, `uml:overview:check`, `node-kind:pages:check`, `p2:refusals:check`, `index:render:check`, `check:published-instance-exports`, `external-schemas:check`, `translation:block-qa:check`, `bpmn:checklist:check`, `render:bpmn:check`.
+     - `repairedChecks` (8): `check:glossary`, `kind:register:check`, `subgraph:jsonld:check`, `translation:pot:check`, `translation:obsolete:check`, `translate-bpmn:check`, `node-kind:pages:check`, `render:bpmn:check`.
+     - `unrepairedChecks` (13): `node-kinds:check`, `slice:sqlite:check`, `check:harness-state:check`, `ns:check`, `landing:sticky:check`, `beans:notes:check`, `uml:overview:check`, `p2:refusals:check`, `index:render:check`, `check:published-instance-exports`, `external-schemas:check`, `libraries:check`, `bpmn:checklist:check` (including `noWriterChecks`: `ns:check`, `libraries:check`).
+     - `builtAtPublishChecks` (13): `library:viz:check`, `uploads:viz:check`, `library:readmes:check`, `voices:viz:check`, `translation:index:check`, `navbar:include:check`, `document-kinds:viz:check`, `check:navbar-consistency:check`, `check:nav-names:check`, `boards:default:check`, `themes:css:check`, `id-lookup:check`, `declarations:retag:check`.
+   - Step 13 (`Check the caller's directory READMEs in its own checkout`) passed (`directory READMEs current in standalone checkout`).
+   - Repair commit `5db6e479e7d4` on `automation/post-merge-regen-0878dd400a` touched 36 files in `cat-harness`, including 10 newly untracked publish-time/cross-instance renderings written into `cat-harness/docs/`:
+     - `docs/assets/glossary/cat-harness-tools--kg-schema-fields.skos.jsonld` (renamed from `cat-harness--kg-schema-fields.skos.jsonld` after `8lcl`) and `docs/assets/glossary/who-iris--kg-bpmn-activities.skos.jsonld`
+     - `docs/assets/img/workflows/{dsa-document-lifecycle,iris-cdn-initial-load,iris-cdn-nightly,iris-cdn-reconcile,iris-cdn-sign-publish}.svg` (cross-instance BPMN SVGs written into `cat-harness/docs/assets/img/workflows/`)
+     - `docs/en/cat-harness/{sme-case-verdict,test-data-fixed,test-data-generated}/index.html` (new node-kind pages not yet listed in `cat-harness.json` `builtAtPublish` / `.gitignore`)
+   - Step 14 (`Open the repair PR in the caller's repository`) failed with `GraphQL: GitHub Actions is not permitted to create or approve pull requests (createPullRequest)`.
+3. **Box 4 status**: Remains unticked (`[ ] A post-merge regen run on a layer's main reports clean twice in a row after unrelated merges (negative control)`) until the remaining 13 `unrepairedChecks` and the 10 new publish-time renderings on `cat-harness` `main` are resolved and two consecutive runs report `clean`.

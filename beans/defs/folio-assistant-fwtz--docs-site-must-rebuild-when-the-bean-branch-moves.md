@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-30T19:45:00Z
+updated_at: 2026-10-30T21:29:30Z
 parent: folio-assistant-fs43
 ---
 
@@ -170,3 +170,15 @@ Investigated the two dry-run findings from `litlfred/folio-assistant#2646` (runs
 3. **Also in `litlfred/cat-harness-tools#903`:** synced `beans/defs/cat-tools-tk99--programme-progress-an-epic-burn-down-and-a-math-pr.md` to `status: completed` (`updated_at: 2026-10-29T07:38:35Z`) from `folio-assistant-hf2q` (`9bea5ab737`).
 
 _2026-10-30T19:45:00Z_ — litlfred/cat-harness-tools#903 merged as `aabd721` (owner card 19:40Z), after merging main and resolving import conflicts. Still open: the three live checks above, which need folio-assistant re-pinned past `aabd721` and a bean-only push to observe. Session https://claude.ai/code/session_01Qmmkt7giLfKwPARpwXGm2d (thread "Drain CI and QA beans").
+
+_2026-10-30T21:29:30Z_ — Checked `litlfred/folio-assistant` `main` `index.lock.json` and `docs-site.yml` runs after `litlfred/cat-harness-tools#903` (`aabd721`, merged `19:40Z`):
+1. **Re-pin verification**: `litlfred/folio-assistant` `main` re-pinned `cat-harness-tools` past `aabd721` in Wave F (`a6e58846b9` at `19:45:57Z`), Wave G (`164908f486` at `19:57:26Z`, pinning `cat-harness-tools` `15939bf565e3`), Wave H (`110d1d59f6` at `20:03:40Z`), Wave I (`27d72c8d91` at `20:33:11Z`, pinning `97fc483d19a2`), and Wave J (`578dcc34cd` at `20:55:57Z`, pinning `f918daaf96ec`).
+2. **Why `docs-site.yml` runs stopped before Step 55 (`Dependency-cone deploy, dry run (bean fwtz)`)**:
+   - Run `41118050306` (Wave F `a6e58846b9`) failed at Step 10 (`Refresh QA working copy`) before `#2765` landed.
+   - Runs `41119437676` (Wave G `164908f486`), `41120272139` (Wave H `110d1d59f6`), `41124135870` (Wave I `27d72c8d91`), `41125150958` (`#2793` `e0d4a39ae5`), and `41127097484` (Wave J `578dcc34cd`) all passed `qa:working-copy` (Step 10) and failed at Step 11 (`Release security gate`, `bun run cat security:gate`) on two newly introduced workflow checks:
+     - `check:workflow-injection`: `docs-site.yml` line 1097 (`--base-path "/${{ github.event.repository.name }}"`, added in `#2771` `9885507564`) interpolated `github.event.repository.name` directly in `run:`. Fixed on `folio-assistant` `main` in [`litlfred/folio-assistant#2793`](https://github.com/litlfred/folio-assistant/pull/2793) (`e0d4a39ae5` at `20:41:13Z`) by moving `github.event.repository.name` to `env: REPO_NAME`.
+     - `action-sha-pinning`: `.github/workflows/cancel-on-close.yml:16` (`#2768`) and `.github/workflows/main-qa.yml:35` (`#2770`) call `litlfred/cat-harness-tools/.github/workflows/layer-{cancel-on-close,main-qa}.yml@main`, which `cat-harness-tools/scripts/pin-actions.ts` rejected because `FIRST_PARTY` only named `litlfred/folio-assistant`.
+3. **Unblocking fixes merged in `litlfred/cat-harness-tools`**:
+   - [`litlfred/cat-harness-tools#1009`](https://github.com/litlfred/cat-harness-tools/pull/1009) (merged as `121bed1de787` at `21:01Z`): added `litlfred/cat-harness-tools` to `FIRST_PARTY_REPOS` in `scripts/pin-actions.ts` (with regression test in `test/security-gate.test.ts`) so `litlfred/cat-harness-tools/.github/workflows/layer-*.yml@main` reusable workflows pass `action-sha-pinning`.
+   - [`litlfred/cat-harness-tools#1021`](https://github.com/litlfred/cat-harness-tools/pull/1021) (merged as `948747762569` at `21:29Z`): removed the temporary `"docs-site.yml (run): github.event.repository.name"` baseline entry from `scripts/workflow-injection-baseline.json` after `litlfred/folio-assistant#2793` (`e0d4a39ae5`) moved `github.event.repository.name` to `env: REPO_NAME` on `folio-assistant` `main`. (See also [`litlfred/folio-assistant#2790`](https://github.com/litlfred/folio-assistant/pull/2790), open, which SHA-pins those two reusable workflow calls in `.github/workflows/{cancel-on-close,main-qa}.yml` directly.)
+4. **Next**: Once `litlfred/folio-assistant` `main` merges `#2790` or re-pins `cat-harness-tools` past `948747762569` (`#1021`), `Release security gate` (Step 11) in `docs-site.yml` will pass and Step 55 (`Dependency-cone deploy, dry run (bean fwtz)`) will execute and report its cone verdict.
