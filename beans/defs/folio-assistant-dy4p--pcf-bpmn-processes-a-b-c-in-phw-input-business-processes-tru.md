@@ -2,11 +2,11 @@
 # folio-assistant-dy4p
 $schema: bean/1.0.0
 title: 'PCF BPMN processes A/B/C in phw input/business-processes, trust-anchor neutral (PCF4)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T15:46:00Z
+updated_at: 2026-10-30T16:26:00Z
 parent: folio-assistant-negd
 blocked_by:
     - folio-assistant-sl5v
