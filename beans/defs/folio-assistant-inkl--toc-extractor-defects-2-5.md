@@ -2,11 +2,11 @@
 # folio-assistant-inkl
 $schema: bean/1.0.0
 title: 'INGEST: TOC extractor defects 2-5, including the DAK contents collapsing past the trust tests'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-30T12:45:00Z
-updated_at: 2026-10-30T12:45:00Z
+updated_at: 2026-10-30T13:35:00Z
 parent: folio-assistant-slw1
 ---
 
