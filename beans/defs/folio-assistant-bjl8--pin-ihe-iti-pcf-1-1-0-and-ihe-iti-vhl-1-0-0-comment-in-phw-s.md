@@ -2,11 +2,11 @@
 # folio-assistant-bjl8
 $schema: bean/1.0.0
 title: 'Pin ihe.iti.pcf 1.1.0 and ihe.iti.vhl 1.0.0-comment in phw sushi-config; reference by canonical URL only (PCF3)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
-updated_at: 2026-10-30T15:46:00Z
+updated_at: 2026-10-30T16:02:30Z
 parent: folio-assistant-negd
 ---
 
