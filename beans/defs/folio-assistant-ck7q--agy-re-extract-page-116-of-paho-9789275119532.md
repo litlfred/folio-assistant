@@ -2,11 +2,11 @@
 # folio-assistant-ck7q
 $schema: bean/1.0.0
 title: 'agy: re-extract page 116 of PAHO 9789275119532_eng.pdf for smart-immunizations (img-p116-1 was committed empty)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T18:20:00Z
-updated_at: 2026-10-30T18:20:00Z
+updated_at: 2026-10-30T18:30:30Z
 ---
 
 For agy (the owner's local agent): cloud sessions cannot reach iris.paho.org (proxy CONNECT 403, checked 2026-10-30 18:15Z).
@@ -20,3 +20,5 @@ Issue: [litlfred/smart-immunizations#76](https://github.com/litlfred/smart-immun
 - [ ] Regenerate the entry (`gen-library-jsonld.ts --prune`, `library:readmes`), open a PR that closes smart-immunizations#76
 
 Lane C thread, session https://claude.ai/code/session_01Qmmkt6H13Awd4ZDHCD3cJH.
+
+_2026-10-30T18:30:30Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`) to download `9789275119532_eng.pdf`, re-extract page 116 in `litlfred/smart-immunizations`, record an image verdict, regenerate the entry, and open a PR closing `smart-immunizations#76`.
