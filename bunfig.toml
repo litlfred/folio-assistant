@@ -13,10 +13,10 @@ linker = "hoisted"
 # What the root ran tests with before the separation (3d4caf6e0f~1), restored:
 # `bun test` from the root reads THIS file only, never cat-harness/bunfig.toml.
 #
-# - preload: cat-harness's two test preloads, in their order (the fixture
+# - preload: the two test preloads (cat-harness-tools' since bean 8lcl moved the schemas there), in their order (the fixture
 #   checkout's variable must be set before the typology registry loads).
 # - pathIgnorePatterns: `fsh-guts/` is the retirement store, mounted from its
 #   state branch; the tests kept there are records, not suites (each says so).
 [test]
-preload = ["./cat-harness/schemas/test-fixture-preload.ts", "./cat-harness/schemas/test-preload.ts"]
+preload = ["./cat-harness-tools/schemas/test-fixture-preload.ts", "./cat-harness-tools/schemas/test-preload.ts"]
 pathIgnorePatterns = ["fsh-guts/**"]
