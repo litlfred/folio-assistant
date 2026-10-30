@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T14:58:00Z
+updated_at: 2026-10-30T17:15:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -106,3 +106,5 @@ Re-measured: not started. `cat-harness/schemas/` is flat (287 `.ts` files; only 
 Same ruling as `8fq9`: **do it now, one concern group per PR** to keep churn down.
 
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: none yet; next after 8fq9 groups.
+
+_2026-10-30T17:15:00Z_ — https://github.com/litlfred/cat-harness-tools/pull/881 (box 4, residual gate) merged (2515e19) and https://github.com/litlfred/smart-base/pull/218 (shim repoint) merged (8451680). https://github.com/litlfred/cat-harness-tools/pull/875 has merged, so the `refactor-strategy.ts` one-release shim in cat-harness can go. `lean-packages.ts` and `formalization-types.ts` still wait on `saqd`. Box 3 (`uml:overview:check`) is still open. The concern groups are final; the 8lcl thread takes them from here. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").

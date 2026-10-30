@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T11:55:00Z
-updated_at: 2026-10-30T12:40:00Z
+updated_at: 2026-10-30T17:15:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -34,3 +34,5 @@ here: qou is a math repo and changes there need the owner's OK first.
 - `litlfred/cat-harness-tools`: https://github.com/litlfred/cat-harness-tools/pull/868 (`resolveAdapterPreamble`, `ResolvedRenderTarget.preamblePath`, `resolvePaperPreamble`, and default preamble resolution in `generate-main-tex.ts`, `build.ts`, and `run-build.ts`).
 - `litlfred/folio-assistant-sci`: https://github.com/litlfred/folio-assistant-sci/pull/115 (`PAPER_PREAMBLE_PATH` and `PaperContentAdapter.preamblePath` on `PaperContentAdapter`, `adapters/paper/latex/README.md` updated to `## How it is wired`, `--preamble` removed from `build-pdf.sh`, and unit + CLI tests in `declared-adapter.test.ts`).
 - `litlfred/folio-assistant`: https://github.com/litlfred/folio-assistant/pull/2732 (`--preamble ../latex/preamble.tex` removed from `.github/workflows/publish.yml`).
+
+_2026-10-30T17:15:00Z_ — Merged https://github.com/litlfred/folio-assistant-sci/pull/115 (0dbdb92) and https://github.com/litlfred/cat-harness-tools/pull/868 (de4e70e). #868 had a tsc error (its test fixture lacked the `root` field main added to `BuiltinAdapterDeclaration`), fixed on the branch. `run-build.ts` had moved to sci in saqd group 3 first, so its preamble change went to https://github.com/litlfred/folio-assistant-sci/pull/126 (f2a3982). Left: https://github.com/litlfred/folio-assistant/pull/2732 (publish.yml), which merges only once the folio-assistant pins include tools de4e70e and sci 0dbdb92 (asked the CI thread). Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").

@@ -5,7 +5,7 @@ title: 'Placement PR4: whole roles, stories, actors and capabilities move up to 
 status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T15:12:00Z
+updated_at: 2026-10-30T17:15:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pzwb
@@ -47,3 +47,5 @@ _2026-10-30T15:12:00Z_ — Completed the remaining PR4 moves and cleared the las
   3. `board-renderer`: 7 of its 8 `cat-harness` skills in `skills/ui/ui-core/` (`board-windows`, `board-diagram-interchange`, `harness-tiles`, `visualizer-loading`, `pdf-inline-viewer`, `liquid-templates`, `incremental-render`) have no other role or BPMN activity in `cat-harness`.
   4. `review-coordinator`: carries 4 `cat-harness` skills in `skills/review/review-core/`, of which `review-heatmap` has no other role or BPMN activity in `cat-harness`.
   5. `terminologist`: carries 2 `cat-harness` skills (`code-lists`, `vocabulary-authority`) in `skills/kg/kg-core/`, neither of which has any other role or BPMN activity in `cat-harness`.
+
+_2026-10-30T17:15:00Z_ — All PRs merged: https://github.com/litlfred/folio-assistant-core/pull/246 (6369b1d), https://github.com/litlfred/folio-assistant-sci/pull/123 (9b0eb08), https://github.com/litlfred/fhir-harness/pull/203 (6ca6874), https://github.com/litlfred/fhir-harness/pull/204 (58cc045), https://github.com/litlfred/cat-harness-tools/pull/912 (e714669), then the remover https://github.com/litlfred/cat-harness/pull/747 (9c3b2ae). All four boxes are ticked. Left: the gates in the composed index after the folio-assistant re-pin (CI thread), and the `pzwb` blocker. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").

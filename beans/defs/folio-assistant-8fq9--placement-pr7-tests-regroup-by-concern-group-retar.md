@@ -2,10 +2,10 @@
 # folio-assistant-8fq9
 $schema: bean/1.0.0
 title: 'Placement PR7: tests regroup by concern group, retargeted to cat-harness-tools/'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T13:36:00Z
+updated_at: 2026-10-30T17:15:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -34,3 +34,5 @@ _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://
 _2026-10-26T13:20:00Z_ — Progress update: groups 1–8 of 9 in `scripts/tests/` have merged on `litlfred/cat-harness-tools` `main`: `#694` (1/9 content, `2026-10-24T09:09:18Z`), `#696` (2/9 tools, `2026-10-24T11:38:40Z`), `#702` (3/9 process, `2026-10-24T11:43:13Z`), `#704` (4/9 library, `2026-10-24T11:07:55Z`), `#707` (5/9 conduct, `2026-10-24T09:26:42Z`), `#712` (6/9 kg, `2026-10-24T11:40:49Z`), `#717` (7/9 ui, `2026-10-24T12:47:20Z`), `#718` (8/9 sdlc, `2026-10-24T12:15:16Z`), plus `#719` (`CI compare: a test that only moved is the same test`, `2026-10-24T10:25:49Z`) and `#748` (`Fix libraries:check and check:anchor-names after the tests regroup`, `2026-10-24T13:44:55Z`). Remaining: group 9/9 (`above-harness`) and `test/<group>/`.
 
 _2026-10-30T13:36:00Z_ — Opened PR https://github.com/litlfred/cat-harness-tools/pull/888 (`claude/8fq9-e2e-tests`) regrouping the 49 audited `test/*.e2e.ts` specs into `test/<group>/` across the eight concern groups (`conduct`, `content`, `kg`, `library`, `process`, `sdlc`, `tools`, `ui`), adding `test/code.json` and `scripts/tests/code.json` (`concern-groups/v1`), and updating relative imports, `id-lookup.e2e.ts` anchor ascent, `scripts/tests/state-visualizer.test.ts`, `scripts/tests/e2e-corpus-coupling.test.ts`, `scripts/artefact-verification.json`, and `libraries/*.library.json` (`libraries:derive`). (Note: `above-harness` unit tests are tracked by bean `saqd`.)
+
+_2026-10-30T17:15:00Z_ — https://github.com/litlfred/cat-harness-tools/pull/888 merged (f5349b5) after merging main in cleanly; it closes https://github.com/litlfred/cat-harness-tools/issues/693. The 49 audited e2e specs are in `test/<group>/`. The 39 `test/*.e2e.ts` still at the top level are not in the placement audit; the above-harness unit tests are tracked by `saqd`. Completed. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").

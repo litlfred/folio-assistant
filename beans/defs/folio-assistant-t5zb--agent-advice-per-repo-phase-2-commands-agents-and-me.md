@@ -2,11 +2,11 @@
 # folio-assistant-t5zb
 $schema: bean/1.0.0
 title: 'AGENT ADVICE PER REPO (phase 2): skill commands, agents, memory and .mcp.json where a repo has content for them'
-status: in-progress
+status: completed
 type: feature
 priority: low
 created_at: 2026-10-24T13:20:00Z
-updated_at: 2026-10-30T13:04:00Z
+updated_at: 2026-10-30T17:15:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -22,3 +22,5 @@ _2026-10-30T13:04:00Z_ — Opened all four PRs implementing Phase 2 per-reposito
 - `litlfred/cat-harness` PR [#724](https://github.com/litlfred/cat-harness/pull/724) (`cat/bean/t5zb-agent-surface-phase2`): 31 generated `.claude/commands/*.md` slash commands, `.claude/agents/{ci-health-watcher,platform-boundary-guard}.md`, `.claude/agent-memory/` (13 + 8 entries and 5 detail sidecars), `.agents/rules/agent-memory.md`, `.agents/skills/*-memory/SKILL.md`, and `.{gemini,codex,cursor,github}/agents/*` vendor definitions.
 - `litlfred/folio-assistant-sci` PR [#117](https://github.com/litlfred/folio-assistant-sci/pull/117) (`cat/bean/t5zb-agent-surface-phase2`): 17 generated `.claude/commands/*.md` slash commands.
 - `litlfred/folio-assistant-core` PR [#236](https://github.com/litlfred/folio-assistant-core/pull/236) (`cat/bean/t5zb-agent-surface-phase2`): 2 generated `.claude/commands/{review,review-comments}.md` slash commands, `platform-boundary-guard` Claude/Antigravity/vendor agent & memory projections (2 entries from `folio-assistant-core/memory/`), and standalone `.mcp.json`.
+
+_2026-10-30T17:15:00Z_ — All four PRs merged: https://github.com/litlfred/folio-assistant-sci/pull/117 (8277fc6), https://github.com/litlfred/folio-assistant-core/pull/236 (2c508eb), https://github.com/litlfred/cat-harness/pull/724 (ea9b3c7), https://github.com/litlfred/cat-harness-tools/pull/876 (f1f813e, after merging main in: the memory schema import now comes from `schemas/conduct/memory`). Completed. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").

@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-30T12:25:00Z
+updated_at: 2026-10-30T17:15:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -84,3 +84,5 @@ Re-checked the 2026-10-20 findings against cat-harness main `e4238567`: F3 (dead
 On folio-assistant-sci having no LICENSE or NOTICE while it carries the MIT claude-scientific-skills packages: **give sci the same Apache-2.0 LICENSE, CC BY content licence and a NOTICE, and move the MIT entry there; open the PR for owner review, do not auto-merge.**
 
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/folio-assistant-sci#68, litlfred/cat-harness#511 (licence, owner review).
+
+_2026-10-30T17:15:00Z_ — https://github.com/litlfred/cat-harness-tools/pull/867 (739fdc0) and https://github.com/litlfred/cat-harness/pull/717 (e754db5) merged: F1 bun.lock, F5 test/README.md, sibling boot. Left: the two QA reports and the licence PRs. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").
