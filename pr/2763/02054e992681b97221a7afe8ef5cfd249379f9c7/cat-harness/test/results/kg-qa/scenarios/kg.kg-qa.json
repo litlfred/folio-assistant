@@ -1,0 +1,1666 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "graph",
+    "id": "kg",
+    "path": null
+  },
+  "source_hash": null,
+  "criteria": {
+    "skill-has-entry-point": {
+      "result": "pass",
+      "findings": []
+    },
+    "global-task-shared": {
+      "result": "pass",
+      "findings": []
+    },
+    "consulted-skill-not-performed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "agent-memory",
+          "detail": "\"agent-memory\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "directory-conventions",
+          "detail": "\"directory-conventions\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "glossary-terms",
+          "detail": "\"glossary-terms\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "index-config",
+          "detail": "\"index-config\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "raci",
+          "detail": "\"raci\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "security",
+          "detail": "\"security\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "symbiotic-interaction",
+          "detail": "\"symbiotic-interaction\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
+    },
+    "skill-in-role-or-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "archimate-models",
+          "detail": "no role carries \"archimate-models\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "audio-transcription",
+          "detail": "no role carries \"audio-transcription\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "bean-drain",
+          "detail": "no role carries \"bean-drain\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "benchmarking-mode",
+          "detail": "no role carries \"benchmarking-mode\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "bun-use",
+          "detail": "no role carries \"bun-use\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "deployment-awareness",
+          "detail": "no role carries \"deployment-awareness\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "fhir-client-operations",
+          "detail": "no role carries \"fhir-client-operations\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "fhir-ig-create",
+          "detail": "no role carries \"fhir-ig-create\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "finding-software",
+          "detail": "no role carries \"finding-software\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "grade",
+          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "hypothesis-generation",
+          "detail": "no role carries \"hypothesis-generation\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-binary-artefacts",
+          "detail": "no role carries \"ig-binary-artefacts\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-publisher-reduction",
+          "detail": "no role carries \"ig-publisher-reduction\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-site-links",
+          "detail": "no role carries \"ig-site-links\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-site-theme",
+          "detail": "no role carries \"ig-site-theme\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "kg-subgraph-layout",
+          "detail": "no role carries \"kg-subgraph-layout\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "l1-coverage",
+          "detail": "no role carries \"l1-coverage\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "l4-application-run-local",
+          "detail": "no role carries \"l4-application-run-local\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "lean-formal-edges",
+          "detail": "no role carries \"lean-formal-edges\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "minimal-change",
+          "detail": "no role carries \"minimal-change\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "oxigraph-catalogue-search",
+          "detail": "no role carries \"oxigraph-catalogue-search\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "plan-request-gate",
+          "detail": "no role carries \"plan-request-gate\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "recommendation-candidates",
+          "detail": "no role carries \"recommendation-candidates\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "reference-dataset-ingestion",
+          "detail": "no role carries \"reference-dataset-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "requirement-definition",
+          "detail": "no role carries \"requirement-definition\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "review",
+          "detail": "no role carries \"review\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "scientific-critical-thinking",
+          "detail": "no role carries \"scientific-critical-thinking\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "scientific-visualization",
+          "detail": "no role carries \"scientific-visualization\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "secrets",
+          "detail": "no role carries \"secrets\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-launch",
+          "detail": "no role carries \"smart-launch\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-stack-layering",
+          "detail": "no role carries \"smart-stack-layering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "spec-template",
+          "detail": "no role carries \"spec-template\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "tool-authoring",
+          "detail": "no role carries \"tool-authoring\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "toolchain-ownership",
+          "detail": "no role carries \"toolchain-ownership\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "transcription-verbatim",
+          "detail": "no role carries \"transcription-verbatim\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "wireframe-viewport-check",
+          "detail": "no role carries \"wireframe-viewport-check\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "zero-trust-handover",
+          "detail": "no role carries \"zero-trust-handover\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `scenarios` at `scenarios/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `who-iris-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
+    },
+    "downstream-tool-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "manifest-skill-exists": {
+      "result": "pass",
+      "findings": []
+    },
+    "remote-skill-is-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-roles-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-capabilities-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-permissions-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-is-not-a-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-fact-has-consumer": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "approval-authority",
+          "detail": "declared permission \"approval-authority\" (claimed by content-reviewer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "clinical-validation",
+          "detail": "declared permission \"clinical-validation\" (claimed by clinical-sme) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "content-authoring",
+          "detail": "declared permission \"content-authoring\" (claimed by author, authoring-agent, collaborator, ingestion-agent, librarian, owner, deep-researcher, evidence-agent, onboarding-agent) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "fhir-validator",
+          "detail": "declared capability \"fhir-validator\" (claimed by fhir-modeller, ig-publisher-service, qc-reviewer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "first-pass-review",
+          "detail": "declared permission \"first-pass-review\" (claimed by technical-officer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "ig-publisher",
+          "detail": "declared capability \"ig-publisher\" (claimed by fhir-modeller, ig-publisher-service, publication-manager, qc-reviewer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "jekyll",
+          "detail": "declared capability \"jekyll\" (claimed by ci-pipeline, publication-manager) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "perform-task",
+          "detail": "declared permission \"perform-task\" (claimed by collaborator, owner) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "project-governance",
+          "detail": "declared permission \"project-governance\" (claimed by programme-manager) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "qa-reporting",
+          "detail": "declared permission \"qa-reporting\" (claimed by ci-health-watcher, ci-pipeline, ig-publisher-service, local-sweep, platform-boundary-guard, qc-reviewer, untainted-adjudicator) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "release-authorization",
+          "detail": "declared permission \"release-authorization\" (claimed by admin, programme-manager) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "sme-coordination",
+          "detail": "declared permission \"sme-coordination\" (claimed by technical-officer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "sushi-compiler",
+          "detail": "declared capability \"sushi-compiler\" (claimed by fhir-modeller) has no consuming process, gateway, task, or rule in the KG."
+        }
+      ]
+    },
+    "story-role-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-graph-typologies-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-contract-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-skill-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-conforms": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-checkable": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-plan-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-case-executed-or-skipped": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-data-hash-present": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-sut-not-self-judged": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-plan-exit-criteria-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "certification-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "test/attestations/certification/crdm-detect-evaluation.attestations.json#certifications[0]",
+          "detail": "evidence `test/results/tests/crdm-detect-evaluation/crdm-detect-signals/r-3554a15543fc-54762ece6646/test-report.json` is not in this checkout — fetch the qa-reports entry (`bun run cat qa:fetch`) to judge it"
+        }
+      ]
+    },
+    "arrow-direction": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-names-resolve": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "processes/sdlc/merge-train.bpmn",
+          "detail": "names `cat-harness/docs/proposals/merge-pipeline-requirements.md`: its directory is here and the file is not — renamed, moved, or never written."
+        },
+        {
+          "where": "../folio-assistant-core/processes/library/ingest-derive-content.bpmn",
+          "detail": "names `docs/document-ingestion.md`: its directory is here and the file is not — renamed, moved, or never written."
+        }
+      ]
+    },
+    "skill-contract-claimed": {
+      "result": "pass",
+      "findings": []
+    },
+    "nested-instance-audited": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "beans/beans.json",
+          "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "bootstrap-tools/bootstrap-tools.json",
+          "detail": "nested instance \"bootstrap-tools\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "bootstrap/bootstrap.json",
+          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 5 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness-tools/beans/beans.json",
+          "detail": "nested instance \"cat-harness-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness-tools/cat-harness-tools.json",
+          "detail": "nested instance \"cat-harness-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/archimate/graph.json",
+          "detail": "nested instance \"archimate\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/docs/docs.json",
+          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/openapi/graph.json",
+          "detail": "nested instance \"openapi\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/skills/skills.json",
+          "detail": "nested instance \"cat-harness/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/skills/voices/voices.json",
+          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "fhir-harness/docs/docs.json",
+          "detail": "nested instance \"fhir-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "fhir-harness/fhir-harness.json",
+          "detail": "nested instance \"fhir-harness\" declares its own graph, and this audit does not read it — 5 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/beans/beans.json",
+          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/docs/docs.json",
+          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/folio-assistant-core.json",
+          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 19 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/skills/skills.json",
+          "detail": "nested instance \"folio-assistant-core/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-sci/docs/docs.json",
+          "detail": "nested instance \"folio-assistant-sci\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-sci/folio-assistant-sci.json",
+          "detail": "nested instance \"folio-assistant-sci\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-sci/skills/skills.json",
+          "detail": "nested instance \"folio-assistant-sci/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-base/site-docs/docs.json",
+          "detail": "nested instance \"smart-base\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-base/skills/skills.json",
+          "detail": "nested instance \"smart-base/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-base/smart-base.json",
+          "detail": "nested instance \"smart-base\" declares its own graph, and this audit does not read it — 7 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-immunizations/smart-immunizations.json",
+          "detail": "nested instance \"smart-immunizations\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-trust/smart-trust.json",
+          "detail": "nested instance \"smart-trust\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "todos/todos.json",
+          "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "who-iris/skills/skills.json",
+          "detail": "nested instance \"who-iris/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "who-iris/who-iris.json",
+          "detail": "nested instance \"who-iris\" declares its own graph, and this audit does not read it — 4 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        }
+      ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
+    },
+    "orphan-subject-resolves": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "folio-assistant-oz9e",
+          "detail": "bean \"folio-assistant-oz9e\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-pesg",
+          "detail": "bean \"folio-assistant-pesg\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tbdg",
+          "detail": "bean \"folio-assistant-tbdg\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-hs08",
+          "detail": "bean \"folio-assistant-hs08\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-gtx4",
+          "detail": "bean \"folio-assistant-gtx4\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4j86",
+          "detail": "bean \"folio-assistant-4j86\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-wvzp",
+          "detail": "bean \"folio-assistant-wvzp\" references parent \"folio-assistant-0lmb\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-zldg",
+          "detail": "bean \"folio-assistant-zldg\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4d22",
+          "detail": "bean \"folio-assistant-4d22\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-sod4",
+          "detail": "bean \"folio-assistant-sod4\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ffv7",
+          "detail": "bean \"folio-assistant-ffv7\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-19wc",
+          "detail": "bean \"folio-assistant-19wc\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-jbvi",
+          "detail": "bean \"folio-assistant-jbvi\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8ez4",
+          "detail": "bean \"folio-assistant-8ez4\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-gzkt",
+          "detail": "bean \"folio-assistant-gzkt\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-x3h9",
+          "detail": "bean \"folio-assistant-x3h9\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ptdp",
+          "detail": "bean \"folio-assistant-ptdp\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-uhkv",
+          "detail": "bean \"folio-assistant-uhkv\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-giiw",
+          "detail": "bean \"folio-assistant-giiw\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lptq",
+          "detail": "bean \"folio-assistant-lptq\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-rq8s",
+          "detail": "bean \"folio-assistant-rq8s\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lk2a",
+          "detail": "bean \"folio-assistant-lk2a\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-n3h9",
+          "detail": "bean \"folio-assistant-n3h9\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-81tw",
+          "detail": "bean \"folio-assistant-81tw\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-1ple",
+          "detail": "bean \"folio-assistant-1ple\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-yc74",
+          "detail": "bean \"folio-assistant-yc74\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-b5f0",
+          "detail": "bean \"folio-assistant-b5f0\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-e8m3",
+          "detail": "bean \"folio-assistant-e8m3\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-81qz",
+          "detail": "bean \"folio-assistant-81qz\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-t5dm",
+          "detail": "bean \"folio-assistant-t5dm\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4dxv",
+          "detail": "bean \"folio-assistant-4dxv\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-7sf1",
+          "detail": "bean \"folio-assistant-7sf1\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-kpcl",
+          "detail": "bean \"folio-assistant-kpcl\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-nij4",
+          "detail": "bean \"folio-assistant-nij4\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-nama",
+          "detail": "bean \"folio-assistant-nama\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-gs0u",
+          "detail": "bean \"folio-assistant-gs0u\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-rmor",
+          "detail": "bean \"folio-assistant-rmor\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-792f",
+          "detail": "bean \"folio-assistant-792f\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-k3ml",
+          "detail": "bean \"folio-assistant-k3ml\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lvlv",
+          "detail": "bean \"folio-assistant-lvlv\" references parent \"folio-assistant-9v5a\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-7x8o",
+          "detail": "bean \"folio-assistant-7x8o\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-uj55",
+          "detail": "bean \"folio-assistant-uj55\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ibxa",
+          "detail": "bean \"folio-assistant-ibxa\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vqsq",
+          "detail": "bean \"folio-assistant-vqsq\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-t5j5",
+          "detail": "bean \"folio-assistant-t5j5\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9k2i",
+          "detail": "bean \"folio-assistant-9k2i\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-065p",
+          "detail": "bean \"folio-assistant-065p\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-89cl",
+          "detail": "bean \"folio-assistant-89cl\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tdir",
+          "detail": "bean \"folio-assistant-tdir\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4vg7",
+          "detail": "bean \"folio-assistant-4vg7\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8unf",
+          "detail": "bean \"folio-assistant-8unf\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-esz4",
+          "detail": "bean \"folio-assistant-esz4\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-2h76",
+          "detail": "bean \"folio-assistant-2h76\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-j9cs",
+          "detail": "bean \"folio-assistant-j9cs\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ahab",
+          "detail": "bean \"folio-assistant-ahab\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-6b8u",
+          "detail": "bean \"folio-assistant-6b8u\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-q7ey",
+          "detail": "bean \"folio-assistant-q7ey\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ffu4",
+          "detail": "bean \"folio-assistant-ffu4\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-5vo9",
+          "detail": "bean \"folio-assistant-5vo9\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-z4mq",
+          "detail": "bean \"folio-assistant-z4mq\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lvw0",
+          "detail": "bean \"folio-assistant-lvw0\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3p7c",
+          "detail": "bean \"folio-assistant-3p7c\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-rn3o",
+          "detail": "bean \"folio-assistant-rn3o\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-5akx",
+          "detail": "bean \"folio-assistant-5akx\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-61n5",
+          "detail": "bean \"folio-assistant-61n5\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tn3d",
+          "detail": "bean \"folio-assistant-tn3d\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-uyp8",
+          "detail": "bean \"folio-assistant-uyp8\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lodp",
+          "detail": "bean \"folio-assistant-lodp\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-sg87",
+          "detail": "bean \"folio-assistant-sg87\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-j79e",
+          "detail": "bean \"folio-assistant-j79e\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-pomp",
+          "detail": "bean \"folio-assistant-pomp\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9rnf",
+          "detail": "bean \"folio-assistant-9rnf\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lrbx",
+          "detail": "bean \"folio-assistant-lrbx\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-yx9p",
+          "detail": "bean \"folio-assistant-yx9p\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4kq7",
+          "detail": "bean \"folio-assistant-4kq7\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-52rd",
+          "detail": "bean \"folio-assistant-52rd\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-nrrf",
+          "detail": "bean \"folio-assistant-nrrf\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-fwtz",
+          "detail": "bean \"folio-assistant-fwtz\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-95ir",
+          "detail": "bean \"folio-assistant-95ir\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-0hi8",
+          "detail": "bean \"folio-assistant-0hi8\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-x89g",
+          "detail": "bean \"folio-assistant-x89g\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ramz",
+          "detail": "bean \"folio-assistant-ramz\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-a98i",
+          "detail": "bean \"folio-assistant-a98i\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-1gf7",
+          "detail": "bean \"folio-assistant-1gf7\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tlk2",
+          "detail": "bean \"folio-assistant-tlk2\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-xies",
+          "detail": "bean \"folio-assistant-xies\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-eof6",
+          "detail": "bean \"folio-assistant-eof6\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vhqq",
+          "detail": "bean \"folio-assistant-vhqq\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-yxob",
+          "detail": "bean \"folio-assistant-yxob\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-xcyh",
+          "detail": "bean \"folio-assistant-xcyh\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9ofm",
+          "detail": "bean \"folio-assistant-9ofm\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-qmqg",
+          "detail": "bean \"folio-assistant-qmqg\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-hajp",
+          "detail": "bean \"folio-assistant-hajp\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-f227",
+          "detail": "bean \"folio-assistant-f227\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9mmu",
+          "detail": "bean \"folio-assistant-9mmu\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vljz",
+          "detail": "bean \"folio-assistant-vljz\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-rva2",
+          "detail": "bean \"folio-assistant-rva2\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-zvl0",
+          "detail": "bean \"folio-assistant-zvl0\" references parent \"folio-assistant-1xhc\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-0uu2",
+          "detail": "bean \"folio-assistant-0uu2\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-t490",
+          "detail": "bean \"folio-assistant-t490\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-r3y6",
+          "detail": "bean \"folio-assistant-r3y6\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-bnuy",
+          "detail": "bean \"folio-assistant-bnuy\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ovkk",
+          "detail": "bean \"folio-assistant-ovkk\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ansc",
+          "detail": "bean \"folio-assistant-ansc\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-n7x7",
+          "detail": "bean \"folio-assistant-n7x7\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-6ztw",
+          "detail": "bean \"folio-assistant-6ztw\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-502c",
+          "detail": "bean \"folio-assistant-502c\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-dmx1",
+          "detail": "bean \"folio-assistant-dmx1\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-0ytk",
+          "detail": "bean \"folio-assistant-0ytk\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-xeer",
+          "detail": "bean \"folio-assistant-xeer\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-6o1z",
+          "detail": "bean \"folio-assistant-6o1z\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-k74z",
+          "detail": "bean \"folio-assistant-k74z\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vov0",
+          "detail": "bean \"folio-assistant-vov0\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-j6t3",
+          "detail": "bean \"folio-assistant-j6t3\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-qr4n",
+          "detail": "bean \"folio-assistant-qr4n\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-88mg",
+          "detail": "bean \"folio-assistant-88mg\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ujiv",
+          "detail": "bean \"folio-assistant-ujiv\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-wp49",
+          "detail": "bean \"folio-assistant-wp49\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-k3tw",
+          "detail": "bean \"folio-assistant-k3tw\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vjbl",
+          "detail": "bean \"folio-assistant-vjbl\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-6pfo",
+          "detail": "bean \"folio-assistant-6pfo\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8xx6",
+          "detail": "bean \"folio-assistant-8xx6\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-oycs",
+          "detail": "bean \"folio-assistant-oycs\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-q2aj",
+          "detail": "bean \"folio-assistant-q2aj\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-w8j8",
+          "detail": "bean \"folio-assistant-w8j8\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-2ngl",
+          "detail": "bean \"folio-assistant-2ngl\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-q885",
+          "detail": "bean \"folio-assistant-q885\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-0om7",
+          "detail": "bean \"folio-assistant-0om7\" references parent \"folio-assistant-1xhc\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ce65",
+          "detail": "bean \"folio-assistant-ce65\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vigi",
+          "detail": "bean \"folio-assistant-vigi\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-xd1g",
+          "detail": "bean \"folio-assistant-xd1g\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-57mn",
+          "detail": "bean \"folio-assistant-57mn\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-byql",
+          "detail": "bean \"folio-assistant-byql\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4tnt",
+          "detail": "bean \"folio-assistant-4tnt\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lbz8",
+          "detail": "bean \"folio-assistant-lbz8\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-5o5c",
+          "detail": "bean \"folio-assistant-5o5c\" references parent \"folio-assistant-1xhc\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-63q4",
+          "detail": "bean \"folio-assistant-63q4\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-fvec",
+          "detail": "bean \"folio-assistant-fvec\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3025",
+          "detail": "bean \"folio-assistant-3025\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-smhv",
+          "detail": "bean \"folio-assistant-smhv\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-hylg",
+          "detail": "bean \"folio-assistant-hylg\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tjj6",
+          "detail": "bean \"folio-assistant-tjj6\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-nvhg",
+          "detail": "bean \"folio-assistant-nvhg\" references parent \"folio-assistant-0lmb\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-75c5",
+          "detail": "bean \"folio-assistant-75c5\" references parent \"folio-assistant-slw1\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-5ge1",
+          "detail": "bean \"folio-assistant-5ge1\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-x6lu",
+          "detail": "bean \"folio-assistant-x6lu\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-nf2z",
+          "detail": "bean \"folio-assistant-nf2z\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3mo4",
+          "detail": "bean \"folio-assistant-3mo4\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vm6m",
+          "detail": "bean \"folio-assistant-vm6m\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-l4ay",
+          "detail": "bean \"folio-assistant-l4ay\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-7bg9",
+          "detail": "bean \"folio-assistant-7bg9\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tc95",
+          "detail": "bean \"folio-assistant-tc95\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-h8ig",
+          "detail": "bean \"folio-assistant-h8ig\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-j00t",
+          "detail": "bean \"folio-assistant-j00t\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3x2o",
+          "detail": "bean \"folio-assistant-3x2o\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-mi97",
+          "detail": "bean \"folio-assistant-mi97\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-rn24",
+          "detail": "bean \"folio-assistant-rn24\" references parent \"folio-assistant-3fva\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-t0jg",
+          "detail": "bean \"folio-assistant-t0jg\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ivg9",
+          "detail": "bean \"folio-assistant-ivg9\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-yr93",
+          "detail": "bean \"folio-assistant-yr93\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-r5wu",
+          "detail": "bean \"folio-assistant-r5wu\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-kyrg",
+          "detail": "bean \"folio-assistant-kyrg\" references parent \"folio-assistant-1xhc\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ga3q",
+          "detail": "bean \"folio-assistant-ga3q\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vwd8",
+          "detail": "bean \"folio-assistant-vwd8\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-fnx4",
+          "detail": "bean \"folio-assistant-fnx4\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9umr",
+          "detail": "bean \"folio-assistant-9umr\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-inkl",
+          "detail": "bean \"folio-assistant-inkl\" references parent \"folio-assistant-slw1\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-0xfe",
+          "detail": "bean \"folio-assistant-0xfe\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-1xrg",
+          "detail": "bean \"folio-assistant-1xrg\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-wlqd",
+          "detail": "bean \"folio-assistant-wlqd\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-kjbb",
+          "detail": "bean \"folio-assistant-kjbb\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-5ulq",
+          "detail": "bean \"folio-assistant-5ulq\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-l9v6",
+          "detail": "bean \"folio-assistant-l9v6\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-upgd",
+          "detail": "bean \"folio-assistant-upgd\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-zjm1",
+          "detail": "bean \"folio-assistant-zjm1\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-wlyg",
+          "detail": "bean \"folio-assistant-wlyg\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-laqs",
+          "detail": "bean \"folio-assistant-laqs\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-46qw",
+          "detail": "bean \"folio-assistant-46qw\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-pgct",
+          "detail": "bean \"folio-assistant-pgct\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-gr0r",
+          "detail": "bean \"folio-assistant-gr0r\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-7x5n",
+          "detail": "bean \"folio-assistant-7x5n\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3sm2",
+          "detail": "bean \"folio-assistant-3sm2\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4dbr",
+          "detail": "bean \"folio-assistant-4dbr\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-6ptx",
+          "detail": "bean \"folio-assistant-6ptx\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-b963",
+          "detail": "bean \"folio-assistant-b963\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-t8g3",
+          "detail": "bean \"folio-assistant-t8g3\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-30hn",
+          "detail": "bean \"folio-assistant-30hn\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-c3d7",
+          "detail": "bean \"folio-assistant-c3d7\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8npa",
+          "detail": "bean \"folio-assistant-8npa\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-p3ny",
+          "detail": "bean \"folio-assistant-p3ny\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3lbz",
+          "detail": "bean \"folio-assistant-3lbz\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ec2a",
+          "detail": "bean \"folio-assistant-ec2a\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8107",
+          "detail": "bean \"folio-assistant-8107\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-f0hv",
+          "detail": "bean \"folio-assistant-f0hv\" references parent \"folio-assistant-slw1\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-jwoc",
+          "detail": "bean \"folio-assistant-jwoc\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-n0vx",
+          "detail": "bean \"folio-assistant-n0vx\" references parent \"folio-assistant-slw1\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-bssi",
+          "detail": "bean \"folio-assistant-bssi\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-whlc",
+          "detail": "bean \"folio-assistant-whlc\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vke6",
+          "detail": "bean \"folio-assistant-vke6\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-f6gq",
+          "detail": "bean \"folio-assistant-f6gq\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-5qq3",
+          "detail": "bean \"folio-assistant-5qq3\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-o1by",
+          "detail": "bean \"folio-assistant-o1by\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-jzba",
+          "detail": "bean \"folio-assistant-jzba\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-81vy",
+          "detail": "bean \"folio-assistant-81vy\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8mlt",
+          "detail": "bean \"folio-assistant-8mlt\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-1j3q",
+          "detail": "bean \"folio-assistant-1j3q\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-qh1s",
+          "detail": "bean \"folio-assistant-qh1s\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-syrl",
+          "detail": "bean \"folio-assistant-syrl\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-h11k",
+          "detail": "bean \"folio-assistant-h11k\" references parent \"folio-assistant-slw1\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-f6r1",
+          "detail": "bean \"folio-assistant-f6r1\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4pm8",
+          "detail": "bean \"folio-assistant-4pm8\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-d4m4",
+          "detail": "bean \"folio-assistant-d4m4\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9io2",
+          "detail": "bean \"folio-assistant-9io2\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-kvd2",
+          "detail": "bean \"folio-assistant-kvd2\" references parent \"folio-assistant-slw1\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-riit",
+          "detail": "bean \"folio-assistant-riit\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vq8o",
+          "detail": "bean \"folio-assistant-vq8o\" references parent \"folio-assistant-2upx\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ig4a",
+          "detail": "bean \"folio-assistant-ig4a\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-pb3e",
+          "detail": "bean \"folio-assistant-pb3e\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-n2l9",
+          "detail": "bean \"folio-assistant-n2l9\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-hp54",
+          "detail": "bean \"folio-assistant-hp54\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9hxd",
+          "detail": "bean \"folio-assistant-9hxd\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-65zi",
+          "detail": "bean \"folio-assistant-65zi\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-vobp",
+          "detail": "bean \"folio-assistant-vobp\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3q47",
+          "detail": "bean \"folio-assistant-3q47\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-2yyh",
+          "detail": "bean \"folio-assistant-2yyh\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-k59d",
+          "detail": "bean \"folio-assistant-k59d\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lpcs",
+          "detail": "bean \"folio-assistant-lpcs\" references parent \"folio-assistant-hfag\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-xu0t",
+          "detail": "bean \"folio-assistant-xu0t\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-iirv",
+          "detail": "bean \"folio-assistant-iirv\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-mkqf",
+          "detail": "bean \"folio-assistant-mkqf\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-y1w9",
+          "detail": "bean \"folio-assistant-y1w9\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-a1ku",
+          "detail": "bean \"folio-assistant-a1ku\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-o29r",
+          "detail": "bean \"folio-assistant-o29r\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-1lfx",
+          "detail": "bean \"folio-assistant-1lfx\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9rrb",
+          "detail": "bean \"folio-assistant-9rrb\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-doy3",
+          "detail": "bean \"folio-assistant-doy3\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-m61r",
+          "detail": "bean \"folio-assistant-m61r\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-bamf",
+          "detail": "bean \"folio-assistant-bamf\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-c4rz",
+          "detail": "bean \"folio-assistant-c4rz\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-j1r2",
+          "detail": "bean \"folio-assistant-j1r2\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-oh78",
+          "detail": "bean \"folio-assistant-oh78\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-4nfs",
+          "detail": "bean \"folio-assistant-4nfs\" references parent \"folio-assistant-0lmb\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-7wgs",
+          "detail": "bean \"folio-assistant-7wgs\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-b91x",
+          "detail": "bean \"folio-assistant-b91x\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-6dvy",
+          "detail": "bean \"folio-assistant-6dvy\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-hloc",
+          "detail": "bean \"folio-assistant-hloc\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-xsrv",
+          "detail": "bean \"folio-assistant-xsrv\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lvk9",
+          "detail": "bean \"folio-assistant-lvk9\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-gpdo",
+          "detail": "bean \"folio-assistant-gpdo\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-sd5v",
+          "detail": "bean \"folio-assistant-sd5v\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-32f6",
+          "detail": "bean \"folio-assistant-32f6\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-0tg5",
+          "detail": "bean \"folio-assistant-0tg5\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-lffo",
+          "detail": "bean \"folio-assistant-lffo\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-zru7",
+          "detail": "bean \"folio-assistant-zru7\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-m4s1",
+          "detail": "bean \"folio-assistant-m4s1\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-h32d",
+          "detail": "bean \"folio-assistant-h32d\" references parent \"folio-assistant-8jt6\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3432",
+          "detail": "bean \"folio-assistant-3432\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-amom",
+          "detail": "bean \"folio-assistant-amom\" references parent \"folio-assistant-5a3l\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-8xtj",
+          "detail": "bean \"folio-assistant-8xtj\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-bkje",
+          "detail": "bean \"folio-assistant-bkje\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-m8gz",
+          "detail": "bean \"folio-assistant-m8gz\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-53rv",
+          "detail": "bean \"folio-assistant-53rv\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-fc8y",
+          "detail": "bean \"folio-assistant-fc8y\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-chq5",
+          "detail": "bean \"folio-assistant-chq5\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-i8wf",
+          "detail": "bean \"folio-assistant-i8wf\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-o57z",
+          "detail": "bean \"folio-assistant-o57z\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-kott",
+          "detail": "bean \"folio-assistant-kott\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9x01",
+          "detail": "bean \"folio-assistant-9x01\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tlj9",
+          "detail": "bean \"folio-assistant-tlj9\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-q7ds",
+          "detail": "bean \"folio-assistant-q7ds\" references parent \"folio-assistant-0lmb\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-qml5",
+          "detail": "bean \"folio-assistant-qml5\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ssfp",
+          "detail": "bean \"folio-assistant-ssfp\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-w2gr",
+          "detail": "bean \"folio-assistant-w2gr\" references parent \"folio-assistant-vuip\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-tvf8",
+          "detail": "bean \"folio-assistant-tvf8\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-p1sk",
+          "detail": "bean \"folio-assistant-p1sk\" references parent \"folio-assistant-0ipy\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-sfjo",
+          "detail": "bean \"folio-assistant-sfjo\" references parent \"folio-assistant-bzyu\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-398x",
+          "detail": "bean \"folio-assistant-398x\" references parent \"folio-assistant-0lmb\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-9fdi",
+          "detail": "bean \"folio-assistant-9fdi\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-zdty",
+          "detail": "bean \"folio-assistant-zdty\" references parent \"folio-assistant-fs43\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-cmsl",
+          "detail": "bean \"folio-assistant-cmsl\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-3sbm",
+          "detail": "bean \"folio-assistant-3sbm\" references parent \"folio-assistant-zzmr\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-p7mb",
+          "detail": "bean \"folio-assistant-p7mb\" references parent \"folio-assistant-1xhc\" which does not exist in the bean graph."
+        },
+        {
+          "where": "folio-assistant-ke1w",
+          "detail": "bean \"folio-assistant-ke1w\" references parent \"folio-assistant-ahvw\" which does not exist in the bean graph."
+        },
+        {
+          "where": "cat-harness/test/attestations/folio-assistant-core/kg-qa/skills/library/cataloguing/ontologist.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/folio-assistant-core/kg-qa/skills/library/cataloguing/ontologist.attestations.json\" attests to subject \"skills/library/cataloguing/ontologist.md\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/certification/crdm-detect-evaluation.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/certification/crdm-detect-evaluation.attestations.json\" attests to subject \"test/results/tests/crdm-detect-evaluation/crdm-detect-signals/r-3554a15543fc-54762ece6646/test-report.json\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/concepts-agentic-harness/feature-request-workflow.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/concepts-agentic-harness/feature-request-workflow.attestations.json\" attests to subject \"docs/source/concepts-agentic-harness/feature-request-workflow\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/process-crdm-methodology/what-is-not-built-yet.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/process-crdm-methodology/what-is-not-built-yet.attestations.json\" attests to subject \"docs/source/process-crdm-methodology/what-is-not-built-yet\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/translation-qa/docs/source/process-crdm-methodology/overview.fr.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/translation-qa/docs/source/process-crdm-methodology/overview.fr.attestations.json\" attests to subject \"docs/source/process-crdm-methodology/overview\" which does not exist on disk."
+        }
+      ]
+    },
+    "work-traceability-audit": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "traceability",
+          "detail": "traceability vacuous: 671 bean(s) and 0 block(s) found (requires both to audit traceability)"
+        }
+      ]
+    },
+    "lake-target-lean-resolution": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "Lake configuration (lakefile.toml or lakefile.lean) is missing or unreadable."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 20,
+    "fail": 6,
+    "n/a": 4,
+    "unknown": 3
+  }
+}
