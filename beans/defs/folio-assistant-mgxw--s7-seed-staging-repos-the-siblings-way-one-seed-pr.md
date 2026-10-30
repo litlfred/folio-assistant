@@ -35,3 +35,5 @@ Re-measured: unchanged. Only box left is `w1gy` (fresh-clone QA); closes with it
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
 
 Re-measured: unchanged. Only box left is `w1gy` (fresh-clone QA); closes with it.
+
+_2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".

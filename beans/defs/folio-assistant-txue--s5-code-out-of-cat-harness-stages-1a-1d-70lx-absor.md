@@ -35,3 +35,5 @@ _2026-10-15T16:49Z_ — Block lifted: `a4of` is completed (PR #2317 merged 2026-
 _2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant store (commit 0b8d249), where this edge was lifted on 2026-10-15; lifted here too (Owner ruling 2026-10-16, item 9). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-30T18:45:00Z_ — vj2p completed; 8lcl landed apart from its generated-JSON-Schema box; y9r6 box 1 met (0 code files under cat-harness). Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
+
+_2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".

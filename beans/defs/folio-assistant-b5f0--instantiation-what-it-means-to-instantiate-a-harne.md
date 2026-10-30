@@ -579,3 +579,5 @@ Where: (three-way hunk)
 
 cat-harness-tools#687, cat-harness#501 and bootstrap#29 merged 2026-10-29. The unticked boxes (7u3g, folio:bean on initialize-harness.bpmn, derived vs dynamic, slot, bootstrap's own config) remain, so the bean stays open. (Lane B drain thread.)
 ```
+
+_2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".
