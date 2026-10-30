@@ -84,6 +84,12 @@ on:
       # gates — the wildcard makes the preview available while that is
       # diagnosed.
       - '.github/workflows/feature-staging.yml'
+      # The Liquid check this run now calls (`liquid-undefined` below), and
+      # the one committed tree the Docs site renders that the list above did
+      # not name: without them a PR changing either is checked only after it
+      # merges, on main (owner, 2026-10-23: green PR must mean green main).
+      - '.github/workflows/liquid-undefined.yml'
+      - 'uploads/**'
   # The MERGE QUEUE — present so this workflow REPORTS in a `merge_group` run,
   # not so it stages one. A required check that never reports on a
   # `merge_group` event leaves every queued PR pending forever, which is the
@@ -249,6 +255,10 @@ jobs:
     # from the last healthy runs, 2026-10-07: ~25 min for the whole job, of
     # which 11-15 min is "Build Jekyll site" (bounded on its own below).
     timeout-minutes: 90
+    # Read by `liquid-undefined` below: whether the Jekyll source was handed
+    # off, i.e. whether there is a render to check.
+    outputs:
+      handed_off: ${{ steps.handed_off.outputs.handed_off }}
     # NO shared `gh-pages-push` group. This job keeps only the per-branch
     # workflow-level group above, plus the retry on its push.
     #
@@ -319,6 +329,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the IG artefact indexes (fhir-harness#124)
+        # Each IG instance's fhir-artifact-index/ (index, menu, releases),
+        # written from the IG's cached AST and its sushi-config.yaml by
+        # `ig-index:build` (fhir-harness), before any page step reads it.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
 
       - name: Generate the mounted SMART IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS of
@@ -861,6 +879,11 @@ jobs:
           name: jekyll-source
           path: ./_docs
           retention-days: 3
+      # Runs whenever the hand-off ran (it is continue-on-error), so a failed
+      # upload still reaches the check, which fails it as NOT CHECKED.
+      - name: Record that the source was handed off
+        id: handed_off
+        run: echo "handed_off=true" >> "$GITHUB_OUTPUT"
 
       # Jekyll 4, with the gems in .github/pages-jekyll/Gemfile (owner,
       # 2026-10-15: "jekyll 4 a"). It replaces actions/jekyll-build-pages
@@ -1324,10 +1347,15 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}.jsonld"
+          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
+          cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
+          # The host's document sits under its own directory, like every layer's
+          # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
+          # and its `.json` alias forwards with it.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # EVERY OTHER declared instance's graph, one document each — bean
@@ -1463,7 +1491,8 @@ jobs:
           # the glossary would serve a scheme IRI that 404s on every concept --
           # `3jhq` again, one document over. `--base-url` so the preview's
           # copies point at the preview rather than at production.
-          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
@@ -1476,7 +1505,7 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
@@ -2003,6 +2032,38 @@ jobs:
   # is a stronger statement about the preview than a label would be. What the
   # label still guards is the case where nobody decided anything — a PR closed
   # without merging.
+  # ── Undefined Liquid variables, judged on THIS run ─────────────
+  # Owner, 2026-10-23: a green PR must mean a green main. The Liquid check
+  # used to run only as a `workflow_run` of this workflow, which GitHub
+  # attaches to the default branch, so a PR's render was judged after it
+  # could still be stopped. Here it is a job of the PR's own run, so a red
+  # check makes Feature Staging red, and merge-guard's check 5 refuses a
+  # finished-red Feature Staging run. The check itself is unchanged: it is
+  # `liquid-undefined.yml`, called, building the handed-off source a second
+  # time with the plugin and throwing the output away, so the render and
+  # its deploy are untouched (bean 8pyz: "CI is in CI not part of render").
+  #
+  # `always()` because a `stage` that failed AFTER the hand-off still
+  # rendered a source worth checking; one that never reached it has nothing
+  # to check, and its own failure is already red on this run.
+  #
+  # Cost, measured on the `workflow_run` runs of 2026-10-22: ~1.5-3 min of
+  # one runner (Ruby with the bundler cache, then a Jekyll build of ~76 s),
+  # after `stage`.
+  liquid-undefined:
+    # bpmn-node: Task_Build
+    # A second build of what Task_Build built, judged and thrown away; the
+    # diagram (a cat-harness file) draws no separate node for it.
+    name: Liquid undefined-variable check
+    needs: stage
+    if: always() && needs.stage.outputs.handed_off == 'true'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/liquid-undefined.yml
+    with:
+      head_sha: ${{ github.sha }}
+
   cleanup:
     # bpmn-node: Start_Closed
     if: github.event.action == 'closed'
