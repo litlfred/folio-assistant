@@ -33,3 +33,4 @@ Repo: smart-trust-phw. Depends on: PCF2.
   - `processesFrom()` (`smart-base/scripts/dak-swimlanes.ts`) and `markdownTable()` (`smart-base/scripts/l1-scenario-vocabulary.ts`) parse all 3 processes (`PHW.A`, `PHW.B`, `PHW.C`) and their figures (`PHW.A.svg`, `PHW.B.svg`, `PHW.C.svg`) from `input/pagecontent/business-processes.md`.
   - `bun run smart-base/scripts/dak-pdf.ts . -o /tmp/fix-pcf24/test-phw-dak.html --html-only` → 54 sections rendered with 0 BPMN omissions (`exit 0`).
 - 2026-10-30 ~17:57Z: [smart-trust-phw#5](https://github.com/litlfred/smart-trust-phw/pull/5) merged as 9165534 (merge window to ~19:38Z).
+- Correction ~18:36Z: #5 merged into #4's feature branch, not main. Re-landed on main as [smart-trust-phw#6](https://github.com/litlfred/smart-trust-phw/pull/6), squash 1ae05a8.

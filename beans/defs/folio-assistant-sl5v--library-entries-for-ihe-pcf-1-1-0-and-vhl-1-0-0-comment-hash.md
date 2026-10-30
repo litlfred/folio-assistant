@@ -33,3 +33,4 @@ Repo: smart-trust-phw `library/`. Depends on: PCF1.
   - `bun run folio-assistant-core/scripts/check-catalogue.ts .` → `✓ every node validates; every metadataRef, libraryId, localPath and parent path resolves` (`exit 0`).
   - `bun run cat-harness-tools/scripts/check-l1-complete.ts library/ihe-iti-pcf-1-1-0 library/ihe-iti-vhl-1-0-0-comment` → all 14 L1 completeness checks pass for both entries (`exit 0`).
 - 2026-10-30 ~17:57Z: [smart-trust-phw#5](https://github.com/litlfred/smart-trust-phw/pull/5) merged as 9165534 (merge window to ~19:38Z).
+- Correction ~18:36Z: #5 merged into #4's feature branch, not main. Re-landed on main as [smart-trust-phw#6](https://github.com/litlfred/smart-trust-phw/pull/6), squash 1ae05a8.

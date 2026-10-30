@@ -2,7 +2,7 @@
 # folio-assistant-nr5p
 $schema: bean/1.0.0
 title: 'Declare smart-trust-phw as a harness instance and mount it (PCF1)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T15:46:00Z
@@ -28,3 +28,4 @@ Repo: litlfred/smart-trust-phw, folio-assistant. Depends on: —.
   - `bun run cat smart-trust-phw:pages` renders 372 IG pages under `smart-trust-phw/docs/`, and `bun run cat smart-base:document-kinds` writes `smart-trust-phw/document-kinds/dak.coverage.smart-trust-phw.json`.
 - 2026-10-30 ~17:00Z: [smart-trust-phw#4](https://github.com/litlfred/smart-trust-phw/pull/4) merged as 20682ab, after merging main in to combine AGENTS.md with [#3](https://github.com/litlfred/smart-trust-phw/pull/3). Merge window (owner, 2026-10-30 11:13Z, extended to ~19:38Z). Its red check was the main side, which has no harness until this PR.
 - Still open: [folio-assistant#2761](https://github.com/litlfred/folio-assistant/pull/2761) pins phw at 9d78dac; it must re-pin to 20682ab (phw main). Re-pin handed to the "CI, render and merge speed" thread.
+- [folio-assistant#2761](https://github.com/litlfred/folio-assistant/pull/2761) merged (b5435c4), pinning phw 20682ab. phw main is now 1ae05a8 (PCF2/PCF4); the CI thread re-pins it in the next wave.
