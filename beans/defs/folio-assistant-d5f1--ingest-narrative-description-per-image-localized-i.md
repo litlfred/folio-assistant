@@ -2,11 +2,11 @@
 # folio-assistant-d5f1
 $schema: bean/1.0.0
 title: 'INGEST: narrative description per image, localized, including images extracted from PDFs'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-30T11:22:00Z
+updated_at: 2026-10-30T12:05:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -388,3 +388,13 @@ _2026-10-30T11:10:00Z_ — Merge sweep: batches J–T in `litlfred/cat-harness` 
 _2026-10-30T11:13:00Z_ — Batch AF opened as [`litlfred/smart-base#189`](https://github.com/litlfred/smart-base/pull/189) (`c29a593`, stacked on `#188` `25b2f13`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the next 34 English-only images (images 35–68 of 102: `img-p041-2` through `img-p081-1` + 34 figure blocks) in `9789241509510-eng` in `smart-base/library/`. Remaining in `smart-base/library/` (37 across 3 entries): `9789241549912-eng` (2), `9789241549912-webannexes-eng` (1), `9789241509510-eng` (34).
 
 _2026-10-30T11:22:00Z_ — Batch AG opened as [`litlfred/smart-base#190`](https://github.com/litlfred/smart-base/pull/190) (`cdda430`, stacked on `#189` `c29a593`): `fr`/`es`/`ar`/`ru`/`zh` draft figure narratives for the final 37 English-only images (and 34 figure blocks) in `smart-base/library/`: the remaining 34 images (images 69–102 of 102: `img-p082-1` through `img-p106-33` + 34 figure blocks; 1 `page-scan` entry `img-p004-1` untouched) in `9789241509510-eng`, all 2 images (`img-p001-1`, `img-p172-1`) in `9789241549912-eng`, and the 1 image (`img-p024-1`) in `9789241549912-webannexes-eng`. Across merged PRs (`cat-harness#622`–`#654`, `folio-assistant-sci#98`–`#100`, `who-iris#86`, `smart-immunizations#82`–`#84`, `smart-base#174`, `#178`, `#180`, `#182`) and open PRs (`smart-base#188`, `#189`, `#190`), `smart-base/library/` and all declared libraries across the workspace now have `0` remaining English-only figures.
+
+## 2026-10-30T12:05Z — completed: every describable image has all six languages, and the gate now checks it
+
+Measured after merging smart-base#188, #189 and #190 (batches AE–AG): across every library I could read at main (cat-harness, smart-base, folio-assistant-core, fhir-harness, smart-immunizations, smart-ra, who-iris, folio-assistant-sci), there are 1011 describable images and 0 without a narrative. 31 were still English-only. Batch AG's note said "0 remaining English-only figures across the workspace", but **smart-ra's own copy of `who-dpi-h-reference-architecture-draft-v1`** has its own English narratives, which differ from smart-base's copy, so batches AB/AC never reached it.
+
+- [`litlfred/smart-ra#100`](https://github.com/litlfred/smart-ra/pull/100) (merged, `cdb1e9e`): adds fr/es/ar/ru/zh drafts for those 31 images and their 29 figure blocks. The drafts are by claude-opus-5-5, session https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS. The narratives first moved to the list form with `narratives-migrate-lang --apply`. Re-measured afterwards: 1011 describable, 0 missing a locale.
+- [`litlfred/cat-harness-tools#864`](https://github.com/litlfred/cat-harness-tools/pull/864) (merged, `8262eba`): `check:l1-complete` image-descriptions now checks for a narrative in **every configured language** (the instance's `translation.supportedLocales`, else the six UN languages). Before, it accepted any narrative, which is why the 31 were invisible. It stays `QA_ONLY`.
+- [`litlfred/folio-assistant#2726`](https://github.com/litlfred/folio-assistant/pull/2726) (merged): re-pins smart-base to 040f197 and cat-harness-tools to 8262eba together. The real-corpus L1 test needs both.
+
+The Done-when is met: each image has a description per configured language, each stamped with its author, and the PDF-extraction path produces them. Every non-English entry is still `draft`. Confirming them is a person's job in `bun run cat narratives`; that is not part of this bean's Done-when.
