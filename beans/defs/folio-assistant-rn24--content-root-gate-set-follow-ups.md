@@ -2,11 +2,11 @@
 # folio-assistant-rn24
 $schema: bean/1.0.0
 title: 'GATES: content-root gate set follow-ups (smart-ra re-pin, drop the PREREQUISITE_FILES skip)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T12:45:00Z
-updated_at: 2026-10-30T13:55:00Z
+updated_at: 2026-10-30T18:30:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -27,3 +27,5 @@ Opened on the owner's card "A. Apply all", 2026-10-30 12:39Z (thread "Finish lef
     3. Added `["bun", "run", "cat", "glossary:page"]` to `WORKING_COPY_STEPS` and updated `workingCopyUnbuildable` in `scripts/qa-working-copy.ts` to accept content roots carrying `index.config.json`, so `ensureWorkingCopy` builds the glossary pages when `skill:register` is skipped as `readsState`.
     4. Updated `snapshot()` in `scripts/publish-check.ts` to skip top-level `BUILD_OUTPUT_DIRS` (`_kg`, `build`, `_site`, `dist`) when `repoRoot` itself is in `roots` (while keeping `bootstrap/_kg/`), preventing `_kg/cat-harness/cat-harness.jsonld` regenerated during `qa:refresh` from being flagged as a moved committed file during `uml:overview:check`.
     5. Verified cold-start `bun run cat uml:overview:check` and `bun run cat readme:subgraphs:check` both exit 0 in `smart-ra`.
+
+_2026-10-30T18:30:00Z_ — `litlfred/cat-harness-tools#897` merged (`a3ed72d`) after main was merged into the branch (`bf34ee0`; import conflicts resolved to the in-repo `../schemas/...` paths from 8lcl). Both boxes are done, so this bean is completed and `cat-harness-tools#281` closes. Lane F thread (https://claude.ai/code/session_01Qmmkt9AsHEPn8ghL33PKJp).
