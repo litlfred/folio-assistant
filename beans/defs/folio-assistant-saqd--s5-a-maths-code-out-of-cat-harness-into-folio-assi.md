@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-26T13:20:00Z
+updated_at: 2026-10-30T13:01:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -29,13 +29,8 @@ _2026-10-24T10:25Z_ — Group 1 up: 13 pipeline leaves (no harness importers) mo
 
 _2026-10-26T13:20:00Z_ — Progress update: Group 1 (`litlfred/cat-harness-tools#732` @ `2026-10-24T11:38:42Z` and `litlfred/folio-assistant-sci#76` @ `2026-10-24T13:18:00Z` — 13 maths pipeline leaves) has merged on `main`. Later groups tracked in `litlfred/folio-assistant-sci#75`.
 
-
-_2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
-
-## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
-
-Re-measured by file name across cat-harness, cat-harness-tools, core and sci: of 73 rows, 49 MOVE and all 10 AMBIGUOUS are still in the harness layers; 7 are in their target, 7 are found nowhere (renamed or deleted). Still the 39-module sci cluster `rfev` describes; not started.
-
-_2026-10-24T10:10Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e) after agy released it at 09:06Z. Moves only, in groups, no maths content changed; anything touching proofs or qou goes to the owner first.
-
-_2026-10-24T10:25Z_ — Group 1 up: 13 pipeline leaves (no harness importers) move tools → sci, folio-assistant-sci#76 then cat-harness-tools#732; issue folio-assistant-sci#75 lists the later groups. Most rows are now in `cat-harness-tools/pipeline/` (moved there by 70lx), not `cat-harness/content/pipeline/`.
+_2026-10-30T13:01:00Z_ — Re-measured the 49 MOVE + 10 AMBIGUOUS rows targeting `folio-assistant-sci`:
+- **14 MOVE rows merged on `main`:** 13 pipeline leaves from Group 1 (`litlfred/cat-harness-tools#732` + `litlfred/folio-assistant-sci#76`) plus `scripts/reseed-lean-cache.sh` (`#2598`).
+- **1 MOVE row (`pipeline/_folio-chapter-profiles.qou.ts`) in open PRs:** `litlfred/folio-assistant-sci#114` + `litlfred/cat-harness-tools#858` (removes the quarantined `qou` chapter profile defaults and their slot).
+- **Group 2 up (`litlfred/folio-assistant-sci#116` + `litlfred/cat-harness-tools#875`):** moves the remaining 5 zero-importer pipeline MOVE rows (`pipeline/conjectural-propagation-audit.ts`, `pipeline/generate-lean-stubs.ts`, `pipeline/lean-atlas-ingest.ts`, `pipeline/proof-narrative-lean-equiv-sweep.ts`, `pipeline/refactor-strategies/` + `pipeline/refactor-strategy.ts`, and their tests `narrative-lean-equiv.test.ts` and `refactor-strategy.test.ts`) from `cat-harness-tools/pipeline/` to `folio-assistant-sci/pipeline/`.
+- **Remaining after Group 2 + `#114`/`#858`:** 29 MOVE rows (17 in `cat-harness-tools/scripts/`, 12 in `cat-harness-tools/pipeline/` including `qa-checkers-{render,triviality,uses,vacuity,extended}.ts`, `lean-formal-ref.ts`, `lean-signature.ts`, `latex-preflight.ts`, `language-trap-audit.ts`, `build.ts`, `validate.ts`, `content-graph-analysis.py`) and 10 AMBIGUOUS rows.
