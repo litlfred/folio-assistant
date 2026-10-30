@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-10-30T12:05:00Z
+updated_at: 2026-10-30T12:06:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -216,3 +216,5 @@ _2026-10-30T12:05:00Z_ — **cat-harness was not drained.** Batch 37's note said
 Both PR titles say "batch 50/51", which collides with the smart-base numbering; read them as cat-harness batches. `drafted_by.model` is `claude-opus-5-5`, session https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS. **Left in cat-harness:** `arxiv-0909.4061v2` (59) and `arxiv-2607.20636v1` (141).
 
 Also merged in this session: smart-base#187, #191 and #193 (batches 47–49).
+
+_2026-10-30T12:06:00Z_ — batch 62 opened as `litlfred/smart-immunizations#86` (`8af3ad05`): 56 English draft summaries across `smart-immunizations/library/facilityanalysisguide-immunization` (all 46 non-empty prose blocks: `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-056`, covering WHO Module 6 *Analysis and Use of Health Facility Data: Guidance for immunization programme managers*), `smart-immunizations/library/immunization-summary-table-1` (all 3 prose blocks: `prose-sec-front-matter`, `prose-sec-000`, and `prose-sec-001`, covering WHO *Table 1: Summary of WHO Position Papers – Recommendations for Routine Immunization*), `smart-immunizations/library/immunization-summary-table-2` (all 4 prose blocks: `prose-sec-front-matter` and `prose-sec-000` through `prose-sec-002`, covering WHO *Table 2: Summary of WHO Position Papers – Recommended Routine Immunizations for Children*), `smart-immunizations/library/immunization-summary-table-3` (all 2 prose blocks: `prose-sec-front-matter` and `prose-sec-000`, covering WHO *Table 3: Recommendations for Interrupted or Delayed Routine Immunization*), and `smart-immunizations/library/immunization-summary-table-4` (all 1 prose block: `prose-sec-000`, covering WHO *Table 4: Summary of WHO Position Papers – Immunization of Health Care Workers*); `drafted_by.model` is `not-disclosed` with session `conversation://6022f050-c80f-45ba-847c-89e3d69bb8c6`. Backlog in `smart-immunizations/library/` 104 → 48 of 152 non-empty prose blocks when combined with `#85` (152 → 96 against `main` alone; 104 drafts await human confirmation across `#85` and `#86`; 0 blocks remain in `facilityanalysisguide-immunization` and `immunization-summary-table-1` through `4`; 48 blocks remain across `monitoring-metrics-related-to-the-global-covid-19-vaccinatio` (7) and `who-2019-ncov-digital-certificates-vaccination-20211-eng` (41)).
