@@ -2,11 +2,11 @@
 # folio-assistant-jbvi
 $schema: bean/1.0.0
 title: 'LIBRARY NODES: outside libraries the platform uses become graph nodes'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-30T13:50:00Z
+updated_at: 2026-10-30T17:50:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -60,6 +60,8 @@ _2026-10-30T12:15Z_ — Follow-ups completed/opened:
 - Only `bootstrap-tools#44` (blocked on owner decision for the `ujiv` layering choice a/b/c) and merging the two new PRs remain.
 
 _2026-10-30T13:50Z_ — bootstrap-tools#44 is DONE: cat-harness#725 (80126dc, software-library 1.2.0 schema for held nodes) and cat-harness-tools#877 (f3bf0cf) merged; folio-assistant re-pinned both together in fa#2743 (482a353). Any later bootstrap-tools re-pin in cat-harness-tools must run `libraries:derive`. Still open: folio-assistant-core#231 and who-iris#92 (bun.lock + libraries/), not yet merged. (CI speed thread, https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5)
+
+_2026-10-30T17:50:00Z_ — Completed. The last two PRs merged: [litlfred/folio-assistant-core#231](https://github.com/litlfred/folio-assistant-core/pull/231) and [litlfred/who-iris#92](https://github.com/litlfred/who-iris/pull/92) (16:39Z). bootstrap-tools#44 was already done (13:50Z note). Every layer now has `libraries/`, and `libraries:check` runs in code-quality-gates. The unticked boxes in the copy below are the proposal steps, met on 2026-10-24 (owner chose D). (Thread "Fix publish failure and orphan beans", https://claude.ai/code/session_01Qmmkt5bHqcmhAXH3s3z4s5)
 
 ## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
 
