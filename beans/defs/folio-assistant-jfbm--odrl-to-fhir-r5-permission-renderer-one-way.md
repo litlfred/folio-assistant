@@ -2,11 +2,11 @@
 # folio-assistant-jfbm
 $schema: bean/1.0.0
 title: 'One-way renderer: ODRL Agreement to FHIR R5 Permission (output only)'
-status: todo
+status: in-progress
 type: task
 priority: low
 created_at: 2026-10-30T19:24:00Z
-updated_at: 2026-10-30T19:24:00Z
+updated_at: 2026-10-30T20:16:15Z
 parent: folio-assistant-negd
 ---
 
