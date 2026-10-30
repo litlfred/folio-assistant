@@ -5,7 +5,7 @@ title: 'FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, material
 status: in-progress
 type: task
 created_at: 2026-09-23T17:59:01Z
-updated_at: 2026-10-30T11:10:00Z
+updated_at: 2026-10-30T17:13:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -28,7 +28,7 @@ They are declarations and paths that only mean something once the repo is split 
 
 - [x] R24: a second harness instance renders the folio pull-down with no code of its own *(who-iris: met via `folio-mount.ts`. FHIR IG pages: fhir-harness#155, merged 2026-10-24 as 49da9cc; live on `gh-pages` after `folio-assistant#2681` re-pinned `fhir-harness`: `smart-base/index.html` on `gh-pages` carries `data-fa-folio-mount`.)*
 - [x] R27: a materialised asset is written under `folio/`, and the glass reads it from there *(met as the owner ruled on 2026-09-21: the folio is the reader's REPOSITORY, of which `library/` and `uploads/` are declared parts. Bytes under `folio/` itself were rejected, because `corpus-grep` reads `library/` only and `folio/` is renderable. See `folio-board-requirements.md` §"R27 and question 1". Gated by `check-catalogue.ts`. Ticked 2026-10-24.)*
-- [ ] R28: creating or linking a document writes it under `folio/` *(creating: done, cat-harness-tools#711 merged as b7b21e5, `bun run cat folio:create`. Linking: an agent can already record a link as a referenced `library/` node through `ingest-document.ts`. Still missing: the reader's "link a document" action on the glass.)*
+- [x] R28: creating or linking a document writes it under `folio/` *(creating: `cat-harness-tools#711` merged as `b7b21e5`, extended in `cat-harness-tools#945` so `readDocumentKinds` / `loadedDocumentKinds` resolve kinds across mounted layers and dependency chains; linking: `bun run cat folio:create --link <url> --slug <slug> --title <title>` writes `<library>/<slug>/referenced.json` + `manifest.jsonld` in `cat-harness-tools#945`, and the reader's "Link a document" action on the glass (`[data-fa-glass-action="link-document"]`) is added in `cat-harness#765`.)*
 - [ ] R29: a todo or sticky can carry a reference into another instance's KG, and the reference resolves
 
 ## 2026-10-24 — re-measured (separation drain, session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e)
@@ -61,14 +61,3 @@ So, for R28:
 - A document a reader **creates** goes in `folio/`. It may be of **any kind that some knowledge graph in the instance's dependency chain describes**, including the mounted layers. So the set of creatable kinds is whatever the loaded graphs declare, not a list fixed here.
 - A document a reader **links to** becomes a `referenced` node in `library/` (catalogue by reference, through `ingest-document.ts`'s referenced rung), as option A said.
 
-## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
-
-These lines differed from the kept copy and could not be merged automatically (cat-harness-tools#459). They are kept here so nothing is lost.
-
-Where: (three-way hunk)
-
-```text
-- [ ] R24: a second harness instance renders the folio pull-down with no code of its own *(who-iris: met via `folio-mount.ts`. FHIR IG pages: fhir-harness#155, merged 2026-10-24 as 49da9cc; live once folio-assistant re-pins fhir-harness and republishes. Tick when `smart-base/index.html` on gh-pages carries `data-fa-folio-mount`.)*
-- [x] R27: a materialised asset is written under `folio/`, and the glass reads it from there *(met as the owner ruled on 2026-09-21: the folio is the reader's REPOSITORY, of which `library/` and `uploads/` are declared parts. Bytes under `folio/` itself were rejected, because `corpus-grep` reads `library/` only and `folio/` is renderable. See `folio-board-requirements.md` §"R27 and question 1". Gated by `check-catalogue.ts`. Ticked 2026-10-24.)*
-- [ ] R28: creating or linking a document writes it under `folio/` *(creating: done, cat-harness-tools#711 merged as b7b21e5, `bun run cat folio:create`. Linking: an agent can already record a link as a referenced `library/` node through `ingest-document.ts`. Still missing: the reader's "link a document" action on the glass.)*
-```
