@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-29T08:00:00Z
+updated_at: 2026-10-30T19:55:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -62,3 +62,7 @@ Still to show: the first stale-cache refresh on a runner, and the first release 
 - 2026-10-24 11:55Z: claimed by the "Publisher AST" thread; fhir-harness#161 opened.
 
 - 2026-10-24 12:40Z: fhir-harness#161 merged (`ae07c25`), inside the owner's merge window. CI is green after `fb77e45` regenerated the stale ig-ast schemas. Open: the first stale-cache refresh on a runner, once an IG repins fhir-harness.
+
+_2026-10-30T19:55:00Z_: **Stale-cache refresh seen on a runner.** litlfred/smart-immunizations-uganda "IG AST refresh" run 41046593760 (push, 11:14Z, `6218808`, no pre-export): the restored cache was judged `stale-inputs` (sourceRevision and inputDigest differ), so the workflow ran `IncrementalBuildCli` over it. Its own plan chose a full build (`::notice::AST rebuilt by IncrementalBuildCli: full`), the AST passed `validity`, `kind=full` was set as the job output, and the cache branch `cat/fhir-harness/fhir-ast/smart.immunizations.uganda` was re-seeded (16 resources, 79 edges). So the refresh path and the build-kind stamp work end to end.
+
+**Still not exercised: the release guard.** No litlfred release path reads the cached AST: smart-base `release.yml` hands off to WHO's smart-html release, a full Publisher build. `ig-ast.ts build-kind --require-full` therefore has nothing to judge until a litlfred IG cuts its own release from an AST. Owner asked whether to close on this evidence (thread "Finish IG and DAK beans"). Session https://claude.ai/code/session_01Qmmkt9C9fukFK42vgZRrKc.

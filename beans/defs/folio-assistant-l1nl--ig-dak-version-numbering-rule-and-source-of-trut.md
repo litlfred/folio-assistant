@@ -2,11 +2,11 @@
 # folio-assistant-l1nl
 $schema: bean/1.0.0
 title: 'IG/DAK version-numbering rule and source-of-truth rule (from #222)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T12:41:00Z
-updated_at: 2026-10-30T13:35:00Z
+updated_at: 2026-10-30T19:55:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -30,3 +30,5 @@ Leftovers of litlfred/folio-assistant#222 ("current state IG publisher pipeline"
   - Adds `## Source of truth versus generated artefacts in a DAK repository` and `## Version numbering: DAK SEMVER and how an IG's version relates to its DAK's` to `smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md`, linking `litlfred/folio-assistant#222`.
   - Documents the cross-layer authority chain (`L1 → L2 → L3 → compiled AST / rendered site`) and the DAK pre/post-processing source-of-truth table (`dak_index.py`, `generate_dak_from_sushi.py`, `update_sushi_config.py`, `dmn_questionnaire_generator.py`, `transform_dmn.py`, `inject_translations.py`, `qa-checkers-dak.ts` `isGeneratedArtefact`, and `ig-site-sidecars.ts`).
   - Defines DAK `major`/`minor`/`patch` triggers across the nine L2 DAK component types (`DAK.fsh` / `DakDeclarationSchema`) and the IG↔DAK version relationship across co-hosted DAK+IG repositories (lockstep `MAJOR.MINOR.PATCH` and `status`, requiring simultaneous updates to `sushi-config.yaml` and `index.config.json` `contentTypes.dak` because `generate_dak_from_sushi.py` skips existing `contentTypes.dak` sections), standalone L2 DAK vs downstream L3 IG repositories, and adapted/country DAKs/IGs.
+
+_2026-10-30T19:55:00Z_: **Done.** Both PRs merged in the owner's merge window (19:21Z, "merge window + 3hrs"): litlfred/fhir-harness#199 (`89df0f7`) and litlfred/smart-base#216 (`43d8ec6`). Both Done-when boxes were already ticked. Thread "Finish IG and DAK beans", session https://claude.ai/code/session_01Qmmkt9C9fukFK42vgZRrKc.
