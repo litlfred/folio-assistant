@@ -1,0 +1,38 @@
+# Post-merge QA of main (owner, 2026-10-30, approved "Both": "each merge to
+# main gets a full QA run that files an issue when it is red").
+#
+# The gates are not run again here. `code-quality-gates.yml` already runs the
+# full gate set on every push to main, and its concurrency cancels an older
+# main's run in favour of the newest. When that push run completes, this
+# hands its conclusion to the harness's reusable
+# https://github.com/litlfred/cat-harness-tools/blob/main/.github/workflows/layer-main-qa.yml,
+# which keeps ONE issue labelled `main-red` in step with it. When the run is
+# red, it opens the issue or updates the open one with the failing jobs and
+# steps and the commits since the last green main (that workflow's newest
+# successful push run). When the run is green, it closes the issue. A
+# cancelled run changes nothing.
+#
+# Like `post-merge-regen.yml`, this reacts to main and never pushes to it. It
+# repairs nothing: it reports.
+name: Post-merge QA of main
+
+on:
+  workflow_run:
+    workflows: ["Code-quality gates"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: write
+  actions: read
+
+jobs:
+  main-qa:
+    if: >-
+      github.event.workflow_run.event == 'push' &&
+      contains(fromJSON('["success","failure","timed_out"]'), github.event.workflow_run.conclusion)
+    uses: litlfred/cat-harness-tools/.github/workflows/layer-main-qa.yml@main
+    with:
+      gate-run-id: ${{ format('{0}', github.event.workflow_run.id) }}
+      sha: ${{ github.event.workflow_run.head_sha }}
