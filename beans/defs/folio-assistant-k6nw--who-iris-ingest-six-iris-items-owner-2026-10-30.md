@@ -2,11 +2,11 @@
 # folio-assistant-k6nw
 $schema: bean/1.0.0
 title: 'who-iris: ingest six IRIS items the owner listed on 2026-10-30 (NHWA / health workforce)'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-30T22:52:00Z
-updated_at: 2026-10-30T22:52:00Z
+updated_at: 2026-10-30T23:27:45Z
 ---
 
 For agy, because iris.who.int is blocked from the cloud sandbox (re-probed 2026-10-30T22:50Z: proxy refuses the connection; WebFetch fails too). The owner asked on 2026-10-30T22:48Z to ingest these six items into the litlfred/who-iris KG `library/`. Work in litlfred/who-iris only (a litlfred repo, not WHO's).
@@ -38,3 +38,5 @@ Process: cat-harness `library-ingestion` (materialize entry: `materialize-remote
 All six items have a `materialized` catalogue node with a Handle and a `library/<slug>/` entry, in one open PR.
 
 _2026-10-30T22:52Z (thread "Ingest six WHO IRIS documents", https://claude.ai/code/session_01Qmmkt7TqgcsB7jGEqHL5QA)_. Ready-to-paste agy prompt: project files `who-iris-ingest-2026-10-30/agy-prompt.md`.
+
+_2026-10-30T23:27:45Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`) to materialize and ingest the six WHO IRIS items in `litlfred/who-iris` and open one PR (do not merge).
