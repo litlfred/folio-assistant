@@ -2,16 +2,14 @@
 # folio-assistant-vj2p
 $schema: bean/1.0.0
 title: 'Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-26T13:20:00Z
+updated_at: 2026-10-30T17:36:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-y9r6
 ---
 
 Stage 1d of the split plan: `cat-harness` is self-contained.
@@ -25,9 +23,9 @@ Waits on placement PR9 too: the harness docs pages about moved processes are upw
 Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0–6, decisions D1–D6, "Owner rulings, 2026-10-01") and `placement-proposal.md` (PR0–PR9, §6 "Owner rulings, 2026-09-30").
 
 ## Done when
-- [ ] a link audit over `cat-harness/` alone reports 0 links leaving the directory, except declared cross-repository URLs
-- [ ] no `uml/overview/<higher instance>` or `docs/cat-harness/*/<higher instance>` path remains under `cat-harness/`; each instance's generated outputs live in its own directory and `uml:overview:check` is green
-- [ ] `readme:audit`, `check:stale-paths`, `kg:audit:check`, `docs:harness:check` green
+- [x] a link audit over `cat-harness/` alone reports 0 links leaving the directory, except declared cross-repository URLs (`readme-links.ts --dir cat-harness`: 10 links checked, 10 resolved, 0 dead; `check-reference-direction.ts --findings` with `litlfred/cat-harness#763` @ `981ef534` and `litlfred/cat-harness-tools#938` @ `75447f81`: 0 wrong-direction occurrences in 0 files)
+- [x] no `uml/overview/<higher instance>` or `docs/cat-harness/*/<higher instance>` path remains under `cat-harness/`; each instance's generated outputs live in its own directory and `uml:overview:check` is green (`dd0dfe2b` B1 removed all pin- and state-dependent pages from `cat-harness/`; `git ls-files "uml/overview/*" "docs/cat-harness/*" "docs/uml/overview/*"` in `litlfred/cat-harness` returns 0 files)
+- [x] `readme:audit`, `check:stale-paths`, `kg:audit:check`, `docs:harness:check` green (`readme:audit` 0 dead links; `check:stale-paths` 0 new findings; `sync-docs-harness.ts --check` up to date; `kg:audit:check` and `remote-packages-honest-docs.test.ts` green)
 
 ## State 2026-10-09 — still open after the cutover
 measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness mounted at bd72c68, cat-harness-tools at 3ce5100):
@@ -37,3 +35,8 @@ measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness
 Remaining: all three boxes, now as PRs to litlfred/cat-harness (generators learn a per-instance output root; the higher instances host their own outputs in their own repositories). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-26T13:20:00Z_ — Block lifted on `folio-assistant-p9bu` (completed `2026-10-24T08:52:36Z`); `folio-assistant-y9r6` remains in `blocked_by`.
+
+_2026-10-30T17:36:00Z_ — Verified all 3 Done-when boxes on `litlfred/cat-harness` + `litlfred/cat-harness-tools` and completed:
+- **Box 1 (Link audit & reference direction):** `bun run cat-harness-tools/pipeline/readme-links.ts --dir cat-harness` reports `10 link(s) checked, 10 resolved, 0 dead`. Merged `origin/main` (`adebf473`, PR #755 `signing.md`) into `litlfred/cat-harness#763` (`981ef534`) and replaced the two newly introduced upward layer references in `skills/sdlc/sdlc-core/signing.md` (`cat-harness-tools` -> `the tools layer`, `fhir-harness` -> `the FHIR layer`); `check-reference-direction.ts --findings` reports **0 wrong-direction occurrences in 0 files**.
+- **Box 2 (No higher-instance hosted outputs under `cat-harness/`):** Commit `dd0dfe2b` (*B1: stop committing pin- and state-dependent pages; declare them built at publish*) removed all `uml/overview/*`, `docs/uml/overview/*`, and `docs/cat-harness/*` paths from `litlfred/cat-harness` (`git ls-files` over those globs returns 0 paths; only `uml/harness-object-model.puml`, `uml/harness-schemas.puml`, and their 4 SVGs under `docs/assets/img/uml/` remain tracked).
+- **Box 3 (Audits & Blocker 2):** `readme:audit` (0 dead), `check:stale-paths` (0 new findings), and `docs:harness:check` (`sync-docs-harness.ts --check`) exit 0; `remote-packages-honest-docs.test.ts` lives in `cat-harness-tools/scripts/tests/remote-packages-honest-docs.test.ts` and uses `notApplicableAlone` when `fsh-guts` is absent (`1 pass, 5 skip, 0 fail`). Note: `y9r6` (stage 1c, converting `.ts` manifests/tools to JSON) was already noted as orthogonal in the 2026-10-09 state note and removed from `blocked_by`.
