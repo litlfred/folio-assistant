@@ -141,3 +141,21 @@ Measured 2026-10-23, fork main against WHO main: smart-base 773 ahead and 3 behi
 - **Update 14:08.** The owner said "1". Draft PR litlfred/smart-base#123 (issue #122, commit 2d03f4b). With stand-ins (crmi 2.0.0-ballot, sdc 4.0.0-ballot, terminology 7.0.1), SUSHI gives 0 errors, but that is NOT a pass: fhir-harness `ig-publisher-fork` requires exact versions. The PR stays a draft until SUSHI is rerun on the exact versions after 53rv.
 - **Update 14:15.** SUSHI rerun on the exact versions (hl7.terminology 7.3.0, crmi 2.0.0, sdc 4.0.0 from fhir-package-mirror c344c47, SHA512-checked): 0 errors, 17 warnings. smart-base#123 is cleared on SUSHI. Seen: `fhir-cache-seed-npm.ts --mirror <git URL> --mirror-commit c344c47` still reported the 3 as missing; `--mirror <local clone>` found them.
 - **Correction 16:25.** The seeder's "bug" above was my abbreviated `--mirror-commit c344c47`: git cannot fetch a short SHA from a remote, so the mirror was dropped. The full SHA works. litlfred/fhir-harness#134 (issue #133) makes the seeder refuse a short SHA by name.
+
+## 2026-10-30 11:40Z — measured against "Done when", per repository (thread draining aai-programme#40, https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS)
+
+Measured from each fork's default branch and gh-pages through the REST API.
+
+| repo (head) | 1. index.config.json + consent | 2. no push/PR gh-pages writer | 3. harnessed site, agent-published, Pages green | extra |
+|---|---|---|---|---|
+| smart-base (main 4571b1f) | met: 6 remote mounts, each with consent whose ref = the pin; no submodule | met, with the sanctioned `publish-context.yml` (push, writes only the JSON-LD context; bean 63q4) | met: gh-pages `folio-build.json` from 50f373b (2026-10-16); latest Pages run 40042559557 success | `branches/` previews survive (30+ dirs): **met** |
+| smart-base-clinical (main 052a2ec) | met: 7 mounts, consent 2026-10-15 | met (fhirbuild, release only) | **not met**: no gh-pages branch, no `site` key, no `cat/fhir-harness/fhir-ast/*` AST cache | |
+| smart-core (master 01cc729) | met: 7 mounts, consent 2026-10-15 | met (fhirbuild dispatch only) | **not met**: no gh-pages, no AST cache | buildability: see below |
+| smart-hiv (main 1cb92e9) | met: 7 mounts, consent 2026-10-15 | met (all dispatch/release) | met: gh-pages 8c4dcea "folio site, built locally" from 50162f2 (2026-10-15); Pages run 38807117989 success. AST branch `cat/fhir-harness/fhir-ast/smart.who.int.hiv` | site is two weeks behind main |
+| smart-immunizations (main f2f75c9) | met: 7 mounts, consent 2026-10-24/29 | met (`repo_actions.ymlOFF` is not a workflow; harness-pr-checks and ig-ast-refresh write no gh-pages) | met: `folio-build.json` from ff6a29a (2026-10-15); Pages 39814091498 success | |
+| smart-trust (main 89df1be) | met: 7 mounts, consent 2026-10-23 | met (same shape as immunizations) | met: `folio-build.json` from f349127 (2026-10-15); Pages 39814084881 success | |
+| smart-ra (main cacf7de) | met: 7 mounts, consent 2026-10-29 | met (qa-sweep on PR is warn-only, writes no gh-pages) | met: gh-pages 0f74cda "Publish dpi-h-ra 9d9cbbc" (2026-10-26); Pages 40340760641 success | public-comment preview: **not met** — the only agent-built preview (`STAGING/claude-stoic-bohr-w77r7f`, 2026-10-14) carries no `public-comments/` or `changeset.json`; the four previews that do were built by the retired `staging.yml` (github-actions[bot], 2026-10-05..10) |
+
+**smart-core.** Pre-SUSHI: `ig.ini` → `input/core.xml` (`who.fhir.core` 0.2.0, no FSH), template `who.fhir.template#current`. A `#current` package is served only by build.fhir.org (refused here) and the mirror takes exact versions only, so the IG Publisher cannot run it in this environment.
+
+Owner setting still open: the Routine environment allowing clone of the litlfred repos and `bun` (not attempted).
