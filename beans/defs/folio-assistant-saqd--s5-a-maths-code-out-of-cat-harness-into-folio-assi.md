@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-30T17:15:00Z
+updated_at: 2026-10-30T17:09:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -57,3 +57,9 @@ _2026-10-30T16:20:00Z_ — **Group 5 up (`litlfred/folio-assistant-sci#124` + `l
 - **Remaining 19 MOVE rows after Groups 1–5 + `#114`/`#858`:** 2 `cat-harness/tools/` targets (`scripts/gen-content-graph-uml.ts`, `pipeline/content-graph-analysis.py`), 3 `qa-criteria-registry.ts` checker modules (`pipeline/qa-checkers-{render,triviality,vacuity}.ts`), 2 `lean-formal-ref` modules (`pipeline/lean-formal-ref.ts`, `pipeline/lean-signature.ts`), 4 shared pipeline/checker modules (`pipeline/build.ts`, `pipeline/validate.ts`, `pipeline/qa-checkers-extended.ts`, `pipeline/qa-checkers-uses.ts`), 1 shared document+math ingestion script (`scripts/extract-candidates.py`), and 7 `qou`-specific scripts.
 
 _2026-10-30T17:15:00Z_ — Groups 2 to 5 merged, receiver first each time: https://github.com/litlfred/folio-assistant-sci/pull/116 (40a9e91) then https://github.com/litlfred/cat-harness-tools/pull/875 (6e17fdd); https://github.com/litlfred/folio-assistant-sci/pull/118 (21fdb77) then https://github.com/litlfred/cat-harness-tools/pull/886 (bdb5eb5); https://github.com/litlfred/folio-assistant-sci/pull/122 (501a7e3) then https://github.com/litlfred/cat-harness-tools/pull/905 (fdb9cc4); https://github.com/litlfred/folio-assistant-sci/pull/124 (df9f62a) then https://github.com/litlfred/cat-harness-tools/pull/924 (5924937, after merging main in: `refresh-authors-note.ts` had already moved with group 3; ratchets set to the merged counts). Left: the 19 MOVE rows listed above, 7 of them qou-specific (owner first). Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").
+
+_2026-10-30T17:09:00Z_ — **Group 6 up (`litlfred/folio-assistant-sci#128` + `litlfred/cat-harness-tools#942`):**
+- Moves the 3 `qa-criteria-registry.ts` paper checker modules (`pipeline/qa-checkers-render.ts`, `pipeline/qa-checkers-triviality.ts`, `pipeline/qa-checkers-vacuity.ts`) and their unit tests (`scripts/tests/qa-checkers-triviality.test.ts`, `scripts/tests/qa-checkers-vacuity.test.ts`) from `cat-harness-tools` to `folio-assistant-sci`.
+- Registers the 6 criteria (`render-math-mode-envelope`, `proof-not-machine-trivial`, `lean-no-vacuous-instance-data`, `lean-no-definitional-laundering`, `lean-docstring-honesty`, `proof-no-placeholder-stub`) as `folio-qa-checker/v1` nodes in `folio-assistant-sci/qa-checkers/` and marks them `checker_contributed: true` in `cat-harness-tools/pipeline/qa-criteria-registry.ts` (retiring `TRIVIALITY_CHECKER_FILE`).
+- Updates `folio-assistant-sci/pipeline/contribution-nodes.test.ts`, `folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md`, `folio-assistant-sci/qa-checkers/README.md`, and `cat-harness-tools/pipeline/pipeline-plugins.test.ts`.
+- **Merge order:** merge `litlfred/folio-assistant-sci#128` first, then `litlfred/cat-harness-tools#942`.
