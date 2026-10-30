@@ -2,11 +2,11 @@
 # folio-assistant-h11k
 $schema: bean/1.0.0
 title: 'BLOCK TRANSLATION GAPS: math placeholders, inline-markup placeholders, manifest extraction, locale render path'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-30T12:45:00Z
-updated_at: 2026-10-30T12:45:00Z
+updated_at: 2026-10-30T13:23:00Z
 parent: folio-assistant-slw1
 ---
 
