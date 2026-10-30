@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 64,
+      "count": 65,
       "unit": "open beans"
     }
   },
@@ -307,14 +307,14 @@
     {
       "id": "folio-assistant-0om7",
       "title": "IG previews publish outline.json and rendered-impact.json for the review page",
-      "status": "in-progress",
+      "status": "todo",
       "type": "feature",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T13:20:00Z",
-      "updatedAt": "2026-10-24T13:53:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "Found walking #215 on smart-immunizations-uganda#12 (see lx2s). The IG route's review page says \"No outline on this build: the folio's build did not publish outline.json\" and \"This build published no rendered-impact.json, so which rendered pages the change alters is not known\". The folio route publishes both; the IG route (fhir-harness#158) does not yet.\n\n## Done when\n- [ ] an IG preview publishes",
       "file": "beans/defs/folio-assistant-0om7--ig-review-page-outline-and-rendered-impact.md"
     },
@@ -449,14 +449,14 @@
     {
       "id": "folio-assistant-10uc",
       "title": "RENDERED SURFACE: navbar, visualisers, stickies — GOAL 2's stream, moved under GOAL 4 at GOAL 2's sign-off",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:09:11Z",
-      "updatedAt": "2026-10-29T08:10:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "## What this is\n\nStream 2 of 3 in the 2026-09-22 consolidation (see the sibling claims under\n`vuip` and `yg29` for the stall measurement that prompted it). It owns **GOAL 2\n(`p5wm`) — 39 open beans**, the largest single group in the store.\n\nThis is the stream where the artefact a reader judges actually appears: the LHS\nnavbar, the visualisers, the stickies, avatars and themes.\n\n## What this stream",
       "file": "beans/defs/folio-assistant-10uc--stream-23-goal-2-the-rendered-surface-navbar-visua.md"
     },
@@ -844,7 +844,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-30T11:10:00Z",
+      "updatedAt": "2026-10-30T11:41:00Z",
       "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
@@ -2036,6 +2036,20 @@
       "file": "beans/defs/folio-assistant-4dbr--forge-portability-gitlab-and-sovereign-compute-as.md"
     },
     {
+      "id": "folio-assistant-4dj5",
+      "title": "PAPER TEMPLATE WIRING: the sci paper adapter supplies its print preamble to generate-main-tex, and publish.yml uses it (#2117 P2, P5)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T11:55:00Z",
+      "updatedAt": "2026-10-30T11:55:00Z",
+      "preview": "The platform half of [#2117](https://github.com/litlfred/folio-assistant/issues/2117) still open after #2118.\nThe template exists at `folio-assistant-sci/adapters/paper/latex/paper-preamble.tex`,\nbut its README says \"Not yet wired\":\n\n- **P2.** `generate-main-tex.ts` (cat-harness-tools) still defaults `--preamble` to the\n  deleted `cat-harness/latex/preamble.tex`. Pointing it at sci from the core w",
+      "file": "beans/defs/folio-assistant-4dj5--paper-adapter-supplies-print-template-and-publish.md"
+    },
+    {
       "id": "folio-assistant-4dx7",
       "title": "LaTeX in the ✍ suggest editor: math macros, references, environments, validated against the KG",
       "status": "completed",
@@ -2289,7 +2303,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T14:30:00Z",
-      "updatedAt": "2026-10-30T11:10:00Z",
+      "updatedAt": "2026-10-30T11:45:00Z",
       "preview": "## Parent\n\nfolio-assistant-n3h9\n\nRelated: folio-assistant-p7mb (build derived artefacts at publish).\n\nOwner, 2026-10-23: \"fhir-artifact-index/ → shouldn't that be a part of fhir-harness?\" and \"1 and implement\" (plan, then implement). Plan: litlfred/fhir-harness#124. Thread \"fhir-harness IG viewers\".\n\n## Why\n\nsmart-trust and smart-base commit `fhir-artifact-index/` (index, menu, releases; 1.3 to 1.",
       "file": "beans/defs/folio-assistant-4u5d--ig-artifact-index-built-at-publish-by-fhir-harness.md"
     },
@@ -2794,6 +2808,20 @@
       "file": "beans/defs/folio-assistant-603s--landing-the-lhs-navbar-is-one-themed-section-per-i.md"
     },
     {
+      "id": "folio-assistant-607f",
+      "title": "UPSTREAM PIN WATCHDOG: red since 2026-10-20 on an undetermined pin, so #1481 has gone stale",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T11:55:00Z",
+      "updatedAt": "2026-10-30T11:55:00Z",
+      "preview": "`upstream-pins.yml` failed on its 2026-10-20 and 2026-10-27 runs at the step\n\"Refuse to report success on an undetermined pin\". Because of that, issue\n[#1481](https://github.com/litlfred/folio-assistant/issues/1481), which the job edits\nin place, was last updated 2026-10-13 and no longer shows the current state.\n\nLikely cause: a pinned dependency moved during the repo split, so the check can't\nres",
+      "file": "beans/defs/folio-assistant-607f--upstream-pin-watchdog-red-undetermined-pin.md"
+    },
+    {
       "id": "folio-assistant-61ca",
       "title": "B5-fix (#1168): a GitHub workflow names the BPMN it implements; 9 <implements workflow> and <job> flipped",
       "status": "completed",
@@ -2880,14 +2908,14 @@
     {
       "id": "folio-assistant-63q4",
       "title": "Bibliography: Reference KG nodes, a path-limited bibliography viewer (like the glossary), exports in BibTeX / CSL-JSON / RIS / Dublin Core, per asset and per subgraph",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-14T17:45:00Z",
-      "updatedAt": "2026-10-29T07:55:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "## The ask, owner 2026-10-14 (verbatim)\n\n> what is the general bibliography support? look at who-iris - its dublin core recores are a basis for a bibliography - there should be abibliogrpahy viewere that allows view/export in multiple formats of bib items in the folio. those citations be from library/ contents or extracted from a paper reference in the library or fiolo/. you should also be able to",
       "file": "beans/defs/folio-assistant-63q4--bibliography-reference-nodes-viewer-and-exports.md"
     },
@@ -4969,7 +4997,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T08:55:37Z",
-      "updatedAt": "2026-10-24T11:25:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"test/swarm\nmode: may have a stack of models, to queue work on (a cross-model swarm mode).\nshared or indepedent work queues.\"\n\n## What exists\n\n`skills/sdlc/sdlc-core/swarm-management.md` and `docs/swarm-management.md`. The rule\nrecorded in `AGENTS.md` is that a swarm is **asked for every time, per swarm,\nwith agent count, model l",
       "file": "beans/defs/folio-assistant-amom--mode-testswarm-a-stack-of-models-over-shared-or-in.md"
     },
@@ -5085,7 +5113,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:23:54Z",
-      "updatedAt": "2026-10-29T07:40:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "Owner, 2026-09-20, across three messages:\n\n> \"migration to cat-harness.config.json as an instance declaration in root.\n> also need bootstrap.config.json to declare its instance data upon\n> initialization. this should be part of ALL harness initializations. (not\n> dependency, but initiation = create UI/start workflow beans todos, install\n> directories etc. to a working state). this is a 'Working KG",
       "file": "beans/defs/folio-assistant-b5f0--instantiation-what-it-means-to-instantiate-a-harne.md"
     },
@@ -6176,7 +6204,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-30T11:13:00Z",
+      "updatedAt": "2026-10-30T11:22:00Z",
       "preview": "## What\n\nGenerate a narrative description for every image, localized to the folio's\nlanguages.\n\n## The half that is easy to miss\n\n**This applies to an image EXTRACTED FROM A PDF, not only to an uploaded one.**\nMost images in this corpus arrive inside a paper, and a figure nobody has\ndescribed is a figure no grep and no agent can reach.\n\n## Provenance is not optional\n\nEvery description carries its ",
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
@@ -7254,7 +7282,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T12:53:43Z",
-      "updatedAt": "2026-10-26T11:05:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "**In one sentence:** every staging preview stores a full ~37.5 MB copy of the\nsite because three per-preview facts are baked into all ~530 pages, so git's\ncontent-hash deduplication has nothing to grip — and moving those facts into one\nsmall data file read in the browser would turn 530 differing files into one.\n[View this bean](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio",
       "file": "beans/defs/folio-assistant-g196--every-preview-stores-a-full-copy-of-the-site-becau.md"
     },
@@ -8534,7 +8562,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T07:53:21Z",
-      "updatedAt": "2026-10-29T07:55:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "On 2026-10-24 at 07:53Z the owner chose \"B + bean for library nodes\" on the 0uu2 card about `cat-harness-tools/types/`. That choice keeps `types/` and declares it, and asks for this bean.\n\n## The gap\n\nNo node kind exists for an outside library the platform depends on, such as bpmn-moddle, dmn-moddle, playwright or katex. What the graph knows about them is scattered:\n- `package.json` dependencies, ",
       "file": "beans/defs/folio-assistant-jbvi--library-nodes-outside-libraries-the-platform-uses.md"
     },
@@ -10847,7 +10875,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T21:30:50Z",
-      "updatedAt": "2026-10-24T11:25:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "From the ARG-Designer mapping (arXiv 2507.18224), row B8: *they measure\naccuracy on benchmarks; we check structure.* The owner, 2026-09-29: that gap is\n**intended** to be closed, as part of the tool-harness / multi-model\nbenchmarking work under this epic — not left as a permanent difference.\n\n## What is missing today\n\nEvery check cat-harness runs is **structural**: a lane binds a role, a step is\ne",
       "file": "beans/defs/folio-assistant-oz9e--benchmark-outcome-evaluation-of-harness-runs-acros.md"
     },
@@ -12350,6 +12378,20 @@
       "file": "beans/defs/folio-assistant-sd5v--spdx-3-applicability-where-it-should-could-and-sho.md"
     },
     {
+      "id": "folio-assistant-se3i",
+      "title": "PUBLIC COMMENT: a person can re-route a change set to a different committee by hand",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T11:55:00Z",
+      "updatedAt": "2026-10-30T11:55:00Z",
+      "preview": "From [#197](https://github.com/litlfred/folio-assistant/issues/197) — the last open ask on that issue, from @Chine-E on 2026-10-16:\n\n> I need the ability for a human to manually re-route a change set if a human\n> decides that the change set should be handled by a different committee.\n\nEverything else #197 asked for landed under epic `q4jm` (beans `xtpc`, `v26p`, `uphx`, `423d`).\nToday the committe",
+      "file": "beans/defs/folio-assistant-se3i--public-comment-human-reroutes-change-set-to-committee.md"
+    },
+    {
       "id": "folio-assistant-sff8",
       "title": "Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main",
       "status": "completed",
@@ -12557,7 +12599,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:07:23Z",
-      "updatedAt": "2026-10-29T07:40:00Z",
+      "updatedAt": "2026-10-30T12:00:00Z",
       "preview": "Owner, 2026-09-20, answering the four options put to them — first \"2+ 2\",\ncorrected immediately to:\n\n> 2+3 + recomend....\n\nand, in the same breath:\n\n> recommendatio on what to do based on curent state of where harness go to in\n> its intialzaiton. would also have harness health check badges.\n\n## What was chosen\n\n**Option 2 AND option 3, together**, plus a third thing neither option had:\n\n| part | w",
       "file": "beans/defs/folio-assistant-supn--harness-cards-become-todos-outstanding-work-a-next.md"
     },
@@ -14720,7 +14762,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-10-30T11:10:00Z",
+      "updatedAt": "2026-10-30T11:48:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
@@ -16398,14 +16440,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 325,
-        "closed": 295,
+        "total": 326,
+        "closed": 296,
         "open": 30,
-        "inProgress": 20,
-        "todo": 10,
+        "inProgress": 19,
+        "todo": 11,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.9076923076923077
+        "share": 0.9079754601226994
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16443,14 +16485,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 20,
-        "total": 643,
-        "closed": 621,
-        "open": 22,
-        "inProgress": 10,
-        "todo": 11,
+        "total": 645,
+        "closed": 622,
+        "open": 23,
+        "inProgress": 8,
+        "todo": 14,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.9657853810264385
+        "share": 0.9643410852713178
       },
       {
         "id": "folio-assistant-npuo",
@@ -16469,8 +16511,8 @@
       }
     ],
     "orphanOpen": 2,
-    "openTotal": 64,
-    "coveredOpen": 59,
+    "openTotal": 65,
+    "coveredOpen": 60,
     "duplicateIds": 0
   }
 }
