@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-30T14:05:00Z
-updated_at: 2026-10-30T16:21:00Z
+updated_at: 2026-10-30T20:30:35Z
 parent: folio-assistant-negd
 ---
 
