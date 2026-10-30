@@ -2,11 +2,11 @@
 # folio-assistant-s4v2
 $schema: bean/1.0.0
 title: 'ODRL duties, required assignee, purpose/date constraints (DSA B1+B2)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-30T14:05:00Z
-updated_at: 2026-10-30T14:48:00Z
+updated_at: 2026-10-30T19:35:00Z
 parent: folio-assistant-negd
 ---
 
@@ -21,3 +21,6 @@ In `cat-harness/schemas/content/odrl.ts`: add `duty` (odrl:delete, attribute, in
 
 ## Progress
 - 2026-10-30: Implemented ODRL duties (`odrl:delete`, `odrl:attribute`, `odrl:inform`, `odrl:obtainConsent`), required `assignee` on `Agreement`, HL7 v3 `ActReason` `PurposeOfUse` hierarchy (`purpose`), `dateTime` and `elapsedTime` left operands, `lt`/`lteq`/`gt`/`gteq`/`isA` operators, and duty/constraint evaluation in `permits()` with PROV records (`schemas/content/odrl.ts`, `schemas/content/odrl.test.ts`). Opened PR `litlfred/cat-harness#742` (`https://github.com/litlfred/cat-harness/pull/742`).
+
+## Done
+Merged in litlfred/cat-harness#742 (4f6a265), 2026-10-30.
