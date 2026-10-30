@@ -2,11 +2,11 @@
 # folio-assistant-4dj5
 $schema: bean/1.0.0
 title: 'PAPER TEMPLATE WIRING: the sci paper adapter supplies its print preamble to generate-main-tex, and publish.yml uses it (#2117 P2, P5)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T11:55:00Z
-updated_at: 2026-10-30T11:55:00Z
+updated_at: 2026-10-30T12:40:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -24,7 +24,13 @@ here: qou is a math repo and changes there need the owner's OK first.
 
 ## Done when
 
-- [ ] `generate-main-tex` with no `--preamble` gets the template from the paper adapter.
-- [ ] No cat-harness or cat-harness-tools file names a sci path.
-- [ ] `publish.yml` builds a paper PDF without an explicit `--preamble`.
-- [ ] The sci README's "Not yet wired" section is removed.
+- [x] `generate-main-tex` with no `--preamble` gets the template from the paper adapter.
+- [x] No cat-harness or cat-harness-tools file names a sci path.
+- [x] `publish.yml` builds a paper PDF without an explicit `--preamble`.
+- [x] The sci README's "Not yet wired" section is removed.
+
+## Implementation & PRs
+
+- `litlfred/cat-harness-tools`: https://github.com/litlfred/cat-harness-tools/pull/868 (`resolveAdapterPreamble`, `ResolvedRenderTarget.preamblePath`, `resolvePaperPreamble`, and default preamble resolution in `generate-main-tex.ts`, `build.ts`, and `run-build.ts`).
+- `litlfred/folio-assistant-sci`: https://github.com/litlfred/folio-assistant-sci/pull/115 (`PAPER_PREAMBLE_PATH` and `PaperContentAdapter.preamblePath` on `PaperContentAdapter`, `adapters/paper/latex/README.md` updated to `## How it is wired`, `--preamble` removed from `build-pdf.sh`, and unit + CLI tests in `declared-adapter.test.ts`).
+- `litlfred/folio-assistant`: https://github.com/litlfred/folio-assistant/pull/2732 (`--preamble ../latex/preamble.tex` removed from `.github/workflows/publish.yml`).
