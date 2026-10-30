@@ -1091,10 +1091,12 @@ jobs:
       - name: Repoint and check every link in the built site
         id: dead_links
         continue-on-error: true
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
         run: |
           set -o pipefail
           bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
-            --base-path "/${{ github.event.repository.name }}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            --base-path "/$REPO_NAME" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
             --report "$RUNNER_TEMP/dead-links.tsv" | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
