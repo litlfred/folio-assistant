@@ -2,13 +2,11 @@
 # folio-assistant-4fv8
 $schema: bean/1.0.0
 title: 'Placement PR4: whole roles, stories, actors and capabilities move up to their owners'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-30T17:15:00Z
+updated_at: 2026-10-30T20:20:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-pzwb
 ---
 
 Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa sidecars RELOCATED (identity-checked), never deleted without the owner (`deletion-requires-confirmation`).
@@ -18,7 +16,7 @@ PR4: whole roles (14), their stories (34), actors (9), capabilities (11) and add
 Blocked by PR2 and PR3: the role→skill edges naming moved skills and diagrams must already have moved, so PR4 moves only whole roles.
 
 ## Done when
-- [x] `cat-harness/scenarios/roles.json` holds 37 roles (9 of the 14 PR4 roles moved up; 5 stay in `cat-harness` to avoid upward `lane-role` bindings or orphaned `cat-harness` skills) and every skill it names resolves inside the harness
+- [x] `cat-harness/scenarios/roles.json` holds 44 roles (the earlier "37" was a miscount: 44 at #747's merge 9c3b2ae and unchanged since) (9 of the 14 PR4 roles moved up; 5 stay in `cat-harness` to avoid upward `lane-role` bindings or orphaned `cat-harness` skills) and every skill it names resolves inside the harness
 - [x] for every role id, skills resolved from the checkout equal those before PR4
 - [x] `residual.py` / `check:process-bindings`: role-skill = 0, actor-role = 0 (`wrong-direction 0` across all 5 joins: `task-skill`, `lane-role`, `role-skill`, `role-inherits`, `call-activity`)
 - [x] `check:raci`, `check:actor-reach`, `check:voices`, `kg:audit:check` green
@@ -49,3 +47,7 @@ _2026-10-30T15:12:00Z_ — Completed the remaining PR4 moves and cleared the las
   5. `terminologist`: carries 2 `cat-harness` skills (`code-lists`, `vocabulary-authority`) in `skills/kg/kg-core/`, neither of which has any other role or BPMN activity in `cat-harness`.
 
 _2026-10-30T17:15:00Z_ — All PRs merged: https://github.com/litlfred/folio-assistant-core/pull/246 (6369b1d), https://github.com/litlfred/folio-assistant-sci/pull/123 (9b0eb08), https://github.com/litlfred/fhir-harness/pull/203 (6ca6874), https://github.com/litlfred/fhir-harness/pull/204 (58cc045), https://github.com/litlfred/cat-harness-tools/pull/912 (e714669), then the remover https://github.com/litlfred/cat-harness/pull/747 (9c3b2ae). All four boxes are ticked. Left: the gates in the composed index after the folio-assistant re-pin (CI thread), and the `pzwb` blocker. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").
+
+## 2026-10-30 — completed (thread "Finish GOAL 1 placement beans", session https://claude.ai/code/session_01Qmmkt6Hy5kLsKxGLMzk88s)
+
+Re-measured on current mains (folio-assistant 1d284ea, every layer at main). All 4 boxes hold. None of the 9 moved roles is back in cat-harness. All 177 skill ids in `roles.json` resolve inside cat-harness. `check:raci`, `check:actor-reach` and `kg:audit:check` are green. `check:process-bindings` went green after the stale `ig-ast-delta` baseline was shrunk (cat-harness-tools#999, merged 83f7f87). `check:voices` went green after 3 DPI-H citations were pointed back to smart-base, where the document is ingested (smart-base#235, merged 6fafa48). The `blocked_by: pzwb` edge is lifted: PR4 needed PR2's skill moves, and those are all merged (core#240/#250, sci#120, cat-harness#728/#738/#758). pzwb's own last box is gate-wide and does not block PR4.
