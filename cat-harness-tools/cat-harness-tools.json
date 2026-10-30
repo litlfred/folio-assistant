@@ -370,15 +370,15 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-30T12:42:26.497Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f205d13162e880c531c1b2f8b9d7a42f768252ca",
-  "sourceCommitSha": "f205d13162e880c531c1b2f8b9d7a42f768252ca",
-  "sourceCommitAt": "2026-10-30T12:15:42Z",
+  "generatedAt": "2026-10-30T13:18:06.488Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+  "sourceCommitSha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+  "sourceCommitAt": "2026-10-30T14:46:51+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "GraphTypology": 9,
-    "Subgraph": 19,
+    "Subgraph": 20,
     "Asset": 3,
     "Tool": 1
   },
@@ -715,6 +715,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-deploy"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-upstream",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "cat-harness-tools-upstream",
+      "path": "upstream/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "This layer's pinned-upstream registry, `upstream-pins.json` (`\"$schema\": \"folio-upstream-pins/v1\"`). It has one row for each upstream dependency whose pin literal is in a file this layer holds. Today that is only the pdf.js viewer, pinned in `scripts/pdf-viewer.ts`. Each row names the file the pin is READ from (`pinnedIn`, resolved against this instance's root), the pattern that reads it, and what of ours binds to the dependency. It holds no version. `bun run cat check:upstream-pins` reads it together with cat-harness's `upstream/` registry (`cat-harness-upstream`), which keeps the rows whose files are in the harness. It is a separate registry because a harness row naming a file in this layer is a wrong-direction reference (folio-assistant#1481). `code`: the checker's input table, not content any reader renders.",
+      "readmePath": "upstream/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-upstream"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
       "name": "cat-harness-tools-archimate",
@@ -941,6 +958,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-deploy"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-upstream",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-upstream",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-upstream"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-archimate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate",
@@ -979,8 +1002,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f205d13162e880c531c1b2f8b9d7a42f768252ca",
+    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
     "pr": "main",
-    "run": "41054014401"
+    "run": "41057942184"
   }
 }

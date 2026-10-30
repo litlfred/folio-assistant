@@ -35,11 +35,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5926,
+          "occurrences": 5925,
           "allowed": 0,
-          "wrongDirection": 18,
-          "wrongDirectionFiles": 12,
-          "exempt": 5908,
+          "wrongDirection": 15,
+          "wrongDirectionFiles": 11,
+          "exempt": 5910,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -49,7 +49,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 12,
+      "count": 11,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/bean-dedupe.ts",
@@ -88,10 +88,6 @@
           "target": "smart-immunizations"
         },
         {
-          "file": "fhir-harness/scripts/build-ig-site.ts",
-          "target": "smart-immunizations"
-        },
-        {
           "file": "fhir-harness/scripts/check-ig-annex-links.ts",
           "target": "smart-immunizations"
         },
@@ -102,5 +98,5 @@
       ]
     }
   },
-  "total": 13
+  "total": 12
 }

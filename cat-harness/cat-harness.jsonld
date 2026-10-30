@@ -366,10 +366,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-30T12:42:21.808Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f205d13162e880c531c1b2f8b9d7a42f768252ca",
-  "sourceCommitSha": "f205d13162e880c531c1b2f8b9d7a42f768252ca",
-  "sourceCommitAt": "2026-10-30T12:15:42Z",
+  "generatedAt": "2026-10-30T13:17:59.191Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+  "sourceCommitSha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+  "sourceCommitAt": "2026-10-30T14:46:51+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -383,7 +383,7 @@
     "SequenceFlow": 1037,
     "Lane": 171,
     "ProcessNode": 1004,
-    "Tool": 164,
+    "Tool": 165,
     "Schema": 180,
     "ExternalSchema": 28,
     "GraphTypology": 52,
@@ -3733,7 +3733,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit"
       ],
       "instructionsPath": "skills/sdlc/spec-kit/spec-kit.md",
-      "instructionLines": 270,
+      "instructionLines": 315,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -41689,6 +41689,62 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/harness-state.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "harness-state",
+      "title": "Per-harness setup position and health",
+      "description": "For every harness in the checkout, run bootstrap's setup check without performing anything or touching the network, and write one `folio-harness-state/v1` file: each step in its state, the first step not done (its position) with what to do next, and health badges that are the harness's own (setup steps; the instance's committed health report, unknown without one). A recommendation is said, never acted on.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat harness:state"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where `<harness>.json` and `index.json` go. The deploy passes `./_site/assets/harnesses`. Absent: print the states and write nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the states as JSON and write nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "states",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One `<harness>.json` per harness and an `index.json` listing them with their positions."
+          },
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "One line per harness: its position, the next step, and its badges."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ig-folio-site-workflow.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "ig-folio-site-workflow",
@@ -52067,7 +52123,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
       ],
-      "description": "The pinned-upstream registry, `upstream-pins.json` (`\"$schema\": \"folio-upstream-pins/v1\"`): one row per upstream dependency the build pins — the just-the-docs theme, the Bun runtime, the pdf.js viewer — naming the file the pin is READ from (`pinnedIn`, resolved against this instance's root), the pattern that reads it, what of ours binds to the dependency and the MVP that must pass before it moves. It deliberately holds no version: that lives in the file the build reads. Read by `bun run cat check:upstream-pins` (weekly, `.github/workflows/upstream-pins.yml`) and worked by the `upstream-pin-watch` / `upstream-version-adoption` processes and skill this instance owns. Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split). HERE rather than in the tool layer because this instance's processes, skills and scripts name it, and a harness file naming a file in the layer above is a wrong-direction reference (`check:reference-direction`). `code`: the checker's input table, authored beside the processes that read it, not content any reader renders.",
+      "description": "The pinned-upstream registry, `upstream-pins.json` (`\"$schema\": \"folio-upstream-pins/v1\"`): one row per upstream dependency the build pins — such as the just-the-docs theme and the Bun runtime — naming the file the pin is READ from (`pinnedIn`, resolved against this instance's root), the pattern that reads it, what of ours binds to the dependency and the MVP that must pass before it moves. It deliberately holds no version: that lives in the file the build reads. Read by `bun run cat check:upstream-pins` (weekly, `.github/workflows/upstream-pins.yml`) and worked by the `upstream-pin-watch` / `upstream-version-adoption` processes and skill this instance owns. Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split). HERE rather than in the tool layer because this instance's processes, skills and scripts name it, and a harness file naming a file in the layer above is a wrong-direction reference (`check:reference-direction`). `code`: the checker's input table, authored beside the processes that read it, not content any reader renders.",
       "readmePath": "upstream/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/cat-harness-upstream"
@@ -76578,6 +76634,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/handover-screen.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/harness-state.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/harness-state.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/harness-state.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/tools/ig-folio-site-workflow.jsonld",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ig-folio-site-workflow.jsonld",
@@ -79040,8 +79102,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f205d13162e880c531c1b2f8b9d7a42f768252ca",
+    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
     "pr": "main",
-    "run": "41054014401"
+    "run": "41057942184"
   }
 }

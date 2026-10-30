@@ -1034,6 +1034,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/harness-state",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Per-harness setup position and health"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every harness in the checkout, run bootstrap's setup check without performing anything or touching the network, and write one `folio-harness-state/v1` file: each step in its state, the first step not done (its position) with what to do next, and health badges that are the harness's own (setup steps; the instance's committed health report, unknown without one). A recommendation is said, never acted on."
+        }
+      ],
+      "skos:notation": "harness-state",
+      "dcterms:source": "cat-harness/tools/harness-state/harness-state.ts#harness-state",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-tools/ig-folio-site-workflow",
       "@type": "skos:Concept",
       "skos:inScheme": {

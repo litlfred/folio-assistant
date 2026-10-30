@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Title tail, author and abstract: 'The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures' by David Nordfors. Language models compete at writing analogies and grade one another, with nothing from outside; the benchmark reproduces GPQA Diamond at r = 0.98, audited for leaks. A player writes a context template whose slots, filled with keyword sets (metanyms) from different domains, give factually true descriptions; ground truth is replaced by the SVD of the factual rating matrix, which rates players as judges and as generators at once, and subjective criteria are weighted by consistency under a swept calibration anchor. Strong generators were middling judges; a council of the five best issues the ratings, with contestable seats.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduction: almost every benchmark needs predetermined ground truth; this one is a game where frontier LLMs invent analogies and grade each other, and that grading is the only source of scores. A player writes a context template with open slots plus keyword sets that instantiate it truthfully in different domains; corresponding keywords are metanyms and the instantiations are parallel contexts of one archetypal context (Figure 1). Items written during the run cannot have been trained on, and sentence-by-sentence factual verdicts let one matrix of ratings reveal competent judges without labels, who are then seated as the grading council. The canonical twelve-model run finds judgement is the bottleneck and the key-free total tracks GPQA Diamond at r = 0.98. Lists the contributions and outlines the evaluation pass against a fixed reference pinned at an anchor value.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Running header only: 'Preprint. arXiv:2606.21008 v3, September 2026.'",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Heading-only block: section 'The metanym game as a benchmark' with its first subsection number (3.1) and no body text.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Participants and protocol: twelve frontier LLMs from Anthropic, Google and OpenAI each generate and evaluate, all at temperature 0 with reasoning and tools disabled. Each writes one portfolio of five archetypal contexts (templates of about 5–8 sentences and 6–10 slots, each instantiated in five domains, 25 instantiations), then scores every other portfolio on the six-axis 1–10 rubric, one anonymised target per call beside a fixed anchor portfolio pinned at 7, giving a 12×11 evaluator-by-generator matrix. Official ratings pool three full runs; the anchor sweep was run once.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The rubric and the anchor: a fixed anchor pinned at a known score turns each evaluator's idiosyncratic scale into a common one and restores discrimination near the ceiling; the axes are holistic and minimally defined so the rubric does not become a template-writing tutorial. Table 1 lists the six axes: factual correctness per parallel context, beauty, intelligence, instantiation distinctness and impressive length per archetype, and structural diversity per portfolio; impressive length counterweights per-sentence factual scoring, which would otherwise reward minimal templates. Includes captions for Figure 1 (a generated archetype, 'Gradient-Guided Navigation') and Figure 2 (the council evaluating one Gemini 2.5 Flash parallel context).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -166,7 +214,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Two key-free estimators. Factual competence by peer centrality: row-centre the 12-evaluator by 275-instantiation factual score matrix to remove leniency and take its SVD; the leading left singular vector gives each judge's competence (eigenvector centrality in the agreement network, rescaled so the anchor reads 7) and the right vector, aggregated, gives generation factuality, a graded relative of Dawid–Skene-style aggregation. Rating consistency by anchor sweep: re-run with the anchor at 5, 6, 7 and 8 and correlate each judge's scores across anchor values per axis, giving an evaluator competence on the subjective axes. Neither can replace the other: agreement only signals truth on facts, and consistency cannot certify truth, so the council is seated on the factual axis with consistency as a bar.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -185,7 +241,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Council, total and scaling by addition: the council is the five players with the highest total (factual loadings 0.26–0.61; the sixth is 0.18). The total T is the mean of four anchored components, generation factuality, council-rated generation on the non-factual criteria, evaluator factual competence and evaluator consistency, with joint bootstrap intervals. New models are scored against the standing council and anchor; seats are contested by beating the lowest seat's total by a resolvable margin, with two fixed 'ballast' portfolios to keep the factual axis identified and guards on the spectral gap (σ1/σ2 ≥ 2) and the spread of seats' factual scores. Contamination is handled by writing items in the run, archiving fixed material and rejecting copies.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -204,7 +268,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Heading-only block: 'Results' with subsection number 4.1 and no body text.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -223,7 +295,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Anchoring doubles resolution: an initial un-anchored pass (leave-self-out means, 2,000-resample bootstrap) picks the top portfolio, claude-opus-4.5's, as the anchor pinned at 7. Re-scored against it, the gap between a leading eight and a trailing four more than doubles relative to the spread of means, though ranks within each band stay unresolved.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -242,7 +322,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Evaluator factual competence: one SVD with no answer key (σ1/σ2 = 2.2 pooled) puts five judges above the rest: gemini-3.1-pro 0.61, claude-opus-4.5 0.52, claude-opus-4.0 0.35, claude-opus-4.1 0.35 and gemini-2.5-flash 0.26. Removing each vendor's judges leaves the generation ordering essentially unchanged (Spearman ≥ 0.94); gpt-4o-mini stays last, and Google+OpenAI judges alone still put the Claude generators on top.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -261,7 +349,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Rating consistency and the council: the anchor sweep gives per-axis self-consistency (not accuracy); gemini-2.5-flash collapses on the factual axis (0.31) but holds elsewhere. On the five subjective criteria generation and evaluation align (anchored cosine 0.85–0.92), unlike the factual axis. The five seats, Gemini 3.1 Pro, Claude Opus 4.5, Gemini 2.5 Flash, Claude Opus 4.0 and 4.1, clear both bars, Gemini 2.5 Flash only marginally.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -280,7 +376,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The official leaderboard (Table 2): each model is rated by the five seats on the contest basis, which agrees with the twelve-evaluator basis (Spearman 0.98). Claude Opus 4.5 (the anchor) reads 7.00, then Gemini 3.1 Pro 6.92, Claude Opus 4.1 6.02, Opus 4.0 5.81 and Gemini 2.5 Flash 5.75, down to gpt-4o-mini at 2.39; adjacent ranks are resolved only at 2–3 and 8–9. The top five totals are exactly the five best factual judges. Generating and judging come apart: the Opus models are the strongest generators but middling factual judges (EF 3.5–3.7), while the best judge, Gemini 3.1 Pro (EF 7.78), generates mid-pack, contradicting peer rankers that assume a strong generator is a strong judge.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -299,7 +403,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "A key-free benchmark replicates a keyed one: GPQA Diamond (198 expert questions) was given to the same twelve models two weeks later, and T reproduces its ordering at Pearson r = 0.98 [0.95, 0.99] (Spearman 0.96), 0.94 within the leading eight. An audit finds no key in any prompt, reproducible accuracies, a balanced key and independent extraction, with strict rescoring moving r by 0.010. Each quarter alone correlates 0.81–0.95, the factual pair 0.94, and only the full total reaches 0.98. Among the leading eight the evaluator factual score is the best single predictor, suggesting judging is a distinct trait no keyed benchmark measures. Captions for Figure 3 (T vs GPQA) and Figure 4 (the shared-archetype hypothesis).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -352,7 +464,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Robustness to regeneration: the full pipeline was run three times at temperature 0 against the frozen anchor. The runs agree on the total and track GPQA at 0.97, 0.97 and 0.92, and 34 of 48 archetype titles recur verbatim between runs two hours apart, but the factual quarter is unstable: one seat's EF reads 4.68, 3.81 and 0.01, and run 3's factual axis is unidentified (σ1/σ2 = 1.29). Single-run re-selection would rotate one seat in runs 2 and 3, neither passing the guard; pooled, the axis is identified (σ1/σ2 = 2.2).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -371,7 +491,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Related work: the game probes the abstraction-and-analogy cluster central to accounts of thinking (Gentner, Hofstadter, Chollet, Mitchell), but where classical analogy tests ask for one keyed selection or completion, it asks for many coupled slots built from scratch and is falsifiable sentence by sentence. As a method it belongs to unsupervised peer evaluation (single judges, PoLL panels, LLM-as-Examiner, PiCO, UPME), differing by weighting agreement only where it can mean truth and by re-contesting its own judges. Also relates the anchor sweep to judge-reliability work on invariance under non-semantic perturbation and to anchor recalibration.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -390,7 +518,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Discussion: peer centrality is used only for facts, because on taste the dominant agreement is shared convention; its weakness is a shared misunderstanding, while consistency only asks for a firm standard. The yardstick is sustainable: when a model beats the anchor by a resolvable margin the anchor is replaced and models re-scored, so the benchmark rises with the models, unlike a keyed test with fixed key-makers. For the 0.98 agreement with GPQA the paper hypothesises both measure knowledge held as archetypal contexts, GPQA instantiating one in one domain and the game one archetype in many, and proposes a falsifiable representation test; the data establish only the correlation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -409,7 +545,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Limitations: self-improvement by the council is specified but not exercised, and optimising against a consensus one participates in can reward courting that consensus. All runs share one prompt template and roster, so intervals reflect item and run dispersion rather than configuration; the leading group is at its discrimination floor; no seat has yet been contested; and peer consensus penalises dissent, as a synthetic evaluator inverting a fifth of the consensus verdicts loses most of its competence.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -428,7 +572,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Conclusion, AI-use statement and references: the game is a structural test of intelligence built from analogy, needing nothing external beyond one deliberate check, r = 0.98 against GPQA Diamond. The AI-use statement says the ideas are the author's, developed in dialogue with Anthropic's Claude, which criticised designs, implemented analysis code, cleaned records and drafted text the author rewrote, with no ratings or data generated by AI beyond the twelve rated models. The rest of the block is the reference list.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -447,7 +599,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A, rating estimators: all ratings come from the participants' scores of one another's portfolios swept across the anchor, with no external key. Defines the panel of twelve models as both submissions and evaluators (self-grades released but never used; every estimator is leave-self-out), portfolios of five archetypes with five parallel contexts each, the six 1–10 axes, scores relative to the anchor declared 7, and the anchor sweep over 5–8 with 7 in production.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -466,7 +626,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.1, generation rating: an evaluator's overall score of a submission averages within and then across axes, and the six-axis generation rating is the leave-self-out council mean, with 95% bootstrap intervals over (submission, archetype) units and paired bootstraps to resolve gaps. The official leaderboard uses the split form G = (GF + GC)/2 instead.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -485,7 +653,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.2, factual competence and generation factuality: the factual score matrix (self-entries set to the anchor) is row-centred to remove leniency and decomposed; the left singular vector, clamped at zero, is each evaluator's factual competence and the right vector, aggregated, the generators' factuality. Centring is essential, since raw scores would rank the most lenient judges highest; filling self-entries differently changes loadings by at most 0.04. Ends with Table 4 of loadings, EF and GF with intervals, from gemini-3.1-pro down to gpt-4o-mini at 0.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -504,7 +680,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.3, rating consistency: per evaluator and axis, the mean Pearson correlation of its scores between anchor values over 50, 250 or 10 units, and a collapsed score averaging the four per-archetype non-factual axes that gates the council (factual and structural diversity excluded). Table 5 gives the values: the strongest judges are around 0.8–0.9, while gpt-4o and gpt-4o-mini are mostly below 0.4.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -523,7 +707,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.4, the council and the total: the sweep keeps the anchor inside the scale, so consistencies are conservative near its ends. A judge is reliable if its competence interval clears the near-zero cluster and its collapsed consistency is at least 0.78; eight pass consistency and five pass both, forming the council. Gives the anchored evaluator scores, the reliability-weighted criterion score GC, and G, E and T as means of the four quarters, with bootstrap intervals that include run-to-run dispersion and are conditional on the selected council.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -542,7 +734,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.5, generator quality against evaluator consistency per criterion: the anchored cosine between each model's criterion-level generation score and its consistency score is a diagnostic only. Table 6 lists both per model for beauty, intelligence, distinctness, length and structure, with cosines of 0.84–0.91 across the five criteria.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -561,7 +761,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.6, the contest, ballast and guards: a contest seats the five council members plus the contestant as evaluators over the incumbents' portfolios, two ballast blocks and the contestant's own, and its factual axis counts as identified only if σ1/σ2 is between 2 and 5 and the seats' EF spread exceeds 2.5 points. Without weak submissions the factual axis breaks, with seats' EF swinging by up to 8.8 points; two fixed ballast blocks of the weakest archived submissions repair it (Table 7). Also sizes the spectral-gap guard against noise, finding run 3 has a shared but not single factual axis that pooling restores.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -580,7 +788,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.7, authority versus consistency: running peer centrality on the subjective axes gives an 'authority' rating that correlates 0.70–0.90 with consistency there but diverges on the factual axis, where a judge can be stable yet wrong. Council membership is the same under either; substituting authority keeps the ordering (Spearman 0.986) except that Gemini 3.1 Pro overtakes the anchor, but it is rejected because it turns alignment into authority where no truth licenses that. A synthetic consensus-copying judge shows the cost of dissent: EF 5.15, falling to 4.84 with 5% and 3.79 with 20% of verdicts inverted.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -599,7 +815,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix A.8, the two estimators compared (Table 8): peer centrality is collective, assumes competent judges share only the truth, replaces the answer key for facts, and is blind to a shared misunderstanding; rating consistency is individual, assumes a stable standard is the only competence a subjective axis can show, is used where there is no right answer, and lets a consistently held private misconception pass.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -618,7 +842,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix B, prompts overview: all prompts ran at temperature 0 with reasoning and tools disabled. B.1 is the generation prompt; B.2 the anchored evaluation prompt used for official ratings, scoring a target against a reference pinned at {ANCHOR_SCORE}; the initial un-anchored selection used the same prompt without the calibration passages, listed after B.2. Names the template variables, with the anchor swept over 5–8 and fixed at 7 officially.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -637,7 +869,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix B.1, the generation prompt verbatim: framed as a ranked contest, it asks for new archetypal contexts, universal relational templates applying across distant domains, defines the terminology (archetypal context, context template with [SLOT]s, parallel contexts or metaphors, metanyms, metanym set, metanym table), gives two worked examples starting with a signalling template, and lists the six scoring criteria the submissions will face.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -656,7 +896,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix B.2, the anchored evaluation prompt verbatim: the evaluator scores a target submission relative to a reference fixed at {ANCHOR_SCORE}/10 on every criterion, above or below it by how much better or worse it is, using the full 1–10 scale, with the same terminology block and the six criteria, and returns integer ratings and justifications in a JSON structure per parallel context, per archetype and per portfolio.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -675,7 +923,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix B.3, the un-anchored form used for the initial selection: identical criteria, terminology and JSON schema, but the title becomes 'Score these. You are evaluating contest submissions.', the whole calibration preamble is removed, and the reference clauses in the scoring instruction and the final 'Equal to the Reference' line are dropped.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -694,7 +950,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix C, a worked council evaluation: the released package includes the full council evaluation of gemini-2.5-flash's mid-leaderboard portfolio by the four other seats plus claude-sonnet-4. It reproduces one unit at each of the rubric's three levels (a parallel context judged sentence by sentence, an archetype-level axis, and the portfolio's structural diversity) with every judge's rating and comment and a Claude Opus administrator's synthesis; every evaluation in the run is released in the same form.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -713,7 +977,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix C.1, a plain error on which the council converges: the ecosystem instantiation of 'Resource Allocation Under Scarcity' (nutrients, predation, 'nature must make natural selections') is quoted, and all five judges independently single out the same flawed clauses, conflating natural selection with allocation decisions, differing only on severity (4 versus 5). The point: a factual claim holds in its domain or not, so persuasiveness cannot rescue it.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -732,7 +1004,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix C.2, judges disagreeing on a countable quantity: on impressive length, claude-opus-4.5 counts about 120 words and rates 6 while gemini-3.1-pro counts 79 words and rates 4, and reported counts across the five judges range from 79 to 120 for the same fixed string. No judge can be treated as an oracle, which motivates estimating competence from the participants.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -751,7 +1031,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix C.3, a dissent better reasoned than the majority: on the portfolio's structural diversity four judges rate 5–6, citing overlapping archetypes, while gemini-3.1-pro rates 8 with a more careful argument, including noticing that the portfolio has six archetypes where five were specified. Such an outlier is what a majority vote mishandles and competence weighting is meant to value.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -770,7 +1058,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Heading-only block: Appendix D, 'Auditing the metanym–GPQA correlation', with subsection number D.1 and no body text.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -789,7 +1085,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix D.1, the correlation decomposed (Table 9): against GPQA, each quarter alone reaches r = 0.81–0.95, the generation and evaluation halves and the factual pair 0.94, and the full total 0.98 (Fisher-z [0.93, 1.00], BCa [0.95, 0.99]), with both interval methods reported because n = 12. Discusses what each step adds and cautions that the agreement corroborates the benchmark as a broad capability measure, not that the factual axis recovered truth specifically, since GC alone reaches 0.95.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -808,7 +1112,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix D.2, how GPQA was administered: 198 questions on 2026-06-13, two weeks after the generation run, through the same gateway and settings, with only the question and four deterministically shuffled options and an 'Answer: $LETTER' instruction. Under an initial 2,048-token cap the two Gemini seats' visible derivations were truncated (e.g. 103 unparseable responses for gemini-3.1-pro), so failed items were retried with a larger budget; retried accuracy did not exceed first-pass accuracy, and both stages' evidence is released.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -827,7 +1139,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix D.3, the leak audit: a script re-derives the published table from raw records and checks that accuracies reconcile exactly, the key is identical across models and balanced (48/51/47/52, p = 0.95), an independently written extractor agrees except mainly on Gemini's \\boxed{} style, and strict terminal-answer rescoring shifts three models slightly with little effect on the correlation. Ends with the table of T against GPQA Diamond accuracy for all twelve models (e.g. claude-opus-4.5 7.00 / 78.79%, gpt-4o-mini 2.39 / 43.94%).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -846,7 +1166,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix E, the constructs of intelligence the game demands: at least eight constructs from cognitive science, centred on abstraction and analogy (not perception, motor skill, working memory or social intelligence), including higher-order relational reasoning, structure-mapping (the metanym table as its bookkeeping), essence-seeing of a novel situation as an instance of a known pattern, and others, ending with collective judgement under shared standards (Longino), which the council mechanises as individual firm standards plus trust flowing to judges trusted by the trusted.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -865,7 +1193,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix F, the three runs apart and pooled (Table 14): totals per model across three full runs (run 1 the bootstrap generation, runs 2–3 the same day two hours apart), with run-to-run SD averaging 0.43 (max 0.72) and pairwise agreement Pearson 0.92–0.96. Single-run re-selection would swap one seat in runs 2 and 3, but neither passes the guard, and run 3's factual axis is unidentified (σ1/σ2 = 1.29). The policy is therefore to pool three portfolios per player in one factorisation.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     },
     {
@@ -918,7 +1254,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Appendix G, what anchoring does to resolution (Figure 6): each model's leave-self-out mean and interval, un-anchored and anchored, deliberately unlabelled. Anchored scores spread around the yardstick instead of piling at the ceiling: the gap between the leading eight and trailing four more than doubles relative to the spread of means and the between/within variance ratio doubles from 0.33 to 0.66, while intervals still overlap within each band.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-30"
       }
     }
   ]

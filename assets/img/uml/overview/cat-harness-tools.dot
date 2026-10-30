@@ -103,6 +103,12 @@ digraph "cat_harness_tools" {
     "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_tools_cat_harness_tools_upstream" {
+    label=<<b>cat-harness-tools/cat-harness-tools-upstream</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_tools_cat_harness_tools_upstream_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
+    "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_tools_cat_harness_tools_archimate" {
     label=<<b>cat-harness-tools/cat-harness-tools-archimate</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "n_cat_harness_tools_cat_harness_tools_archimate_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
@@ -191,6 +197,8 @@ digraph "cat_harness_tools" {
   "n_cat_harness_tools_folio_templates_code" -> "grid_pkg_cat_harness_tools_folio_templates_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_top" -> "n_cat_harness_tools_cat_harness_tools_deploy_code" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_tools_cat_harness_tools_deploy_code" -> "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_top" -> "n_cat_harness_tools_cat_harness_tools_upstream_code" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_tools_cat_harness_tools_upstream_code" -> "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_top" -> "n_cat_harness_tools_cat_harness_tools_archimate_code" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_tools_cat_harness_tools_archimate_code" -> "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_top" -> "n_cat_harness_tools_cat_harness_tools_openapi_code" [style=invis, class="kg-graph-anchor"];
@@ -223,10 +231,11 @@ digraph "cat_harness_tools" {
   "grid_pkg_cat_harness_tools_cat_harness_tools_tools_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_pipeline_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_python_bottom" -> "grid_pkg_cat_harness_tools_folio_templates_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_libraries_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_beans_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_cat_harness_tools_pipeline_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_folio_templates_bottom" -> "grid_pkg_cat_harness_tools_health_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_bottom" -> "grid_pkg_cat_harness_tools_defs_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_beans_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_pipeline_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_folio_templates_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_bottom" -> "grid_pkg_cat_harness_tools_health_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_bottom" -> "grid_pkg_cat_harness_tools_defs_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_bottom" -> "grid_pkg_cat_harness_tools_notes_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_bottom" -> "grid_pkg_cat_harness_tools_workflows_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_health_bottom" -> "grid_pkg_cat_harness_tools_marks_top" [style=invis, class="kg-graph-anchor"];
