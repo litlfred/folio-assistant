@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-10-26T13:20:00Z
+updated_at: 2026-10-30T13:25:00Z
 parent: folio-assistant-o1by
 ---
 
@@ -99,3 +99,5 @@ The run: a fresh clone of smart-trust-demo with all seven layers mounted from `i
 Still owed: the same run with the network on, in the same clean layout, for a line-by-line comparison. The first pass at 08:25Z showed the same content failures online.
 
 _2026-10-26T13:20:00Z_ — The air-gapped deployment description (`scenarios/deployments/self-sovereign.json` with `liveData: "may-hold-credentials"`, verified by `schemas/deployment-examples.test.ts` including the `attestation-service` reach refusal) merged in `litlfred/cat-harness#547` (`0a2a4c0f`, `2026-10-26T11:23:55Z`).
+
+_2026-10-30T13:25:00Z_ — Defect half fixed: `gates --list` no longer produces the QA working copy, so it writes nothing into the mounted layers (litlfred/cat-harness-tools#879, merged 1f34762; issue #878). It now prints the copy's state. Still open from the same run: `render:bpmn:check` writes 104 files under `cat-harness/docs/assets`, which is `publish:check` running the writer by design; whether a check may write into a mount it cannot re-clone is a question for this bean's topology, not a bug fix. (https://claude.ai/code/session_01Qmmkt6TFC8Yd4jePf6WnBv)
