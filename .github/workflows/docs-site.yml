@@ -1078,6 +1078,25 @@ jobs:
         continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
 
+      # EVERY LINK, against the tree that ships (fa#2741). The tiles check
+      # above reads the navbar only; a link check of the published site found
+      # 262 missing targets nobody had been told about. `--fix` first repoints
+      # the two kinds with one right answer: a missing translation goes to the
+      # untranslated page or diagram, and a source file the site does not
+      # publish goes to that file on GitHub at the pinned commit. The rest is
+      # reported in the step summary. It is NOT judged below yet: about a
+      # hundred dead links remain to fix by hand, and judging it now would turn
+      # every publish red and open a publication-manager alert each time. It
+      # joins the judged checks once the count reaches zero.
+      - name: Repoint and check every link in the built site
+        id: dead_links
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
+            --base-path "/${{ github.event.repository.name }}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            --report "$RUNNER_TEMP/dead-links.tsv" | tee -a "$GITHUB_STEP_SUMMARY"
+
       # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
       # on purpose. CI builds with `bundle exec jekyll build` and the gem set
       # in .github/pages-jekyll/Gemfile; `jekyll-minifier` would add a gem to
@@ -1316,6 +1335,7 @@ jobs:
           ESCAPED: ${{ steps.escaped.outcome }}
           QA_ASSETS: ${{ steps.qa_assets.outcome }}
           TILES: ${{ steps.tiles.outcome }}
+          DEAD_LINKS: ${{ steps.dead_links.outcome }}
           VERIFY: ${{ steps.verify.outcome }}
           DEPLOY: ${{ steps.deploy.outcome }}
           PREVIEWS: ${{ steps.previews.outcome }}
@@ -1331,6 +1351,7 @@ jobs:
             echo "| no escaped block-level markup | ${ESCAPED:-not reached} |"
             echo "| QA witnesses and results | ${QA_ASSETS:-not reached} |"
             echo "| navbar tiles resolve | ${TILES:-not reached} |"
+            echo "| every link resolves | ${DEAD_LINKS:-not reached} |"
             echo "| verify the export before deploying | ${VERIFY:-not reached} |"
             echo "| deploy to gh-pages | ${DEPLOY:-not reached} |"
             echo "| staging previews survived | ${PREVIEWS:-not reached} |"
