@@ -64,6 +64,7 @@ on:
       # and `publish-gh-pages.sh` among them.
       - 'cat-harness-tools/scripts/**'
       - 'cat-harness/schemas/**'
+      - 'cat-harness-tools/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
       # bootstrap-tools writes bootstrap's graph and vocabulary for the preview
@@ -355,6 +356,13 @@ jobs:
       # from a branch-kept graph. One of them is `render:bpmn` (other instances'
       # diagrams), which draws through Chromium, so the browser is installed
       # before this step rather than only before the later render.
+      # PlantUML 1.2026.9 needs Java 21 (its ELK classes are class file 65);
+      # ubuntu-latest's PATH java is 17, which broke every publish from
+      # 2026-10-30 13:23Z (#2744). The major is read from the plantuml
+      # tool-release declaration, so a later bump moves it too.
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
+
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
@@ -526,10 +534,10 @@ jobs:
               # three generators; `api/` is TypeDoc over the schema entry
               # points. Matching the SOURCES, not the generated directory, so
               # a regeneration that lands in the same commit is still covered.
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/schemas/|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
                 ref=yes; why="the branch touches schemas, skills or the reference generators"
               fi
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness-tools/schemas/'; then
                 api=yes
               fi
               # A RE-PIN is a change to every mounted instance's skills and
@@ -1104,22 +1112,11 @@ jobs:
       # not what anybody is reviewing.
       - name: Generate TypeDoc API reference
         if: steps.carry.outputs.api == 'yes'
-        env:
-          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
-          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
-        run: |
-          npx --yes typedoc \
-            --gitRevision "$STAGING_BRANCH" \
-            --out ./_site/api \
-            --entryPointStrategy expand \
-            --readme none \
-            --hideGenerator \
-            --skipErrorChecking \
-            --name "folio-assistant API (staging: $STAGING_SLUG)" \
-            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
-            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
-            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
-            cat-harness/schemas/lean-packages.ts 2>&1 | tail -10
+        uses: ./.github/actions/typedoc-api
+        with:
+          out: ./_site/api
+          name: "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})"
+          git-revision: ${{ steps.slug.outputs.branch }}
 
       # Add a staging banner to every HTML page so a reviewer never
       # mistakes staged content for the published site.
@@ -1677,6 +1674,18 @@ jobs:
         # whatever this says; `Judge the built-site checks` fails the run after.
         continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+
+      # The deploy's link pass (fa#2741), so a preview shows the links the
+      # site will ship. Reported, not blocking.
+      - name: Repoint and check every link in the built site
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          set -o pipefail
+          bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
+            --base-path "/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST — the deploy's pass, mirrored here because
       # `check:invocation-parity` requires it and because a preview whose

@@ -31,7 +31,6 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 | [`2506.20759v1.pdf`](2506.20759v1.pdf) | a file |  |
 | [`2603.10808v1.pdf`](2603.10808v1.pdf) | a file |  |
 | [`2609.07340v1.pdf`](2609.07340v1.pdf) | a file |  |
-| [`9789240093362-eng.pdf`](9789240093362-eng.pdf) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_33_23-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_23-PM.png) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_33_28-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_28-PM.png) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_35_27-PM.png`](ChatGPT-Image-Sep-20-2026-03_35_27-PM.png) | a file |  |
@@ -47,8 +46,6 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 | [`ICDAR2013-ToC.pdf`](ICDAR2013-ToC.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
-| [`9789240101197-eng/`](9789240101197-eng/) | _nothing declares what this holds_ | |
-| [`9789240116191-eng/`](9789240116191-eng/) | _nothing declares what this holds_ | |
 | [`arxiv-2402.02172v5/`](arxiv-2402.02172v5/) | _nothing declares what this holds_ | |
 | [`arxiv-2404.04834v4/`](arxiv-2404.04834v4/) | _nothing declares what this holds_ | |
 | [`arxiv-2503.18813v2/`](arxiv-2503.18813v2/) | _nothing declares what this holds_ | |
