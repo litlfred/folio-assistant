@@ -37,3 +37,5 @@ _2026-10-16T06:30:00Z_ — The note above is mirrored from the folio-assistant s
 _2026-10-30T18:45:00Z_ — vj2p completed; 8lcl landed apart from its generated-JSON-Schema box; y9r6 box 1 met (0 code files under cat-harness). Session https://claude.ai/code/session_01Qmmkt7dhGQL6nLTZKbWCxo.
 
 _2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp). The placement-move beans stay with "Finish GOAL 1 beans".
+
+_2026-10-30T19:41Z_ — rfuq direction work merged (tools#938 129349e, core#256 058c880, cat-harness#763 27c1eae, fhir-harness#213): 0 wrong-direction edges across 11 instances. rfuq stays open only on its pzwb-gated placement box, so the block edge stays until rfuq completes. txue now waits on 8lcl (generated JSON Schema) and y9r6 (boxes 2-3). Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
