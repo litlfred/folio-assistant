@@ -23,3 +23,4 @@ Repo: fhir-harness, smart-trust-phw.
 ## Progress
 - 2026-10-30 ~19:45Z: [fhir-harness#227](https://github.com/litlfred/fhir-harness/pull/227) merged (b347890): rules 2 and 4 in the evaluator and ITI-108 client, skill updated; 35 tests pass.
 - [smart-trust-phw#7](https://github.com/litlfred/smart-trust-phw/pull/7) merged (4077fba): rules 1-4 in processes A and C5, documentation only. SUSHI shows the same 14 errors on main and the branch, all from packages this sandbox cannot fetch (ihe.iti.vhl#1.0.0-comment, smart.who.int.pcmt-vaxprequal#current).
+- 2026-10-30 ~20:10Z: owner card 19:55Z "A: Follow version chain": [fhir-harness#228](https://github.com/litlfred/fhir-harness/pull/228) merged (3772521). An older Consent counts while every dcat:previousVersion step to the current version is narrowing; isNarrowingAmendment() computes it from the ODRL rules (no invented field). 39 tests pass.
