@@ -360,8 +360,7 @@ jobs:
             quantum-observable-universe/quantum-observable-universe.ts \
             --out-dir ../chapters/ \
             --generate-main \
-            --main-out ../main.tex \
-            --preamble ../latex/preamble.tex 2>&1 | tail -20 || \
+            --main-out ../main.tex 2>&1 | tail -20 || \
             echo "::warning::Content build reported issues (chapters/main.tex still generated)"
           echo "── Generated artefacts ──"
           ls -la ../main.tex ../chapters/*.tex 2>/dev/null | head -20 || \
