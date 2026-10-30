@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-24T07:53:21Z
-updated_at: 2026-10-30T12:15:00Z
+updated_at: 2026-10-30T13:50:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -58,6 +58,8 @@ _2026-10-30T12:15Z_ — Follow-ups completed/opened:
 - Opened `litlfred/folio-assistant-core#231`: adds `bun.lock` (plus `mdast-util-math` and `@types/mdast` in `package.json`, imported by `scripts/codemod-refterm.ts`), declares `folio-assistant-core-libraries` (`path: "libraries/"`, typology `software-library`), and generates 22 `software-library/1.0.0` nodes and `libraries/README.md`.
 - Opened `litlfred/who-iris#92`: adds `bun.lock`, declares `who-iris-libraries` (`path: "libraries/"`, typology `software-library`), and generates 5 `software-library/1.0.0` nodes and `libraries/README.md`.
 - Only `bootstrap-tools#44` (blocked on owner decision for the `ujiv` layering choice a/b/c) and merging the two new PRs remain.
+
+_2026-10-30T13:50Z_ — bootstrap-tools#44 is DONE: cat-harness#725 (80126dc, software-library 1.2.0 schema for held nodes) and cat-harness-tools#877 (f3bf0cf) merged; folio-assistant re-pinned both together in fa#2743 (482a353). Any later bootstrap-tools re-pin in cat-harness-tools must run `libraries:derive`. Still open: folio-assistant-core#231 and who-iris#92 (bun.lock + libraries/), not yet merged. (CI speed thread, https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5)
 
 ## Merged from the cat-harness copy (bean dedupe, 2026-10-30)
 
