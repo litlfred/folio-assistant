@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-30T17:15:00Z
+updated_at: 2026-10-30T18:10:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -86,3 +86,5 @@ On folio-assistant-sci having no LICENSE or NOTICE while it carries the MIT clau
 _2026-10-24T08:16Z_ — Claimed by the separation drain thread (session https://claude.ai/code/session_01X14WfP6kHutkCyB8dpmj4e). Open PRs: litlfred/folio-assistant-sci#68, litlfred/cat-harness#511 (licence, owner review).
 
 _2026-10-30T17:15:00Z_ — https://github.com/litlfred/cat-harness-tools/pull/867 (739fdc0) and https://github.com/litlfred/cat-harness/pull/717 (e754db5) merged: F1 bun.lock, F5 test/README.md, sibling boot. Left: the two QA reports and the licence PRs. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie (thread "Land GOAL 1 placement moves").
+
+_2026-10-30T18:10:00Z_ — Fresh-clone QA re-run (note folio-assistant-w1gy--2026-10-30--claude-saqd-maths-qa-checkers.md). cat-harness PASSES on e3d1dd28 after https://github.com/litlfred/cat-harness/pull/769, https://github.com/litlfred/cat-harness/pull/770 and https://github.com/litlfred/cat-harness/pull/776. cat-harness-tools does NOT pass in the bare sibling layout: 323 failures outside its baseline, mostly checkout or site-build tests (F18), plus root detection (F11), gen-schema-docs reading the git remote (F12) and a baseline measured in a different layout (F19). Stays in-progress. Session https://claude.ai/code/session_01Qmmkt5WaLSwgbVA8urteie.
