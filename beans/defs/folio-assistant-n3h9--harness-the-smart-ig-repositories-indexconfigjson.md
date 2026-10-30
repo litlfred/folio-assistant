@@ -159,3 +159,21 @@ Measured from each fork's default branch and gh-pages through the REST API.
 **smart-core.** Pre-SUSHI: `ig.ini` → `input/core.xml` (`who.fhir.core` 0.2.0, no FSH), template `who.fhir.template#current`. A `#current` package is served only by build.fhir.org (refused here) and the mirror takes exact versions only, so the IG Publisher cannot run it in this environment.
 
 Owner setting still open: the Routine environment allowing clone of the litlfred repos and `bun` (not attempted).
+
+## 2026-10-30 12:30Z — fixes after the measurement (same thread)
+
+- **smart-ra#101 (merged, 95229fa)**: `site.build.pre` now runs `ig-index:build` before `check:archimate`. Since the repin to smart-base 415d637 (smart-ra#96), every smart-ra site build was refused at the coverage gate. The cause: smart-base stopped committing `fhir-artifact-index/index.json` (smart-base 091a6c1, fhir-harness#124), so the ig-pages writer for the mounted smart-base had nothing to render. Verified by a dry-run from a cleared index: 16089 pages, 0 unresolved. The PR's harness checks show failures only because they ran after the merge (`refs/pull/101/merge` gone).
+  - smart-trust and smart-immunizations mount smart-base the same way and will likely hit the same gate on their next publish. Neither runs `ig-index:build` for mounted IG instances. The general fix belongs in build-instance-site: run mounted instances' `builtAtPublish` writers.
+- **smart-ra public-comment preview: done.** It is agent-built at `STAGING/pr-93/` (gh-pages 62c4195), from external PR smart-ra#93 (Chine-E, a 1-line prose change to the executive summary) merged onto main.
+  - The preview carries `changeset.json` (1 prose change), `review/`, and the public-comment dashboard (`en/folio-assistant-core/public-comments/folio/dpi-h-ra/`, 2744 comments).
+  - The link is on smart-ra#93. Pages run 41053277898 was queued at the time of writing.
+  - Seen: stage-local found "no open pull request" for the local branch name `pr-93`, because the fork's head ref is `patch-3`. So the review page has no PR review comments.
+- **smart-base-clinical#5 (merged, c3d594e)**:
+  - `site: {landing: smart-base, agentRun: true}`;
+  - fhir-harness's `ig-ast-refresh.yml` and `site-publish.yml` templates, unchanged;
+  - an AGENTS.md with "The site";
+  - the 7 layers repinned to smart-ra's 2026-10-29 set, with the owner's consent of 2026-10-30T11:13Z. smart-base's directory list follows 415d637, where `smart-base-external-schemas` is gone.
+  - Not repinned to the main tips: fhir-harness main `typologies/ig-annex.json` carries `shownOnPublishedPages`, which cat-harness main's GraphTypologyNode schema rejects (`unrecognized_keys`). The main tips are mutually inconsistent at 2026-10-30 11:50Z.
+- **smart-base-clinical AST: blocked.** `ig-ast-refresh` run 41051844061 failed twice, deterministically (attempts at 11:58Z and 12:15Z, about 2 minutes each), in "Build the IG and export its AST". The only readable annotation is "404 Not Found"; the job log and the `ast-build-log` artifact are refused from this container (blob host 403).
+  - Suspected cause: `smart.who.int.base#1.0.0` (sushi-config dependency), which is neither on npm nor in fhir-package-mirror. The template `who.template.root#current` is the other candidate.
+  - Needs someone who can read the job log (the owner, in the browser), or the package published or mirrored. Without an AST there is no site, so smart-base-clinical's checklist item 3 stays open.
