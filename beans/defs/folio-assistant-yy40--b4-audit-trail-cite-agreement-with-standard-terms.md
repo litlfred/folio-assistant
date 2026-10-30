@@ -2,11 +2,11 @@
 # folio-assistant-yy40
 $schema: bean/1.0.0
 title: 'B4 audit trail: cite agreement with standard terms (prov:used + DCAT spdx:checksum + VC id)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T19:20:41Z
-updated_at: 2026-10-30T19:20:41Z
+updated_at: 2026-10-30T20:10:00Z
 parent: folio-assistant-negd
 ---
 
@@ -23,6 +23,10 @@ In `cat-harness-tools/schemas/content/prov.ts`, `schemas/kg/prov-jsonld.ts` and 
 - The Consent citation from `2egb` (`id` + `versionId`) is out of scope unless it carries invented fields too. If it does, record that here instead of changing it.
 
 ## Done when
-- [ ] No invented agreement or grant fields remain: no `cat-harness:agreement`, `cat-harness:grant` or `ProvAgreementRefSchema`. The agreement is cited through `prov:used` → DCAT distribution + `spdx:checksum`, and the grant by VC 2.0 credential id.
-- [ ] `previousHash` / `recordHash` are documented as a local extension wherever they are defined.
-- [ ] Tests pass: `schemas/content/prov.test.ts`, `scripts/tests/prov-record.test.ts` and `scripts/tests/prov-qaqc.test.ts`, updated to the new shape.
+- [x] No invented agreement or grant fields remain: no `cat-harness:agreement`, `cat-harness:grant` or `ProvAgreementRefSchema`. The agreement is cited through `prov:used` → DCAT distribution + `spdx:checksum`, and the grant by VC 2.0 credential id.
+- [x] `previousHash` / `recordHash` are documented as a local extension wherever they are defined.
+- [x] Tests pass: `schemas/content/prov.test.ts`, `scripts/tests/prov-record.test.ts` and `scripts/tests/prov-qaqc.test.ts`, updated to the new shape.
+
+## Progress
+- 2026-10-30: litlfred/cat-harness-tools#983 (issue #982), based on `main` (#919 was already merged as f05c8748). Agreement = `prov:used` `["prov:Entity","dcat:Distribution"]` with `spdx:checksum` (`spdx:algorithm` + `spdx:checksumValue`); grant = `prov:used` `["prov:Entity","cred:VerifiableCredential"]` whose `@id` is the VC 2.0 id. Hash-chain terms labelled local extension in `PROV_LOCAL_EXTENSION_TERMS` and as `rdf:Property` + `rdfs:comment` nodes in emitted PROV-JSONLD. No skill or README describes the log today, so no doc outside the schema needed changing. Awaiting owner review; not merged.
+- Consent citation (`2egb`): `cat-harness:consent` `{id, versionId}` restates FHIR `Consent.id` + `meta.versionId`, no new fields; left unchanged. `cat-harness:consentBased` is a local boolean flag — a candidate for the same treatment if the owner wants it gone.
