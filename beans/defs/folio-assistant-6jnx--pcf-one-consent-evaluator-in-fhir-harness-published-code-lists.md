@@ -2,11 +2,11 @@
 # folio-assistant-6jnx
 $schema: bean/1.0.0
 title: 'PCF follow-up: one Consent evaluator in fhir-harness; read PurposeOfUse and Consent from published packages'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T16:55:00Z
-updated_at: 2026-10-30T16:55:00Z
+updated_at: 2026-10-30T17:13:00Z
 parent: folio-assistant-negd
 ---
 
@@ -24,3 +24,5 @@ Repo: cat-harness, fhir-harness.
 - [ ] cat-harness `schemas/content/odrl.ts` names no FHIR resource and no `pcf:` key; a7c1's three cases still pass via the injected evaluator.
 - [ ] fhir-harness has one PCF Consent evaluator; no hand-typed PurposeOfUse hierarchy or Consent type remains.
 - [ ] The published `ihe.iti.pcf#1.1.0` example sweep in `pcf-consent.test.ts` runs (not skipped) in CI.
+
+_2026-10-30T17:13:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`) to implement items 1–5 across `cat-harness` and `fhir-harness`.
