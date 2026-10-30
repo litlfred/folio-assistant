@@ -18,3 +18,9 @@ Mapping (from the 14:15Z analysis in this thread): permission/prohibition to `ru
 - A worked DSA example renders to a Permission that validates (SUSHI/IG validation, 0 errors).
 - Every ODRL term that has no Permission home is listed in the render output as dropped.
 - No field outside FHIR R5 Permission is invented.
+
+## Progress 2026-10-30
+- Owner moved the home to litlfred/smart-trust-phw. That repository declares no Tool or code directory, so a worked example went there instead of renderer code: litlfred/smart-trust-phw#10 (`input/fsh/examples/DSAPermissionExample.fsh`, Ministry M → Institute I).
+- SUSHI: the example adds 0 errors and 0 warnings. The 14 baseline errors on phw main come from packages the sandbox cannot fetch. The IG Publisher/validator did not run.
+- Unmapped ODRL terms are listed in the Permission's Description and in the PR.
+- Still open: the renderer code needs a code-capable home (smart-trust-server, or a Tool in smart-trust-tools / fhir-harness: owner's call).
