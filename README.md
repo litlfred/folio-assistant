@@ -19,6 +19,7 @@
   - [folio-assistant-core](#folio-assistant-core)
   - [smart-base](#smart-base)
   - [smart-trust](#smart-trust)
+  - [smart-trust-phw](#smart-trust-phw)
   - [bootstrap](#bootstrap)
   - [bootstrap-tools](#bootstrap-tools)
   - [who-iris](#who-iris)
@@ -50,7 +51,7 @@
 
 ## Harness instances
 
-This checkout is an **index**: it declares no instance of its own and holds 11, each declaring its own `<instance>.json`. Every one has two entry points on purpose: a **README** saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments the first rather than restating it.
+This checkout is an **index**: it declares no instance of its own and holds 12, each declaring its own `<instance>.json`. Every one has two entry points on purpose: a **README** saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments the first rather than restating it.
 
 The table is generated from the declarations themselves; it is not a list anybody keeps. Add an instance and it appears; rename a directory and the links follow.
 
@@ -68,11 +69,12 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/site-docs/) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) |
+| `smart-trust-phw` | smart-trust-phw | [AGENTS.md](./smart-trust-phw/AGENTS.md) | [README](./smart-trust-phw/README.md) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **4 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **4 of 12** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
-> **2** declared `memory` or `docs` directories are built at publish, never committed, so they are not linked from a committed file.
+> **3** declared `memory` or `docs` directories are built at publish, never committed, so they are not linked from a committed file.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
@@ -128,6 +130,12 @@ This is the WHO SMART Trust Implementation Guide
 <br> </br>
 
 → [smart-trust/README.md](smart-trust/README.md)
+
+### `smart-trust-phw`
+
+This is an empty framework, to be used to create SMART Implementation Guides.
+
+→ [smart-trust-phw/README.md](smart-trust-phw/README.md)
 
 ### `bootstrap`
 
