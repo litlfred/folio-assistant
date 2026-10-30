@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-30T11:10:00Z
+updated_at: 2026-10-30T13:19:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -75,3 +75,7 @@ Read the full job log of `litlfred/cat-harness` `post-merge-regen.yml` run `4008
   - [`litlfred/cat-harness#606`](https://github.com/litlfred/cat-harness/pull/606): declares `docs/en/cat-harness/{bean,software-library,attestations/folio-assistant-core,attestations/smart-base}/` in `cat-harness.json` `builtAtPublish` (`because: "checkout"`), untracks `docs/en/cat-harness/bean/index.html`, handles move-in-flight role extensions (`lean-toolchain`) in `schemas/scenario-overlay.ts`, and refreshes the 7 stale committed artefacts (`external-schemas/omg-bpmn-2.0.json`, `docs/assets/folio/index.json`, `docs/assets/prov/merge-train--train-6.prov.jsonld`, and 6 `docs/assets/glossary/*.skos.jsonld` files).
 
 _2026-10-30T11:10:00Z_ — Progress update: `litlfred/cat-harness-tools#590` (`2026-10-23T15:51:09Z`), `#614` (`2026-10-23T16:37:25Z`), `#771` (`2026-10-29T07:26:28Z`), and `litlfred/cat-harness#606` (`2026-10-29T07:27:15Z`) all merged on `main`. Box 4 remains open: `post-merge-regen.yml` on `cat-harness` `main` (runs `40897480812` and `40900325607`) currently hits the 2h0m job timeout in step 11 (`Run post-merge regen in the composed index`).
+
+_2026-10-30T13:19:00Z_ — Diagnosed the 2h0m timeout in `post-merge-regen.yml` (`job 123530439008` of run `40897480812`, `job 123540518890` of run `40900325607`) and opened `litlfred/cat-harness-tools#885`:
+1. **Recursive 25-minute `qa:refresh` rebuilds inside `uml:overview:check`**: At cancellation (1h58m, >125,000 spawned PIDs), the active process tree was `post-merge:regen` → `uml:overview:check` (`publish-check.ts uml:overview`) → `gen-uml-overview.ts` → `requireCurrentWorkingCopy` → `ensureWorkingCopy` → `qa:refresh` → `skill:register`. Because `fa/cat-harness` is a gitignored mount in the composed index, `trackedQaFiles` saw 0 git-tracked files and ran `qa:refresh` in `computed` mode across all 25 `QA_WRITERS` (~25m), and later checks in the same pass (`docs:pages:check` touching `*/test/results/witnesses/**`) invalidated `build/regen-cache/qa-working-copy.json`, causing `uml:overview:check` to re-run `qa:refresh` on every pass. Fixed by setting `QA_WORKING_COPY_BUILDING=1` (`BUILDING_ENV`) in `checkPostMergeRegen`'s `baseRunner` (since `post-merge:regen` already checks and repairs every QA writer as its own pair over the mounted instances' committed `test/results/` working copy).
+2. **Redundant full-suite re-execution in `regenToFixpoint`**: Because ~18 `builtAtPublish` checks fail in Step 1 (`dryRun: true`) on a fresh checkout, `checkPostMergeRegen` always enters `regenToFixpoint`, which previously had no `skip` or `narrow` hooks — re-running all ~65 clean checks (including multi-minute `translation:block-qa:check` and `kg:audit:all:check`) in Pass 1 and Pass 2+, and disabling the barren-pass check (`lastChange === undefined`). Fixed by passing `skip` and `narrow` hooks to `regenToFixpoint` so Pass 1 skips pairs whose own check/residual passed in the audit pass, Pass 2+ skips passing pairs unless a committed file moved in the previous pass that hits their declared inputs, and `narrow.begin` measures per-pass moves so barren passes settle immediately.
