@@ -2,10 +2,10 @@
 # folio-assistant-fwtz
 $schema: bean/1.0.0
 title: docs-site must rebuild when the bean branch moves (ref + concurrency)
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-23T16:40:00Z
+updated_at: 2026-10-30T14:35:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -154,3 +154,17 @@ The default if no answer is **client**. It is needed before phase 2, not for the
 - cat-harness#434 (gp2f, merged bda1867) moved the `fa-tiles` list and the navbar row out of every page and into one Liquid-rendered `assets/js/harness-data.js`.
 - cat-harness#432 (g196, open) loads that file with NO `?v`. A content-hash `?v` would put every count change back into every page. Two previews 25 minutes apart differed on 1,351 pages for one count (133 → 132), and only on that meta.
 - With both merged, a bean edit changes `harness-data.js`, `assets/beans/*`, the beans slice and the two pages that print the counts (`en/cat-harness/beans/<instance>/` and `en/cat-harness/site/`), not every page. Stale tiles last at most the Pages cache (about 10 min).
+
+## 2026-10-30T14:35:00Z — phase 1 dry-run fixes (`litlfred/cat-harness-tools#903`)
+
+Investigated the two dry-run findings from `litlfred/folio-assistant#2646` (runs `40900768066` on `5723804..dfc77dc` and `41057942184` on `f205d13..71f74d2`) and opened `litlfred/cat-harness-tools#903` (`e1fb782` on `claude/fwtz-docs-cone-dryrun-fixes`):
+
+1. **Finding 1 — `health` branch-mount diff failures (`scripts/docs-cone-dryrun.ts`):**
+   - Four instances declare `id: "health"` (`cat-harness.health`, `smart-base.health`, `smart-immunizations.health`, `smart-trust.health`), so `build.json.mounts` keyed by bare `m.id` collided on `"health"` (storing `smart-trust.health`'s tip `18249e7` / `e254f37`), and `docs-cone-dryrun.ts` attempted `git -C . fetch ... origin <sha>` against the checkout's `.git` instead of the bare `BranchStore` (`<git-common-dir>/branch-store.git` or `<git-common-dir>/branch-store/<owner>__<repo>.git`).
+   - Added `markerKey(m)` (`m.key ?? m.id`), `mountsForStamp(markers)` (merged into `_site/build.json` by `docs-cone-dryrun.ts judge`), `diffBranchMount(root, m, from, to)` (diffing with `--no-renames` inside `BranchStore.open(m.branch, storeOptionsFor(m, root))`), and `m.branchPath ?? m.path` in `intoCheckout`.
+2. **Finding 2 — deploy stamps, search-split coverage and repository-scoped cone dirs:**
+   - Added `.map` to `TEXTUAL` and blanked `jekyll-remote-theme-YYYYMMDD-PID-RAND` temp directory paths in `.css.map` files (3 files per deploy) plus `qa:working-copy` live-checker `"at":"<ISO>","sha":"<40-hex>"` and `qa-site-assets` `main/<40-hex>` stamps in `DEPLOY_STAMPS` (196 of the 339 measured files in `40900768066`).
+   - Covered `assets/js/search/*.json` (`search-split.ts`) in `docs-cone-dryrun.ts` when `assets/js/search-data.json` is in the predicted cone.
+   - Indexed non-HTML templates with YAML front matter (`.liquid`, `.json`, such as `assets/js/harness-data.liquid` -> `assets/js/harness-data.js` and `assets/harness/tiles.json`) as `role: "data"` in `scripts/docs-rendered-impact.ts`.
+   - Fixed `readTree` in `scripts/check-derived-from.ts` to resolve `d.scope === "repository"` directory paths against `repoRoot` (`beans/`, `todos/`, `test/health/results/`) rather than `<instance>/<path>` (`cat-harness/beans/`), so `coneByFile` carries `cat-harness/beans` when `beans/defs/*` changes.
+3. **Also in `litlfred/cat-harness-tools#903`:** synced `beans/defs/cat-tools-tk99--programme-progress-an-epic-burn-down-and-a-math-pr.md` to `status: completed` (`updated_at: 2026-10-29T07:38:35Z`) from `folio-assistant-hf2q` (`9bea5ab737`).
