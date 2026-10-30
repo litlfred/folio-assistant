@@ -493,6 +493,16 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
         # (the state:mount step above lays them down). Their docs/ pages are
@@ -679,10 +689,8 @@ jobs:
         # (`ig-index:build`, fhir-harness), once per run, and shared with the
         # reader jobs as the `ig-indexes` artifact, which they download before
         # their own `smart:pages` (owner, 2026-10-23: "Publish + staging,
-        # gates use cache"). Until the IG instances stop committing their
-        # copies, this replaces those copies in the checkout only. The bun
-        # test shards do not download it: their tests still assert facts of
-        # the committed copies, and move with step 3 (fhir-harness#124).
+        # gates use cache"). The IG instances commit no copy (step 3). Jobs
+        # that run before this one is done build their own, the same way.
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bun run cat ig-index:build
@@ -978,6 +986,16 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
         # (the state:mount step above lays them down). Their docs/ pages are
@@ -1151,8 +1169,11 @@ jobs:
           REUSED_RUN: ${{ needs.verdict-reuse.outputs.run_id }}
           # A draft PR runs the fast tier only (bean `dft1`, see `on:`): every
           # part is skipped by design, and the full tier runs when it is
-          # marked ready for review.
-          DRAFT: ${{ github.event.pull_request.draft == true }}
+          # marked ready for review. Every other event (push, merge_group,
+          # workflow_dispatch) carries no pull_request payload and is never a
+          # draft, which the expression states rather than leaves to how
+          # `null == true` evaluates.
+          DRAFT: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft == true }}
         # No `gate-shell.sh` here: this job never checks out, so the wrapper
         # does not exist for it. It needs none — the diagnosis is already in
         # the env vars, so it writes its own summary and WHICH part failed
@@ -2320,6 +2341,16 @@ jobs:
       - name: fhir-harness stays WHO-free
         run: bun run cat check:fhir-harness-exclusions
 
+      # fhir-harness's `ig-annex` kind (fhir-harness d911bf4): a markdown annex
+      # is appended to its host page as written, so its links address the
+      # PUBLISHED page (`shownOnPublishedPages`) and are taken out of the
+      # source-tree link sweep. This is the other half, judging them from the
+      # host page; without a step running it, a broken annex link is checked
+      # by nothing, and the gate's `@covers ig-annex` reaches no file. With no
+      # IG mounted it reports "nothing to check" rather than passing silently.
+      - name: every markdown annex link resolves from the page it is appended to
+        run: bun run cat check:ig-annex-links
+
       # The `lean` kind arrived with folio-assistant-sci's `lean/` (sci
       # c396b5b). `audit:coverage` counts a kind as reached only when a gate
       # CI runs declares `@covers` it, so without this step the kind's files
@@ -2956,6 +2987,16 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -3935,6 +3976,15 @@ jobs:
       - name: adversarial review of agent changes (warn-only)
         run: bun run cat check:adversarial-review
 
+      # Wired 2026-10-29: declared by cat-harness-tools#827 and run by no
+      # workflow until now. Every generated file names a writer that exists
+      # (folio-assistant#1254). Warn-only by the owner's 2026-10-29 ruling
+      # (option A: derive, accept all, warn), so it exits 0 in every state and
+      # prints each marker naming no writer the checkout can find, the
+      # `dependency-advisories` pattern. `--strict` is the switch for later.
+      - name: every generated file names a writer that exists (warn-only)
+        run: bun run cat check:generated-writers
+
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. Bean `ymvt`: no imported `<name>.config.json`
       # is left beside the index; each instance's config is inline in
@@ -3944,8 +3994,14 @@ jobs:
 
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. smart-base's DAK annex records resolve and validate.
-      - name: DAK annexes resolve
-        run: bun run cat check:dak-annexes
+      - name: web annexes resolve
+        run: bun run cat check:web-annexes
+
+      # The generated `libraries/` of each layer are current (bean `jbvi`).
+      # Brought in with the re-pin that adds the `software-library` kind;
+      # `libraries:check` declares `@covers software-library`.
+      - name: software libraries are current
+        run: bun run cat libraries:check
 
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. folio-assistant-sci's extracted reference lists
@@ -4164,6 +4220,16 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
+        # The IG instances commit no artefact index (fhir-harness#124 step 3):
+        # `ig-index:build` writes each one's index, menu, releases and package
+        # from the IG's cached AST. It takes about 15 seconds, so this job builds
+        # its own rather than waiting on qa-working-copy for the `ig-indexes`
+        # artifact.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS

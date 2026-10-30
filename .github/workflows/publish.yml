@@ -185,7 +185,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.bun/install/cache
-          key: bun-${{ runner.os }}-${{ hashFiles('content/bun.lock') }}
+          key: bun-${{ runner.os }}-${{ hashFiles('folio/bun.lock') }}
           restore-keys: |
             bun-${{ runner.os }}-
 
@@ -206,20 +206,20 @@ jobs:
             witness-cache-${{ runner.os }}-
 
       - name: Install content pipeline dependencies
-        run: if [ ! -d content ]; then
-            echo "::notice::no content/ in this checkout — nothing to install (this instance carries no folio)"
-          elif [ -f content/bun.lock ]; then
-            (cd content && bun install --frozen-lockfile)
+        run: if [ ! -d folio ]; then
+            echo "::notice::no folio/ in this checkout — nothing to install (this instance carries no folio)"
+          elif [ -f folio/bun.lock ]; then
+            (cd folio && bun install --frozen-lockfile)
           else
-            echo "::warning::content/ carries no bun.lock — installing UNPINNED"
-            (cd content && bun install)
+            echo "::warning::folio/ carries no bun.lock — installing UNPINNED"
+            (cd folio && bun install)
           fi
 
       - name: Check references.bib is in sync with references.ts
         # Guard against the recurring "Citation 'foo' undefined" failure
         # mode (PR #1702): a contributor adds an entry to
-        # content/schema/references.ts but forgets to regenerate
-        # references.bib via `cd content && bun run export-bibtex`.
+        # folio/schema/references.ts but forgets to regenerate
+        # references.bib via `cd folio && bun run export-bibtex`.
         # The pdflatex compile in the paper-pdf job then fails with
         # an undefined-citation error, which is opaque from a content
         # PR's perspective. Fail fast here with an actionable message.
@@ -227,18 +227,18 @@ jobs:
         # Ignores the `% Generated:` timestamp line, which differs on
         # every regen but carries no semantic content.
         run: |
-          cd content && bun run pipeline/export-bibtex.ts
+          cd folio && bun run pipeline/export-bibtex.ts
           cd ..
           if ! diff -q -I '^% Generated:' \
                <(git show HEAD:references.bib) references.bib > /dev/null; then
-            echo "::error::references.bib is stale: a content/schema/references.ts entry was added/modified without regenerating references.bib. Fix locally with: cd content && bun run export-bibtex && cd .. && git add references.bib && git commit"
+            echo "::error::references.bib is stale: a folio/schema/references.ts entry was added/modified without regenerating references.bib. Fix locally with: cd folio && bun run export-bibtex && cd .. && git add references.bib && git commit"
             echo ""
             echo "── Diff (regenerated vs committed; '% Generated:' line ignored) ──"
             diff -u -I '^% Generated:' \
               <(git show HEAD:references.bib) references.bib | head -40 || true
             exit 1
           fi
-          echo "✓ references.bib is in sync with content/schema/references.ts"
+          echo "✓ references.bib is in sync with folio/schema/references.ts"
 
       - name: Extract paper list from folio
         id: folio
@@ -334,12 +334,12 @@ jobs:
 
       - name: Validate content objects
         # Pass the paper dir explicitly. Bare `bun run validate` resolves to
-        # content/package.json's no-arg script, which validates the (empty)
-        # content/objects/ dir and always passes — a silent no-op that never
+        # folio/package.json's no-arg script, which validates the (empty)
+        # folio/objects/ dir and always passes — a silent no-op that never
         # checked the actual paper. The paper currently validates clean
         # (0 errors), so enabling the real check closes that hole without
         # breaking CI; future content errors now fail here as intended.
-        run: cd content && bun run pipeline/validate.ts quantum-observable-universe/
+        run: cd folio && bun run pipeline/validate.ts quantum-observable-universe/
 
       - name: Build content objects (chapters .tex + main.tex)
         # Pre-existing cross-reference warnings produce exit code 1
@@ -350,7 +350,7 @@ jobs:
         # / lean_ci.yml. Without this, the downstream paper-pdf job fails with
         # "latexmk: Could not find file 'main.tex'".
         run: |
-          cd content
+          cd folio
           # Pre-build hooks from the npm `build` script (witness staleness +
           # atlas render). Keep them best-effort, exit code intentionally
           # masked to match the existing behaviour.
@@ -367,6 +367,18 @@ jobs:
           ls -la ../main.tex ../chapters/*.tex 2>/dev/null | head -20 || \
             { echo "::error::main.tex was not generated"; exit 1; }
 
+      - name: Generate leanblueprint layout (formal \uses + \lean/\leanok)
+        # Emit blueprint-src/ via exportBlueprint + buildBlueprintLayout so
+        # blueprint-html compiles the formal-edge export (replacing editorial
+        # \uses with generated formal \uses, injecting \lean / \leanok, and
+        # stripping \blockannot margin annotations) rather than flattening
+        # main.tex (bean yxob / #1492).
+        run: |
+          cd folio && bun run ../folio-assistant-sci/pipeline/blueprint-layout.ts \
+            --paper quantum-observable-universe/quantum-observable-universe.ts \
+            --out ../blueprint-src 2>&1 | tail -20 || \
+            echo "::warning::Blueprint layout generation reported issues"
+
       - name: LaTeX preflight (macro lint — fast, no TeX)
         # Fast static gate (~1 s, no TeX install) on the GENERATED compile
         # unit (main.tex + every \input'd chapters/*.tex). Catches the three
@@ -380,7 +392,7 @@ jobs:
         # conditions under which classes A/B/C historically reached main
         # and needed a manual fix(latex) commit (see
         # docs/audits/2026-06-07-latex-compile-bug-prevention.md).
-        run: cd content && bun run pipeline/latex-preflight.ts ../main.tex
+        run: cd folio && bun run pipeline/latex-preflight.ts ../main.tex
 
       - name: Compute output filename base
         id: filename
@@ -398,6 +410,7 @@ jobs:
           path: |
             main.tex
             chapters/
+            blueprint-src/
             standalone-*.tex
             papers.json
             folio-assistant/computations/*.witness.json
@@ -521,7 +534,7 @@ jobs:
         continue-on-error: true
         run: |
           if command -v bun >/dev/null 2>&1; then
-            bun run content/pipeline/latex-overfull-report.ts main.log --min 10
+            bun run folio/pipeline/latex-overfull-report.ts main.log --min 10
           else
             echo "bun unavailable in image; raw Overfull lines are in latex-warnings.txt"
           fi
@@ -630,23 +643,13 @@ jobs:
         with:
           name: content-pipeline-${{ needs.content-pipeline.outputs.filename-base }}
 
-      - name: Create plastex.cfg
+      - name: Build HTML blueprint from generated layout
+        # blueprint-src/ is generated in content-pipeline by blueprint-layout.ts
+        # (via exportBlueprint: formal \uses + generated \lean/\leanok, with
+        # \blockannot stripped) and carries its own plastex.cfg + web.tex.
         run: |
-          cat << 'EOF' > plastex.cfg
-          [general]
-          plugins = leanblueprint
-          [document]
-          toc-depth = 2
-          EOF
-
-      - name: Flatten \input includes
-        # plasTeX sometimes struggles with nested \inputs if they aren't fully resolved.
-        # We flatten it just to be safe.
-        run: latexpand main.tex > main-flat.tex 2>/dev/null || true
-
-      - name: Build HTML blueprint
-        run: |
-          plasTeX --dir=blueprint-out main-flat.tex 2>&1 | tail -50 || \
+          cd blueprint-src
+          plasTeX --dir=../blueprint-out web.tex 2>&1 | tail -50 || \
             echo "::warning::blueprint compile failed or had warnings"
 
       - name: Upload blueprint artefacts
