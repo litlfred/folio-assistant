@@ -2,11 +2,11 @@
 # folio-assistant-h3tx
 $schema: bean/1.0.0
 title: 'PHASE P4: the Publisher invoked for AST + QA only; a release still cut from a full build and saying so'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-30T19:55:00Z
+updated_at: 2026-10-30T19:41:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -66,3 +66,5 @@ Still to show: the first stale-cache refresh on a runner, and the first release 
 _2026-10-30T19:55:00Z_: **Stale-cache refresh seen on a runner.** litlfred/smart-immunizations-uganda "IG AST refresh" run 41046593760 (push, 11:14Z, `6218808`, no pre-export): the restored cache was judged `stale-inputs` (sourceRevision and inputDigest differ), so the workflow ran `IncrementalBuildCli` over it. Its own plan chose a full build (`::notice::AST rebuilt by IncrementalBuildCli: full`), the AST passed `validity`, `kind=full` was set as the job output, and the cache branch `cat/fhir-harness/fhir-ast/smart.immunizations.uganda` was re-seeded (16 resources, 79 edges). So the refresh path and the build-kind stamp work end to end.
 
 **Still not exercised: the release guard.** No litlfred release path reads the cached AST: smart-base `release.yml` hands off to WHO's smart-html release, a full Publisher build. `ig-ast.ts build-kind --require-full` therefore has nothing to judge until a litlfred IG cuts its own release from an AST. Owner asked whether to close on this evidence (thread "Finish IG and DAK beans"). Session https://claude.ai/code/session_01Qmmkt9C9fukFK42vgZRrKc.
+
+_2026-10-30T19:41:00Z_: **Completed.** Owner card 19:40Z ("Close h3tx now, or keep it open until a release uses the guard?"): "A. Close it now". Closed on the runner evidence above. Reopen when a litlfred IG cuts its own release from an AST, so that `build-kind --require-full` is exercised.
