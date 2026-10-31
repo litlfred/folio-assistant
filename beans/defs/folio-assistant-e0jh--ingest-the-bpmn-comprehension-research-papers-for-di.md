@@ -2,11 +2,11 @@
 # folio-assistant-e0jh
 $schema: bean/1.0.0
 title: 'Ingest the BPMN comprehension research papers (7PMG, labeling, PMCF, flow direction, ...) so diagram lint rules cite evidence'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T10:10:00Z
-updated_at: 2026-10-31T10:10:00Z
+updated_at: 2026-10-31T10:11:32Z
 ---
 
 Owner, 2026-10-31 (thread "Improve BPMN quality checks from research"): review a Gemini discussion on evidence-based BPMN style, and have the connected agent (agy) download and ingest every referenced article so the authoring rules and the diagram lint rules cite the papers, not Gemini's summary of them.
