@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/ToolReleaseKind",
+  "definitions": {
+    "ToolReleaseKind": {
+      "type": "string",
+      "enum": [
+        "jar",
+        "archive",
+        "binary",
+        "oci-image",
+        "toolchain-file"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseKindSchema.schema.json",
+  "title": "ToolReleaseKindSchema",
+  "description": "Generated from `ToolReleaseKindSchema` in schemas/tools/tool-release.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}

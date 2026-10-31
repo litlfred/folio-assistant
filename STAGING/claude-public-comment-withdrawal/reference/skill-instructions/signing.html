@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(280)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(280) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(130) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(280) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(280) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Signing | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Signing" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Signing" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-signing",
+    "src": "../../assets/qa/reference-skill-instructions-signing/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-signing/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=3d595c44f6af" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/signing.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-split-this-skill-and-the-tools","label":"The split: this skill, and the tools"},{"href":"#1-who-signs","label":"Who signs","icon":"1"},{"href":"#2-what-is-signed","label":"What is signed","icon":"2"},{"href":"#3-which-suites-are-accepted","label":"Which suites are accepted","icon":"3","children":[{"href":"#the-values-are-identifiers-the-standards-already-define","label":"The values are identifiers the standards already define","depth":1}],"fold":"1 sub-section"},{"href":"#4-key-custody","label":"Key custody","icon":"4"},{"href":"#5-the-route-api-or-person-by-reach","label":"The route: API or person, by reach","icon":"5"},{"href":"#6-what-a-verifier-must-check-and-record","label":"What a verifier must check, and record","icon":"6"},{"href":"#where-verification-is-implemented","label":"Where verification is implemented"},{"href":"#open-questions-for-the-owner","label":"Open questions for the owner"},{"href":"#what-this-skill-does-not-decide","label":"What this skill does not decide"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller)return;
+    var k='fa-share:'+r;if(sessionStorage.getItem(k))return;
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(function(){});
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Signing</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/signing.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/signing.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/signing.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/signing.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="signing--the-process-not-the-code"><a href="#signing--the-process-not-the-code" class="anchor-heading" aria-labelledby="signing--the-process-not-the-code"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Signing — the process, not the code
+  
+  
+</h1><p>A signature is evidence only when a reader can establish <strong>who</strong> signed,
+<strong>what</strong> they signed, <strong>under which suite</strong>, and <strong>against which key and trust
+anchor</strong> it was checked. This skill is the rule set for that, for any subject:
+a QA report, a mounted declaration, a materialised source, a data sharing
+grant. <a href="../../reference/skill-instructions/qa-report-signing.html"><code class="language-plaintext highlighter-rouge">qa-report-signing</code></a> is this skill applied to one
+subject, and keeps only what is particular to QA reports.</p><p>From the owner, 2026-10-30 14:37Z:</p><blockquote><p>“JsonWebSignature2020 is kept for now, 2025 is also supported. up to
+jurisdiction. there is the skill of ‘signing’ and the tool we need to
+differentiate.”</p></blockquote><p>And at 15:45Z, on the tool: <strong>verify only</strong>, wrapping an existing open-source
+library, plus key lookup. There is no <code class="language-plaintext highlighter-rouge">sign</code> tool unless the harness itself
+must issue grants or sign its own logs.</p><h2 id="the-split-this-skill-and-the-tools"><a href="#the-split-this-skill-and-the-tools" class="anchor-heading" aria-labelledby="the-split-this-skill-and-the-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The split: this skill, and the tools
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th></th><th>what it is</th><th>where it lives</th></tr></thead><tbody><tr><td><strong>the signing skill</strong> (this file)</td><td>who, what, which suite, key custody, route, what a verifier checks</td><td><code class="language-plaintext highlighter-rouge">cat-harness</code>, a definition</td></tr><tr><td><strong>verify</strong> and <strong>resolve-key</strong> tool contracts</td><td>the Tool’s input and output, naming this skill in <code class="language-plaintext highlighter-rouge">satisfies</code></td><td><code class="language-plaintext highlighter-rouge">cat-harness/tools/&lt;id&gt;/&lt;id&gt;.ts</code>, when written</td></tr><tr><td>their code</td><td>a thin wrapper over a maintained library</td><td>the tools layer (https://github.com/litlfred/cat-harness-tools), or the layer whose library it wraps (see <em>Where verification is implemented</em>)</td></tr></tbody></table></div><p><strong>Definitions there, implementations here.</strong> Nothing in this skill is code,
+and it names no library as chosen. The cryptography is never written in this
+repository: a maintained, open-source library does it
+(<a href="../../reference/skill-instructions/finding-software.html"><code class="language-plaintext highlighter-rouge">finding-software</code></a>).</p><h2 id="1-who-signs"><a href="#1-who-signs" class="anchor-heading" aria-labelledby="1-who-signs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Who signs
+  
+  
+</h2><p>Signing is done <strong>by the parties’ own systems</strong>: a ministry’s HSM, a PKI, the
+GDHCN onboarding tools, a release manager’s hardware key. The harness does not
+hold their keys and does not sign on their behalf. What this skill states is
+<strong>what they must sign, and with which suite</strong>.</p><p>Record whether the signer is a <strong>person</strong> or a <strong>machine</strong>. They attest
+different things and are not interchangeable:</p><ul><li>a <strong>machine</strong> attests that a service holding a key saw these bytes;</li><li>a <strong>person</strong> attests that someone with authority approved them.</li></ul><p>The role that signs is named by the process that asks for the signature, as a
+lane in its BPMN. A process never leaves “who signs” to the moment of signing.</p><p>The harness signs <strong>only</strong> where it is itself the party: issuing a grant it
+is accountable for, or signing its own logs. Each such case is decided by the
+owner before a <code class="language-plaintext highlighter-rouge">sign</code> tool exists.</p><h2 id="2-what-is-signed"><a href="#2-what-is-signed" class="anchor-heading" aria-labelledby="2-what-is-signed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. What is signed
+  
+  
+</h2><p>The exact bytes, or a digest of them, stated before anything is signed:</p><ul><li>the hash algorithm and the canonicalisation, where the suite has one (<code class="language-plaintext highlighter-rouge">rdfc</code>
+suites canonicalise as RDF, <code class="language-plaintext highlighter-rouge">jcs</code> suites as JSON);</li><li>the subject’s identity: which commit, which pin, which run;</li><li>for an enveloping signature (JWS, COSE), the payload itself.</li></ul><p>A signature kept apart from the bytes it covers attests nothing a reader can
+check. Keep it <strong>with</strong> its subject, or record a digest that a reader can
+recompute and compare.</p><h2 id="3-which-suites-are-accepted"><a href="#3-which-suites-are-accepted" class="anchor-heading" aria-labelledby="3-which-suites-are-accepted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Which suites are accepted
+  
+  
+</h2><p><strong>Which suites are accepted is policy, and it differs by jurisdiction.</strong> It is
+not a constant in code. The code supports a set of suites, and a policy picks
+which of them a given check accepts.</p><ul><li><strong>Each accepted trust anchor lists the suites it accepts.</strong> GDHCN is one
+possible trust anchor among others: a ministry’s own <code class="language-plaintext highlighter-rouge">did:web</code>, an X.509
+root, or a local key list may be anchors too, each with its own list.</li><li><strong>An agreement may narrow that list, but never widen it.</strong> A data sharing
+agreement can say “only <code class="language-plaintext highlighter-rouge">ecdsa-rdfc-2019</code>”. It cannot accept a suite that
+its anchor does not accept. A suite outside the anchor’s list is
+<strong>refused</strong>, whatever the agreement says.</li><li>A verifier accepts a signature only if its suite is in the list for that
+anchor, after any agreement has narrowed it. An empty result is a refusal,
+never “anything goes”.</li></ul><h3 id="the-values-are-identifiers-the-standards-already-define"><a href="#the-values-are-identifiers-the-standards-already-define" class="anchor-heading" aria-labelledby="the-values-are-identifiers-the-standards-already-define"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The values are identifiers the standards already define
+  
+  
+</h3><p>No new code list. Store each suite under the name its own standard gives it:</p><div class="table-wrapper"><table><thead><tr><th>family</th><th>identifier stored</th><th>defined by</th></tr></thead><tbody><tr><td>Data Integrity</td><td>the <code class="language-plaintext highlighter-rouge">cryptosuite</code> value: <code class="language-plaintext highlighter-rouge">ecdsa-rdfc-2019</code>, <code class="language-plaintext highlighter-rouge">ecdsa-jcs-2019</code>, <code class="language-plaintext highlighter-rouge">ecdsa-sd-2023</code>, <code class="language-plaintext highlighter-rouge">eddsa-rdfc-2022</code>, <code class="language-plaintext highlighter-rouge">eddsa-jcs-2022</code></td><td>W3C Data Integrity ECDSA and EdDSA Cryptosuites v1.0 (Recommendations, 15 May 2025)</td></tr><tr><td>older Linked Data proofs</td><td>the proof <code class="language-plaintext highlighter-rouge">type</code>: <code class="language-plaintext highlighter-rouge">JsonWebSignature2020</code></td><td>W3C <code class="language-plaintext highlighter-rouge">vc-jws-2020</code>, a Discontinued Draft since 2 July 2024</td></tr><tr><td>VC-JOSE-COSE</td><td>the media type: <code class="language-plaintext highlighter-rouge">application/vc+jwt</code>, <code class="language-plaintext highlighter-rouge">application/vc+sd-jwt</code>, <code class="language-plaintext highlighter-rouge">application/vc+cose</code> (and the <code class="language-plaintext highlighter-rouge">vp+</code> forms)</td><td>W3C Securing Verifiable Credentials using JOSE and COSE (Recommendation, 15 May 2025)</td></tr><tr><td>plain JOSE / COSE</td><td>the <code class="language-plaintext highlighter-rouge">alg</code>, e.g. <code class="language-plaintext highlighter-rouge">ES256</code>, <code class="language-plaintext highlighter-rouge">EdDSA</code></td><td>IANA JOSE and COSE algorithm registries</td></tr></tbody></table></div><p><strong><code class="language-plaintext highlighter-rouge">JsonWebSignature2020</code> is kept for now</strong> (owner, 2026-10-30). W3C
+discontinued it, but WHO GDHCN signs its trust list with it, so a verifier
+that trusts GDHCN must accept it for that list. When it is dropped, that is a
+policy edit to an anchor’s list. It is not a code change.</p><p>The same identifiers fit the existing <code class="language-plaintext highlighter-rouge">format</code> of <code class="language-plaintext highlighter-rouge">SignatureSchema</code> in
+<code class="language-plaintext highlighter-rouge">schemas/library/source-provenance.ts</code> (“a media type or a named scheme”).
+<code class="language-plaintext highlighter-rouge">MountSignatureSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/kg/mount-trust.ts</code> has no suite field yet.
+Without one, a mount signature cannot be checked by any verifier.</p><h2 id="4-key-custody"><a href="#4-key-custody" class="anchor-heading" aria-labelledby="4-key-custody"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Key custody
+  
+  
+</h2><ul><li><strong>A private key never goes in a repository</strong>, in a configuration file, or in
+anything this harness publishes. A deployment names a key by its mechanism
+or secret name, never by its value (<code class="language-plaintext highlighter-rouge">Placement.credentials</code> in
+<code class="language-plaintext highlighter-rouge">schemas/process/deployment-description.ts</code>).</li><li>The private key stays with its holder. A remote signing step sends the
+digest to the holder and gets back a signature. It never sends the key to
+the signer.</li><li>An air-gapped key needs a <strong>person</strong> to carry the bytes to it and the
+signature back. That is the human route below, not an exception to it.</li><li>A public key is found through its trust anchor (did:web, an X.509 chain, a
+local list). It is never found from a key inside the document being
+checked. DEV, UAT and PROD trust lists are kept apart, and a key from one
+never verifies a document meant for another.</li></ul><h2 id="5-the-route-api-or-person-by-reach"><a href="#5-the-route-api-or-person-by-reach" class="anchor-heading" aria-labelledby="5-the-route-api-or-person-by-reach"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. The route: API or person, by reach
+  
+  
+</h2><p>This is already decided. Do not write a second table for it.</p><ul><li><strong>Reach is a property of the actor</strong>: <code class="language-plaintext highlighter-rouge">schemas/process/actor-reach.ts</code>.
+<code class="language-plaintext highlighter-rouge">effectiveReach(deployment, actor)</code> gives <code class="language-plaintext highlighter-rouge">internet</code>, <code class="language-plaintext highlighter-rouge">egress-restricted</code>,
+<code class="language-plaintext highlighter-rouge">air-gapped</code> or <code class="language-plaintext highlighter-rouge">unknown</code>. An undeclared actor in a connected deployment is
+<code class="language-plaintext highlighter-rouge">unknown</code>, not <code class="language-plaintext highlighter-rouge">internet</code>.</li><li><strong>The route is computed</strong> by <code class="language-plaintext highlighter-rouge">processes/sdlc/decisions/signing-route.dmn</code>
+from that reach and the <code class="language-plaintext highlighter-rouge">signing-api</code> capability probe. It gives <code class="language-plaintext highlighter-rouge">api</code> or
+<code class="language-plaintext highlighter-rouge">human</code>. <code class="language-plaintext highlighter-rouge">unknown</code> and <code class="language-plaintext highlighter-rouge">air-gapped</code> both go to <code class="language-plaintext highlighter-rouge">human</code>.</li><li>A process that signs a new kind of subject <strong>reuses that table</strong> for its
+route gateway, as <code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code> does. It does not decide the
+route by hand, and it does not copy the table.</li></ul><p>Record <strong>which route signed it</strong>. A reader who cannot tell an API signature
+from a human one cannot tell which trust assumption they are relying on.</p><h2 id="6-what-a-verifier-must-check-and-record"><a href="#6-what-a-verifier-must-check-and-record" class="anchor-heading" aria-labelledby="6-what-a-verifier-must-check-and-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. What a verifier must check, and record
+  
+  
+</h2><p>A verifier returns one of three results: <strong>valid</strong>, <strong>invalid</strong>, or <strong>could
+not determine</strong>. Could-not-determine is never treated as trusted. This rule
+already appears in <code class="language-plaintext highlighter-rouge">SignatureSchema</code>, <code class="language-plaintext highlighter-rouge">mount-trust.ts</code> and <code class="language-plaintext highlighter-rouge">ci-health</code>.</p><p>Before it returns <em>valid</em>, a verifier checks:</p><ol><li><strong>The suite is accepted.</strong> It is in the anchor’s list, narrowed by the
+agreement if there is one (section 3).</li><li><strong>The key belongs to the anchor.</strong> The key resolves through the anchor, for
+the right environment, and is not revoked or expired at the time that
+matters.</li><li><strong>The key may be used for this.</strong> The key’s declared purpose, such as a
+GDHCN key usage or <code class="language-plaintext highlighter-rouge">proofPurpose</code>, permits this kind of signature.</li><li><strong>The signature is over these bytes.</strong> Recompute the digest with the
+suite’s canonicalisation, and verify the signature with the library.</li><li><strong>The anchor’s own list is trusted.</strong> For example, the GDHCN trust list’s
+<code class="language-plaintext highlighter-rouge">JsonWebSignature2020</code> proof is checked before any key in that list is
+used.</li></ol><p>Record, beside the subject: the suite, the key id, the anchor, the route that
+signed it, the result, and <strong>when it was checked</strong> (<code class="language-plaintext highlighter-rouge">verifiedAt</code>, never the
+time it was recorded). If any of these cannot be found out, the result is
+<em>could not determine</em>, and the record says which one.</p><p>A recorded signature is not a verified one. A slot that holds a signature
+nothing has checked must not be read as coverage.</p><h2 id="where-verification-is-implemented"><a href="#where-verification-is-implemented" class="anchor-heading" aria-labelledby="where-verification-is-implemented"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where verification is implemented
+  
+  
+</h2><p><strong><code class="language-plaintext highlighter-rouge">litlfred/smart-trust-tools</code></strong> is the likely home for verification and key
+lookup for <strong>COSE/HCERT</strong> documents and the <strong>GDHCN trust list’s
+<code class="language-plaintext highlighter-rouge">JsonWebSignature2020</code> proof</strong>. As checked at <code class="language-plaintext highlighter-rouge">bad1e36</code>, it has:</p><ul><li>the skills <code class="language-plaintext highlighter-rouge">hcert-verify</code>, <code class="language-plaintext highlighter-rouge">hcert-trust-list</code> and <code class="language-plaintext highlighter-rouge">hcert-sign-cose</code>. The
+last is two-phase, so the private key stays with its holder;</li><li>requirement <code class="language-plaintext highlighter-rouge">stt-tru-006</code>, which verifies the trust list’s detached
+<code class="language-plaintext highlighter-rouge">b64:false</code> ES256 JWS over URDNA2015;</li><li>a trust store that loads DSCs from PEM, DER and the GDHCN DID trust list v2;</li><li>Kotlin and Rust/WASM libraries.</li></ul><p><strong>What it does not yet cover:</strong> the VC 2.0 family, that is SD-JWT VC,
+VC-JOSE-COSE and the 2025 Data Integrity cryptosuites.</p><p>This harness <strong>does not import it</strong>. smart-trust-tools sits above this layer
+and needs the FHIR layer, and a lower layer naming a higher one is the wrong
+direction. This skill only names it. A <code class="language-plaintext highlighter-rouge">verify</code> Tool contract here would be
+implemented by whichever layer wraps the chosen library.</p><h2 id="open-questions-for-the-owner"><a href="#open-questions-for-the-owner" class="anchor-heading" aria-labelledby="open-questions-for-the-owner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Open questions for the owner
+  
+  
+</h2><p>These are not decided. Do not settle them in code.</p><ol><li><strong>Whose jurisdiction does “up to jurisdiction” mean?</strong> It could be (a) the
+<strong>signer’s</strong>, which picks the suite it signs with; (b) the <strong>verifier’s</strong>,
+which picks the suites it accepts; or both. The model above covers both. If
+only one is meant, one of the two lists can be dropped.</li><li><strong>Should the deployment’s <code class="language-plaintext highlighter-rouge">Jurisdiction</code> carry a minimum suite list?</strong> <code class="language-plaintext highlighter-rouge">Jurisdiction</code> in <code class="language-plaintext highlighter-rouge">schemas/process/deployment-description.ts</code> has four
+optional fields today (<code class="language-plaintext highlighter-rouge">publicationBase</code>, <code class="language-plaintext highlighter-rouge">audience</code>, <code class="language-plaintext highlighter-rouge">retention</code>,
+<code class="language-plaintext highlighter-rouge">residency</code>). A fifth would hold the suites this deployment will ever
+accept, beneath every anchor and agreement. The other option is to keep the
+policy only on trust anchors and agreements. No field is added until this
+is decided.</li><li><strong>Which libraries to adopt</strong> for JOSE, COSE and Data Integrity, beyond what
+smart-trust-tools already uses. Each needs an entry in the software-library
+registry before any tool code depends on it.</li></ol><h2 id="what-this-skill-does-not-decide"><a href="#what-this-skill-does-not-decide" class="anchor-heading" aria-labelledby="what-this-skill-does-not-decide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this skill does not decide
+  
+  
+</h2><ul><li>The QA-report specifics: the <code class="language-plaintext highlighter-rouge">folio-test-run/v1</code> hashes, the <code class="language-plaintext highlighter-rouge">qa-reports</code>
+branch, and attestation versus certification. Those are in
+<a href="../../reference/skill-instructions/qa-report-signing.html"><code class="language-plaintext highlighter-rouge">qa-report-signing</code></a>.</li><li>Which trust anchors a given agreement accepts. That is the agreement’s data.</li><li>The Tool contracts themselves. They come after the library decision, and
+each one names this skill in <code class="language-plaintext highlighter-rouge">satisfies</code>.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

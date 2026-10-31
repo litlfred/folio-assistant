@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/session-record.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/session-record",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Session record",
+      "title": "Session record",
+      "notation": "session-record",
+      "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the other stores. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/session-context"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-record"
+    }
+  ]
+}

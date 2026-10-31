@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/directory/bootstrap-tools-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "bootstrap-tools-schemas",
+      "path": "schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas"
+      ],
+      "title": "Bootstrap's shapes, in Zod",
+      "description": "The Zod source of every schema bootstrap publishes, bootstrap's defined terms and graph typologies, and the small readers the tools share: a declaration reader over bootstrap's own shape, release addresses, and the declared-order check.",
+      "readmePath": "schemas/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/instance-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/instance-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "instance-kinds",
+      "title": "Instance kinds — naming one, and what a new kind must declare",
+      "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/instance-kinds.md",
+      "instructionLines": 289,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/instance-kinds"
+    }
+  ]
+}

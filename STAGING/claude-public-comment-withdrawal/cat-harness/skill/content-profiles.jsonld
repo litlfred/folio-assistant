@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/content-profiles.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/content-profiles",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "content-profiles",
+      "title": "Content types — `document` is the base, a paper extends it",
+      "description": "Adapters and profiles are different axes and conflating them is costly. What a document folio is, how a paper extends it, which distinction needs code and which needs only rules, and what profile enforcement catches that schema validation structurally cannot.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-profiles"
+    }
+  ]
+}

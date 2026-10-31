@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/clinical-sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/clinical-sme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Clinical / scientific SME",
+      "title": "Clinical / scientific SME",
+      "notation": "clinical-sme",
+      "description": "Reviewer whose judgement is about the subject matter rather than the artefact. Acts by domain judgement (`judgementOnly`: no procedure yields the answer, which is why a person is in the lane; bean `vljz`).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme"
+    }
+  ]
+}

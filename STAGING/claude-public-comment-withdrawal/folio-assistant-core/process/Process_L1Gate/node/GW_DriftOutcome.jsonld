@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Which reading was right?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate/lane/Lane_1",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate#flow/Flow_g5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate#flow/Flow_DriftReal",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate#flow/Flow_DriftSpurious",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1Gate#flow/Flow_SourceWrong"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome"
+    }
+  ]
+}

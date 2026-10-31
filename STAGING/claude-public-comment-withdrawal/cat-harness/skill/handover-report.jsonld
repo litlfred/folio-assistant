@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/handover-report.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/handover-report",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "handover-report",
+      "title": "Handover report",
+      "description": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/handover-report.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/handover-report"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/methodology-adoption.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/methodology-adoption",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "methodology-adoption",
+      "title": "Adopting a methodology, and choosing between them",
+      "description": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/methodology-adoption.md",
+      "instructionLines": 233,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
+    }
+  ]
+}

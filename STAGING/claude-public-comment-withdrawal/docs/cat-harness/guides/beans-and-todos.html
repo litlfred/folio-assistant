@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(5)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(5) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(5) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(5) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../../assets/js/vendor/lunr.min.js"></script><script src="../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Beans and todos | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Beans and todos" /><meta property="og:locale" content="en" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Beans and todos" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": ["en"],
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "guides-beans-and-todos",
+    "src": "../../../assets/qa/guides-beans-and-todos/page.translation.json",
+    "index": "../../../assets/qa/guides-beans-and-todos/qa-index.json",
+    "list": "../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../folio-assistant-core/","jsonld":"../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../build.json"><meta name="fa-fsh-guts-src" content="../../../fsh-guts.json"><link rel="stylesheet" href="../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../assets/js/harness-data.js" defer></script><script src="../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../assets/js/kg-render.js" defer></script><script src="../../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../../assets/js/docs-ui.js?v=3d595c44f6af" defer></script><script src="../../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../../assets/js/work-plan.js" defer></script><script src="../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../assets/css/navbar.css"><script src="../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../assets/page-layout.css" data-fa-page-layout><script src="../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-giobbw31pa","here":"/docs/cat-harness/guides/beans-and-todos.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#two-things-one-word","label":"Two things that share a word"},{"href":"#the-agent-bean-lifecycle","label":"The agent bean lifecycle"},{"href":"#never-delete","label":"A bean is never deleted"},{"href":"#two-layers","label":"Engine operations are not CLI calls"},{"href":"#human-todos","label":"Human todos — not built yet"},{"href":"#work-plan-state","label":"What the work plan holds right now"},{"href":"#fa-todo-listing-heading","label":"Notes on this page (1)"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller)return;
+    var k='fa-share:'+r;if(sessionStorage.getItem(k))return;
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(function(){});
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../../docs/cat-harness/guides/index.html">Authoring guides</a></li><li class="breadcrumb-nav-list-item"><span>Beans and todos</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 class="no_toc" id="beans-and-todos"><a href="#beans-and-todos" class="anchor-heading" aria-labelledby="beans-and-todos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Beans and todos
+  
+  
+</h1><p><span class="fa-qa-badges fa-page-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="page.translation" data-qa-label="Translation QA" data-qa-noun="page" data-qa-src="../../../assets/qa/guides-beans-and-todos/page.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><details open=""><summary class="text-delta">On this page</summary><ol id="markdown-toc"><li><a href="#two-things-one-word" id="markdown-toc-two-things-one-word">Two things that share a word</a></li><li><a href="#the-agent-bean-lifecycle" id="markdown-toc-the-agent-bean-lifecycle">The agent bean lifecycle</a></li><li><a href="#never-delete" id="markdown-toc-never-delete">A bean is never deleted</a></li><li><a href="#two-layers" id="markdown-toc-two-layers">Engine operations are not CLI calls</a></li><li><a href="#human-todos" id="markdown-toc-human-todos">Human todos — not built yet</a></li><li><a href="#work-plan-state" id="markdown-toc-work-plan-state">What the work plan holds right now</a></li></ol></details><p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/docs/source/guides-beans-and-todos"><code class="language-plaintext highlighter-rouge">docs/source/guides-beans-and-todos/</code></a> — each section below links to its own source.</em></p><p><a href="https://github.com/litlfred/cat-harness/edit/main/docs/source/guides-beans-and-todos/overview.md" class="fa-node-edit" title="Edit docs/source/guides-beans-and-todos/overview.md" data-fa-link="edit" data-src="docs/source/guides-beans-and-todos/overview.md" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="overview.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/overview.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="overview.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/overview.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><p><strong>Beans are for agents. Todos are for humans.</strong> They share a word in ordinary
+speech and nothing else, and conflating them is how a work plan comes to hold
+two kinds of thing that need different handling.</p><p>A <strong>bean</strong> is process state an agent keeps while doing work: claimed before
+starting so a sibling session avoids it, kept current as the work proceeds,
+and closed with a record of what changed. The store is <code class="language-plaintext highlighter-rouge">beans/</code>, committed,
+so it survives a reclaimed container and is visible to every other session.</p><p>A <strong>todo</strong> is a person’s own reminder — what they mean to look at next. It is
+theirs to create, reorder and discard on no schedule but their own, and
+nothing about an agent’s process should be deciding when it is done.</p><p>This page describes the first in full. The second is <strong>not built yet</strong> and
+says so.</p><h2 id="two-things-one-word" data-fa-label="sec:beans-and-todos-two-things-one-word"><a href="#two-things-one-word" class="anchor-heading" aria-labelledby="two-things-one-word"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things that share a word
+  
+  
+</h2><p><a href="https://github.com/litlfred/cat-harness/edit/main/docs/source/guides-beans-and-todos/two-things-one-word.md" class="fa-node-edit" title="Edit docs/source/guides-beans-and-todos/two-things-one-word.md" data-fa-link="edit" data-src="docs/source/guides-beans-and-todos/two-things-one-word.md" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="two-things-one-word.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/two-things-one-word.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="two-things-one-word.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/two-things-one-word.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><p>The distinction is not terminology. The two have different owners, different
+lifecycles and different failure modes.</p><div class="table-wrapper"><table><thead><tr><th></th><th><strong>Bean</strong></th><th><strong>Todo</strong></th></tr></thead><tbody><tr><td>Owner</td><td>An agent session</td><td>A person</td></tr><tr><td>Purpose</td><td>Process state for work in flight</td><td>A reminder of intent</td></tr><tr><td>Store</td><td><code class="language-plaintext highlighter-rouge">beans/</code>, committed and shared</td><td>Not yet defined</td></tr><tr><td>Created by</td><td>An agent, after an exact-title check</td><td>The person, whenever they like</td></tr><tr><td>Closed by</td><td>The agent that did the work, with a summary</td><td>The person, on their own judgement</td></tr><tr><td>Visible to</td><td>Every sibling session</td><td>The person, primarily</td></tr><tr><td>Failure mode</td><td>Duplicated, or closed by the wrong session</td><td>Forgotten</td></tr></tbody></table></div><p><strong>The failure modes are what make the split worth keeping.</strong> A duplicated bean
+starves the work plan of signal — in one folio an unguarded re-run produced
+14,688 duplicates, 92 % of every open bean in the repository. A forgotten todo
+inconveniences one person. Machinery sized for the first is ceremony on the
+second, and machinery sized for the second is nowhere near enough for the
+first.</p><h2 id="the-agent-bean-lifecycle" data-fa-label="sec:beans-and-todos-the-agent-bean-lifecycle"><a href="#the-agent-bean-lifecycle" class="anchor-heading" aria-labelledby="the-agent-bean-lifecycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent bean lifecycle
+  
+  
+</h2><p><a href="https://github.com/litlfred/cat-harness/edit/main/processes/sdlc/bean-lifecycle.bpmn" class="fa-node-edit" title="Edit processes/sdlc/bean-lifecycle.bpmn" data-fa-link="edit" data-src="processes/sdlc/bean-lifecycle.bpmn" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/the-agent-bean-lifecycle.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="the-agent-bean-lifecycle.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/the-agent-bean-lifecycle.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" lang="en" dir="ltr" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="../../../assets/qa/guides-beans-and-todos/the-agent-bean-lifecycle.kg.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><div class="bpmn-figure" id="figure-the-agent-bean-lifecycle"><img src="../../../assets/img/workflows/bean-lifecycle.svg" alt="BPMN swimlane diagram with two lanes. In the agent's lane: durable work is identified, the agent runs an exact-title search before creating anything, then a gateway asks whether the bean already exists. If not, it creates one; if it does, a second gateway asks whose it is. A bean owned by someone else routes to the lower lane — sibling session or human — where the only action is to leave it alone and coordinate, ending there. The agent's own or an unclaimed bean is claimed as in-progress, worked on with the body kept current, and then reaches an outcome gateway with three branches: done goes to complete, not wanted goes to scrap with reasons and never delete, and blocked goes to recording the blocker and handing it back. All three converge on a single end event, state recorded." /></div><p><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/bean-lifecycle.bpmn" class="btn btn-outline">Open the BPMN source</a></p><p>The diagram above is the whole cycle, and three of its edges are the ones
+worth reading twice.</p><p><strong>The first step is a search, not a creation.</strong> <code class="language-plaintext highlighter-rouge">beans create</code> is not
+idempotent: it mints a fresh identifier on every call and de-duplicates on
+nothing, so re-entering a step duplicates the plan rather than doing nothing.
+The exact-title check is what stands between a repeated workflow step and a
+corpus of near-identical beans.</p><p><strong>Ownership is a gateway, not a courtesy.</strong> A bean another session claimed is
+not yours to resolve, scrap or delete. Claiming is how two sessions avoid
+picking up the same item; closing someone else’s is how one of them loses work
+it had not finished reporting.</p><p><strong>“Blocked” is not “not wanted”.</strong> A blocked bean returns to <code class="language-plaintext highlighter-rouge">todo</code> with its
+blocker recorded and something said about what would clear it. Leaving it
+<code class="language-plaintext highlighter-rouge">in-progress</code> is worse than either: an item nobody is progressing reads, to
+every other session, as active work.</p><h2 id="never-delete" data-fa-label="sec:beans-and-todos-never-delete"><a href="#never-delete" class="anchor-heading" aria-labelledby="never-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean is never deleted
+  
+  
+</h2><p><a href="https://github.com/litlfred/cat-harness/edit/main/docs/source/guides-beans-and-todos/never-delete.md" class="fa-node-edit" title="Edit docs/source/guides-beans-and-todos/never-delete.md" data-fa-link="edit" data-src="docs/source/guides-beans-and-todos/never-delete.md" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="never-delete.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/never-delete.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="never-delete.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/never-delete.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><p><code class="language-plaintext highlighter-rouge">beans delete</code> exists in the CLI. <strong>Do not use it.</strong></p><p>Work that turns out not to be wanted is <strong>scrapped</strong> — <code class="language-plaintext highlighter-rouge">status: scrapped</code>,
+with a section saying why. That is what “disable” means here; the CLI has no
+disabled state, and its vocabulary is <code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">todo</code>, <code class="language-plaintext highlighter-rouge">in-progress</code>,
+<code class="language-plaintext highlighter-rouge">completed</code>, <code class="language-plaintext highlighter-rouge">scrapped</code>.</p><p>The reason is not tidiness. A scrapped bean records that something was
+considered and rejected, and on what grounds — which is worth as much to the
+next agent as the record of work that was done, because it is what stops the
+same dead end being re-entered. A deleted bean leaves a sibling session unable
+to tell abandonment from accident, and leaves the next agent free to start
+over on the thing you already ruled out.</p><p>The prohibition is written here, and in the diagram’s own documentation,
+precisely because the tool offers the operation. A rule that depends on nobody
+noticing a command is not a rule.</p><h2 id="two-layers" data-fa-label="sec:beans-and-todos-two-layers"><a href="#two-layers" class="anchor-heading" aria-labelledby="two-layers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Engine operations are not CLI calls
+  
+  
+</h2><p><a href="https://github.com/litlfred/cat-harness/edit/main/docs/source/guides-beans-and-todos/two-layers.md" class="fa-node-edit" title="Edit docs/source/guides-beans-and-todos/two-layers.md" data-fa-link="edit" data-src="docs/source/guides-beans-and-todos/two-layers.md" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="two-layers.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/two-layers.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="two-layers.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/two-layers.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><p>Two different things can change a bean, and a step that confuses them will
+announce an effect it does not have.</p><p><strong>The workflow engine</strong> performs <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">note</code> and <code class="language-plaintext highlighter-rouge">resolve</code> on a process
+instance’s own bean when a step marked <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op="…"/&gt;</code> completes.
+<code class="language-plaintext highlighter-rouge">claim</code> sets <code class="language-plaintext highlighter-rouge">in-progress</code> and is idempotent; <code class="language-plaintext highlighter-rouge">note</code> appends; <code class="language-plaintext highlighter-rouge">resolve</code>
+completes the bean <strong>only once the instance itself has completed</strong>, because
+whether work is done is a judgement and a bean is not closed on someone else’s
+say-so.</p><p><strong>The agent</strong> does everything else with the <code class="language-plaintext highlighter-rouge">beans</code> CLI: creating, scrapping,
+retitling, setting a blocker. The engine has no operation for any of these.</p><p>This is not a hypothetical distinction. An activity in the CRDM diagram
+carried <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean action="create"/&gt;</code> — <code class="language-plaintext highlighter-rouge">action</code>, where the engine reads
+<code class="language-plaintext highlighter-rouge">op</code> — so it parsed as no operation at all. The step advertised that sign-off
+produced beans, performed nothing, and did so silently until somebody read the
+parser.</p><p><strong>When you add a bean-marked step,</strong> use one of the three operations the
+engine implements, and say in the step’s documentation which parts are the
+agent’s own CLI calls. <code class="language-plaintext highlighter-rouge">bun run cat check:workflow-refs</code> will catch a skill
+reference that does not resolve; it cannot catch a plausible attribute the
+engine never reads.</p><h2 id="human-todos" data-fa-label="sec:beans-and-todos-human-todos"><a href="#human-todos" class="anchor-heading" aria-labelledby="human-todos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Human todos — not built yet
+  
+  
+</h2><p><a href="https://github.com/litlfred/cat-harness/edit/main/docs/source/guides-beans-and-todos/human-todos.md" class="fa-node-edit" title="Edit docs/source/guides-beans-and-todos/human-todos.md" data-fa-link="edit" data-src="docs/source/guides-beans-and-todos/human-todos.md" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="human-todos.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/human-todos.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="human-todos.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/human-todos.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><p><strong>Not built yet</strong>, and stated here rather than left as an absence somebody has
+to notice.</p><p>A person’s todos need a cycle of their own, and none of it exists:</p><ul><li><strong>When a todo is shown.</strong> Surfacing every open item on every turn is noise;
+surfacing none is a list nobody reads. Whatever the rule is, it is not the
+same as the work-plan priming an agent gets at session start.</li><li><strong>When a person may create one</strong>, and through what — chat, a command, the
+session-start surface.</li><li><strong>How one is retired.</strong> A person abandoning a reminder is ordinary and needs
+no “reasons for scrapping” section; the bean rules do not transfer.</li></ul><p>Until that is designed, <strong>do not repurpose beans for it.</strong> A store whose
+entries are claimed by sessions, closed with change summaries and never
+deleted is the wrong shape for a reminder somebody wants to drop without
+ceremony — and mixing the two would put items in the agent work plan that no
+agent should be acting on.</p><h2 id="work-plan-state" data-fa-label="sec:beans-and-todos-work-plan-state"><a href="#work-plan-state" class="anchor-heading" aria-labelledby="work-plan-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the work plan holds right now
+  
+  
+</h2><p><a href="https://github.com/litlfred/cat-harness/edit/main/docs/source/guides-beans-and-todos/work-plan-state.md" class="fa-node-edit" title="Edit docs/source/guides-beans-and-todos/work-plan-state.md" data-fa-link="edit" data-src="docs/source/guides-beans-and-todos/work-plan-state.md" data-repo="litlfred/cat-harness">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="work-plan-state.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/work-plan-state.block.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="work-plan-state.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="../../../assets/qa/guides-beans-and-todos/work-plan-state.translation.json" data-qa-index="../../../assets/qa/guides-beans-and-todos/qa-index.json" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p><p>The rest of this page says what a bean <strong>is</strong>. This section says what the
+store currently <strong>holds</strong> — read live from
+<a href="../../../assets/beans/index.json"><code class="language-plaintext highlighter-rouge">/assets/beans/index.json</code></a>, the projection
+<code class="language-plaintext highlighter-rouge">gen-docs-pages.ts</code> writes from <code class="language-plaintext highlighter-rouge">beans/defs/</code> on every build, beside the todo
+index it has published for longer.</p><p>Until 2026-09-20 there was nothing to put here. <code class="language-plaintext highlighter-rouge">todos/</code> had a reader, a
+published index and a board over it; <code class="language-plaintext highlighter-rouge">beans/</code> had none of the three, though it
+is the larger store by two orders of magnitude. A work plan nobody can look at
+is one nobody checks.</p><p><strong>What the dashboard shows, and why each panel is the shape it is.</strong> The
+counts are a headline, so they are numbers rather than a chart of four bars
+saying the same thing. The work plan itself is a tree, goal → epic →
+feature → story, because the question a reader brings is “where does this sit”,
+and a bar per epic answered “how many” and listed one level. The type filter
+and the search prune that tree to what matches and open it down to them. The
+store’s <code class="language-plaintext highlighter-rouge">task</code> type is shown as <strong>story</strong>, since a Task here is a BPMN task.
+The findings are three or four
+rows, so they are a list — with an icon and a label on every row, because a
+status colour never carries meaning alone.</p><p><strong>The findings are computed from committed data only, and one of them is
+missing on purpose.</strong> A stale <code class="language-plaintext highlighter-rouge">in-progress</code> detector would have to read the
+clock, and the projection is gated on exact content — anything computed
+against the clock changes the file on every build and the staleness gate then
+fires forever. So the projection publishes each bean’s <code class="language-plaintext highlighter-rouge">updated_at</code> as a fact
+and the page computes age when you open it. Age therefore moves without the
+file moving, which is the right way round.</p><p><strong>There is a fuller view, and it is browsable.</strong> Every declared state graph
+gets its own visualiser at the path this instance already uses for that graph —
+<code class="language-plaintext highlighter-rouge">/beans/</code>, <code class="language-plaintext highlighter-rouge">/todos/</code>, and one for each of the others. The
+route is not this page’s invention: bean <code class="language-plaintext highlighter-rouge">o7eq</code> carries the owner’s ruling that
+a rendered asset is addressed by its instance’s <strong>name</strong> with the <strong>declared
+graph as a path segment</strong>, and that this instance elides its own name because
+its <code class="language-plaintext highlighter-rouge">docs/</code> is what the site serves, and the <code class="language-plaintext highlighter-rouge">harness-requirements</code> skill
+names that exact URL as the obligation — <em>“a requirement of them is to provide
+visualisers accessible at <code class="language-plaintext highlighter-rouge">&lt;base-url&gt;/beans</code>“</em>. There is no index above them,
+because <code class="language-plaintext highlighter-rouge">/</code> is the documentation site’s, so each page lists its siblings.</p><p><strong>A graph with no projection says so.</strong> <code class="language-plaintext highlighter-rouge">qa</code>, <code class="language-plaintext highlighter-rouge">health</code>, <code class="language-plaintext highlighter-rouge">issue-marks</code> and
+<code class="language-plaintext highlighter-rouge">uploads</code> are declared state graphs that nothing publishes a projection for
+yet. Their dashboards say exactly that and name bean <code class="language-plaintext highlighter-rouge">2krx</code>, rather than
+rendering zeros for a store nobody read — a dashboard that opens at zero is
+indistinguishable from a store with nothing in it, and those are opposite
+facts.</p><p><strong>Every identifier on those pages is a link.</strong> A bean id resolves to the bean’s
+file, an issue or pull-request number to the forge, and each finding carries a
+pencil to where writing actually happens. A reference that cannot be resolved
+stays as plain text, which is the visible difference between <em>“follow this”</em>
+and <em>“this points somewhere I could not reach”</em>.</p><p><strong>What is not here.</strong> Where a bean sits in a BPMN process, which is the other
+half of bean <code class="language-plaintext highlighter-rouge">v49e</code>. That join needs <code class="language-plaintext highlighter-rouge">beans/workflows/</code>, the declared
+<code class="language-plaintext highlighter-rouge">workflow-state</code> graph, and it is empty — so a position view would report
+“nowhere” for every bean in the store. It waits for instance state to exist.</p><div class="fa-workplan" data-fa-workplan=""><p class="fa-workplan-fallback">
+    The live work-plan dashboard needs JavaScript. The projection it reads is
+    <a href="../../../assets/beans/index.json">a plain JSON file</a> and can be read
+    directly.
+  </p></div></main><hr><footer><section class="fa-todo-listing" id="fa-todo-listing" lang="en" dir="ltr" aria-labelledby="fa-todo-listing-heading" data-fa-todo-scope="page" data-fa-todo-count="1"><h2 class="fa-todo-listing-heading" id="fa-todo-listing-heading">Notes on this page (1)</h2><p class="fa-todo-listing-lead">The notes attached to this page, in document order. Every note in this folio is on the todos board.</p><ol class="fa-todo-listing-items"><li class="fa-todo-listing-item" id="fa-todo-listing-human-todos-page-says-not-built-yet" data-fa-todo="human-todos-page-says-not-built-yet"><h3 class="fa-todo-listing-summary">The human-todos page still says &#39;Not built yet&#39; — the store now exists</h3><dl class="fa-todo-listing-meta"><dt>Status</dt><dd>open</dd><dt>Priority</dt><dd>high</dd><dt>Raised by</dt><dd>agent</dd><dt>Created</dt><dd>2026-09-19</dd><dt>About</dt><dd><a href="../../../docs/cat-harness/guides/beans-and-todos.html#human-todos">guides/beans-and-todos &rsaquo; human-todos</a></dd></dl><div class="fa-todo-listing-body"><p><code>content/docs/guides-beans-and-todos/human-todos.md</code> opens **&quot;Not built yet&quot;**, and
+that is no longer true. <code>todos/</code> is a declared graph with items on disk, a
+reader, a published JSON index and a board on the site.</p><p>This todo is attached to that block, so it renders beside the sentence it
+contradicts. That is the per-page assignment working on a real case rather
+than a demonstration — the page is genuinely stale and somebody has to decide
+what it should say now.</p><p>## What the page still gets RIGHT, and must not lose</p><p>Three of its four claims survive, and they are the valuable part:</p><p>- **&quot;Do not repurpose beans for it.&quot;** Still correct, and now structural:
+  <code>beans/</code> and <code>todos/</code> are separate declared graphs.
+- **When a todo is shown.** Still undecided. This PR answers it for the
+  navbar and the board; it does not answer whether an open item should
+  surface unasked, and the page&#39;s objection stands — surfacing every item on
+  every turn is noise, surfacing none is a list nobody reads.
+- **How one is retired.** Still undecided. <code>TodoStatus</code> carries <code>resolved</code>
+  and <code>wontfix</code>, but nothing retires one, and the page&#39;s point holds: a
+  person abandoning a reminder is ordinary and needs no ceremony, so the bean
+  rules do not transfer.</p><p>## What has changed and needs writing down</p><p>- **How a person creates one** is answered in the worst way: by an agent
+  writing a file. There is no human path at all yet.
+- The 2×2 the page is missing — memory against workflow management, human
+  against agent — with the empty quadrant named.</p><p>## Done when</p><p>The page says what is true. Cheapest correct move is an edit to that block,
+not a rewrite: strike &quot;Not built yet&quot;, keep the three open questions, add
+what now exists and who created it.</p><p>Every todo carries a pencil to exactly this file, so the edit is one click
+from where the stale sentence renders.</p></div><p class="fa-todo-listing-links"><a href="../../../todos/human-todos-page-says-not-built-yet/">Open this todo</a> &middot; <a data-fa-link="source" href="https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/todos/todos/items/human-todos-page-says-not-built-yet.md">View source</a> &middot; <a data-fa-link="edit" href="https://github.com/litlfred/folio-assistant/edit/cat/cat-harness/todos/todos/items/human-todos-page-says-not-built-yet.md">Edit</a></p><ul class="fa-todo-listing-relations"><li><a href="https://github.com/litlfred">who: github:litlfred</a></li><li><a href="https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/beans/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li><li><a href="https://github.com/litlfred/folio-assistant/pull/336">PR: #336</a></li><li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li></ul></li></ol></section><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

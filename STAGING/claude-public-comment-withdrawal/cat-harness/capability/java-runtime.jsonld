@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/capability/java-runtime.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/capability/java-runtime",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "java-runtime",
+      "name": "Java Runtime",
+      "description": "Java Runtime Environment for running Java-based tools (IG Publisher, validators).",
+      "detection": {
+        "method": "command",
+        "command": "java -version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime"
+    }
+  ]
+}

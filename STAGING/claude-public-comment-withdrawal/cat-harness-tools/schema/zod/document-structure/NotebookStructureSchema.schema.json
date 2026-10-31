@@ -1,0 +1,183 @@
+{
+  "$ref": "#/definitions/NotebookStructure",
+  "definitions": {
+    "NotebookStructure": {
+      "type": "object",
+      "properties": {
+        "_schema": {
+          "type": "string",
+          "const": "notebook-structure/v1"
+        },
+        "doc_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "mtime": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "mimetype_sniffed": {
+              "type": "string",
+              "const": "application/x-ipynb+json"
+            },
+            "mimetype_source": {
+              "type": "string",
+              "const": "content"
+            },
+            "nbformat": {
+              "type": "string",
+              "minLength": 1
+            },
+            "language": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cells": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "file",
+            "sha256",
+            "bytes",
+            "mtime",
+            "mimetype_sniffed",
+            "mimetype_source",
+            "nbformat",
+            "language",
+            "cells"
+          ],
+          "additionalProperties": false
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "additionalProperties": {}
+        },
+        "toc_source": {
+          "type": "string",
+          "enum": [
+            "headings",
+            "none"
+          ]
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "number": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "title": {
+                "type": "string"
+              },
+              "level": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "cell_start": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "cell_end": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "code_cells": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "n_chars": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "n_words": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "number",
+              "title",
+              "level",
+              "cell_start",
+              "cell_end",
+              "code_cells",
+              "n_chars",
+              "n_words"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "structure_note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "_schema",
+        "doc_id",
+        "source",
+        "metadata",
+        "toc_source",
+        "sections"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/NotebookStructureSchema.schema.json",
+  "title": "NotebookStructureSchema",
+  "description": "Generated from `NotebookStructureSchema` in schemas/content/document-structure.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}

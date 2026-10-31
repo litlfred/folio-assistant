@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/actor/end-user.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/actor/end-user",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "end-user",
+      "actorKind": "person",
+      "title": "End user",
+      "description": "The person the assistant is working for — the one who states intent and answers what the agent cannot decide from the filesystem.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/user"
+      ],
+      "permissionName": [
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/end-user"
+    }
+  ]
+}

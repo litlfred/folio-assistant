@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/process/Process_SgEndToEnd/node/End_AdjKg.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjKg.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjKg",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E30"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

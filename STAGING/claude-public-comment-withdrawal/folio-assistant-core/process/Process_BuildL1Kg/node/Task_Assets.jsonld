@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Record assets[] — local path or remote URL",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_BuildL1Kg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/document-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets"
+    }
+  ]
+}

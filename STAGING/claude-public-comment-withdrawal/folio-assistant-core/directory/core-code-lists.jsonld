@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-code-lists.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-code-lists",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "core-code-lists",
+      "path": "code-lists/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code-list"
+      ],
+      "description": "Code lists this layer owns, one `folio-code-list/v1` file per list, inherited by every dependent through the dependency overlay (`codeListDirs`) and exported as SKOS with the harness's. Declared with its files, bean 55ao: a `recommendation` block's `strength` names a code here, so the check is \"resolves in the scheme\" rather than a closed enum (owner ruling 2026-09-23, Q2). Two lists: `grade-recommendation-strength` (GRADE as WHO applies it) and `rfc2119-requirement-level` (BCP 14). A folio whose issuing body grades differently declares its own list rather than editing these.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-code-lists",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-code-lists"
+    }
+  ]
+}

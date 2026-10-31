@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/VoicePattern",
+  "definitions": {
+    "VoicePattern": {
+      "type": "object",
+      "properties": {
+        "regex": {
+          "type": "string",
+          "minLength": 1
+        },
+        "caseSensitive": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "regex",
+        "message"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoicePatternSchema.schema.json",
+  "title": "VoicePatternSchema",
+  "description": "Generated from `VoicePatternSchema` in schemas/content/voices.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}

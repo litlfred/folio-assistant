@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/Shard",
+  "definitions": {
+    "Shard": {
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "type": "string"
+        },
+        "entries": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "string",
+                "format": "uri"
+              }
+            ],
+            "items": false,
+            "minItems": 3,
+            "maxItems": 3
+          }
+        }
+      },
+      "required": [
+        "prefix",
+        "entries"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/ShardSchema.schema.json",
+  "title": "ShardSchema",
+  "description": "Generated from `ShardSchema` in schemas/kg/id-lookup.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}

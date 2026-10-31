@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/actor/programme-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/actor/programme-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "programme-manager",
+      "actorKind": "person",
+      "title": "Programme Manager",
+      "description": "Overall coordination and governance. Responsible for scope definition, team formation, resource allocation, timeline planning, and stakeholder engagement.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ProgrammeManager",
+        "lifecycle": [
+          "plan",
+          "review",
+          "publish",
+          "feedback"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/certifier",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/test-requester",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/translation-coordinator"
+      ],
+      "permissionName": [
+        "project-governance",
+        "release-authorization"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/programme-manager"
+    }
+  ]
+}

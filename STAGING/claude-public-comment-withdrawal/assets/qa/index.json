@@ -1,0 +1,105 @@
+{
+  "tile": {
+    "qa": {
+      "count": 1272,
+      "unit": "documents"
+    }
+  },
+  "$schema": "folio-qa-graph/v1",
+  "files": 1272,
+  "families": [
+    {
+      "schema": "kg-qa/v1",
+      "files": 588,
+      "rollUpField": "totals",
+      "buckets": {
+        "pass": 3486,
+        "fail": 339,
+        "n/a": 1892,
+        "unknown": 273
+      }
+    },
+    {
+      "schema": "folio-detangle-sidecar/v1",
+      "files": 264,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 102,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-script/v1",
+      "files": 86,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 83,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 30,
+        "warn": 71,
+        "pass": 1467,
+        "na": 2818,
+        "unknown": 40
+      }
+    },
+    {
+      "schema": "block-qa/v1",
+      "files": 70,
+      "rollUpField": null
+    },
+    {
+      "schema": "translation-qa/v1",
+      "files": 41,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-index/v1",
+      "files": 17,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-lsi-index/v1",
+      "files": 6,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-tool-run/v1",
+      "files": 6,
+      "rollUpField": null
+    },
+    {
+      "schema": "kg-qa-manifest/v1",
+      "files": 6,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-translation-pages/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-test-run/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "viewer-nav-qa/v1",
+      "files": 1,
+      "rollUpField": "totals",
+      "buckets": {
+        "pages": 2,
+        "railed": 0,
+        "declined": 0,
+        "linked": 0,
+        "missing": 2,
+        "flagged": 0
+      }
+    }
+  ],
+  "unclassified": 0,
+  "unreadable": 0
+}

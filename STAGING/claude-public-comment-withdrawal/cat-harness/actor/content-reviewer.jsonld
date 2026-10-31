@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/actor/content-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/actor/content-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "content-reviewer",
+      "actorKind": "person",
+      "title": "Content Reviewer",
+      "description": "Formal approval and sign-off authority who gates phase transitions and ensures alignment with source guidelines.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ContentReviewer",
+        "lifecycle": [
+          "review"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/translation-adjudicator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/narrative-reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/role/adjudicator"
+      ],
+      "permissionName": [
+        "approval-authority",
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/content-reviewer"
+    }
+  ]
+}

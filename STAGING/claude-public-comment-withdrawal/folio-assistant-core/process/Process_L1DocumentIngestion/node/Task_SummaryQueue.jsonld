@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Prose blocks enter the summary queue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1DocumentIngestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/l1-document-ingestion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue"
+    }
+  ]
+}

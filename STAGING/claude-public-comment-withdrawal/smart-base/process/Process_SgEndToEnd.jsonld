@@ -1,0 +1,339 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/process/Process_SgEndToEnd.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "SMART Guideline end to end",
+      "summary": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming ap…",
+      "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming application the requester describes. Adjudication follows every stage as QA, not as a gate (owner, 2026-10-14: \"once agent produces L2 it can produce L3\"), but the order is a rule (owner, 2026-10-15: \"order strict, sign-off QA\"): no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested (Gateway_L3Ready). Each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. Each stage runs one named skill with its own input and output contract, named in brackets on the task (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6), and each stage's output is the next stage's input; the smart-guideline-end-to-end skill is the orchestrator that says so, and who adjudicates each.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/smart-guideline-end-to-end.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/smart-guideline-end-to-end.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/smart-guideline-end-to-end.svg",
+      "startNode": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd/node/StartEvent_Need"
+      ],
+      "nodeCount": 37,
+      "flowCount": 38,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/StartEvent_Need",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL1",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IngestKg",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IngestKg",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjKg",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E15",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E16",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E17",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E18",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E19",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E20",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E38",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E36",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E37",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E21",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E22",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E23",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E24",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E25",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_BuildApp",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E26",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_BuildApp",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E27",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjApp",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E28",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/EndEvent_AppBuilt",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E29",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL1",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL1",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E30",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjKg",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjKg",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E31",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjDepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E32",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL2",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E33",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjDepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E34",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL3",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E35",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjApp",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjApp",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

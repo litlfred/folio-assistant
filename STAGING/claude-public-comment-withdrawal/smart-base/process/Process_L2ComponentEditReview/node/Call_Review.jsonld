@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/process/Process_L2ComponentEditReview/node/Call_Review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Call_Review.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Call_Review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review the staged component",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "requires": [
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/visual-diff",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R09"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

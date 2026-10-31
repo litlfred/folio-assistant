@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/kg-subgraph-layout.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/kg-subgraph-layout",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "kg-subgraph-layout",
+      "title": "KG subgraph layout: one diagram per declared sub-graph, laid out in the browser",
+      "description": "Lay out one declared sub-graph of a knowledge graph (a harness's schema overview, one named sub-graph, a declaration's kinds) as a single Graphviz diagram in the i2ce Form Documentor's convention, and show it on the site laid out in the reader's browser by Graphviz in WebAssembly, with pan, zoom, find, keyboard control and draggable nodes. The DOT is a third rendering of the model the PlantUML and Mermaid already draw, coloured from the same stylesheet. Tool `uml-overview`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/kg-subgraph-layout.md",
+      "instructionLines": 161,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-subgraph-layout"
+    }
+  ]
+}

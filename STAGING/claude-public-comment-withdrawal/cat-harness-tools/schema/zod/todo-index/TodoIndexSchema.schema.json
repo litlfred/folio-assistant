@@ -1,0 +1,342 @@
+{
+  "$ref": "#/definitions/TodoIndex",
+  "definitions": {
+    "TodoIndex": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-todo-index/v1"
+        },
+        "tile": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "count",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "repoWeb": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "comment": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "minLength": 1
+              },
+              "priority": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              },
+              "createdAt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "targetLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "node": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "page",
+                  "node",
+                  "label"
+                ],
+                "additionalProperties": false
+              },
+              "theme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "type": "object",
+                "properties": {
+                  "roles": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "processes": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "tasks": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "process": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+                          "description": "A BPMN process element id, e.g. Process_CRDM"
+                        },
+                        "task": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "process",
+                        "task"
+                      ]
+                    }
+                  },
+                  "identities": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "displayName": {
+                          "type": "string"
+                        },
+                        "actor": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "id"
+                      ]
+                    }
+                  },
+                  "references": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "agent",
+                            "asset",
+                            "bean",
+                            "block",
+                            "capability",
+                            "decision",
+                            "directory",
+                            "package",
+                            "process",
+                            "requirement",
+                            "role",
+                            "schema",
+                            "skill",
+                            "todo",
+                            "tool",
+                            "user-story",
+                            "voice"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "id"
+                      ]
+                    }
+                  },
+                  "artefacts": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "provider": {
+                          "type": "string"
+                        },
+                        "repo": {
+                          "type": "string"
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "id"
+                      ]
+                    }
+                  }
+                }
+              },
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "axis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "axis",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "viewHref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "editHref": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "summary",
+              "comment",
+              "status",
+              "priority",
+              "createdAt",
+              "tags",
+              "relations"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "processes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "themeArt": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1
+            },
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "repoWeb",
+        "items",
+        "processes",
+        "themeArt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-index/TodoIndexSchema.schema.json",
+  "title": "TodoIndexSchema",
+  "description": "Generated from `TodoIndexSchema` in schemas/sdlc/todo-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Site Publisher",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/role/site-publisher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher"
+    }
+  ]
+}

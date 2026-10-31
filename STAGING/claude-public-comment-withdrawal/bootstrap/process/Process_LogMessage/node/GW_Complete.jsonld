@@ -1,0 +1,14 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap/process/Process_LogMessage/node/GW_Complete.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap/process/Process_LogMessage/node/GW_Complete",
+      "@type": "bootstrap:ProcessNode",
+      "label": "All five present?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/bootstrap/process/Process_LogMessage"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/subscribed-harnesses.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/subscribed-harnesses",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "subscribed-harnesses",
+      "path": "subscribed-harnesses/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/subscribed-harnesses"
+      ],
+      "title": "Subscribed harness state",
+      "description": "The state directories of each harness this instance instantiates from a KG subscription: `<subscription>/<harness>/<state path>/`, one home per chosen harness, each state directory the harness declares created with a `.gitkeep`. Written by `bun run cat kg:instantiate`; the harness's processes write into it after that. Never at the repository root, where a harness named after a staged instance would write into that instance's directory (gap G11), and never under `subscriptions/`, which holds upstream's bytes and is read-only.",
+      "readmePath": "subscribed-harnesses/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/subscribed-harnesses",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses"
+    }
+  ]
+}

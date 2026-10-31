@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/specification-compiled-agents.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/skill/specification-compiled-agents",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "specification-compiled-agents",
+      "title": "Specification-compiled agents",
+      "description": "When a diagram already says what the process is, the model should not be planning it. The two gaps between this repository's engine and a compiled control plane — typed node contracts and per-node context scope — what to do before either exists, and the three things not to adopt with the method.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/specification-compiled-agents.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-compiled-agents"
+    }
+  ]
+}

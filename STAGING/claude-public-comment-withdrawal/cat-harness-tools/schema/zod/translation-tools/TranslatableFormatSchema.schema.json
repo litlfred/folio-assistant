@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/TranslatableFormat",
+  "definitions": {
+    "TranslatableFormat": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "smartBaseScript": {
+          "type": "string"
+        },
+        "smartBaseExtractRef": {
+          "type": "string"
+        },
+        "smartBaseInjectRef": {
+          "type": "string"
+        },
+        "extractModule": {
+          "type": "string"
+        },
+        "injectModule": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "extensions"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation-tools/TranslatableFormatSchema.schema.json",
+  "title": "TranslatableFormatSchema",
+  "description": "Generated from `TranslatableFormatSchema` in schemas/library/translation-tools.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}

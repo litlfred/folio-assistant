@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(2)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(2) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(130) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(2) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>/before-after-preview | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="/before-after-preview" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="/before-after-preview" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-before-after-preview",
+    "src": "../../assets/qa/reference-skill-instructions-before-after-preview/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-before-after-preview/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=3d595c44f6af" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/before-after-preview.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#how-this-sits-beside-its-neighbours","label":"How this sits beside its neighbours"},{"href":"#the-rule","label":"The rule"},{"href":"#1-one-build-one-variable","label":"One build, one variable","icon":"1"},{"href":"#2-stable-capture--load-everything-then-check-the-two-shots-line-up","label":"Stable capture — load everything, then check the two shots line up","icon":"2"},{"href":"#3-measure-dont-just-show","label":"Measure, don’t just show","icon":"3"},{"href":"#4-several-viewports-and-both-schemes-when-colour-is-involved","label":"Several viewports, and both schemes when colour is involved","icon":"4"},{"href":"#5-honest-status--one-line-at-the-top","label":"Honest status — one line, at the top","icon":"5"},{"href":"#6-publishing--a-private-page-updated-in-place","label":"Publishing — a private page, updated in place","icon":"6"},{"href":"#7-by-content-type","label":"By content type","icon":"7","children":[{"href":"#docs-site-jekyll-just-the-docs","label":"Docs site (Jekyll, just-the-docs)","depth":1},{"href":"#papers-latex--pdf","label":"Papers (LaTeX → PDF)","depth":1},{"href":"#fhir-igs-sushi-ig-publisher","label":"FHIR IGs (sushi, IG Publisher)","depth":1},{"href":"#slide-decks-pptx-odp","label":"Slide decks (PPTX, ODP)","depth":1},{"href":"#websites-in-general","label":"Websites in general","depth":1}],"fold":"5 sub-sections"},{"href":"#8-in-the-review-and-feedback-processes","label":"In the review and feedback processes","icon":"8"},{"href":"#what-this-does-not-do","label":"What this does NOT do"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller)return;
+    var k='fa-share:'+r;if(sessionStorage.getItem(k))return;
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(function(){});
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>/before-after-preview</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/before-after-preview.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/before-after-preview.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="before-after-preview--show-the-reviewer-the-change-not-a-description-of-it"><a href="#before-after-preview--show-the-reviewer-the-change-not-a-description-of-it" class="anchor-heading" aria-labelledby="before-after-preview--show-the-reviewer-the-change-not-a-description-of-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /before-after-preview — show the reviewer the change, not a description of it
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">before-after-preview</code> · Package: <code class="language-plaintext highlighter-rouge">sdlc-core</code> · Issue: #1710 ·
+Bean: <code class="language-plaintext highlighter-rouge">y2jh</code> · Worked example: the Folio tab, #1693 / PR #1709</p></blockquote><p><a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> holds that <strong>a human cannot
+assess a rendered artefact from a description of it.</strong> <a href="../../reference/skill-instructions/rendered-verification.html"><code class="language-plaintext highlighter-rouge">rendered-verification</code></a> adds that the agent that
+wrote the change cannot either. This skill is about <strong>what goes to the
+reviewer</strong>: a before/after preview that is a fair comparison, carries a number,
+and can be read without opening anything else. It covers every content type
+this platform renders.</p><p>Owner, 2026-09-30: <em>“make sure before after previews are well documented skill
+that genealizes (e.g. fhir, documenation, papers, websites) as parr of. review
+and feedback processes”</em>.</p><h2 id="how-this-sits-beside-its-neighbours"><a href="#how-this-sits-beside-its-neighbours" class="anchor-heading" aria-labelledby="how-this-sits-beside-its-neighbours"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How this sits beside its neighbours
+  
+  
+</h2><p>This skill does not replace any of these. It tells you which one to use.</p><div class="table-wrapper"><table><thead><tr><th>skill</th><th>what it answers</th><th>use it for</th></tr></thead><tbody><tr><td><a href="../../reference/skill-instructions/rendered-verification.html"><code class="language-plaintext highlighter-rouge">rendered-verification</code></a></td><td><em>does it work?</em> — the agent checks in a browser</td><td>the tools: computed style, hit tests, <code class="language-plaintext highlighter-rouge">pageerror</code>, and asserting that the page actually loaded its styles</td></tr><tr><td><a href="../../reference/skill-instructions/visual-diff.html"><code class="language-plaintext highlighter-rouge">visual-diff</code></a></td><td><em>how much of this figure changed?</em></td><td>automatic pixel pictures of changed blocks on a folio’s review page</td></tr><tr><td><a href="../../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a></td><td><em>where do I look?</em></td><td>the before (main) and after (staging) URL pairs, and what to review at each</td></tr><tr><td><strong>this skill</strong></td><td><em>is the reviewer’s comparison fair, measured and findable?</em></td><td>the preview itself, for any content type, and where it fits in the processes</td></tr></tbody></table></div><p>If the change is a folio block and the staging job already made its pictures,
+link to those. Use this skill for everything the job cannot make: page chrome,
+behaviour on scroll, a PDF page, an IG page, a slide.</p><p><strong>A staging “after” is not permanent.</strong> <code class="language-plaintext highlighter-rouge">gh-pages</code> keeps at most ten
+<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> previews and rotates the least recently updated off (owner
+ruling 2026-10-02, issue #1868), so a link in a preview can 404 days later
+while the PR is still open. The next push to the branch re-stages it. Where the
+comparison must outlive that, publish the captures themselves (§6) rather than
+only the staging URL. Detail: <a href="../../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a> §”The cap”.</p><p><strong>Which pages to picture.</strong> For a Change Set, the pages come from its
+rendered list (skill <a href="../../reference/skill-instructions/rendered-impact.html"><code class="language-plaintext highlighter-rouge">rendered-impact</code></a>), so the “k of n
+pages changed” count is the list’s count, not one made by hand. Its
+<code class="language-plaintext highlighter-rouge">unconfirmed</code> content pages (bytes unchanged, content loaded in the browser)
+are exactly the ones a screenshot settles.</p><h2 id="the-rule"><a href="#the-rule" class="anchor-heading" aria-labelledby="the-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule
+  
+  
+</h2><blockquote><p><strong>A reviewer is shown a rendered change as a before/after pair. Each pair
+comes from ONE build with ONE variable, is captured stably, is paired with a
+measured count and its method, and has a status line saying what it is and
+what was not checked. Each pair is introduced by a narrative: a sentence or
+two, in plain words, on what a reader will now see or do differently and
+why.</strong></p></blockquote><p>The narrative comes first, above the pictures. A pair without it makes the
+reviewer play spot-the-difference, and the difference they find first is not
+always the one that changed: a re-render shifts anti-aliasing, a merge brings
+in somebody else’s edit. Name the change so the reviewer looks for it, then
+let the pair confirm it (owner, 2026-10-01: <em>“provide/show before/after,
+provide narrative description of change”</em>).</p><p>If any part is missing, say so in the preview. Never drop a missing part
+silently.</p><p><strong>Build only the cone.</strong> For any rendered kind, the “after” build need only
+cover what the change can reach: its own files, its generator’s import closure,
+and what is derived from those. That is the general rule, written once in
+<a href="../../reference/skill-instructions/feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging</code></a> §7. Anything the cone leaves out is
+identical to the “before” by construction, so leaving it out loses no
+comparison.</p><h2 id="1-one-build-one-variable"><a href="#1-one-build-one-variable" class="anchor-heading" aria-labelledby="1-one-build-one-variable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. One build, one variable
+  
+  
+</h2><p>The only difference between the two pictures should be the change under
+review.</p><p>In order of preference:</p><ol><li><strong>The same build, with the change toggled.</strong> Render once and make “before”
+by switching the change off in place. The usual way is injected CSS that
+hides the new element, reverts a rule, or removes a class. Everything else
+stays identical, including the build, the theme, the fonts, the data and
+the viewport.</li><li><strong>Two builds made with identical tooling</strong>, one of the base commit and one
+of the head commit. Use this when the change cannot be toggled, for example
+generated markup, a different PDF, or a new IG page. Use
+<code class="language-plaintext highlighter-rouge">git worktree add &lt;dir&gt; origin/main --detach</code> and symlink the installed
+dependencies (see <code class="language-plaintext highlighter-rouge">rendered-verification</code> §”A before/after pair beats an
+after”). <strong>Say in the preview that there are two builds</strong>, with both SHAs.</li><li><strong>A local build against a published one.</strong> Only if nothing else is
+possible, and the preview must say so in its first line. The published side
+used different tooling. On the docs site, for example, the pinned
+<code class="language-plaintext highlighter-rouge">remote_theme</code> differs from the local theme gem. Any difference in the
+pictures may come from that and not from the change.</li></ol><p>Record which of the three you used. It is the first line of the status line
+in section 5.</p><h2 id="2-stable-capture--load-everything-then-check-the-two-shots-line-up"><a href="#2-stable-capture--load-everything-then-check-the-two-shots-line-up" class="anchor-heading" aria-labelledby="2-stable-capture--load-everything-then-check-the-two-shots-line-up"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Stable capture — load everything, then check the two shots line up
+  
+  
+</h2><p>A pair captured while the page is still settling compares two moments, not
+two versions.</p><p>Do all of these before either shot:</p><ul><li><strong>Force lazy media to eager</strong>:
+<code class="language-plaintext highlighter-rouge">document.querySelectorAll('img[loading=lazy],iframe[loading=lazy]').forEach(e =&gt; e.loading = 'eager')</code>.</li><li><strong>Scroll the whole page once</strong>, top to bottom and back, so anything that
+loads on intersection has loaded.</li><li><strong>Wait for network idle</strong> (<code class="language-plaintext highlighter-rouge">page.waitForLoadState('networkidle')</code>) and for
+<code class="language-plaintext highlighter-rouge">document.fonts.ready</code>.</li><li><strong>Turn smooth scrolling off</strong>:
+<code class="language-plaintext highlighter-rouge">document.documentElement.style.scrollBehavior = 'auto'</code>. Otherwise a
+<code class="language-plaintext highlighter-rouge">scrollTo</code> returns before the page has moved.</li><li><strong>Assert the shots line up</strong>: <code class="language-plaintext highlighter-rouge">scrollY</code> must be equal in both, and so must
+the <code class="language-plaintext highlighter-rouge">getBoundingClientRect().top</code> of a <strong>reference element</strong> outside the
+change, such as a heading. If either differs, the shots are invalid. Retake
+them. Do not caption around the mismatch.</li></ul><p><strong>The failure this section is written from.</strong> The first capture of the Folio
+tab fix (#1693) was invalid. Lazy images loaded between the before and after
+shots, so the text moved and the two pictures showed <em>different content</em> at
+the same scroll offset. They looked plausible, and a reviewer would have been
+comparing text positions rather than the fix. The reference-element check
+catches this. Looking at the pictures does not.</p><h2 id="3-measure-dont-just-show"><a href="#3-measure-dont-just-show" class="anchor-heading" aria-labelledby="3-measure-dont-just-show"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Measure, don’t just show
+  
+  
+</h2><p>A picture shows one position. A count shows all of them. Send both, and
+<strong>name the method</strong> so the reviewer can repeat it or dispute it.</p><ul><li>Choose a <strong>question that has a yes/no answer at one position</strong>. For
+example: “is body text visible beside the handle?”, “does the caption
+overflow the slide?”, “is this IG table wider than the viewport?”.</li><li>Ask it at <strong>many positions</strong>: scroll steps, pages, slides, or viewports.
+Report the result as <em>k of n</em>, before and after.</li><li>Measure from the rendered geometry. For text overlap, collect <code class="language-plaintext highlighter-rouge">Range</code>
+client rects of the text nodes, intersect them with the element’s
+<code class="language-plaintext highlighter-rouge">getBoundingClientRect()</code>, and <strong>confirm each hit</strong> with
+<code class="language-plaintext highlighter-rouge">document.elementFromPoint</code> at the overlap. A rect intersection alone
+counts text that is painted underneath.</li><li>State the step size and the viewport with the numbers.</li></ul><p>Folio tab, <code class="language-plaintext highlighter-rouge">platform.html</code>, 19 scroll positions at 1280×900:
+<em>text visible beside the handle at <strong>16 of 19</strong> positions before, <strong>0 of 19</strong>
+after</em>. At 390×844: <strong>18 of 20</strong> before, <strong>0 of 20</strong> after. PR #1709’s own
+table used 97 px steps across four page and viewport pairs:
+platform 1280 9/21 → 0, platform 390 32/39 → 0, index 1280 25/50 → 0,
+cat-harness/index 390 36/60 → 0.</p><p>Treat a count the same way as any other measurement. Validate the method on a
+known positive and a known negative before trusting it
+(<code class="language-plaintext highlighter-rouge">rendered-verification</code> §”A COUNT over the built site needs its instrument
+validated first”).</p><h2 id="4-several-viewports-and-both-schemes-when-colour-is-involved"><a href="#4-several-viewports-and-both-schemes-when-colour-is-involved" class="anchor-heading" aria-labelledby="4-several-viewports-and-both-schemes-when-colour-is-involved"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Several viewports, and both schemes when colour is involved
+  
+  
+</h2><p>At least:</p><div class="table-wrapper"><table><thead><tr><th>viewport</th><th>size</th><th>why</th></tr></thead><tbody><tr><td>desktop</td><td>1280×900</td><td>the layout most authors write in</td></tr><tr><td>phone</td><td>390×844</td><td>fixed and sticky elements, narrow columns, overflow</td></tr></tbody></table></div><p>Add <strong>light and dark</strong> whenever the change touches colour, contrast, a
+border or an image with transparency. Switch the scheme with the real
+control (on the docs site that is <code class="language-plaintext highlighter-rouge">jtd.setTheme</code>, not an attribute set by
+hand) and check that the switch took effect before shooting.</p><p>Show a pair for each combination that matters. Give the count for every
+combination you measured.</p><h2 id="5-honest-status--one-line-at-the-top"><a href="#5-honest-status--one-line-at-the-top" class="anchor-heading" aria-labelledby="5-honest-status--one-line-at-the-top"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Honest status — one line, at the top
+  
+  
+</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Status: &lt;committed | pushed | in PR #N | merged&gt; at &lt;sha&gt; ·
+Build: &lt;one build, toggled | base &lt;sha&gt; vs head &lt;sha&gt;, same tooling | local vs published&gt; ·
+Not checked: &lt;what, and why&gt;
+</code></pre></div></div><p>“Not checked” is required and is never empty without a reason. Typical
+entries:</p><ul><li>local theme gem vs the pinned remote theme;</li><li>dark mode;</li><li>a browser other than Chromium;</li><li>print CSS;</li><li>the IG Publisher’s full build (only sushi ran);</li><li>the PPTX was not rendered, only its geometry was reconstructed.</li></ul><p>A preview that looks complete but hides an unchecked axis is a false green
+(<code class="language-plaintext highlighter-rouge">dh4f</code>).</p><h2 id="6-publishing--a-private-page-updated-in-place"><a href="#6-publishing--a-private-page-updated-in-place" class="anchor-heading" aria-labelledby="6-publishing--a-private-page-updated-in-place"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Publishing — a private page, updated in place
+  
+  
+</h2><ul><li><strong>Where:</strong> a private web page. Use the Artifact tool when it is available.
+It holds the pairs, the counts, the method, the status line and links to the
+PR and the issue. <strong>Update the same page as the work moves on</strong>, so the link
+in the PR body stays current. Do not post a new page for each round. Where
+no page can be published, attach the images to the turn and to the PR
+comment instead.</li><li><strong>Alt text on every image</strong>, saying what the reader should see. For
+example: <em>“Before, phone, scrolled 1200 px: the Folio tab covers the first
+three words of each line”</em>. Do not write “before screenshot”. A preview
+without alt text cannot be used by a reviewer with a screen reader, and the
+owner is one of this platform’s reviewers with access needs.</li><li><strong>Label each pair in words</strong>, not only with position or colour:
+“Before” and “After”, then viewport and scheme.</li><li><strong>Committed evidence:</strong> do not commit screenshots to the repository. The
+page and the PR are the record. <code class="language-plaintext highlighter-rouge">visual-diff</code>’s pictures are built by CI and
+are not committed either.</li></ul><p>The Folio tab preview was published this way as a private artifact page. It
+has the before/after pairs, the counts above, the method and the link to PR
+#1709.</p><h2 id="7-by-content-type"><a href="#7-by-content-type" class="anchor-heading" aria-labelledby="7-by-content-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. By content type
+  
+  
+</h2><p>The discipline above is the same for every type. What changes is how you
+build it, what one “position” is, and what you toggle.</p><h3 id="docs-site-jekyll-just-the-docs"><a href="#docs-site-jekyll-just-the-docs" class="anchor-heading" aria-labelledby="docs-site-jekyll-just-the-docs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Docs site (Jekyll, just-the-docs)
+  
+  
+</h3><ul><li><strong>Build:</strong> <code class="language-plaintext highlighter-rouge">bun run cat preview:site</code>. Its header explains how its output
+differs from CI’s: the local theme gem, not the pinned <code class="language-plaintext highlighter-rouge">remote_theme</code>.</li><li><strong>Serve under the baseurl.</strong> Symlink <code class="language-plaintext highlighter-rouge">&lt;serve&gt;/folio-assistant -&gt; &lt;build&gt;</code>
+and serve the parent directory. Served at <code class="language-plaintext highlighter-rouge">/</code>, every stylesheet returns 404
+and the page still renders, unstyled.</li><li><strong>For theme chrome</strong>, take the real CI build from <code class="language-plaintext highlighter-rouge">gh-pages</code>
+(<code class="language-plaintext highlighter-rouge">rendered-verification</code> §”The REAL build is reachable”).</li><li><strong>Toggle:</strong> inject CSS into the one build.</li><li><strong>Position:</strong> a scroll step (for example 97 px) or a page.</li></ul><p><strong>The worked example is the Folio tab (#1693, PR #1709).</strong> The fixed “Folio”
+handle covered body text as the page scrolled. The capture used one
+<code class="language-plaintext highlighter-rouge">preview:site</code> build of commit <code class="language-plaintext highlighter-rouge">438268976</code>. “Before” was made by injecting
+<code class="language-plaintext highlighter-rouge">.fa-glass-band{visibility:hidden!important}</code>, so the new strip was the only
+difference. The capture forced lazy images to eager, scrolled the page once,
+turned smooth scrolling off, and checked that <code class="language-plaintext highlighter-rouge">scrollY</code> was equal in both
+shots. The counts are in section 3.</p><h3 id="papers-latex--pdf"><a href="#papers-latex--pdf" class="anchor-heading" aria-labelledby="papers-latex--pdf"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Papers (LaTeX → PDF)
+  
+  
+</h3><ul><li><strong>Build:</strong> the paper render path. See <code class="language-plaintext highlighter-rouge">build-pdf</code> (the science layer) and the
+<code class="language-plaintext highlighter-rouge">paper_render_pdf</code> tool, or <code class="language-plaintext highlighter-rouge">document_render_pdf</code> for a document folio with
+no TeX. Build base and head with the <strong>same TeX Live and the same class
+files</strong>. A PDF cannot be toggled in place, so this is always case 2 of
+section 1.</li><li><strong>Page images:</strong> rasterise with <code class="language-plaintext highlighter-rouge">pdftoppm -r 110 -png</code> or <code class="language-plaintext highlighter-rouge">mutool draw</code>
+when present (check with <code class="language-plaintext highlighter-rouge">command -v</code>). Otherwise render the pages with
+pdf.js in Chromium. <code class="language-plaintext highlighter-rouge">paper_preview</code> opens a rendered PDF or HTML for a
+person to look at. It is for a human looking, not for capture.</li><li><strong>Position:</strong> a page. Align pages by <strong>anchor, not by page number</strong>. An
+added paragraph shifts every later page. Pair the page that holds the
+changed label in each build.</li><li><strong>Measure:</strong> changed pages <em>k of n</em>, overfull boxes and warnings from the
+log before and after, and page count.</li><li>A changed block’s own picture comes from <code class="language-plaintext highlighter-rouge">visual-diff</code> on the HTML render.
+Link it rather than taking it again.</li></ul><h3 id="fhir-igs-sushi-ig-publisher"><a href="#fhir-igs-sushi-ig-publisher" class="anchor-heading" aria-labelledby="fhir-igs-sushi-ig-publisher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> FHIR IGs (sushi, IG Publisher)
+  
+  
+</h3><ul><li><strong>Order:</strong> <strong>sushi must pass first.</strong> A red sushi run has no IG to preview.
+Then run the IG Publisher, and compare the rendered <code class="language-plaintext highlighter-rouge">output/</code> pages
+(<code class="language-plaintext highlighter-rouge">ig-publication</code> (the FHIR IG layer),
+<code class="language-plaintext highlighter-rouge">fhir-validation</code> (the FHIR IG layer)).</li><li><strong>Build:</strong> two builds with identical tooling. The Publisher jar floats to
+the latest release on every run (bean <code class="language-plaintext highlighter-rouge">dhvf</code>), so <strong>record its version for
+both sides</strong>. If the versions differ, some differences in the pictures may
+come from the tool and not from the change. <code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>’s
+restored-state assembly is fine for an authoring preview but is not the
+full build. Say which one you used.</li><li><strong>Position:</strong> an <code class="language-plaintext highlighter-rouge">output/</code> page such as <code class="language-plaintext highlighter-rouge">StructureDefinition-*.html</code>, a
+pagecontent page or <code class="language-plaintext highlighter-rouge">artifacts.html</code>. Pick the pages from the changed
+resources, not by browsing.</li><li><strong>Measure:</strong> pages changed <em>k of n</em>. Also compare <code class="language-plaintext highlighter-rouge">qa.json</code> errors and
+warnings before and after. A preview that looks right with more QA errors
+is not an improvement.</li></ul><h3 id="slide-decks-pptx-odp"><a href="#slide-decks-pptx-odp" class="anchor-heading" aria-labelledby="slide-decks-pptx-odp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slide decks (PPTX, ODP)
+  
+  
+</h3><p>On a slide, layout carries meaning. What overlaps, what is cut off and what
+sits next to what is part of the message.</p><ul><li><strong>Render if you can.</strong> <code class="language-plaintext highlighter-rouge">soffice --headless --convert-to pdf</code>, then use the
+paper route for page images. Check with <code class="language-plaintext highlighter-rouge">command -v soffice</code>. The session
+that worked out this route had no LibreOffice in its container.</li><li><strong>If you cannot render, reconstruct the geometry from the package XML.</strong> A
+<code class="language-plaintext highlighter-rouge">.pptx</code> is a zip file.
+    <ul><li><code class="language-plaintext highlighter-rouge">ppt/presentation.xml</code> <code class="language-plaintext highlighter-rouge">&lt;p:sldSz cx cy&gt;</code> gives the slide size.</li><li>Each <code class="language-plaintext highlighter-rouge">ppt/slides/slideN.xml</code> shape has <code class="language-plaintext highlighter-rouge">&lt;a:off x y&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;a:ext cx cy&gt;</code>,
+in EMU (914400 per inch).</li><li>A shape with no <code class="language-plaintext highlighter-rouge">&lt;a:xfrm&gt;</code> <strong>inherits</strong> its geometry from its placeholder
+in <code class="language-plaintext highlighter-rouge">slideLayoutN.xml</code>, then from <code class="language-plaintext highlighter-rouge">slideMasterN.xml</code>. Follow the chain or
+the shape is missing.</li><li>For <code class="language-plaintext highlighter-rouge">.odp</code>, read <code class="language-plaintext highlighter-rouge">content.xml</code> <code class="language-plaintext highlighter-rouge">svg:x/svg:y/svg:width/svg:height</code>, which
+use units such as <code class="language-plaintext highlighter-rouge">cm</code>.</li><li>Draw the boxes as SVG with their text, before and after. Measure overlaps
+and boxes past the slide edge as <em>k of n</em> slides.</li></ul></li><li><strong>Status must say “geometry reconstructed, not rendered”</strong>. Fonts,
+autofit and text wrapping are not modelled, so text overflow inside a box is
+unchecked.</li></ul><h3 id="websites-in-general"><a href="#websites-in-general" class="anchor-heading" aria-labelledby="websites-in-general"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Websites in general
+  
+  
+</h3><ul><li>The docs-site method, without the Jekyll parts. Build base and head with
+the site’s own build, or toggle with injected CSS or JS in one build. Serve
+under the same path prefix the site is deployed at.</li><li>Everything in <code class="language-plaintext highlighter-rouge">rendered-verification</code> applies: styles actually loaded,
+<code class="language-plaintext highlighter-rouge">pageerror</code> count zero, and hit tests at the centre of controls.</li><li><strong>Position:</strong> scroll steps, routes, or interaction states such as a menu
+open or a form in error. List the states you covered.</li></ul><h2 id="8-in-the-review-and-feedback-processes"><a href="#8-in-the-review-and-feedback-processes" class="anchor-heading" aria-labelledby="8-in-the-review-and-feedback-processes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. In the review and feedback processes
+  
+  
+</h2><p><strong>When it is required.</strong> A preview is required before a rendered change is
+handed to anyone to judge:</p><ul><li>when the PR is opened for review;</li><li>at each round of author feedback;</li><li>at the HCI validation gate’s review.</li></ul><p>A non-rendered change needs none. Say so in one line, rather than attaching
+an empty preview.</p><p><strong>Who makes it.</strong> The agent that made the change, in its own lane. The
+reviewer’s lane <strong>reads</strong> the preview and does not build it. A reviewer who
+must build their own before/after has been handed a chore, not a review.</p><p>Only the producing activities carry the skill ref, because a skill ref says
+the lane PERFORMS the skill and the lane’s role must carry it
+(<code class="language-plaintext highlighter-rouge">role-carries-activity-skill</code>). The reading activities name the preview in
+their documentation and carry no ref.</p><div class="table-wrapper"><table><thead><tr><th>process (<code class="language-plaintext highlighter-rouge">cat-harness/processes/</code>)</th><th>activity</th><th>role</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_CommitPush</code></td><td>agent <strong>produces</strong> it with the first push (skill ref)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_Iterate</code></td><td>agent <strong>refreshes</strong> it with each revision push, which bypasses <code class="language-plaintext highlighter-rouge">Task_CommitPush</code> (skill ref)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_ReviewStaging</code></td><td>author <strong>reads</strong> it beside the staging URLs</td></tr><tr><td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_CompareBeforeAfter</code></td><td>review committee <strong>reads</strong> it beside <code class="language-plaintext highlighter-rouge">visual-diff</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_CommitAndOpenPR</code></td><td>agent <strong>produces</strong> it for a change to a rendered surface (skill ref)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_Review</code></td><td>reviewer <strong>reads</strong> it</td></tr><tr><td><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_DraftEdit</code>, <code class="language-plaintext highlighter-rouge">Task_ReviseEdit</code></td><td>agent <strong>produces</strong> it with the proposal, before <code class="language-plaintext highlighter-rouge">Gateway_ValidationFork</code>, so it exists when review starts (skill ref)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">Task_SmeReview</code></td><td>human or SME <strong>reads</strong> it as an input to judgement</td></tr></tbody></table></div><p><strong>Where it is linked.</strong></p><ul><li><strong>PR body:</strong> the preview link and the status line, near the top. Also any
+count that settles the question.</li><li><strong>Issue comment:</strong> each round’s summary on the issue carries the same link
+(<a href="../../reference/skill-instructions/issue-working.html"><code class="language-plaintext highlighter-rouge">issue-working</code></a>).</li><li>Update the page in place, so both links stay current.</li></ul><p><strong>Asking the reviewer.</strong> The question follows
+<a href="../../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a>:
+context first, then options, then the recommendation, then the question. The
+choices are <strong>structured and easy to select</strong>, because some reviewers find
+typing hard. Put the preview link and the counts in the context, so the
+reviewer can answer without opening anything else. Recommended first:</p><ol><li><strong>Looks right. Approve this preview.</strong> (recommended when the counts went to
+zero and nothing is unchecked)</li><li><strong>Something is wrong at a position.</strong> Pick the pair by its label, for
+example “After, phone, 1200 px”. Adding a note is optional.</li><li><strong>Check something not covered.</strong> Pick from the “Not checked” list.</li><li><strong>Not now.</strong></li></ol><p>Say what happens if they give no answer: the PR stays open and nothing
+merges. Merging still needs the explicit confirmation the processes require.</p><p><strong>How feedback becomes work.</strong></p><ul><li>A choice of 2 or 3, or a comment on the preview, becomes a <strong>bean</strong> with
+the pair’s label, the status line’s SHA and the position
+(<a href="../../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>; check before you create).</li><li>On a folio, a comment tagged <code class="language-plaintext highlighter-rouge">block: &lt;label&gt;</code> on the PR becomes a
+<code class="language-plaintext highlighter-rouge">review-comment/1.0.0</code> todo (<code class="language-plaintext highlighter-rouge">review-comments</code>).</li><li>Feedback on published content goes through
+<a href="../../reference/skill-instructions/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a>.</li><li>The next round’s preview answers each item. Take the same pair again and
+update the count.</li></ul><h2 id="what-this-does-not-do"><a href="#what-this-does-not-do" class="anchor-heading" aria-labelledby="what-this-does-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does NOT do
+  
+  
+</h2><ul><li>It does not decide whether the change is right. It makes that decision
+possible to take at a glance.</li><li>It does not replace the gates, <code class="language-plaintext highlighter-rouge">rendered-verification</code>’s checks, or
+<code class="language-plaintext highlighter-rouge">visual-diff</code>’s pixel job. It uses them.</li><li>It is not a merge approval. A reviewer choosing option 1 has approved the
+preview, and the merge still needs its own confirmation.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/code-change-review.html">Code change and review</a></td><td>Commit, push, open the PR</td></tr><tr><td><a href="../../en/cat-harness/processes/content-change-review.html">Content Change and Review</a></td><td>Commit, push, update PR; Iterate on author feedback</td></tr><tr><td><a href="../../en/cat-harness/processes/editing-hci-validation.html">Editing and HCI validation</a></td><td>Draft the block edit; Revise the proposed change</td></tr><tr><td><a href="../../en/cat-harness/processes/l2-component-edit-review.html">L2 component edit and review</a></td><td>Render, stage, before/after [before-after-preview · feature-staging]</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

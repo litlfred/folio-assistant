@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Adjudicate slot codings and glossary candidates [classify-and-code-content · ontologist · glossary-terms · terminology-management · content-review]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/ontologist",
+        "http://smart.who.int/base/skill/glossary-terms",
+        "http://smart.who.int/base/skill/terminology-management",
+        "http://smart.who.int/base/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/FixedTestData",
+  "definitions": {
+    "FixedTestData": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "fixed"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "type": "object",
+          "properties": {
+            "reviewer": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "script",
+                    "agent",
+                    "human"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "reviewed_at": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "reviewer",
+            "reviewed_at"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "kind",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/FixedTestDataSchema.schema.json",
+  "title": "FixedTestDataSchema",
+  "description": "Generated from `FixedTestDataSchema` in schemas/sdlc/test-plan.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "pr": "2847/merge",
+    "run": "41202589173"
+  }
+}
