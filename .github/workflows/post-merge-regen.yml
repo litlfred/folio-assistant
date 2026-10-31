@@ -78,6 +78,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount every instance from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -86,6 +93,11 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      # PlantUML 1.2026.9 needs Java 21 (its ELK classes are class file 65);
+      # ubuntu-latest's PATH java is 17 (#2744). The major is read from the
+      # plantuml tool-release declaration, so a later bump moves it too.
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
       - name: Install Chromium, for the checks that draw through a browser
         # `render:bpmn` and the `*:processes:render:check` gates draw BPMN with
         # bpmn-js in Chromium, which code-quality-gates.yml installs and this
@@ -94,10 +106,34 @@ jobs:
         run: node_modules/.bin/playwright install --with-deps chromium
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         run: bun run cat state:mount
+      # Bean `ksek`: give `post-merge:regen` the same pre-built inputs that
+      # `code-quality-gates.yml`'s `qa-working-copy` and `publish-pages` jobs
+      # build before the gate jobs run. Without `ig-index:build` and
+      # `smart:pages`, `index:render:check` exits 2 (`could not determine: no
+      # artefact index at .../smart-base/fhir-artifact-index/index.json`);
+      # without `qa:working-copy` and `derive:publish`, the checks that read the
+      # gitignored `test/results/` working copy or `builtAtPublish` outputs fail
+      # in the audit pass on a clean `main` tree. All four steps write only into
+      # gitignored mounts, `test/results/`, and `build/`, so index-tracked
+      # staleness (`AGENTS.md`, `README.md`, `CLAUDE.md`, `GEMINI.md`, etc.) is
+      # never masked.
+      - name: Build the IG artefact indexes the pages read (fhir-harness#124, bean ksek)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+      - name: Build the mounted IG instances' pages (beans hupw, ksek)
+        run: bun run cat smart:pages
+      - name: Produce the QA working copy this run reads (beans 72a8, ksek)
+        run: |
+          bun run cat qa:working-copy || echo "::warning::qa:working-copy exited $?; continuing to post-merge:regen so index-scoped pairs are still checked and repaired"
+      - name: Build the publish-time pages this run reads (B1, bean ksek)
+        run: |
+          bun run cat derive:publish || echo "::warning::derive:publish exited $?; continuing to post-merge:regen so index-scoped pairs are still checked and repaired"
       - name: Run post-merge regen
         env:
           GH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
           DRY_RUN: ${{ inputs.dry_run == true }}
+          QA_WORKING_COPY_BUILDING: "1"
         run: |
           set -uo pipefail
           git config user.name "github-actions[bot]"
