@@ -249,8 +249,8 @@ changes, and their cursor has not moved. Nothing was said. <code class="language
 on the region, and a count announced when a filter changes the list.</p><h2 id="how-to-check-it"><a href="#how-to-check-it" class="anchor-heading" aria-labelledby="how-to-check-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to check it
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">test/a11y.e2e.ts</code> is the worked example and the gate. It runs in CI as the
-<code class="language-plaintext highlighter-rouge">End-to-end + accessibility, shard i/3</code> jobs (one required check per shard).</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat test</span>:e2e cat-harness-tools/test/a11y.e2e.ts
+</h2><p><code class="language-plaintext highlighter-rouge">test/content/a11y.e2e.ts</code> is the worked example and the gate. It runs in CI as the
+<code class="language-plaintext highlighter-rouge">End-to-end + accessibility, shard i/3</code> jobs (one required check per shard).</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat test</span>:e2e cat-harness-tools/test/content/a11y.e2e.ts
 </code></pre></div></div><p>Two halves, deliberately:</p><ul><li><strong>axe-core</strong> over the page in <strong>both colour schemes at two viewports</strong>,
 asserting zero WCAG A/AA violations. The failure names the rules, so a red
 run says <em>what</em> rather than <em>how many</em>.</li><li><strong>Assertions axe cannot make</strong> — focus lands on the control, Enter and Space

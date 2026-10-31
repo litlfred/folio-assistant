@@ -31,8 +31,42 @@
     },
     "open-bean-linked-inferred": {
       "summary": "Not a finding: an open bean tied to a task only because its file NAMES a diagram id (inferred — a mention is not a run). Listed so the inference can be checked.",
-      "count": 0,
-      "entries": []
+      "count": 3,
+      "entries": [
+        {
+          "severity": "info",
+          "bean": "folio-assistant-dthl",
+          "title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
+          "status": "in-progress",
+          "parent": "",
+          "basis": "named-id",
+          "named": [
+            "Process_Editing"
+          ]
+        },
+        {
+          "severity": "info",
+          "bean": "folio-assistant-ksek",
+          "title": "CI: green PR must mean green main",
+          "status": "in-progress",
+          "parent": "",
+          "basis": "named-id",
+          "named": [
+            "Process_Editing"
+          ]
+        },
+        {
+          "severity": "info",
+          "bean": "folio-assistant-p7mb",
+          "title": "Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish (owner option 1, 2026-10-23)",
+          "status": "in-progress",
+          "parent": "folio-assistant-1xhc",
+          "basis": "named-id",
+          "named": [
+            "Process_Editing"
+          ]
+        }
+      ]
     },
     "open-bean-linked-instance": {
       "summary": "Not a finding: an open bean a workflow instance names (recorded).",
@@ -41,7 +75,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 33,
+      "count": 30,
       "entries": [
         {
           "severity": "warning",
@@ -51,7 +85,7 @@
           "parent": "folio-assistant-uhkv",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.547
+          "cosine": 0.542
         },
         {
           "severity": "warning",
@@ -61,7 +95,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.829
+          "cosine": 0.828
         },
         {
           "severity": "warning",
@@ -71,7 +105,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.756
+          "cosine": 0.755
         },
         {
           "severity": "warning",
@@ -81,7 +115,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.88
+          "cosine": 0.878
         },
         {
           "severity": "warning",
@@ -101,7 +135,7 @@
           "parent": "folio-assistant-slw1",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.514
+          "cosine": 0.516
         },
         {
           "severity": "warning",
@@ -121,7 +155,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.392
+          "cosine": 0.389
         },
         {
           "severity": "warning",
@@ -141,17 +175,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.794
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-dthl",
-          "title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
-          "status": "in-progress",
-          "parent": "",
-          "basis": "none",
-          "group": "folio-assistant-dthl",
-          "cosine": 0.836
+          "cosine": 0.792
         },
         {
           "severity": "warning",
@@ -161,7 +185,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.311
+          "cosine": 0.312
         },
         {
           "severity": "warning",
@@ -171,7 +195,7 @@
           "parent": "folio-assistant-fs43",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.353
+          "cosine": 0.354
         },
         {
           "severity": "warning",
@@ -185,23 +209,13 @@
         },
         {
           "severity": "warning",
-          "bean": "folio-assistant-ksek",
-          "title": "CI: green PR must mean green main",
-          "status": "in-progress",
-          "parent": "",
-          "basis": "none",
-          "group": "folio-assistant-ksek",
-          "cosine": 0.614
-        },
-        {
-          "severity": "warning",
           "bean": "folio-assistant-llxa",
           "title": "cat-harness CRDM skills: cite PHII and PATH CRDM as the method they adapt",
           "status": "todo",
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.747
+          "cosine": 0.744
         },
         {
           "severity": "warning",
@@ -211,7 +225,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.701
+          "cosine": 0.697
         },
         {
           "severity": "warning",
@@ -221,7 +235,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.868
+          "cosine": 0.867
         },
         {
           "severity": "warning",
@@ -231,7 +245,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.724
+          "cosine": 0.72
         },
         {
           "severity": "warning",
@@ -251,7 +265,7 @@
           "parent": "folio-assistant-0lmb",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.579
+          "cosine": 0.578
         },
         {
           "severity": "warning",
@@ -261,17 +275,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.353
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-p7mb",
-          "title": "Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish (owner option 1, 2026-10-23)",
-          "status": "in-progress",
-          "parent": "folio-assistant-1xhc",
-          "basis": "none",
-          "group": "folio-assistant-ksek",
-          "cosine": 0.711
+          "cosine": 0.35
         },
         {
           "severity": "warning",
@@ -291,7 +295,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-vke6",
-          "cosine": 0.337
+          "cosine": 0.335
         },
         {
           "severity": "warning",
@@ -301,7 +305,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.655
+          "cosine": 0.654
         },
         {
           "severity": "warning",
@@ -311,7 +315,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.732
+          "cosine": 0.733
         },
         {
           "severity": "warning",
@@ -321,7 +325,7 @@
           "parent": "folio-assistant-sb31",
           "basis": "none",
           "group": "folio-assistant-sb31",
-          "cosine": 0.805
+          "cosine": 0.807
         },
         {
           "severity": "warning",
@@ -351,7 +355,7 @@
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.714
+          "cosine": 0.713
         },
         {
           "severity": "warning",
@@ -361,7 +365,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.422
+          "cosine": 0.423
         },
         {
           "severity": "warning",
@@ -371,7 +375,7 @@
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.742
+          "cosine": 0.741
         }
       ]
     },
@@ -382,27 +386,26 @@
         {
           "severity": "warning",
           "group": "folio-assistant-dthl",
-          "size": 9,
+          "size": 8,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-dthl",
           "nearest_epic_title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
-          "mean_cosine": 0.735,
+          "mean_cosine": 0.719,
           "terms": [
-            "litlfred dth-phc",
             "dth-phc section",
-            "phc handbook",
-            "pass dth",
+            "litlfred dth-phc",
             "phii crdm",
+            "referencing phii",
+            "phc handbook",
             "phc workplan",
-            "crdm pdf",
-            "glossary archimate"
+            "dth repo",
+            "pass litlfred"
           ],
           "beans": [
             "folio-assistant-17iw",
             "folio-assistant-6chd",
             "folio-assistant-75c5",
             "folio-assistant-cysv",
-            "folio-assistant-dthl",
             "folio-assistant-llxa",
             "folio-assistant-lo3p",
             "folio-assistant-ls3t",
@@ -418,7 +421,12 @@
               "beans": 1
             }
           ],
-          "known_processes": []
+          "known_processes": [
+            {
+              "process": "Process_Editing",
+              "beans": 1
+            }
+          ]
         },
         {
           "severity": "warning",
@@ -427,7 +435,7 @@
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-yj32",
           "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "mean_cosine": 0.377,
+          "mean_cosine": 0.376,
           "terms": [
             "task bank",
             "independent queues",
@@ -460,7 +468,7 @@
           "size_class": "small",
           "nearest_epic": "folio-assistant-33iz",
           "nearest_epic_title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
-          "mean_cosine": 0.76,
+          "mean_cosine": 0.759,
           "terms": [
             "group security",
             "security review",
@@ -492,7 +500,7 @@
           "size_class": "small",
           "nearest_epic": "folio-assistant-iirv",
           "nearest_epic_title": "cat-harness / cat-harness-tools separation",
-          "mean_cosine": 0.689,
+          "mean_cosine": 0.688,
           "terms": [
             "placement proposal",
             "open children",
@@ -500,8 +508,8 @@
             "group assignment",
             "open prs",
             "merged prs",
-            "seeded shas",
-            "remaining open"
+            "remaining open",
+            "seeded shas"
           ],
           "beans": [
             "folio-assistant-6fez",
@@ -541,32 +549,6 @@
               "beans": 1
             }
           ]
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-ksek",
-          "size": 3,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-ksek",
-          "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.559,
-          "terms": [
-            "index re-pins",
-            "post-merge regen",
-            "layer re-pins",
-            "publish-time cross-instance",
-            "cone deploy",
-            "skipped writer",
-            "regenerates bpmn",
-            "writer puts"
-          ],
-          "beans": [
-            "folio-assistant-fwtz",
-            "folio-assistant-ksek",
-            "folio-assistant-p7mb"
-          ],
-          "filed_under": [],
-          "known_processes": []
         },
         {
           "severity": "warning",
@@ -652,7 +634,7 @@
           "size_class": "small",
           "nearest_epic": "folio-assistant-vke6",
           "nearest_epic_title": "SPLIT (#223): cut this repo into layers that can depend on each other",
-          "mean_cosine": 0.459,
+          "mean_cosine": 0.458,
           "terms": [
             "milestone ancestor",
             "orphan epics",
@@ -691,6 +673,35 @@
             },
             {
               "process": "Process_Publication",
+              "beans": 1
+            }
+          ]
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-ksek",
+          "size": 1,
+          "size_class": "singleton",
+          "nearest_epic": "folio-assistant-ksek",
+          "nearest_epic_title": "CI: green PR must mean green main",
+          "mean_cosine": 0.354,
+          "terms": [
+            "cone deploy",
+            "deploy stamps",
+            "cone update",
+            "full deploy",
+            "dependency cone",
+            "incremental deploy",
+            "unrecorded writers",
+            "main deploy"
+          ],
+          "beans": [
+            "folio-assistant-fwtz"
+          ],
+          "filed_under": [],
+          "known_processes": [
+            {
+              "process": "Process_Editing",
               "beans": 1
             }
           ]
