@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "core-schemas": {
-      "count": 37,
+      "count": 39,
       "unit": "modules"
     }
   },
@@ -3275,6 +3275,21 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/figure-data.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "figure-data.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "instance": "folio-assistant-core",
+      "name": "figure-data",
+      "graphNode": "undeclared",
+      "summary": "The shapes of figure data held on a library entry's `figure-data/`: a",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/glossary-focus.test.ts",
       "instance": "folio-assistant-core",
       "name": "glossary-focus.test",
@@ -4083,7 +4098,7 @@
           "type": "z.array(z.union([GraphExportNodeSchema, GraphExportTombstoneSchema]))",
           "optional": false,
           "array": true,
-          "doc": "Subjects, and for one release a tombstone per pre-path `#fragment` (https://github.com/litlfred/cat-harness-tools/issues/958)."
+          "doc": "Subjects, and for one release a tombstone per pre-#958 `#fragment` (litlfred/cat-harness-tools#958)."
         },
         {
           "name": "omitted",
@@ -74831,6 +74846,619 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Cell",
+      "name": "Cell",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "product",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationData",
+      "name": "DiigPhasesAdaptationData",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
+      "name": "DiigPhasesAdaptationSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"diig-phases-adaptation/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "adapts",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "resources",
+          "type": "z.array(Resource).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "tiles",
+          "type": "z.array(Tile).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "thisDocument",
+          "type": "ThisDocument",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#Resource",
+        "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+        "folio-assistant-core/schemas/figure-data.ts#Tile"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureData",
+      "name": "DiigPhasesFigureData",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureSchema",
+      "name": "DiigPhasesFigureSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"diig-phases-figure/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "figure",
+          "type": "FigureRef",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "legend",
+          "type": "z.record(z.string(), z.string())",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "phases",
+          "type": "z.array(Phase).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "resources",
+          "type": "z.array(Resource)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "layout",
+          "type": "z.object({ columns: z.number().int().positive(), rows: z.number().int().positive(), tiles: z.array(Tile), }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "thisDocument",
+          "type": "ThisDocument",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#FigureRef",
+        "folio-assistant-core/schemas/figure-data.ts#Phase",
+        "folio-assistant-core/schemas/figure-data.ts#Resource",
+        "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+        "folio-assistant-core/schemas/figure-data.ts#Tile"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#FigureRef",
+      "name": "FigureRef",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "library",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "caption",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Hex",
+      "name": "Hex",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Lines",
+      "name": "Lines",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Link",
+      "name": "Link",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "library",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "glossary",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Phase",
+      "name": "Phase",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "Lines",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "color",
+          "type": "Hex",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tint",
+          "type": "Hex",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "steps",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#Hex",
+        "folio-assistant-core/schemas/figure-data.ts#Lines"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Resource",
+      "name": "Resource",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Lines",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "icons",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "smallPrint",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "parts",
+          "type": "z.array(z.array(z.string())).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "link",
+          "type": "Link.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#Lines",
+        "folio-assistant-core/schemas/figure-data.ts#Link"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureData",
+      "name": "SmartGuidelinesApproachFigureData",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureSchema",
+      "name": "SmartGuidelinesApproachFigureSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"smart-guidelines-approach-figure/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "figure",
+          "type": "FigureRef",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "link",
+          "type": "Link.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "style",
+          "type": "z.object({ band: Hex, panel: Hex, card: Hex, ink: Hex, arrow: Hex, loop: Hex }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "loop",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bands",
+          "type": "z.array(z.object({ id: z.string().min(1), label: z.string().min(1) }).strict()).length(3)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "rows",
+          "type": "z.array(z.object({ id: z.enum([\"knowledge\", \"country\"]), label: Lines, from: z.string().min(1), to: z.string().min(1), …",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "layers",
+          "type": "z.array(z.object({ level: z.number().int().positive(), knowledge: Cell, country: Cell, }).strict()).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#Cell",
+        "folio-assistant-core/schemas/figure-data.ts#FigureRef",
+        "folio-assistant-core/schemas/figure-data.ts#Hex",
+        "folio-assistant-core/schemas/figure-data.ts#Lines",
+        "folio-assistant-core/schemas/figure-data.ts#Link"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Span",
+      "name": "Span",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "undetermined",
+      "note": "z.tuple([z.number().int().nonnegative(), z.number().int().nonnegative()])",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+      "name": "ThisDocument",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "resource",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "style",
+          "type": "z.enum([\"dashed\", \"filled\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "color",
+          "type": "Hex",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fill",
+          "type": "Hex",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#Hex"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Tile",
+      "name": "Tile",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "resource",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "columns",
+          "type": "Span",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rows",
+          "type": "Span",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "outlinePhase",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#Span"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/glossary.ts#AutomatedMatch",
       "name": "AutomatedMatch",
       "module": "folio-assistant-core/schemas/glossary.ts",
@@ -92529,6 +93157,182 @@
       "array": true
     },
     {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Resource",
+      "via": "resources",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+      "via": "thisDocument",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Tile",
+      "via": "tiles",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#FigureRef",
+      "via": "figure",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Phase",
+      "via": "phases",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Resource",
+      "via": "resources",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+      "via": "thisDocument",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Tile",
+      "via": "layout",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Phase",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Hex",
+      "via": "color",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Phase",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Hex",
+      "via": "tint",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Phase",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Lines",
+      "via": "name",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Resource",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Lines",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Resource",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Link",
+      "via": "link",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Cell",
+      "via": "layers",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#FigureRef",
+      "via": "figure",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Hex",
+      "via": "style",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Lines",
+      "via": "rows",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#SmartGuidelinesApproachFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Link",
+      "via": "link",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Hex",
+      "via": "color",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#ThisDocument",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Hex",
+      "via": "fill",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Tile",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Span",
+      "via": "columns",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#Tile",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Span",
+      "via": "rows",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "folio-assistant-core/schemas/glossary.ts#FocusSchema",
       "to": "folio-assistant-core/schemas/glossary.ts#Iri",
       "via": "homepage",
@@ -93696,12 +94500,16 @@
       "note": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapKind — an export this reader does not model as a declaration"
     },
     {
-      "id": "diig-phases-figure/v1",
-      "source": "family",
+      "id": "diig-phases-figure",
+      "source": "node-kind",
+      "instance": "folio-assistant-core",
+      "parents": [],
+      "subclasses": [],
       "typologies": [
         "library"
       ],
-      "note": "no validator is named for it, so no schema defines it"
+      "page": "en/folio-assistant-core/diig-phases-figure/",
+      "note": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesFigureKind — an export this reader does not model as a declaration"
     },
     {
       "id": "doco:Section",
@@ -94602,12 +95410,16 @@
       ]
     },
     {
-      "id": "smart-guidelines-approach-figure/v1",
-      "source": "family",
+      "id": "smart-guidelines-approach-figure",
+      "source": "node-kind",
+      "instance": "folio-assistant-core",
+      "parents": [],
+      "subclasses": [],
       "typologies": [
         "library"
       ],
-      "note": "no validator is named for it, so no schema defines it"
+      "page": "en/folio-assistant-core/smart-guidelines-approach-figure/",
+      "note": "folio-assistant-core/schemas/figure-data.ts#SmartApproachFigureKind — an export this reader does not model as a declaration"
     },
     {
       "id": "sme-case-verdict",

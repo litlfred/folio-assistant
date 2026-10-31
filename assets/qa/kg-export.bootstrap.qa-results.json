@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 11,
+      "count": 12,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -64,6 +64,10 @@
           "why": "no-tag"
         },
         {
+          "module": "../folio-assistant-core/schemas/figure-data.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../smart-base/schemas/dak-annexes.ts",
           "why": "no-tag"
         }
@@ -75,5 +79,5 @@
       "entries": []
     }
   },
-  "total": 11
+  "total": 12
 }

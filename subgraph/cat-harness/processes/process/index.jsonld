@@ -146,20 +146,6 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_10",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_11",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_12",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_2",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -209,11 +195,6 @@
       "name": "Compose the full question"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_HandBack",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Hand it back to the discussion"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_OfferCard",
       "@type": "bootstrap:ProcessNode",
       "name": "Offer the same options as a tappable card"
@@ -244,19 +225,9 @@
       "name": "Default taken, question still open"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/End_HandedBack",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Answer returned through the discussion"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/GW_Answered",
       "@type": "bootstrap:ProcessNode",
       "name": "Answered?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/GW_Discussing",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Talking with the person?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/Start_Process_AskThePerson",
@@ -1203,151 +1174,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/Start_Process_CRDM_Signoff",
       "@type": "bootstrap:ProcessNode",
       "name": "Phase begins"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
-      "@type": "bootstrap:Process",
-      "name": "Hand back to the discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_1",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_10",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_11",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_12",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_13",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_14",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_4",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_5",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_7",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_8",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_9",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
-      "@type": "cat-harness:Lane",
-      "name": "Discussion agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
-      "@type": "cat-harness:Lane",
-      "name": "Sibling"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Ask",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Ask the person"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Inform",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Post it in the discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_MarkAnswered",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Mark every copy answered"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_RouteBack",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Route the answer back, quoted"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Acted",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Answer acted on"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Informed",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Person informed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_Channel",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Feedback channel in play?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_ChannelJoin",
-      "@type": "bootstrap:ProcessNode",
-      "name": "GW_ChannelJoin"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_NeedsAnswer",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Needs an answer?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Act",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Act on the answer"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Compose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Compose the hand-back and post it in own thread"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_HandBack",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Hand it back to the discussion agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Mirror",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Mirror it to the feedback channel"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/Start_Process_HandBackToDiscussion",
-      "@type": "bootstrap:ProcessNode",
-      "name": "The person must see or decide something"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn",
