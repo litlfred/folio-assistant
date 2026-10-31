@@ -1,0 +1,257 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_HandBackToDiscussion",
+    "path": "processes/process/hand-back-to-discussion.bpmn"
+  },
+  "source_hash": "sha256:017877a42695ee2c3102e1d946933da77fa704b1a281de1a1de675f438c90c45",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "S_Compose",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_Compose",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_Mirror",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_HandBack",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "D_Inform",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "D_Ask",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "D_Ask",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "D_RouteBack",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "D_MarkAnswered",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_Act",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_Act",
+          "detail": "names skill \"symbiotic-interaction\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "S_Compose",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"sibling-session\" does not carry it."
+        },
+        {
+          "where": "S_Compose",
+          "detail": "needs skill \"ask-the-person\", but its lane's role \"sibling-session\" does not carry it."
+        },
+        {
+          "where": "S_Mirror",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"sibling-session\" does not carry it."
+        },
+        {
+          "where": "S_HandBack",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"sibling-session\" does not carry it."
+        },
+        {
+          "where": "D_Inform",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"session-coordinator\" does not carry it."
+        },
+        {
+          "where": "D_Ask",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"session-coordinator\" does not carry it."
+        },
+        {
+          "where": "D_RouteBack",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"session-coordinator\" does not carry it."
+        },
+        {
+          "where": "D_MarkAnswered",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"session-coordinator\" does not carry it."
+        },
+        {
+          "where": "S_Act",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"sibling-session\" does not carry it."
+        },
+        {
+          "where": "S_Act",
+          "detail": "needs skill \"symbiotic-interaction\", but its lane's role \"sibling-session\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "S_Compose",
+          "detail": "task \"Compose the hand-back and post it in own thread\" requires skill \"hand-back-to-discussion\", which role \"sibling-session\" (named by lane \"Sibling\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "S_Compose",
+          "detail": "task \"Compose the hand-back and post it in own thread\" requires skill \"ask-the-person\", which role \"sibling-session\" (named by lane \"Sibling\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "S_Mirror",
+          "detail": "task \"Mirror it to the feedback channel\" requires skill \"hand-back-to-discussion\", which role \"sibling-session\" (named by lane \"Sibling\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "S_HandBack",
+          "detail": "task \"Hand it back to the discussion agent\" requires skill \"hand-back-to-discussion\", which role \"sibling-session\" (named by lane \"Sibling\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "D_Inform",
+          "detail": "task \"Post it in the discussion\" requires skill \"hand-back-to-discussion\", which role \"session-coordinator\" (named by lane \"Discussion agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "D_Ask",
+          "detail": "task \"Ask the person\" requires skill \"hand-back-to-discussion\", which role \"session-coordinator\" (named by lane \"Discussion agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "D_RouteBack",
+          "detail": "task \"Route the answer back, quoted\" requires skill \"hand-back-to-discussion\", which role \"session-coordinator\" (named by lane \"Discussion agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "D_MarkAnswered",
+          "detail": "task \"Mark every copy answered\" requires skill \"hand-back-to-discussion\", which role \"session-coordinator\" (named by lane \"Discussion agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "S_Act",
+          "detail": "task \"Act on the answer\" requires skill \"hand-back-to-discussion\", which role \"sibling-session\" (named by lane \"Sibling\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "S_Act",
+          "detail": "task \"Act on the answer\" requires skill \"symbiotic-interaction\", which role \"sibling-session\" (named by lane \"Sibling\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_HandBackToDiscussion",
+          "detail": "no rendered diagram at hand-back-to-discussion.svg — run `bun run cat render:bpmn`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 14,
+    "fail": 4,
+    "n/a": 9,
+    "unknown": 0
+  }
+}
