@@ -1324,6 +1324,16 @@ jobs:
             --predicted "$W/rendered-impact.json" --sources "$W/sources.json" --doubts "$W/doubts.json" \
             --out "$W/dryrun.json" --summary "$GITHUB_STEP_SUMMARY"
 
+      # The live site's root 404.html. GitHub Pages serves it for every
+      # missing path, and a preview that shares the live site's unchanged
+      # files (staging-share.ts) relies on it for a deep link opened before
+      # the preview's worker is installed: it registers that worker and
+      # reloads. Elsewhere it says the page is missing.
+      - name: Write the root 404 page
+        run: |
+          S=cat-harness-tools/scripts/staging-share.ts
+          if [ -f "$S" ]; then bun run "$S" write-404 --site ./_site; else echo "this tools pin has no $S: no 404 page"; fi
+
       - name: Publish to gh-pages
         id: deploy
         env:
