@@ -1241,7 +1241,7 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    needs: qa-working-copy
+    needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1384,6 +1384,29 @@ jobs:
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: The publish-time pages were built for this run (B1)
+        env:
+          PRODUCER: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
+
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -3214,6 +3237,9 @@ jobs:
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
+
       - name: gates that were registered and never run
         run: |
           set -e
@@ -4526,7 +4552,7 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    needs: qa-working-copy
+    needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -4632,6 +4658,29 @@ jobs:
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: The publish-time pages were built for this run (B1)
+        env:
+          PRODUCER: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
+
+      - name: Java runtime the PlantUML release declares (#2744)
+        uses: ./.github/actions/plantuml-java
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
