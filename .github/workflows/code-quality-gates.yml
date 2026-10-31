@@ -1716,6 +1716,17 @@ jobs:
       - name: voice citations resolve
         run: bun run cat check:voices
 
+      # Three checks that were scripts and ran nowhere (gates-workflows
+      # "no check script is unrun", folio-assistant#2781): the DSA hashes
+      # cited match the agreements, every held PDF has its cover, and no
+      # code file sits in the cat-harness content instance.
+      - name: data sharing agreement hashes match
+        run: bun run cat check:dsa-hash
+      - name: every held PDF has its cover
+        run: bun run cat library:covers:check
+      - name: the cat-harness content instance holds no code
+        run: bun run cat check:content-code-free
+
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
       #
