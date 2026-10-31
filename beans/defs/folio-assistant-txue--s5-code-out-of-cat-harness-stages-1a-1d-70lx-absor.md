@@ -2,13 +2,13 @@
 # folio-assistant-txue
 $schema: bean/1.0.0
 title: 'S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y9r6, vj2p'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-30T20:37:00Z
+updated_at: 2026-10-31T08:35:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -16,9 +16,9 @@ D1: all cat-harness code -> cat-harness-tools. One agent at a time.
 
 ## Done when
 - [x] 70lx: server/tools/routes/rbac/auth/mcp moved; MCP server lists the same tools
-- [ ] 8lcl Zod moved; JSON Schema stays
-- [ ] y9r6 no .ts in cat-harness content
-- [ ] vj2p each instance hosts its own outputs
+- [x] 8lcl Zod moved; JSON Schema stays
+- [x] y9r6 no .ts in cat-harness content
+- [x] vj2p each instance hosts its own outputs
 
 ## State 2026-10-09
 - 70lx (stage 1a): completed. y9r6 (1c): completed (closed on #1702). 8lcl (1b): todo — 254 Zod modules still in `cat-harness/schemas/`. vj2p (1d): todo — higher-instance outputs still in cat-harness.
@@ -39,3 +39,11 @@ _2026-10-30T19:40Z_ — Claimed by thread "Finish GOAL 1 code-move beans" (sessi
 _2026-10-30T19:41Z_ — rfuq direction work merged (tools#938 129349e, core#256 058c880, cat-harness#763 27c1eae, fhir-harness#213): 0 wrong-direction edges across 11 instances. rfuq stays open only on its pzwb-gated placement box, so the block edge stays until rfuq completes. txue now waits on 8lcl (generated JSON Schema) and y9r6 (boxes 2-3). Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp.
 
 _2026-10-30T20:37:00Z_ — Block lifted: `folio-assistant-rfuq` is completed (all placement PR2–PR9 beans `pzwb`, `63wl`, `4fv8`, `tlat`, `apcg`, `8fq9`, `f8wp`, `p9bu` are completed and merged on `main`, and import/reference/process-binding direction gates are all at 0 wrong-direction edges).
+
+## Summary of Changes
+
+_2026-10-31T08:35:00Z_ — All 4 child stages (`70lx`, `8lcl`, `y9r6`, `vj2p`) are now `completed` and verified on `main`:
+- `70lx` (stage 1a): server/tools/routes/rbac/auth/mcp moved to `cat-harness-tools`.
+- `8lcl` (stage 1b): Zod schemas moved to `cat-harness-tools/schemas/`; 55 generated JSON Schemas in `cat-harness/schemas/kinds/` (`cat-harness#794`, `cat-harness-tools#995`).
+- `y9r6` (stage 1c): `check-content-code-free.ts` passes with 0 code files under `cat-harness/` and an empty baseline list.
+- `vj2p` (stage 1d): each instance hosts its own outputs and `cat-harness` is self-contained.

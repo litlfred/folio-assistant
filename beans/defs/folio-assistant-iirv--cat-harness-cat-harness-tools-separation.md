@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-12T18:30:00Z
+updated_at: 2026-10-31T08:35:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -71,3 +71,5 @@ Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
   - Both bear on done-when box 2.
 
 _2026-10-30T20:37:00Z_ — Placement PR2–PR9 (`pzwb`, `63wl`, `4fv8`, `tlat`, `apcg`, `8fq9`, `f8wp`, `p9bu`) and `vj2p` are now all `completed`, and both `check:import-direction` and `check:reference-direction` report **0 wrong-direction** across `cat-harness` (and across all 12 instances in `folio-assistant` at `27d72c8d91`). Remaining open children under `iirv`: `8lcl` (generated JSON Schema half in flight in `cat-harness#794` + `cat-harness-tools#995`), `w1gy`, and `ygge`.
+
+_2026-10-31T08:35:00Z_ — `folio-assistant-8lcl` (stage 1b) and `folio-assistant-txue` (S5) are now `completed` (`cat-harness#794` and `cat-harness-tools#995` merged on `main`; `check:content-code-free` at 0 code files; `kind:json-schemas:check` and `check:node-iris` green). Remaining open children under `iirv`: `w1gy` and `ygge`.
