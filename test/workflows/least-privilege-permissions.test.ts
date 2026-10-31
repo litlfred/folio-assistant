@@ -42,3 +42,25 @@ describe("deploy-folio runs only on main, through an environment", () => {
     }
   });
 });
+
+describe("every workflow declares a top-level permissions block (bean folio-assistant-aso6)", () => {
+  test("no workflow in .github/workflows/ omits top-level permissions", () => {
+    const { readdirSync } = require("node:fs") as typeof import("node:fs");
+    const missing: string[] = [];
+    for (const f of readdirSync(DIR).filter((n) => /\.ya?ml$/.test(n)).sort()) {
+      const doc = read(f);
+      if (doc.permissions === undefined) missing.push(f);
+    }
+    expect(missing).toEqual([]);
+  });
+});
+
+describe("sage container image is pinned by @sha256: digest (bean folio-assistant-vbhb)", () => {
+  test(".mcp.json pins SAGE_DOCKER_IMAGE by sha256 digest", () => {
+    const mcp = JSON.parse(readFileSync(join(resolve(import.meta.dir, "../.."), ".mcp.json"), "utf-8")) as {
+      mcpServers?: { sage?: { env?: { SAGE_DOCKER_IMAGE?: string } } };
+    };
+    const img = mcp.mcpServers?.sage?.env?.SAGE_DOCKER_IMAGE ?? "";
+    expect(img).toMatch(/^sagemath\/sagemath@sha256:[0-9a-f]{64}$/);
+  });
+});
