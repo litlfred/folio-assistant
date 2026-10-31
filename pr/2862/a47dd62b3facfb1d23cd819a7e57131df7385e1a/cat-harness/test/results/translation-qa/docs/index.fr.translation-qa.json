@@ -1,0 +1,97 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:fr/index",
+  "block": "Home",
+  "locale": "fr",
+  "paths": {
+    "md": "docs/index.md"
+  },
+  "po": "translations/fr/index.po",
+  "source_hashes": {
+    "md": "2e59340e176f",
+    "po": "d2e71a458018"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "2e59340e176f",
+          "po": "d2e71a458018"
+        },
+        "result": "fail",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T19:32:42.892Z",
+        "reviewed_sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+        "severity": "major",
+        "metrics": {
+          "translated": 20,
+          "total": 45,
+          "pct": 44
+        },
+        "notes": "25 of 45 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "2e59340e176f",
+          "po": "d2e71a458018"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T19:32:42.895Z",
+        "reviewed_sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+        "metrics": {
+          "checked": 20,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 3
+        },
+        "notes": "3 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "2e59340e176f",
+          "po": "d2e71a458018"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T19:32:42.898Z",
+        "reviewed_sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 1,
+          "translated": 20
+        },
+        "notes": "1 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-31T19:32:42.900Z"
+}
