@@ -370,19 +370,26 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-31T16:48:20.434Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/72b5eba13bdf9262e9bd1cd87378df502fe8d6a2",
-  "sourceCommitSha": "72b5eba13bdf9262e9bd1cd87378df502fe8d6a2",
-  "sourceCommitAt": "2026-10-31T16:26:39Z",
+  "generatedAt": "2026-10-31T20:30:43.453Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/512a2e62be1f907c2d1135753d964e149557b3da",
+  "sourceCommitSha": "512a2e62be1f907c2d1135753d964e149557b3da",
+  "sourceCommitAt": "2026-10-31T20:09:48Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "GraphTypology": 10,
-    "Subgraph": 22,
+    "GraphTypology": 11,
+    "Subgraph": 23,
     "Asset": 3,
     "Tool": 1
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "validators",
+      "renderable": false,
+      "summary": "The validators a harness's code provides, one node each naming the graph typology and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+    },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/tools",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
@@ -469,6 +476,22 @@
       "readmePath": "adapters/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-validators",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "cat-harness-tools-validators",
+      "path": "validators/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators"
+      ],
+      "description": "The validators this layer's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit), as cat-harness and the layers above it declare theirs. The first is `dynamic-state.json`, for the `cat-harness-dynamic-state/v1` document `writeDynamicState` writes: its family is listed in the docs typology here, so its node is here too and both land in one change.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-validators"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-ui",
@@ -919,6 +942,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-adapters"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-validators",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-validators",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-validators"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-ui",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-ui",
@@ -1065,8 +1094,8 @@
   ],
   "staging": {
     "branch": "claude/preview-drop-nav-activation",
-    "sha": "72b5eba13bdf9262e9bd1cd87378df502fe8d6a2",
+    "sha": "512a2e62be1f907c2d1135753d964e149557b3da",
     "pr": "2839/merge",
-    "run": "41219709477"
+    "run": "41237596174"
   }
 }

@@ -16,12 +16,8 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 2,
+      "count": 1,
       "entries": [
-        {
-          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
-          "names": 2
-        },
         {
           "file": "folio-assistant-core/skills/library/ingestion/figure-rebuild.md",
           "names": 2
@@ -44,11 +40,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6204,
+          "occurrences": 6202,
           "allowed": 0,
-          "wrongDirection": 22,
-          "wrongDirectionFiles": 12,
-          "exempt": 6182,
+          "wrongDirection": 21,
+          "wrongDirectionFiles": 13,
+          "exempt": 6181,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -77,16 +73,8 @@
           "target": "fhir-harness"
         },
         {
-          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/state.jsonld",
-          "target": "cat-harness-tools"
+          "file": "folio-assistant-core/schemas/figure-data.ts",
+          "target": "who-iris"
         },
         {
           "file": "folio-assistant-core/scripts/diig-phases-svg.ts",
@@ -115,9 +103,17 @@
         {
           "file": "folio-assistant-core/tools/smart-approach-svg/smart-approach-svg.ts",
           "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/validators/diig-phases-figure.json",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/validators/smart-guidelines-approach-figure.json",
+          "target": "who-iris"
         }
       ]
     }
   },
-  "total": 17
+  "total": 16
 }

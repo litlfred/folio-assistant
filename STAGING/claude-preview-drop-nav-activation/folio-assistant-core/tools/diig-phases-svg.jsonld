@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/preview-drop-nav-activation",
-    "sha": "72b5eba13bdf9262e9bd1cd87378df502fe8d6a2",
+    "sha": "512a2e62be1f907c2d1135753d964e149557b3da",
     "pr": "2839/merge",
-    "run": "41219709477"
+    "run": "41237596174"
   },
   "@graph": [
     {
@@ -386,7 +386,7 @@
       "io": {
         "inputs": [
           {
-            "name": "data",
+            "name": "figure-or-adaptation",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A diig-phases-figure/v1 file, or a diig-phases-adaptation/v1 file whose `adapts` is a repository-root path to one.",
             "required": true,

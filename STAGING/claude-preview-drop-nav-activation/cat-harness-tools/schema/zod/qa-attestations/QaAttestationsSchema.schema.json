@@ -827,6 +827,362 @@
             "title_coherence"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "adversarial-review"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "adversarial_reviews": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "reviewer": {
+                    "type": "object",
+                    "properties": {
+                      "by": {
+                        "type": "string",
+                        "enum": [
+                          "agent",
+                          "human"
+                        ]
+                      },
+                      "session": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "model": {
+                        "default": null,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "by",
+                      "session"
+                    ]
+                  },
+                  "author_sessions": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "skill_hash": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "at": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "coverage": {
+                    "type": "object",
+                    "properties": {
+                      "files_total": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "files_reviewed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "skipped": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "path": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "why": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "why"
+                          ]
+                        }
+                      },
+                      "truncated": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "files_total",
+                      "files_reviewed"
+                    ]
+                  },
+                  "result": {
+                    "type": "string",
+                    "enum": [
+                      "pass",
+                      "fail",
+                      "unknown"
+                    ]
+                  },
+                  "flags": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "category": {
+                          "type": "string",
+                          "enum": [
+                            "security",
+                            "data-loss",
+                            "correctness",
+                            "false-green",
+                            "provenance",
+                            "scope-breach",
+                            "irreversible-action",
+                            "licence"
+                          ]
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "critical",
+                            "major",
+                            "minor"
+                          ]
+                        },
+                        "weight": {
+                          "type": "string",
+                          "enum": [
+                            "blocking",
+                            "suggestion",
+                            "praise"
+                          ]
+                        },
+                        "where": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "evidence": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "default": "open",
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "resolved",
+                            "overridden"
+                          ]
+                        },
+                        "resolution": {
+                          "type": "object",
+                          "properties": {
+                            "by": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "at": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "commit": {
+                              "type": "string"
+                            },
+                            "decision": {
+                              "type": "string"
+                            },
+                            "reason": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "by",
+                            "at",
+                            "reason"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "severity",
+                        "weight",
+                        "where"
+                      ]
+                    }
+                  },
+                  "findings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "category": {
+                          "type": "string",
+                          "enum": [
+                            "security",
+                            "data-loss",
+                            "correctness",
+                            "false-green",
+                            "provenance",
+                            "scope-breach",
+                            "irreversible-action",
+                            "licence"
+                          ]
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "critical",
+                            "major",
+                            "minor"
+                          ]
+                        },
+                        "weight": {
+                          "type": "string",
+                          "enum": [
+                            "blocking",
+                            "suggestion",
+                            "praise"
+                          ]
+                        },
+                        "where": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "evidence": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "default": "open",
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "resolved",
+                            "overridden"
+                          ]
+                        },
+                        "resolution": {
+                          "type": "object",
+                          "properties": {
+                            "by": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "at": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "commit": {
+                              "type": "string"
+                            },
+                            "decision": {
+                              "type": "string"
+                            },
+                            "reason": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "by",
+                            "at",
+                            "reason"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "severity",
+                        "weight",
+                        "where"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "reviewer",
+                  "skill_hash",
+                  "at",
+                  "coverage",
+                  "result"
+                ]
+              }
+            },
+            "source_hash": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "adversarial_reviews",
+            "source_hash"
+          ],
+          "additionalProperties": false
         }
       ]
     }
@@ -836,8 +1192,8 @@
   "description": "Generated from `QaAttestationsSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/preview-drop-nav-activation",
-    "sha": "72b5eba13bdf9262e9bd1cd87378df502fe8d6a2",
+    "sha": "512a2e62be1f907c2d1135753d964e149557b3da",
     "pr": "2839/merge",
-    "run": "41219709477"
+    "run": "41237596174"
   }
 }
