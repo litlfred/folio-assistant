@@ -6,7 +6,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-31T01:56:00Z
-updated_at: 2026-10-31T01:56:00Z
+updated_at: 2026-10-31T06:42:00Z
+parent: folio-assistant-dthl
 blocked_by:
   - folio-assistant-max2
 ---
