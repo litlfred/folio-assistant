@@ -130,6 +130,7 @@ on:
 permissions:
   contents: write  # required to push to the gh-pages branch
   issues: write    # the publication manager's alert (bean vigi): one tracking issue
+  actions: read    # bean fwtz: download the newest writer-records artifact for the writers dry run
 
 # A deploy: never cancelled in progress, since a run cancelled mid-build or
 # mid-push is a deploy dropped (owner, 2026-10-23). Without cancel-in-progress
@@ -285,6 +286,33 @@ jobs:
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
         run: bun run cat derive:publish
+
+      # BEAN fwtz, OPTION B, AS A DRY RUN (owner card 2026-10-31, "rerun and
+      # measure"). `writer-records.yml`, run after each deploy, uploads what
+      # each writer read and wrote (artifact `writer-records`).
+      # Against it, `writer-cone-verify.ts` says which writers this build
+      # could have skipped, and whether skipping them would have been right:
+      # every recorded output must equal what the full run above just wrote.
+      # `skip-unsafe` must stay at zero before any writer is skipped. It skips
+      # nothing; best effort and bounded, like the page dry run below.
+      - name: Writers, rerun and measure, dry run (bean fwtz)
+        continue-on-error: true
+        timeout-minutes: 5
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -eu
+          S=cat-harness-tools/scripts/writer-cone-verify.ts
+          if [ ! -f "$S" ]; then echo "this tools pin has no $S: no dry run"; exit 0; fi
+          # The newest records `writer-records.yml` uploaded after a deploy.
+          D="$RUNNER_TEMP/prev-writer-records"; mkdir -p "$D"
+          URL=$(gh api "repos/$REPO/actions/artifacts?name=writer-records&per_page=1" --jq '.artifacts[0] | select(.expired == false) | .archive_download_url' 2>/dev/null || true)
+          if [ -z "$URL" ] || ! gh api "$URL" > "$D/a.zip" 2>/dev/null || ! unzip -q -o "$D/a.zip" -d "$D"; then
+            echo "no writer records recorded yet: nothing to judge"; exit 0
+          fi
+          P="$D/records.json"
+          bun run "$S" --prev "$P" --out "$RUNNER_TEMP/writer-verdicts.json" --summary "$GITHUB_STEP_SUMMARY"
 
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
       # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
