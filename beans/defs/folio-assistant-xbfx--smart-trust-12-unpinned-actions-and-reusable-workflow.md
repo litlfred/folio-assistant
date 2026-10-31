@@ -9,7 +9,7 @@ tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T04:22:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -33,3 +33,7 @@ Also not counted by the gate but on `@main` under write tokens: `cancel-on-close
 **Fix:** `bun run cat actions:pin` for the third-party actions; decide whether first-party reusable workflows are pinned by SHA (they are the platform's own, but `@main` means a merge there runs here with this repo's write token). who-iris is already fully pinned and is the model.
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+## Fixed (2026-10-31)
+
+litlfred/smart-trust#98 merged as `f5446e7`. The third-party actions are pinned to full SHAs, and `checkout@v2` is replaced. Still at `@main`, by the owner's decision: `WorldHealthOrganization/smart-html` (release.yml) and the first-party reusable workflows (smart-base fhirbuild, fhir-harness ig-ast-refresh, cat-harness-tools callers).
