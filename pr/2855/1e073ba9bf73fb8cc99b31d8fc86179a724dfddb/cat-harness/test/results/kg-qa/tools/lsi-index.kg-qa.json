@@ -1,0 +1,66 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "tool",
+    "id": "lsi-index",
+    "path": null
+  },
+  "source_hash": "c9c5005db0a2",
+  "criteria": {
+    "tool-invoke-path-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-contract-met": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-io-types-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-args-shell-safe": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-alternative-selectable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-downstream-fresh": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "lsi-index/cat-harness/docs",
+          "detail": "not-run: needs an LSI index and has none — run `bun run cat lsi index --instance cat-harness --graph docs`"
+        },
+        {
+          "where": "lsi-index/folio-assistant-core/core-library",
+          "detail": "not-run: needs an LSI index and has none — run `bun run cat lsi index --instance folio-assistant-core --graph core-library`"
+        },
+        {
+          "where": "lsi-index/folio-assistant-sci/skills",
+          "detail": "not-run: needs an LSI index and has none — run `bun run cat lsi index --instance folio-assistant-sci --graph skills`"
+        },
+        {
+          "where": "lsi-index/smart-base/smart-base-docs",
+          "detail": "not-run: needs an LSI index and has none — run `bun run cat lsi index --instance smart-base --graph smart-base-docs`"
+        }
+      ]
+    },
+    "tool-maintains-in-tree": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 2,
+    "unknown": 0
+  }
+}
