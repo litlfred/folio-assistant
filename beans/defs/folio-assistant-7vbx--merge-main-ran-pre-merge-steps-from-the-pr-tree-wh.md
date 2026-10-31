@@ -11,6 +11,7 @@ tags:
     - red-flag-security
 created_at: 2026-10-31T04:21:22Z
 updated_at: 2026-10-31T04:21:22Z
+parent: folio-assistant-sb31
 ---
 
 Found by the 2026-10-31 security review of the folio-assistant layers. Held privately until the fix merged, then filed (owner, option A).

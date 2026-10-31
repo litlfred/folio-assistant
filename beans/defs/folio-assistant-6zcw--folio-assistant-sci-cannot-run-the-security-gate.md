@@ -11,6 +11,7 @@ tags:
     - red-flag-false-green
 created_at: 2026-10-31T04:01:56Z
 updated_at: 2026-10-31T04:15:00Z
+parent: folio-assistant-sb31
 ---
 
 Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.

@@ -1,5 +1,5 @@
 ---
-# folio-assistant-k3tw
+# folio-assistant-lkv5
 $schema: bean/1.0.0
 title: 'lean-kg-viewer inserted unsanitised HTML and loaded CDN scripts without SRI'
 status: completed
@@ -11,6 +11,7 @@ tags:
     - red-flag-security
 created_at: 2026-10-31T04:25:00Z
 updated_at: 2026-10-31T04:25:00Z
+parent: folio-assistant-sb31
 ---
 
 Found by the 2026-10-31 security review of the folio-assistant layers. Held privately until the fix merged, then filed (owner, option A).
