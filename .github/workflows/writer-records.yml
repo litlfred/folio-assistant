@@ -27,14 +27,16 @@ permissions:
   contents: read
   actions: read
 
-# One recording at a time; a newer deploy's recording replaces a stale one.
-concurrency:
-  group: writer-records
-  cancel-in-progress: true
-
 jobs:
   record:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    # One recording at a time. The group sits on the job, not the workflow,
+    # so a run whose `if` skips it (a cancelled deploy) never joins it: at
+    # workflow level such a run cancelled recording 41197008752. A running
+    # recording finishes; only a newer pending one replaces an older pending.
+    concurrency:
+      group: writer-records
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
