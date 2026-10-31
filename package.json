@@ -35,5 +35,9 @@
     "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
     "smart-trust-phw:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust-phw --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"GDHCN Trust Network - Personal Health Wallet\" --chrome-owner smart-base"
+  },
+  "overrides": {
+    "undici": "^6.29.1",
+    "zod": "^4.6.6"
   }
 }
