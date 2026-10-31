@@ -6,7 +6,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-10-03T08:26:45Z
-updated_at: 2026-10-31T17:05:00Z
+updated_at: 2026-10-31T17:27:00Z
 ---
 
 ## There is no owner's quote on this bean, and that is deliberate
@@ -266,7 +266,7 @@ GOAL 2 (`p5wm`) closed with all three of its boxes met. Its 10 open direct child
   - **`End-to-end + accessibility, shard 3/3` (`sidebar-rail.e2e.ts` & `who-iris-search.e2e.ts`)**: Fixed in [`litlfred/cat-harness-tools#1159`](https://github.com/litlfred/cat-harness-tools/pull/1159) (`dedcc0d`, all PR checks green).
   - **`gates-workflows.test.ts:295` (`staging-share.ts apply`)**: Fixed in open [`litlfred/cat-harness-tools#1157`](https://github.com/litlfred/cat-harness-tools/pull/1157) (`68c5559`).
   - **`tools.test.ts:300` (`diig-phases-svg ~ smart-approach-svg`)**: **FIXED and Merged on `main`** in [`litlfred/folio-assistant-core@8ee87e2`](https://github.com/litlfred/folio-assistant-core/commit/8ee87e239dad83b7ad7e4a3669282184ee913c5c) (`#435` closed as superseded).
-  - **`cat-harness` stale derived files & cross-instance `builtAtPublish` (`fa#2781`)**: Fixed in open [`litlfred/cat-harness#865`](https://github.com/litlfred/cat-harness/pull/865) (`b3fde5e`); adversarial-review attestation regression from `#857` fixed and **Merged on `main`** in [`litlfred/cat-harness#863`](https://github.com/litlfred/cat-harness/pull/863) (`920dce8`) and [`litlfred/cat-harness-tools#1158`](https://github.com/litlfred/cat-harness-tools/pull/1158) (`7465b33`).
+  - **`cat-harness` stale derived files & cross-instance `builtAtPublish` (`fa#2781`)**: Consolidated [`litlfred/cat-harness#865`](https://github.com/litlfred/cat-harness/pull/865) (`b3fde5e`, closed) into open [`litlfred/cat-harness#839`](https://github.com/litlfred/cat-harness/pull/839) (`4885d43d`); `check:reference-direction` (`who-iris` mentions & `state.jsonld` generator output) **FIXED and Merged on `main`** in [`litlfred/cat-harness-tools#1160`](https://github.com/litlfred/cat-harness-tools/pull/1160) (`53dd38d`); adversarial-review attestation regression from `#857` fixed and **Merged on `main`** in [`litlfred/cat-harness#863`](https://github.com/litlfred/cat-harness/pull/863) (`920dce8`) and [`litlfred/cat-harness-tools#1158`](https://github.com/litlfred/cat-harness-tools/pull/1158) (`7465b33`).
   - **`subgraphs-checkout.test.ts:66` (`public-comment.md → review-sheet-agent-columns.md`)**: Ready in [`litlfred/folio-assistant-core#315`](https://github.com/litlfred/folio-assistant-core/pull/315) (`4ee7219`).
   - **`glossary-mapping-block.test.ts:170`**: Fixed in [`litlfred/cat-harness-tools#1150`](https://github.com/litlfred/cat-harness-tools/pull/1150) (`4ac9907`).
   - **`ingest-and-l1.test.ts:429`**: Fixed in [`litlfred/cat-harness-tools#1095`](https://github.com/litlfred/cat-harness-tools/pull/1095) (`8bb24b4`).
