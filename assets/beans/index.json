@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 25,
+      "count": 27,
       "unit": "open beans"
     }
   },
@@ -1955,14 +1955,14 @@
     {
       "id": "folio-assistant-75c5",
       "title": "INGEST: volume-separation acceptance run on the GDZ Invent. Math. volume",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "low",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:45:00Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
+      "updatedAt": "2026-10-31T02:02:00Z",
       "preview": "Bean for cat-harness-tools#132. The arm and its scoring are merged (cat-harness-tools#801, `scripts/volume-separation.py`), and its 7 tests pass on main 9434d65.\n\n## Done when\n- [ ] at least 3 voter model runs over the GDZ Invent. Math. volume, scored against qou's hand cut. This needs qou access, and qou PRs wait for the owner.\n- [ ] a span a person has confirmed becomes one entry per article, wi",
       "file": "beans/defs/folio-assistant-75c5--volume-separation-acceptance-run-gdz.md"
     },
@@ -3795,14 +3795,14 @@
     {
       "id": "folio-assistant-f0hv",
       "title": "INGEST: formula-region arm (ScanSSD-style), blocked on recorded detector output",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "low",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:45:00Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
+      "updatedAt": "2026-10-31T02:02:00Z",
       "preview": "Bean for cat-harness-tools#131. There is no code yet. The ScanSSD weights download from drive.google.com and huggingface.co, and both are refused (403) in cloud sessions, so the acceptance benchmark cannot run here. An arm that always answers \"undetermined\" would ship untested (the 5rfy defect).\n\n## Blocked until\nThe owner or agy runs ScanSSD on a machine with ordinary internet, over a page set wi",
       "file": "beans/defs/folio-assistant-f0hv--formula-region-arm-blocked-on-detector-output.md"
     },
@@ -5523,6 +5523,22 @@
       "file": "beans/defs/folio-assistant-lk2a--checkworkflow-refs-sends-the-reader-to-bean-bvuk-w.md"
     },
     {
+      "id": "folio-assistant-llxa",
+      "title": "cat-harness CRDM skills: cite PHII and PATH CRDM as the method they adapt",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-max2"
+      ],
+      "createdAt": "2026-10-31T01:56:00Z",
+      "updatedAt": "2026-10-31T01:56:00Z",
+      "preview": "Owner, 2026-10-31 01:53Z: \"cat-harness CRDM should be referencing PHII and PATH CRDM so its same, no?\" Card option A at 01:54Z: the citation fix is a bean, not a PR yet.\n\ncat-harness `skills/sdlc/crdm/` (phases 1-6 and `processes/process/crdm-*.bpmn`) uses the CRDM name and phase idea but cites no source. Today \"CRDM\" names two things: PHII's methodology (cited by the PHC handbook) and this platfo",
+      "file": "beans/defs/folio-assistant-llxa--cat-harness-crdm-skills-cite-phii-and-path-crdm-as-the-me.md"
+    },
+    {
       "id": "folio-assistant-lodp",
       "title": "Vocabulary drift D1–D3: role naming, fsh-guts description, sl9u condition onto mapping tables",
       "status": "completed",
@@ -5751,6 +5767,22 @@
       "updatedAt": "2026-10-02T18:00:00Z",
       "preview": "## Brief\n\nYou are the EXECUTOR for this bean. A cloud Claude session (the coordinator)\nhanded it to you because it cannot reach `packages.fhir.org`, and you can.\nYou were sent here by one sentence:\n`Do bean mac1 on branch agy/wnhh-sushi-publisher-local of repo litlfred/folio-assistant.`\n\nWHERE\n- Repo:     litlfred/folio-assistant\n- Checkout: `~/space_cats/folio-assistant` (NOT `~/space_cats/folio-",
       "file": "beans/defs/folio-assistant-mac1--re-seed-both-fhir-ast-caches-with-the-git-tree-inp.md"
+    },
+    {
+      "id": "folio-assistant-max2",
+      "title": "cat-harness library: ingest the CRDM sources (PHII 2023 web page, PATH 2012 common requirements)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [
+        "folio-assistant-llxa"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T01:56:00Z",
+      "updatedAt": "2026-10-31T02:11:00Z",
+      "preview": "Owner, 2026-10-31 01:54Z (card \"What should I do with the SDLC alignment findings?\", option A): add the SDLC alignment to the PHC workplan and fetch the CRDM sources. Owner 01:53Z: \"cat-harness CRDM should be referencing PHII and PATH CRDM\".\n\nThe PHC handbook (who-iris 9789240093362-eng, sec-006) says its method \"leverages the Collaborative Requirements Development Methodology (CRDM)\" and cites:\n\n",
+      "file": "beans/defs/folio-assistant-max2--cat-harness-library-ingest-the-crdm-sources-phii-and-path.md"
     },
     {
       "id": "folio-assistant-mer2",
@@ -9798,6 +9830,13 @@
       ]
     },
     {
+      "blocker": "folio-assistant-max2",
+      "blocked": "folio-assistant-llxa",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
       "blocker": "folio-assistant-mfhc",
       "blocked": "folio-assistant-wm63",
       "declaredOn": [
@@ -9875,7 +9914,14 @@
       ]
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-max2",
+      "blocks": "folio-assistant-llxa",
+      "detail": "blocks `folio-assistant-llxa` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
+    }
+  ],
   "plan": {
     "milestones": [
       {
@@ -9924,8 +9970,8 @@
         "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 23,
-    "openTotal": 25,
+    "orphanOpen": 25,
+    "openTotal": 27,
     "coveredOpen": 1,
     "duplicateIds": 0
   }

@@ -7,6 +7,9 @@
     "id": "@id",
     "type": "@type",
     "graph": "@graph",
+    "$schema": {
+      "@id": "http://purl.org/dc/terms/conformsTo"
+    },
     "generatedAt": {
       "@id": "http://www.w3.org/ns/prov#generatedAtTime",
       "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
@@ -56,13 +59,14 @@
     "unreadStores": {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#unreadBeanStore",
       "@container": "@set"
-    }
+    },
+    "@base": "https://litlfred.github.io/folio-assistant/cat-harness/state.jsonld"
   },
   "$schema": "cat-harness-dynamic-state/v1",
-  "id": "",
+  "id": "https://litlfred.github.io/folio-assistant/cat-harness/state.jsonld",
   "type": "cat-harness:DynamicState",
   "harness": "cat-harness",
-  "generatedAt": "2026-10-31T02:03:03.851Z",
+  "generatedAt": "2026-10-31T02:35:12.706Z",
   "unreadStores": [],
   "graph": [
     {

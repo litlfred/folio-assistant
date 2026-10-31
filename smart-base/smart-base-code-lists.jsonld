@@ -14,6 +14,15 @@
     "inScheme": {
       "@id": "skos:inScheme",
       "@type": "@id"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/cat-harness/v0/ns#stagingBranch",
+        "sha": "https://litlfred.github.io/cat-harness/v0/ns#stagingSha",
+        "pr": "https://litlfred.github.io/cat-harness/v0/ns#stagingRef",
+        "run": "https://litlfred.github.io/cat-harness/v0/ns#stagingRun"
+      }
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/smart-base-code-lists.jsonld",
@@ -595,8 +604,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "7c9a579eeb8de6e4001ec5ca0f7519f64b2c5c3f",
+    "sha": "2a8ba97c11599e0d811286a74533cf3c34324b50",
     "pr": "main",
-    "run": "41157057132"
+    "run": "41159867361"
   }
 }

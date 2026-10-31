@@ -2,11 +2,11 @@
 # folio-assistant-75c5
 $schema: bean/1.0.0
 title: 'INGEST: volume-separation acceptance run on the GDZ Invent. Math. volume'
-status: todo
+status: in-progress
 type: task
 priority: low
 created_at: 2026-10-30T12:45:00Z
-updated_at: 2026-10-30T12:45:00Z
+updated_at: 2026-10-31T02:02:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -23,3 +23,5 @@ _2026-10-30T19:45Z (thread "Drain ingest beans", https://claude.ai/code/session_
 - **Item 2 is already met for that volume.** qou `library/ant-v14-n7-s/structure.json` has `container: true` and `container_children` p01–p10 (hand cut). The proposal agrees with it.
 - **GDZ itself** needs agy (network) and must not copy the scan anywhere (GDZ terms, recorded in `c61cfb205d`). Prompt: project files `ingest-drain-2026-10-30/agy-prompts.md` §2 (local OCR, mixed-vendor voters, commit votes/proposal/score only).
 - Owner asked whether the stand-in run closes this bean (card in the thread).
+
+_2026-10-31T02:02:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
