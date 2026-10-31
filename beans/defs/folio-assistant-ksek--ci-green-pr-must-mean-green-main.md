@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-23T08:42:44Z
-updated_at: 2026-10-31T20:25:00Z
+updated_at: 2026-10-31T21:00:00Z
 ---
 Owner-approved process fix, 2026-10-23. Two checks ran only after merge (Liquid undefined-variable check, workflow_run on main; Post-merge regen check and repair, push to main), so a PR could be fully green and still turn main red, and every such merge emailed the owner a failure. The rule: whatever can be judged before a merge is judged before it, on the PR's own runs, and merge-guard is the only way in. Children: (a) PR-time Liquid + regen checks, (b) layer PRs need a green folio-assistant run with the change pinned, (c) stop-the-line while a post-merge check is red on main, (d) folio-assistant PRs merge only on merge-guard success. Follow-ups found while doing (a): merge-guard does not WAIT for Feature Staging (NOT_WAITED_FOR_WORKFLOW_FILES, bean gnnj), so the in-run Liquid job is judged only once that run finishes, and closing that needs a cat-harness-tools change. post-merge-regen.yml is red for its own environment, not for main: on 6cf10d9 main's gates were green while it was red (run 39820219694). A local check-mode run on 3a52ac6 reports 13 stale checks because that job lacks publish-pages, qa-working-copy and smart:pages. Give it the gates' inputs, or narrow it to the pairs whose inputs it builds.
 
@@ -39,9 +39,19 @@ _2026-10-31T20:25:00Z_ — Evening merges and open green PRs across `cat-harness
   - [`litlfred/cat-harness-tools#1107`](https://github.com/litlfred/cat-harness-tools/pull/1107) (`b03f70f`, `claude/drop-nav-activation`): drops the dead `site-bar` nav activation style so one nav edit stops rewriting every page.
   - [`litlfred/cat-harness-tools#1075`](https://github.com/litlfred/cat-harness-tools/pull/1075) (`b16d541`, `claude/detangle-slide`): `archimate-detangle` slides a box into free space inside its own parent.
   - [`litlfred/folio-assistant#2847`](https://github.com/litlfred/folio-assistant/pull/2847) (`d0c9151d`, `claude/public-comment-withdrawal`): re-pins `cat-harness-tools@62f6439` and `folio-assistant-core@c4a1e8d` (subprocess click-through, withdrawal, linked prose, staging flash fix).
+  - [`litlfred/cat-harness#839`](https://github.com/litlfred/cat-harness/pull/839) (`d80077a0` / `4885d43d`, `fix/p7mb-post-merge-regen-clean`): declares cross-instance `builtAtPublish` artefacts (`cat-harness.json`, `folio-assistant-core.json`, `fhir-harness.json`) and refreshes stale `cat-harness` ledger/translations (`bean p7mb`).
+  - [`litlfred/cat-harness#870`](https://github.com/litlfred/cat-harness/pull/870) (`92fdb3a9` / `7f06480d`, `fix/hand-back-skill-contract-staging-links`): inlines `ask-the-person` refs and adds `stagingLinks` in `hand-back-to-discussion` contracts.
+  - [`litlfred/cat-harness#872`](https://github.com/litlfred/cat-harness/pull/872) (`d9223fb7` / `3d453854`, `claude/figure-drag-pan`): drag pans a figure instead of selecting its text.
+  - [`litlfred/cat-harness-tools#1175`](https://github.com/litlfred/cat-harness-tools/pull/1175) (`3217855c` / `9274bedc`, `claude/inline-link-diff`): review page brief links, added links green inline, staging bar restored, and clean side-by-side.
+  - [`litlfred/cat-harness-tools#1182`](https://github.com/litlfred/cat-harness-tools/pull/1182) (`f284ab7e` / `c29ea22e`, `claude/serve-local-one-command`): local server Phase 3 (`serve:local` fetches and serves rendered sites in one command).
+  - [`litlfred/folio-assistant-core#442`](https://github.com/litlfred/folio-assistant-core/pull/442) (`360558a3` / `32219681`, `claude/reference-direction-figure`): reference direction for figure data and re-extracted process `.pot` templates.
+  - [`litlfred/folio-assistant#2839`](https://github.com/litlfred/folio-assistant/pull/2839) (`4f8d2c74` / `5f725f8b`, `claude/preview-drop-nav-activation`): re-pins `cat-harness-tools` to `b03f70f` (`#1107`).
+  - [`litlfred/fhir-harness#247`](https://github.com/litlfred/fhir-harness/pull/247) (`43a84f0e` / `e0c907b4`, `fix/33iz-avcq-wyez`): blocks unanswered cross-origin SW requests and overrides transitive advisories (`avcq`, `wyez`).
+  - [`litlfred/smart-base#257`](https://github.com/litlfred/smart-base/pull/257) (`ce2ee669` / `3017d04a`, `fix/239-main-qa-gates`): declares `.github/main-qa-gates.json` for `smart-base`.
+  - [`litlfred/who-iris#145`](https://github.com/litlfred/who-iris/pull/145) (`0d541d55` / `3728eb03`, `fix/123-main-qa-gates`): declares `.github/main-qa-gates.json` for `who-iris`.
+  - [`litlfred/who-iris#146`](https://github.com/litlfred/who-iris/pull/146) (`9d4bff45` / `81e0a951`, `feat/104-iris-cdn-exporter-followups`): `#104` IRIS CDN exporter follow-ups and live DSpace REST fixes.
 - **Open green PRs & index re-pins**:
-  - [`litlfred/cat-harness#870`](https://github.com/litlfred/cat-harness/pull/870) (`7f06480d`, `fix/hand-back-skill-contract-staging-links`): inlines `ask-the-person` refs and adds `stagingLinks` in `hand-back-to-discussion` contracts.
-  - [`litlfred/cat-harness-tools#1175`](https://github.com/litlfred/cat-harness-tools/pull/1175) (`9274bedc`, `claude/inline-link-diff`, 9/9 PR checks green): review page brief links, added links green inline, staging bar restored, and clean side-by-side.
+  - [`litlfred/cat-harness#873`](https://github.com/litlfred/cat-harness/pull/873) (`efa249ce`, `fix/bpmn-svgs-bootstrap-tools-72344e1`): regenerates BPMN SVGs with `bootstrap-tools@72344e1` (`#54`).
   - [`litlfred/cat-harness-tools#1176`](https://github.com/litlfred/cat-harness-tools/pull/1176) (`b52bc65` / `581678dd`, `fix/kg-audit-check-skip-prior-carry`): skips prior adversarial review lookup in `kg-audit --check` when sidecar is absent on disk.
   - [`litlfred/cat-harness-tools#1178`](https://github.com/litlfred/cat-harness-tools/pull/1178) (`49f9c1e`, `fix/translation-test-collapsed-floor`): updates collapsed-pair floor after `683afc26` obsoleted pre-G3 code-span msgids.
   - [`litlfred/bootstrap#35`](https://github.com/litlfred/bootstrap/pull/35) (`8785b20`, `fix/bpmn-svgs-bootstrap-tools-72344e1`): regenerates BPMN SVGs with `bootstrap-tools@72344e1` (`#54`).
