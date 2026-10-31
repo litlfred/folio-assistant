@@ -34,13 +34,13 @@ const runOf = (s: Step): string => s.run ?? "";
 
 describe("post-merge-regen.yml builds the gates' inputs before running post-merge:regen (bean ksek)", () => {
   const mountIdx = steps.findIndex((s) => runOf(s).includes("mount-from-lock.sh"));
-  const stateIdx = steps.findIndex((s) => runOf(s).includes("state:mount"));
+  const stateIdx = steps.findIndex((s) => runOf(s).includes("bun run cat state:mount"));
   const javaIdx = steps.findIndex((s) => (s.uses ?? "").includes("plantuml-java"));
-  const igIndexIdx = steps.findIndex((s) => runOf(s).includes("ig-index:build"));
-  const smartPagesIdx = steps.findIndex((s) => runOf(s).includes("smart:pages"));
-  const qaCopyIdx = steps.findIndex((s) => runOf(s).includes("qa:working-copy"));
-  const derivePublishIdx = steps.findIndex((s) => runOf(s).includes("derive:publish"));
-  const regenIdx = steps.findIndex((s) => runOf(s).includes("post-merge:regen"));
+  const igIndexIdx = steps.findIndex((s) => runOf(s).includes("bun run cat ig-index:build"));
+  const smartPagesIdx = steps.findIndex((s) => runOf(s).includes("bun run cat smart:pages"));
+  const qaCopyIdx = steps.findIndex((s) => runOf(s).includes("bun run cat qa:working-copy"));
+  const derivePublishIdx = steps.findIndex((s) => runOf(s).includes("bun run cat derive:publish"));
+  const regenIdx = steps.findIndex((s) => runOf(s).includes("bun run cat post-merge:regen"));
 
   test("installs the PlantUML Java runtime before building QA and publish outputs", () => {
     expect(javaIdx).toBeGreaterThan(mountIdx);
