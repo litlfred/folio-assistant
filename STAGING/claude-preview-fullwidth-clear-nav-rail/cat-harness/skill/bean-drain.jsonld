@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skill/bean-drain.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skill/bean-drain",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "bean-drain",
+      "title": "Bean drain",
+      "description": "Drain open beans (stories, bugs, features) with several agents at once, as part of the SDLC: build the queue, group it by owner, check and claim each bean on every bean copy before any work, open the PR at the first commit, ask the owner through ask-the-person, close, and refill. Use when a thread or agent is asked to drain beans, when a coordinator spawns drain threads, or when an idle agent pulls from a shared queue next to other agents.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/bean-drain.md",
+      "instructionLines": 222,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skills/bean-drain/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skills/bean-drain/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-drain"
+    }
+  ]
+}

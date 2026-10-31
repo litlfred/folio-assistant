@@ -1,0 +1,54 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-measure-real-igs/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-measure-real-igs.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build the WHO SMART Trust and Immunizations IGs through `ig-ast-export` and print the W1/W2 measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type against 458 of 458. `--byte-identical` adds a stock build and an `output/` diff.",
+      "install": {
+        "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher"
+      },
+      "invoke": {
+        "shell": "fhir-ig-publisher/ast-export/scripts/run-real-igs.sh [work-dir] [--byte-identical]"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "work-dir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Logic resources carrying at least one edge to another logic resource in the IG.",
+            "name": "logic-covered",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          }
+        ]
+      },
+      "name": "ig-ast-measure-real-igs",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "java",
+          "maven",
+          "sushi",
+          "jekyll",
+          "python3",
+          "git"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-fork",
+      "title": "Measure the AST export on real IGs"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ig-ast-measure-real-igs",
+  "path": "tools/ig-ast-measure-real-igs/"
+}

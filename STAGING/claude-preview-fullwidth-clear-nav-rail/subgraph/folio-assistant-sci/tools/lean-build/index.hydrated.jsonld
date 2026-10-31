@@ -1,0 +1,82 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-build/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-build.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat lean:build-all"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--paper"
+            },
+            "description": "Build one paper instead of all of them.",
+            "name": "paper",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--cache"
+            },
+            "description": "Fetch the Mathlib cache first. A from-source Mathlib build is 30–60 minutes against ~2 for a restore.",
+            "name": "cache",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--update"
+            },
+            "description": "Run `lake update` before building.",
+            "name": "update",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--log-dir"
+            },
+            "description": "Where logs and the status sidecar go.",
+            "name": "logDir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`lean-build-status.json` — committable, so a green build is distinguishable from one nobody ran.",
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "lean-build",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bash",
+          "lean",
+          "lake"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-build-fix",
+      "title": "Lean build"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/lean-build",
+  "path": "tools/lean-build/"
+}

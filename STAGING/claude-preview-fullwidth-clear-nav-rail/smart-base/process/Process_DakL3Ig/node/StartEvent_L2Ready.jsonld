@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-base/process/Process_DakL3Ig/node/StartEvent_L2Ready.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "L2 DAK ready",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

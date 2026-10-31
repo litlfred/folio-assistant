@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Requirements-SGAuthoring.Skills.TranslateContent.jsonld",
+  "@type": "fhir:Requirements",
+  "dcterms:identifier": "Requirements/SGAuthoring.Skills.TranslateContent",
+  "schema:name": "SkillTranslateContent",
+  "dcterms:title": "Can translate content",
+  "dcterms:description": "Capability to translate IG content across UN languages.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Formal Requirements",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/Requirements/SGAuthoring.Skills.TranslateContent"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-base/Requirements-SGAuthoring.Skills.TranslateContent.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

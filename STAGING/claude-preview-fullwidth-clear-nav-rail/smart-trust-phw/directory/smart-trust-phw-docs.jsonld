@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-trust-phw/directory/smart-trust-phw-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-trust-phw/directory/smart-trust-phw-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-phw-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs",
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/ig-pages"
+      ],
+      "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust-phw:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). These are the artefact pages of smart-trust-phw's IG site (`igSite`, bean `mftp`): they build into smart-trust-phw's own IG site at `/smart-trust-phw/` under the IG's menu. Generated at publish, never authored or committed.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/smart-trust-phw/directory/smart-trust-phw-docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-docs"
+    }
+  ]
+}

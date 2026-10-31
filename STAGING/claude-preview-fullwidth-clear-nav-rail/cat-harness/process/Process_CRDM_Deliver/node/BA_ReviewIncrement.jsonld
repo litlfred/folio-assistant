@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/process/Process_CRDM_Deliver/node/BA_ReviewIncrement.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/process/Process_CRDM_Deliver/node/BA_ReviewIncrement",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review increment (test behaviour)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/process/Process_CRDM_Deliver/lane/Lane_BA",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skill/crdm-requirements-workflow"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/BA_ReviewIncrement"
+    }
+  ]
+}

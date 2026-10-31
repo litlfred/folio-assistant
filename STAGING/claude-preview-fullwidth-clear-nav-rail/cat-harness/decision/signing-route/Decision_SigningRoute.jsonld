@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/decision/signing-route/Decision_SigningRoute.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/decision/signing-route/Decision_SigningRoute",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Decision",
+      "name": "Which signing route?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/sdlc/decisions/signing-route.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/signing-route/Decision_SigningRoute"
+    }
+  ]
+}

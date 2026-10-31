@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skill/release-lifecycle.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/skill/release-lifecycle",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "release-lifecycle",
+      "title": "Release lifecycle — process and policy",
+      "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/release-lifecycle.md",
+      "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-lifecycle"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/bpmn-to-fsh/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/bpmn-to-fsh.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Derive FSH from a DAK's BPMN business processes — the render direction, of which the extractors are the inverse.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 scripts/smart-base-transform.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "bpmn",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Generated FSH, for SUSHI to compile.",
+            "name": "fsh",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "bpmn-to-fsh",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "BPMN → FHIR Shorthand"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/bpmn-to-fsh",
+  "path": "tools/bpmn-to-fsh/"
+}

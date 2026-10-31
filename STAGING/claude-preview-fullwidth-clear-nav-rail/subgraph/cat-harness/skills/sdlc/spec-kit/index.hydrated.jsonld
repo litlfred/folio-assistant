@@ -1,0 +1,85 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/spec-kit/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/change-size",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-kit",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-template"
+      ],
+      "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/sdlc/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "name": "spec-kit",
+      "path": "skills/sdlc/spec-kit",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/change-size",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 93,
+      "instructionsPath": "skills/sdlc/spec-kit/change-size.md",
+      "name": "change-size",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b232c5bbb144fa685936d633911a8efe80b33f08763f8c0d38a3cf01e4d62f40",
+        "bytes": 5195,
+        "sha256": "b232c5bbb144fa685936d633911a8efe80b33f08763f8c0d38a3cf01e4d62f40"
+      },
+      "title": "Change Size Rule — Threshold, Basis, and Complexity Weighting"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-kit",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 323,
+      "instructionsPath": "skills/sdlc/spec-kit/spec-kit.md",
+      "name": "spec-kit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4eaa87f7ff31f4eeb5a3f4b4a9de709b0bfd75998891a3b9075da9a5e0a11c08",
+        "bytes": 16753,
+        "sha256": "4eaa87f7ff31f4eeb5a3f4b4a9de709b0bfd75998891a3b9075da9a5e0a11c08"
+      },
+      "title": "Spec Kit — spec-driven development"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-template",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 112,
+      "instructionsPath": "skills/sdlc/spec-kit/spec-template.md",
+      "name": "spec-template",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/29b641f97347fb6ed9ffffc35a3c89a43ff3b26d92ab31a86fc0509fe50dc8d5",
+        "bytes": 3783,
+        "sha256": "29b641f97347fb6ed9ffffc35a3c89a43ff3b26d92ab31a86fc0509fe50dc8d5"
+      },
+      "title": "Feature Specification: [Feature Name]"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/sdlc/spec-kit",
+  "path": "skills/sdlc/spec-kit/"
+}

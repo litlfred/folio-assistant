@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/cat-harness/tool-types/ReviewThreadId.schema.json",
+  "title": "ReviewThreadId",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{6,127}$",
+  "description": "A review thread id — a GitHub review-thread node id or a GitLab discussion id",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

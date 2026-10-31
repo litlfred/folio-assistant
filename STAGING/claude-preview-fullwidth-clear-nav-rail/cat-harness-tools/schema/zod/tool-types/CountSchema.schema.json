@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/Count",
+  "definitions": {
+    "Count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000,
+      "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/CountSchema.schema.json",
+  "title": "CountSchema",
+  "description": "Generated from `CountSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$ref": "#/definitions/SemanticZoom",
+  "definitions": {
+    "SemanticZoom": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-semantic-zoom/v1"
+        },
+        "belowPx": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "byKind": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "belowPx": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "because": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "belowPx",
+              "because"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "belowPx"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/semantic-zoom/SemanticZoomSchema.schema.json",
+  "title": "SemanticZoomSchema",
+  "description": "Generated from `SemanticZoomSchema` in schemas/kg/semantic-zoom.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

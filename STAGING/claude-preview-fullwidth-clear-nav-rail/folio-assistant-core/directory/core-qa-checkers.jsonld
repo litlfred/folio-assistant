@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-qa-checkers.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-qa-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "core-qa-checkers",
+      "path": "qa-checkers/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa-checkers"
+      ],
+      "description": "The QA checkers this layer's code provides, one `folio-qa-checker/v1` node per criterion, registered for a folio through its dependency tree by `loadContributions` (bean riit, step 3b). One today: `recommendation-strength-resolves` (bean 55ao), naming `RECOMMENDATION_CHECKERS` in `pipeline/qa-checkers-recommendation.ts`. The criterion itself is declared in cat-harness-tools' QA registry with `checker_contributed`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-qa-checkers",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-qa-checkers"
+    }
+  ]
+}

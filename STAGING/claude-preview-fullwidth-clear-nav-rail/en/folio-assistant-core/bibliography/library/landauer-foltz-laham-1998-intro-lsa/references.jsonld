@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/landauer-foltz-laham-1998-intro-lsa",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "An Introduction to Latent Semantic Analysis",
+      "dcterms:creator": [
+        "Laham), (Darrell"
+      ],
+      "dcterms:issued": "(10:59 AM ",
+      "dcterms:source": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa"
+    }
+  ]
+}

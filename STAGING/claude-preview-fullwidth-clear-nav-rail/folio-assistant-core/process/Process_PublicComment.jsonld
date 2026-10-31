@@ -1,0 +1,218 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Public comment on a review draft",
+      "summary": "A frozen, line-numbered draft went out for public review.",
+      "description": "A frozen, line-numbered draft went out for public review. This is what\nhappens to ONE comment that comes back: placed on the block it cites,\ntriaged, weighed by the review committee, decided by the editor and, if\nthe decision changes the document, made on a feature branch whose\nstaging preview shows the text before and after. The change set is\nreviewed by the same process as any content change\n(Process_ContentChangeReview); only the intake is new. Skill:\npublic-comment.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/public-comment.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/public-comment.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/assets/img/workflows/public-comment.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/StartEvent_CommentsReturned",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/StartEvent_BlockFeedback",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested"
+      ],
+      "nodeCount": 21,
+      "flowCount": 20,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIngest",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/StartEvent_CommentsReturned",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIngest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_BlockFeedbackToIngest",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/StartEvent_BlockFeedback",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_BlockFeedbackToIngest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToTriage",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Triage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToTriage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToTriageGateway",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_Triage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToTriageGateway"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_Duplicate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "duplicate",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Duplicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_Duplicate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAssign",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "to be weighed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAssign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToGroup",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToGroup"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToReroute",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToReroute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_GroupedToAssign",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Assign",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_GroupedToAssign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_EditorialDirect",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "plain editorial",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_EditorDecides",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_EditorialDirect"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToRecommend",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Assign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_CommitteeRecommends",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToRecommend"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToDecide",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_CommitteeRecommends",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_EditorDecides",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToDecide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangesGateway",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_EditorDecides",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangesGateway"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_NoChange",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no: not accepted, noted, deferred",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Decided",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_NoChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes: accepted",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporated",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Incorporated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToWithdraw",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Withdraw",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToWithdraw"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToWithdrawn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/Task_Withdraw",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Withdrawn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToWithdrawn"
+    }
+  ]
+}

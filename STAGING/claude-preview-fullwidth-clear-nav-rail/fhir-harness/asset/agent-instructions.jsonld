@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/fhir-harness/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/agent-instructions.jsonld",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — fhir-harness",
+      "description": "Cold start for work in this layer, and its one rule: nothing here may know about WHO."
+    }
+  ]
+}

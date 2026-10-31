@@ -1,0 +1,2265 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/library",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/library",
+      "name": "library",
+      "path": "library/",
+      "readmePath": "library/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2003.08005v1/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2003.08005v1/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/arxiv-2003.08005v1/manifest.jsonld",
+          "title": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2003.08005v1/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p001-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p001-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-10",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-10.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-11",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-11.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-3",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-3.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-4",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-4.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-5",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-5.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-6",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-6.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-7",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-7.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-8",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-8.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p004-9",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p004-9.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p005-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p005-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p005-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p005-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p005-3",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p005-3.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p006-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p006-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p006-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p006-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p006-3",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p006-3.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p006-4",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p006-4.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/figure-img-p007-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2003.08005v1/blocks/figure-img-p007-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/prose-sec-000",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2003.08005v1/blocks/prose-sec-000.jsonld",
+              "title": "References"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/blocks/prose-sec-front-matter",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2003.08005v1/blocks/prose-sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2003.08005v1/blocks",
+          "path": "library/arxiv-2003.08005v1/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2003.08005v1/figures/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2003.08005v1/figures",
+          "path": "library/arxiv-2003.08005v1/figures/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2003.08005v1/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2003.08005v1/images",
+          "path": "library/arxiv-2003.08005v1/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2003.08005v1/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/sections/sec-000",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2003.08005v1/sections/sec-000.jsonld",
+              "title": "References"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2003.08005v1/sections/sec-front-matter",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2003.08005v1/sections/sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2003.08005v1/sections",
+          "path": "library/arxiv-2003.08005v1/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2003.08005v1",
+      "path": "library/arxiv-2003.08005v1/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2406.01940v2/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2406.01940v2/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/arxiv-2406.01940v2/manifest.jsonld",
+          "title": "Process-Driven Autoformalization in Lean 4"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2406.01940v2/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/figure-img-p002-7",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2406.01940v2/blocks/figure-img-p002-7.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-000",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-000.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-001",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-001.jsonld",
+              "title": "Related Work"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-002",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-002.jsonld",
+              "title": "FormL4: Dataset Construction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-003",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-003.jsonld",
+              "title": "Informalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-004",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-004.jsonld",
+              "title": "Data Source"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-005",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-005.jsonld",
+              "title": "Curation Process"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-006",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-006.jsonld",
+              "title": "Comparing FormL4 with Existing Autoformalization Datasets"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-007",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-007.jsonld",
+              "title": "Method: Process-Driven Autoformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-008",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-008.jsonld",
+              "title": "Verification Model"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-009",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-009.jsonld",
+              "title": "Further Enhancement with Back-Propagated Process Feedback"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-010",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-010.jsonld",
+              "title": "Experiments"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-011",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-011.jsonld",
+              "title": "Autoformalization Enhancement"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-012",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-012.jsonld",
+              "title": "Experimental Setup"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-013",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-013.jsonld",
+              "title": "Enhanced Autoformalizer Performance"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-014",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-014.jsonld",
+              "title": "Further Enhanced Verifier Performance"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-015",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-015.jsonld",
+              "title": "Human Evaluation on Autoformalizer Performances"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-016",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-016.jsonld",
+              "title": "Conclusion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-017",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-017.jsonld",
+              "title": "Future Directions"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-018",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-018.jsonld",
+              "title": "More Related Works"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-019",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-019.jsonld",
+              "title": "Detailed Decomposition Strategy"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-020",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-020.jsonld",
+              "title": "Prompt for Informalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-021",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-021.jsonld",
+              "title": "Human Evaluation: Comparative Model Selection"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-022",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-022.jsonld",
+              "title": "Annotation Protocol for Informalization Model Comparison"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-023",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-023.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-024",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-024.jsonld",
+              "title": "Task"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-025",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-025.jsonld",
+              "title": "File Structure"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-026",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-026.jsonld",
+              "title": "Quality Criteria"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-027",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-027.jsonld",
+              "title": "Annotation Results for Informalization Model Comparison"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-028",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-028.jsonld",
+              "title": "Human Evaluation: PDA Dataset Quality"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-029",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-029.jsonld",
+              "title": "Case Visualization in Comparision with existing datasets"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-030",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-030.jsonld",
+              "title": "Human Evaluation: Autoformalization Performance Evaluation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-031",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-031.jsonld",
+              "title": "Experimental Details"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-032",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-032.jsonld",
+              "title": "Training Settings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-033",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-033.jsonld",
+              "title": "Generation Settings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-034",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-034.jsonld",
+              "title": "Lean 4 Compilation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-035",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-035.jsonld",
+              "title": "Comprehensive Evaluation of the Enhanced Autoformalizer"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-036",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-036.jsonld",
+              "title": "Model Selection Process"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-037",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-037.jsonld",
+              "title": "Detailed Dataset Comparison Analysis"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-038",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-038.jsonld",
+              "title": "Analysis for Training and Test Data in FormL4"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-039",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-039.jsonld",
+              "title": "Autoformalization on Real-World Mathematical Reasonings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-040",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-040.jsonld",
+              "title": "Data Construction Details"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-041",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-041.jsonld",
+              "title": "Data Preprocessing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-042",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-042.jsonld",
+              "title": "Dataset Split"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-043",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-043.jsonld",
+              "title": "Data Postprocessing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-044",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-044.jsonld",
+              "title": "Details of Automated Autoformalization Evaluation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-045",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-045.jsonld",
+              "title": "Prompt"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-046",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-046.jsonld",
+              "title": "Preprocessing and Evaluation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-047",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-047.jsonld",
+              "title": "Detailed Analyses of Existing LLMs on FormL4"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/blocks/prose-sec-front-matter",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2406.01940v2/blocks/prose-sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2406.01940v2/blocks",
+          "path": "library/arxiv-2406.01940v2/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2406.01940v2/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2406.01940v2/images",
+          "path": "library/arxiv-2406.01940v2/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2406.01940v2/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-000",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-000.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-001",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-001.jsonld",
+              "title": "Related Work"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-002",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-002.jsonld",
+              "title": "FormL4: Dataset Construction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-003",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-003.jsonld",
+              "title": "Informalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-004",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-004.jsonld",
+              "title": "Data Source"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-005",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-005.jsonld",
+              "title": "Curation Process"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-006",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-006.jsonld",
+              "title": "Comparing FormL4 with Existing Autoformalization Datasets"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-007",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-007.jsonld",
+              "title": "Method: Process-Driven Autoformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-008",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-008.jsonld",
+              "title": "Verification Model"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-009",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-009.jsonld",
+              "title": "Further Enhancement with Back-Propagated Process Feedback"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-010",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-010.jsonld",
+              "title": "Experiments"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-011",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-011.jsonld",
+              "title": "Autoformalization Enhancement"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-012",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-012.jsonld",
+              "title": "Experimental Setup"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-013",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-013.jsonld",
+              "title": "Enhanced Autoformalizer Performance"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-014",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-014.jsonld",
+              "title": "Further Enhanced Verifier Performance"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-015",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-015.jsonld",
+              "title": "Human Evaluation on Autoformalizer Performances"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-016",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-016.jsonld",
+              "title": "Conclusion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-017",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-017.jsonld",
+              "title": "Future Directions"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-018",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-018.jsonld",
+              "title": "More Related Works"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-019",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-019.jsonld",
+              "title": "Detailed Decomposition Strategy"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-020",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-020.jsonld",
+              "title": "Prompt for Informalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-021",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-021.jsonld",
+              "title": "Human Evaluation: Comparative Model Selection"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-022",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-022.jsonld",
+              "title": "Annotation Protocol for Informalization Model Comparison"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-023",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-023.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-024",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-024.jsonld",
+              "title": "Task"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-025",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-025.jsonld",
+              "title": "File Structure"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-026",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-026.jsonld",
+              "title": "Quality Criteria"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-027",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-027.jsonld",
+              "title": "Annotation Results for Informalization Model Comparison"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-028",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-028.jsonld",
+              "title": "Human Evaluation: PDA Dataset Quality"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-029",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-029.jsonld",
+              "title": "Case Visualization in Comparision with existing datasets"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-030",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-030.jsonld",
+              "title": "Human Evaluation: Autoformalization Performance Evaluation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-031",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-031.jsonld",
+              "title": "Experimental Details"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-032",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-032.jsonld",
+              "title": "Training Settings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-033",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-033.jsonld",
+              "title": "Generation Settings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-034",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-034.jsonld",
+              "title": "Lean 4 Compilation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-035",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-035.jsonld",
+              "title": "Comprehensive Evaluation of the Enhanced Autoformalizer"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-036",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-036.jsonld",
+              "title": "Model Selection Process"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-037",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-037.jsonld",
+              "title": "Detailed Dataset Comparison Analysis"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-038",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-038.jsonld",
+              "title": "Analysis for Training and Test Data in FormL4"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-039",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-039.jsonld",
+              "title": "Autoformalization on Real-World Mathematical Reasonings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-040",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-040.jsonld",
+              "title": "Data Construction Details"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-041",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-041.jsonld",
+              "title": "Data Preprocessing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-042",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-042.jsonld",
+              "title": "Dataset Split"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-043",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-043.jsonld",
+              "title": "Data Postprocessing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-044",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-044.jsonld",
+              "title": "Details of Automated Autoformalization Evaluation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-045",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-045.jsonld",
+              "title": "Prompt"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-046",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-046.jsonld",
+              "title": "Preprocessing and Evaluation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-047",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-047.jsonld",
+              "title": "Detailed Analyses of Existing LLMs on FormL4"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2406.01940v2/sections/sec-front-matter",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2406.01940v2/sections/sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2406.01940v2/sections",
+          "path": "library/arxiv-2406.01940v2/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2406.01940v2",
+      "path": "library/arxiv-2406.01940v2/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2512.09874v3/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/arxiv-2512.09874v3/manifest.jsonld",
+          "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p005-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2512.09874v3/blocks/figure-img-p005-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p005-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2512.09874v3/blocks/figure-img-p005-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p008-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2512.09874v3/blocks/figure-img-p008-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p010-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2512.09874v3/blocks/figure-img-p010-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/figure-img-p010-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2512.09874v3/blocks/figure-img-p010-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/blocks/prose-sec-000",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2512.09874v3/blocks/prose-sec-000.jsonld",
+              "title": "Document"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2512.09874v3/blocks",
+          "path": "library/arxiv-2512.09874v3/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/figures/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2512.09874v3/figures",
+          "path": "library/arxiv-2512.09874v3/figures/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2512.09874v3/images",
+          "path": "library/arxiv-2512.09874v3/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2512.09874v3/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2512.09874v3/sections/sec-000",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2512.09874v3/sections/sec-000.jsonld",
+              "title": "Document"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2512.09874v3/sections",
+          "path": "library/arxiv-2512.09874v3/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2512.09874v3",
+      "path": "library/arxiv-2512.09874v3/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2601.22554v1/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2601.22554v1/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/arxiv-2601.22554v1/manifest.jsonld",
+          "title": "LeanArchitect: Automating Blueprint Generation for Humans and AI"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2601.22554v1/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p008-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p008-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p008-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p008-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p008-3",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p008-3.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p008-4",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p008-4.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p008-5",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p008-5.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p012-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p012-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/figure-img-p012-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2601.22554v1/blocks/figure-img-p012-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-000",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-000.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-001",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-001.jsonld",
+              "title": "Related Work"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-002",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-002.jsonld",
+              "title": "Methods"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-003",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-003.jsonld",
+              "title": "Overview"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-004",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-004.jsonld",
+              "title": "Environment Extension"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-005",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-005.jsonld",
+              "title": "Blueprint Attribute"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-006",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-006.jsonld",
+              "title": "LaTeX Export"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-007",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-007.jsonld",
+              "title": "Project Management Using LeanArchitect"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-008",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-008.jsonld",
+              "title": "Case Studies"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-009",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-009.jsonld",
+              "title": "PrimeNumberTheoremAnd"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-010",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-010.jsonld",
+              "title": "Converting Existing Projects to LeanArchitect Format"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-011",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-011.jsonld",
+              "title": "Blueprint-Based Autoformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-012",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-012.jsonld",
+              "title": "Limitations"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-013",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-013.jsonld",
+              "title": "Technical Details"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-014",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-014.jsonld",
+              "title": "Example"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-015",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-015.jsonld",
+              "title": "Implementation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/blocks/prose-sec-front-matter",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2601.22554v1/blocks/prose-sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2601.22554v1/blocks",
+          "path": "library/arxiv-2601.22554v1/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2601.22554v1/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2601.22554v1/images",
+          "path": "library/arxiv-2601.22554v1/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2601.22554v1/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-000",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-000.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-001",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-001.jsonld",
+              "title": "Related Work"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-002",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-002.jsonld",
+              "title": "Methods"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-003",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-003.jsonld",
+              "title": "Overview"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-004",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-004.jsonld",
+              "title": "Environment Extension"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-005",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-005.jsonld",
+              "title": "Blueprint Attribute"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-006",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-006.jsonld",
+              "title": "LaTeX Export"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-007",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-007.jsonld",
+              "title": "Project Management Using LeanArchitect"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-008",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-008.jsonld",
+              "title": "Case Studies"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-009",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-009.jsonld",
+              "title": "PrimeNumberTheoremAnd"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-010",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-010.jsonld",
+              "title": "Converting Existing Projects to LeanArchitect Format"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-011",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-011.jsonld",
+              "title": "Blueprint-Based Autoformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-012",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-012.jsonld",
+              "title": "Limitations"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-013",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-013.jsonld",
+              "title": "Technical Details"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-014",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-014.jsonld",
+              "title": "Example"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-015",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-015.jsonld",
+              "title": "Implementation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2601.22554v1/sections/sec-front-matter",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2601.22554v1/sections/sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2601.22554v1/sections",
+          "path": "library/arxiv-2601.22554v1/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2601.22554v1",
+      "path": "library/arxiv-2601.22554v1/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2602.16554v1/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2602.16554v1/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/arxiv-2602.16554v1/manifest.jsonld",
+          "title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2602.16554v1/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-000",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-000.jsonld",
+              "title": "Framework"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-001",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-001.jsonld",
+              "title": "Autoformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-002",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-002.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-003",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-003.jsonld",
+              "title": "Related Works"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-004",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-004.jsonld",
+              "title": "Autoinformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-005",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-005.jsonld",
+              "title": "Results"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-006",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-006.jsonld",
+              "title": "Experiments"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-007",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-007.jsonld",
+              "title": "Qualitative Observations"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-008",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-008.jsonld",
+              "title": "Discussion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-009",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-009.jsonld",
+              "title": "Challenges in MerLean"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-010",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-010.jsonld",
+              "title": "Future Applications of MerLean"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-011",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-011.jsonld",
+              "title": "Conclusion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-012",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-012.jsonld",
+              "title": "Formalization Examples"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-013",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-013.jsonld",
+              "title": "Theorem: Fault Tolerance of Gauging Measurement"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/blocks/prose-sec-014",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2602.16554v1/blocks/prose-sec-014.jsonld",
+              "title": "Agent-Discovered Helper Lemma"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2602.16554v1/blocks",
+          "path": "library/arxiv-2602.16554v1/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2602.16554v1/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2602.16554v1/images",
+          "path": "library/arxiv-2602.16554v1/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2602.16554v1/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-000",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-000.jsonld",
+              "title": "Framework"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-001",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-001.jsonld",
+              "title": "Autoformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-002",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-002.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-003",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-003.jsonld",
+              "title": "Related Works"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-004",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-004.jsonld",
+              "title": "Autoinformalization"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-005",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-005.jsonld",
+              "title": "Results"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-006",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-006.jsonld",
+              "title": "Experiments"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-007",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-007.jsonld",
+              "title": "Qualitative Observations"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-008",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-008.jsonld",
+              "title": "Discussion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-009",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-009.jsonld",
+              "title": "Challenges in MerLean"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-010",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-010.jsonld",
+              "title": "Future Applications of MerLean"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-011",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-011.jsonld",
+              "title": "Conclusion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-012",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-012.jsonld",
+              "title": "Formalization Examples"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-013",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-013.jsonld",
+              "title": "Theorem: Fault Tolerance of Gauging Measurement"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2602.16554v1/sections/sec-014",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2602.16554v1/sections/sec-014.jsonld",
+              "title": "Agent-Discovered Helper Lemma"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2602.16554v1/sections",
+          "path": "library/arxiv-2602.16554v1/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2602.16554v1",
+      "path": "library/arxiv-2602.16554v1/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2604.00554v1/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2604.00554v1/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/arxiv-2604.00554v1/manifest.jsonld",
+          "title": "LLM-supported document separation for printed reviews from zbMATH Open"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2604.00554v1/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p002-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p002-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p002-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p002-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p005-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p005-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p005-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p005-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p006-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p006-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p006-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p006-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p006-3",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p006-3.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p007-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p007-1.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/figure-img-p007-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+              "path": "library/arxiv-2604.00554v1/blocks/figure-img-p007-2.jsonld"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-000",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-000.jsonld",
+              "title": "Abstract"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-001",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-001.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-002",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-002.jsonld",
+              "title": "Document Splitting"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-003",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-003.jsonld",
+              "title": "Metrics"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-004",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-004.jsonld",
+              "title": "Related Work"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-005",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-005.jsonld",
+              "title": "OCR errors"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-006",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-006.jsonld",
+              "title": "Datasets and metrics"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-007",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-007.jsonld",
+              "title": "zbMATH Open dataset"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-008",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-008.jsonld",
+              "title": "OCR evaluation dataset"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-009",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-009.jsonld",
+              "title": "Challenges"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-010",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-010.jsonld",
+              "title": "OCR comparison"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-011",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-011.jsonld",
+              "title": "Conversion and challenges"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-012",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-012.jsonld",
+              "title": "Regular expressions approach"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-013",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-013.jsonld",
+              "title": "Methodology"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-014",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-014.jsonld",
+              "title": "Results"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-015",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-015.jsonld",
+              "title": "Exclusion of documents from consideration"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-016",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-016.jsonld",
+              "title": "LLM-voting based document splitting"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-017",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-017.jsonld",
+              "title": "Base models"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-018",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-018.jsonld",
+              "title": "Fine-tuning"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-019",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-019.jsonld",
+              "title": "Majority Voting approach"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-020",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-020.jsonld",
+              "title": "LLM baseline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-021",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-021.jsonld",
+              "title": "Computer vision-based baseline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-022",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-022.jsonld",
+              "title": "Evaluation and all data processing."
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-023",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-023.jsonld",
+              "title": "Evaluation of \"base\" models"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-024",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-024.jsonld",
+              "title": "Evaluation results"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-025",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-025.jsonld",
+              "title": "Errors analysis"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-026",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-026.jsonld",
+              "title": "Error detection hypotheses"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-027",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-027.jsonld",
+              "title": "All data processing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-028",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-028.jsonld",
+              "title": "Conclusion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-029",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-029.jsonld",
+              "title": "References"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/blocks/prose-sec-front-matter",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/arxiv-2604.00554v1/blocks/prose-sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2604.00554v1/blocks",
+          "path": "library/arxiv-2604.00554v1/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2604.00554v1/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2604.00554v1/images",
+          "path": "library/arxiv-2604.00554v1/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/arxiv-2604.00554v1/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-000",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-000.jsonld",
+              "title": "Abstract"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-001",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-001.jsonld",
+              "title": "Introduction"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-002",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-002.jsonld",
+              "title": "Document Splitting"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-003",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-003.jsonld",
+              "title": "Metrics"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-004",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-004.jsonld",
+              "title": "Related Work"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-005",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-005.jsonld",
+              "title": "OCR errors"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-006",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-006.jsonld",
+              "title": "Datasets and metrics"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-007",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-007.jsonld",
+              "title": "zbMATH Open dataset"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-008",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-008.jsonld",
+              "title": "OCR evaluation dataset"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-009",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-009.jsonld",
+              "title": "Challenges"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-010",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-010.jsonld",
+              "title": "OCR comparison"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-011",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-011.jsonld",
+              "title": "Conversion and challenges"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-012",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-012.jsonld",
+              "title": "Regular expressions approach"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-013",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-013.jsonld",
+              "title": "Methodology"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-014",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-014.jsonld",
+              "title": "Results"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-015",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-015.jsonld",
+              "title": "Exclusion of documents from consideration"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-016",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-016.jsonld",
+              "title": "LLM-voting based document splitting"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-017",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-017.jsonld",
+              "title": "Base models"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-018",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-018.jsonld",
+              "title": "Fine-tuning"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-019",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-019.jsonld",
+              "title": "Majority Voting approach"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-020",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-020.jsonld",
+              "title": "LLM baseline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-021",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-021.jsonld",
+              "title": "Computer vision-based baseline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-022",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-022.jsonld",
+              "title": "Evaluation and all data processing."
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-023",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-023.jsonld",
+              "title": "Evaluation of \"base\" models"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-024",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-024.jsonld",
+              "title": "Evaluation results"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-025",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-025.jsonld",
+              "title": "Errors analysis"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-026",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-026.jsonld",
+              "title": "Error detection hypotheses"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-027",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-027.jsonld",
+              "title": "All data processing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-028",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-028.jsonld",
+              "title": "Conclusion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-029",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-029.jsonld",
+              "title": "References"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/arxiv-2604.00554v1/sections/sec-front-matter",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/arxiv-2604.00554v1/sections/sec-front-matter.jsonld",
+              "title": "Front matter"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/arxiv-2604.00554v1/sections",
+          "path": "library/arxiv-2604.00554v1/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2604.00554v1",
+      "path": "library/arxiv-2604.00554v1/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/codata-2022/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/codata-2022/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/codata-2022/manifest.jsonld",
+          "title": "CODATA 2022 Recommended Values of the Fundamental Physical Constants"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/codata-2022/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/codata-2022/blocks/table-001",
+              "@type": "cat-harness:Block",
+              "path": "library/codata-2022/blocks/table-001.jsonld"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/codata-2022/blocks",
+          "path": "library/codata-2022/blocks/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/codata-2022",
+      "path": "library/codata-2022/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/milnorlink/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/milnorlink/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/milnorlink/manifest.jsonld",
+          "title": "Link Groups"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/milnorlink/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-001",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-001.jsonld",
+              "title": "Page 1"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-177",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-177.jsonld",
+              "title": "p. 177"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-178",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-178.jsonld",
+              "title": "p. 178"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-179",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-179.jsonld",
+              "title": "p. 179"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-180",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-180.jsonld",
+              "title": "p. 180"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-181",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-181.jsonld",
+              "title": "p. 181"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-182",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-182.jsonld",
+              "title": "p. 182"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-183",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-183.jsonld",
+              "title": "p. 183"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-184",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-184.jsonld",
+              "title": "p. 184"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-185",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-185.jsonld",
+              "title": "p. 185"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-186",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-186.jsonld",
+              "title": "p. 186"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-187",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-187.jsonld",
+              "title": "p. 187"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-188",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-188.jsonld",
+              "title": "p. 188"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-189",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-189.jsonld",
+              "title": "p. 189"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-190",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-190.jsonld",
+              "title": "p. 190"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-191",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-191.jsonld",
+              "title": "p. 191"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-192",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-192.jsonld",
+              "title": "p. 192"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-193",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-193.jsonld",
+              "title": "p. 193"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-194",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-194.jsonld",
+              "title": "p. 194"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/blocks/prose-page-195",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/milnorlink/blocks/prose-page-195.jsonld",
+              "title": "p. 195"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/milnorlink/blocks",
+          "path": "library/milnorlink/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/milnorlink/images/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/milnorlink/images",
+          "path": "library/milnorlink/images/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/library/milnorlink/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-001",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-001.jsonld",
+              "title": "Page 1"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-177",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-177.jsonld",
+              "title": "p. 177"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-178",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-178.jsonld",
+              "title": "p. 178"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-179",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-179.jsonld",
+              "title": "p. 179"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-180",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-180.jsonld",
+              "title": "p. 180"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-181",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-181.jsonld",
+              "title": "p. 181"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-182",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-182.jsonld",
+              "title": "p. 182"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-183",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-183.jsonld",
+              "title": "p. 183"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-184",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-184.jsonld",
+              "title": "p. 184"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-185",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-185.jsonld",
+              "title": "p. 185"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-186",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-186.jsonld",
+              "title": "p. 186"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-187",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-187.jsonld",
+              "title": "p. 187"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-188",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-188.jsonld",
+              "title": "p. 188"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-189",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-189.jsonld",
+              "title": "p. 189"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-190",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-190.jsonld",
+              "title": "p. 190"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-191",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-191.jsonld",
+              "title": "p. 191"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-192",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-192.jsonld",
+              "title": "p. 192"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-193",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-193.jsonld",
+              "title": "p. 193"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-194",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-194.jsonld",
+              "title": "p. 194"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/milnorlink/sections/page-195",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/milnorlink/sections/page-195.jsonld",
+              "title": "p. 195"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/milnorlink/sections",
+          "path": "library/milnorlink/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/milnorlink",
+      "path": "library/milnorlink/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library",
+  "path": "library/"
+}

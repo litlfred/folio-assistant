@@ -1,0 +1,112 @@
+{
+  "$ref": "#/definitions/ProvUsed",
+  "definitions": {
+    "ProvUsed": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9+.-]*:\\S+$"
+            },
+            "@type": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "const": "prov:Entity"
+                },
+                {
+                  "type": "string",
+                  "const": "dcat:Distribution"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "spdx:checksum": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "spdx:Checksum"
+                },
+                "spdx:algorithm": {
+                  "type": "string",
+                  "enum": [
+                    "spdx:checksumAlgorithm_sha256",
+                    "spdx:checksumAlgorithm_sha512"
+                  ]
+                },
+                "spdx:checksumValue": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]+$"
+                }
+              },
+              "required": [
+                "spdx:algorithm",
+                "spdx:checksumValue"
+              ],
+              "additionalProperties": false
+            },
+            "dcat:downloadURL": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9+.-]*:\\S+$"
+            }
+          },
+          "required": [
+            "@id",
+            "@type",
+            "spdx:checksum"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9+.-]*:\\S+$"
+            },
+            "@type": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "const": "prov:Entity"
+                },
+                {
+                  "type": "string",
+                  "const": "cred:VerifiableCredential"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "@id",
+            "@type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvUsedSchema.schema.json",
+  "title": "ProvUsedSchema",
+  "description": "Generated from `ProvUsedSchema` in schemas/content/prov.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

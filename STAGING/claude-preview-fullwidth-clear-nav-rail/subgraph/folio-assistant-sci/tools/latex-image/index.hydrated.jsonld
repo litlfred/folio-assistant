@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-image/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.",
+      "install": {
+        "container": "docker build -t folio-latex -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build"
+      },
+      "invoke": {
+        "container": "docker run --rm -v .:/workspace -w /workspace folio-latex latexmk -pdf -interaction=nonstopmode"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "The rendered paper's top-level `.tex`, relative to the checkout.",
+            "name": "mainTex",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The compiled PDF beside the input.",
+            "name": "pdf",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "latex-image",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "docker"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache",
+      "title": "Compile LaTeX in a container"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/latex-image",
+  "path": "tools/latex-image/"
+}

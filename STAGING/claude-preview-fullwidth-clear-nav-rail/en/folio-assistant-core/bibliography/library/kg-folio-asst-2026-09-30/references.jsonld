@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/kg-folio-asst-2026-09-30",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "WHO SMART Guidelines: Architecture & Knowledge Content Platform",
+      "dcterms:issued": "2026",
+      "dcterms:source": "cat-harness/library/kg-folio-asst-2026-09-30/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/kg-folio-asst-2026-09-30"
+    }
+  ]
+}

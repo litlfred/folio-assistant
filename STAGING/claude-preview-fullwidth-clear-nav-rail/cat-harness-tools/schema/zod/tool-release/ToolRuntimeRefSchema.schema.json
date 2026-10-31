@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/ToolRuntimeRef",
+  "definitions": {
+    "ToolRuntimeRef": {
+      "type": "object",
+      "properties": {
+        "release": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*@[^\\s@/]+$"
+        },
+        "inject": {
+          "type": "string",
+          "enum": [
+            "JAVA_HOME",
+            "PATH"
+          ]
+        }
+      },
+      "required": [
+        "release",
+        "inject"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolRuntimeRefSchema.schema.json",
+  "title": "ToolRuntimeRefSchema",
+  "description": "Generated from `ToolRuntimeRefSchema` in schemas/tools/tool-release.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

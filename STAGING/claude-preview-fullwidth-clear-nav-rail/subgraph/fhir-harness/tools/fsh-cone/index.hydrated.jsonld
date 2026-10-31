@@ -1,0 +1,89 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/fsh-cone/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fsh-cone.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/fsh-cone.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone.",
+            "name": "igRoot",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--csv"
+            },
+            "description": "Write the report as CSV to this path instead of printing it.",
+            "name": "csv",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--top"
+            },
+            "description": "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero.",
+            "name": "top",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          },
+          {
+            "arg": {
+              "flag": "--history"
+            },
+            "description": "Report the blast radius over the last N commits instead of a static cone.",
+            "name": "history",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          },
+          {
+            "arg": {
+              "flag": "--file-users"
+            },
+            "description": "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build (bean `a9tx`).",
+            "name": "fileUsers",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead.",
+            "name": "cone",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "fsh-cone",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+      "title": "FSH dependency cone"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/fsh-cone",
+  "path": "tools/fsh-cone/"
+}

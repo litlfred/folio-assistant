@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/SoftwareDigest",
+  "definitions": {
+    "SoftwareDigest": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "verifiedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "algorithm",
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha512"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{128}$"
+            },
+            "verifiedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "algorithm",
+            "digest"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareDigestSchema.schema.json",
+  "title": "SoftwareDigestSchema",
+  "description": "Generated from `SoftwareDigestSchema` in schemas/library/outside-software.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

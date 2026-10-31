@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGRemark.schema.json",
+  "title": "Knowledge graph L1: Remark",
+  "description": "A remark attached to a recommendation (handbook §10.6). May also be printed as a table footnote. Class IRI: http://smart.who.int/kg/remark.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGRemark",
+      "description": "Resource type identifier for KGRemark logical model"
+    },
+    "@context": {
+      "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to external JSON-LD context"
+        },
+        {
+          "type": "object",
+          "description": "Inline JSON-LD context",
+          "properties": {
+            "@version": {
+              "type": "number",
+              "const": 1.1
+            },
+            "fhir": {
+              "type": "string",
+              "const": "http://hl7.org/fhir/"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "type": "array",
+          "description": "Array of JSON-LD context objects/URIs",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type identifier for KGRemark logical model",
+      "examples": [
+        "LogicalModel-KGRemark"
+      ]
+    },
+    "text": {
+      "type": "string",
+      "description": "The remark, verbatim."
+    },
+    "remarkType": {
+      "$ref": "./ValueSet-KGRemarkTypeVS.schema.json",
+      "description": "What a remark is for."
+    },
+    "ordinal": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Position among the recommendation's remarks."
+    },
+    "contentHash": {
+      "type": "string",
+      "description": "sha256 of the normalised text."
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGRemark"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        },
+        "jsonld:valuesets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "const": [
+            "KGRemarkTypeVS"
+          ]
+        },
+        "jsonld:contextTemplate": {
+          "type": "object",
+          "const": {
+            "@version": 1.1,
+            "fhir": "http://hl7.org/fhir/",
+            "KGRemarkTypeVS": "http://smart.who.int/base/ValueSet-KGRemarkTypeVS.jsonld"
+          }
+        }
+      }
+    }
+  ]
+}

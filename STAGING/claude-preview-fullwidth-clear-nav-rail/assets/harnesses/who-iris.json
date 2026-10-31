@@ -1,0 +1,222 @@
+{
+  "$schema": "folio-harness-state/v1",
+  "harness": "who-iris",
+  "initialization": {
+    "position": "complete",
+    "next": null,
+    "counts": {
+      "done": 24,
+      "not-done": 0,
+      "could-not-determine": 3,
+      "stated": 0
+    },
+    "steps": [
+      {
+        "id": "declaration",
+        "namedBy": "who-iris",
+        "what": "who-iris.json parses",
+        "state": "done",
+        "detail": "who-iris 0.1.0"
+      },
+      {
+        "id": "needs:folio-assistant-core",
+        "namedBy": "who-iris",
+        "what": "folio-assistant-core, which who-iris needs, is beside it and parses",
+        "state": "done",
+        "detail": "folio-assistant-core"
+      },
+      {
+        "id": "directory:who-iris-translations",
+        "namedBy": "who-iris",
+        "what": "declared directory translations/ exists",
+        "state": "done",
+        "detail": "holds translation-sources"
+      },
+      {
+        "id": "directory:library",
+        "namedBy": "who-iris",
+        "what": "declared directory library/ exists",
+        "state": "done",
+        "detail": "holds library"
+      },
+      {
+        "id": "directory:who-iris-site",
+        "namedBy": "who-iris",
+        "what": "declared directory site/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:who-iris-catalogue",
+        "namedBy": "who-iris",
+        "what": "declared directory catalogue/ exists",
+        "state": "done",
+        "detail": "holds catalogue"
+      },
+      {
+        "id": "directory:who-iris-uploads",
+        "namedBy": "who-iris",
+        "what": "declared directory uploads/ exists",
+        "state": "done",
+        "detail": "holds uploads"
+      },
+      {
+        "id": "directory:who-iris-skills",
+        "namedBy": "who-iris",
+        "what": "declared directory skills/ exists",
+        "state": "done",
+        "detail": "holds skills"
+      },
+      {
+        "id": "directory:glossary",
+        "namedBy": "who-iris",
+        "what": "declared directory glossary/ exists",
+        "state": "done",
+        "detail": "holds glossary"
+      },
+      {
+        "id": "directory:who-iris-themes",
+        "namedBy": "who-iris",
+        "what": "declared directory themes/ exists",
+        "state": "done",
+        "detail": "holds themes"
+      },
+      {
+        "id": "directory:who-iris-docs",
+        "namedBy": "who-iris",
+        "what": "declared directory docs/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:who-iris-processes",
+        "namedBy": "who-iris",
+        "what": "declared directory processes/ exists",
+        "state": "done",
+        "detail": "holds processes"
+      },
+      {
+        "id": "directory:who-iris-scripts",
+        "namedBy": "who-iris",
+        "what": "declared directory scripts/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:who-iris-sources",
+        "namedBy": "who-iris",
+        "what": "declared directory sources/ exists",
+        "state": "done",
+        "detail": "holds schemas"
+      },
+      {
+        "id": "directory:id-lookup",
+        "namedBy": "who-iris",
+        "what": "declared directory id-lookup/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:qa",
+        "namedBy": "who-iris",
+        "what": "declared directory test/results/ exists",
+        "state": "done",
+        "detail": "holds qa"
+      },
+      {
+        "id": "directory:folio",
+        "namedBy": "who-iris",
+        "what": "declared directory folio/ exists",
+        "state": "done",
+        "detail": "holds folio"
+      },
+      {
+        "id": "directory:who-iris-tools",
+        "namedBy": "who-iris",
+        "what": "declared directory tools/ exists",
+        "state": "done",
+        "detail": "holds tools"
+      },
+      {
+        "id": "directory:who-iris-libraries",
+        "namedBy": "who-iris",
+        "what": "declared directory libraries/ exists",
+        "state": "done",
+        "detail": "holds software-library"
+      },
+      {
+        "id": "directory:health",
+        "namedBy": "who-iris",
+        "what": "declared directory test/health/results/ exists",
+        "state": "done",
+        "detail": "holds health"
+      },
+      {
+        "id": "asset:agent-instructions",
+        "namedBy": "who-iris",
+        "what": "declared agent-instructions AGENTS.md exists",
+        "state": "done",
+        "detail": "AGENTS.md"
+      },
+      {
+        "id": "asset:readme",
+        "namedBy": "who-iris",
+        "what": "declared instance-readme README.md exists",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "readme",
+        "namedBy": "who-iris",
+        "what": "the root has a README.md (FR-8)",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "site:workflow",
+        "namedBy": "who-iris",
+        "what": "a workflow that builds the site and deploys it to GitHub Pages",
+        "state": "done",
+        "detail": ".github/workflows/publish-context.yml"
+      },
+      {
+        "id": "site:branch",
+        "namedBy": "who-iris",
+        "what": "a gh-pages branch exists on litlfred/who-iris, for Pages to serve",
+        "state": "could-not-determine",
+        "detail": "no `git` here to ask the remote",
+        "action": "create it: an orphan gh-pages holding a placeholder index.html and .nojekyll, pushed to https://github.com/litlfred/who-iris"
+      },
+      {
+        "id": "site:enabled",
+        "namedBy": "who-iris",
+        "what": "GitHub Pages is on for litlfred/who-iris, serving the gh-pages branch",
+        "state": "could-not-determine",
+        "detail": "no `gh` CLI here, so Pages could not be checked or enabled",
+        "action": "open https://github.com/litlfred/who-iris/settings/pages → \"Build and deployment\" → Source: \"Deploy from a branch\" → branch `gh-pages`, folder `/ (root)` (free for a public repository; the branch must exist first — site:branch). Then re-run the Pages workflow from the Actions tab, or push to main."
+      },
+      {
+        "id": "site:live",
+        "namedBy": "who-iris",
+        "what": "the site answers at https://litlfred.github.io/who-iris/, and its README page at https://litlfred.github.io/who-iris/README.html",
+        "state": "could-not-determine",
+        "detail": "https://litlfred.github.io/who-iris/ could not be reached from here; https://litlfred.github.io/who-iris/README.html could not be reached from here — an answer about the way here (a proxy, an access rule), not about the site",
+        "action": "open https://litlfred.github.io/who-iris/README.html in a browser"
+      }
+    ]
+  },
+  "health": {
+    "badges": [
+      {
+        "id": "initialization",
+        "state": "unknown",
+        "label": "3 setup step(s) could not be checked from here"
+      },
+      {
+        "id": "repository",
+        "state": "unknown",
+        "label": "repository health: unknown"
+      }
+    ]
+  }
+}

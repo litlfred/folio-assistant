@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/RequirementSetMember",
+  "definitions": {
+    "RequirementSetMember": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*(\\/[A-Za-z0-9][A-Za-z0-9_.-]*)?)?$"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "approved",
+            "amended",
+            "rejected",
+            "deferred"
+          ]
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-fullwidth-clear-nav-rail/bootstrap-tools/schema/zod/requirement-set/RequirementSetMemberSchema.schema.json",
+  "title": "RequirementSetMemberSchema",
+  "description": "Generated from `RequirementSetMemberSchema` in schemas/requirement-set.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-fullwidth-clear-nav-rail",
+    "sha": "6b221188ba41576b873bdb35e0f0c06d824e490e",
+    "pr": "2832/merge",
+    "run": "41191827071"
+  }
+}

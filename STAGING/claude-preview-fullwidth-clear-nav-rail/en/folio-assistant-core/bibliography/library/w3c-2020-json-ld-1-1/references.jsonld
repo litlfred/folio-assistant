@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/w3c-2020-json-ld-1-1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "JSON-LD 1.1",
+      "dcterms:creator": [
+        "(v1.0, Gregg Kellogg",
+        "v1.1)"
+      ],
+      "dcterms:issued": "D:20261001",
+      "dcterms:source": "cat-harness/library/w3c-2020-json-ld-1-1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/w3c-2020-json-ld-1-1"
+    }
+  ]
+}

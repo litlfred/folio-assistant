@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDHIv2.2.displays.json",
+  "title": "Digital Health Interventions for Healthcare Providers Display Values",
+  "description": "Display values for Digital Health Interventions for Healthcare Providers ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "description": "Display values for a specific code fragment by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "2": {
+      "en": "Healthcare providers"
+    },
+    "2.1": {
+      "en": "Identification and registration of persons"
+    },
+    "2.1.1": {
+      "en": "Verify a person's unique identity"
+    },
+    "2.1.2": {
+      "en": "Enrol person(s) for health services/clinical care plan"
+    },
+    "2.2": {
+      "en": "Person-centred health records"
+    },
+    "2.2.1": {
+      "en": "Longitudinal tracking of person's health status and services"
+    },
+    "2.2.2": {
+      "en": "Manage person-centred structured clinical records"
+    },
+    "2.2.3": {
+      "en": "Manage person-centred unstructured clinical records (e.g. notes, images, documents)"
+    },
+    "2.2.4": {
+      "en": "Routine health indicator data collection and management"
+    },
+    "2.3": {
+      "en": "Healthcare provider decision support"
+    },
+    "2.3.1": {
+      "en": "Provide prompts and alerts based according to protocol"
+    },
+    "2.3.2": {
+      "en": "Provide checklist according to protocol"
+    },
+    "2.3.3": {
+      "en": "Screen persons by risk or other health status"
+    },
+    "2.4": {
+      "en": "Telemedicine"
+    },
+    "2.4.1": {
+      "en": "Consultations between remote person and healthcare provider"
+    },
+    "2.4.2": {
+      "en": "Remote monitoring of person's health or diagnostic data by provider"
+    },
+    "2.4.3": {
+      "en": "Transmission of medical data (e.g. images, notes, and videos) to healthcare provider"
+    },
+    "2.4.4": {
+      "en": "Consultations for case management between healthcare providers"
+    },
+    "2.5": {
+      "en": "Healthcare provider communication"
+    },
+    "2.5.1": {
+      "en": "Communication from healthcare provider to supervisor(s)"
+    },
+    "2.5.2": {
+      "en": "Communication and performance feedback to healthcare provider(s)"
+    },
+    "2.5.3": {
+      "en": "Transmit routine news and workflow notifications to healthcare provider(s)"
+    },
+    "2.5.4": {
+      "en": "Transmit non-routine health event alerts to healthcare provider(s)"
+    },
+    "2.5.5": {
+      "en": "Peer group for healthcare providers"
+    },
+    "2.5.6": {
+      "en": "Generative AI for tailored content creation"
+    },
+    "2.6": {
+      "en": "Referral coordination"
+    },
+    "2.6.1": {
+      "en": "Coordinate emergency response and transport"
+    },
+    "2.6.2": {
+      "en": "Manage referrals between points of service within health sector"
+    },
+    "2.6.3": {
+      "en": "Manage referrals between health and other sectors (social services, police, justice, economic support schemes)"
+    },
+    "2.7": {
+      "en": "Scheduling and activity planning for healthcare providers"
+    },
+    "2.7.1": {
+      "en": "Identify persons in need of services"
+    },
+    "2.7.2": {
+      "en": "Schedule healthcare provider's activities"
+    },
+    "2.8": {
+      "en": "Healthcare provider training"
+    },
+    "2.8.1": {
+      "en": "Provide training content to healthcare provider(s)"
+    },
+    "2.8.2": {
+      "en": "Assess capacity of healthcare provider(s)"
+    },
+    "2.9": {
+      "en": "Prescription and medication management"
+    },
+    "2.9.1": {
+      "en": "Transmit or track prescription orders"
+    },
+    "2.9.2": {
+      "en": "Track individual's medication consumption"
+    },
+    "2.9.3": {
+      "en": "Report adverse drug effects"
+    },
+    "2.10": {
+      "en": "Laboratory and diagnostics imaging management"
+    },
+    "2.10.1": {
+      "en": "Transmit person's diagnostic result to healthcare provider"
+    },
+    "2.10.2": {
+      "en": "Transmit and track diagnostic orders"
+    },
+    "2.10.3": {
+      "en": "Capture diagnostic results from digital devices"
+    },
+    "2.10.4": {
+      "en": "Track biological specimens"
+    },
+    "2.11": {
+      "en": "Healthcare provider financial transactions"
+    },
+    "2.11.1": {
+      "en": "Verify individual's health coverage and financing scheme membership"
+    },
+    "2.11.2": {
+      "en": "Receive payments from individuals"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDHIv2.2",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:27+00:00"
+}

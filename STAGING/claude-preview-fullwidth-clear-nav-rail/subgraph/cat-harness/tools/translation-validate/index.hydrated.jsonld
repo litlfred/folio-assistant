@@ -1,0 +1,71 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-validate/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-validate.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        },
+        "mcp": {
+          "tool": "translation_validate"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "name": "pot_file",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "positional": 1
+            },
+            "name": "po_file",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--source"
+            },
+            "description": "Also check the .pot is current for this source.",
+            "name": "source",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Missing, obsolete and malformed entries.",
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "translation-validate",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+      "title": "Validate a translation"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/translation-validate",
+  "path": "tools/translation-validate/"
+}
