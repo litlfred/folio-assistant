@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/skill/domain-fencing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/skill/domain-fencing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "domain-fencing",
+      "title": "Domain fencing — keeping one folio's rules out of everybody's platform",
+      "description": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/domain-fencing.md",
+      "instructionLines": 224,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/domain-fencing"
+    }
+  ]
+}

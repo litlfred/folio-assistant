@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/who-iris/skill/iris-cdn-signing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/who-iris/skill/iris-cdn-signing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "iris-cdn-signing",
+      "title": "Signing and verifying an IRIS CDN release",
+      "description": "How an IRIS CDN release is packaged, signed and verified using published standards only: a BagIt bag (RFC 8493), a detached JWS (RFC 7515 App. F) with ES256 (RFC 7518), and the key published in a did:web DID document whose publicKeyJwk carries an x5c chain up to WHO's signing key. No GDHCN trust list is assumed.",
+      "instructionsPath": "skills/iris-cdn-signing.md",
+      "instructionLines": 124,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+    }
+  ]
+}

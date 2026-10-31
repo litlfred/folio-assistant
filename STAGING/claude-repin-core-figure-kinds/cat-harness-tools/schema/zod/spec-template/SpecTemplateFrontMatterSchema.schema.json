@@ -1,0 +1,60 @@
+{
+  "$ref": "#/definitions/SpecTemplateFrontMatter",
+  "definitions": {
+    "SpecTemplateFrontMatter": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-spec-template/v1"
+        },
+        "name": {
+          "type": "string",
+          "const": "spec-template"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mandatory_sections": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommended_sections": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadata_fields": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "mandatory_sections"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/spec-template/SpecTemplateFrontMatterSchema.schema.json",
+  "title": "SpecTemplateFrontMatterSchema",
+  "description": "Generated from `SpecTemplateFrontMatterSchema` in schemas/sdlc/spec-template.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

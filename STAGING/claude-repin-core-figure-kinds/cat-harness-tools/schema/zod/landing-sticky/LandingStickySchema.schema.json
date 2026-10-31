@@ -1,0 +1,384 @@
+{
+  "$ref": "#/definitions/LandingSticky",
+  "definitions": {
+    "LandingSticky": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "comment": {
+          "default": "",
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "targetLabel": {
+          "type": "string"
+        },
+        "anchor": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "page"
+            },
+            "page": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "page"
+          ],
+          "additionalProperties": false
+        },
+        "alsoAbout": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "block"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "tags": {
+          "default": {
+            "roles": [],
+            "processes": [],
+            "tasks": [],
+            "identities": [],
+            "references": [],
+            "artefacts": []
+          },
+          "type": "object",
+          "properties": {
+            "roles": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "processes": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "tasks": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "process": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+                    "description": "A BPMN process element id, e.g. Process_CRDM"
+                  },
+                  "task": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "process",
+                  "task"
+                ]
+              }
+            },
+            "identities": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "actor": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "provider",
+                  "id"
+                ]
+              }
+            },
+            "references": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "agent",
+                      "asset",
+                      "bean",
+                      "block",
+                      "capability",
+                      "decision",
+                      "directory",
+                      "package",
+                      "process",
+                      "requirement",
+                      "role",
+                      "schema",
+                      "skill",
+                      "todo",
+                      "tool",
+                      "user-story",
+                      "voice"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id"
+                ]
+              }
+            },
+            "artefacts": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "provider": {
+                    "type": "string"
+                  },
+                  "repo": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "$schema": {
+          "type": "string",
+          "const": "folio-landing-sticky/v1"
+        },
+        "theme": {
+          "type": "object",
+          "properties": {
+            "instance": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "themeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$"
+            }
+          },
+          "required": [
+            "themeId"
+          ],
+          "additionalProperties": false
+        },
+        "links": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "href": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "contributedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declaredIn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "laptop",
+            "mobile",
+            "card"
+          ]
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "box": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "w": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "h": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "w",
+                "h"
+              ],
+              "additionalProperties": false
+            },
+            "scale": {
+              "type": "number",
+              "minimum": 0.6,
+              "maximum": 2
+            },
+            "align": {
+              "type": "string",
+              "enum": [
+                "start",
+                "center",
+                "end"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "initiation": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "running",
+                "ok",
+                "failed"
+              ]
+            },
+            "startedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "completedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "detail": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "startedAt"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "summary",
+        "createdAt",
+        "anchor",
+        "$schema",
+        "theme",
+        "contributedBy",
+        "declaredIn"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/landing-sticky/LandingStickySchema.schema.json",
+  "title": "LandingStickySchema",
+  "description": "Generated from `LandingStickySchema` in schemas/content/landing-sticky.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

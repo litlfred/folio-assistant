@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/NewInstanceSource",
+  "definitions": {
+    "NewInstanceSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "branch"
+        },
+        "keyedBy": {
+          "type": "string",
+          "enum": [
+            "tip"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "keyedBy"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/NewInstanceSourceSchema.schema.json",
+  "title": "NewInstanceSourceSchema",
+  "description": "Generated from `NewInstanceSourceSchema` in schemas/kg/subgraph-source.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

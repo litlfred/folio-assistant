@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Translate strings in preferred tool",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/role/translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation/lane/Lane_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation#flow/F06",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation#flow/F11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation#flow/F19"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/process/Process_HumanTranslation#flow/F07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool"
+    }
+  ]
+}

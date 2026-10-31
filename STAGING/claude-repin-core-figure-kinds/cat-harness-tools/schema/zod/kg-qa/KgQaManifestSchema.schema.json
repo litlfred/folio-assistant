@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/KgQaManifest",
+  "definitions": {
+    "KgQaManifest": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "kg-qa-manifest/v1"
+        },
+        "auditor": {
+          "type": "object",
+          "properties": {
+            "script": {
+              "type": "string"
+            },
+            "script_hash": {
+              "type": "string"
+            },
+            "engine_version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "script",
+            "script_hash",
+            "engine_version"
+          ]
+        },
+        "runContext": {
+          "type": "object",
+          "properties": {
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "auditor"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-qa/KgQaManifestSchema.schema.json",
+  "title": "KgQaManifestSchema",
+  "description": "Generated from `KgQaManifestSchema` in schemas/sdlc/kg-qa.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

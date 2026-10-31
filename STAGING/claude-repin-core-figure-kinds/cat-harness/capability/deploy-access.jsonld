@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/capability/deploy-access.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/capability/deploy-access",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "deploy-access",
+      "name": "Deployment Access",
+      "description": "Credentials and configuration to deploy this instance — the OAuth client id/secret and cookie secret that deploy/.env holds. Probed by CONFIGURATION rather than by attempting a deployment, the same reading signing-api takes: a probe that tried to deploy would be indistinguishable from an outage, and would act on an external host just to answer a question about setup. The path is not invented — deploy/deploy.sh gates on exactly this file ([ ! -f \"$DEPLOY_DIR/.env\" ]) before it will run, so the probe agrees with the script it describes. Declared 2026-09-20, bean folio-assistant-q6ud: it was referenced by deployment-auth and declared by nothing, which executing the degradation model found on its first run.",
+      "detection": {
+        "method": "file-exists",
+        "path": "cat-harness/deploy/.env"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/deploy-access"
+    }
+  ]
+}

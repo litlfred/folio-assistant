@@ -1,0 +1,483 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/conduct-core/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "@type": "cat-harness:SkillPackage",
+          "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-memory",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-permissions",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/ask-the-person",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/communication-language",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/confirmation-waiver",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/retry-backoff",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/symbiotic-interaction",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/untrusted-input",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/unverified-constraints",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-does-this-go"
+          ],
+          "description": "How an agent conducts itself in this harness: interaction modality and the order of a question, confirmation and its waivers, deletion only on confirmation, agent memory, communication language, untrusted input and unverified constraints, retries, where a thing goes, and getting started. Moved out of folio-core into the conduct topic (bean 9umr, owner ruling 2026-09-30); security is its sibling in the same topic.",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "name": "conduct-core",
+          "path": "skills/conduct/conduct-core",
+          "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-memory",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 239,
+          "instructionsPath": "skills/conduct/conduct-core/agent-memory.md",
+          "name": "agent-memory",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4a58957a68edc52f7b976e7f005bf19499a732a164cf1eaba6432d1eb880c9eb",
+            "bytes": 13383,
+            "sha256": "4a58957a68edc52f7b976e7f005bf19499a732a164cf1eaba6432d1eb880c9eb"
+          },
+          "title": "Subagent memory — what a durable entry may claim"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-permissions",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Securing what a coding agent may do without asking, from the person who can grant it: the `secure-agent-permissions` sub-process, run at session start and on demand when an action is denied. Vendor-neutral: the coding agent is a Tool (Claude Code is one; Gemini CLI, Cursor, Copilot and Codex are others), and each Tool's own config format belongs to its adapter, not here. Covers the permissions the harness's processes need, least privilege, how each one is explained before it is granted, how a grant is recorded, and the rules that no grant relaxes: never self-granted, generated projections are CI's, and merging to main is never a standing permission.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 146,
+          "instructionsPath": "skills/conduct/conduct-core/agent-permissions.md",
+          "name": "agent-permissions",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fbd8405506ff00b2c7589f189ade83fc955c765d936d13438f659ce7d53742be",
+            "bytes": 8381,
+            "sha256": "fbd8405506ff00b2c7589f189ade83fc955c765d936d13438f659ce7d53742be"
+          },
+          "title": "Agent permissions — asked for, explained, granted by a person, recorded"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ask-the-person",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Put one question or decision to a person: the full question, context and every option written in the chat FIRST, then the same options as a tappable card. Use before every AskUserQuestion, request_decision / Decision card, button card, or any ask that hands a choice to the owner. Input is the composed question; output is the answer, or the default taken.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/input.schema.json",
+          "instructionLines": 59,
+          "instructionsPath": "skills/conduct/conduct-core/ask-the-person.md",
+          "name": "ask-the-person",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae",
+            "bytes": 3233,
+            "sha256": "6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae"
+          },
+          "title": "Ask the person"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/communication-language",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 138,
+          "instructionsPath": "skills/conduct/conduct-core/communication-language.md",
+          "name": "communication-language",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/17654fa9fa436c5380a4fc467156e992a1363189bc528184fdb51512918f2513",
+            "bytes": 6546,
+            "sha256": "17654fa9fa436c5380a4fc467156e992a1363189bc528184fdb51512918f2513"
+          },
+          "title": "The language you communicate in"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/confirmation-waiver",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A human may waive a confirmation they are owed — for a session, for a process run, or until a stated time. Covers what a waiver is made of, where it is recorded (the context graph, never the work plan), the gates that can be waived and the rules that cannot, why every waiver carries an expiry, and the one thing an agent may never do: grant itself one.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 135,
+          "instructionsPath": "skills/conduct/conduct-core/confirmation-waiver.md",
+          "name": "confirmation-waiver",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b929802fafe8ad5193dc3c2a7c430c42b439ed00f314fd58d111c684e6383ad8",
+            "bytes": 8279,
+            "sha256": "b929802fafe8ad5193dc3c2a7c430c42b439ed00f314fd58d111c684e6383ad8"
+          },
+          "title": "A confirmation can be waived — by the person who is owed it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 117,
+          "instructionsPath": "skills/conduct/conduct-core/decision-comparison.md",
+          "name": "decision-comparison",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a5b7bca57af1a8c719f680117b01bd02ea9e1f27af4de4ee7bb3a0c1bef2c03",
+            "bytes": 5503,
+            "sha256": "8a5b7bca57af1a8c719f680117b01bd02ea9e1f27af4de4ee7bb3a0c1bef2c03"
+          },
+          "title": "The comparison goes BEFORE the question, not inside the options"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "An agent never removes a durable artefact on its own initiative. Report what would go, with sizes and ages, and wait for the user to say so. Covers what counts as durable, the non-destructive move for each kind, and the rule that a workflow whose shape deletes something counts as a deletion nobody decided.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 308,
+          "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
+          "name": "deletion-requires-confirmation",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d409a9f0cc991f6c4a6d2266a47b0234a6dbdc073525480c5f01fc917cf37590",
+            "bytes": 18717,
+            "sha256": "d409a9f0cc991f6c4a6d2266a47b0234a6dbdc073525480c5f01fc917cf37590"
+          },
+          "title": "Deletion requires explicit confirmation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Triage what a person means when they ask to create a folio, and route them. Five requests share one sentence — a folio in a new repo, folio-assistant overlaid on an existing repo, a second folio in an instance that already has one, a content object they called a folio, or something the filesystem cannot tell apart. Reads the repository facts, runs them through the folio-intent decision table, asks a selectable question for what facts cannot settle, scaffolds, and reports the published URL. Use whenever a user asks to create, start, set up, or initialise a folio, a paper, a DAK, an IG, or \"folio-assistant\" itself.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 302,
+          "instructionsPath": "skills/conduct/conduct-core/getting-started.md",
+          "name": "getting-started",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d4e0d93cd7fb63951fbec7980c111bdcaf51d8ee1d7c56ccdcf318d9367c6491",
+            "bytes": 17812,
+            "sha256": "d4e0d93cd7fb63951fbec7980c111bdcaf51d8ee1d7c56ccdcf318d9367c6491"
+          },
+          "title": "/getting-started — what did they actually ask for?"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A sibling agent, spawned during or working beside a live agent-human discussion, hands every card, question, decision, result, blocker or piece of context back to the discussion agent that is talking with the person, and never leaves it only in its own thread. The discussion agent asks the person (ask-the-person), marks every copy answered, and routes the answer back. A review sheet or issue in play is an extra channel. Use whenever an agent that is not the one talking with the person has something the person must see.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/hand-back-to-discussion/input.schema.json",
+          "instructionLines": 142,
+          "instructionsPath": "skills/conduct/conduct-core/hand-back-to-discussion.md",
+          "name": "hand-back-to-discussion",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/hand-back-to-discussion/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e839b4fe5f268a27b8ee00c1e4286694ca77f9a9a5e87f085b28dbd73a101d27",
+            "bytes": 8314,
+            "sha256": "e839b4fe5f268a27b8ee00c1e4286694ca77f9a9a5e87f085b28dbd73a101d27"
+          },
+          "title": "Hand back to the discussion"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Who may write under `.claude/`, and when. The generated projections of the knowledge graph (`.claude/commands/*.md` from `skill:commands`, the assembled agent memory under `.claude/agents/` and `.claude/agent-memory/`) are written by CI, which commits them to the PR branch, and never by an agent. A hand-edited `.claude/` file (`settings.json`, its hooks, a hand-written command or agent definition) changes only with the owner's explicit consent to that change: the agent shows the exact diff and the reason, asks first, and records the consent. Read before staging any path under `.claude/`.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 123,
+          "instructionsPath": "skills/conduct/conduct-core/harness-projections.md",
+          "name": "harness-projections",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0544a71c0de19cfbf2ef4e88b0cb6485363898738ed6c5e6f73a675c360218fe",
+            "bytes": 6891,
+            "sha256": "0544a71c0de19cfbf2ef4e88b0cb6485363898738ed6c5e6f73a675c360218fe"
+          },
+          "title": "Harness projections: CI writes them, the owner consents to every hand edit"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 696,
+          "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
+          "name": "interaction-modality",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ac7b2829846ebfdfee5b53949d3b1b88ce7764ac9861bd13350db94dbb12a91e",
+            "bytes": 39671,
+            "sha256": "ac7b2829846ebfdfee5b53949d3b1b88ce7764ac9861bd13350db94dbb12a91e"
+          },
+          "title": "/interaction-modality — ask in a form the person can answer"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, lists the content markers (an IG, a DAK, processes, beans, library, Lean, folio manifests) the harness could declare and declares only the ones the person picks, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, asks whether their PDFs/notes/drafts can come along, or asks what else in a repository an existing harness could declare.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 272,
+          "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
+          "name": "repo-conversion",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8765ca5cefc4d453dd805a03b43551b8b1971d015e64ebe97708abdd52bd40ca",
+            "bytes": 15584,
+            "sha256": "8765ca5cefc4d453dd805a03b43551b8b1971d015e64ebe97708abdd52bd40ca"
+          },
+          "title": "/repo-conversion — folio-assistant over a repo that already has a life"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/retry-backoff",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Every error gets a falling-off retry rate — each wait doubles, with jitter. Read before writing any call that can fail transiently, and before deciding that a failure is worth retrying at all. Exhausting the retries does not change the verdict.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 122,
+          "instructionsPath": "skills/conduct/conduct-core/retry-backoff.md",
+          "name": "retry-backoff",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43912933e7df7f6b27e0a18a30920c4df5f26b5edfa7c62f86d62e3c148ea8d6",
+            "bytes": 5869,
+            "sha256": "43912933e7df7f6b27e0a18a30920c4df5f26b5edfa7c62f86d62e3c148ea8d6"
+          },
+          "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/symbiotic-interaction",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 190,
+          "instructionsPath": "skills/conduct/conduct-core/symbiotic-interaction.md",
+          "name": "symbiotic-interaction",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f32ef1241925652751b19967051bb87f4e1704e929ef719c6428721a1b62af15",
+            "bytes": 11324,
+            "sha256": "f32ef1241925652751b19967051bb87f4e1704e929ef719c6428721a1b62af15"
+          },
+          "title": "symbiotic-interaction — the three registers of author input"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untrusted-input",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs. Read before interpolating any value into a script, and before giving a Tool a command-line input.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 180,
+          "instructionsPath": "skills/conduct/conduct-core/untrusted-input.md",
+          "name": "untrusted-input",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c7865a9e3a67a488be67eff489dd2ccd71c7ca07b1cadd6d6c6081fa2547ad4a",
+            "bytes": 8873,
+            "sha256": "c7865a9e3a67a488be67eff489dd2ccd71c7ca07b1cadd6d6c6081fa2547ad4a"
+          },
+          "title": "Untrusted input — the value must never become program text"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/unverified-constraints",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 77,
+          "instructionsPath": "skills/conduct/conduct-core/unverified-constraints.md",
+          "name": "unverified-constraints",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e67399c52a572d53bc0097bd1c489d0338e258e2477df3b580f9bff2876109d3",
+            "bytes": 3351,
+            "sha256": "e67399c52a572d53bc0097bd1c489d0338e258e2477df3b580f9bff2876109d3"
+          },
+          "title": "consulted: reference material nobody performs — a DISCIPLINE. \"Never encode a constraint you have not verified\" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-does-this-go",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 115,
+          "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
+          "name": "where-does-this-go",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c1c7230b98f2a2f9ed7404fdf9fdbd1a28bb99bd7f073d45b9418c1eb0cd19ff",
+            "bytes": 7298,
+            "sha256": "c1c7230b98f2a2f9ed7404fdf9fdbd1a28bb99bd7f073d45b9418c1eb0cd19ff"
+          },
+          "title": "Where does this go? — the question, then the skill that answers it"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/conduct/conduct-core",
+      "path": "skills/conduct/conduct-core/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/security/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+          "@type": "cat-harness:SkillPackage",
+          "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/injection-boundaries",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/path-containment",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/security",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/zero-trust-handover"
+          ],
+          "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 (paraphrased: a cybersecurity sub-KG in tools, injection first, consolidating the many related skills already scattered across the folio and content layers) and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "name": "security",
+          "path": "skills/conduct/security",
+          "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/injection-boundaries",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 188,
+          "instructionsPath": "skills/conduct/security/injection-boundaries.md",
+          "name": "injection-boundaries",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ec4d5b6ab47215b89f6ae0ab15bdf06532857e4e87faf0178fabb62ee3649d91",
+            "bytes": 9784,
+            "sha256": "ec4d5b6ab47215b89f6ae0ab15bdf06532857e4e87faf0178fabb62ee3649d91"
+          },
+          "title": "Injection — the value became program"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/path-containment",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 102,
+          "instructionsPath": "skills/conduct/security/path-containment.md",
+          "name": "path-containment",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8570fc820c3ad01aa2b8142a66a80e9b340e58bffd914f8786eff4eea4bccdc7",
+            "bytes": 5557,
+            "sha256": "8570fc820c3ad01aa2b8142a66a80e9b340e58bffd914f8786eff4eea4bccdc7"
+          },
+          "title": "Path containment — two questions that look like one"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/security",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 76,
+          "instructionsPath": "skills/conduct/security/security.md",
+          "name": "security",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9593b94e51f530cb2ac2dd8097e3c76d469ca9295078bc67048ad2805454f89e",
+            "bytes": 6476,
+            "sha256": "9593b94e51f530cb2ac2dd8097e3c76d469ca9295078bc67048ad2805454f89e"
+          },
+          "title": "Security — one question, asked at every boundary"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/zero-trust-handover",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 405,
+          "instructionsPath": "skills/conduct/security/zero-trust-handover.md",
+          "name": "zero-trust-handover",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f5a7365a1a29f5221c46826347c5073dafa813cbf6d5c04ac1a392dd9418dda9",
+            "bytes": 29022,
+            "sha256": "f5a7365a1a29f5221c46826347c5073dafa813cbf6d5c04ac1a392dd9418dda9"
+          },
+          "title": "Zero-trust handover"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/conduct/security",
+      "path": "skills/conduct/security/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/conduct",
+  "path": "skills/conduct/"
+}

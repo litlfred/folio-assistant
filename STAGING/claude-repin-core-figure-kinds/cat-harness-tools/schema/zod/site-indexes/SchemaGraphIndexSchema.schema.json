@@ -1,0 +1,438 @@
+{
+  "$ref": "#/definitions/SchemaGraphIndex",
+  "definitions": {
+    "SchemaGraphIndex": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-schema-graph/v1"
+        },
+        "tile": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "count",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "instance": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "graphNode": {
+                "type": "string",
+                "enum": [
+                  "schema",
+                  "none",
+                  "undeclared"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "isTest": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "module",
+              "instance",
+              "name",
+              "graphNode",
+              "isTest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "decls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "module": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "zod-object",
+                  "zod-union",
+                  "zod-enum",
+                  "zod-array",
+                  "zod-record",
+                  "zod-scalar",
+                  "interface",
+                  "type-alias",
+                  "json-schema",
+                  "undetermined"
+                ]
+              },
+              "note": {
+                "type": "string"
+              },
+              "doc": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "optional": {
+                      "type": "boolean"
+                    },
+                    "array": {
+                      "type": "boolean"
+                    },
+                    "doc": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type",
+                    "optional",
+                    "array"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "extendsNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "unresolved": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "external": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "exported": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "module",
+              "kind",
+              "fields",
+              "extendsNames",
+              "values",
+              "refs",
+              "unresolved",
+              "external",
+              "exported"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "via": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "field",
+                  "member",
+                  "extends",
+                  "id-ref"
+                ]
+              },
+              "optional": {
+                "type": "boolean"
+              },
+              "array": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "via",
+              "kind",
+              "optional",
+              "array"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "nodeKinds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "node-kind",
+                  "family",
+                  "typology"
+                ]
+              },
+              "instance": {
+                "type": "string"
+              },
+              "decl": {
+                "type": "string"
+              },
+              "tag": {
+                "type": "string"
+              },
+              "parents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "subclasses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "typologies": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "page": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "source",
+              "typologies"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "instance": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "system": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "nodeKind": {
+                "type": "string"
+              },
+              "subsetStrategies": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "subsetIsSelfContained": {
+                "type": "boolean"
+              },
+              "identifiers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "authoritative": {
+                      "type": "boolean"
+                    },
+                    "example": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "authoritative"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "enumeration": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string"
+                  },
+                  "pageSize": {
+                    "type": "number"
+                  },
+                  "totalNodes": {
+                    "type": "number"
+                  },
+                  "requests": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "method"
+                ],
+                "additionalProperties": false
+              },
+              "termsUrl": {
+                "type": "string"
+              },
+              "character": {
+                "type": "object",
+                "properties": {
+                  "remote": {
+                    "type": "boolean"
+                  },
+                  "large": {
+                    "type": "boolean"
+                  },
+                  "volatility": {
+                    "type": "string"
+                  },
+                  "availability": {
+                    "type": "string"
+                  },
+                  "hasOwnSearch": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "remote",
+                  "large",
+                  "volatility",
+                  "availability",
+                  "hasOwnSearch"
+                ],
+                "additionalProperties": false
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "file",
+              "instance"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "roots",
+        "modules",
+        "decls",
+        "edges"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/SchemaGraphIndexSchema.schema.json",
+  "title": "SchemaGraphIndexSchema",
+  "description": "Generated from `SchemaGraphIndexSchema` in schemas/ui/site-indexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$ref": "#/definitions/NoAnchor",
+  "definitions": {
+    "NoAnchor": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "none"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/NoAnchorSchema.schema.json",
+  "title": "NoAnchorSchema",
+  "description": "Generated from `NoAnchorSchema` in schemas/ui/note-anchor.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

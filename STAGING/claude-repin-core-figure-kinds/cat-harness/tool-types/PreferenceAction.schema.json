@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/tool-types/PreferenceAction.schema.json",
+  "title": "PreferenceAction",
+  "type": "string",
+  "enum": [
+    "get",
+    "set",
+    "reset"
+  ],
+  "description": "Read, write or clear the stored preferences.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

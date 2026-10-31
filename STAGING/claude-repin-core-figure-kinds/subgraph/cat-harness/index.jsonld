@@ -1,0 +1,2195 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "bootstrap:graphTypology/processes",
+      "@type": "bootstrap:GraphTypology",
+      "name": "processes"
+    },
+    {
+      "@id": "bootstrap:graphTypology/scenarios",
+      "@type": "bootstrap:GraphTypology",
+      "name": "scenarios"
+    },
+    {
+      "@id": "bootstrap:graphTypology/schemas",
+      "@type": "bootstrap:GraphTypology",
+      "name": "schemas"
+    },
+    {
+      "@id": "bootstrap:graphTypology/skills",
+      "@type": "bootstrap:GraphTypology",
+      "name": "skills"
+    },
+    {
+      "@id": "cat-harness:graphTypology/attestations",
+      "@type": "bootstrap:GraphTypology",
+      "name": "attestations"
+    },
+    {
+      "@id": "cat-harness:graphTypology/auto-docs",
+      "@type": "bootstrap:GraphTypology",
+      "name": "auto-docs"
+    },
+    {
+      "@id": "cat-harness:graphTypology/basic-cdn-site",
+      "@type": "bootstrap:GraphTypology",
+      "name": "basic-cdn-site"
+    },
+    {
+      "@id": "cat-harness:graphTypology/bean-defs",
+      "@type": "bootstrap:GraphTypology",
+      "name": "bean-defs"
+    },
+    {
+      "@id": "cat-harness:graphTypology/bean-notes",
+      "@type": "bootstrap:GraphTypology",
+      "name": "bean-notes"
+    },
+    {
+      "@id": "cat-harness:graphTypology/beans",
+      "@type": "bootstrap:GraphTypology",
+      "name": "beans"
+    },
+    {
+      "@id": "cat-harness:graphTypology/board-positions",
+      "@type": "bootstrap:GraphTypology",
+      "name": "board-positions"
+    },
+    {
+      "@id": "cat-harness:graphTypology/boards",
+      "@type": "bootstrap:GraphTypology",
+      "name": "boards"
+    },
+    {
+      "@id": "cat-harness:graphTypology/cat-harness",
+      "@type": "bootstrap:GraphTypology",
+      "name": "cat-harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/code",
+      "@type": "bootstrap:GraphTypology",
+      "name": "code"
+    },
+    {
+      "@id": "cat-harness:graphTypology/code-list",
+      "@type": "bootstrap:GraphTypology",
+      "name": "code-list"
+    },
+    {
+      "@id": "cat-harness:graphTypology/doc-group",
+      "@type": "bootstrap:GraphTypology",
+      "name": "doc-group"
+    },
+    {
+      "@id": "cat-harness:graphTypology/docs",
+      "@type": "bootstrap:GraphTypology",
+      "name": "docs"
+    },
+    {
+      "@id": "cat-harness:graphTypology/external-schema",
+      "@type": "bootstrap:GraphTypology",
+      "name": "external-schema"
+    },
+    {
+      "@id": "cat-harness:graphTypology/folio",
+      "@type": "bootstrap:GraphTypology",
+      "name": "folio"
+    },
+    {
+      "@id": "cat-harness:graphTypology/health",
+      "@type": "bootstrap:GraphTypology",
+      "name": "health"
+    },
+    {
+      "@id": "cat-harness:graphTypology/interaction",
+      "@type": "bootstrap:GraphTypology",
+      "name": "interaction"
+    },
+    {
+      "@id": "cat-harness:graphTypology/issue-marks",
+      "@type": "bootstrap:GraphTypology",
+      "name": "issue-marks"
+    },
+    {
+      "@id": "cat-harness:graphTypology/library",
+      "@type": "bootstrap:GraphTypology",
+      "name": "library"
+    },
+    {
+      "@id": "cat-harness:graphTypology/memory",
+      "@type": "bootstrap:GraphTypology",
+      "name": "memory"
+    },
+    {
+      "@id": "cat-harness:graphTypology/merge-queue",
+      "@type": "bootstrap:GraphTypology",
+      "name": "merge-queue"
+    },
+    {
+      "@id": "cat-harness:graphTypology/merge-reviews",
+      "@type": "bootstrap:GraphTypology",
+      "name": "merge-reviews"
+    },
+    {
+      "@id": "cat-harness:graphTypology/methodology",
+      "@type": "bootstrap:GraphTypology",
+      "name": "methodology"
+    },
+    {
+      "@id": "cat-harness:graphTypology/policies",
+      "@type": "bootstrap:GraphTypology",
+      "name": "policies"
+    },
+    {
+      "@id": "cat-harness:graphTypology/proposals",
+      "@type": "bootstrap:GraphTypology",
+      "name": "proposals"
+    },
+    {
+      "@id": "cat-harness:graphTypology/qa",
+      "@type": "bootstrap:GraphTypology",
+      "name": "qa"
+    },
+    {
+      "@id": "cat-harness:graphTypology/requirements",
+      "@type": "bootstrap:GraphTypology",
+      "name": "requirements"
+    },
+    {
+      "@id": "cat-harness:graphTypology/session-survey",
+      "@type": "bootstrap:GraphTypology",
+      "name": "session-survey"
+    },
+    {
+      "@id": "cat-harness:graphTypology/software-library",
+      "@type": "bootstrap:GraphTypology",
+      "name": "software-library"
+    },
+    {
+      "@id": "cat-harness:graphTypology/subscribed-harnesses",
+      "@type": "bootstrap:GraphTypology",
+      "name": "subscribed-harnesses"
+    },
+    {
+      "@id": "cat-harness:graphTypology/substrate-snapshot",
+      "@type": "bootstrap:GraphTypology",
+      "name": "substrate-snapshot"
+    },
+    {
+      "@id": "cat-harness:graphTypology/sweep-marks",
+      "@type": "bootstrap:GraphTypology",
+      "name": "sweep-marks"
+    },
+    {
+      "@id": "cat-harness:graphTypology/swimlane-glossary",
+      "@type": "bootstrap:GraphTypology",
+      "name": "swimlane-glossary"
+    },
+    {
+      "@id": "cat-harness:graphTypology/test-plan",
+      "@type": "bootstrap:GraphTypology",
+      "name": "test-plan"
+    },
+    {
+      "@id": "cat-harness:graphTypology/todo-feedback",
+      "@type": "bootstrap:GraphTypology",
+      "name": "todo-feedback"
+    },
+    {
+      "@id": "cat-harness:graphTypology/todo-items",
+      "@type": "bootstrap:GraphTypology",
+      "name": "todo-items"
+    },
+    {
+      "@id": "cat-harness:graphTypology/todos",
+      "@type": "bootstrap:GraphTypology",
+      "name": "todos"
+    },
+    {
+      "@id": "cat-harness:graphTypology/tool-release",
+      "@type": "bootstrap:GraphTypology",
+      "name": "tool-release"
+    },
+    {
+      "@id": "cat-harness:graphTypology/tools",
+      "@type": "bootstrap:GraphTypology",
+      "name": "tools"
+    },
+    {
+      "@id": "cat-harness:graphTypology/translation-sources",
+      "@type": "bootstrap:GraphTypology",
+      "name": "translation-sources"
+    },
+    {
+      "@id": "cat-harness:graphTypology/typologies",
+      "@type": "bootstrap:GraphTypology",
+      "name": "typologies"
+    },
+    {
+      "@id": "cat-harness:graphTypology/uml",
+      "@type": "bootstrap:GraphTypology",
+      "name": "uml"
+    },
+    {
+      "@id": "cat-harness:graphTypology/uploads",
+      "@type": "bootstrap:GraphTypology",
+      "name": "uploads"
+    },
+    {
+      "@id": "cat-harness:graphTypology/validators",
+      "@type": "bootstrap:GraphTypology",
+      "name": "validators"
+    },
+    {
+      "@id": "cat-harness:graphTypology/vocab-mapping",
+      "@type": "bootstrap:GraphTypology",
+      "name": "vocab-mapping"
+    },
+    {
+      "@id": "cat-harness:graphTypology/voice-vendors",
+      "@type": "bootstrap:GraphTypology",
+      "name": "voice-vendors"
+    },
+    {
+      "@id": "cat-harness:graphTypology/voices",
+      "@type": "bootstrap:GraphTypology",
+      "name": "voices"
+    },
+    {
+      "@id": "cat-harness:graphTypology/waiver",
+      "@type": "bootstrap:GraphTypology",
+      "name": "waiver"
+    },
+    {
+      "@id": "cat-harness:graphTypology/workflow-state",
+      "@type": "bootstrap:GraphTypology",
+      "name": "workflow-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/admin",
+      "@type": "bootstrap:Actor",
+      "title": "Administrator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/attestation-service",
+      "@type": "bootstrap:Actor",
+      "title": "Attestation service"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/author",
+      "@type": "bootstrap:Actor",
+      "title": "Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent",
+      "@type": "bootstrap:Actor",
+      "title": "Authoring Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/board-renderer",
+      "@type": "bootstrap:Actor",
+      "title": "Board renderer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/business-analyst",
+      "@type": "bootstrap:Actor",
+      "title": "Business Analyst"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-health-watcher",
+      "@type": "bootstrap:Actor",
+      "title": "CI health watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline",
+      "@type": "bootstrap:Actor",
+      "title": "CI pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "@type": "bootstrap:Actor",
+      "title": "Claude (agent session)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/clinical-sme",
+      "@type": "bootstrap:Actor",
+      "title": "Clinical Subject Matter Expert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/collaborator",
+      "@type": "bootstrap:Actor",
+      "title": "Collaborator (gateway session)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/content-reviewer",
+      "@type": "bootstrap:Actor",
+      "title": "Content Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/crdm-detect-signals",
+      "@type": "bootstrap:Actor",
+      "title": "crdm-detect phrase signals"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/end-user",
+      "@type": "bootstrap:Actor",
+      "title": "End user"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ingestion-agent",
+      "@type": "bootstrap:Actor",
+      "title": "Ingestion engine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/librarian",
+      "@type": "bootstrap:Actor",
+      "title": "Librarian"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/local-sweep",
+      "@type": "bootstrap:Actor",
+      "title": "Local sweep"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "@type": "bootstrap:Actor",
+      "title": "Owner (gateway session)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/platform-boundary-guard",
+      "@type": "bootstrap:Actor",
+      "title": "Platform boundary guard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/programme-manager",
+      "@type": "bootstrap:Actor",
+      "title": "Programme Manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/publication-manager",
+      "@type": "bootstrap:Actor",
+      "title": "Publication Manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/qc-reviewer",
+      "@type": "bootstrap:Actor",
+      "title": "QC Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/review-agent",
+      "@type": "bootstrap:Actor",
+      "title": "Review Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/reviewer",
+      "@type": "bootstrap:Actor",
+      "title": "Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/stakeholder",
+      "@type": "bootstrap:Actor",
+      "title": "Stakeholder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/technical-officer",
+      "@type": "bootstrap:Actor",
+      "title": "Technical Officer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/terminologist",
+      "@type": "bootstrap:Actor",
+      "title": "Terminologist"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/translator",
+      "@type": "bootstrap:Actor",
+      "title": "Translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-adjudicator",
+      "@type": "bootstrap:Actor",
+      "title": "Untainted adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-checker",
+      "@type": "bootstrap:Actor",
+      "title": "Untainted checker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/viewer",
+      "@type": "bootstrap:Actor",
+      "title": "Viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/asset/agent-instructions",
+      "@type": "bootstrap:Asset",
+      "name": "agent-instructions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/93abb3a75a18078c2f5ac215ce8f2c55b956f40a53b209d584268bc94a9df8eb",
+        "bytes": 19882,
+        "sha256": "93abb3a75a18078c2f5ac215ce8f2c55b956f40a53b209d584268bc94a9df8eb"
+      },
+      "title": "AGENTS.md — cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/asset/bootstrap-initialization",
+      "@type": "bootstrap:Asset",
+      "name": "bootstrap-initialization",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b",
+        "bytes": 5692,
+        "sha256": "f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b"
+      },
+      "title": "Initializing into folio-assistant"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/asset/instance-readme",
+      "@type": "bootstrap:Asset",
+      "name": "instance-readme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91c48c8cd18d71d114540547e9a6fb44823df574eed06d057a1b9e9c77b0c223",
+        "bytes": 15063,
+        "sha256": "91c48c8cd18d71d114540547e9a6fb44823df574eed06d057a1b9e9c77b0c223"
+      },
+      "title": "cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/asset/npm-manifest",
+      "@type": "bootstrap:Asset",
+      "name": "npm-manifest",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db697fcbc05a710033cd8ff47679e06a850b60c731316842a52ddcccb5e6e2ce",
+        "bytes": 1062,
+        "sha256": "db697fcbc05a710033cd8ff47679e06a850b60c731316842a52ddcccb5e6e2ce"
+      },
+      "title": "package.json"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/asset/unkinded-baseline",
+      "@type": "bootstrap:Asset",
+      "name": "unkinded-baseline",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/28e4c9f89051439fda83ed20abfa0bbd95ae294763f1bfcb99ef5b20f47d391b",
+        "bytes": 8083,
+        "sha256": "28e4c9f89051439fda83ed20abfa0bbd95ae294763f1bfcb99ef5b20f47d391b"
+      },
+      "title": "Unkinded families — cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/bun-runtime",
+      "@type": "cat-harness:Capability",
+      "name": "Bun Runtime"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/camelot",
+      "@type": "cat-harness:Capability",
+      "name": "camelot-py (table extraction with a confidence score)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/deploy-access",
+      "@type": "cat-harness:Capability",
+      "name": "Deployment Access"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/docker",
+      "@type": "cat-harness:Capability",
+      "name": "Docker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/docling",
+      "@type": "cat-harness:Capability",
+      "name": "Docling (layout-aware PDF parsing)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
+      "@type": "cat-harness:Capability",
+      "name": "Git Push"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-read",
+      "@type": "cat-harness:Capability",
+      "name": "Git Read"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-api",
+      "@type": "cat-harness:Capability",
+      "name": "GitHub API (token or OAuth)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-connector",
+      "@type": "cat-harness:Capability",
+      "name": "GitHub connector (host-provided)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/graphviz",
+      "@type": "cat-harness:Capability",
+      "name": "Graphviz"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime",
+      "@type": "cat-harness:Capability",
+      "name": "Java Runtime"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/jekyll",
+      "@type": "cat-harness:Capability",
+      "name": "Jekyll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime",
+      "@type": "cat-harness:Capability",
+      "name": "Node.js Runtime"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pdfplumber",
+      "@type": "cat-harness:Capability",
+      "name": "pdfplumber (deterministic table extraction)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/plantuml",
+      "@type": "cat-harness:Capability",
+      "name": "PlantUML"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pymupdf",
+      "@type": "cat-harness:Capability",
+      "name": "PyMuPDF (preferred PDF reader backend for pdf-structure.py)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/python3",
+      "@type": "cat-harness:Capability",
+      "name": "Python 3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api",
+      "@type": "cat-harness:Capability",
+      "name": "Signing API"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations",
+      "@type": "bootstrap:Subgraph",
+      "name": "attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/beans",
+      "@type": "bootstrap:Subgraph",
+      "name": "beans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/cat-harness-libraries",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-libraries",
+      "title": "Software libraries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/cat-harness-ns",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-ns"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/cat-harness-upstream",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-upstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/cat-harness-validators",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-validators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/checkout-uploads",
+      "@type": "bootstrap:Subgraph",
+      "name": "checkout-uploads"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/code-lists",
+      "@type": "bootstrap:Subgraph",
+      "name": "code-lists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/docs",
+      "@type": "bootstrap:Subgraph",
+      "name": "docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/external-schemas",
+      "@type": "bootstrap:Subgraph",
+      "name": "external-schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/folio",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/folio-render",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-render"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/health",
+      "@type": "bootstrap:Subgraph",
+      "name": "health"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/issue-marks",
+      "@type": "bootstrap:Subgraph",
+      "name": "issue-marks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/memory",
+      "@type": "bootstrap:Subgraph",
+      "name": "memory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/merge-reviews",
+      "@type": "bootstrap:Subgraph",
+      "name": "merge-reviews"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/methodologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/policies",
+      "@type": "bootstrap:Subgraph",
+      "name": "policies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/qa",
+      "@type": "bootstrap:Subgraph",
+      "name": "qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas",
+      "@type": "bootstrap:Subgraph",
+      "name": "schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/site",
+      "@type": "bootstrap:Subgraph",
+      "name": "site"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/site-chrome",
+      "@type": "bootstrap:Subgraph",
+      "name": "site-chrome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses",
+      "@type": "bootstrap:Subgraph",
+      "name": "subscribed-harnesses",
+      "title": "Subscribed harness state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscriptions",
+      "@type": "bootstrap:Subgraph",
+      "name": "subscriptions",
+      "title": "Subscribed substrates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/swimlane-glossary",
+      "@type": "bootstrap:Subgraph",
+      "name": "swimlane-glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/test-plans",
+      "@type": "bootstrap:Subgraph",
+      "name": "test-plans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/todos",
+      "@type": "bootstrap:Subgraph",
+      "name": "todos"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/tool-releases",
+      "@type": "bootstrap:Subgraph",
+      "name": "tool-releases",
+      "title": "Tool releases"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/translation-sources",
+      "@type": "bootstrap:Subgraph",
+      "name": "translation-sources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/uml",
+      "@type": "bootstrap:Subgraph",
+      "name": "uml"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/uploads",
+      "@type": "bootstrap:Subgraph",
+      "name": "uploads"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/vocab-mappings",
+      "@type": "bootstrap:Subgraph",
+      "name": "vocab-mappings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/dcmi-terms",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "dcmi-terms",
+      "title": "DCMI Metadata Terms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/hl7-fhir",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "hl7-fhir",
+      "title": "HL7 FHIR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/ietf-handle-system",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "omg-bpmn-2.0",
+      "title": "Business Process Model and Notation (BPMN)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "omg-dd-1.0",
+      "title": "Diagram Definition (DD)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dmn-1.3",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "omg-dmn-1.3",
+      "title": "Decision Model and Notation (DMN)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/opengroup-archimate-3.0",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "opengroup-archimate-3.0",
+      "title": "ArchiMate® Model Exchange File Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/purl-bibo",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "purl-bibo",
+      "title": "The Bibliographic Ontology (BIBO)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/schema-org",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "schema-org",
+      "title": "Schema.org"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/spar-doco-deo-cito",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "spar-doco-deo-cito",
+      "title": "SPAR Ontologies: DoCO, DEO and CiTO"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/spar-fabio",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "spar-fabio",
+      "title": "SPAR Ontologies: FaBiO, the FRBR-aligned Bibliographic Ontology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/spdx-license-list",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "spdx-license-list",
+      "title": "SPDX License List"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-csvw",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-csvw",
+      "title": "Metadata Vocabulary for Tabular Data"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-hydra",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-hydra",
+      "title": "Hydra Core Vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-n-quads",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-n-quads",
+      "title": "RDF 1.1 N-Quads: A line-based syntax for RDF datasets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-odrl",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-odrl",
+      "title": "ODRL Information Model 2.2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-owl2",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-owl2",
+      "title": "OWL 2 Web Ontology Language Document Overview (Second Edition)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-prov-jsonld",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-prov-jsonld",
+      "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-prov-o",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-prov-o",
+      "title": "PROV-O: The PROV Ontology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-rdf",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-rdf",
+      "title": "RDF 1.1 Concepts and Abstract Syntax"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-rdf-calendar",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-rdf-calendar",
+      "title": "RDF Calendar — an application of the Resource Description Framework to iCalendar Data"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-rdfs",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-rdfs",
+      "title": "RDF Schema 1.1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-skos",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-skos",
+      "title": "SKOS Simple Knowledge Organization System Reference"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-sparql-1.1-query",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-sparql-1.1-query",
+      "title": "SPARQL 1.1 Query Language"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-web-annotation",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-web-annotation",
+      "title": "Web Annotation Vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-datatypes",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-xsd11-datatypes",
+      "title": "XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-xsd11-structures",
+      "title": "W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/who-smart-base",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "who-smart-base",
+      "title": "WHO SMART Guidelines base IG"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "@type": "bootstrap:Role",
+      "title": "Adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+      "@type": "bootstrap:Role",
+      "title": "Administrator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
+      "@type": "bootstrap:Role",
+      "title": "Attestation service"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "@type": "bootstrap:Role",
+      "title": "Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "@type": "bootstrap:Role",
+      "title": "Authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
+      "@type": "bootstrap:Role",
+      "title": "Board renderer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "@type": "bootstrap:Role",
+      "title": "Build pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "@type": "bootstrap:Role",
+      "title": "Business analyst"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/certifier",
+      "@type": "bootstrap:Role",
+      "title": "Certifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
+      "@type": "bootstrap:Role",
+      "title": "Clinical / scientific SME"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
+      "@type": "bootstrap:Role",
+      "title": "Code reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+      "@type": "bootstrap:Role",
+      "title": "Corpus"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/docs-authoring-agent",
+      "@type": "bootstrap:Role",
+      "title": "Docs authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+      "@type": "bootstrap:Role",
+      "title": "Editor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/editorial-authoring-agent",
+      "@type": "bootstrap:Role",
+      "title": "Editorial authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
+      "@type": "bootstrap:Role",
+      "title": "External registry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+      "@type": "bootstrap:Role",
+      "title": "Feedback provider"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "@type": "bootstrap:Role",
+      "title": "Ingestion engine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/integration-watcher",
+      "@type": "bootstrap:Role",
+      "title": "Integration watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
+      "@type": "bootstrap:Role",
+      "title": "Librarian"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/log",
+      "@type": "bootstrap:Role",
+      "title": "Activity log"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+      "@type": "bootstrap:Role",
+      "title": "Merge steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+      "@type": "bootstrap:Role",
+      "title": "Narrative reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+      "@type": "bootstrap:Role",
+      "title": "Platform authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "@type": "bootstrap:Role",
+      "title": "Programme manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "@type": "bootstrap:Role",
+      "title": "Publication manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
+      "@type": "bootstrap:Role",
+      "title": "Publish target"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+      "@type": "bootstrap:Role",
+      "title": "QC reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
+      "@type": "bootstrap:Role",
+      "title": "Review coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "@type": "bootstrap:Role",
+      "title": "Reviewer / SME"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+      "@type": "bootstrap:Role",
+      "title": "Session coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-record",
+      "@type": "bootstrap:Role",
+      "title": "Session record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
+      "@type": "bootstrap:Role",
+      "title": "Sibling session"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+      "@type": "bootstrap:Role",
+      "title": "Stakeholder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+      "@type": "bootstrap:Role",
+      "title": "Terminologist"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/test-requester",
+      "@type": "bootstrap:Role",
+      "title": "Test requester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
+      "@type": "bootstrap:Role",
+      "title": "Tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
+      "@type": "bootstrap:Role",
+      "title": "Translation adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
+      "@type": "bootstrap:Role",
+      "title": "Translation coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translator",
+      "@type": "bootstrap:Role",
+      "title": "Human translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/untainted-checker",
+      "@type": "bootstrap:Role",
+      "title": "Untainted checker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "@type": "bootstrap:Role",
+      "title": "User"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+      "@type": "bootstrap:Role",
+      "title": "Validation pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+      "@type": "bootstrap:Role",
+      "title": "Work plan (beans)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/actor-reach",
+      "@type": "cat-harness:Schema",
+      "name": "actor-reach",
+      "title": "actor-reach"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/adversarial-checklist",
+      "@type": "cat-harness:Schema",
+      "name": "adversarial-checklist",
+      "title": "adversarial-checklist"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archive-contents",
+      "@type": "cat-harness:Schema",
+      "name": "archive-contents",
+      "title": "archive-contents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/artifact-store",
+      "@type": "cat-harness:Schema",
+      "name": "artifact-store",
+      "title": "artifact-store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-package",
+      "@type": "cat-harness:Schema",
+      "name": "assistant-package",
+      "title": "assistant-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-types",
+      "@type": "cat-harness:Schema",
+      "name": "assistant-types",
+      "title": "assistant-types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/assistant-workflow",
+      "@type": "cat-harness:Schema",
+      "name": "assistant-workflow",
+      "title": "assistant-workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/attribution",
+      "@type": "cat-harness:Schema",
+      "name": "attribution",
+      "title": "attribution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/avatars",
+      "@type": "cat-harness:Schema",
+      "name": "avatars",
+      "title": "avatars"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-graph",
+      "@type": "cat-harness:Schema",
+      "name": "bean-graph",
+      "title": "bean-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note",
+      "@type": "cat-harness:Schema",
+      "name": "bean-note",
+      "title": "bean-note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-attestations",
+      "@type": "cat-harness:Schema",
+      "name": "bib-attestations",
+      "title": "bib-attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bib-verification",
+      "@type": "cat-harness:Schema",
+      "name": "bib-verification",
+      "title": "bib-verification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/binary-release",
+      "@type": "cat-harness:Schema",
+      "name": "binary-release",
+      "title": "binary-release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-kind-node",
+      "@type": "cat-harness:Schema",
+      "name": "block-kind-node",
+      "title": "block-kind-node"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-kinds",
+      "@type": "cat-harness:Schema",
+      "name": "block-kinds",
+      "title": "block-kinds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-qa",
+      "@type": "cat-harness:Schema",
+      "name": "block-qa",
+      "title": "block-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-summary",
+      "@type": "cat-harness:Schema",
+      "name": "block-summary",
+      "title": "block-summary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board",
+      "@type": "cat-harness:Schema",
+      "name": "board",
+      "title": "board"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/board-positions",
+      "@type": "cat-harness:Schema",
+      "name": "board-positions",
+      "title": "board-positions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/carried-note",
+      "@type": "cat-harness:Schema",
+      "name": "carried-note",
+      "title": "carried-note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/cat-harness",
+      "@type": "cat-harness:Schema",
+      "name": "cat-harness",
+      "title": "cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size",
+      "@type": "cat-harness:Schema",
+      "name": "change-size",
+      "title": "change-size"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/computation-witness",
+      "@type": "cat-harness:Schema",
+      "name": "computation-witness",
+      "title": "computation-witness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/concern-groups",
+      "@type": "cat-harness:Schema",
+      "name": "concern-groups",
+      "title": "concern-groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/constraints",
+      "@type": "cat-harness:Schema",
+      "name": "constraints",
+      "title": "constraints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/content-adapter-node",
+      "@type": "cat-harness:Schema",
+      "name": "content-adapter-node",
+      "title": "content-adapter-node"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/content-type",
+      "@type": "cat-harness:Schema",
+      "name": "content-type",
+      "title": "content-type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/content-types-base",
+      "@type": "cat-harness:Schema",
+      "name": "content-types-base",
+      "title": "content-types-base"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/contribution-nodes",
+      "@type": "cat-harness:Schema",
+      "name": "contribution-nodes",
+      "title": "contribution-nodes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/contributions",
+      "@type": "cat-harness:Schema",
+      "name": "contributions",
+      "title": "contributions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/convention",
+      "@type": "cat-harness:Schema",
+      "name": "convention",
+      "title": "convention"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/decision-methodology-context",
+      "@type": "cat-harness:Schema",
+      "name": "decision-methodology-context",
+      "title": "decision-methodology-context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/decision-request",
+      "@type": "cat-harness:Schema",
+      "name": "decision-request",
+      "title": "decision-request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/depends-on",
+      "@type": "cat-harness:Schema",
+      "name": "depends-on",
+      "title": "depends-on"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description",
+      "@type": "cat-harness:Schema",
+      "name": "deployment-description",
+      "title": "deployment-description"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver",
+      "@type": "cat-harness:Schema",
+      "name": "deployment-resolver",
+      "title": "deployment-resolver"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/detangle",
+      "@type": "cat-harness:Schema",
+      "name": "detangle",
+      "title": "detangle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/detangle-sidecar",
+      "@type": "cat-harness:Schema",
+      "name": "detangle-sidecar",
+      "title": "detangle-sidecar"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diff-renderers",
+      "@type": "cat-harness:Schema",
+      "name": "diff-renderers",
+      "title": "diff-renderers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-image",
+      "@type": "cat-harness:Schema",
+      "name": "document-image",
+      "title": "document-image"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-kind",
+      "@type": "cat-harness:Schema",
+      "name": "document-kind",
+      "title": "document-kind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-structure",
+      "@type": "cat-harness:Schema",
+      "name": "document-structure",
+      "title": "document-structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/external-schema",
+      "@type": "cat-harness:Schema",
+      "name": "external-schema",
+      "title": "external-schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/extraction",
+      "@type": "cat-harness:Schema",
+      "name": "extraction",
+      "title": "extraction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/figure-description",
+      "@type": "cat-harness:Schema",
+      "name": "figure-description",
+      "title": "figure-description"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/folio-graph-typology",
+      "@type": "cat-harness:Schema",
+      "name": "folio-graph-typology",
+      "title": "folio-graph-typology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/formal-ref",
+      "@type": "cat-harness:Schema",
+      "name": "formal-ref",
+      "title": "formal-ref"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/formalization-types",
+      "@type": "cat-harness:Schema",
+      "name": "formalization-types",
+      "title": "formalization-types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/front-matter",
+      "@type": "cat-harness:Schema",
+      "name": "front-matter",
+      "title": "front-matter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/glossary-ledger",
+      "@type": "cat-harness:Schema",
+      "name": "glossary-ledger",
+      "title": "glossary-ledger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/graph-typology-node",
+      "@type": "cat-harness:Schema",
+      "name": "graph-typology-node",
+      "title": "graph-typology-node"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/graph-typology-registry",
+      "@type": "cat-harness:Schema",
+      "name": "graph-typology-registry",
+      "title": "graph-typology-registry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-config",
+      "@type": "cat-harness:Schema",
+      "name": "harness-config",
+      "title": "harness-config"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/health-report",
+      "@type": "cat-harness:Schema",
+      "name": "health-report",
+      "title": "health-report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/id-lookup",
+      "@type": "cat-harness:Schema",
+      "name": "id-lookup",
+      "title": "id-lookup"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/index-config",
+      "@type": "cat-harness:Schema",
+      "name": "index-config",
+      "title": "index-config"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/inline-code",
+      "@type": "cat-harness:Schema",
+      "name": "inline-code",
+      "title": "inline-code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/instance-repositories",
+      "@type": "cat-harness:Schema",
+      "name": "instance-repositories",
+      "title": "instance-repositories"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/intake",
+      "@type": "cat-harness:Schema",
+      "name": "intake",
+      "title": "intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/interaction",
+      "@type": "cat-harness:Schema",
+      "name": "interaction",
+      "title": "interaction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/jsonld",
+      "@type": "cat-harness:Schema",
+      "name": "jsonld",
+      "title": "jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/jsonld-prefixes",
+      "@type": "cat-harness:Schema",
+      "name": "jsonld-prefixes",
+      "title": "jsonld-prefixes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/kg-node",
+      "@type": "cat-harness:Schema",
+      "name": "kg-node",
+      "title": "kg-node"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/kg-qa",
+      "@type": "cat-harness:Schema",
+      "name": "kg-qa",
+      "title": "kg-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/kind-validator",
+      "@type": "cat-harness:Schema",
+      "name": "kind-validator",
+      "title": "kind-validator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/landing-sticky",
+      "@type": "cat-harness:Schema",
+      "name": "landing-sticky",
+      "title": "landing-sticky"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/lean-packages",
+      "@type": "cat-harness:Schema",
+      "name": "lean-packages",
+      "title": "lean-packages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords",
+      "@type": "cat-harness:Schema",
+      "name": "library-keywords",
+      "title": "library-keywords"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-nodes",
+      "@type": "cat-harness:Schema",
+      "name": "library-nodes",
+      "title": "library-nodes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/log-entry",
+      "@type": "cat-harness:Schema",
+      "name": "log-entry",
+      "title": "log-entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/materialization-state",
+      "@type": "cat-harness:Schema",
+      "name": "materialization-state",
+      "title": "materialization-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/memory",
+      "@type": "cat-harness:Schema",
+      "name": "memory",
+      "title": "memory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue",
+      "@type": "cat-harness:Schema",
+      "name": "merge-queue",
+      "title": "merge-queue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review",
+      "@type": "cat-harness:Schema",
+      "name": "merge-review",
+      "title": "merge-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/methodology",
+      "@type": "cat-harness:Schema",
+      "name": "methodology",
+      "title": "methodology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/model-capabilities",
+      "@type": "cat-harness:Schema",
+      "name": "model-capabilities",
+      "title": "model-capabilities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/mount-trust",
+      "@type": "cat-harness:Schema",
+      "name": "mount-trust",
+      "title": "mount-trust"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/narrative",
+      "@type": "cat-harness:Schema",
+      "name": "narrative",
+      "title": "narrative"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/note-anchor",
+      "@type": "cat-harness:Schema",
+      "name": "note-anchor",
+      "title": "note-anchor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/nquads-distribution",
+      "@type": "cat-harness:Schema",
+      "name": "nquads-distribution",
+      "title": "nquads-distribution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/odrl",
+      "@type": "cat-harness:Schema",
+      "name": "odrl",
+      "title": "odrl"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software",
+      "@type": "cat-harness:Schema",
+      "name": "outside-software",
+      "title": "outside-software"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/panel-chrome",
+      "@type": "cat-harness:Schema",
+      "name": "panel-chrome",
+      "title": "panel-chrome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/pdf-structure",
+      "@type": "cat-harness:Schema",
+      "name": "pdf-structure",
+      "title": "pdf-structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/pinned-terminology",
+      "@type": "cat-harness:Schema",
+      "name": "pinned-terminology",
+      "title": "pinned-terminology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/process-element-id",
+      "@type": "cat-harness:Schema",
+      "name": "process-element-id",
+      "title": "process-element-id"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/property-skills",
+      "@type": "cat-harness:Schema",
+      "name": "property-skills",
+      "title": "property-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/prov",
+      "@type": "cat-harness:Schema",
+      "name": "prov",
+      "title": "prov"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/prov-jsonld",
+      "@type": "cat-harness:Schema",
+      "name": "prov-jsonld",
+      "title": "prov-jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/python-deps",
+      "@type": "cat-harness:Schema",
+      "name": "python-deps",
+      "title": "python-deps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-attestations",
+      "@type": "cat-harness:Schema",
+      "name": "qa-attestations",
+      "title": "qa-attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-record-shapes",
+      "@type": "cat-harness:Schema",
+      "name": "qa-record-shapes",
+      "title": "qa-record-shapes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-report",
+      "@type": "cat-harness:Schema",
+      "name": "qa-report",
+      "title": "qa-report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-review",
+      "@type": "cat-harness:Schema",
+      "name": "qa-review",
+      "title": "qa-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/reader-filter",
+      "@type": "cat-harness:Schema",
+      "name": "reader-filter",
+      "title": "reader-filter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/recording",
+      "@type": "cat-harness:Schema",
+      "name": "recording",
+      "title": "recording"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/red-flag",
+      "@type": "cat-harness:Schema",
+      "name": "red-flag",
+      "title": "red-flag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window",
+      "@type": "cat-harness:Schema",
+      "name": "ref-window",
+      "title": "ref-window"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/referenced-source",
+      "@type": "cat-harness:Schema",
+      "name": "referenced-source",
+      "title": "referenced-source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/remote-mount",
+      "@type": "cat-harness:Schema",
+      "name": "remote-mount",
+      "title": "remote-mount"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-log",
+      "@type": "cat-harness:Schema",
+      "name": "render-log",
+      "title": "render-log"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output",
+      "@type": "cat-harness:Schema",
+      "name": "render-output",
+      "title": "render-output"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-targets",
+      "@type": "cat-harness:Schema",
+      "name": "render-targets",
+      "title": "render-targets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact",
+      "@type": "cat-harness:Schema",
+      "name": "rendered-impact",
+      "title": "rendered-impact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/repo-full-name",
+      "@type": "cat-harness:Schema",
+      "name": "repo-full-name",
+      "title": "repo-full-name"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/role-graph",
+      "@type": "cat-harness:Schema",
+      "name": "role-graph",
+      "title": "role-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/run-context",
+      "@type": "cat-harness:Schema",
+      "name": "run-context",
+      "title": "run-context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url",
+      "@type": "cat-harness:Schema",
+      "name": "safe-url",
+      "title": "safe-url"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/scenario-overlay",
+      "@type": "cat-harness:Schema",
+      "name": "scenario-overlay",
+      "title": "scenario-overlay"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/script-qa",
+      "@type": "cat-harness:Schema",
+      "name": "script-qa",
+      "title": "script-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/section-verdicts",
+      "@type": "cat-harness:Schema",
+      "name": "section-verdicts",
+      "title": "section-verdicts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/semantic-zoom",
+      "@type": "cat-harness:Schema",
+      "name": "semantic-zoom",
+      "title": "semantic-zoom"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/session-context",
+      "@type": "cat-harness:Schema",
+      "name": "session-context",
+      "title": "session-context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/session-survey",
+      "@type": "cat-harness:Schema",
+      "name": "session-survey",
+      "title": "session-survey"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/site",
+      "@type": "cat-harness:Schema",
+      "name": "site",
+      "title": "site"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/site-indexes",
+      "@type": "cat-harness:Schema",
+      "name": "site-indexes",
+      "title": "site-indexes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/skill-definitions-dir",
+      "@type": "cat-harness:Schema",
+      "name": "skill-definitions-dir",
+      "title": "skill-definitions-dir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/skill-package",
+      "@type": "cat-harness:Schema",
+      "name": "skill-package",
+      "title": "skill-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/skill-topics",
+      "@type": "cat-harness:Schema",
+      "name": "skill-topics",
+      "title": "skill-topics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/slides-accessibility",
+      "@type": "cat-harness:Schema",
+      "name": "slides-accessibility",
+      "title": "slides-accessibility"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/software-library",
+      "@type": "cat-harness:Schema",
+      "name": "software-library",
+      "title": "software-library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-descriptor",
+      "@type": "cat-harness:Schema",
+      "name": "source-descriptor",
+      "title": "source-descriptor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-licence",
+      "@type": "cat-harness:Schema",
+      "name": "source-licence",
+      "title": "source-licence"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-provenance",
+      "@type": "cat-harness:Schema",
+      "name": "source-provenance",
+      "title": "source-provenance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spdx-license-expression",
+      "@type": "cat-harness:Schema",
+      "name": "spdx-license-expression",
+      "title": "spdx-license-expression"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/spec-template",
+      "@type": "cat-harness:Schema",
+      "name": "spec-template",
+      "title": "spec-template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/staging",
+      "@type": "cat-harness:Schema",
+      "name": "staging",
+      "title": "staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/staging-preview",
+      "@type": "cat-harness:Schema",
+      "name": "staging-preview",
+      "title": "staging-preview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/state-manifest",
+      "@type": "cat-harness:Schema",
+      "name": "state-manifest",
+      "title": "state-manifest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sticky-contribution",
+      "@type": "cat-harness:Schema",
+      "name": "sticky-contribution",
+      "title": "sticky-contribution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/subgraph-manifest",
+      "@type": "cat-harness:Schema",
+      "name": "subgraph-manifest",
+      "title": "subgraph-manifest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/subgraph-source",
+      "@type": "cat-harness:Schema",
+      "name": "subgraph-source",
+      "title": "subgraph-source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/substrate-snapshot",
+      "@type": "cat-harness:Schema",
+      "name": "substrate-snapshot",
+      "title": "substrate-snapshot"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sweep-mark",
+      "@type": "cat-harness:Schema",
+      "name": "sweep-mark",
+      "title": "sweep-mark"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tabular-csvw",
+      "@type": "cat-harness:Schema",
+      "name": "tabular-csvw",
+      "title": "tabular-csvw"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tabular-records",
+      "@type": "cat-harness:Schema",
+      "name": "tabular-records",
+      "title": "tabular-records"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/term-adjudication",
+      "@type": "cat-harness:Schema",
+      "name": "term-adjudication",
+      "title": "term-adjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/term-mapping",
+      "@type": "cat-harness:Schema",
+      "name": "term-mapping",
+      "title": "term-mapping"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data",
+      "@type": "cat-harness:Schema",
+      "name": "test-data",
+      "title": "test-data"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan",
+      "@type": "cat-harness:Schema",
+      "name": "test-plan",
+      "title": "test-plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload",
+      "@type": "cat-harness:Schema",
+      "name": "test-preload",
+      "title": "test-preload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-report",
+      "@type": "cat-harness:Schema",
+      "name": "test-report",
+      "title": "test-report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-run",
+      "@type": "cat-harness:Schema",
+      "name": "test-run",
+      "title": "test-run"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/theme",
+      "@type": "cat-harness:Schema",
+      "name": "theme",
+      "title": "theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/theme-art-intake",
+      "@type": "cat-harness:Schema",
+      "name": "theme-art-intake",
+      "title": "theme-art-intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/themes",
+      "@type": "cat-harness:Schema",
+      "name": "themes",
+      "title": "themes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tile-count",
+      "@type": "cat-harness:Schema",
+      "name": "tile-count",
+      "title": "tile-count"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/todo",
+      "@type": "cat-harness:Schema",
+      "name": "todo",
+      "title": "todo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/todo-graph",
+      "@type": "cat-harness:Schema",
+      "name": "todo-graph",
+      "title": "todo-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/todo-index",
+      "@type": "cat-harness:Schema",
+      "name": "todo-index",
+      "title": "todo-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool",
+      "@type": "cat-harness:Schema",
+      "name": "tool",
+      "title": "tool"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-invocation",
+      "@type": "cat-harness:Schema",
+      "name": "tool-invocation",
+      "title": "tool-invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-profile",
+      "@type": "cat-harness:Schema",
+      "name": "tool-profile",
+      "title": "tool-profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-release",
+      "@type": "cat-harness:Schema",
+      "name": "tool-release",
+      "title": "tool-release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-run",
+      "@type": "cat-harness:Schema",
+      "name": "tool-run",
+      "title": "tool-run"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-types",
+      "@type": "cat-harness:Schema",
+      "name": "tool-types",
+      "title": "tool-types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/translation",
+      "@type": "cat-harness:Schema",
+      "name": "translation",
+      "title": "translation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/translation-tools",
+      "@type": "cat-harness:Schema",
+      "name": "translation-tools",
+      "title": "translation-tools"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types",
+      "@type": "cat-harness:Schema",
+      "name": "types",
+      "title": "types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/url-space",
+      "@type": "cat-harness:Schema",
+      "name": "url-space",
+      "title": "url-space"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/user-story",
+      "@type": "cat-harness:Schema",
+      "name": "user-story",
+      "title": "user-story"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/validator-node",
+      "@type": "cat-harness:Schema",
+      "name": "validator-node",
+      "title": "validator-node"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vector-figure",
+      "@type": "cat-harness:Schema",
+      "name": "vector-figure",
+      "title": "vector-figure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vector-labels",
+      "@type": "cat-harness:Schema",
+      "name": "vector-labels",
+      "title": "vector-labels"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/version-bump",
+      "@type": "cat-harness:Schema",
+      "name": "version-bump",
+      "title": "version-bump"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/viewer-nav-qa",
+      "@type": "cat-harness:Schema",
+      "name": "viewer-nav-qa",
+      "title": "viewer-nav-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocab-mapping",
+      "@type": "cat-harness:Schema",
+      "name": "vocab-mapping",
+      "title": "vocab-mapping"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocabulary",
+      "@type": "cat-harness:Schema",
+      "name": "vocabulary",
+      "title": "vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/voice-skill",
+      "@type": "cat-harness:Schema",
+      "name": "voice-skill",
+      "title": "voice-skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/voices",
+      "@type": "cat-harness:Schema",
+      "name": "voices",
+      "title": "voices"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/waiver",
+      "@type": "cat-harness:Schema",
+      "name": "waiver",
+      "title": "waiver"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/webpage",
+      "@type": "cat-harness:Schema",
+      "name": "webpage",
+      "title": "webpage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack",
+      "@type": "cat-harness:Schema",
+      "name": "window-stack",
+      "title": "window-stack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/withheld",
+      "@type": "cat-harness:Schema",
+      "name": "withheld",
+      "title": "withheld"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/openapi/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
+    "cat-harness:graphTypology/library",
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/scenarios",
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "cat-harness",
+  "path": "./",
+  "title": "C@T Harness"
+}

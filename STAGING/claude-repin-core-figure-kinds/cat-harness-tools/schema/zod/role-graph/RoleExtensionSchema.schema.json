@@ -1,0 +1,38 @@
+{
+  "$ref": "#/definitions/RoleExtension",
+  "definitions": {
+    "RoleExtension": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "skills": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A skill name, e.g. todo-manager"
+          }
+        }
+      },
+      "required": [
+        "role",
+        "skills"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/RoleExtensionSchema.schema.json",
+  "title": "RoleExtensionSchema",
+  "description": "Generated from `RoleExtensionSchema` in schemas/process/role-graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

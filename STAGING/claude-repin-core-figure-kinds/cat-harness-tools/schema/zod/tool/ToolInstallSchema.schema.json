@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/ToolInstall",
+  "definitions": {
+    "ToolInstall": {
+      "type": "object",
+      "properties": {
+        "cli": {
+          "type": "string"
+        },
+        "container": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "none": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolInstallSchema.schema.json",
+  "title": "ToolInstallSchema",
+  "description": "Generated from `ToolInstallSchema` in schemas/tools/tool.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

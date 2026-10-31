@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/SourceLicence",
+  "definitions": {
+    "SourceLicence": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "unknown"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "searched": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "where": {
+                "type": "string"
+              },
+              "result": {
+                "type": "string"
+              },
+              "on": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "where",
+              "result"
+            ]
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-licence/SourceLicenceSchema.schema.json",
+  "title": "SourceLicenceSchema",
+  "description": "Generated from `SourceLicenceSchema` in schemas/library/source-licence.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}

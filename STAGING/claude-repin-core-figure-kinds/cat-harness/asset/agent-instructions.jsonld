@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — cat-harness",
+      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md — one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the bootstrap provenance, because the root's is the file bootstrap copies at initialisation.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/asset/agent-instructions"
+    }
+  ]
+}

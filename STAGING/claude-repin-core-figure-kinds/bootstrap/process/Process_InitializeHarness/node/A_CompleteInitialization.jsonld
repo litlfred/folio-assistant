@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Make sure every step is done",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/skill/initialization-steps",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/bootstrap/process/Process_CompleteInitialization"
+    }
+  ]
+}

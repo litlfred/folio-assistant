@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/ModelCapabilities",
+  "definitions": {
+    "ModelCapabilities": {
+      "type": "object",
+      "properties": {
+        "reasoning_tier": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "expert"
+          ]
+        },
+        "tool_use": {
+          "type": "boolean"
+        },
+        "context_window": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "multimodal": {
+          "type": "boolean"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/model-capabilities/ModelCapabilitiesSchema.schema.json",
+  "title": "ModelCapabilitiesSchema",
+  "description": "Generated from `ModelCapabilitiesSchema` in schemas/conduct/model-capabilities.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-figure-kinds",
+    "sha": "df7105996fc5ce44d93a45a461ba48690486be97",
+    "pr": "2862/merge",
+    "run": "41234428105"
+  }
+}
