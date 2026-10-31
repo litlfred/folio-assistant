@@ -20,8 +20,10 @@ tags:
 **Evidence:** none of these sets `resolve_entities=False` (or uses defusedxml). lxml >= 5 resolves only internal entities by default and blocks network access, so the remaining exposure is entity expansion (billion laughs) on a crafted BPMN/DMN/translation file in a PR. The BPMN import skill is meant to take files from outside authors.
 
 ## Done when
-- [ ] these parsers are built with `resolve_entities=False, no_network=True, huge_tree=False` (one shared helper)
+- [x] these parsers are built with `resolve_entities=False, no_network=True, huge_tree=False` (one shared helper)
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-base/pull/255 (shared `safe_xml_parser` helper with `resolve_entities=False, no_network=True, huge_tree=False` in `input/scripts/safe_xml.py` and `.github/skills/common/safe_xml.py`, wired across all 8 `lxml` parsers).

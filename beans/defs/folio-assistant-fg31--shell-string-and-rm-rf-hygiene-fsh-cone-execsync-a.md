@@ -2,7 +2,7 @@
 # folio-assistant-fg31
 $schema: bean/1.0.0
 title: 'Shell-string and rm -rf hygiene: fsh-cone execSync and smart-base mount-platform.sh'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-31T04:20:00Z
@@ -28,3 +28,5 @@ _2026-10-31T04:20Z_ — Filed by the group C security review, session https://cl
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T04:22Z_ — Done: fsh-cone in fhir-harness#244 (ab2d071), mount-platform.sh in smart-base#251 (d1cfa96). Session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T08:25Z_ — Both PRs merged on main (`fhir-harness#244`, `smart-base#251`); marking completed.

@@ -20,8 +20,10 @@ tags:
 **Evidence:** when `faTerminologyMap.answer` has no answer, the service worker forwards the original cross-origin request. Whatever the NLM Form Builder sends (terminology lookups that can carry typed form text) then reaches the third-party host, which the comment and the owner's design note (2026-10-14) say should not happen.
 
 ## Done when
-- [ ] either unanswered cross-origin requests get a local 404/503 response, or the comment says they are forwarded and why
+- [x] either unanswered cross-origin requests get a local 404/503 response, or the comment says they are forwarded and why
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/fhir-harness/pull/247 (`scripts/terminology-sw.js` returns a local `503` `OperationOutcome` JSON response for unanswered cross-origin requests; regression test in `scripts/terminology-map.test.ts`).

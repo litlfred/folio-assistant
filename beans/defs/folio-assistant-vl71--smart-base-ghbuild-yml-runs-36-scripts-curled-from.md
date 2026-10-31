@@ -22,9 +22,11 @@ tags:
 **Mitigation today:** ghbuild.yml is `workflow_call`/`workflow_dispatch` only (owner decision 2026-10-06), so it runs only when started by hand.
 
 ## Done when
-- [ ] the scripts come from this checkout (or a commit SHA recorded in the repo), not a moving branch of another org
-- [ ] or each download is verified against a recorded sha256 and refused on mismatch
+- [x] the scripts come from this checkout (or a commit SHA recorded in the repo), not a moving branch of another org
+- [x] or each download is verified against a recorded sha256 and refused on mismatch
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-base/pull/255 (`SCRIPTS_BASE_COMMIT`/`SCRIPTS_BASE_URL` pinned to immutable 40-hex commit SHA `49178a48d460bb53acf6e90d8c0aee3f0146d8f7` in `litlfred/smart-base` with one-step git checkout seeding for downstream callers; `stamp_deploy.py` pinned by commit SHA and verified against SHA-256 `4a82437fb69a894b4539b638cdf4caa08e4f5dca3cedfcee3a80164c2d977022`).

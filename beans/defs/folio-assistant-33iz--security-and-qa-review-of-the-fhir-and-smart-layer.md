@@ -25,3 +25,5 @@ Children are the filed findings. Session https://claude.ai/code/session_01Qmmkt6
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Open PRs for all remaining Group C beans: `fhir-harness#247` (`avcq`, `wyez`), `smart-base#255` (`plxg`, `towy`, `vl71`, `ylu8`), `smart-ra#181` (`x09n`, `ylu8`), `smart-immunizations#105` (`hgxs`, `ylu8`). (`fg31` completed in `fhir-harness#244` and `smart-base#251`.)

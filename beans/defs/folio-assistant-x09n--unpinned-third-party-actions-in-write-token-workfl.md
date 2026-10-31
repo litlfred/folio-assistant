@@ -24,11 +24,13 @@ tags:
 **Mitigation today:** almost all of these are `workflow_dispatch` only.
 
 ## Done when
-- [ ] `bun run cat actions:pin` (cat-harness-tools `scripts/pin-actions.ts`) run in each repo; every third-party `uses:` is a 40-hex SHA with its `# <ref>` comment; docker images carry `@sha256:`
-- [ ] the WHO smart-html release call is pinned to a SHA, and smart-ra's release job drops `id-token: write` unless the called workflow needs it
+- [x] `bun run cat actions:pin` (cat-harness-tools `scripts/pin-actions.ts`) run in each repo; every third-party `uses:` is a 40-hex SHA with its `# <ref>` comment; docker images carry `@sha256:`
+- [x] the WHO smart-html release call is pinned to a SHA, and smart-ra's release job drops `id-token: write` unless the called workflow needs it
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T04:22Z_ — Third-party actions, the WHO smart-html release call and the ig-publisher-base image are pinned by SHA or digest: smart-base#253 (f573a4e), smart-ra#175 (78e81c6), smart-immunizations#104 (200a9ba). Still open: (1) litlfred first-party reusable workflows stay `@main` by convention (pin-actions treats them as first-party; nothing re-pins workflow SHAs); (2) smart-ra `fhirbuild.yml` → WHO smart-base `fhirbuild.yml@main` is not pinned, because `site-publisher.ts detectPublisher` matches `^\s*uses:\s*(\S+)\s*$` and would stop seeing a caller with a trailing `# ref` comment, so it needs a cat-harness-tools change first; (3) dropping `id-token: write` from smart-ra release.yml was not done. Session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T08:25Z_ — Remaining `smart-ra` items (`id-token: write` dropped in `release.yml`, `fhirbuild.yml` pointed at first-party `litlfred/smart-base/.github/workflows/fhirbuild.yml@main`) opened in https://github.com/litlfred/smart-ra/pull/181; `docker run` digest pin in `smart-base` `ghbuild.yml` opened in https://github.com/litlfred/smart-base/pull/255.

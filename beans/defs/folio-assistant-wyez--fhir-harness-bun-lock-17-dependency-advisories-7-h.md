@@ -25,8 +25,10 @@ tags:
 The `expo` chain is a build-time transitive of the SDC populate library and is probably not on any runtime path, which is why this is major rather than critical. That is a guess from the dependency path, not something traced.
 
 ## Done when
-- [ ] `bun audit` in fhir-harness reports no high or critical, or each remaining one carries a recorded waiver saying why it is not reachable
+- [x] `bun audit` in fhir-harness reports no high or critical, or each remaining one carries a recorded waiver saying why it is not reachable
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/fhir-harness/pull/247 (`zod` bumped to `^4.6.7`, `overrides` added in `package.json` for `node-forge@^1.4.2`, `zod@^4.6.7`, `minimatch@^11.0.3`, `glob@^14.0.3`, `csv-parse@^7.0.3`; `bun audit` now reports 0 critical/high/moderate, 1 low in `deepmerge@4.3.1`).

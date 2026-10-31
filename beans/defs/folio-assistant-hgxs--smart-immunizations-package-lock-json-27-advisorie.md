@@ -22,8 +22,10 @@ tags:
 The repo also declares bun workspaces (bunfig.toml), so it is unclear whether this lock is still the one installs read. If it is stale, deleting it is the fix.
 
 ## Done when
-- [ ] `npm` dropped as a dependency (or the lock regenerated) and `npm audit` reports no critical or high, or the stale lock is removed
+- [x] `npm` dropped as a dependency (or the lock regenerated) and `npm audit` reports no critical or high, or the stale lock is removed
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-immunizations/pull/105 (dropped `npm` from `package.json` `dependencies`, added `overrides` for transitive advisories, and regenerated `package-lock.json`; `npm audit --package-lock-only` now reports 0 vulnerabilities).

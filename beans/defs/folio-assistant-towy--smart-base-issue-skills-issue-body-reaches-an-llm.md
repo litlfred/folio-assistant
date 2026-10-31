@@ -25,8 +25,10 @@ tags:
 **Mitigation today:** all five are `workflow_dispatch` only, and their `if:` conditions read `github.event.issue`/`label`, which a dispatch does not carry, so none of them can run as written.
 
 ## Done when
-- [ ] either the dead skills and workflows are removed, or: labels are refused unless in a fixed allowlist, the issue text is fenced as untrusted, and pip installs are pinned by hash
+- [x] either the dead skills and workflows are removed, or: labels are refused unless in a fixed allowlist, the issue text is fenced as untrusted, and pip installs are pinned by hash
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-base/pull/255 (`fence_untrusted` added in `prompt_loader.py` and applied to `ISSUE_TITLE`/`ISSUE_BODY` in `classify_issue_action.py` and `dak_authoring_action.py`; `ALLOWED_LABELS` allowlist enforced in `classify_issue_action.py`; `pip install --require-hashes --no-deps -r .github/skills/requirements.lock` wired in the 4 issue-skill workflows).
