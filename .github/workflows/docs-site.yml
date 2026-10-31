@@ -685,6 +685,10 @@ jobs:
       # `instance-publication` §"What each instance publishes" (bean `4ak5`).
       - name: Export the knowledge graph and its schema
         run: |
+          # Bean fwtz: when each command of this step started, carried into
+          # build.json below, to find which of its ~9 minutes to cut first.
+          T="$RUNNER_TEMP/kg-step-times.log"; : > "$T"
+          trap 'case "$BASH_COMMAND" in *"bun run"*) printf "%s %s\n" "$(date +%s)" "${BASH_COMMAND:0:160}" >> "$T";; esac' DEBUG
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site
@@ -969,6 +973,9 @@ jobs:
           # there rather than publishing a shorter map. Built here and never
           # committed: `instance-publication` §"What each instance publishes".
           bun run cat-harness-tools/scripts/root-index.ts --site ./_site
+          trap - DEBUG
+          printf "%s end\n" "$(date +%s)" >> "$T"
+          jq --rawfile l "$T" '. + {kgStepTimes: ($l | split("\n") | map(select(. != "")))}' ./_site/build.json > "$RUNNER_TEMP/build.json" && mv "$RUNNER_TEMP/build.json" ./_site/build.json || true
 
       # Every `maintains` claim, checked where the answer exists.
       #
