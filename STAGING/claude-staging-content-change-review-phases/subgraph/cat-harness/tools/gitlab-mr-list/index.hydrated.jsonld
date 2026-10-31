@@ -1,0 +1,54 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-list/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-list.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "List the open merge requests of the current checkout's GitLab project, optionally only those from one branch.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr list"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--source-branch"
+            },
+            "description": "Only proposals whose source branch is this.",
+            "name": "branch",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One line per open change proposal: number, title, source branch.",
+            "name": "proposals",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "gitlab-mr-list",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+      ],
+      "title": "List merge requests (GitLab)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/gitlab-mr-list",
+  "path": "tools/gitlab-mr-list/"
+}

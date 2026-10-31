@@ -1,0 +1,157 @@
+{
+  "$schema": "folio-harness-state/v1",
+  "harness": "bootstrap",
+  "initialization": {
+    "position": "readme-sections",
+    "next": {
+      "step": "readme-sections",
+      "action": "run bootstrap-tools' `readme-sections` against this root"
+    },
+    "counts": {
+      "done": 12,
+      "not-done": 1,
+      "could-not-determine": 4,
+      "stated": 0
+    },
+    "steps": [
+      {
+        "id": "declaration",
+        "namedBy": "bootstrap",
+        "what": "bootstrap.json parses",
+        "state": "done",
+        "detail": "bootstrap 0.1.1"
+      },
+      {
+        "id": "schemas:staged",
+        "namedBy": "bootstrap",
+        "what": "each of 1 JSON Schema / JSON-LD documents is staged at the address it names",
+        "state": "done",
+        "detail": "1 documents, each at its own IRI"
+      },
+      {
+        "id": "schemas:published",
+        "namedBy": "bootstrap",
+        "what": "each of 1 document IRIs answers",
+        "state": "could-not-determine",
+        "detail": "0 answer; 1 could not be checked from here (unreachable)",
+        "action": "open one in a browser, e.g. https://litlfred.github.io/bootstrap/bootstrap.jsonld"
+      },
+      {
+        "id": "directory:skills",
+        "namedBy": "bootstrap",
+        "what": "declared directory skills/ exists",
+        "state": "done",
+        "detail": "holds skills"
+      },
+      {
+        "id": "directory:schemas",
+        "namedBy": "bootstrap",
+        "what": "declared directory schemas/ exists",
+        "state": "done",
+        "detail": "holds schemas"
+      },
+      {
+        "id": "directory:scenarios",
+        "namedBy": "bootstrap",
+        "what": "declared directory scenarios/ exists",
+        "state": "done",
+        "detail": "holds scenarios"
+      },
+      {
+        "id": "directory:processes",
+        "namedBy": "bootstrap",
+        "what": "declared directory processes/ exists",
+        "state": "done",
+        "detail": "holds processes"
+      },
+      {
+        "id": "directory:models",
+        "namedBy": "bootstrap",
+        "what": "declared directory models/ exists",
+        "state": "done",
+        "detail": "holds models"
+      },
+      {
+        "id": "asset:agent-instructions",
+        "namedBy": "bootstrap",
+        "what": "declared agent-instructions AGENTS.md exists",
+        "state": "done",
+        "detail": "AGENTS.md"
+      },
+      {
+        "id": "asset:readme",
+        "namedBy": "bootstrap",
+        "what": "declared instance-readme README.md exists",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "asset:vocabulary",
+        "namedBy": "bootstrap",
+        "what": "declared vocabulary ns.jsonld exists",
+        "state": "done",
+        "detail": "ns.jsonld"
+      },
+      {
+        "id": "readme",
+        "namedBy": "bootstrap",
+        "what": "the root has a README.md (FR-8)",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "readme-sections",
+        "namedBy": "bootstrap",
+        "what": "every README section the README opts into is current",
+        "state": "not-done",
+        "detail": "kg:processes, kg:files, kg:roles, kg:toc; kg:processes: no .bpmn found — stale",
+        "action": "run bootstrap-tools' `readme-sections` against this root"
+      },
+      {
+        "id": "site:workflow",
+        "namedBy": "bootstrap",
+        "what": "a workflow that builds the site and deploys it to GitHub Pages",
+        "state": "done",
+        "detail": ".github/workflows/publish-context.yml"
+      },
+      {
+        "id": "site:branch",
+        "namedBy": "bootstrap",
+        "what": "a gh-pages branch exists on litlfred/bootstrap, for Pages to serve",
+        "state": "could-not-determine",
+        "detail": "no `git` here to ask the remote",
+        "action": "create it: an orphan gh-pages holding a placeholder index.html and .nojekyll, pushed to https://github.com/litlfred/bootstrap"
+      },
+      {
+        "id": "site:enabled",
+        "namedBy": "bootstrap",
+        "what": "GitHub Pages is on for litlfred/bootstrap, serving the gh-pages branch",
+        "state": "could-not-determine",
+        "detail": "no `gh` CLI here, so Pages could not be checked or enabled",
+        "action": "open https://github.com/litlfred/bootstrap/settings/pages → \"Build and deployment\" → Source: \"Deploy from a branch\" → branch `gh-pages`, folder `/ (root)` (free for a public repository; the branch must exist first — site:branch). Then re-run the Pages workflow from the Actions tab, or push to main."
+      },
+      {
+        "id": "site:live",
+        "namedBy": "bootstrap",
+        "what": "the site answers at https://litlfred.github.io/bootstrap/, and its README page at https://litlfred.github.io/bootstrap/README.html",
+        "state": "could-not-determine",
+        "detail": "https://litlfred.github.io/bootstrap/ could not be reached from here; https://litlfred.github.io/bootstrap/README.html could not be reached from here — an answer about the way here (a proxy, an access rule), not about the site",
+        "action": "open https://litlfred.github.io/bootstrap/README.html in a browser"
+      }
+    ]
+  },
+  "health": {
+    "badges": [
+      {
+        "id": "initialization",
+        "state": "finding",
+        "label": "1 setup step(s) not done"
+      },
+      {
+        "id": "repository",
+        "state": "unknown",
+        "label": "no committed health report in this checkout"
+      }
+    ]
+  }
+}

@@ -1,0 +1,385 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "ihe-iti-pcf-1-1-0",
+  "title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)",
+  "variant": "text",
+  "pages": null,
+  "tocSource": "headings",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "s001-ihe-it-infrastructure-technical-framework-supple",
+      "number": null,
+      "title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 13,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "s002-overview-and-bibliographic-identity",
+      "number": null,
+      "title": "Overview and Bibliographic Identity",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 129,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "infrastructure technical",
+          "heading": false
+        },
+        {
+          "term": "technical framework",
+          "heading": false
+        },
+        {
+          "term": "framework supplement",
+          "heading": false
+        },
+        {
+          "term": "bibliographic",
+          "heading": true
+        }
+      ],
+      "extract": "The IHE IT Infrastructure Technical Framework Supplement: Privacy Consent on FHIR (PCF) specifies how patient privacy consent directives are recorded, discovered, maintained, and enforced over HL7 FHIR resources using the FHIR Consent resource and RESTful transactions. Field; Value Title; IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF) Canonical URL;",
+      "extractCut": true
+    },
+    {
+      "id": "s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-",
+      "number": null,
+      "title": "Volume 1 — Profiles: Privacy Consent on FHIR (PCF) (§1:53)",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 11,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "s004-actors-and-transactions-1-53-1",
+      "number": null,
+      "title": "Actors and Transactions (§1:53.1)",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 148,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "authorization server",
+          "heading": false
+        },
+        {
+          "term": "actors",
+          "heading": true
+        },
+        {
+          "term": "access",
+          "heading": false
+        },
+        {
+          "term": "registry",
+          "heading": false
+        },
+        {
+          "term": "directives",
+          "heading": false
+        }
+      ],
+      "extract": "PCF defines three primary actors for privacy consent management and enforcement: Actor; Role in PCF; CapabilityStatement Canonical Consent Recorder; Captures, updates, and revokes patient privacy consent directives on behalf of a patient or authorized representative and submits them to a Consent Registry via [ITI-108] Access Consent.; https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRecorder",
+      "extractCut": true
+    },
+    {
+      "id": "s005-actor-options-1-53-2",
+      "number": null,
+      "title": "Actor Options (§1:53.2)",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 112,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "record corresponding",
+          "heading": false
+        },
+        {
+          "term": "corresponding resource",
+          "heading": false
+        },
+        {
+          "term": "access",
+          "heading": false
+        }
+      ],
+      "extract": "The Consent Recorder and Consent Registry support five explicit [ITI-108] Access Consent interaction options: 1. Access Consent: Read — Retrieve a specific Consent instance by logical ID (GET [base]/Consent/[id]) or version ID (GET [base]/Consent/[id]/_history/[vid]). 2. Access Consent: Search — Query Consent instances by patient, status, date, period, actor, action, purpose, security-label, category, or",
+      "extractCut": true
+    },
+    {
+      "id": "s006-implicit-base-policy-sets-1-53-2-1",
+      "number": null,
+      "title": "Implicit Base Policy Sets (§1:53.2.1)",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 171,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "base policy",
+          "heading": true
+        },
+        {
+          "term": "security labels",
+          "heading": false
+        },
+        {
+          "term": "level",
+          "heading": false
+        },
+        {
+          "term": "against",
+          "heading": false
+        },
+        {
+          "term": "data",
+          "heading": false
+        }
+      ],
+      "extract": "A FHIR Consent resource under PCF refines an underlying organizational or jurisdictional privacy policy identified in Consent.policy.uri. PCF organizes consent expressiveness into four progressive profile levels corresponding to the implicit base policy set (Consent.provision.type): Profile Level; StructureDefinition Canonical; Semantics Basic Consent;",
+      "extractCut": true
+    },
+    {
+      "id": "s007-volume-2-transactions-access-consent-iti-108-2-3",
+      "number": null,
+      "title": "Volume 2 — Transactions: Access Consent [ITI-108] (§2:3.108)",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 9,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "s008-scope-and-interaction-model",
+      "number": null,
+      "title": "Scope and Interaction Model",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 57,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "interaction",
+          "heading": true
+        },
+        {
+          "term": "composite",
+          "heading": false
+        },
+        {
+          "term": "information",
+          "heading": false
+        }
+      ],
+      "extract": "Transaction Access Consent [ITI-108] is used by a Consent Recorder to create, update, delete, read, or search Consent resources held on a Consent Registry, and by a Consent Authorization Server (or composite data-sharing actor such as a VHL Sharer) to query active Consent directives for a patient prior to disclosing health information.",
+      "extractCut": false
+    },
+    {
+      "id": "s009-message-semantics-2-3-108-4",
+      "number": null,
+      "title": "Message Semantics (§2:3.108.4)",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 178,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "reference",
+          "heading": false
+        },
+        {
+          "term": "semantics",
+          "heading": true
+        },
+        {
+          "term": "resource",
+          "heading": false
+        },
+        {
+          "term": "codes",
+          "heading": false
+        }
+      ],
+      "extract": "[ITI-108] uses the HL7 FHIR RESTful API over HTTPS: Create (POST [base]/Consent): Creates a new Consent resource conforming to IHE.PCF.consentBasic, IHE.PCF.consentIntermediate, or IHE.PCF.consentAdvanced. When submitted inside a FHIR transaction Bundle alongside a Provenance resource (IHE.PCF.provenance), records who captured the consent directive and how it was attested. Update (PUT [base]/Consent/[id]): Replaces",
+      "extractCut": true
+    },
+    {
+      "id": "s010-volume-3-content-profiles-and-terminology-3-5-8",
+      "number": null,
+      "title": "Volume 3 — Content Profiles and Terminology (§3:5.8)",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 9,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "s011-required-elements-on-pcf-consent-profiles",
+      "number": null,
+      "title": "Required Elements on PCF Consent Profiles",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 216,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "pcf",
+          "heading": true
+        },
+        {
+          "term": "security",
+          "heading": false
+        },
+        {
+          "term": "policy",
+          "heading": false
+        },
+        {
+          "term": "base",
+          "heading": false
+        }
+      ],
+      "extract": "Every PCF Consent instance (IHE.PCF.consentBasic, IHE.PCF.consentIntermediate, IHE.PCF.consentAdvanced) constrains the FHIR Consent resource as follows: Consent.status (1..1): draft | active | inactive | entered-in-error (proposed and rejected are prohibited in active enforcement). Consent.scope (1..1): Fixed to http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy. Consent.category (1..): Includes",
+      "extractCut": true
+    },
+    {
+      "id": "s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-",
+      "number": null,
+      "title": "Conformance Artefact Inventory in ihe.iti.pcf@1.1.0",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 203,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ihe pcf",
+          "heading": false
+        },
+        {
+          "term": "sensitivity",
+          "heading": false
+        },
+        {
+          "term": "conformance",
+          "heading": true
+        },
+        {
+          "term": "advanced",
+          "heading": false
+        }
+      ],
+      "extract": "ResourceType; ID; Name / Title; Canonical URL ImplementationGuide; ihe.iti.pcf; Privacy Consent on FHIR (PCF); https://profiles.ihe.net/ITI/PCF/ImplementationGuide/ihe.iti.pcf CapabilityStatement; IHE.PCF.consentRecorder; IHE PCF Consent Recorder; https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRecorder CapabilityStatement; IHE.PCF.consentRegistry; IHE PCF Consent Registry;",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "ihe pcf",
+      "heading": true
+    },
+    {
+      "term": "base policy",
+      "heading": true
+    },
+    {
+      "term": "privacy policy",
+      "heading": false
+    },
+    {
+      "term": "corresponding resource",
+      "heading": false
+    },
+    {
+      "term": "patient privacy",
+      "heading": false
+    },
+    {
+      "term": "security labels",
+      "heading": false
+    },
+    {
+      "term": "active directives",
+      "heading": false
+    },
+    {
+      "term": "existing directive",
+      "heading": false
+    },
+    {
+      "term": "authorization server",
+      "heading": false
+    },
+    {
+      "term": "sensitivity",
+      "heading": false
+    },
+    {
+      "term": "record corresponding",
+      "heading": false
+    },
+    {
+      "term": "access",
+      "heading": true
+    }
+  ],
+  "links": {
+    "repo": "litlfred/smart-trust-phw",
+    "branch": "main",
+    "dir": "library/ihe-iti-pcf-1-1-0"
+  }
+}

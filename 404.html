@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Page not found</title>
+<style>body{font-family:system-ui,sans-serif;max-width:40rem;margin:4rem auto;padding:0 1rem;line-height:1.5}</style></head>
+<body><h1>Page not found</h1><p id="fa-404-detail">This page does not exist on this site.</p>
+<p><a id="fa-404-live" href="/">Go to the home page</a></p>
+<script>(function(){
+var path=location.pathname,m=path.match(/^(.*\/STAGING\/[^/]+\/)/);if(!m)return;
+var root=m[1],live=root.replace(/STAGING\/[^/]+\/$/,'')+path.slice(root.length);
+var d=document.getElementById('fa-404-detail'),a=document.getElementById('fa-404-live');
+a.href=live;a.textContent='Open the live site\u2019s copy of this page';
+d.textContent='This preview does not carry this page. It may be unchanged on the branch, so the preview serves the live site\u2019s copy through a script.';
+var key='fa-share-404:'+path;
+if(sessionStorage.getItem(key)&&navigator.serviceWorker&&navigator.serviceWorker.controller){d.textContent='Neither this preview nor the live site has this page.';a.href=root;a.textContent='Go to the preview’s home page';return;}
+if(!('serviceWorker' in navigator)||sessionStorage.getItem(key)){d.textContent+=' That did not work in this browser.';return;}
+d.textContent+=' Loading it\u2026';
+navigator.serviceWorker.register(root+'staging-sw.js',{scope:root}).then(function(){return navigator.serviceWorker.ready;})
+  .then(function(){sessionStorage.setItem(key,'1');location.reload();})
+  .catch(function(){d.textContent='This preview does not carry this page, and it has no way to serve the live copy (it may have been removed).';});
+})();</script></body></html>

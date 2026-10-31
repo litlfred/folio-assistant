@@ -1,0 +1,67 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/bean-query/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/bean-query.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Query the beans knowledge graph using named graph analytics or arbitrary SPARQL 1.1.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/beans-prime.ts"
+        },
+        "mcp": {
+          "tool": "bean_query"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "Pre-defined named query (e.g. safe_drain_candidates, actionable_leaves).",
+            "name": "named",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Arbitrary SPARQL 1.1 SELECT query over the bean store.",
+            "name": "sparql",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Output format: table, json, or ids.",
+            "name": "format",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Query results formatted as table, JSON, or IDs.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "bean-query",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination"
+      ],
+      "title": "Query the beans knowledge graph"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/bean-query",
+  "path": "tools/bean-query/"
+}

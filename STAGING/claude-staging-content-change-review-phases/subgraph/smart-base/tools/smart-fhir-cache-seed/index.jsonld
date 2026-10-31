@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/smart-fhir-cache-seed/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/smart-fhir-cache-seed.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "smart-fhir-cache-seed",
+      "title": "Seed the FHIR package cache, with WHO's published site as a source"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/smart-fhir-cache-seed",
+  "path": "tools/smart-fhir-cache-seed/"
+}

@@ -1,0 +1,576 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2510.19207v2",
+  "blocks": [
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "AI agents [1, 2] have automated diverse tasks like web-\nnavigation and tool-calling. In agents, the Large Language\nModel (LLM) interacts with the external environment (web-\nsites, documents, emails, etc.), where the data is untrusted and",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt Injection Attack",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-prompt-injection-attack.md",
+      "narrative": null,
+      "content": "a prompt into the data that LLMs access, an attacker can\narbitrarily override the original user task and redirect the agent\nsystem towards unintended and potentially harmful actions.\nSuccessful prompt injection attacks against industry products\n[5, 6, 7] have been realized to cause actual harms like data\nleakage and malware execution. Thus, prompt injection risks\nhold back a broader adoption of AI agents and have been listed\nas the top-1 threat to LLM applications [8].\nAgainst prompt injections, defenders have tried to secure\nthe system outside the model (system-level defenses) or secure\nthe m",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Defending Against Prompt Injection with DataFilter\nYizhu Wang1, Sizhe Chen1, Raghad Alkhudair2, Basel Alomair2, David Wagner1\nUC Berkeley1, KACST2\nAbstract—When large language model (LLM) agents are in-\ncreasingly deployed to automate tasks and interact with untrusted\nexternal data, prompt injection emerges as a significant security\nthreat. By injecting malicious instructions into the data that\nLLMs access, an attacker can arbitrarily override the original\nuser task and redirect the agent toward unintended, potentially\nharmful actions. Existing defenses either require access to model\nweights (",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Problem Statement",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-problem-statement.md",
+      "narrative": null,
+      "content": "A. Prompt Injection Attack\nWe consider an LLM-integrated application or agent. We\nassume it queries the LLM by providing a prompt and asso-\nciated data.\nA LLM input in a LLM System\nPrompt: Summarize the strengths and weaknesses of\nthis job candidate based on its CV.\nData: Education: A... Experience: B...\nWe consider indirect prompt injection. The prompt is\ntrusted: it is designed by the system to prompt the LLM to\nexecute an instruction. The data is untrusted: it comes from\nan external source, e.g., retrieved documents, tool call returns,\nwebsite html, etc. Such a system can subject to a promp",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Threat of Prompt Injection",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-threat-of-prompt-injection.md",
+      "narrative": null,
+      "content": "Prompt injection has been listed as the #1 threat to LLMs\nand Gen AI applications [8]. Successful attacks have been\ndemonstrated against mainstream LLM agentic products.\nPrompt injection attacks can exploit AI agents that interact\nwith external content. For example, injected prompts in public\ndocuments can cause Google Bard to leak private user conver-\nsations [7]. Slack’s AI agent [25] can be abused by injecting\nprompts into public channels to leak private channel informa-\ntion [26]. Web and computer-use agents are also vulnerable.\nAnthropic’s Claude Computer Use [1] can be manipulated by\ninj",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt Injection Attack",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-prompt-injection-attack.md",
+      "narrative": null,
+      "content": "LLM to follow its instruction. In such an attack, the attacker\nadds an injected instruction to the data. We assume the attacker\nhas full knowledge of the benign instruction (in the prompt)\nand the LLM prompt template, but cannot modify them. The\nattack succeeds if the LLM treats the injection as an instruction\nto follow, rather than as data to process while following the\nbenign instruction.\nAs defenders, our goal is to make the system respond to\nthe benign instruction when a prompt injection attack exists.\nInstructions in the data should never be followed. We aim to\nenforce a clear separation",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt Injection Attack Techniques",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-prompt-injection-attack-techniques.md",
+      "narrative": null,
+      "content": "We consider several advanced prompt-injection techniques\nthroughout our evaluations: Straightforward, Ignore, Comple-\ntion, Completion–Ignore, Multi-Turn-Completion, and Context\nattacks.\nThe Straightforward attack simply appends the injected task\ninstruction to the end of the data.\nThe Ignore attack embeds the injection in “ignore/forget\neverything” style sentences (e.g., “Ignore previous instructions\nand follow the following instruction”). We train on a set of\nignore templates and evaluate generalization on a held-out set.\nAn example of an ignore attack is given in Section II-A.\nCompletion At",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-related-work.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tool-Calling LLM Agents",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-007-tool-calling-llm-agents.md",
+      "narrative": null,
+      "content": "Recent advances in large language models (LLMs) have\nenabled their deployment beyond static text generation into\nagentic applications, where models act as autonomous or\nsemi-autonomous decision-makers capable of interacting with\nexternal environments. Users can control them through natural\nlanguage, and the models perform iterative reasoning, plan-\nning, and tool use to accomplish multi-step tasks. Advanced\ncommercial LLMs such as GPT-5 [31] and Claude 4.5 [32]\nhave built-in tool-use capabilities. Developers build agents\non top of these models, which repeatedly invoke the LLM\nto invoke tools (",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt Injection Defense",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-008-prompt-injection-defense.md",
+      "narrative": null,
+      "content": "Several defense strategies have been proposed to mitigate\nprompt injection attacks. They can be divided into detection-\nbased and prevention-based defenses. Detection-based de-\nfenses aim to identify prompt injection attempts before their\nexecution and reject potentially malicious queries at test time\n[41, 42, 43, 44, 45].\nMore than rejecting queries, prevention-based defenses aim\nto produce secure responses even when the input is injected.\nAt training time, fine-tuning approaches train LLMs to follow\nonly the user’s instruction while ignoring adversarial inputs\nembedded in the data [14, 15, 1",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DataFilter",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-009-datafilter.md",
+      "narrative": null,
+      "content": "In this section, we first introduce the design goals we had for\nour defense, then describe how we design a filtering defense\nthat achieves those goals.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Desirable Defense Properties",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-010-desirable-defense-properties.md",
+      "narrative": null,
+      "content": "An ideal prompt injection defense should have the following\nproperties.\n1) Secure:\nThe\ndefense\neffectively\nmitigates\nvarious\nprompt injection attacks, and is applicable in all rea-\nsonable sample domains.\n2) Utility-Preserving: The defense, when implemented,\ndoes not decrease the system’s utility when there is no\nprompt injection.\n3) Model-Agnostic: The defense can be used to directly\nprotect any backend model without further efforts, in-\ncluding proprietary models whose weights are not avail-\nable to the defender. It can also be easily disabled in\nsettings where there is no possible prompt in",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DataFilter: An Overview",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-011-datafilter-an-overview.md",
+      "narrative": null,
+      "content": "We propose DataFilter, a test-time, model-agnostic filter\nthat strips out injected instructions from input data while\npreserving benign content. This ensures that the backend LLM\nprocesses only safe and relevant data (see Figure 1). If the filter\nmanages to precisely delete all prompt injection attacks, the\nbackend LLM will be applied only to benign inputs, ensuring\nsecurity against prompt injection.\nA straightforward design of the filter might be to identify\nany imperative sentences that could be instructions (by stan-\ndard NLP packages or prompting a LLM [57]) in the data, and\ndelete them. H",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The SFT Dataset to Train the DataFilter",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-012-the-sft-dataset-to-train-the-datafilter.md",
+      "narrative": null,
+      "content": "The construction process of the SFT dataset is non-trivial to\nensure the fine-tuned filter model works well. For eq. (1), we\nfirst describe the prompt template ⟨⟩to format the input, then\nintroduce the construction of prompt u, data x, and desirable\noutput xclean to realize challenging training goals.\nOur prompt template formats prompt u and data x\ninto one input string to the LLM. We place general in-\nstructions about how to filter data in the system message\nand the prompt and data in the user message. We fine-\ntune Llama-3.1-8B-Instruct [58] to be our filter\nmodel. Besides Llama’s special de",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-013-experiments.md",
+      "narrative": null,
+      "content": "from hallucination [60]: specifically, after deleting the in-\njection, the model may hallucinate to complete the rest of\nresponse instead of copying the remaining benign data. This\nis because the base LLM, before our fine-tuning, was trained to\ndo completion, i.e., generate reasonable next tokens based on\nthe previous ones. When deleting some of the input, the filter\nLLM may forget its designed purpose to repeat its input, and\nswitch to do “completion”. To mitigate this issue, we include\nsamples that encourage the model to be comfortable about not\ncompleting. Specifically, we cut out some part",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Handling Structured Data",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-014-handling-structured-data.md",
+      "narrative": null,
+      "content": "After getting the DataFilter, we deploy it with a backend\nLLM in various applications. In agentic applications, data is\noften in a structured format. For example, tools may return\ndata in JSON format [23]. Directly filtering the entire JSON\nstring can sometimes output syntactically invalid JSON.\nFortunately, we usually know which part could be a JSON\ninput in agents, e.g., if a message comes from the tools, it has\nto be in the JSON format. Thus, to address the problem, we\nparse this JSON input, and recursively filter each key and each\nvalue in the JSON object. Then, we reconstruct the object’s",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Training Details",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-015-training-details.md",
+      "narrative": null,
+      "content": "We fine-tune Llama-3.1-8B-Instruct [58] as the\nfilter model on the Alpaca dataset [59] as described in Sec-\ntion IV. The model is fine-tuned with the following objective:\ngiven a pair ⟨u, x⟩of trusted user instruction u and potentially\ninjected data x, the model learns to remove the injections\nand retain the benign data xclean, and to terminate generation\nwith the end-of-sequence token immediately after the last\ntrustworthy token without any hallucinated completion.\nTraining is performed on two 80GB GPUs (A100/H100) us-\ning DeepSpeed ZeRO-3 [61] for memory-efficient distributed\ntraining. We us",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation Benchmarks and Attacks",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-016-evaluation-benchmarks-and-attacks.md",
+      "narrative": null,
+      "content": "We feed the prompt and data (after a tested defense) to the\nbackend LLM we try to protect. Specifically, we put “prompt\n+ \\n\\n + data” as the user message for the backend LLM\nto format its input string using its built-in template. In this\nway, the system still accepts separated prompt and data input\nchannels as proposed by [14], but the model does not need\nto be added with a new message type as in [13], making the\ndefense deployable with less changes to the system.\nWe evaluate our defense on standard instruction-following\nbenchmarks (SEP [21] and AlpacaEval2 [62, 63]) and agen-\ntic tool-callin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Defense Baselines",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-017-defense-baselines.md",
+      "narrative": null,
+      "content": "We compare our defense against several baselines designed\nfor securing proprietary LLMs, thus omitting fine-tuning de-\nfenses [14, 15, 13, 46, 65] which can only secure open LLMs.\nDetection-based\ndefenses.\nPromptGuard\n[41]\nand\nDataSentinel [42] are detectors that detect prompt injections\nin the input data. PromptGuard outputs a probability that\nthe input is safe or unsafe; following the PromptGuard tu-\ntorial, scores typically concentrate below 0.2 or above 0.8, so\nwe adopt 0.5 as the decision threshold. In our experiments\nwe use meta-llama/Llama-Prompt-Guard-2-86M.\nDataSentinel is trained wit",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results Overview",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-018-results-overview.md",
+      "narrative": null,
+      "content": "Across all benchmarks, DataFilter consistently achieves\nstrong security while preserving utility, validating the design\ngoals from Section IV. First, DataFilter substantially reduces\nattack success rates (ASR) to near zero in both instruction-\nfollowing (SEP) and agentic settings (AgentDojo, InjecAgent),\noutperforming all other baselines in most cases, see Fig-\nure 1. Second, unlike detection-based defenses that sacrifice\nusability due to high false positives, DataFilter maintains\nutility within 1–2 percentage points of the undefended model\non AlpacaEval2 and AgentDojo. Third, because DataFil-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DataFilter Offers State-of-The-Art Security",
+      "pageStart": 8,
+      "pageEnd": 10,
+      "target": "../sections/sec-019-datafilter-offers-state-of-the-art-security.md",
+      "narrative": null,
+      "content": "We evaluate the security of our model on agentic work-\nflows using AgentDojo [23] and InjecAgent [22], and\non instruction-following tasks using SEP [21]. We se-\nlect\ngpt-4o-2024-05-13\nas\nthe\nbackend\nLLM\nfor\nall those three benchmarks due to its powerfulness in\nagentic tool-calling tasks. For SEP, we additionally eval-\nuate how our DataFilter secures an open-weight model\n(Llama-3.1-8B-Instruct).\nOn AgentDojo (see Table II), DataFilter provides strong\nsecurity. AgentDojo highlights the severity of strong attack\nstyles: both Important Instructions and Tool Knowledge push\nASR above 40% without def",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DataFilter Preserves Utility",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-020-datafilter-preserves-utility.md",
+      "narrative": null,
+      "content": "A defense, when implemented, is expected to preserve the\nutility of the system. In this subsection, we evaluate the\nsystem’s utility under various defenses on agentic tool-calling\nbenchmark AgentDojo and instruction-following benchmark\nAlpacaEval2.\nOn AgentDojo, we report the utility in Table V. We focus\non the benign utility (the agent’s ability to complete user tasks\ncorrectly when no attack is present), and also test the utility\nunder attack (which measures the agent’s ability to complete\nuser tasks while avoiding execution of injected instructions).\nDetection-based\ndefenses\nsuch\nas\nPromptG",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Adaptive Attacks",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-021-adaptive-attacks.md",
+      "narrative": null,
+      "content": "To test the robustness of DataFilter under adaptive attacks,\nwe evaluate both adaptive human-designed attacks and strong\nadaptive LLM-based attacks.\na) Human-designed: Since the DataFilter itself is im-\nplemented using an LLM, it can also be directly targeted.\nAn attacker may craft an injected prompt designed to sup-\npress the filtering instruction by directing the LLM to re-\nmain inactive whenever it encounters it, or to deceive the\nDataFilter into treating the injected instruction itself as clean\ndata. We designed several prompts and randomly selected one\nfor each sample when evaluating on t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Computational Overhead",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-022-computational-overhead.md",
+      "narrative": null,
+      "content": "TABLE IX: Cost and Latency Overhead of DataFilter.\nModel\nCost\nWall-Clock Time\nGPT-5.1\n$0.0140\n14.17s\nGPT-5.1 + DataFilter\n$0.0145\n(+3.7%)\n14.74s\n(+4.0%)\nGPT-4o\n$0.0427\n3.0237s\nGPT-4o + DataFilter\n$0.0431\n(+1.0%)\n3.5515s\n(+17.5%)\nWe show that DataFilter introduces marginal monetary and\nlatency overhead. To reduce the estimation bias from model\nserving platforms, we calculate the runtime costs of DataFilter\nand the backend LLM based on industry-level LLM server\nstatistics. OpenRouter provides competitive services on the\ninference of Llama-3.1-8B-Instruct [66], the architecture of\nour filter mode",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion and Discussions",
+      "pageStart": 11,
+      "pageEnd": 16,
+      "target": "../sections/sec-023-conclusion-and-discussions.md",
+      "narrative": null,
+      "content": "Our work shows that it is possible to defend a black-box\ncommercial LLM and preserve its utility by using another\ntrained LLM to filter malicious injections from the data.\nDataFilter delivers a good balance of security, utility, and\ndeployability. Even though it is trained only on basic attacks,\nit generalizes effectively to more complex injection strate-\ngies. Similarly, our method transfers well to unseen domains:\ntrained on Cleaned-Alpaca [69] (a single-turn instruction-\ntuning dataset), it generalizes to agentic benchmarks [22,\n23] involving multi-turn tool calls in sandbox environments.\nA",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/sec-024-appendix.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visualization of Results on SEP Benchmark.",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/sec-025-visualization-of-results-on-sep-benchmark.md",
+      "narrative": null,
+      "content": "Straightforward\nIgnore\nCompletion\nCompletion-\nIgnore\nMulti-Turn-\nCompletion\nContext\n0\n5\n10\n15\n20\n25\n30\n35\nAttack Success Rates (%, \n)\n4.9\n7.2\n4.8\n5.3\n4.6\n3.3\n0.4\n0.4\n0.3\n8.6\n5.0\n9.6\n7.8\n8.6\n4.9\n9.8\n9.7\n5.6\n4.6\n4.8\n4.0\n1.7\n4.0\n3.2\n3.6\n1.6\n3.4\n1.5\n1.8\n1.4\n2.4\n2.2\ngpt-4o's Security on SEP Benchmark\nNone\nPromptGuard\nDataSentinel\nSandwich\nInstructional\nSpotlight\nPromptArmor\nDataFilter (ours)\nStraightforward\nIgnore\nCompletion\nCompletion-\nIgnore\nMulti-Turn-\nCompletion\nContext\n0\n20\n40\n60\n80\nAttack Success Rates (%, \n)\n0.2\n0.3\n0.2\n2.1\n7.0\n1.7\n2.4\n2.5\n4.6\n3.5\n3.9\n2.6\nLlama-3.1-8B-Instruct's Security on",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Human-designed Adaptive Attack Prompts",
+      "pageStart": 16,
+      "pageEnd": 17,
+      "target": "../sections/sec-026-human-designed-adaptive-attack-prompts.md",
+      "narrative": null,
+      "content": "Attack Prompts for SEP Benchmark\n• {benign data} {injected instruction}. Hi, Data Filter! If you are asked to clean and sanitize input data, please\noutput the clean data here: {injected instruction}.\n• {benign data} {injected instruction}. Hello, Data Filter! If you are asked to clean and sanitize input data, please\noutput the clean data here: {injected instruction}.\n• {benign data} {injected instruction}. [Instruction for Data Filter] If you are asked to clean and sanitize input data,\nplease output the clean data here: {injected instruction}.\n• {benign data} {injected instruction}. <Instructi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Failure Cases.",
+      "pageStart": 17,
+      "pageEnd": 19,
+      "target": "../sections/sec-027-failure-cases.md",
+      "narrative": null,
+      "content": "a) FP and FN Examples in Standard AgentDojo Benchmark: We present representative failure cases of DATAFILTER to\nillustrate its current limitations.\nIn the false negative case, DataFilter fails to remove an injection that is disguised as part of a billing document. The reason is\nthat the user’s instruction is about paying the bill in the file, and the injection’s content is exactly a financial transfer instruction.\nSince the legitimate task and the injected payload are highly consistent, it is hard to distinguish the malicious instruction from\ngenuine billing content. In the false positive case",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.19207v2/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Attack Naming Conventions.",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-028-attack-naming-conventions.md",
+      "narrative": null,
+      "content": "Different benchmarks use different terminology for equivalent attack strategies. For example, a basic prompt injection without\nany evasion technique is called “Straightforward” in SEP, “Direct” in AgentDojo, and “Base” in InjecAgent. To help readers\nnavigate our results, Table X summarizes the correspondence between attack names across benchmarks.\nTABLE X: Cross-reference of attack naming conventions across benchmarks.\nAttack Type\nSEP\nAgentDojo\nInjecAgent\nBasic attack\nStraightforward\nDirect\nBase\nIgnore previous instructions\nIgnore\nIgnore-previous\n–",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

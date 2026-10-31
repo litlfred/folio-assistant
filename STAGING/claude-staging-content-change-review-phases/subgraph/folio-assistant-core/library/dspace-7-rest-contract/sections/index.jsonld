@@ -1,0 +1,3823 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/library/dspace-7-rest-contract/sections/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s001-dspace-7-rest-contract",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DSpace 7 REST Contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s002-table-of-contents",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Table of Contents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s003-rest-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "REST Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s004-use-of-http-verbs-and-response-codes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Use of HTTP Verbs and Response Codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s005-on-collection-of-resources-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "On Collection of Resources Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s006-on-single-resource-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "On Single Resource Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s007-on-sub-path-of-a-single-resource-endpoint-associ",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "On Sub-Path of a Single Resource Endpoint (Associations)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s008-error-codes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Error Codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s009-pagination",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Pagination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s010-pagination-request-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Pagination Request Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s011-pagination-response",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Pagination Response"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s012-out-of-bound-pages",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Out of Bound Pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s013-pagination-error-codes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Pagination Error Codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s014-rest-design-principles",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "REST Design Principles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s015-on-the-naming-of-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "On the Naming of Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s016-hateoas-hal",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "HATEOAS & HAL"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s017-statelessness",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Statelessness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s018-json-web-tokens",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "JSON Web Tokens"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s019-alps-application-level-profile-semantics",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "ALPS - Application Level Profile Semantics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s020-spring-technology-alignment",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Spring Technology Alignment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s021-content-negotiation",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Content Negotiation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s022-language-support",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Language Support"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s023-proxies",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Proxies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s024-etags-conditional-headers",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "ETags & conditional headers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s025-api-versioning",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "API Versioning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s026-community-resources",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Community Resources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s027-actuator",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Actuator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s028-authentication",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s029-login",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Login"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s030-username-password-based-authentication",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Username Password based authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s031-shibboleth-authentication",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Shibboleth authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s032-refresh-authentication",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Refresh authentication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s033-json-web-token-structure",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "JSON Web Token structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s034-logout",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Logout"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s035-status",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Status"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s036-log-in-as",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Log in as"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s037-request-short-lived-token",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Request short lived token"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s038-using-short-lived-token",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Using short lived token"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s039-authorizations-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Authorizations Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s040-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s041-single-authorization",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Authorization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s042-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s043-object",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s044-objects",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "objects"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s045-other-http-verbs-than-get",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Other HTTP verbs than GET"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s046-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s047-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s048-object",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s049-feature",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Feature"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s050-bitstream-formats-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Bitstream Formats Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s051-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s052-single-bitstream-format",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Bitstream Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s053-bitstreams-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Bitstreams Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s054-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s055-single-bitstream",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s056-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s057-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s058-format",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s059-bundle",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s060-content",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Content"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s061-main-thumbnail",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Thumbnail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s062-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s063-byitemhandle",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "byItemHandle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s064-delete-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s065-single-bitstream-delete",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Bitstream Delete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s066-multiple-bitstreams-delete",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multiple Bitstreams Delete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s067-browse-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Browse Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s068-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s069-browse-types",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Browse types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s070-single-browse-index",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single browse index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s071-hierarchical-browse-index",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Hierarchical browse index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s072-browse-indexes-configured-for-metadata-linking",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Browse indexes configured for metadata linking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s073-get-a-single-index-configured-as-browse-links-fo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get a single index configured as browse links for the given metadata fields"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s074-browse-entries",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Browse entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s075-metadata-browse-1st-level",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata browse 1st level"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s076-item-browse-or-2nd-level-metadata-browse",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Item browse or 2nd level metadata browse"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s077-bulkaccessconditionoptions-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "BulkAccessConditionOptions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s078-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s079-single-bulkaccessconditionoptions-form",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single bulkaccessconditionoptions-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s080-bundles-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Bundles Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s081-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s082-single-bundle",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s083-creating-a-bundle",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s084-deleting-a-bundle",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a bundle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s085-bitstreams",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Bitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s086-ordering-bitstreams",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Ordering bitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s087-primary-bitstream",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s088-retrieve-primary-bitstream",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s089-create-primary-bitstream",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s090-update-primary-bitstream",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Update Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s091-removing-primary-bitstream",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Removing Primary bitstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s092-claimed-tasks-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Claimed Tasks Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s093-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s094-single-claimed-task",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Claimed Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s095-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s096-workflowitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflowitem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s097-owner",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s098-workflow-step",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflow step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s099-workflow-action",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflow action"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s100-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s101-findbyuser",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByUser"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s102-findallbyitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAllByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s103-findbyitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s104-post-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s105-post-method-single-resource-level",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "POST Method (single resource level)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s106-return-code",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Return code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s107-delete-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s108-multipart-post-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s109-collections-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collections Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s110-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s111-single-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s112-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s113-findsubmitauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findSubmitAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s114-findsubmitauthorizedbyentitytype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findSubmitAuthorizedByEntityType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s115-findsubmitauthorizedbycommunity",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findSubmitAuthorizedByCommunity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s116-findsubmitauthorizedbycommunityandentitytype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findSubmitAuthorizedByCommunityAndEntityType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s117-findadminauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAdminAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s118-findeditauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findEditAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s119-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s120-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s121-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s122-retrieve-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s123-create-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s124-replace-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s125-delete-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s126-license",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "License"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s127-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s128-retrieve-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s129-create-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s130-replace-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s131-delete-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s132-default-access-conditions",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Default Access Conditions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s133-mapped-items",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Mapped items"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s134-collection-harvesting-settings",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection Harvesting Settings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s135-changing-collection-harvesting-settings",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Changing Collection Harvesting Settings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s136-parent-community",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parent Community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s137-groups",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s138-collection-administrators",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s139-retrieve-collection-administrators",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve collection administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s140-create-collection-administrators-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create collection administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s141-modifying-the-collection-administrators-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Modifying the collection administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s142-delete-the-collection-administrators-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete the collection administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s143-collection-submitters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection Submitters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s144-collection-default-item-read-rights-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection Default item READ rights group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s145-collection-default-bitstream-read-rights-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection Default bitstream READ rights group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s146-collection-workflow-groups",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection Workflow groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s147-delete-a-collection-workflow-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete a collection workflow group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s148-creating-a-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s149-updating-a-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating a collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s150-deleting-a-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s151-communities-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Communities Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s152-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s153-single-community",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s154-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s155-subcommunities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "SubCommunities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s156-collections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s157-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s158-retrieve-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s159-create-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s160-replace-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s161-delete-logo",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete Logo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s162-parent-community",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parent Community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s163-groups",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s164-community-administrators",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Community administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s165-retrieve-community-administrators",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve Community administrators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s166-create-community-administrators-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create Community administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s167-modifying-the-community-administrators-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Modifying the Community administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s168-delete-the-community-administrators-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete the Community administrators group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s169-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s170-top",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "top"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s171-findadminauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAdminAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s172-findeditauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findEditAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s173-findaddauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAddAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s174-creating-communities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating communities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s175-creating-top-level-community",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating top level community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s176-creating-subcommunity",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating subCommunity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s177-updating-a-community",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating a community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s178-deleting-a-community",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a community"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s179-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s180-configuration-properties",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Configuration properties"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s181-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s182-single-property",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single property"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s183-csrf-protection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "CSRF Protection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s184-how-to-obtain-reset-a-csrf-token",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How to obtain/reset a CSRF token?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s185-get-api-security-csrf",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "GET /api/security/csrf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s186-what-is-csrf-and-why-is-this-necessary",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What is CSRF and why is this necessary?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s187-how-does-csrf-protection-work-in-dspace-rest-api",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How does CSRF protection work in DSpace REST API?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s188-how-does-csrf-protection-work-in-dspace-user-int",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How does CSRF protection work in DSpace User Interface?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s189-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s190-available-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Available Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s191-actuator-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Actuator endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s192-other-endpoints-raw-list",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Other Endpoints (raw list)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s193-other-endpoints-not-under-api-context",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Other Endpoints not under /api context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s194-entity-type-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Entity Type Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s195-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s196-single-entity-type",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Entity Type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s197-relationship-types-for-the-current-entity-type",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationship Types for the current Entity Type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s198-get-entity-type-from-label",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get Entity type from label"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s199-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s200-findallbyauthorizedcollection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAllByAuthorizedCollection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s201-findallbyauthorizedexternalsource",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAllByAuthorizedExternalSource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s202-eperson-groups-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "EPerson groups Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s203-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s204-single-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s205-create-new-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create new EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s206-deleting-an-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting an EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s207-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s208-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s209-sub-groups-in-a-single-parent-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Sub Groups in a single parent EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s210-get-sub-groups-in-a-single-parent-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get Sub Groups in a single parent EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s211-changing-subgroups",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Changing subgroups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s212-add-a-group-to-a-parent-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add a Group to a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s213-remove-a-group-from-a-parent-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove a Group from a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s214-epeople-in-a-single-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Epeople in a single EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s215-get-epeople-for-a-single-eperson-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get Epeople for a single EPerson Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s216-changing-epeople-in-a-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Changing Epeople in a Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s217-add-an-eperson-to-a-parent-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add an EPerson to a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s218-remove-an-eperson-from-a-parent-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove an EPerson from a parent Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s219-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search Methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s220-bymetadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "byMetadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s221-isnotmemberof",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "isNotMemberOf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s222-related-dspace-object-of-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Related DSpace Object of group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s223-eperson-registration-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "EPerson registration Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s224-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s225-single-eperson-registration",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single EPerson registration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s226-search-eperson-registration",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search EPerson registration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s227-create-new-eperson-registration",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create new EPerson registration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s228-forgot-password",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Forgot password"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s229-epersons-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "EPersons Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s230-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s231-single-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s232-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s233-byemail",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "byEmail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s234-bymetadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "byMetadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s235-isnotmemberof",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "isNotMemberOf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s236-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s237-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s238-these-operations-can-be-performed-by-administrat",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "These operations can be performed by administrators."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s239-these-operations-can-be-performed-by-administrat",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "These operations can be performed by administrators and by the authenticated user."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s240-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s241-these-operations-can-be-performed-by-administrat",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "These operations can be performed by administrators and by the authenticated user."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s242-create-new-eperson-requires-admin-permissions",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create new EPerson (requires admin permissions)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s243-create-new-eperson-based-on-registration-token",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create new EPerson based on registration token"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s244-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s245-groups",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Groups"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s246-external-sources-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "External sources Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s247-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s248-single-authority",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Authority"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s249-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s250-external-source-entries",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "external source entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s251-single-entry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "single entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s252-supported-entity-types",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "supported entity types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s253-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s254-findbyentitytype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByEntityType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s255-features-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Features Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s256-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s257-single-feature",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Feature"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s258-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s259-resourcetype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "resourcetype"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s260-feedbacks-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Feedbacks Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s261-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s262-single-feedback",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s263-creating-a-feedback",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s264-harvesting-metadata-configuration-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Harvesting metadata configuration Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s265-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s266-identifier-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Identifier endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s267-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s268-get-identifiers-for-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get identifiers for item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s269-find-dso-by-identifier-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Find DSO by identifier endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s270-item-request-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Item Request Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s271-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s272-single-request",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s273-creating-a-request",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s274-accepting-denying-a-request",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Accepting / Denying a Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s275-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s276-item-entries",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "item entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s277-bitstream-entries",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "bitstream entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s278-items-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Items Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s279-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s280-single-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s281-withdrawn-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Withdrawn item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s282-creating-an-archived-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating an archived item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s283-creating-an-archived-item-from-an-external-sourc",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating an archived item from an external source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s284-updating-item-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating item metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s285-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s286-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s287-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s288-access-status",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Access Status"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s289-bundles",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Bundles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s290-owning-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Owning Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s291-template-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Template Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s292-relationships-per-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationships per item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s293-main-thumbnail",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Thumbnail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s294-get-single-version-for-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get single version for item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s295-get-item-identifiers",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get item identifiers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s296-deleting-an-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting an item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s297-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s298-findeditauthorized",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findEditAuthorized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s299-collection-item-template-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collection Item Template Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s300-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s301-single-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s302-creating-an-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating an item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s303-updating-item-template-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating item template metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s304-delete-item-template",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete Item template"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s305-modifying-metadata-via-patch",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Modifying metadata via Patch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s306-introduction",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Introduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s307-adding-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Adding metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s308-removing-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Removing metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s309-replacing-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replacing metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s310-ordering-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Ordering metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s311-metadata-suggestions-md",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "metadata-suggestions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s312-metadata-suggestions-from-live-import",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata suggestions from live import"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s313-introduction",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Introduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s314-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s315-single-suggestion-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single suggestion endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s316-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s317-live-import-entries",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Live import entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s318-single-entry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s319-differences-for-a-single-entry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Differences for a single entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s320-changes-suggested-from-the-live-import",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Changes suggested from the live import"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s321-introduction",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Introduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s322-adding-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Adding metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s323-replacing-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replacing metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s324-replacing-name-variants",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replacing name variants"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s325-adding-relationships",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Adding relationships"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s326-metadata-fields-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata Fields Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s327-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s328-single-metadata-field",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s329-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s330-schema",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s331-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s332-byschema",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "bySchema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s333-byfieldname",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "byFieldName"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s334-creating-a-metadata-field",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s335-updating-a-metadata-field",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating a Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s336-deleting-a-metadata-field",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a Metadata Field"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s337-metadata-schemas-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata Schemas Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s338-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s339-single-metadata-schema",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s340-creating-a-metadata-schema",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s341-updating-a-metadata-schema",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating a Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s342-deleting-a-metadata-schema",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a Metadata Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s343-orcid-history-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "ORCID History Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s344-single-orcid-history-entry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single ORCID History entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s345-send-to-orcid-registry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Send to ORCID registry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s346-orcid-queue-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "ORCID Queue Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s347-single-orcid-queue-entry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single ORCID Queue entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s348-search-orcid-queue-entries-by-profileitem-id",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search ORCID Queue entries by profileItem id"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s349-delete-an-orcid-queue-entry",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete an ORCID Queue entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s350-general-rules-for-the-patch-operation",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "General rules for the Patch operation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s351-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s352-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s353-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s354-move",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s355-test-copy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s356-error-codes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Error codes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s357-pool-tasks-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Pool Tasks Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s358-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s359-single-pool-task",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Pool Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s360-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s361-workflowitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflowitem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s362-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s363-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s364-workflow-step",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflow step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s365-workflow-action",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflow action"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s366-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s367-findbyuser",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByUser"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s368-findallbyitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findAllByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s369-findbyitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByItem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s370-post-method-collection-level",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "POST Method (collection level)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s371-post-method-single-resource-level",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "POST Method (single resource level)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s372-delete-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s373-multipart-post-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s374-admin-processes-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Admin Processes Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s375-execution-list",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Execution List"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s376-execution-details",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Execution Details"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s377-execution-console-output",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Execution Console Output"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s378-execution-file-output-list",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Execution File Output List"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s379-get-process-file-types",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get process file types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s380-execution-file-output-using-type-identifier",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Execution File Output (using type identifier)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s381-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search Methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s382-search-processes-by-property",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search processes by Property"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s383-retrieve-own-processes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve own processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s384-execution-deletion",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Execution Deletion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s385-script-invocation",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Script Invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s386-researcher-profiles-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Researcher profiles Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s387-get-all-profile",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get all Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s388-single-profile",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s389-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s390-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s391-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s392-creating-a-new-profile",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a new Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s393-claim-an-existing-profile",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Claim an existing Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s394-hide-unhide-a-profile",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Hide/unhide a profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s395-modify-orcid-synchronization-preferences",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Modify ORCID synchronization preferences"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s396-connect-a-profile-with-orcid",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Connect a profile with ORCID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s397-disconnect-a-profile-from-orcid",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Disconnect a profile from ORCID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s398-delete-a-profile",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Delete a profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s399-projections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Projections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s400-standard-projections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Standard Projections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s401-default-projection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Default Projection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s402-full-projection-projection-full",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Full Projection (`?projection=full`)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s403-custom-projections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Custom Projections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s404-specify-embed-requests",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Specify Embed requests"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s405-basic-embeds",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Basic embeds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s406-multi-level-embeds",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multi-level embeds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s407-relationship-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationship Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s408-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s409-single-relationship",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Relationship"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s410-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s411-relationship-involving-specified-items",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationship involving specified items"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s412-deleting-a-relationship",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a relationship"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s413-relationship-type-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationship Type Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s414-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s415-single-relationship-type",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Relationship Type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s416-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s417-relationship-types-containing-an-entity-type",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationship types containing an entity type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s418-resource-policies-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Resource Policies Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s419-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s420-single-resource-policy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Resource Policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s421-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s422-resource",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "resource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s423-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s424-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s425-creating-a-resource-policy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a resource policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s426-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s427-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s428-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s429-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s430-deleting-a-resource-policy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a resource policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s431-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s432-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "EPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s433-update-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Update eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s434-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s435-update-group",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Update group"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s436-resource",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Resource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s437-admin-scripts-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Admin Scripts Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s438-scripts-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Scripts Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s439-script-name-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Script Name Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s440-script-details",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Script Details"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s441-script-invocation",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Script Invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s442-bulk-access-control-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "bulk-access-control script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s443-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s444-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s445-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s446-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s447-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s448-what-is-an-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What is an Access Condition?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s449-curate-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "curate script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s450-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s451-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s452-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s453-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s454-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s455-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s456-export-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "export script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s457-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s458-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s459-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s460-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s461-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s462-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s463-what-is-saf",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What is SAF?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s464-dspace-simple-archive-format",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DSpace Simple Archive Format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s465-a-visual-representation-of-a-saf",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "A visual representation of a SAF"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s466-filter-media-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "filter-media script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s467-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s468-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s469-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s470-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s471-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s472-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s473-harvest-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "harvest script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s474-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s475-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s476-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s477-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s478-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s479-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s480-import-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "import script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s481-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s482-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s483-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s484-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s485-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s486-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s487-index-discovery-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "index-discovery script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s488-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s489-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s490-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s491-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s492-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s493-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s494-available-scripts-index",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Available scripts index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s495-scripts-and-processes-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Scripts and processes endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s496-list-of-available-scripts",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "List of available scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s497-metadata-deletion-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "metadata-deletion script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s498-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s499-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s500-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s501-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s502-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s503-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s504-metadata-export-search-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "metadata-export-search Script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s505-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s506-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s507-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s508-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s509-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s510-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s511-metadata-export-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "metadata-export script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s512-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s513-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s514-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s515-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s516-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s517-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s518-metadata-import-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "metadata-import script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s519-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s520-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s521-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s522-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s523-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s524-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s525-orcid-bulk-push-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "ORCID-bulk-push script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s526-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s527-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s528-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s529-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s530-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s531-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s532-process-cleaner-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "process-cleaner script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s533-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s534-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s535-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s536-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s537-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s538-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s539-retry-tracker-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "retry-tracker script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s540-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s541-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s542-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s543-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s544-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s545-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s546-solr-database-resync-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "solr-database-resync script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s547-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s548-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s549-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s550-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s551-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s552-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s553-subscription-send-script",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "subscription-send script"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s554-what-it-does",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "What it does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s555-who-can-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Who can use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s556-when-we-use-it",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "When we use it?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s557-how-it-works",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "How it Works?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s558-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s559-conclusion-quickguide",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Conclusion/QuickGuide:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s560-discovery-search-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Discovery Search Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s561-search-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s562-matching-dspace-objects-search-results",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Matching DSpace objects search results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s563-matching-facets-search-results",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Matching Facets search results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s564-matching-facet-search-results",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Matching facet search results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s565-list-values-of-a-certain-facet",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "List values of a certain facet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s566-special-configurations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Special configurations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s567-workspace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workspace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s568-workflow",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s569-search-methods-on-collection-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods on collection endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s570-endpoints-that-have-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Endpoints that have Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s571-signposting-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Signposting Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s572-the-signposting-is-used-to-implement-signposting",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "The /signposting is used to implement Signposting."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s573-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s574-in-application-linkset-serialization",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "in application/linkset serialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s575-describes-the-scholarly-object-in-a-commonly-use",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Describes the scholarly object in a commonly used format"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s576-displaying-usage-statistics",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Displaying usage statistics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s577-statistics-for-a-dspaceobject",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Statistics for a DSpaceObject"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s578-single-statistic",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single statistic"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s579-search-statistics-for-a-dspaceobject",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search Statistics for a DSpaceObject"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s580-collecting-user-interactions",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Collecting user interactions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s581-view-events-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "View events endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s582-required-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Required Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s583-optional-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Optional Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s584-status-codes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Status codes:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s585-example-item-page-view",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Example item page view:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s586-search-events-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search events Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s587-required-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Required Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s588-optional-parameters",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Optional Parameters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s589-status-codes",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Status codes:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s590-example-search",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Example search:"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s591-downloads-and-workflow",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Downloads and workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s592-submission-deposit",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Submission / Deposit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s593-starting-a-submission",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Starting a Submission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s594-modifying-the-submission",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Modifying the Submission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s595-completing-the-submission-starting-workflow",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Completing the Submission / Starting Workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s596-submissionaccessoptions-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "SubmissionAccessOptions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s597-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s598-single-submission-form",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Submission-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s599-submission-cc-licenses-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Submission CC Licenses Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s600-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s601-single-cc-license",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single CC License"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s602-search-cc-license",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search CC License"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s603-submission-definitions-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Submission-Definitions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s604-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s605-single-submission-definition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Submission-Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s606-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s607-findbycollection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByCollection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s608-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s609-collections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "collections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s610-sections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "sections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s611-submission-forms-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Submission-Forms Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s612-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s613-single-submission-form",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Submission-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s614-submission-section-types",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Submission Section Types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s615-submission-sections-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Submission-Sections Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s616-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s617-single-submission-definition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Submission-Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s618-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked Entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s619-config",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "config"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s620-submissionuploads-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "SubmissionUploads Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s621-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s622-single-submission-form",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Submission-Form"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s623-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s624-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s625-subscriptions-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Subscriptions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s626-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s627-single-subscription-object",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Subscription Object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s628-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s629-findbyeperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByEPerson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s630-findbyepersonanddso",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByEPersonAndDso"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s631-creating-a-subscription",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a subscription"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s632-updating-subscription",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Updating subscription"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s633-deleting-a-subscription-object",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a Subscription Object"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s634-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s635-eperson",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "eperson"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s636-resource",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "resource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s637-supervision-orders-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Supervision Orders Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s638-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s639-single-supervision-order",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Supervision Order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s640-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s641-find-by-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Find by Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s642-creating-a-supervision-order",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Creating a supervision order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s643-deleting-a-supervision-order",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Deleting a supervision order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s644-system-wide-alerts",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "System-wide alerts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s645-retrieve-all-active-alerts",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve all active alerts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s646-retrieve-a-specific-alert",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve a specific alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s647-retrieve-all-alerts",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Retrieve all alerts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s648-create-a-new-alert",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create a new alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s649-modify-an-existing-alert",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Modify an existing alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s650-versioning-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Versioning endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s651-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s652-create-version",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Create version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s653-get-single-version",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get single version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s654-get-single-version-for-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get single version for item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s655-remove-version",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s656-update-version-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Update version (patch operations)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s657-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s658-version-history",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Version History"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s659-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s660-version-history-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Version history endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s661-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s662-get-version-history",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get version history"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s663-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s664-versions",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Versions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s665-draftversion",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "draftVersion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s666-controlled-vocabularies-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Controlled Vocabularies Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s667-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s668-single-vocabulary",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Vocabulary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s669-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s670-controlled-vocabulary-entries",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "controlled vocabulary entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s671-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s672-get-controlled-vocabulary-by-metadata-and-collec",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get controlled vocabulary by metadata and collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s673-vocabulary-entries-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Vocabulary Entries Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s674-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s675-single-authority",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Authority"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s676-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s677-top",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "top"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s678-workflow-actions-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Workflow Actions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s679-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s680-single-workflow-action-definition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Workflow Action Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s681-workflow-definitions-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Workflow Definitions Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s682-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s683-single-workflow-definition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Workflow Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s684-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s685-findbycollection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findByCollection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s686-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s687-collections",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "collections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s688-steps",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s689-workflowitem-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkflowItem Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s690-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s691-single-workflow-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Workflow Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s692-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s693-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s694-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s695-submissiondefinition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "submissionDefinition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s696-workflow-step",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "workflow step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s697-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s698-findbysubmitter",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findBySubmitter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s699-get-single-workflow-item-from-item-uuid",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get Single Workflow Item from Item UUID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s700-post-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s701-multipart-post-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s702-delete-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DELETE Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s703-workflow-steps-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Workflow Steps Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s704-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s705-single-workflow-step-definition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Workflow Step Definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s706-workspaceitem-data-of-access-sectiontype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of access sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s707-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s708-add-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s709-remove-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s710-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s711-discoverable",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Discoverable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s712-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s713-relationship-between-the-access-conditions-of-th",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Relationship between the access conditions of the item and the bitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s714-workspaceitem-data-of-cc-license-sectiontype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of CC License sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s715-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s716-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s717-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s718-workspaceitem-data-of-identifiers-sectiontype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of identifiers sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s719-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s720-workspaceitem-data-of-license-sectiontype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of license sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s721-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s722-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s723-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s724-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s725-move-test-copy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Move, Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s726-workspaceitem-data-of-submission-form-sectiontyp",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of submission-form sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s727-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s728-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s729-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s730-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s731-move",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s732-test-copy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s733-workspaceitem-data-of-sherpa-policies-sectiontyp",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of sherpa-policies sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s734-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s735-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s736-workspaceitem-data-of-upload-sectiontype",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem data of upload sectionType"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s737-patch-operations",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Patch operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s738-add",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Add"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s739-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s740-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s741-remove",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s742-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s743-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s744-replace",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Replace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s745-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s746-access-condition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Access Condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s747-move",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s748-metadata",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Metadata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s749-test-copy",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Test & copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s750-workspaceitem-endpoints",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "WorkspaceItem Endpoints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s751-main-endpoint",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Main Endpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s752-multipart-post-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multipart POST Method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s753-single-workspace-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Single Workspace Item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s754-multipart-post-method-on-a-single-workspaceitem",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Multipart POST Method on a single workspaceitem"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s755-linked-entities",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Linked entities"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s756-collection",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s757-item",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "item"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s758-submissiondefinition",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "submissionDefinition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s759-search-methods",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Search methods"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s760-findbysubmitter",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "findBySubmitter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s761-get-single-workspace-item-from-item-uuid",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "Get Single Workspace Item from Item UUID"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio/library/dspace-7-rest-contract/sections/s762-delete-method",
+      "@type": "http://purl.org/spar/doco/Section",
+      "title": "DELETE Method"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/dspace-7-rest-contract/sections",
+  "path": "library/dspace-7-rest-contract/sections/"
+}

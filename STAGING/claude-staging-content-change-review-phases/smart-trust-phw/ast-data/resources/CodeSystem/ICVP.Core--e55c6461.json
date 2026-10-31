@@ -1,0 +1,169 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "ICVP.Core",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem ICVP.Core</b></p><a name=\"ICVP.Core\"> </a><a name=\"hcICVP.Core\"> </a><p>This case-insensitive code system <code>http://smart.who.int/trust-phw/CodeSystem/ICVP.Core</code> defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td><td><b>Definition</b></td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.1<a name=\"ICVP.Core-ICVP.46A9.46DE.461\"> </a></td><td>Name of the recipient of vaccine or prophylaxis</td><td>The full name of the recipient of vaccine or prophylaxis</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.2<a name=\"ICVP.Core-ICVP.46A9.46DE.462\"> </a></td><td>Date of Birth</td><td>The date of birth of the recipient of vaccine or prophylaxis</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.3<a name=\"ICVP.Core-ICVP.46A9.46DE.463\"> </a></td><td>Sex</td><td>The sex of the recipient of vaccine or prophylaxis</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.4<a name=\"ICVP.Core-ICVP.46A9.46DE.464\"> </a></td><td>Male</td><td>Recipient is male</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.5<a name=\"ICVP.Core-ICVP.46A9.46DE.465\"> </a></td><td>Female</td><td>Recipient is female</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.6<a name=\"ICVP.Core-ICVP.46A9.46DE.466\"> </a></td><td>Other</td><td>Recipient identifies as another sex</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.7<a name=\"ICVP.Core-ICVP.46A9.46DE.467\"> </a></td><td>Unknown</td><td>Sex is not known or not specified</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.8<a name=\"ICVP.Core-ICVP.46A9.46DE.468\"> </a></td><td>Nationality</td><td>The nationality of the recipient of vaccine or prophylaxis</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.9<a name=\"ICVP.Core-ICVP.46A9.46DE.469\"> </a></td><td>National identification document, if applicable</td><td>Identifier of an official national identity document, where applicable</td></tr><tr><td style=\"white-space:nowrap\">ICVP.A9.DE.10<a name=\"ICVP.Core-ICVP.46A9.46DE.4610\"> </a></td><td>Name of the parent or guardian</td><td>The full name of the parent or guardian. Required, if applicable.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.11<a name=\"ICVP.Core-ICVP.46C5.46DE.4611\"> </a></td><td>Vaccine or prophylaxis</td><td>Name of the vaccine or prophylaxis product administered</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.12<a name=\"ICVP.Core-ICVP.46C5.46DE.4612\"> </a></td><td>Name of disease or condition</td><td>Name of the disease or condition for which the vaccine or prophylaxis has been administered.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.13<a name=\"ICVP.Core-ICVP.46C5.46DE.4613\"> </a></td><td>Date</td><td>Date when vaccine or prophylaxis was administered</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.14<a name=\"ICVP.Core-ICVP.46C5.46DE.4614\"> </a></td><td>Name of supervising clinician</td><td>Name of supervising clinician responsible for administering the vaccine or overseeing the vaccination process.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.15<a name=\"ICVP.Core-ICVP.46C5.46DE.4615\"> </a></td><td>Relevant authority responsible for issuing this certificate</td><td>Name of relevant authority that has been onboarded to GDHCN and is responsible for issuing this certificate, or overseeing the administering centre</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.16<a name=\"ICVP.Core-ICVP.46C5.46DE.4616\"> </a></td><td>Manufacturer of vaccine or prophylaxis</td><td>Name of the manufacturer of vaccine or prophylaxis administered</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.17<a name=\"ICVP.Core-ICVP.46C5.46DE.4617\"> </a></td><td>Batch No. of vaccine or prophylaxis</td><td>Batch number of vaccine or prophylaxis administered. May be represented as a string or as a coded value.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.18<a name=\"ICVP.Core-ICVP.46C5.46DE.4618\"> </a></td><td>Batch number (string)</td><td>Batch or lot number as recorded by the manufacturer.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.C5.DE.19<a name=\"ICVP.Core-ICVP.46C5.46DE.4619\"> </a></td><td>Batch number (coded)</td><td>Batch or lot number represented as a coded value from a predefined list, if available.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.20<a name=\"ICVP.Core-ICVP.46D5.46DE.4620\"> </a></td><td>Certificate valid from</td><td>Date from which the certificate became valid</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.21<a name=\"ICVP.Core-ICVP.46D5.46DE.4621\"> </a></td><td>Certificate valid until</td><td>Indicates that the certificate remains valid based on a predefined condition (e.g., lifetime validity).</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.22<a name=\"ICVP.Core-ICVP.46D5.46DE.4622\"> </a></td><td>Certificate valid until (string)</td><td>Certificate is valid for the life of the vaccinated person</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.23<a name=\"ICVP.Core-ICVP.46D5.46DE.4623\"> </a></td><td>Certificate valid until (date)</td><td>Date until which the certificate remains valid</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.24<a name=\"ICVP.Core-ICVP.46D5.46DE.4624\"> </a></td><td>Text following the table in the Model ICVP in Annex 6</td><td>This certificate is valid only if the vaccine or prophylaxis used has been approved by the World Health Organization. This certificate in non-digital format must be signed by the clinician, who shall be a medical practitioner or other authorized health worker supervising the administration of the vaccine or prophylaxis. The certificate must also bear the official stamp of the administering centre; however, this shall not be an accepted substitute for the signature. Regardless of the format in which this certificate has been issued, it must bear the name of the clinician supervising the administration of the vaccine or prophylaxis, or of the relevant authority responsible for issuing the certificate or overseeing the administering centre. Any amendment of this certificate, or erasure, or failure to complete any part of it, may render it invalid. The validity of this certificate shall extend until the date indicated for the particular vaccination or prophylaxis. The certificate shall be fully completed in English or in French. The certificate may also be completed in another language on the same document, in addition to either English or French.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.25<a name=\"ICVP.Core-ICVP.46D5.46DE.4625\"> </a></td><td>Cryptographic signature of the issuer</td><td>A digital cryptographic signature generated by the issuing authority and applied to the certificate data as part of the integrity check.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.26<a name=\"ICVP.Core-ICVP.46D5.46DE.4626\"> </a></td><td>Key identifier for signature verification</td><td>An identifier that references the public key or trusted source required to verify the issuer's cryptographic signature as part of the integrity check.</td></tr><tr><td style=\"white-space:nowrap\">ICVP.D5.DE.27<a name=\"ICVP.Core-ICVP.46D5.46DE.4627\"> </a></td><td>Version</td><td>Identifier indicating the version of the certificate</td></tr></table></div>"
+  },
+  "url" : "http://smart.who.int/trust-phw/CodeSystem/ICVP.Core",
+  "version" : "0.1.0",
+  "name" : "ICVP_Core",
+  "title" : "ICVP.Core CodeSystem for Data Elements",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-10-30T17:37:34+01:00",
+  "publisher" : "WHO",
+  "contact" : [{
+    "name" : "WHO",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://who.int"
+    }]
+  }],
+  "description" : "CodeSystem for ICVP.Core Data Elements from the Digital ICVP Core Data Dictionary",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "caseSensitive" : false,
+  "content" : "complete",
+  "count" : 27,
+  "concept" : [{
+    "code" : "ICVP.A9.DE.1",
+    "display" : "Name of the recipient of vaccine or prophylaxis",
+    "definition" : "The full name of the recipient of vaccine or prophylaxis"
+  },
+  {
+    "code" : "ICVP.A9.DE.2",
+    "display" : "Date of Birth",
+    "definition" : "The date of birth of the recipient of vaccine or prophylaxis"
+  },
+  {
+    "code" : "ICVP.A9.DE.3",
+    "display" : "Sex",
+    "definition" : "The sex of the recipient of vaccine or prophylaxis"
+  },
+  {
+    "code" : "ICVP.A9.DE.4",
+    "display" : "Male",
+    "definition" : "Recipient is male"
+  },
+  {
+    "code" : "ICVP.A9.DE.5",
+    "display" : "Female",
+    "definition" : "Recipient is female"
+  },
+  {
+    "code" : "ICVP.A9.DE.6",
+    "display" : "Other",
+    "definition" : "Recipient identifies as another sex"
+  },
+  {
+    "code" : "ICVP.A9.DE.7",
+    "display" : "Unknown",
+    "definition" : "Sex is not known or not specified"
+  },
+  {
+    "code" : "ICVP.A9.DE.8",
+    "display" : "Nationality",
+    "definition" : "The nationality of the recipient of vaccine or prophylaxis"
+  },
+  {
+    "code" : "ICVP.A9.DE.9",
+    "display" : "National identification document, if applicable",
+    "definition" : "Identifier of an official national identity document, where applicable"
+  },
+  {
+    "code" : "ICVP.A9.DE.10",
+    "display" : "Name of the parent or guardian",
+    "definition" : "The full name of the parent or guardian. Required, if applicable."
+  },
+  {
+    "code" : "ICVP.C5.DE.11",
+    "display" : "Vaccine or prophylaxis",
+    "definition" : "Name of the vaccine or prophylaxis product administered"
+  },
+  {
+    "code" : "ICVP.C5.DE.12",
+    "display" : "Name of disease or condition",
+    "definition" : "Name of the disease or condition for which the vaccine or prophylaxis has been administered."
+  },
+  {
+    "code" : "ICVP.C5.DE.13",
+    "display" : "Date",
+    "definition" : "Date when vaccine or prophylaxis was administered"
+  },
+  {
+    "code" : "ICVP.C5.DE.14",
+    "display" : "Name of supervising clinician",
+    "definition" : "Name of supervising clinician responsible for administering the vaccine or overseeing the vaccination process."
+  },
+  {
+    "code" : "ICVP.C5.DE.15",
+    "display" : "Relevant authority responsible for issuing this certificate",
+    "definition" : "Name of relevant authority that has been onboarded to GDHCN and is responsible for issuing this certificate, or overseeing the administering centre"
+  },
+  {
+    "code" : "ICVP.C5.DE.16",
+    "display" : "Manufacturer of vaccine or prophylaxis",
+    "definition" : "Name of the manufacturer of vaccine or prophylaxis administered"
+  },
+  {
+    "code" : "ICVP.C5.DE.17",
+    "display" : "Batch No. of vaccine or prophylaxis",
+    "definition" : "Batch number of vaccine or prophylaxis administered. May be represented as a string or as a coded value."
+  },
+  {
+    "code" : "ICVP.C5.DE.18",
+    "display" : "Batch number (string)",
+    "definition" : "Batch or lot number as recorded by the manufacturer."
+  },
+  {
+    "code" : "ICVP.C5.DE.19",
+    "display" : "Batch number (coded)",
+    "definition" : "Batch or lot number represented as a coded value from a predefined list, if available."
+  },
+  {
+    "code" : "ICVP.D5.DE.20",
+    "display" : "Certificate valid from",
+    "definition" : "Date from which the certificate became valid"
+  },
+  {
+    "code" : "ICVP.D5.DE.21",
+    "display" : "Certificate valid until",
+    "definition" : "Indicates that the certificate remains valid based on a predefined condition (e.g., lifetime validity)."
+  },
+  {
+    "code" : "ICVP.D5.DE.22",
+    "display" : "Certificate valid until (string)",
+    "definition" : "Certificate is valid for the life of the vaccinated person"
+  },
+  {
+    "code" : "ICVP.D5.DE.23",
+    "display" : "Certificate valid until (date)",
+    "definition" : "Date until which the certificate remains valid"
+  },
+  {
+    "code" : "ICVP.D5.DE.24",
+    "display" : "Text following the table in the Model ICVP in Annex 6",
+    "definition" : "This certificate is valid only if the vaccine or prophylaxis used has been approved by the World Health Organization. This certificate in non-digital format must be signed by the clinician, who shall be a medical practitioner or other authorized health worker supervising the administration of the vaccine or prophylaxis. The certificate must also bear the official stamp of the administering centre; however, this shall not be an accepted substitute for the signature. Regardless of the format in which this certificate has been issued, it must bear the name of the clinician supervising the administration of the vaccine or prophylaxis, or of the relevant authority responsible for issuing the certificate or overseeing the administering centre. Any amendment of this certificate, or erasure, or failure to complete any part of it, may render it invalid. The validity of this certificate shall extend until the date indicated for the particular vaccination or prophylaxis. The certificate shall be fully completed in English or in French. The certificate may also be completed in another language on the same document, in addition to either English or French."
+  },
+  {
+    "code" : "ICVP.D5.DE.25",
+    "display" : "Cryptographic signature of the issuer",
+    "definition" : "A digital cryptographic signature generated by the issuing authority and applied to the certificate data as part of the integrity check."
+  },
+  {
+    "code" : "ICVP.D5.DE.26",
+    "display" : "Key identifier for signature verification",
+    "definition" : "An identifier that references the public key or trusted source required to verify the issuer's cryptographic signature as part of the integrity check."
+  },
+  {
+    "code" : "ICVP.D5.DE.27",
+    "display" : "Version",
+    "definition" : "Identifier indicating the version of the certificate"
+  }]
+}

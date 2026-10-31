@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/hl7-2023-fhir-r5-testplan/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "title": "FHIR R5 (5.0.0) — TestPlan resource"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/blocks/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/sections/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/hl7-2023-fhir-r5-testplan",
+  "path": "library/hl7-2023-fhir-r5-testplan/"
+}

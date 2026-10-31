@@ -1,0 +1,52 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant-sci/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/arxiv-2512.09874v3/manifest.jsonld",
+  "@type": [
+    "cat-harness:SourceDocument"
+  ],
+  "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+  "contains": [
+    "library/arxiv-2512.09874v3/sections/sec-000"
+  ],
+  "provenance": "ingested",
+  "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/library",
+  "licenceRecord": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the ingested text of the PDF (library/arxiv-2512.09874v3/sections/)",
+        "result": "no licence, copyright or Creative Commons statement",
+        "on": "2026-10-12"
+      },
+      {
+        "where": "https://arxiv.org/abs/2512.09874v3 (the licence arXiv states for the submission)",
+        "result": "not reachable: arxiv.org is blocked by this session's network egress policy",
+        "on": "2026-10-12"
+      }
+    ],
+    "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+  },
+  "meta": {
+    "doc_id": "arxiv-2512.09874v3",
+    "title_source": "pdf-info",
+    "title_from": "structure.json metadata.docinfo.Title",
+    "source_file": "2512.09874v3.pdf",
+    "source_sha256": "64a6fa7bd984c39433e2e955569a6465a6b4203608d1c5b29b581beebc0cb177",
+    "pages": 16,
+    "arxiv": {
+      "id": "2512.09874",
+      "version": "3",
+      "primary_class": "cs.CV",
+      "stamp_date": "22 Aug 2026"
+    },
+    "doi": null,
+    "document_class": null,
+    "extractor_validated": null,
+    "disposition": "ingested source material — attributed to its document, not folio content"
+  }
+}

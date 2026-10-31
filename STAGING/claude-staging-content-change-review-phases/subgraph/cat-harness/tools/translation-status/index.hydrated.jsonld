@@ -1,0 +1,55 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-status/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-status.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Per-locale translation coverage, computed from the .po files under the translations directory.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        },
+        "mcp": {
+          "tool": "translation_status"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--locale"
+            },
+            "description": "Absent means every locale.",
+            "name": "locale",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Locale"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Translated, fuzzy and untranslated counts per locale.",
+            "name": "coverage",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "translation-status",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+      "title": "Translation coverage"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/translation-status",
+  "path": "tools/translation-status/"
+}
