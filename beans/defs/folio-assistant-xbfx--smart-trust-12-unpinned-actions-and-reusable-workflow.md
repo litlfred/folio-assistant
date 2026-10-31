@@ -2,14 +2,14 @@
 # folio-assistant-xbfx
 $schema: bean/1.0.0
 title: 'smart-trust: 12 unpinned actions and reusable workflows in write-token workflows (security:gate fails)'
-status: todo
+status: in-progress
 type: bug
 priority: high
 tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:10:00Z
+updated_at: 2026-10-31T04:15:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -31,3 +31,5 @@ parent: folio-assistant-3o2w
 Also not counted by the gate but on `@main` under write tokens: `cancel-on-close.yml:16`, `harness-pr-checks.yml:50,68` (cat-harness-tools reusable workflows).
 
 **Fix:** `bun run cat actions:pin` for the third-party actions; decide whether first-party reusable workflows are pinned by SHA (they are the platform's own, but `@main` means a merge there runs here with this repo's write token). who-iris is already fully pinned and is the model.
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

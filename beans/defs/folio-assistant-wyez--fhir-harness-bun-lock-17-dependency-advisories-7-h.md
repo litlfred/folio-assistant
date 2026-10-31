@@ -2,11 +2,11 @@
 # folio-assistant-wyez
 $schema: bean/1.0.0
 title: 'fhir-harness bun.lock: 17 dependency advisories (7 high), node-forge and zod'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:20:00Z
+updated_at: 2026-10-31T04:15:00Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -28,3 +28,5 @@ The `expo` chain is a build-time transitive of the SDC populate library and is p
 - [ ] `bun audit` in fhir-harness reports no high or critical, or each remaining one carries a recorded waiver saying why it is not reachable
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

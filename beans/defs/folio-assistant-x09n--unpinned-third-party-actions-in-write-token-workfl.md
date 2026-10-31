@@ -2,11 +2,11 @@
 # folio-assistant-x09n
 $schema: bean/1.0.0
 title: 'Unpinned third-party actions in write-token workflows (smart-base, smart-ra, smart-immunizations)'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:20:00Z
+updated_at: 2026-10-31T04:15:00Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -28,3 +28,5 @@ tags:
 - [ ] the WHO smart-html release call is pinned to a SHA, and smart-ra's release job drops `id-token: write` unless the called workflow needs it
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

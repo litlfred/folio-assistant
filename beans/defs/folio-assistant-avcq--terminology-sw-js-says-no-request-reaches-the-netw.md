@@ -2,11 +2,11 @@
 # folio-assistant-avcq
 $schema: bean/1.0.0
 title: 'terminology-sw.js says no request reaches the network, but unanswered cross-origin requests go out'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:20:00Z
+updated_at: 2026-10-31T04:15:00Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -23,3 +23,5 @@ tags:
 - [ ] either unanswered cross-origin requests get a local 404/503 response, or the comment says they are forwarded and why
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

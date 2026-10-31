@@ -2,14 +2,14 @@
 # folio-assistant-3o2w
 $schema: bean/1.0.0
 title: 'SECURITY REVIEW 2026-10-31, group D: smart-trust, who-iris, dth-hrh, bootstrap'
-status: todo
+status: in-progress
 type: epic
 priority: high
 tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:10:00Z
+updated_at: 2026-10-31T04:15:00Z
 ---
 
 The owner asked (2026-10-31 03:51Z, thread "Security review all harnessed KG code") for a full QA and security review of all code harnessed in a KG, with findings recorded per the SOPs. This epic holds group D's public findings. The sibling epic for cat-harness and cat-harness-tools is `cat-tools-sr31` in the cat-harness-tools store.
@@ -23,3 +23,5 @@ Reviewed heads (main): smart-trust `496290a`, who-iris `df8f63f`, dth-hrh `ffb89
 **No finding:** dth-hrh's own code (generators use `json.dumps`, slugs are `[a-z0-9-]`), bootstrap's skills and processes (no injected instructions found), secret-pattern grep in all four repos (no keys or tokens committed), no `pull_request_target` or `issue_comment` triggers anywhere.
 
 **Tooling gap (reported to cat-tools-sr31, not filed here):** in all four instances `security:gate` reports every pinned check `unknown` (the script table finds no `checkoutScripts`), and `check-secret-leaks` crashes on instance-declared graph typologies (`ig-ast`, `catalogue`, `public-comments`). The checks could only be run by calling the scripts directly.
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

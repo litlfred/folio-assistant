@@ -2,7 +2,7 @@
 # folio-assistant-wox6
 $schema: bean/1.0.0
 title: 'Dependency advisories: happy-dom critical, node-forge, zod, undici'
-status: todo
+status: in-progress
 type: bug
 priority: high
 tags:
@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:01:56Z
+updated_at: 2026-10-31T04:15:00Z
 ---
 
 Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.
@@ -35,3 +35,5 @@ Run `bun run cat check:dependency-advisories` (warn-only today) after bumping.
 - [ ] happy-dom >= 20.14.7 in sci
 - [ ] zod >= 4.6.6 resolved in every layer
 - [ ] No high advisory left without a recorded reason
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

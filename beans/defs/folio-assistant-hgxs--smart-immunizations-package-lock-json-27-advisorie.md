@@ -2,11 +2,11 @@
 # folio-assistant-hgxs
 $schema: bean/1.0.0
 title: 'smart-immunizations package-lock.json: 27 advisories (1 critical tar, 14 high) via the npm dependency'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:20:00Z
+updated_at: 2026-10-31T04:15:00Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -25,3 +25,5 @@ The repo also declares bun workspaces (bunfig.toml), so it is unclear whether th
 - [ ] `npm` dropped as a dependency (or the lock regenerated) and `npm audit` reports no critical or high, or the stale lock is removed
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

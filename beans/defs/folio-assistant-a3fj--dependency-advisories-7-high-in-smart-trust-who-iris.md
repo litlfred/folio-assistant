@@ -2,14 +2,14 @@
 # folio-assistant-a3fj
 $schema: bean/1.0.0
 title: 'Dependency advisories: 7 high, 12 moderate in smart-trust, who-iris and dth-hrh installs'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:10:00Z
+updated_at: 2026-10-31T04:15:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -24,3 +24,5 @@ parent: folio-assistant-3o2w
 Most come in through the mounted layers' dependencies (shared with the groups reviewing those layers), so the fix is mainly a bump in the layer that declares each one, then a lockfile refresh here. Find the owner of each with `bun why <pkg>`.
 
 **Fix:** bump `zod` to ≥ 4.6.6 in dth-hrh; bump `undici` (via its parent) everywhere; refresh `bun.lock` in who-iris and dth-hrh.
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).

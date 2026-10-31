@@ -2,11 +2,11 @@
 # folio-assistant-33iz
 $schema: bean/1.0.0
 title: 'Security and QA review of the FHIR and SMART layers (2026-10-31)'
-status: todo
+status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:20:00Z
+updated_at: 2026-10-31T04:15:00Z
 tags:
     - security
     - security-review-2026-10-31
@@ -23,3 +23,5 @@ No committed secrets found. No `pull_request_target` or `issue_comment` trigger 
 Children are the filed findings. Session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
