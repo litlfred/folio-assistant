@@ -116,6 +116,16 @@ on:
       - 'folio-assistant.mount-lock.json'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
+    inputs:
+      record_writers:
+        # Bean fwtz, option B (owner card 2026-10-31, "rerun and measure"):
+        # run every derive:publish writer under strace and publish what each
+        # read and wrote (cat-harness-tools `writer-cone.ts`). strace costs a
+        # traced script 3-10x (bean 4rbc), so it is a manual run until that
+        # cost is measured, never part of a push deploy. It skips nothing.
+        description: 'Record what each derive:publish writer reads and writes (slower; skips nothing)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write  # required to push to the gh-pages branch
@@ -259,7 +269,16 @@ jobs:
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
+      - name: strace, for the writer records (bean fwtz)
+        if: ${{ inputs.record_writers }}
+        run: |
+          if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        env:
+          # Bean fwtz: traced writers and build/writer-cone/records.json, only on a manual run that asks.
+          CAT_WRITER_RECORD: ${{ inputs.record_writers && '1' || '' }}
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push
         # made a committed copy stale on main and every open PR (2026-10-05).
@@ -1149,6 +1168,12 @@ jobs:
           jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" --arg checksUrl "$CHECKS_URL" \
             --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, checksUrl: $checksUrl, mounts: $mounts}' > ./_site/build.json
           cat ./_site/build.json
+          # Bean fwtz: the writer records sit beside the stamp, so the NEXT
+          # deploy can ask which writers' reads moved since this one.
+          if [ -f build/writer-cone/records.json ]; then
+            mkdir -p ./_site/writer-cone && cp build/writer-cone/records.json ./_site/writer-cone/records.json
+            jq -r '"writer records: \(.writers | length) recorded, \(.unrecorded | length) not"' ./_site/writer-cone/records.json
+          fi
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
       #
