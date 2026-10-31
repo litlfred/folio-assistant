@@ -975,7 +975,7 @@ jobs:
           bun run cat-harness-tools/scripts/root-index.ts --site ./_site
           trap - DEBUG
           printf "%s end\n" "$(date +%s)" >> "$T"
-          jq --rawfile l "$T" '. + {kgStepTimes: ($l | split("\n") | map(select(. != "")))}' ./_site/build.json > "$RUNNER_TEMP/build.json" && mv "$RUNNER_TEMP/build.json" ./_site/build.json || true
+          # The stamp step writes build.json later and merges these times into it.
 
       # Every `maintains` claim, checked where the answer exists.
       #
@@ -1216,6 +1216,9 @@ jobs:
           fi
           if [ -f "$RUNNER_TEMP/writer-verify.log" ]; then
             jq --rawfile l "$RUNNER_TEMP/writer-verify.log" '. + {writerVerifyLog: ($l | split("\n") | .[-60:])}' ./_site/build.json > "$RUNNER_TEMP/build.json" && mv "$RUNNER_TEMP/build.json" ./_site/build.json
+          fi
+          if [ -f "$RUNNER_TEMP/kg-step-times.log" ]; then
+            jq --rawfile l "$RUNNER_TEMP/kg-step-times.log" '. + {kgStepTimes: ($l | split("\n") | map(select(. != "")))}' ./_site/build.json > "$RUNNER_TEMP/build.json" && mv "$RUNNER_TEMP/build.json" ./_site/build.json
           fi
           cat ./_site/build.json
           # Bean fwtz: the writer records sit beside the stamp, so the NEXT
