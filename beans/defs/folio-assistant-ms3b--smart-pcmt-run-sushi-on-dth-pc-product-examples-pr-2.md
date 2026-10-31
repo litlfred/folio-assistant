@@ -2,7 +2,7 @@
 # folio-assistant-ms3b
 $schema: bean/1.0.0
 title: 'smart-pcmt#2: run sushi on the dth-pc product examples (agy, local)'
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
@@ -10,7 +10,7 @@ tags:
     - sushi
     - dth-figures
 created_at: 2026-10-31T12:42:00Z
-updated_at: 2026-10-31T12:42:30Z
+updated_at: 2026-10-31T12:46:00Z
 ---
 
 **For agy** (owner, 2026-10-31 12:40Z: "make bean for agy"). Cloud sandboxes cannot reach packages.fhir.org, and the fork's `ghbuild` check does not run sushi, so sushi has not been run on https://github.com/litlfred/smart-pcmt/pull/2.
@@ -23,3 +23,8 @@ updated_at: 2026-10-31T12:42:30Z
 4. Note here when done. Do not merge the PR, and never push to WorldHealthOrganization/smart-pcmt.
 
 **Context:** thread "Recreate dth-pc and dth-sc handbook figures". The instances are the single source for dth-pc Fig. 11 and the NPC01101001 table.
+
+**Done (2026-10-31, agy `f2cc66c1-4356-4fff-a3e9-6da39efddd8c`):**
+- Reconfigured `~/space_cats/smart-pcmt` remotes so `origin` points to `https://github.com/litlfred/smart-pcmt.git` and `upstream` (`WorldHealthOrganization/smart-pcmt`) has `pushurl = no_push`.
+- Checked out `claude/dth-pc-product-examples` (`d7ffb0e`) and ran `sushi build .` with **SUSHI v3.20.1** (FHIR Shorthand v3.0.0): **0 Errors, 1 Warning** (all 10 `Product` instances exported cleanly; 0 errors and 0 warnings naming `input/fsh/examples/dth-pc-packaging.fsh` or `input/fsh/examples/dth-pc-npc-lamivudine.fsh`, only the pre-existing duplicate entity name warning for `AttributeType`, `ProductRelationship`, `Status`). No branch edits were needed.
+- Posted verification comment on [`litlfred/smart-pcmt#2` (`#issuecomment-6543532271`)](https://github.com/litlfred/smart-pcmt/pull/2#issuecomment-6543532271).
