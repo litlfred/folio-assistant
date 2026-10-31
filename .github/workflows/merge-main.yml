@@ -222,8 +222,12 @@ jobs:
       pull-requests: write
       issues: write
       actions: write
+    # NO JOB-WIDE TOKEN. This job runs code that comes from the PR branch (the
+    # lock replayer it pins, and what merge-base runs inside the merged tree),
+    # so a token is handed only to the steps that call `gh` or push, each in
+    # its own `env:`. The checkout persists no credential, and the App token
+    # is minted only after the merge, just before the push that uses it.
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
       PR: ${{ matrix.pr }}
       MARKER: "<!-- merge-main-bot -->"
@@ -231,6 +235,8 @@ jobs:
     steps:
       - name: Resolve the PR's head branch
         id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           pr=$(gh api "repos/$REPO/pulls/$PR")
@@ -248,28 +254,20 @@ jobs:
       # `gh-pages` with every preview). A merge needs exactly two: the PR
       # branch and main. They are fetched blobless; git fetches the contents
       # of the files the merge touches on demand.
-      # PUSH_BRANCH_TRIGGERING_CI: minted from the harness App when it is set
-      # up, else the repository secret of that name, else unset (the dispatch
-      # fallback below). The App token lasts one hour and acts as the bot.
-      - id: bot
-        if: vars.HARNESS_BOT_ID != ''
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
-        with:
-          app-id: ${{ vars.HARNESS_BOT_ID }}
-          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
+      #
+      # NO PERSISTED CREDENTIAL. The checkout leaves no token in `.git/config`,
+      # so nothing that later runs in this tree can read one there. The
+      # repository is public, so the fetches below, and the on-demand blob
+      # fetches of the blobless clone, need none; the push step supplies its
+      # own token for that one command.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.pr.outputs.ref }}
           fetch-depth: 1
-          token: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
+          persist-credentials: false
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
 
       - name: Fetch the history of the PR branch and main only
         env:
@@ -280,34 +278,11 @@ jobs:
             "+refs/heads/main:refs/remotes/origin/main" \
             "+refs/heads/$REF:refs/remotes/origin/$REF"
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
       # regen runs the writers behind every fast gate, the same set the
       # `gates` job asks — so it needs that job's interpreters too.
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Mount the subgraphs kept on branches (bean 9c7h)
-        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
-        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
-        # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run cat state:mount
-
-      # `id` because this exit 1 is an expected RACE, not a defect: under a fast
-      # merge cadence the head moves between selection and checkout several
-      # times an hour. The verdict step reads this outcome and stays quiet.
-      - name: Check the branch did not move since selection
-        id: head
-        env:
-          SELECTED: ${{ steps.pr.outputs.sha }}
-        run: |
-          test "$(git rev-parse HEAD)" = "$SELECTED" || { echo "::notice::head moved since selection; the next run will pick it up"; exit 1; }
 
       # THE TOOL COMES FROM MAIN, NOT FROM THE PR — measured 2026-10-02 on 7
       # real runs: an old branch has neither the `merge:main` script nor
@@ -318,6 +293,10 @@ jobs:
       # base being merged in is main. What merge-base then runs INSIDE the
       # tree — `qa:resolve-conflicts`, `regen` — runs after the merge, so it is
       # main's version as merged into the branch, not the branch's old one.
+      #
+      # FIRST, before anything touches the PR's tree: the steps that prepare
+      # that tree below (mounts, install, state:mount) run main's copies of
+      # their scripts from here, not the PR branch's.
       - name: Check out main's merge tool beside the PR
         run: |
           set -euo pipefail
@@ -334,6 +313,45 @@ jobs:
           bun install --frozen-lockfile
           # bean 9c7h: fsh-guts is kept on its branch; mount it before the gates prove the merge
           bun run cat state:mount
+
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA; mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
+      # MAIN's copy of the wrapper, pointed at the PR's tree with `--root`: the
+      # PR's lock still says WHAT to mount (the merge needs the branch's own
+      # layers on disk), but the wrapper is not the branch's. The replayer the
+      # wrapper fetches is still the one the PR's lock pins, so an older lock
+      # is read by the replayer written for it; no token is in reach here.
+      - name: Mount bootstrap and bootstrap-tools from the PR's lock, with main's wrapper
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash "$RUNNER_TEMP/tool/.github/mount-from-lock.sh" --root "$GITHUB_WORKSPACE"
+
+      # `--ignore-scripts`: the install resolves the PR's lockfile into
+      # node_modules, which regen needs, without running any lifecycle script
+      # from the PR's tree. The root manifest declares none, and no mounted
+      # workspace does either (checked 2026-10-31).
+      - name: Install dependencies (no lifecycle scripts)
+        run: bun install --frozen-lockfile --ignore-scripts
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        # Main's copy of state-mount.ts, run from the PR's tree: it reads the
+        # declarations of the checkout it is run in (`git rev-parse
+        # --show-toplevel` of the working directory), so it mounts what the
+        # PR's tree declares, which is what `bun run cat state:mount` there did.
+        working-directory: ${{ github.workspace }}
+        run: bun "$RUNNER_TEMP/tool/cat-harness-tools/scripts/state-mount.ts"
+
+      # `id` because this exit 1 is an expected RACE, not a defect: under a fast
+      # merge cadence the head moves between selection and checkout several
+      # times an hour. The verdict step reads this outcome and stays quiet.
+      - name: Check the branch did not move since selection
+        id: head
+        env:
+          SELECTED: ${{ steps.pr.outputs.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$SELECTED" || { echo "::notice::head moved since selection; the next run will pick it up"; exit 1; }
 
       # Since bean `i1q7` item 3, `regen` asks the WHOLE gate set, browser-job
       # pairs included: `render:bpmn:check` needs Chromium, and on a runner
@@ -366,13 +384,51 @@ jobs:
             echo "merged=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # PUSH_BRANCH_TRIGGERING_CI: minted from the harness App when it is set
+      # up, else the repository secret of that name, else unset (the dispatch
+      # fallback below). The App token lasts one hour and acts as the bot.
+      # Minted HERE, after the merge and only when there is a merge to push,
+      # so it does not exist while anything earlier in the job runs.
+      - id: bot
+        if: vars.HARNESS_BOT_ID != '' && steps.merge.outputs.merged == 'true'
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
+
       - name: Push the proved merge (fast-forward only)
         id: push
         if: steps.merge.outputs.merged == 'true'
         env:
           REF: ${{ steps.pr.outputs.ref }}
           SELECTED: ${{ steps.pr.outputs.sha }}
+          # The only step that holds a push token. It reaches git as an
+          # environment-supplied config entry for this one command, never in
+          # `.git/config` and never on a command line.
+          PUSH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+          # Only the repository's own config is read here, never a global or
+          # system file, so the URL check below sees everything git will apply.
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_CONFIG_NOSYSTEM: "1"
         run: |
+          set -uo pipefail
+          # The push goes to this repository by its URL, not by whatever
+          # `origin` now says, with hooks off and no credential helper; and it
+          # is refused outright if the repository's config rewrites URLs.
+          url="$GITHUB_SERVER_URL/$REPO.git"
+          if git config --local --includes --get-regexp '^url\..*insteadof$' >/dev/null; then
+            echo "::error::a git config entry rewrites URLs; refusing to push with a token"
+            exit 1
+          fi
+          auth=$(printf 'x-access-token:%s' "$PUSH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          push() {
+            GIT_CONFIG_COUNT=3 \
+            GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader" GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+            GIT_CONFIG_KEY_1=core.hooksPath GIT_CONFIG_VALUE_1=/dev/null \
+            GIT_CONFIG_KEY_2=credential.helper GIT_CONFIG_VALUE_2= \
+              git push "$url" "HEAD:refs/heads/$REF"
+          }
           # No --force of any kind: if the author pushed during the run this is
           # rejected, which is the guard against overwriting their work.
           #
@@ -391,7 +447,7 @@ jobs:
           # head can NEVER be pushed with GITHUB_TOKEN, so retrying is useless:
           # it is a person's merge until the owner's
           # credentials design (#1829) supplies a token with `workflows` scope.
-          if git push origin "HEAD:refs/heads/$REF" 2> "$RUNNER_TEMP/push.err"; then
+          if push 2> "$RUNNER_TEMP/push.err"; then
             echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -401,7 +457,7 @@ jobs:
             echo "blocked=workflows" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          now=$(git ls-remote origin "refs/heads/$REF" | cut -f1)
+          now=$(git ls-remote "$url" "refs/heads/$REF" | cut -f1)
           if [ -n "$now" ] && [ "$now" != "$SELECTED" ]; then
             echo "::notice::the branch moved during the run ($SELECTED -> $now); nothing overwritten, the next push to main retries"
             echo "rejected=true" >> "$GITHUB_OUTPUT"
@@ -413,6 +469,7 @@ jobs:
       - name: Have CI judge the merge commit
         if: steps.push.outputs.sha != ''
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REF: ${{ steps.pr.outputs.ref }}
           HAS_TOKEN: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
         run: |
@@ -440,6 +497,8 @@ jobs:
       - name: Read the failure this PR's comment already reports
         id: prev
         if: always() && steps.merge.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -uo pipefail
           sig=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" --paginate \
@@ -458,6 +517,7 @@ jobs:
       - name: Comment once, edited in place
         if: always() && steps.merge.outcome != 'skipped'
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JOB_STATUS: ${{ job.status }}
           STATUS: ${{ steps.merge.outputs.status }}
           MERGED: ${{ steps.merge.outputs.merged }}
