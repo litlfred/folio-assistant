@@ -40,10 +40,10 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6205,
+          "occurrences": 6204,
           "allowed": 0,
-          "wrongDirection": 18,
-          "wrongDirectionFiles": 12,
+          "wrongDirection": 17,
+          "wrongDirectionFiles": 11,
           "exempt": 6187,
           "namesRepository": 0,
           "undetermined": 0,
@@ -54,15 +54,11 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 13,
+      "count": 12,
       "entries": [
         {
           "file": "bootstrap/models/models.json",
           "target": "who-iris"
-        },
-        {
-          "file": "cat-harness-tools/cat-harness-tools.json",
-          "target": "folio-assistant-core"
         },
         {
           "file": "cat-harness-tools/schemas/harness-root.ts",
@@ -111,5 +107,5 @@
       ]
     }
   },
-  "total": 15
+  "total": 14
 }

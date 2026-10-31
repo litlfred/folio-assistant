@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "a47dd62b3facfb1d23cd819a7e57131df7385e1a",
+    "head": "eb3717763b47ebc51597600b7bb719e278d6da0b",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "a47dd62b3facfb1d23cd819a7e57131df7385e1a",
+        "ref": "eb3717763b47ebc51597600b7bb719e278d6da0b",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "a47dd62b3facfb1d23cd819a7e57131df7385e1a",
+        "ref": "eb3717763b47ebc51597600b7bb719e278d6da0b",
         "mounted": true
       },
       {
@@ -11822,6 +11822,33 @@
         "mounted": true
       },
       {
+        "path": "cat-harness-tools/cat-harness-tools.json",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "cat-harness-tools.json",
+        "ref": "3f95be05b516df4430b9a748ad74189548969c9f",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/qa-store.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/qa-store.ts",
+        "ref": "3f95be05b516df4430b9a748ad74189548969c9f",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/l1-sidecar-owner.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/l1-sidecar-owner.test.ts",
+        "ref": "3f95be05b516df4430b9a748ad74189548969c9f",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
         "path": "folio-assistant-core/.gitignore",
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
@@ -11982,6 +12009,13 @@
         "files": 1306
       },
       {
+        "instance": "cat-harness-tools",
+        "repository": "litlfred/cat-harness-tools",
+        "from": "6a9a5b3baddb15badaadcc26ae0e0809ee07fa61",
+        "to": "3f95be05b516df4430b9a748ad74189548969c9f",
+        "files": 3
+      },
+      {
         "instance": "folio-assistant-core",
         "repository": "litlfred/folio-assistant-core",
         "from": "14e68e9627ec0fb64eb4f3c4bca1ff34405fb9a4",
@@ -12096,6 +12130,18 @@
         "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/render-bpmn.ts); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "b6365b44be00b2db26c3a89c3aad47246f44ecda9755c529041db2b16c01bc0e"
+      },
+      {
+        "input": "cat-harness-tools/scripts/qa-store.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/qa-store.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "2149d5eb82bd871c8fc68dbc14ea5ba3c360ce5fb844db3a23e6c614288eb4bf"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/l1-sidecar-owner.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/l1-sidecar-owner.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b30a53bafc50bb84f7ee73443a2aa05d0cf8177460022c2bd0d83ea4d6a8b6a4"
       },
       {
         "input": "cat-harness/glossary/glossary-ledger.json",
