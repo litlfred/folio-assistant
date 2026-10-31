@@ -1086,7 +1086,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page"
+          "@value": "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page A draft pull request is staged too, from its first push (owner, 2026-10-31, \"drafts get previews\"; folio-assistant#2836). A build takes about 22 minutes, and GitHub Pages about 3 to 4 more."
         }
       ],
       "skos:notation": "Task_BuildStaging",
@@ -1126,7 +1126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "peaceiris/actions-gh-pages deploys to gh-pages branch under STAGING/<branch-slug>/ with keep_files: true so other staging deployments and the main site are preserved."
+          "@value": "The stage job copies the built site into gh-pages under STAGING/<branch-slug>/, then `staging-share.ts apply` keeps only the files that differ from the live site (cat-harness-tools#1115). The preview's staging-sw.js serves every other file from the live site and puts the staging banner back on it. Other previews and the main site are left as they are."
         }
       ],
       "skos:notation": "Task_DeployStaging",
