@@ -1,0 +1,321 @@
+{
+  "$schema": "folio-harness-state/v1",
+  "harness": "folio-assistant-core",
+  "initialization": {
+    "position": "complete",
+    "next": null,
+    "counts": {
+      "done": 37,
+      "not-done": 0,
+      "could-not-determine": 3,
+      "stated": 1
+    },
+    "steps": [
+      {
+        "id": "declaration",
+        "namedBy": "folio-assistant-core",
+        "what": "folio-assistant-core.json parses",
+        "state": "done",
+        "detail": "folio-assistant-core 0.1.0"
+      },
+      {
+        "id": "needs:cat-harness",
+        "namedBy": "folio-assistant-core",
+        "what": "cat-harness, which folio-assistant-core needs, is beside it and parses",
+        "state": "done",
+        "detail": "cat-harness"
+      },
+      {
+        "id": "instructions:cat-harness",
+        "namedBy": "cat-harness",
+        "what": "cat-harness's own initialization instructions are followed (FR-4)",
+        "state": "stated",
+        "detail": "cat-harness/docs/bootstrap/initialization.md — nothing here can observe that an agent followed it",
+        "action": "read cat-harness/docs/bootstrap/initialization.md and do what it says; record that you did"
+      },
+      {
+        "id": "needs:cat-harness-tools",
+        "namedBy": "folio-assistant-core",
+        "what": "cat-harness-tools, which folio-assistant-core needs, is beside it and parses",
+        "state": "done",
+        "detail": "cat-harness-tools"
+      },
+      {
+        "id": "directory:folio-assistant-core-docs",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory docs/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:folio-assistant-core-translations",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory translations/ exists",
+        "state": "done",
+        "detail": "holds translation-sources"
+      },
+      {
+        "id": "directory:folio-assistant-core-block-typologies",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory block-kinds/ exists",
+        "state": "done",
+        "detail": "holds block-kinds"
+      },
+      {
+        "id": "directory:folio-assistant-core-content-adapters",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory content-adapters/ exists",
+        "state": "done",
+        "detail": "holds content-adapters"
+      },
+      {
+        "id": "directory:folio-assistant-core-validators",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory validators/ exists",
+        "state": "done",
+        "detail": "holds validators"
+      },
+      {
+        "id": "directory:core-code-lists",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory code-lists/ exists",
+        "state": "done",
+        "detail": "holds code-list"
+      },
+      {
+        "id": "directory:core-qa-checkers",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory qa-checkers/ exists",
+        "state": "done",
+        "detail": "holds qa-checkers"
+      },
+      {
+        "id": "directory:core-pipeline-plugins",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory pipeline-plugins/ exists",
+        "state": "done",
+        "detail": "holds pipeline-plugins"
+      },
+      {
+        "id": "directory:core-pipeline",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory pipeline/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:folio-assistant-core-typologies",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory typologies/ exists",
+        "state": "done",
+        "detail": "holds typologies"
+      },
+      {
+        "id": "directory:core-schemas",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory schemas/ exists",
+        "state": "done",
+        "detail": "holds schemas, cat-harness"
+      },
+      {
+        "id": "directory:folios",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory folios/ exists",
+        "state": "done",
+        "detail": "holds folio"
+      },
+      {
+        "id": "directory:glossary",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory glossary/ exists",
+        "state": "done",
+        "detail": "holds glossary"
+      },
+      {
+        "id": "directory:core-tools",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory tools/ exists",
+        "state": "done",
+        "detail": "holds tools"
+      },
+      {
+        "id": "directory:core-adapters",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory adapters/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:core-src",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory src/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:core-scripts",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory scripts/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:core-templates",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory templates/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:core-library",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory library/ exists",
+        "state": "done",
+        "detail": "holds library"
+      },
+      {
+        "id": "directory:core-methodologies",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory methodologies/ exists",
+        "state": "done",
+        "detail": "holds methodology"
+      },
+      {
+        "id": "directory:core-skills",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory skills/ exists",
+        "state": "done",
+        "detail": "holds skills"
+      },
+      {
+        "id": "directory:core-processes",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory processes/ exists",
+        "state": "done",
+        "detail": "holds processes"
+      },
+      {
+        "id": "directory:scenarios",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory scenarios/ exists",
+        "state": "done",
+        "detail": "holds scenarios"
+      },
+      {
+        "id": "directory:qa",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory test/results/ exists",
+        "state": "done",
+        "detail": "holds qa"
+      },
+      {
+        "id": "directory:memory",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory memory/ exists",
+        "state": "done",
+        "detail": "holds memory"
+      },
+      {
+        "id": "directory:beans",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory beans/ exists",
+        "state": "done",
+        "detail": "holds beans"
+      },
+      {
+        "id": "directory:folio-assistant-core-libraries",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory libraries/ exists",
+        "state": "done",
+        "detail": "holds software-library"
+      },
+      {
+        "id": "directory:health",
+        "namedBy": "folio-assistant-core",
+        "what": "declared directory test/health/results/ exists",
+        "state": "done",
+        "detail": "holds health"
+      },
+      {
+        "id": "asset:agent-instructions",
+        "namedBy": "folio-assistant-core",
+        "what": "declared agent-instructions AGENTS.md exists",
+        "state": "done",
+        "detail": "AGENTS.md"
+      },
+      {
+        "id": "asset:readme",
+        "namedBy": "folio-assistant-core",
+        "what": "declared instance-readme README.md exists",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "asset:npm-manifest",
+        "namedBy": "folio-assistant-core",
+        "what": "declared package-manifest package.json exists",
+        "state": "done",
+        "detail": "package.json"
+      },
+      {
+        "id": "asset:unkinded-baseline",
+        "namedBy": "folio-assistant-core",
+        "what": "declared unkinded-baseline node-kinds.baseline.json exists",
+        "state": "done",
+        "detail": "node-kinds.baseline.json"
+      },
+      {
+        "id": "readme",
+        "namedBy": "folio-assistant-core",
+        "what": "the root has a README.md (FR-8)",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "site:workflow",
+        "namedBy": "folio-assistant-core",
+        "what": "a workflow that builds the site and deploys it to GitHub Pages",
+        "state": "done",
+        "detail": ".github/workflows/publish-context.yml"
+      },
+      {
+        "id": "site:branch",
+        "namedBy": "folio-assistant-core",
+        "what": "a gh-pages branch exists on litlfred/folio-assistant-core, for Pages to serve",
+        "state": "could-not-determine",
+        "detail": "no `git` here to ask the remote",
+        "action": "create it: an orphan gh-pages holding a placeholder index.html and .nojekyll, pushed to https://github.com/litlfred/folio-assistant-core"
+      },
+      {
+        "id": "site:enabled",
+        "namedBy": "folio-assistant-core",
+        "what": "GitHub Pages is on for litlfred/folio-assistant-core, serving the gh-pages branch",
+        "state": "could-not-determine",
+        "detail": "no `gh` CLI here, so Pages could not be checked or enabled",
+        "action": "open https://github.com/litlfred/folio-assistant-core/settings/pages → \"Build and deployment\" → Source: \"Deploy from a branch\" → branch `gh-pages`, folder `/ (root)` (free for a public repository; the branch must exist first — site:branch). Then re-run the Pages workflow from the Actions tab, or push to main."
+      },
+      {
+        "id": "site:live",
+        "namedBy": "folio-assistant-core",
+        "what": "the site answers at https://litlfred.github.io/folio-assistant-core/, and its README page at https://litlfred.github.io/folio-assistant-core/README.html",
+        "state": "could-not-determine",
+        "detail": "https://litlfred.github.io/folio-assistant-core/ could not be reached from here; https://litlfred.github.io/folio-assistant-core/README.html could not be reached from here — an answer about the way here (a proxy, an access rule), not about the site",
+        "action": "open https://litlfred.github.io/folio-assistant-core/README.html in a browser"
+      }
+    ]
+  },
+  "health": {
+    "badges": [
+      {
+        "id": "initialization",
+        "state": "unknown",
+        "label": "3 setup step(s) could not be checked from here"
+      },
+      {
+        "id": "repository",
+        "state": "finding",
+        "label": "repository health: findings"
+      }
+    ]
+  }
+}
