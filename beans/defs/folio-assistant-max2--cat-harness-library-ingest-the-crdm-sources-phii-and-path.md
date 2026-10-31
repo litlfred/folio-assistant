@@ -6,7 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T01:56:00Z
-updated_at: 2026-10-31T02:11:00Z
+updated_at: 2026-10-31T06:42:00Z
+parent: folio-assistant-dthl
 ---
 
 Owner, 2026-10-31 01:54Z (card "What should I do with the SDLC alignment findings?", option A): add the SDLC alignment to the PHC workplan and fetch the CRDM sources. Owner 01:53Z: "cat-harness CRDM should be referencing PHII and PATH CRDM".
