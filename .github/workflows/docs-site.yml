@@ -303,6 +303,9 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           set -eu
+          # Everything this step says also goes to a log the stamp step carries
+          # into build.json, so a quiet or failed run can be read from gh-pages.
+          exec > >(tee "$RUNNER_TEMP/writer-verify.log") 2>&1
           S=cat-harness-tools/scripts/writer-cone-verify.ts
           if [ ! -f "$S" ]; then echo "this tools pin has no $S: no dry run"; exit 0; fi
           # The newest records `writer-records.yml` uploaded after a deploy.
@@ -1203,6 +1206,9 @@ jobs:
           # the page dry run already expects it to move).
           if [ -f "$RUNNER_TEMP/writer-verdicts.json" ]; then
             jq --slurpfile v "$RUNNER_TEMP/writer-verdicts.json" '. + {writerVerdicts: $v[0]}' ./_site/build.json > "$RUNNER_TEMP/build.json" && mv "$RUNNER_TEMP/build.json" ./_site/build.json
+          fi
+          if [ -f "$RUNNER_TEMP/writer-verify.log" ]; then
+            jq --rawfile l "$RUNNER_TEMP/writer-verify.log" '. + {writerVerifyLog: ($l | split("\n") | .[-60:])}' ./_site/build.json > "$RUNNER_TEMP/build.json" && mv "$RUNNER_TEMP/build.json" ./_site/build.json
           fi
           cat ./_site/build.json
           # Bean fwtz: the writer records sit beside the stamp, so the NEXT
