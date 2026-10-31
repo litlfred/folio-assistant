@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "claude/preview-drop-nav-activation",
-    "sha": "56864cc595583fba39d9b2cbdafd8638e2ad888a",
+    "sha": "f1ca4079f57338abf70534b0cb1b92c107cd08d8",
     "pr": "2839/merge",
-    "run": "41205914953"
+    "run": "41212371288"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/who-iris/process/Process_IrisCdnNightly",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "IRIS CDN nightly change ingest",
-      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (owner, 2026-10-30: full rebuild nightly; sorted output keeps unchanged partitions byte-identical), and publish a signed rel…",
-      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (owner, 2026-10-30: full rebuild nightly; sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
+      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release.",
+      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
       "enforcement": "strict",
       "sourcePath": "processes/iris-cdn-nightly.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-nightly.bpmn",

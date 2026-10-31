@@ -1,0 +1,45 @@
+{
+  "$schema": "folio-graph-projection/v1",
+  "tile": {
+    "folio": {
+      "count": 1,
+      "unit": "stickies"
+    }
+  },
+  "directories": [
+    {
+      "dir": "who-iris/folio",
+      "present": true,
+      "nodes": 1,
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 1240,
+          "size": "1.2 KB"
+        },
+        {
+          "path": "who-iris.json",
+          "bytes": 814,
+          "size": "814 B"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "who-iris",
+      "summary": "A catalogue by reference",
+      "theme": "iris-sticky",
+      "anchor": "page:index",
+      "declaredIn": "who-iris.json",
+      "links": [
+        {
+          "label": "WHO IRIS",
+          "href": "/who-iris/"
+        }
+      ],
+      "chars": 153,
+      "file": "who-iris/folio/who-iris.json"
+    }
+  ]
+}

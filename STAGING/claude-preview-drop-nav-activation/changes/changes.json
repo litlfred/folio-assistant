@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "23b9d20bf8b6c6bbeb18338f512217f3a12c6a05",
+    "head": "04b64c5a6e2ab8657cad0145e4e51884b7f0a25f",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "23b9d20bf8b6c6bbeb18338f512217f3a12c6a05",
+        "ref": "04b64c5a6e2ab8657cad0145e4e51884b7f0a25f",
         "mounted": true
       },
       {
@@ -18,7 +18,52 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "23b9d20bf8b6c6bbeb18338f512217f3a12c6a05",
+        "ref": "04b64c5a6e2ab8657cad0145e4e51884b7f0a25f",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/schemas/sdlc/kg-qa.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "schemas/sdlc/kg-qa.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/ci-cone.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/ci-cone.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/declared-path-baseline.json",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/declared-path-baseline.json",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/derive-at-publish.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/derive-at-publish.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/kg-validate.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/kg-validate.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
         "mounted": true
       },
       {
@@ -26,7 +71,34 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/lib/site-bar.ts",
-        "ref": "430e6e9f3f79d1dce616d10572687dc534167017",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/check-qa-result-links.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/check-qa-result-links.test.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/e2e-corpus-coupling.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/e2e-corpus-coupling.test.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/kg/declared-paths.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/kg/declared-paths.test.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -35,8 +107,242 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/ui/site-bar.test.ts",
-        "ref": "430e6e9f3f79d1dce616d10572687dc534167017",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
         "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/writer-cone.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/writer-cone.test.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/writer-cone.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/writer-cone.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/test/coordinator/kg-validate-nested-instances.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "test/coordinator/kg-validate-nested-instances.test.ts",
+        "ref": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/folio-assistant-core.json",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "folio-assistant-core.json",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/package.json",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "package.json",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/pipeline/qa-checkers-acronyms.ts",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "pipeline/qa-checkers-acronyms.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/processes/content/draft-to-publication.bpmn",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "processes/content/draft-to-publication.bpmn",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/processes/content/draft-to-publication.checklist.md",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "processes/content/draft-to-publication.checklist.md",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/processes/content/public-comment-release.bpmn",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "processes/content/public-comment-release.bpmn",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/processes/content/public-comment-release.checklist.md",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "processes/content/public-comment-release.checklist.md",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/processes/content/public-comment.checklist.md",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "processes/content/public-comment.checklist.md",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/qa-checkers/acronym-in-glossary.json",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "qa-checkers/acronym-in-glossary.json",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/schemas/acronyms.test.ts",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "schemas/acronyms.test.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/schemas/acronyms.ts",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "schemas/acronyms.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/schemas/glossary-focus.test.ts",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "schemas/glossary-focus.test.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/schemas/glossary.ts",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "schemas/glossary.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/scripts/glossary-acronyms.ts",
+        "status": "added",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "scripts/glossary-acronyms.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/scripts/glossary-page.ts",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "scripts/glossary-page.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "skills/content/folio-document-adapter/review-sheet-script.md",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/skills/library/cataloguing/glossary-terms.md",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "skills/library/cataloguing/glossary-terms.md",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "tools/review-sheet-sync/build-review-sheet-script.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/tools/review-sheet-sync/dist/Code.gs",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "tools/review-sheet-sync/dist/Code.gs",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/tools/review-sheet-sync/dist/Stub.gs",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "tools/review-sheet-sync/dist/Stub.gs",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/tools/review-sheet-sync/review-sheet.gs",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "tools/review-sheet-sync/review-sheet.gs",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/tools/review-sheet-sync/review-sheet.test.ts",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "tools/review-sheet-sync/review-sheet.test.ts",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
+        "mounted": true
+      },
+      {
+        "path": "folio-assistant-core/tools/review-sheet-sync/stub.gs",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant-core",
+        "upstreamPath": "tools/review-sheet-sync/stub.gs",
+        "ref": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "instance": "folio-assistant-core",
         "mounted": true
       }
     ],
@@ -44,9 +350,16 @@
       {
         "instance": "cat-harness-tools",
         "repository": "litlfred/cat-harness-tools",
-        "from": "f62a1d9417a60f71b3c96835a33afdc572b957e3",
-        "to": "430e6e9f3f79d1dce616d10572687dc534167017",
-        "files": 2
+        "from": "0644c1986ca634207255588c404a6442d0f6c0cc",
+        "to": "9d8fe1ededd16a5fb36b8defedc2f744b80c90c7",
+        "files": 13
+      },
+      {
+        "instance": "folio-assistant-core",
+        "repository": "litlfred/folio-assistant-core",
+        "from": "00ae0eccc981542dcbf4c60f9c0b6ff5798e1c72",
+        "to": "53b6f568544bf4502c32191f3b69609a589d9014",
+        "files": 23
       }
     ]
   },
@@ -55,8 +368,63 @@
     "renderer": "docs-site+published-provenance",
     "method": "cone",
     "inputs": [],
-    "files": [],
+    "files": [
+      {
+        "path": "en/cat-harness/processes/draft-to-publication.html",
+        "change": "changed",
+        "role": "content",
+        "via": [
+          "folio-assistant-core/processes/content/draft-to-publication.bpmn"
+        ]
+      },
+      {
+        "path": "reference/skill-instructions/glossary-terms.html",
+        "change": "changed",
+        "role": "content",
+        "via": [
+          "folio-assistant-core/skills/library/cataloguing/glossary-terms.md"
+        ]
+      },
+      {
+        "path": "reference/skill-instructions/review-sheet-script.html",
+        "change": "changed",
+        "role": "content",
+        "via": [
+          "folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md"
+        ]
+      }
+    ],
     "undetermined": [
+      {
+        "input": "cat-harness-tools/schemas/sdlc/kg-qa.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-schemas (the branch changes cat-harness-tools/schemas/sdlc/kg-qa.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b7eedc4bdcb01fbcc43df11e0d538e8629501cf5150663afa0ed8bb6fc095ac1"
+      },
+      {
+        "input": "cat-harness-tools/scripts/ci-cone.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/ci-cone.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "25a155a0cf0a6f053d7f3bbaeaabdae1a0a07db845d5edf8461614a0c9fe86c8"
+      },
+      {
+        "input": "cat-harness-tools/scripts/declared-path-baseline.json",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/declared-path-baseline.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "8ddce46f62a83b6ab2bbb5fecf0ed99e44b5d31f4eb857fc2789b44c7892bfa9"
+      },
+      {
+        "input": "cat-harness-tools/scripts/derive-at-publish.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/derive-at-publish.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "d8586dc3e8f06555545b6e03334418cdd8e37b1bb831b748b00f8aa8dee1055b"
+      },
+      {
+        "input": "cat-harness-tools/scripts/kg-validate.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/kg-validate.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b6e886bc9094a41a0db9d6e167d293499481215a9483497b5b678d3725683941"
+      },
       {
         "input": "cat-harness-tools/scripts/lib/site-bar.ts",
         "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/lib/site-bar.ts); the pages rendered from them are not mapped file by file",
@@ -64,18 +432,180 @@
         "hash": "5e9f4677f50bb4f43dfdcb0be998f47b93f51dde8aa9ca2f649062d9d294cade"
       },
       {
+        "input": "cat-harness-tools/scripts/tests/check-qa-result-links.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/check-qa-result-links.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "2162e471e788e2fce1f4899bcd4582e11c143beb4b1fc437e185ee556f8ebae3"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/e2e-corpus-coupling.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/e2e-corpus-coupling.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "9897feee74a1894755f4c9faf7860d6ba9c4d8dc9d04816d3ba21c840d0728b5"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/kg/declared-paths.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/kg/declared-paths.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "a600f3ef1a44195974b8d8cf9a4c113c6bef7b27dc1f7cbf5c386b813b2a03d1"
+      },
+      {
         "input": "cat-harness-tools/scripts/tests/ui/site-bar.test.ts",
         "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/ui/site-bar.test.ts); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "3aef6d569ada2d1a9c8ac837ae966139750fe3047d7cf65e69f8bdc47bbf39d6"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/writer-cone.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/writer-cone.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "35b176ae51c1a612a025fca2b0e58ae861fca67bc4361c718c9b3afa79687722"
+      },
+      {
+        "input": "cat-harness-tools/scripts/writer-cone.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/writer-cone.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e2eddc8f5574ce82cf45f99eddecacb82adc941747a1fe2ea286083e5a2cba67"
+      },
+      {
+        "input": "cat-harness-tools/test/coordinator/kg-validate-nested-instances.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-tests (the branch changes cat-harness-tools/test/coordinator/kg-validate-nested-instances.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "bf5e99d796f82d2766f65aec322de6e93990a4110e824b016e8ee3a0485cff71"
+      },
+      {
+        "input": "folio-assistant-core/pipeline/qa-checkers-acronyms.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-pipeline (the branch changes folio-assistant-core/pipeline/qa-checkers-acronyms.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b0b6ac4571c2ebadc9a878267319c7ddd257c6669a38a5a7a0e6cdd46984c88d"
+      },
+      {
+        "input": "folio-assistant-core/processes/content/draft-to-publication.bpmn",
+        "reason": "the staging cone carries folio-assistant-core/core-processes (the branch changes folio-assistant-core/processes/content/draft-to-publication.bpmn); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "fc30ba2f31532b3f5049aa506974768c6ee11dc5c375169d474aba4590ab8b73"
+      },
+      {
+        "input": "folio-assistant-core/processes/content/draft-to-publication.checklist.md",
+        "reason": "the staging cone carries folio-assistant-core/core-processes (the branch changes folio-assistant-core/processes/content/draft-to-publication.checklist.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "3b0d556dbd6952281d965ef307c3550862645c66fb430b833de78d9206c8b144"
+      },
+      {
+        "input": "folio-assistant-core/processes/content/public-comment-release.bpmn",
+        "reason": "the staging cone carries folio-assistant-core/core-processes (the branch changes folio-assistant-core/processes/content/public-comment-release.bpmn); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "3e8c0a470c80ea333936f307eccbf73342672614f1a303943865f379c84303c2"
+      },
+      {
+        "input": "folio-assistant-core/processes/content/public-comment-release.checklist.md",
+        "reason": "the staging cone carries folio-assistant-core/core-processes (the branch changes folio-assistant-core/processes/content/public-comment-release.checklist.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "6bca33453e22939bd061c5611b83b663eccc0110e5f11e51c27cca97a1b6511f"
+      },
+      {
+        "input": "folio-assistant-core/processes/content/public-comment.checklist.md",
+        "reason": "the staging cone carries folio-assistant-core/core-processes (the branch changes folio-assistant-core/processes/content/public-comment.checklist.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "1e76b0a0d7f83f68c1ef420bec436500d21bdc9df29dc23646827794955d4bda"
+      },
+      {
+        "input": "folio-assistant-core/qa-checkers/acronym-in-glossary.json",
+        "reason": "the staging cone carries folio-assistant-core/core-qa-checkers (the branch changes folio-assistant-core/qa-checkers/acronym-in-glossary.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "487a9b177c7489b02620cdabb90bc65b4db10b5baf241e40e6d672cca82e5846"
+      },
+      {
+        "input": "folio-assistant-core/schemas/acronyms.test.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-schemas (the branch changes folio-assistant-core/schemas/acronyms.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "f8940d78af6818b2d189d0d74733f60736c85fa5f84ee869c58e416e93d9e2fe"
+      },
+      {
+        "input": "folio-assistant-core/schemas/acronyms.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-schemas (the branch changes folio-assistant-core/schemas/acronyms.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "9f82b9e9e4127c60c8c7c130d088d17b05211ffd8be834222eea4c0c016bdd85"
+      },
+      {
+        "input": "folio-assistant-core/schemas/glossary-focus.test.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-schemas (the branch changes folio-assistant-core/schemas/glossary-focus.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "02f8846647c7714a2b6a2436a605618213607d6f430ecd4b82bf81e816bd6be2"
+      },
+      {
+        "input": "folio-assistant-core/schemas/glossary.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-schemas (the branch changes folio-assistant-core/schemas/glossary.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "15bb94f44549838f6fe9789b7078589bbcd2be7ae1b98adf6517e2e47d7fa5a9"
+      },
+      {
+        "input": "folio-assistant-core/scripts/glossary-acronyms.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-scripts (the branch changes folio-assistant-core/scripts/glossary-acronyms.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "cd86bad3c4267976c54b6896f93b6ccf1a7cd0b0041fa5211826742ed0021ea9"
+      },
+      {
+        "input": "folio-assistant-core/scripts/glossary-page.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-scripts (the branch changes folio-assistant-core/scripts/glossary-page.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "c6c722b222f88f18634254064a7fb99eef65f6215948b5df0ac503f3c3df645a"
+      },
+      {
+        "input": "folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md",
+        "reason": "the staging cone carries folio-assistant-core/core-skills (the branch changes folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "55396fad8a1b34a8974c8469f02ed40683e2cdd39a72a87d489c1605549eed0f"
+      },
+      {
+        "input": "folio-assistant-core/skills/library/cataloguing/glossary-terms.md",
+        "reason": "the staging cone carries folio-assistant-core/core-skills (the branch changes folio-assistant-core/skills/library/cataloguing/glossary-terms.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "d12fad9acff4266202cf4252dde56a56911550de40678ffac642a171748462a4"
+      },
+      {
+        "input": "folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-tools (the branch changes folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "5627c26086a123ad0f59d0024d32f7b9914af34f26a66b4deeedbbcfacd83489"
+      },
+      {
+        "input": "folio-assistant-core/tools/review-sheet-sync/dist/Code.gs",
+        "reason": "the staging cone carries folio-assistant-core/core-tools (the branch changes folio-assistant-core/tools/review-sheet-sync/dist/Code.gs); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "d6880398eb2dca1db4790e28be73593ed1b58d919c6af5f5c0b2a06bc384e05a"
+      },
+      {
+        "input": "folio-assistant-core/tools/review-sheet-sync/dist/Stub.gs",
+        "reason": "the staging cone carries folio-assistant-core/core-tools (the branch changes folio-assistant-core/tools/review-sheet-sync/dist/Stub.gs); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "4827f900c2273c1f7f66359e3c04ce48e641f80f02aed8228d6b5259d58ab22b"
+      },
+      {
+        "input": "folio-assistant-core/tools/review-sheet-sync/review-sheet.gs",
+        "reason": "the staging cone carries folio-assistant-core/core-tools (the branch changes folio-assistant-core/tools/review-sheet-sync/review-sheet.gs); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "63a91be7cc8ec3e7e29f6cd90e8a235053f07f35af133eb14541391b55a9cfe5"
+      },
+      {
+        "input": "folio-assistant-core/tools/review-sheet-sync/review-sheet.test.ts",
+        "reason": "the staging cone carries folio-assistant-core/core-tools (the branch changes folio-assistant-core/tools/review-sheet-sync/review-sheet.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b51ea6a7e1df9dfb253bca18c4408c1226f6ca86957cf5cab9208681f3f04a7d"
+      },
+      {
+        "input": "folio-assistant-core/tools/review-sheet-sync/stub.gs",
+        "reason": "the staging cone carries folio-assistant-core/core-tools (the branch changes folio-assistant-core/tools/review-sheet-sync/stub.gs); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e183aca0cf26d15a5548307d1263e552511c885126c085af081be8450c5194a6"
       }
     ]
   },
   "qa": {
-    "status": "known",
-    "beforeCommit": "e7be5d6790904a690bfbb6a8377778ded5e1f946",
-    "baseCommit": "e7be5d6790904a690bfbb6a8377778ded5e1f946",
-    "measured": 19485,
+    "status": "not-base",
+    "beforeCommit": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+    "baseCommit": "73442974deab8690245cd6879a1f72eeea0a2075",
+    "measured": 19616,
     "notInCone": [
       {
         "path": "api/classes/folio-assistant_schemas_kind-validator.ValidatorRefError.html",
@@ -16008,7 +16538,7 @@
         "via": []
       },
       {
-        "path": "assets/beans/count.json",
+        "path": "assets/auto-docs/index.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16038,7 +16568,163 @@
         "via": []
       },
       {
+        "path": "assets/folio/who-iris/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/cat-harness--kg-skills.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/folio-assistant-core--kg-skills.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/folio-assistant-core--kg-tools.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/harness/config.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/harness/tiles.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness/glossary.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness/glossary.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness/glossary.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-core.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-core.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-core.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-core/glossary.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-core/glossary.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-core/glossary.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-sci.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-sci.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-sci.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-sci/glossary.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-sci/glossary.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/folio-assistant-sci/glossary.svg",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16057,6 +16743,24 @@
       },
       {
         "path": "assets/img/uml/overview/smart-base.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base/glossary.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base/glossary.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base/glossary.svg",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16147,6 +16851,114 @@
       },
       {
         "path": "assets/img/uml/overview/smart-trust/smart-trust-document-kinds.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/glossary.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/glossary.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/glossary.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/who-iris-scenarios.dot",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/who-iris-scenarios.landscape.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/who-iris-scenarios.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-change-review-committee.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-change-review-make.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-change-review-publish.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-change-review-stage.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-change-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/draft-to-publication.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/public-comment-release.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/public-comment.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/docs-ui.js",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16422,13 +17234,25 @@
         "via": []
       },
       {
+        "path": "assets/processes/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/qa/index.json",
         "change": "changed",
         "role": "data",
         "via": []
       },
       {
-        "path": "assets/slices/beans.4fa73d96a7cc2a5fcab06723d3f15f06725d108b2d0194e26a14975b213b6002.sqlite3",
+        "path": "assets/schemas/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.87bda102635ff7600df0305428534125bb4d0746b1185f1c88b0a7480ed2099c.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
@@ -16446,13 +17270,37 @@
         "via": []
       },
       {
-        "path": "assets/slices/kg.cfc03ae54246fdeb23851f2385101ded7fe041e238c7d9cedd39186062456441.sqlite3",
+        "path": "assets/slices/kg.42f20b64a3f51667863c2e4bf4f8d5667d0cb61b79266d0d8645f7cc8be6a074.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
       },
       {
         "path": "assets/slices/kg.sqlite3.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/todos/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/tools/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/translation-status/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/voices/index.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16940,6 +17788,12 @@
       {
         "path": "cat-harness/auto-docs/index/roles/smart-base-scenarios/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "cat-harness/auto-docs/index/roles/who-iris-scenarios/index.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -18840,6 +19694,30 @@
         "via": []
       },
       {
+        "path": "cat-harness/processes/content-change-review-committee.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "cat-harness/processes/content-change-review-make.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "cat-harness/processes/content-change-review-publish.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "cat-harness/processes/content-change-review-stage.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "cat-harness/processes/content-change-review.html",
         "change": "changed",
         "role": "content",
@@ -19230,6 +20108,12 @@
         "via": []
       },
       {
+        "path": "cat-harness/processes/public-comment-release.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "cat-harness/processes/public-comment.html",
         "change": "changed",
         "role": "content",
@@ -19566,6 +20450,12 @@
         "via": []
       },
       {
+        "path": "cat-harness/scenarios/who-iris/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "cat-harness/schemas/bootstrap-tools/index.html",
         "change": "changed",
         "role": "content",
@@ -19629,12 +20519,6 @@
         "path": "cat-harness/site/index.html",
         "change": "changed",
         "role": "content",
-        "via": []
-      },
-      {
-        "path": "cat-harness/state.jsonld",
-        "change": "changed",
-        "role": "data",
         "via": []
       },
       {
@@ -25566,9 +26450,63 @@
         "via": []
       },
       {
+        "path": "en/cat-harness/processes/content-change-review-committee.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-committee.tasks.json",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-make.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-make.tasks.json",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-publish.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-publish.tasks.json",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-stage.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review-stage.tasks.json",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "en/cat-harness/processes/content-change-review.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/content-change-review.tasks.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -25686,9 +26624,9 @@
         "via": []
       },
       {
-        "path": "en/cat-harness/processes/draft-to-publication.html",
+        "path": "en/cat-harness/processes/draft-to-publication.tasks.json",
         "change": "changed",
-        "role": "content",
+        "role": "data",
         "via": []
       },
       {
@@ -25806,9 +26744,21 @@
         "via": []
       },
       {
+        "path": "en/cat-harness/processes/iris-cdn-initial-load.tasks.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "en/cat-harness/processes/iris-cdn-nightly.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/iris-cdn-nightly.tasks.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -25818,9 +26768,21 @@
         "via": []
       },
       {
+        "path": "en/cat-harness/processes/iris-cdn-reconcile.tasks.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "en/cat-harness/processes/iris-cdn-sign-publish.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/iris-cdn-sign-publish.tasks.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -25953,6 +26915,18 @@
         "path": "en/cat-harness/processes/pr-checks-present.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/public-comment-release.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/public-comment-release.tasks.json",
+        "change": "added",
+        "role": "data",
         "via": []
       },
       {
@@ -26288,6 +27262,12 @@
       {
         "path": "en/cat-harness/scenarios/smart-base/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/scenarios/who-iris/index.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -27936,8 +28916,26 @@
         "via": []
       },
       {
+        "path": "en/folio-assistant-core/glossary/bpmn-activities/a-d/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/folio-assistant-core/glossary/bpmn-activities/e-q/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "en/folio-assistant-core/glossary/bpmn-activities/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/folio-assistant-core/glossary/bpmn-activities/r-z/index.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -28680,8 +29678,26 @@
         "via": []
       },
       {
+        "path": "folio-assistant-core/glossary/bpmn-activities/a-d/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "folio-assistant-core/glossary/bpmn-activities/e-q/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "folio-assistant-core/glossary/bpmn-activities/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "folio-assistant-core/glossary/bpmn-activities/r-z/index.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -28824,8 +29840,26 @@
         "via": []
       },
       {
+        "path": "glossary/bpmn-activities/a-d/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "glossary/bpmn-activities/e-q/index.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "glossary/bpmn-activities/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "glossary/bpmn-activities/r-z/index.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -28977,6 +30011,12 @@
         "path": "id-lookup/index.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "id-lookup/who-iris/manifest.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -29330,6 +30370,30 @@
       {
         "path": "processes/content-acquisition.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "processes/content-change-review-committee.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "processes/content-change-review-make.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "processes/content-change-review-publish.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "processes/content-change-review-stage.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -29720,6 +30784,12 @@
       {
         "path": "processes/pr-checks-present.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "processes/public-comment-release.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -30504,6 +31574,12 @@
         "via": []
       },
       {
+        "path": "reference/skill-instructions/bpmn-detangle.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "reference/skill-instructions/bpmn-processes.html",
         "change": "changed",
         "role": "content",
@@ -31074,6 +32150,12 @@
         "via": []
       },
       {
+        "path": "reference/skill-instructions/figure-rebuild.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "reference/skill-instructions/filing-dublin-core.html",
         "change": "changed",
         "role": "content",
@@ -31189,12 +32271,6 @@
       },
       {
         "path": "reference/skill-instructions/glossary-build.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
-        "path": "reference/skill-instructions/glossary-terms.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -32257,12 +33333,6 @@
       },
       {
         "path": "reference/skill-instructions/review-heatmap.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
-        "path": "reference/skill-instructions/review-sheet-script.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -37968,6 +39038,12 @@
         "via": []
       },
       {
+        "path": "smart-base/fhir-artifact-index/menu.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "smart-base/fhir-artifact-index/package.tgz",
         "change": "changed",
         "role": "data",
@@ -39547,6 +40623,12 @@
       },
       {
         "path": "smart-trust-phw/fhir-artifact-index/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "smart-trust-phw/fhir-artifact-index/menu.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -48912,6 +49994,216 @@
         "via": []
       },
       {
+        "path": "subgraph/cat-harness-tools/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/process/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/process/workflow/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/process/workflow/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/ui/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/ui/ui-core/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/ui/ui-core/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/processes/content/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/processes/content/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/processes/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/content/folio-document-adapter/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/content/folio-document-adapter/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/content/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/library/cataloguing/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/library/cataloguing/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/library/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/library/ingestion/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/skills/library/ingestion/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/figure-coverage/index.hydrated.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/figure-coverage/index.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/review-sheet-sync/dist/index.hydrated.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/review-sheet-sync/dist/index.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/review-sheet-sync/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/folio-assistant-core/tools/review-sheet-sync/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/processes/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/scenarios/index.hydrated.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/scenarios/index.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "subscriptions/index.html",
         "change": "changed",
         "role": "content",
@@ -50592,6 +51884,12 @@
         "via": []
       },
       {
+        "path": "uml/overview/who-iris/who-iris-scenarios.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "uml/overview/who-iris/who-iris-scripts.html",
         "change": "changed",
         "role": "content",
@@ -51084,7 +52382,11 @@
         "via": []
       }
     ],
-    "confirmed": [],
+    "confirmed": [
+      "en/cat-harness/processes/draft-to-publication.html",
+      "reference/skill-instructions/glossary-terms.html",
+      "reference/skill-instructions/review-sheet-script.html"
+    ],
     "unconfirmed": [],
     "absent": [
       {
@@ -51129,12 +52431,12 @@
           "payload/sha256/00e2f0ada38ad1f24db3cab94e543e12294cd1cd4079d733ed168d5ac28c5b15.json",
           "payload/sha256/00efa6414cd17c95c0ef818e6d2b85b714a2c015212231fcd7b34e217bfa4927",
           "payload/sha256/00efa6414cd17c95c0ef818e6d2b85b714a2c015212231fcd7b34e217bfa4927.json",
-          "payload/sha256/01136654393d76495fc9b5343058d139aee0fea4c93ed6e6571690b8bc65ec55",
-          "payload/sha256/01136654393d76495fc9b5343058d139aee0fea4c93ed6e6571690b8bc65ec55.json",
           "payload/sha256/0179c7eaf99c857bb94914e8dc7c206b1d77e99ceeabb5153b0177ac7f23858b",
           "payload/sha256/0179c7eaf99c857bb94914e8dc7c206b1d77e99ceeabb5153b0177ac7f23858b.json",
           "payload/sha256/01dc1968032dc9b254268dc4dd6093a0a6b321b66cea806e2632686f69f98ab4",
           "payload/sha256/01dc1968032dc9b254268dc4dd6093a0a6b321b66cea806e2632686f69f98ab4.json",
+          "payload/sha256/021c1b010ba881fb4308cb32a5b0a89c780c62cb4f93cc5359a6ed5efef82c9c",
+          "payload/sha256/021c1b010ba881fb4308cb32a5b0a89c780c62cb4f93cc5359a6ed5efef82c9c.json",
           "payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8",
           "payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8.json"
         ]

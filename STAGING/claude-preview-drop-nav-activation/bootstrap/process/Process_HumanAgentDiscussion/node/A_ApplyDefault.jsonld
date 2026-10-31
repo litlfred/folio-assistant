@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/bootstrap/process/Process_HumanAgentDiscussion/node/A_ApplyDefault.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/bootstrap/process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Apply the stated default, and say so",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

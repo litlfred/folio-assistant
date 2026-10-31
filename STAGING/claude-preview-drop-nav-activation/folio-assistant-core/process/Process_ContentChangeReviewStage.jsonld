@@ -1,0 +1,76 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "f1ca4079f57338abf70534b0cb1b92c107cd08d8",
+    "pr": "2839/merge",
+    "run": "41212371288"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Stage the content change",
+      "summary": "Putting one push of a content change where a person can look at it: build the staging site, deploy it under the branch's slug, link it on the pull request, and watch the branch's CI.",
+      "description": "Putting one push of a content change where a person can look at it: build the staging site, deploy it under the branch's slug, link it on the pull request, and watch the branch's CI.\n\nCalled from content-change-review after the first push and after every revision, so the author and the committee never review a stale preview.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/content-change-review-stage.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-change-review-stage.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/assets/img/workflows/content-change-review-stage.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Start_Pipeline"
+      ],
+      "nodeCount": 6,
+      "flowCount": 5,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Start_Pipeline",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_BuildStaging",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_BuildStaging",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_DeployStaging",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_DeployStaging",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_CommentPR",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_CommentPR",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p4b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/process/Process_ContentChangeReviewStage/node/End_Staged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p4b"
+    }
+  ]
+}
