@@ -358,7 +358,22 @@ jobs:
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
+      # BEAN fwtz: a preview skips each derive:publish writer whose recorded
+      # reads all still match, and puts back the outputs main's newest
+      # recording kept (owner 2026-10-31 14:32Z: "dont wait for clean deploys
+      # to skip. we can fix aftermath"). Main's deploy still runs every writer.
+      # Kill switch: set the repository variable WRITER_SKIP to `off`.
+      - name: Writer records and outputs from main's newest recording (bean fwtz)
+        if: ${{ vars.WRITER_SKIP != 'off' }}
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/writer-cone
+          key: writer-cone-${{ github.sha }}
+          restore-keys: writer-cone-
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        env:
+          CAT_WRITER_SKIP: ${{ vars.WRITER_SKIP != 'off' && '1' || '' }}
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push
         # made a committed copy stale on main and every open PR (2026-10-05).
