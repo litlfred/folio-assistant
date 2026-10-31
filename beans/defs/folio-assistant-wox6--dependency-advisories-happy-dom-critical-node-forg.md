@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T04:25:00Z
 ---
 
 Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.
@@ -37,3 +37,7 @@ Run `bun run cat check:dependency-advisories` (warn-only today) after bumping.
 - [ ] No high advisory left without a recorded reason
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+## Progress 2026-10-31
+
+sci part fixed in litlfred/folio-assistant-sci#156 (merge `0729230`): happy-dom 21.0.4, zod ^4.6.7; sci audit 32 to 27 (0 critical). Still open: node-forge and zod 3 via the fhir-harness expo chain, undici 5.29 via jsonld, express-chain advisories via @modelcontextprotocol/sdk.
