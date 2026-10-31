@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-31T15:35:00Z
+updated_at: 2026-10-31T17:05:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -245,4 +245,5 @@ _2026-10-31T15:35:00Z_ — Follow-up updates on Option B writer-records, preview
   - [`litlfred/folio-assistant#2841`](https://github.com/litlfred/folio-assistant/pull/2841) (`08a3a88`), [`#2842`](https://github.com/litlfred/folio-assistant/pull/2842) (`c453f26`), [`#2846`](https://github.com/litlfred/folio-assistant/pull/2846) (`facc291`), [`#2848`](https://github.com/litlfred/folio-assistant/pull/2848) (`11ffff6`, re-pinning `cat-harness-tools` to `f62a1d9`, where `writer-records.yml` run `41205872016` recorded **27 of 43** writers), [`#2849`](https://github.com/litlfred/folio-assistant/pull/2849) (`c8cf761`, `writerVerdicts` in `build.json`), and [`#2850`](https://github.com/litlfred/folio-assistant/pull/2850) (`c520883`, `writerVerifyLog` in `build.json`).
   - [`litlfred/cat-harness-tools#1147`](https://github.com/litlfred/cat-harness-tools/pull/1147) (merged as `8cad4dd`: allows writers re-reading their own declared outputs for 8 writers and raises `MAX_RECORDS_PER_WRITER` to 200,000 for 4 large-tree writers), re-pinned in [`litlfred/folio-assistant#2852`](https://github.com/litlfred/folio-assistant/pull/2852) (`e9dc3ba`).
   - [`litlfred/cat-harness-tools#1149`](https://github.com/litlfred/cat-harness-tools/pull/1149) (merged as `0644c19`: `CAT_WRITER_SKIP=1` in `derive:publish` to skip writers whose records match in previews), wired in [`litlfred/folio-assistant#2853`](https://github.com/litlfred/folio-assistant/pull/2853) (`d2243e9`: caches `build/writer-cone` from `main` in `writer-records.yml` and skips unchanged `derive:publish` writers in `staging-preview.yml`).
-  - [`litlfred/folio-assistant#2854`](https://github.com/litlfred/folio-assistant/pull/2854) (`7344297`: times each command of the KG export step in `docs-site.yml`).
+  - [`litlfred/folio-assistant#2854`](https://github.com/litlfred/folio-assistant/pull/2854) (`04a7043`: times each command of the KG export step in `docs-site.yml`).
+    - [`litlfred/cat-harness-tools#1156`](https://github.com/litlfred/cat-harness-tools/pull/1156) (merged as `10ebb8b`: `rail-standalone-pages` computes each page's rail once per owner and depth, ~30x faster), re-pinned in [`litlfred/folio-assistant#2858`](https://github.com/litlfred/folio-assistant/pull/2858) (merged as `6aa82ae`).
