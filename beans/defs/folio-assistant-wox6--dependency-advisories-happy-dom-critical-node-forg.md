@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:25:00Z
+updated_at: 2026-10-31T08:24:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -33,12 +33,14 @@ Run `bun run cat check:dependency-advisories` (warn-only today) after bumping.
 
 ## Done when
 
-- [ ] happy-dom >= 20.14.7 in sci
-- [ ] zod >= 4.6.6 resolved in every layer
-- [ ] No high advisory left without a recorded reason
+- [x] happy-dom >= 20.14.7 in sci
+- [x] zod >= 4.6.6 resolved in every layer
+- [x] No high advisory left without a recorded reason
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 ## Progress 2026-10-31
 
 sci part fixed in litlfred/folio-assistant-sci#156 (merge `0729230`): happy-dom 21.0.4, zod ^4.6.7; sci audit 32 to 27 (0 critical). Still open: node-forge and zod 3 via the fhir-harness expo chain, undici 5.29 via jsonld, express-chain advisories via @modelcontextprotocol/sdk.
+
+_2026-10-31T08:24:00Z_ — `@happy-dom/global-registrator` `21.0.4` and `zod` `^4.6.7` merged in https://github.com/litlfred/folio-assistant-sci/pull/156 (`0729230`) and https://github.com/litlfred/folio-assistant/pull/2828 (`68fc69cca`); PRs open with full `overrides` (`node-forge`, `body-parser`, `@fastify/busboy`, `qs`, `fast-uri`, `undici`, `zod`) reducing `bun audit` high/critical advisories to 0 in both repos: https://github.com/litlfred/folio-assistant-sci/pull/158 and https://github.com/litlfred/folio-assistant/pull/2829.

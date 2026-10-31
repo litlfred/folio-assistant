@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T08:24:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -28,6 +28,8 @@ The source is an orphan cache branch that needs write access, so this is defence
 
 ## Done when
 
-- [ ] All three extract only regular files and directories (type whitelist), with a test on an archive holding a symlink
+- [x] All three extract only regular files and directories (type whitelist), with a test on an archive holding a symlink
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:24:00Z_ — PR open: https://github.com/litlfred/folio-assistant-sci/pull/158 (adds `tar -tvf` member-type whitelist `-` and `d` + path validation across `scripts/lake-cache-fetch.sh`, `scripts/lake-cache-fetch-multi.py`, and `scripts/lake-cache.sh`, with unit tests on archives holding a symlink).

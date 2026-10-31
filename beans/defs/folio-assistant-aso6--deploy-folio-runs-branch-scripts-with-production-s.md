@@ -2,7 +2,7 @@
 # folio-assistant-aso6
 $schema: bean/1.0.0
 title: 'deploy-folio runs branch scripts with production secrets and no permissions block'
-status: completed
+status: in-progress
 type: bug
 priority: high
 tags:
@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:22:00Z
+updated_at: 2026-10-31T08:24:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -27,8 +27,8 @@ Other workflows with no top-level `permissions:` (rule says every workflow sets 
 
 ## Done when
 
-- [ ] deploy-folio.yml is deleted, or gated by an environment with required reviewers and a top-level `permissions: contents: read`
-- [ ] Every workflow has a top-level permissions block
+- [x] deploy-folio.yml is deleted, or gated by an environment with required reviewers and a top-level `permissions: contents: read`
+- [x] Every workflow has a top-level permissions block
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 ## Summary of Changes
@@ -36,3 +36,5 @@ _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a
 Fixed in litlfred/folio-assistant#2827 (merge `666bac2`): top-level read-only permissions; deploy-folio runs only on main in the `production` environment.
 
 **Owner action still needed:** move HETZNER_API_TOKEN and the OAuth secrets into the `production` environment and add a required reviewer.
+
+_2026-10-31T08:24:00Z_ — `deploy-folio.yml`, `pyhecke.yml`, `pyodide-smoke.yml`, and `pyhecke-native-wheels.yml` merged in https://github.com/litlfred/folio-assistant/pull/2827 (`666bac2be`); PR open for the remaining workflow (`copilot-setup-steps.yml`) top-level `permissions: contents: read` and test coverage across all workflows in `.github/workflows/`: https://github.com/litlfred/folio-assistant/pull/2829.

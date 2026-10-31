@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:25:00Z
+updated_at: 2026-10-31T08:24:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -34,3 +34,5 @@ _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a
 ## Summary of Changes
 
 Fixed in litlfred/folio-assistant-sci#154 (merge `4691146`): witness-audit and proof-axis-dashboard use argv / a TS walk, `which` lookups use Bun.which; test with shell metacharacters in file names.
+
+_2026-10-31T08:24:00Z_ — Completed in merged PR https://github.com/litlfred/folio-assistant-sci/pull/154 (`4691146`, re-pinned in https://github.com/litlfred/folio-assistant/pull/2828 `68fc69cca`): replaced interpolated `execSync` calls in `scripts/witness-audit.ts`, `pipeline/proof-axis-dashboard.ts`, `adapters/paper/tools/lean.ts`, and `adapters/paper/tools/preview.ts` with `execFileSync` argv / `Bun.which`, with regression tests for file paths containing `$(` and shell metacharacters.

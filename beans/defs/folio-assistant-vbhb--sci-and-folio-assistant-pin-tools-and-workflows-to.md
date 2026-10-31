@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T08:24:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -27,7 +27,9 @@ Third-party actions in both repos are all SHA-pinned (cat-harness-tools `pin-act
 
 ## Done when
 
-- [ ] sci's reusable workflow calls are SHA-pinned
-- [ ] The sage image is pinned by digest
+- [x] sci's reusable workflow calls are SHA-pinned
+- [x] The sage image is pinned by digest
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:24:00Z_ — PRs open: https://github.com/litlfred/folio-assistant-sci/pull/158 (SHA-pins `litlfred/cat-harness-tools/.github/workflows/layer-*.yml` in `sci`) and https://github.com/litlfred/folio-assistant/pull/2829 (pins `sagemath/sagemath@sha256:310dfe23fc786f3a5a06a7b0387c60201ec79b32c0db941b7624505ee5edb565` in `.mcp.json` and `.github/workflows/wrapper-tests.yml`).
