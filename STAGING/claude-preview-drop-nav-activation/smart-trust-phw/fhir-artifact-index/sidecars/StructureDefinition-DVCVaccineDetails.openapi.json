@@ -1,0 +1,110 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DVC - Vaccine Details API",
+    "description": "Vaccine Data elements for the Digital Vaccination Certificates",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-DVCVaccineDetails.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-DVCVaccineDetails",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-DVCVaccineDetails.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-DVCVaccineDetails",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-DVCVaccineDetails.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-DVCVaccineDetails": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/trust-phw/StructureDefinition-DVCVaccineDetails.schema.json",
+        "title": "DVC - Vaccine Details",
+        "description": "Vaccine Data elements for the Digital Vaccination Certificates",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "DVCVaccineDetails",
+            "description": "Resource type identifier for DVCVaccineDetails logical model"
+          },
+          "vaccine[x]": {
+            "oneOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "object",
+                "description": "FHIR Reference"
+              }
+            ],
+            "description": "Vaccine or prophylaxis product"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of vaccination"
+          },
+          "issuer": {
+            "type": "object",
+            "description": "Relevant authoring responsible for issuing the certificate, or for overseeing the administration center"
+          },
+          "clinicianName": {
+            "type": "string",
+            "description": "Name of supervising clinician, of relevant authority responsible for issuing this certificate, or for overseeing the administering centre"
+          },
+          "manufacturer": {
+            "type": "object",
+            "description": "Manufacturer of vaccine or prophylaxis"
+          },
+          "batchNo": {
+            "type": "object",
+            "description": "Batch No. of vaccine or prophylaxis"
+          },
+          "validity": {
+            "type": "object",
+            "description": "Certificate valid from... until..."
+          }
+        },
+        "required": [
+          "resourceType",
+          "vaccine[x]",
+          "date",
+          "manufacturer",
+          "batchNo",
+          "validity"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetails"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

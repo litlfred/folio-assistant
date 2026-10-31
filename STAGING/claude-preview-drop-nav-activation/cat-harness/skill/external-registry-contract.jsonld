@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/skill/external-registry-contract.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/skill/external-registry-contract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "external-registry-contract",
+      "title": "External registry — the role's contract",
+      "description": "The contract the `external-registry` role is held to: what a trusted registry outside this instance must provide for a portal to verify what it received, and what the verifier does when it cannot. The narrowest contract the diagrams require. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/external-registry-contract.md",
+      "instructionLines": 54,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/external-registry-contract"
+    }
+  ]
+}

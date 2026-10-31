@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Options and recommendation recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/fhir-harness/skill/ig-site-theme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-theme.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-theme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ig-site-theme",
+      "title": "ig-site-theme",
+      "description": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.",
+      "instructionsPath": "skills/fhir-ig-base/ig-site-theme.md",
+      "instructionLines": 88,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

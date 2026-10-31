@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/smart-base/process/Process_DakL3Ig/node/CallActivity_L3Fhir.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "L3 FHIR IG pipeline (fhir-harness)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "requires": [
+        "http://smart.who.int/base/skill/l3-fhir-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

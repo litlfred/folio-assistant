@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Milnor exposition standard | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="The Milnor exposition standard" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="The Milnor exposition standard" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-milnor-exposition-standard",
+    "src": "../../assets/qa/reference-skill-instructions-milnor-exposition-standard/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-milnor-exposition-standard/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=573c7a318c07"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=23428cd3d675" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/milnor-exposition-standard.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#what-the-measurement-found-including-where-we-are-wrong","label":"What the measurement found, including where WE are wrong","depth":1},{"href":"#the-eight-hallmarks-and-what-0--1--2-looks-like","label":"The eight hallmarks, and what 0 / 1 / 2 looks like","depth":1},{"href":"#scoring-one-block","label":"Scoring one block","depth":1},{"href":"#do-not","label":"Do not","depth":1}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>The Milnor exposition standard</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/authoring-math/milnor-exposition-standard.md"><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/content/authoring-math/milnor-exposition-standard.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/authoring-math/milnor-exposition-standard.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-sci/skills/content/authoring-math/milnor-exposition-standard.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="the-milnor-exposition-standard"><a href="#the-milnor-exposition-standard" class="anchor-heading" aria-labelledby="the-milnor-exposition-standard"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The Milnor exposition standard
+  
+  
+</h1><p><strong>Three files sent readers here for this section and it did not exist.</strong> <code class="language-plaintext highlighter-rouge">skills/authoring/authoring-core/exposition-swarm-drain.md</code> cited “one-voice style guide →
+‘The Milnor exposition standard’” three times, one of them naming a
+<code class="language-plaintext highlighter-rouge">.claude/skills/local/one-voice-style-guide.md</code> that is not on disk. The eight
+hallmarks lived only inside the <code class="language-plaintext highlighter-rouge">expo-milnor-clarity</code> criterion’s description —
+eight words, no rubric — while that criterion is a <strong>strict gate passing only on
+a perfect 16/16</strong>. Scoring against eight bare words is how eight reviewers
+produce eight different sixteens. Bean <code class="language-plaintext highlighter-rouge">bfmf</code>.</p><p><strong>It is now derived from the paper, not from the name.</strong> The source is the
+<code class="language-plaintext highlighter-rouge">milnorlink</code> library entry — John Milnor, <em>Link Groups</em>,
+Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177–195
+(<a href="http://www.jstor.org/stable/1969685">JSTOR 1969685</a>), ingested at journal-page
+granularity so a citation to “p. 179” resolves to its
+<code class="language-plaintext highlighter-rouge">sections/page-179.md</code>. The entry is held by this layer’s <code class="language-plaintext highlighter-rouge">library</code> graph
+(<a href="https://github.com/litlfred/folio-assistant/tree/main/folio-assistant-sci/library/milnorlink"><code class="language-plaintext highlighter-rouge">library/milnorlink/</code></a>). This skill lived in
+cat-harness until 2026-10-24 and moved here with the corpus it is derived from
+(bean <code class="language-plaintext highlighter-rouge">syiq</code>, the owner’s ruling Q3 of 2026-10-01: Milnor goes to the science
+layer).</p><p>The path moved with the corpus (bean <code class="language-plaintext highlighter-rouge">frs5</code>): the platform holds no content,
+so <code class="language-plaintext highlighter-rouge">milnorlink</code> went to the science instance. This link went on pointing at
+<code class="language-plaintext highlighter-rouge">cat-harness/library/</code> for a day and nothing reported it — <code class="language-plaintext highlighter-rouge">check:subgraphs</code>
+only began walking this directory once <code class="language-plaintext highlighter-rouge">main</code> added its zero-dangling
+assertion, which is what finally surfaced it. Every rule in the <code class="language-plaintext highlighter-rouge">milnor</code>
+voice skill’s <code class="language-plaintext highlighter-rouge">voice.json</code> (<code class="language-plaintext highlighter-rouge">skill_fetch milnor</code>) quotes a page. 8899 words, 496
+sentences; measured 2026-09-19.</p><h3 id="what-the-measurement-found-including-where-we-are-wrong"><a href="#what-the-measurement-found-including-where-we-are-wrong" class="anchor-heading" aria-labelledby="what-the-measurement-found-including-where-we-are-wrong"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the measurement found, including where WE are wrong
+  
+  
+</h3><p>Three findings contradict rules stated elsewhere in this very file or in the
+<code class="language-plaintext highlighter-rouge">voice-*</code> criteria, and the paper wins:</p><p><strong><code class="language-plaintext highlighter-rouge">clearly</code> is proof economy, not editorializing.</strong> <code class="language-plaintext highlighter-rouge">voice-editorializing</code> lists
+“clearly”, “obviously” and “trivially” and fails a block for them. Milnor uses
+<em>clearly</em> <strong>fourteen times</strong> in 8899 words, and every one routes the reader’s
+effort away from a verification that is routine — <em>“Clearly the relation of
+homotopy is reflexive, symmetric and transitive”</em>, <em>“The inclusion map … is
+clearly a homotopy equivalence”</em>, <em>“This is clear for the case n = 0”</em>. Not once
+does it mean “this is remarkable”. Editorializing spends the reader’s attention
+on the author’s opinion; this spends none and saves some. In a mathematical
+block, <em>clearly</em> before a check the reader can perform is correct, and a finding
+against it should be overruled with a reviewer entry. <em>Clearly</em> attached to a
+claim the reader cannot verify in their head is the real defect — and no phrase
+list separates the two.</p><p><strong>“Never <code class="language-plaintext highlighter-rouge">I</code>” is too blunt.</strong> §”Author Voice Profile” above says <em>“we” for joint
+reasoning with the reader, never “I”</em>. Milnor’s split is sharper than a
+prohibition: exactly <strong>one</strong> first-person singular in the paper — <em>“I am indebted
+to R. H. Fox for assistance in the preparation of this paper”</em>, at the end of §1
+— against <strong>twenty</strong> uses of <em>we</em>, every one joint reasoning. Zero <em>our</em>, zero
+<em>the author</em>, zero <em>you</em>. So: a personal debt is stated personally, in one
+sentence; the mathematics is done with the reader.</p><p><strong>Concrete-before-abstract is a property of the PAPER, not the section.</strong> Read §2
+alone and it opens on pure abstraction — <em>“Let M be an open 3-dimensional
+manifold which possesses a regular triangulation. Let C be a circle.”</em> A
+per-section rubric scores that 0. It is a 2, because §1 already gave the picture
+in words a reader can hold. Never score H2 on a definitions section in
+isolation.</p><p>Two more numbers worth having: <strong>no superlatives at all</strong> (zero <em>surprisingly</em>,
+<em>remarkably</em>, <em>interestingly</em>, <em>beautiful</em>, <em>elegant</em>), and <strong>one hedge</strong> in the
+whole paper — <em>“a (possibly redundant) list”</em> — which qualifies a mathematical
+fact rather than the author’s confidence. Median sentence <strong>17 words</strong>, 90th
+percentile 29, longest 52.</p><h3 id="the-eight-hallmarks-and-what-0--1--2-looks-like"><a href="#the-eight-hallmarks-and-what-0--1--2-looks-like" class="anchor-heading" aria-labelledby="the-eight-hallmarks-and-what-0--1--2-looks-like"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The eight hallmarks, and what 0 / 1 / 2 looks like
+  
+  
+</h3><p>Each scores <strong>0, 1 or 2</strong>. Sixteen is the only passing total, so a 1 is a
+finding: “acceptable” is not the bar. Every row’s evidence is in
+the <code class="language-plaintext highlighter-rouge">milnor</code> voice skill with its page.</p><div class="table-wrapper"><table><thead><tr><th></th><th>hallmark</th><th>0</th><th>1</th><th>2</th></tr></thead><tbody><tr><td><strong>H1</strong></td><td><strong>Economy</strong> — the opening is a <em>Summary</em>, not an Introduction</td><td>A paragraph could be deleted with no loss</td><td>Sentences restate their neighbours, or a closing line summarises what was just said</td><td>Nothing can be removed without losing content</td></tr><tr><td><strong>H2</strong></td><td><strong>Concrete before abstract</strong> — scored over the unit a reader reads through</td><td>Opens on the general definition and never lands</td><td>An example arrives, but after the abstraction it was meant to motivate</td><td>The informal instance precedes the formal definition</td></tr><tr><td><strong>H3</strong></td><td><strong>Why before what</strong> — the tool’s purpose precedes the tool</td><td>The construction appears with no indication of what it is for</td><td>The motivation is present but buried after the construction</td><td>The reader knows what problem is being solved first</td></tr><tr><td><strong>H4</strong></td><td><strong>Uncluttered notation</strong> — a symbol is introduced where it is needed</td><td>Notation used once; collisions; decoration where a word would do</td><td>More indices than the argument needs</td><td>Every symbol earns its name and none is overloaded</td></tr><tr><td><strong>H5</strong></td><td><strong>Linear argument</strong> — routine verification is dispatched in a sentence</td><td>A forward reference to a result not yet stated</td><td>One aside the reader must park and return to</td><td>Read once, top to bottom, and it follows</td></tr><tr><td><strong>H6</strong></td><td><strong>Strategy before execution</strong> — say what the proof will build and why that finishes it</td><td>The argument exists only in the displays; the prose says “we compute”</td><td>Prose narrates the steps without saying why they follow</td><td>A reader who skipped every display would still follow</td></tr><tr><td><strong>H7</strong></td><td><strong>Right-tool framing</strong> — say what the method requires, in a clause</td><td>A heavy method with no indication why</td><td>The right tool, with no sense of what the alternative would cost</td><td>The reader sees why this tool and not the obvious other</td></tr><tr><td><strong>H8</strong></td><td><strong>Respect for the reader</strong> — countable: no superlatives, no hedging, no second person</td><td>Tells the reader what is beautiful, surprising or important</td><td>Hedges a claim the text can support</td><td>States what is true and lets the reader judge</td></tr></tbody></table></div><p><strong>H6 is the most transferable of the eight.</strong> Lemma 3’s proof opens by saying
+what will be built and why that finishes the job — <em>“A natural isomorphism …
+will be constructed for i = 0, 1. Since a homotopy … induces a homotopy
+equivalence …, this will complete the proof”</em> — and only then constructs it. The
+reader knows the destination before the first step, so no step is a surprise
+(p. 179).</p><h3 id="scoring-one-block"><a href="#scoring-one-block" class="anchor-heading" aria-labelledby="scoring-one-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Scoring one block
+  
+  
+</h3><ol><li><strong>Read it whole, once, without scoring.</strong> H5 and H6 are properties of the
+reading and cannot be recovered from a second pass that already knows the
+argument.</li><li><strong>Score H1–H8 and write the evidence for every score below 2</strong> — the line, and
+what the 2 would have been. A bare number is not a finding.</li><li><strong><code class="language-plaintext highlighter-rouge">milnor-brevity</code> is the companion and its resolve discipline is STRICTER.</strong>
+A repeat may be deleted only where the two occurrences are semantically
+identical. Where the content differs you may not delete, and you never delete
+maths — a diagram, an equation or a derivation. Where de-duplication would
+lose distinct content, keep it, or split the block if that helps explication.</li></ol><h3 id="do-not"><a href="#do-not" class="anchor-heading" aria-labelledby="do-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not
+  
+  
+</h3><ul><li><strong>Do not score from a diff.</strong> Every hallmark is a property of the block as a
+reader meets it, not of what changed.</li><li><strong>Do not fail a block for <code class="language-plaintext highlighter-rouge">clearly</code> before a routine verification.</strong> The
+checker no longer does either — bean <code class="language-plaintext highlighter-rouge">2t41</code> narrowed it, and the exemplar now
+scores exactly one <code class="language-plaintext highlighter-rouge">voice-editorializing</code> finding (p194’s <em>“Unfortunately these
+invariants are not strong enough”</em>, which is real). What remains yours is the
+distinction no regex makes: <code class="language-plaintext highlighter-rouge">clearly</code> before a check the reader can perform is
+correct; <code class="language-plaintext highlighter-rouge">clearly</code> on a claim they cannot verify is the author asserting where
+they should be proving.</li><li><strong>Do not fix H4 by renaming symbols across a chapter</strong> without checking what
+else binds them. Notation is shared.</li><li><strong>Do not treat a 16 as a licence.</strong> The gate is necessary, not sufficient: a
+block can be perfectly expounded and wrong.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/ChangeProposalNumber",
+  "definitions": {
+    "ChangeProposalNumber": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "description": "A change-proposal number — a pull request on GitHub, a merge request on GitLab"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ChangeProposalNumberSchema.schema.json",
+  "title": "ChangeProposalNumberSchema",
+  "description": "Generated from `ChangeProposalNumberSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/directory/site-chrome.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/directory/site-chrome",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "site-chrome",
+      "path": "site-chrome/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs"
+      ],
+      "description": "The SITE CHROME: the just-the-docs theme configuration (`_config.yml`'s theme keys, the `Gemfile`), the generic includes every page pulls in (`head_custom`, `footer_custom`, `nav_footer_custom`, `mermaid_config`) and the stylesheets and scripts they load, in their Jekyll-relative places. Concern group `ui`. It is the BASE layer of the composed docs tree: declared BEFORE `docs`, so `compose-docs` lays it down first and `docs/` overlays it (later wins; `_config.yml` merged, parse-equal to the file it was cut from, ruling D1). Empty `_includes/generated/*` stand-ins let a site with no harness pages build. A downstream that wants the harness's look without its 3,456 pages mounts `site-chrome` and omits `docs`. Owner, 2026-10-09: *\"go ahead with the cat-harness chrome subgraph\"*; proposal `docs/proposals/semantic-subgraphs-2026-10-09.md`, slice 1. The harness pages' own assets (`work-plan.*`, `process-index.js`, `slice-sqlite*`, `kg-render.js`, `vendor/sqlite-wasm`) stay in `docs/` (ruling D2).",
+      "readmePath": "site-chrome/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/cat-harness/directory/site-chrome",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/site-chrome"
+    }
+  ]
+}

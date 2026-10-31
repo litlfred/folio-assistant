@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/trust-phw/ValueSet-DisclosureStatements.schema.json",
+  "title": "Disclosure Statements Schema",
+  "description": "JSON Schema for Disclosure Statements ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "disclose-icvp",
+        "disclose-icvp-narrative",
+        "disclose-icvp-demographic",
+        "disclose-icvp-demographic-narrative",
+        "disclose-icvp-demographic-name",
+        "disclose-icvp-demographic-sex",
+        "disclose-icvp-demographic-dob",
+        "disclose-icvp-demographic-nationality",
+        "disclose-icvp-demographic-national-id",
+        "disclose-icvp-vaccination",
+        "disclose-icvp-vaccination-narrative",
+        "disclose-icvp-vaccination-clinician",
+        "disclose-icvp-vaccination-issuer"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the Disclosure Statements ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/trust-phw/ValueSet-DisclosureStatements.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/trust-phw/ValueSet-DisclosureStatements.displays.json",
+  "fhir:valueSet": "http://smart.who.int/trust-phw/ValueSet/DisclosureStatements",
+  "fhir:version": "0.1.0",
+  "fhir:expansionTimestamp": "2026-10-30T17:39:52+01:00"
+}

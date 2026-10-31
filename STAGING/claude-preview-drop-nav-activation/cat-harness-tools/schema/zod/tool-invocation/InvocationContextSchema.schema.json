@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/InvocationContext",
+  "definitions": {
+    "InvocationContext": {
+      "type": "object",
+      "properties": {
+        "process": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+          "description": "A BPMN process element id, e.g. Process_CRDM"
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "process",
+        "task"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/InvocationContextSchema.schema.json",
+  "title": "InvocationContextSchema",
+  "description": "Generated from `InvocationContextSchema` in schemas/tools/tool-invocation.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

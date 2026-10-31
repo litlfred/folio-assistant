@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/library",
+      "@type": "bootstrap:Subgraph",
+      "name": "library"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/cucumber-2024-gherkin-reference/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/isaitb-2026-interoperability-test-bed-readme/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library",
+  "path": "library/"
+}

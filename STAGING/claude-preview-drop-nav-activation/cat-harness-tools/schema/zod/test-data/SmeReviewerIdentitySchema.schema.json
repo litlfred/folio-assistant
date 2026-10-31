@@ -1,0 +1,50 @@
+{
+  "$ref": "#/definitions/SmeReviewerIdentity",
+  "definitions": {
+    "SmeReviewerIdentity": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "human"
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "handle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "actor": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        }
+      },
+      "required": [
+        "kind",
+        "provider",
+        "handle",
+        "role"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeReviewerIdentitySchema.schema.json",
+  "title": "SmeReviewerIdentitySchema",
+  "description": "Generated from `SmeReviewerIdentitySchema` in schemas/sdlc/test-data.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

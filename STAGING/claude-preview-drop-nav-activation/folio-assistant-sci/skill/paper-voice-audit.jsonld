@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-sci/skill/paper-voice-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-sci/skill/paper-voice-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "paper-voice-audit",
+      "title": "Paper voice audit and watcher rules",
+      "description": "The paper-folio half of the harness's one-voice-audit, one-voice-integration-watcher, and one-voice-style-guide: scholarly voice across proof bodies, pdflatex Unicode crash remediation, mathematical hedging patterns, conditional-theorem banners, and paper watcher triggers.",
+      "instructionsPath": "skills/content/authoring-math/paper-voice-audit.md",
+      "instructionLines": 68,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-voice-audit"
+    }
+  ]
+}

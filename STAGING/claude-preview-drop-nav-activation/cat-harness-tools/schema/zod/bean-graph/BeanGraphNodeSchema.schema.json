@@ -1,0 +1,286 @@
+{
+  "$ref": "#/definitions/BeanGraphNode",
+  "definitions": {
+    "BeanGraphNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "instance",
+            "repository"
+          ]
+        },
+        "graphTypologies": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "absent": {
+          "type": "object",
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "reason"
+          ]
+        },
+        "subgraph": {
+          "type": "boolean",
+          "const": true
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "directory"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "branch"
+                },
+                "branch": {
+                  "type": "string",
+                  "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                },
+                "keyedBy": {
+                  "type": "string",
+                  "enum": [
+                    "commit",
+                    "tip",
+                    "route",
+                    "route-family",
+                    "family"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "branch",
+                "keyedBy"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "family"
+                },
+                "branchPrefix": {
+                  "type": "string",
+                  "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                },
+                "keyFrom": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "repository": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                }
+              },
+              "required": [
+                "kind",
+                "branchPrefix",
+                "keyFrom"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "remote"
+                },
+                "repository": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                },
+                "ref": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "upstreamPath": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                },
+                "tool": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "repository",
+                "ref"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "npm"
+                },
+                "package": {
+                  "type": "string",
+                  "pattern": "^(@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]*$"
+                },
+                "version": {
+                  "type": "string",
+                  "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$"
+                },
+                "integrity": {
+                  "type": "string"
+                },
+                "upstreamPath": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                },
+                "tool": {
+                  "default": "npm",
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "package",
+                "version"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "hydrated"
+                },
+                "repository": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                },
+                "ref": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "harness": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "subgraph": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                },
+                "tool": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "repository",
+                "ref",
+                "harness",
+                "subgraph"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "storage": {
+          "type": "object",
+          "properties": {
+            "branch": {
+              "type": "string",
+              "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+            },
+            "keyedBy": {
+              "type": "string",
+              "enum": [
+                "commit",
+                "tip",
+                "route",
+                "route-family",
+                "family"
+              ]
+            },
+            "branchPrefix": {
+              "type": "string",
+              "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+            },
+            "keyFrom": {
+              "type": "string",
+              "minLength": 1
+            },
+            "repository": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+            },
+            "tool": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            }
+          },
+          "required": [
+            "keyedBy"
+          ],
+          "additionalProperties": false
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "graphTypologies"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/BeanGraphNodeSchema.schema.json",
+  "title": "BeanGraphNodeSchema",
+  "description": "Generated from `BeanGraphNodeSchema` in schemas/sdlc/bean-graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

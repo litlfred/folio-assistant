@@ -1,0 +1,284 @@
+{
+  "$ref": "#/definitions/TextStructure",
+  "definitions": {
+    "TextStructure": {
+      "type": "object",
+      "properties": {
+        "_schema": {
+          "type": "string",
+          "const": "text-structure/v1"
+        },
+        "doc_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "digest": {
+              "type": "string",
+              "enum": [
+                "file",
+                "listing"
+              ]
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "mtime": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "mimetype_sniffed": {
+              "type": "string",
+              "const": "text/plain"
+            },
+            "mimetype_source": {
+              "type": "string",
+              "const": "content"
+            },
+            "files": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "bytes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "lines": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "markdown",
+                      "verbatim",
+                      "image"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes",
+                  "lines",
+                  "format"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "upstream": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "repository": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "commit": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{40}$"
+                    },
+                    "ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "committed": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "published": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "retrieved": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "repository",
+                    "commit",
+                    "ref",
+                    "committed",
+                    "path",
+                    "published",
+                    "retrieved"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "file",
+            "sha256",
+            "digest",
+            "bytes",
+            "mtime",
+            "mimetype_sniffed",
+            "mimetype_source",
+            "files",
+            "upstream"
+          ],
+          "additionalProperties": false
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "additionalProperties": {}
+        },
+        "toc_source": {
+          "type": "string",
+          "enum": [
+            "headings",
+            "files"
+          ]
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "number": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "title": {
+                "type": "string"
+              },
+              "level": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "file": {
+                "type": "string",
+                "minLength": 1
+              },
+              "line_start": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "line_end": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "heading",
+                  "file"
+                ]
+              },
+              "n_chars": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "n_words": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "number",
+              "title",
+              "level",
+              "file",
+              "line_start",
+              "line_end",
+              "unit",
+              "n_chars",
+              "n_words"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "structure_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "_schema",
+        "doc_id",
+        "source",
+        "metadata",
+        "toc_source",
+        "sections",
+        "structure_note"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/TextStructureSchema.schema.json",
+  "title": "TextStructureSchema",
+  "description": "Generated from `TextStructureSchema` in schemas/content/document-structure.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

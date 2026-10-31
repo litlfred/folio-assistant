@@ -1,0 +1,155 @@
+{
+  "$ref": "#/definitions/TodoTags",
+  "definitions": {
+    "TodoTags": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "processes": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tasks": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "process": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+                "description": "A BPMN process element id, e.g. Process_CRDM"
+              },
+              "task": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "process",
+              "task"
+            ]
+          }
+        },
+        "identities": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "actor": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider",
+              "id"
+            ]
+          }
+        },
+        "references": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "agent",
+                  "asset",
+                  "bean",
+                  "block",
+                  "capability",
+                  "decision",
+                  "directory",
+                  "package",
+                  "process",
+                  "requirement",
+                  "role",
+                  "schema",
+                  "skill",
+                  "todo",
+                  "tool",
+                  "user-story",
+                  "voice"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id"
+            ]
+          }
+        },
+        "artefacts": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "provider": {
+                "type": "string"
+              },
+              "repo": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/TodoTagsSchema.schema.json",
+  "title": "TodoTagsSchema",
+  "description": "Generated from `TodoTagsSchema` in schemas/sdlc/todo.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

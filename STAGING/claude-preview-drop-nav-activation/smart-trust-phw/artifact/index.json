@@ -1,0 +1,685 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-index-jsonld/v1",
+  "@id": "index.jsonld",
+  "@type": "fhir:ImplementationGuide",
+  "dcterms:identifier": "smart.who.int.trust-phw",
+  "schema:version": "0.1.0",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust-phw"
+  },
+  "dcterms:title": "GDHCN Trust Network - Personal Health Wallet",
+  "schema:numberOfItems": 61,
+  "schema:hasPart": [
+    {
+      "@id": "ActorDefinition-ConsentRegistry.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/ConsentRegistry",
+      "dcterms:title": "Consent Registry",
+      "dcterms:description": "[IHE PCF Consent Registry](https://profiles.ihe.net/ITI/PCF/volume-1.html#153112-consent-registry) actor",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ActorDefinition/ConsentRegistry"
+      }
+    },
+    {
+      "@id": "ActorDefinition-Holder.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/Holder",
+      "dcterms:title": "Holder",
+      "dcterms:description": "Holder (person) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ActorDefinition/Holder"
+      }
+    },
+    {
+      "@id": "ActorDefinition-Issuer.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/Issuer",
+      "dcterms:title": "Issuer",
+      "dcterms:description": "Issuer (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ActorDefinition/Issuer"
+      }
+    },
+    {
+      "@id": "ActorDefinition-Receiver.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/Receiver",
+      "dcterms:title": "Receiver",
+      "dcterms:description": "Receiver (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ActorDefinition/Receiver"
+      }
+    },
+    {
+      "@id": "ActorDefinition-TrustNetworkAnchor.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/TrustNetworkAnchor",
+      "dcterms:title": "Trust Network Anchor",
+      "dcterms:description": "Trust Anchor which receives and distributes PKI-material within a Trust Network",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ActorDefinition/TrustNetworkAnchor"
+      }
+    },
+    {
+      "@id": "ActorDefinition-TrustNetworkParticipant.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/TrustNetworkParticipant",
+      "dcterms:title": "Trust Network Participant",
+      "dcterms:description": "Trust Network Participant which publishes and or receives PKI-material within a Trust Network",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ActorDefinition/TrustNetworkParticipant"
+      }
+    },
+    {
+      "@id": "Binary-DVCExample.jsonld",
+      "@type": "fhir:Binary",
+      "dcterms:identifier": "Binary/DVCExample",
+      "dcterms:title": "DVCExample",
+      "dcterms:type": "Other"
+    },
+    {
+      "@id": "Bundle-DVCDocExample.jsonld",
+      "@type": "fhir:Bundle",
+      "dcterms:identifier": "Bundle/DVCDocExample",
+      "dcterms:title": "DVCDocExample",
+      "dcterms:type": "Other",
+      "dcterms:conformsTo": [
+        {
+          "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCBundle"
+        }
+      ]
+    },
+    {
+      "@id": "Bundle-DVCDocSDExample.jsonld",
+      "@type": "fhir:Bundle",
+      "dcterms:identifier": "Bundle/DVCDocSDExample",
+      "dcterms:title": "DVCDocSDExample",
+      "dcterms:type": "Other",
+      "dcterms:conformsTo": [
+        {
+          "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDBundle"
+        }
+      ]
+    },
+    {
+      "@id": "Organization-ExampleManufacturerOrg.jsonld",
+      "@type": "fhir:Organization",
+      "dcterms:identifier": "Organization/ExampleManufacturerOrg",
+      "dcterms:title": "ExampleManufacturerOrg",
+      "dcterms:description": "Manufacturer A",
+      "dcterms:type": "Other"
+    },
+    {
+      "@id": "Questionnaire-PreQual.jsonld",
+      "@type": "fhir:Questionnaire",
+      "dcterms:identifier": "Questionnaire/PreQual",
+      "dcterms:title": "DVC Model Questionnaire",
+      "dcterms:description": "Questionnaire for DVC Logical Model with the WHO PreQual DB",
+      "dcterms:type": "Other",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Questionnaire/PreQual"
+      }
+    },
+    {
+      "@id": "CodeSystem-DVCRelationshipStatus.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DVCRelationshipStatus",
+      "dcterms:title": "Relationship Status for Contact in Patient",
+      "dcterms:description": "Relationship Status for Contact in Patient",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus"
+      }
+    },
+    {
+      "@id": "CodeSystem-DisclosureStatements.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DisclosureStatements",
+      "dcterms:title": "Disclosure Statements",
+      "dcterms:description": "Disclosure Statement Code System",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements"
+      }
+    },
+    {
+      "@id": "CodeSystem-DocumentationSections.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DocumentationSections",
+      "dcterms:title": "Smart Guidelines Documentation Section",
+      "dcterms:description": "CodeSystem for Smart Guidelines Documentation Section to autogenerate documentation from artifacts",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections"
+      }
+    },
+    {
+      "@id": "CodeSystem-HL.TYPE.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/HL.TYPE",
+      "dcterms:title": "HL Type CodeSystem",
+      "dcterms:description": "CodeSystem for Health Link Type that has codes classifying type of Smart Health Link",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/CodeSystem/HL.TYPE"
+      }
+    },
+    {
+      "@id": "CodeSystem-ICVP.Core.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ICVP.Core",
+      "dcterms:title": "ICVP.Core CodeSystem for Data Elements",
+      "dcterms:description": "CodeSystem for ICVP.Core Data Elements from the Digital ICVP Core Data Dictionary",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/CodeSystem/ICVP.Core"
+      }
+    },
+    {
+      "@id": "ConceptMap-ICVP.Core.ConceptMap.jsonld",
+      "@type": "fhir:ConceptMap",
+      "dcterms:identifier": "ConceptMap/ICVP.Core.ConceptMap",
+      "dcterms:title": "ConceptMap to and from ICVP.Core Data Elements",
+      "dcterms:description": "Mapping to and from ICVP.Core Data Dictionary to other code systems.",
+      "dcterms:type": "Terminology: Concept Maps",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ConceptMap/ICVP.Core.ConceptMap"
+      }
+    },
+    {
+      "@id": "Requirements-accept-mtls-connection.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/accept-mtls-connection",
+      "dcterms:title": "Accept mTLS",
+      "dcterms:description": "Accept an mTLS in order to conduct further transactions under a secure channel",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/accept-mtls-connection"
+      }
+    },
+    {
+      "@id": "Requirements-distribute-pki-material.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/distribute-pki-material",
+      "dcterms:title": "Distribute PKI material",
+      "dcterms:description": "Make received trust material available through a distrubution point to a Trust Network Participant",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/distribute-pki-material"
+      }
+    },
+    {
+      "@id": "Requirements-initiate-mtls-connection.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/initiate-mtls-connection",
+      "dcterms:title": "Initiate mTLS",
+      "dcterms:description": "Initiate an mTLS in order to conduct further transactions under a secure channel",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/initiate-mtls-connection"
+      }
+    },
+    {
+      "@id": "Requirements-provide-a-vhl-to-a-receiver.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/provide-a-vhl-to-a-receiver",
+      "dcterms:title": "Provide VHL or VDHC",
+      "dcterms:description": "Is able to provide a VHL authorization mechanism or a VDHC to a VHL Receiver",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/provide-a-vhl-to-a-receiver"
+      }
+    },
+    {
+      "@id": "Requirements-publish-pki-material.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/publish-pki-material",
+      "dcterms:title": "Publish PKI material",
+      "dcterms:description": "Publish trust material to a Trust Anchor",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/publish-pki-material"
+      }
+    },
+    {
+      "@id": "Requirements-receive-a-vhl.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/receive-a-vhl",
+      "dcterms:title": "Receive VHL or VDHC",
+      "dcterms:description": "Is able to receive a VHL authorization mechanism or a VDHC from a Holder",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/receive-a-vhl"
+      }
+    },
+    {
+      "@id": "Requirements-receive-pki-material.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/receive-pki-material",
+      "dcterms:title": "Receive PKI material",
+      "dcterms:description": "Receive trust material from a Trust Network Participant, for distribution within the Trust Network",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/receive-pki-material"
+      }
+    },
+    {
+      "@id": "Requirements-retrieve-pki-material.jsonld",
+      "@type": "fhir:Requirements",
+      "dcterms:identifier": "Requirements/retrieve-pki-material",
+      "dcterms:title": "Retrieve PKI material",
+      "dcterms:description": "Retrieve PKI material from a distribution point",
+      "dcterms:type": "Requirements: Formal Requirements",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/Requirements/retrieve-pki-material"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Bundle-uv-ips-DVC.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Bundle-uv-ips-DVC",
+      "dcterms:title": "DVC Certificate - DVC Bundle for Digital Vaccine Certificates",
+      "dcterms:description": "Profile of the IPS Bundle for representing digital vaccination certificates ",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/Bundle-uv-ips-DVC"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Bundle-uv-ips-PreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Bundle-uv-ips-PreQual",
+      "dcterms:title": "DVC Certificate - IPS Bundle for WHO PreQual Databae",
+      "dcterms:description": "Profile of the IPS Bundle for representing digital vaccination certificates from WHO PreQual Databae",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/Bundle-uv-ips-PreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Composition-uv-ips-DVC.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Composition-uv-ips-DVC",
+      "dcterms:title": "DVC Certificate - IPS Composition ",
+      "dcterms:description": "Profile of the IPS Composition for representing digital vaccination certificates with ",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/Composition-uv-ips-DVC"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Composition-uv-ips-PreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Composition-uv-ips-PreQual",
+      "dcterms:title": "DVC Certificate - IPS Composition for WHO PreQual Database",
+      "dcterms:description": "Profile of the IPS Composition for representing digital vaccination certificates with WHO PreQual Database",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/Composition-uv-ips-PreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCBundle.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCBundle",
+      "dcterms:title": "Digital Vaccination Certificate - Bundle",
+      "dcterms:description": "Digital Vaccination Certificate - Bundle",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCBundle"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCComposition.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCComposition",
+      "dcterms:title": "Digital Vaccination Certificate - Composition",
+      "dcterms:description": "Digital Vaccination Certificate - Composition",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCComposition"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCImmunization.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCImmunization",
+      "dcterms:title": "DVC Immunization",
+      "dcterms:description": "This profile represents a vaccination record for Digital Vaccine Certificates",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCImmunization"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCPatient.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCPatient",
+      "dcterms:title": "DVC Patient",
+      "dcterms:description": "DVC Patient",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCPatient"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCSDBundle.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCSDBundle",
+      "dcterms:title": "DVC document Bundle with Selective Disclosure",
+      "dcterms:description": "DVC document Bundle with Selective Disclosure for each entry",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDBundle"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCSDComposition.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCSDComposition",
+      "dcterms:title": "Digital Vaccination Certificate - Composition",
+      "dcterms:description": "Digital Vaccination Certificate - Composition",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDComposition"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCSDImmunization.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCSDImmunization",
+      "dcterms:title": "DVC Immunization with Selective Disclosure",
+      "dcterms:description": "DVC Immunization with Selective Disclosure",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDImmunization"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCSDPatient.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCSDPatient",
+      "dcterms:title": "DVC Patient with Selective Disclosure",
+      "dcterms:description": "DVC Patient with Selective Disclosure",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDPatient"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Immunization-uv-ips-DVC.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Immunization-uv-ips-DVC",
+      "dcterms:title": "DVC - Profile for Digital Vaccination Cards for Immunization for IPS.  Note that no Product Catalog has been set",
+      "dcterms:description": "This profile represents an IPS Immunization record that can be mapped onto a Digital Vaccine Certificates using the WHO PreQual Database",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/Immunization-uv-ips-DVC"
+      }
+    },
+    {
+      "@id": "StructureDefinition-Immunization-uv-ips-PreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/Immunization-uv-ips-PreQual",
+      "dcterms:title": "DVC - WHO PreQual Immunization for IPS",
+      "dcterms:description": "This profile represents an IPS Immunization record that can be mapped onto a Digital Vaccine Certificates using the WHO PreQual Database",
+      "dcterms:type": "Structures: Resource Profiles",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/Immunization-uv-ips-PreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVC.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVC",
+      "dcterms:title": "DVC",
+      "dcterms:description": "Data elements for Digital Vaccination Certificate.",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVC"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCMin.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCMin",
+      "dcterms:title": "DVC HCERT Payload",
+      "dcterms:description": "Minimal DVC payload for use within an HCERT Payload",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCMin"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCMinPreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCMinPreQual",
+      "dcterms:title": "DVCMinPreQual",
+      "dcterms:description": "DVC payload minimized  for use within an HCERT Payload with the WHO PreQual Vaccine Database",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCMinPreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCMinVaccineDetails.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCMinVaccineDetails",
+      "dcterms:title": "DVC HCert Vaccine Details (Minimal)",
+      "dcterms:description": "DVC Vaccine Details for a minimal DVC payload for use within an HCERT Payload",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCMinVaccineDetails"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCMinVaccineDetailsPreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCMinVaccineDetailsPreQual",
+      "dcterms:title": "DVC HCERT Payload for PreQual DB",
+      "dcterms:description": "DVC payload for a minimal DVC for use within an HCERT Payload using the WHO PreQual Vaccine Database",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCMinVaccineDetailsPreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCPreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCPreQual",
+      "dcterms:title": "PreQual",
+      "dcterms:description": "Data elements for the Digital Vaccine Certificate using WHO Vaccine PreQualification database",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCPreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCSD.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCSD",
+      "dcterms:title": "DVC with Selective Disclosure",
+      "dcterms:description": "DVC with Selective Disclosure",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCSD"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCVaccineDetails.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCVaccineDetails",
+      "dcterms:title": "DVC - Vaccine Details",
+      "dcterms:description": "Vaccine Data elements for the Digital Vaccination Certificates",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetails"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DVCVaccineDetailsPreQual.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DVCVaccineDetailsPreQual",
+      "dcterms:title": "PreQual - Vaccine Details",
+      "dcterms:description": "Vaccine Data elements from the Pre Qual Database",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetailsPreQual"
+      }
+    },
+    {
+      "@id": "StructureDefinition-HealthLinkPayload.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/HealthLinkPayload",
+      "dcterms:title": "Health Link Payload (DRAFT)",
+      "dcterms:description": "Health Link Payload (DRAFT)\n\nA Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)\n\n\n",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/HealthLinkPayload"
+      }
+    },
+    {
+      "@id": "StructureDefinition-SMARTHealthLinkPayload.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/SMARTHealthLinkPayload",
+      "dcterms:title": "SMART Health Link Payload (DRAFT)",
+      "dcterms:description": "SMART Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a SMART Health Link\n\nA SMART Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)\n\n",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/SMARTHealthLinkPayload"
+      }
+    },
+    {
+      "@id": "StructureDefinition-SmartHealthLink.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/SmartHealthLink",
+      "dcterms:title": "Smart Health Link (DRAFT)",
+      "dcterms:description": "Smart Health Link URI (DRAFT)\n\nLogical Model to represent a SMART Health Link as its URI.  It is generated from the content of the SMART Health Link Payload.\n\n\n",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/SmartHealthLink"
+      }
+    },
+    {
+      "@id": "StructureDefinition-VaccineDetailsSD.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/VaccineDetailsSD",
+      "dcterms:title": "DVC Vaccine Details with Selective Disclosure",
+      "dcterms:description": "DVC Vaccine Details with Selective Disclosure",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/VaccineDetailsSD"
+      }
+    },
+    {
+      "@id": "StructureDefinition-VerifiableHealthLinkPayload.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/VerifiableHealthLinkPayload",
+      "dcterms:title": "Verifiable Health Link Payload (DRAFT)",
+      "dcterms:description": "Verifiable Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a Verifiable Health Link\n",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/VerifiableHealthLinkPayload"
+      }
+    },
+    {
+      "@id": "StructureDefinition-DoseNumberCodeableConcept.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/DoseNumberCodeableConcept",
+      "dcterms:title": "DoseNumberCodeableConcept",
+      "dcterms:description": "Dose Number",
+      "dcterms:type": "Structures: Extension Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/DoseNumberCodeableConcept"
+      }
+    },
+    {
+      "@id": "StructureDefinition-SGActorExt.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/SGActorExt",
+      "dcterms:title": "SGActorExt",
+      "dcterms:description": "Smart Guidelines Actor Reference extension",
+      "dcterms:type": "Structures: Extension Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/SGActorExt"
+      }
+    },
+    {
+      "@id": "StructureDefinition-SelectiveDisclosure.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/SelectiveDisclosure",
+      "dcterms:title": "SelectiveDisclosure",
+      "dcterms:description": "Guidance that a document signing service with selective disclosure support (e.g. SD-JWT) should perform a selective disclosure of the content of the containing node of the extension in the JSON representation of the FHIR instance.\n\nThe code value should be from a code system containing appropriate disclosure statements for the use case.  The disclosure statement should describe the content that is to be disclosed at that node.  For example a code such as 'disclose-date-of-birth' or 'disclose-vaccine-history'.\n",
+      "dcterms:type": "Structures: Extension Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/StructureDefinition/SelectiveDisclosure"
+      }
+    },
+    {
+      "@id": "ValueSet-DVCRelationshipStatus.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/DVCRelationshipStatus",
+      "dcterms:title": "Relationship Status for Contact in Patient",
+      "dcterms:description": "Relationship Status for Contact in Patient",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ValueSet/DVCRelationshipStatus"
+      }
+    },
+    {
+      "@id": "ValueSet-DVCVaccines.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/DVCVaccines",
+      "dcterms:title": "DVC - Vaccines",
+      "dcterms:description": "This value set includes codes from ICD",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ValueSet/DVCVaccines"
+      }
+    },
+    {
+      "@id": "ValueSet-DisclosureStatements.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/DisclosureStatements",
+      "dcterms:title": "Disclosure Statements",
+      "dcterms:description": "Disclosure Statements value set",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ValueSet/DisclosureStatements"
+      }
+    },
+    {
+      "@id": "ValueSet-HL.TYPE.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/HL.TYPE",
+      "dcterms:title": "HL.TYPE ValueSet ",
+      "dcterms:description": "ValueSet of HL Type Codes",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ValueSet/HL.TYPE"
+      }
+    },
+    {
+      "@id": "ImplementationGuide-smart.who.int.trust-phw.jsonld",
+      "@type": "fhir:ImplementationGuide",
+      "dcterms:identifier": "ImplementationGuide/smart.who.int.trust-phw",
+      "dcterms:title": "GDHCN Trust Network - Personal Health Wallet",
+      "dcterms:description": "Describes common workflows and specifications for usage of personal health wallets on the WHO GDHCN Trust Network",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw"
+      }
+    }
+  ]
+}

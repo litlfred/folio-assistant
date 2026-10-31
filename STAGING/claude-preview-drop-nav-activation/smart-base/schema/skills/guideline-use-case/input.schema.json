@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Guideline Use Case Input",
+  "description": "Stage 0 of smart-guideline-end-to-end. What the requester said, and anything already known about where the guideline applies.",
+  "type": "object",
+  "required": [
+    "request"
+  ],
+  "properties": {
+    "request": {
+      "type": "string",
+      "description": "The requester's words, verbatim."
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "WHO, or the country or region, when the request names it."
+    },
+    "adapts": {
+      "type": "string",
+      "description": "The guideline or DAK being adapted, when the request names one."
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

@@ -1,0 +1,272 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_CopyOutMaterialized",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized",
+ "tasks": {
+  "Task_EditDirectly": {
+   "id": "Task_EditDirectly",
+   "name": "Edit it in place — it is your own content",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+   "lane": "Reader (any actor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Reader",
+   "skills": [
+    {
+     "name": "copy-out-materialized",
+     "href": "../../../reference/skill-instructions/copy-out-materialized.html"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "dispatch-agent",
+      "href": "../../../reference/skill-instructions/dispatch-agent.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html"
+     },
+     {
+      "name": "interaction-modality",
+      "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "repo-conversion",
+      "href": "../../../reference/skill-instructions/repo-conversion.html"
+     }
+    ]
+   }
+  },
+  "Task_ReadSource": {
+   "id": "Task_ReadSource",
+   "name": "Read the original — and write nothing",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_ReadSource",
+   "lane": "Source graph — read-only",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Source",
+   "skills": [
+    {
+     "name": "copy-out-materialized",
+     "href": "../../../reference/skill-instructions/copy-out-materialized.html"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     }
+    ]
+   }
+  },
+  "Task_Land": {
+   "id": "Task_Land",
+   "name": "Land the bytes in the copier's own folio/",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_Land",
+   "lane": "Copier's own folio/",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Folio",
+   "skills": [
+    {
+     "name": "copy-out-materialized",
+     "href": "../../../reference/skill-instructions/copy-out-materialized.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordProvenance": {
+   "id": "Task_RecordProvenance",
+   "name": "Record provenance.local — what this is a copy OF",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+   "lane": "Copier's own folio/",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Folio",
+   "skills": [
+    {
+     "name": "copy-out-materialized",
+     "href": "../../../reference/skill-instructions/copy-out-materialized.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_VerifySourceUntouched": {
+   "id": "Task_VerifySourceUntouched",
+   "name": "Verify the ORIGINAL still hashes to its digest",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+   "lane": "Verification",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Verify",
+   "skills": [
+    {
+     "name": "copy-out-materialized",
+     "href": "../../../reference/skill-instructions/copy-out-materialized.html"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     }
+    ]
+   }
+  }
+ }
+}

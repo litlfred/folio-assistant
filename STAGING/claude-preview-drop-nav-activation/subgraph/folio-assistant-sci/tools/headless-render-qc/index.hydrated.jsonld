@@ -1,0 +1,54 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/headless-render-qc/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/headless-render-qc.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat render:headless-qc"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--screenshot"
+            },
+            "description": "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate.",
+            "name": "screenshot",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 2 with `No paper.json found` in the platform (could-not-determine).",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "headless-render-qc",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "chromium"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
+      "title": "Headless render QC (Playwright)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/headless-render-qc",
+  "path": "tools/headless-render-qc/"
+}

@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/ToolRender",
+  "definitions": {
+    "ToolRender": {
+      "type": "object",
+      "properties": {
+        "as": {
+          "type": "string",
+          "enum": [
+            "text",
+            "url",
+            "markdown",
+            "json"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "as"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolRenderSchema.schema.json",
+  "title": "ToolRenderSchema",
+  "description": "Generated from `ToolRenderSchema` in schemas/tools/tool.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

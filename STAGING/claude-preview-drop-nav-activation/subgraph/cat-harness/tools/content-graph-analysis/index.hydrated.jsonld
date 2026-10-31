@@ -1,0 +1,98 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/content-graph-analysis/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/content-graph-analysis.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat content:graph-analysis"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--paper"
+            },
+            "description": "The paper: a directory name under the folio directory, or a path to it. When omitted, the folio's only paper; required when the folio holds several.",
+            "name": "paper",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--chapter"
+            },
+            "description": "Restrict the analysis to one chapter directory.",
+            "name": "chapter",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "description": "Emit the whole graph as JSON on stdout and exit.",
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--md"
+            },
+            "description": "Write the report to /tmp/content-graph-report.md.",
+            "name": "md",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--visualise"
+            },
+            "description": "Render the Graphviz SVGs (needs graphviz).",
+            "name": "visualise",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--proposals"
+            },
+            "description": "Write concrete reorganisation proposals to /tmp/content-graph-proposals.md.",
+            "name": "proposals",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The ranked findings, or the graph as JSON with `--json`.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "content-graph-analysis",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-graph",
+      "title": "Editorial content-graph analysis"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/content-graph-analysis",
+  "path": "tools/content-graph-analysis/"
+}

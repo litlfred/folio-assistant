@@ -1,0 +1,75 @@
+{
+  "$ref": "#/definitions/ChangeSetCommitteeMove",
+  "definitions": {
+    "ChangeSetCommitteeMove": {
+      "type": "object",
+      "properties": {
+        "who": {
+          "type": "string",
+          "minLength": 1
+        },
+        "when": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "Metadata registries",
+                "Supply chain",
+                "Financial systems",
+                "Clinical",
+                "WHO",
+                "Core architects",
+                "Editorial",
+                "No"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "to": {
+          "type": "string",
+          "enum": [
+            "Metadata registries",
+            "Supply chain",
+            "Financial systems",
+            "Clinical",
+            "WHO",
+            "Core architects",
+            "Editorial",
+            "No"
+          ]
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "who",
+        "when",
+        "from",
+        "to",
+        "why"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-drop-nav-activation/folio-assistant-core/schema/zod/public-comment/ChangeSetCommitteeMoveSchema.schema.json",
+  "title": "ChangeSetCommitteeMoveSchema",
+  "description": "Generated from `ChangeSetCommitteeMoveSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}

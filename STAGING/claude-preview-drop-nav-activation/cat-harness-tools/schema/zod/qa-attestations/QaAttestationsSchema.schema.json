@@ -1,0 +1,843 @@
+{
+  "$ref": "#/definitions/QaAttestations",
+  "definitions": {
+    "QaAttestations": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "kg-qa"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "pair_attestations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "implements",
+                      "co-located"
+                    ]
+                  },
+                  "prose": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "prose_hash": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "code_hash": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "by": {
+                    "type": "string",
+                    "enum": [
+                      "baseline",
+                      "agent",
+                      "human"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "prose",
+                  "code",
+                  "prose_hash",
+                  "code_hash",
+                  "by"
+                ]
+              }
+            },
+            "voice_reviews": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "voice": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "instance": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "skill_hash": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "voice_hash": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "by": {
+                    "type": "string",
+                    "enum": [
+                      "agent",
+                      "human"
+                    ]
+                  },
+                  "at": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "verdicts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "rule": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "result": {
+                          "type": "string",
+                          "enum": [
+                            "pass",
+                            "fail",
+                            "n/a"
+                          ]
+                        },
+                        "note": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "rule",
+                        "result"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "voice",
+                  "instance",
+                  "skill_hash",
+                  "voice_hash",
+                  "by",
+                  "at",
+                  "verdicts"
+                ]
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "block-qa"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "criteria": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "criteria"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "translation-qa"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "locale": {
+              "type": "string",
+              "minLength": 1
+            },
+            "criteria": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "locale",
+            "criteria"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "bib-verification"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "verifications": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "position": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "verifier": {
+                    "type": "string",
+                    "const": "unknown"
+                  },
+                  "entry": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "position",
+                  "entry"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "verifications"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "bib-human-review"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "reviews": {
+              "maxItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "position": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "review": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "position",
+                  "review"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "reviews"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "requirement-signoff"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "signoffs": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "script",
+                      "agent",
+                      "human"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "actor": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "at": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?(Z|[+-]\\d{2}:\\d{2}))?$"
+                  },
+                  "scope": {
+                    "type": "string",
+                    "pattern": "^(reqset:[a-z0-9][a-z0-9-]*|req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*)?)$"
+                  },
+                  "outcome": {
+                    "type": "string",
+                    "enum": [
+                      "approve",
+                      "amend",
+                      "reject",
+                      "defer",
+                      "cancel"
+                    ]
+                  },
+                  "stage": {
+                    "type": "string",
+                    "enum": [
+                      "draft",
+                      "proposed",
+                      "approved",
+                      "planned",
+                      "in-progress",
+                      "delivered",
+                      "accepted",
+                      "rejected",
+                      "cancelled",
+                      "superseded"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "^https:\\/\\/\\S+$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id",
+                  "at",
+                  "scope",
+                  "outcome",
+                  "evidence"
+                ]
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "signoffs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "certification"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "certifications": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "signer": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "actor": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "version": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id"
+                        ]
+                      }
+                    ]
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "verdict": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "decision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "testPlanId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reqId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    ]
+                  },
+                  "signature": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "algorithm": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "certificate": {
+                            "type": "string"
+                          },
+                          "signed_at": {
+                            "type": "string"
+                          },
+                          "key_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "value"
+                        ]
+                      }
+                    ]
+                  },
+                  "evidence": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "attestation": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "signer",
+                  "timestamp",
+                  "testPlanId"
+                ]
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "certifications"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "qa-attestations/v1"
+            },
+            "family": {
+              "type": "string",
+              "const": "section-title"
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ]
+            },
+            "title_coherence": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "depth": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "result": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "reviewer": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "reviewed_hash": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "stale_mode": {
+                      "type": "string",
+                      "enum": [
+                        "manifest",
+                        "thorough"
+                      ]
+                    },
+                    "reviewed_at": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "note": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "depth",
+                    "result",
+                    "reviewer",
+                    "reviewed_hash",
+                    "stale_mode"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "family",
+            "subject",
+            "title_coherence"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/QaAttestationsSchema.schema.json",
+  "title": "QaAttestationsSchema",
+  "description": "Generated from `QaAttestationsSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-drop-nav-activation",
+    "sha": "a233fc80446ab44a73dbd8845a9fc15fc067c84a",
+    "pr": "2839/merge",
+    "run": "41196178460"
+  }
+}
