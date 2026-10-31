@@ -9,7 +9,7 @@ tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T08:21:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -25,3 +25,5 @@ parent: folio-assistant-3o2w
 **Fix:** job-level permissions (read for `check`), current pinned checkout, a dispatch input for the tag, `$GITHUB_OUTPUT`.
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:21:00Z_ — Fixed in https://github.com/litlfred/smart-trust/pull/98 (least-privilege `permissions: {}` with `contents: read` on `check`, `actions/checkout` SHA-pinned at v4, `$GITHUB_OUTPUT`) and https://github.com/litlfred/smart-trust/pull/99 (`workflow_dispatch.inputs.tag` wired to `ref: ${{ inputs.tag || github.event.release.tag_name || 'main' }}`).

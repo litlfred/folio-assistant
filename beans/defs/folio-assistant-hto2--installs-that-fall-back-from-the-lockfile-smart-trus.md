@@ -9,7 +9,7 @@ tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T08:21:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -24,3 +24,8 @@ parent: folio-assistant-3o2w
 **Fix:** `--frozen-lockfile` where a lockfile exists; where it does not (mounts), either commit one or report "no lockfile" as its own state with a `::warning::`, as the check asks.
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:21:00Z_ — Fixed across all 3 repos:
+- `litlfred/smart-trust`: https://github.com/litlfred/smart-trust/pull/99 (root `bun install --frozen-lockfile` in `site-publish.yml` against committed `bun.lock`)
+- `litlfred/who-iris`: https://github.com/litlfred/who-iris/pull/143 (`bun install --frozen-lockfile` in `.github/workflows/checks.yml`)
+- `litlfred/dth-hrh`: https://github.com/litlfred/dth-hrh/pull/62 (removed per-mount `bun install --no-save` and `|| bun install` fallback in `.claude/hooks/session-start.sh`)

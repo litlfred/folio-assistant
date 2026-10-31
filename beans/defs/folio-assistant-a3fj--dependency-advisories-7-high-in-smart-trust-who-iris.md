@@ -9,7 +9,7 @@ tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T08:21:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -26,3 +26,8 @@ Most come in through the mounted layers' dependencies (shared with the groups re
 **Fix:** bump `zod` to ≥ 4.6.6 in dth-hrh; bump `undici` (via its parent) everywhere; refresh `bun.lock` in who-iris and dth-hrh.
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:21:00Z_ — Fixed across all 3 repos (`bun audit` verified at 0 high advisories in each):
+- `litlfred/smart-trust`: https://github.com/litlfred/smart-trust/pull/99 (`overrides` for `zod`, `undici`, `@fastify/busboy`, `csv-parse`, `katex` in `package.json` + committed `bun.lock`)
+- `litlfred/who-iris`: https://github.com/litlfred/who-iris/pull/143 (`overrides` for `zod`, `undici`, `@fastify/busboy`, `katex` in `package.json` + refreshed `bun.lock`)
+- `litlfred/dth-hrh`: https://github.com/litlfred/dth-hrh/pull/62 (`zod` bumped to `^4.6.6`, `overrides` for `zod`, `undici`, `@fastify/busboy`, `csv-parse`, `katex` in `package.json` + refreshed `bun.lock`)

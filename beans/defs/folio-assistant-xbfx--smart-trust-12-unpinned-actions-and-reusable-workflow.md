@@ -9,7 +9,7 @@ tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T04:22:00Z
+updated_at: 2026-10-31T08:21:00Z
 parent: folio-assistant-3o2w
 ---
 
@@ -37,3 +37,5 @@ _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a
 ## Fixed (2026-10-31)
 
 litlfred/smart-trust#98 merged as `f5446e7`. The third-party actions are pinned to full SHAs, and `checkout@v2` is replaced. Still at `@main`, by the owner's decision: `WorldHealthOrganization/smart-html` (release.yml) and the first-party reusable workflows (smart-base fhirbuild, fhir-harness ig-ast-refresh, cat-harness-tools callers).
+
+_2026-10-31T08:21:00Z_ — Third-party actions SHA-pinned in https://github.com/litlfred/smart-trust/pull/98; remaining 4 reusable workflow calls (`fhirbuild.yml`, `ig-ast-refresh.yml`, `release.yml`, `site-publish.yml`) SHA-pinned with `# main` comments in https://github.com/litlfred/smart-trust/pull/99 (`unpinnedActions` reports 0 unpinned).
