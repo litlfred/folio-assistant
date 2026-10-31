@@ -374,25 +374,25 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-31T20:16:21.314Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/289b7c780ae7e035fe7667d9a83fc177d32586b8",
-  "sourceCommitSha": "289b7c780ae7e035fe7667d9a83fc177d32586b8",
-  "sourceCommitAt": "2026-10-31T19:50:31Z",
+  "generatedAt": "2026-10-31T22:20:29.680Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c5cba42b98a8a2a1900aa17e8adf4ed52df9071",
+  "sourceCommitSha": "3c5cba42b98a8a2a1900aa17e8adf4ed52df9071",
+  "sourceCommitAt": "2026-10-31T21:57:45Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 45,
     "Decision": 4,
     "Task": 1,
-    "Process": 24,
-    "SequenceFlow": 394,
+    "Process": 25,
+    "SequenceFlow": 396,
     "Lane": 83,
-    "ProcessNode": 363,
+    "ProcessNode": 366,
     "GraphTypology": 29,
     "Role": 4,
     "Subgraph": 28,
     "Asset": 4,
-    "Tool": 19
+    "Tool": 20
   },
   "@graph": [
     {
@@ -529,7 +529,7 @@
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 1223,
+      "instructionLines": 1261,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -600,7 +600,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 602,
+      "instructionLines": 604,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -10572,6 +10572,270 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Make a decided public comment change",
+      "summary": "Called by Process_PublicComment (CallActivity_MakeChange) once the editor's decision on a comment changes the document.",
+      "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges. Drawn on its own page so that each phase fits the screen.\nSkill: public-comment.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/public-comment-change.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/public-comment-change.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/assets/img/workflows/public-comment-change.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided"
+      ],
+      "nodeCount": 7,
+      "flowCount": 7,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "failed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "passed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/EndEvent_ChangeMerged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Author (human or agentic)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/author",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Change set — feature branch and staging",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "QA reviewer (independent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/qc-reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "The editor's decision changes the document",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Edit the document as decided, on a feature branch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review the change set on its staging preview",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_ContentChangeReview",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "QA gate: check dispositions against the people and the pull request",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/qc-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "QA gate passed for the PR's head?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/qc-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Mark incorporated when the change set merges",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/EndEvent_ChangeMerged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Merged, comments incorporated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/EndEvent_ChangeMerged"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Committee review of a content change",
@@ -11961,8 +12225,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/StartEvent_BlockFeedback",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested"
       ],
-      "nodeCount": 23,
-      "flowCount": 23,
+      "nodeCount": 19,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment"
     },
@@ -12115,67 +12379,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_NoChange"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "name": "yes: accepted",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_ChangesDocument",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_QaGate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGateway",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_QaGate",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGateway"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_QaFailed",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "failed",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_QaFailed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "passed",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporated",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Incorporated",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporated"
@@ -12224,33 +12441,6 @@
       "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/editor",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Author (human or agentic)",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/author",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Change set — feature branch and staging",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_QaReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "QA reviewer (independent)",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/qc-reviewer",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_QaReviewer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/StartEvent_CommentsReturned",
@@ -12537,7 +12727,7 @@
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_NoChange",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Gateway_ChangesDocument"
@@ -12562,120 +12752,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Decided"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Edit the document as decided, on a feature branch",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/author",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/public-comment"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_QaFailed"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Review the change set on its staging preview",
+      "name": "Make the change, check it and merge it",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/staging-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_ContentChangeReview",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGate"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_QaGate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "QA gate: check dispositions against the people and the pull request",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/qc-reviewer",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_QaReviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/editor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/public-comment"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGate"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGateway"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_QaGate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "QA gate passed for the PR's head?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/qc-reviewer",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_QaReviewer",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGateway"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_QaFailed",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Mark incorporated when the change set merges",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/public-comment"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporated"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/directory/core-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Incorporated",
@@ -12684,8 +12782,8 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/role/editor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -15063,6 +15161,52 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/filing-dublin-core"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/catalogue-from-references.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/tools/check-dsa-hash.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "check-dsa-hash",
+      "title": "Verify Data Sharing Agreement hash, citation, and vocabulary terms",
+      "description": "Verify a Data Sharing Agreement (DSA) directory or single version: checks that every JSON-LD term in `agreement.jsonld` and `dcat.jsonld` is defined in the SHA-256-pinned official W3C ODRL 2.2, W3C DCAT 3 (with SPDX 2.2.2 and ADMS), or DCMI Metadata Terms contexts; checks that the ODRL 2.2 Agreement's `uid` is the version's fixed-version URL and its `dcterms:source` cites the DCAT 3 `dcat:Distribution` whose `spdx:checksum` is checked; verifies that the SHA-256 digest of `agreement.md` matches `spdx:checksumValue`; and checks `dcat:previousVersion` and hash distinctness across versions.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/check-dsa-hash.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Path to a versioned DSA directory (holding `v1/`, `v2/`, ...) or a single version directory holding `agreement.md`, `dcat.jsonld`, and `agreement.jsonld`. Defaults to `folio-assistant-core/scripts/test-fixtures/dsa`.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Per-version verification line (`dcat:version`, `dcat:downloadURL`, `sha256`) on stdout when valid; diagnostic findings on stderr with exit code 1 when any check fails."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/dsa-checksum",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/dsa-odrl-source",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/dsa-dcat-record",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/skill/dsa-catalogue-status"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/check-dsa-hash.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/tools/diig-phases-svg.jsonld",
@@ -20327,6 +20471,114 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_ToAuthor",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_ToChangeSet",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_ToQaGate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_ToQaGateway",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_QaFailed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_ToIncorporate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/flow/Flow_ToMerged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/lane/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/lane/Lane_QaReviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/StartEvent_ChangeDecided",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/Task_QaGate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/Task_Incorporate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicCommentChange/node/EndEvent_ChangeMerged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/EndEvent_ChangeMerged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicCommentChange/node/EndEvent_ChangeMerged"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ContentChangeReviewCommittee",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
@@ -20963,40 +21215,10 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_NoChange"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToMakeChange",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToQaGate",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGate",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToQaGateway",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGateway",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToQaGateway"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_QaFailed",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_QaFailed",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_QaFailed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated",
@@ -21033,24 +21255,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Author",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_QaReviewer",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_QaReviewer",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/lane/Lane_QaReviewer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
@@ -21137,34 +21341,10 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Decided"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_AuthorEdits",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/CallActivity_MakeChange",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_QaGate",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_QaGate",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_QaGate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_QaPassed",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Gateway_QaPassed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Incorporate",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-figure-kinds/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Incorporated",
@@ -21925,8 +22105,8 @@
   ],
   "staging": {
     "branch": "claude/repin-core-figure-kinds",
-    "sha": "289b7c780ae7e035fe7667d9a83fc177d32586b8",
+    "sha": "3c5cba42b98a8a2a1900aa17e8adf4ed52df9071",
     "pr": "2862/merge",
-    "run": "41236086852"
+    "run": "41245983978"
   }
 }

@@ -4094,23 +4094,23 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.callactivity_changeset",
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.callactivity_makechange",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "Review the change set on its staging preview"
+          "@value": "Make the change, check it and merge it"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process."
+          "@value": "The second phase, drawn on its own page (public-comment-change.bpmn): an author edits the document as decided on a feature branch, the change set is reviewed on its staging preview, an independent QA gate checks the dispositions against the pull request, and each comment it answers is marked incorporated when it merges. A withdrawal still interrupts the comment while this runs."
         }
       ],
-      "skos:notation": "CallActivity_ChangeSet",
-      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#CallActivity_ChangeSet",
+      "skos:notation": "CallActivity_MakeChange",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#CallActivity_MakeChange",
       "skos:note": "candidate"
     },
     {
@@ -4131,26 +4131,6 @@
       ],
       "skos:notation": "Task_Assign",
       "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Assign",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_authoredits",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Edit the document as decided, on a feature branch"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing. Before its preview is staged, the author writes the change set's Disposition (change set) on the Agent tab: one line per comment (No. 136: Accepted. ...), starting from each comment's Blue Disposition on Review Public Comments, after an optional Overall statement. Quality check: every comment number in the change set has a disposition; the sheet flags gaps and words that differ from the people's (owner, 2026-10-31)."
-        }
-      ],
-      "skos:notation": "Task_AuthorEdits",
-      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_AuthorEdits",
       "skos:note": "candidate"
     },
     {
@@ -4214,26 +4194,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_incorporate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Mark incorporated when the change set merges"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing. Ready for merge is set only once the QA gate has passed for the PR's head commit; set earlier, the agent does not merge until it passes. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary that closes its issue (owner, 2026-10-31)."
-        }
-      ],
-      "skos:notation": "Task_Incorporate",
-      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Incorporate",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_ingest",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4271,26 +4231,6 @@
       ],
       "skos:notation": "Task_ProposeChangeSets",
       "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_qagate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "QA gate: check dispositions against the people and the pull request"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Before Ready for merge. Reads: the change set's Disposition (change set), each comment's Blue Disposition on Review Public Comments, the PR's diff at its head commit, and the staging QA report. Checks that every comment number has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted comment has its change in the diff, and a Not accepted, Noted, Deferred, Duplicate or Out of scope one has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set), first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows both under Staging review; a pass for an older commit reads as stale (owner, 2026-10-31)."
-        }
-      ],
-      "skos:notation": "Task_QaGate",
-      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_QaGate",
       "skos:note": "candidate"
     },
     {
@@ -4351,6 +4291,86 @@
       ],
       "skos:notation": "Task_Withdraw",
       "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Withdraw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccommentchange.callactivity_changeset",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the change set on its staging preview"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process."
+        }
+      ],
+      "skos:notation": "CallActivity_ChangeSet",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment-change.bpmn#CallActivity_ChangeSet",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccommentchange.task_authoredits",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Edit the document as decided, on a feature branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing. Before its preview is staged, the author writes the change set's Disposition (change set) on the Agent tab: one line per comment (No. 136: Accepted. ...), starting from each comment's Blue Disposition on Review Public Comments, after an optional Overall statement. Quality check: every comment number in the change set has a disposition; the sheet flags gaps and words that differ from the people's (owner, 2026-10-31)."
+        }
+      ],
+      "skos:notation": "Task_AuthorEdits",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment-change.bpmn#Task_AuthorEdits",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccommentchange.task_incorporate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mark incorporated when the change set merges"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing. Ready for merge is set only once the QA gate has passed for the PR's head commit; set earlier, the agent does not merge until it passes. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary that closes its issue (owner, 2026-10-31)."
+        }
+      ],
+      "skos:notation": "Task_Incorporate",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment-change.bpmn#Task_Incorporate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccommentchange.task_qagate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QA gate: check dispositions against the people and the pull request"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before Ready for merge. Reads: the change set's Disposition (change set), each comment's Blue Disposition on Review Public Comments, the PR's diff at its head commit, and the staging QA report. Checks that every comment number has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted comment has its change in the diff, and a Not accepted, Noted, Deferred, Duplicate or Out of scope one has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set), first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows both under Staging review; a pass for an older commit reads as stale (owner, 2026-10-31)."
+        }
+      ],
+      "skos:notation": "Task_QaGate",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment-change.bpmn#Task_QaGate",
       "skos:note": "candidate"
     },
     {

@@ -1,0 +1,40 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-tools",
+      "@type": "bootstrap:Subgraph",
+      "name": "core-tools"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/bibliography-page/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/block-actions/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/catalogue-from-references/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/check-dsa-hash/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/diig-phases-svg/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/dublin-core-render/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/figure-coverage/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-block-qa-summary/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-block-screenshots/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-changeset/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-comment-move/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-comments/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-coverage/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-build/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-page/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/l1-coverage/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/review-sheet-sync/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/smart-approach-svg/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/tabular-csv/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/tabular-xlsx/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

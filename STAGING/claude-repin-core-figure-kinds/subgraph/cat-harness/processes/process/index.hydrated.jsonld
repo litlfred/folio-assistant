@@ -3134,6 +3134,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/hand-back-to-discussion.svg",
       "description": "How a sibling agent gets a card, question, result, blocker or context in front of the person: through the discussion agent that is talking with them, never only in its own thread. The person's answer comes back the same way. The owner asked for it on 2026-10-31 after several sibling threads posted cards nobody saw (cat-harness#861).\n\nINPUT AND OUTPUT: the `hand-back-to-discussion` skill's schemas, schemas/skills/hand-back-to-discussion/input.schema.json (from, to, kind, summary, ask = the ask-the-person input, context, links, channels, answerRoute, blocking) and output.schema.json (shown, state, chosen, quote, answeredIn, marked, deliveredBack).\n\nTHE PERSON'S STEP is inside `Process_AskThePerson`, called by the discussion agent, so the asking rule (chat text first, then the card) holds here unchanged. A Blue-column answer in a review sheet is an answer to that same question.",
       "enforcement": "strict",
       "flowCount": 14,
