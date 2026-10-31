@@ -20,7 +20,7 @@
       "entries": [
         {
           "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
-          "names": 2
+          "names": 3
         },
         {
           "file": "folio-assistant-core/skills/library/ingestion/figure-rebuild.md",
@@ -44,10 +44,10 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6205,
+          "occurrences": 6207,
           "allowed": 0,
-          "wrongDirection": 19,
-          "wrongDirectionFiles": 11,
+          "wrongDirection": 21,
+          "wrongDirectionFiles": 12,
           "exempt": 6186,
           "namesRepository": 0,
           "undetermined": 0,
@@ -58,10 +58,14 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 13,
+      "count": 15,
       "entries": [
         {
           "file": "bootstrap/models/models.json",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/schemas/content/vector-figure.ts",
           "target": "who-iris"
         },
         {
@@ -75,6 +79,10 @@
         {
           "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
           "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
+          "target": "who-iris"
         },
         {
           "file": "cat-harness/docs/cat-harness/state.jsonld",
@@ -115,5 +123,5 @@
       ]
     }
   },
-  "total": 16
+  "total": 18
 }
