@@ -4,7 +4,7 @@ What a merge steward **decided** about an open pull request — and nothing GitH
 
 One JSON file per pull request under consideration, each carrying
 `"$schema": "folio-merge-queue-entry/v1"` and validating against `MergeQueueEntrySchema`
-in [`cat-harness/schemas/merge-queue.ts`](../../cat-harness/schemas/merge-queue.ts).
+in [`cat-harness-tools/schemas/sdlc/merge-queue.ts`](../../cat-harness-tools/schemas/sdlc/merge-queue.ts).
 Declared in [`../beans.json`](../beans.json) as the `merge-queue` node.
 
 ## Decisions are stored; facts are read live
