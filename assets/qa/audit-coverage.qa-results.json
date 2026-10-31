@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/audit-coverage.ts",
-    "script_hash": "4443d25e5586"
+    "script_hash": "aa164b30e5b0"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 89 of 89 declared kind(s), 273 gate(s), 89 criteria.",
-      "count": 89,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 91 of 91 declared kind(s), 274 gate(s), 89 criteria.",
+      "count": 91,
       "entries": [
         {
           "kind": "archimate",
@@ -335,6 +335,7 @@
           "kind": "catalogue",
           "state": "covered",
           "directories": [
+            "smart-trust-phw/catalogue",
             "who-iris/catalogue"
           ],
           "criteria": [],
@@ -364,9 +365,11 @@
           "directories": [
             "bootstrap-tools/scripts",
             "cat-harness-tools/adapters",
+            "cat-harness-tools/archimate/schemas",
             "cat-harness-tools/archimate/scripts",
             "cat-harness-tools/deploy",
             "cat-harness-tools/id-lookup",
+            "cat-harness-tools/openapi/schemas",
             "cat-harness-tools/openapi/scripts",
             "cat-harness-tools/pipeline",
             "cat-harness-tools/python",
@@ -518,6 +521,7 @@
             "smart-base/findings",
             "smart-base/site-docs",
             "smart-base/site-docs/source",
+            "smart-trust-phw/docs",
             "smart-trust/docs",
             "who-iris/docs",
             "who-iris/site"
@@ -572,6 +576,7 @@
           "directories": [
             "smart-base/document-kinds",
             "smart-immunizations/document-kinds",
+            "smart-trust-phw/document-kinds",
             "smart-trust/document-kinds"
           ],
           "criteria": [],
@@ -584,6 +589,17 @@
           "typed": true,
           "adversarial": "never",
           "hasFiles": true
+        },
+        {
+          "kind": "dsa",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": false
         },
         {
           "kind": "editor-checkers",
@@ -621,6 +637,7 @@
           "state": "covered",
           "directories": [
             "smart-base/fhir-artifact-index",
+            "smart-trust-phw/fhir-artifact-index",
             "smart-trust/fhir-artifact-index"
           ],
           "criteria": [],
@@ -750,6 +767,7 @@
           "kind": "ig-ast",
           "state": "stored",
           "directories": [
+            "smart-trust-phw/fhir-ast",
             "smart-trust/fhir-ast"
           ],
           "criteria": [],
@@ -775,6 +793,7 @@
           "state": "covered",
           "directories": [
             "smart-base/docs",
+            "smart-trust-phw/docs",
             "smart-trust/docs"
           ],
           "criteria": [],
@@ -821,7 +840,7 @@
           "kind": "l1-extraction",
           "state": "covered",
           "directories": [
-            "smart-base/library/9789240116191-eng/l1-extraction",
+            "smart-base/l1-extractions/9789240116191-eng",
             "smart-immunizations/examples/l1-recommendation-scenarios"
           ],
           "criteria": [],
@@ -869,6 +888,7 @@
             "folio-assistant-sci/library",
             "smart-base/library",
             "smart-immunizations/library",
+            "smart-trust-phw/library",
             "who-iris/library"
           ],
           "criteria": [],
@@ -1045,7 +1065,8 @@
             "folio-assistant-core/processes",
             "folio-assistant-sci/processes",
             "smart-base/methodologies/processes",
-            "smart-base/processes"
+            "smart-base/processes",
+            "who-iris/processes"
           ],
           "criteria": [
             "activity-calls-skill-process",
@@ -1285,10 +1306,10 @@
           "directories": [
             "bootstrap-tools/schemas",
             "bootstrap/schemas",
+            "cat-harness-tools/archimate/schemas",
+            "cat-harness-tools/openapi/schemas",
             "cat-harness-tools/schemas",
-            "cat-harness/archimate/schemas",
             "cat-harness/ns",
-            "cat-harness/openapi/schemas",
             "cat-harness/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
@@ -1422,7 +1443,9 @@
             "cat-harness-tools/libraries",
             "cat-harness/libraries",
             "fhir-harness/libraries",
-            "folio-assistant-sci/libraries"
+            "folio-assistant-core/libraries",
+            "folio-assistant-sci/libraries",
+            "who-iris/libraries"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -1430,6 +1453,21 @@
             "bun run cat libraries:check"
           ],
           "typed": true,
+          "adversarial": "never",
+          "hasFiles": true
+        },
+        {
+          "kind": "subscribed-harnesses",
+          "state": "covered",
+          "directories": [
+            "cat-harness/subscribed-harnesses"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run cat kg:subscribe:check"
+          ],
+          "typed": false,
           "adversarial": "never",
           "hasFiles": true
         },
@@ -1883,7 +1921,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 17,
+      "count": 18,
       "entries": [
         {
           "kind": "archimate",
@@ -1907,6 +1945,11 @@
         },
         {
           "kind": "conjectures",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "dsa",
           "criteria": 0,
           "gates": []
         },
@@ -1978,7 +2021,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. An UPPER bound while gates remain undeclared: 1 of 273 have not said what they cover.",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. An UPPER bound while gates remain undeclared: 1 of 274 have not said what they cover.",
       "count": 0,
       "entries": []
     },
@@ -1988,5 +2031,5 @@
       "entries": []
     }
   },
-  "total": 108
+  "total": 111
 }

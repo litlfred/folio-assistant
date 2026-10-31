@@ -156,7 +156,7 @@
             ],
             "outputs": [
               {
-                "description": "`dak.config.json` — ours, per bean `cz17`. Upstream still writes `dak.json`.",
+                "description": "`index.config.json` (`contentTypes.dak`) — ours, per bean `cz17`. Upstream still writes `dak.json`.",
                 "name": "dakConfig",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               }
@@ -170,7 +170,7 @@
             ]
           },
           "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
-          "title": "sushi-config.yaml → dak.config.json"
+          "title": "sushi-config.yaml → index.config.json#contentTypes.dak"
         }
       ],
       "holdsGraph": [
@@ -420,7 +420,7 @@
               "git"
             ]
           },
-          "satisfies": "http://smart.who.int/base/skill/l4-application-build",
+          "satisfies": "http://smart.who.int/base/skill/l4-application-run-local",
           "title": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG"
         }
       ],

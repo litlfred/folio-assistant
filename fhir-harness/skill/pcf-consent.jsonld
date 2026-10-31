@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "pcf-consent",
+      "title": "pcf-consent",
+      "description": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`.",
+      "instructionsPath": "skills/content/fhir-ig-authoring/pcf-consent.md",
+      "instructionLines": 303,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

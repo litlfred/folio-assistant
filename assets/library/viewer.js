@@ -177,8 +177,16 @@ var COLS = [
       if (!refs.length) return pill;
       return '<details class="refs"><summary>'+pill+'</summary><ul>' + refs.map(function(r){
         return "<li>"+esc(r.from)+" ("+r.count+")</li>"; }).join("") + "</ul></details>"; } },
+  /* THE SOURCE FILE NAME OPENS IT -- owner, 2026-10-30: "the link to the
+     source should be clickable to view under source". An entry whose held
+     source has a viewer (e.viewable, set by the projection from viewableOf)
+     links to its own page's view panel, #lib-view, which opens on arrival,
+     in a NEW TAB (owner, 2026-10-30, option B) so the listing stays where the
+     reader left it. Any other entry keeps the plain name. */
   { k:"upload",   t:"source",   n:false, c:"t-source", f:function(e){ var s=uploadState(e);
-      return '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>"+(e.sourceFile?'<br><span class="slug" style="font-size:.72rem;color:var(--muted)">'+esc(e.sourceFile)+"</span>":""); } }
+      var name = '<span class="slug" style="font-size:.72rem;color:var(--muted)">'+esc(e.sourceFile)+"</span>";
+      if (e.sourceFile && e.viewable) name = '<a class="src lib-src" href="'+esc(entryHref(e))+'#lib-view" target="_blank" rel="noopener">'+esc(e.sourceFile)+"</a>";
+      return '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>"+(e.sourceFile?"<br>"+name:""); } }
 ];
 
 function rows(){

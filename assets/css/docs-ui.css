@@ -4063,10 +4063,13 @@ a.fa-glass-asset-tool svg { width: 1.2rem; height: 1.2rem; fill: currentColor; }
 .fa-glass-dock-head {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
   min-height: 2.75rem;
   padding: 0 1rem;
 }
-.fa-glass-strip-toggle {
+.fa-glass-strip-toggle,
+.fa-glass-link-doc {
   min-height: 2.75rem;
   padding: 0 1rem;
   /* A control IN the panel, drawn like the panel's other controls: one thin
@@ -4081,9 +4084,41 @@ a.fa-glass-asset-tool svg { width: 1.2rem; height: 1.2rem; fill: currentColor; }
   font-weight: 700;
   cursor: pointer;
 }
-.fa-glass-strip-toggle:focus-visible {
+.fa-glass-link-doc[aria-expanded="true"] {
+  border-color: var(--fa-glass-accent);
+  box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
+}
+.fa-glass-strip-toggle:focus-visible,
+.fa-glass-link-doc:focus-visible {
   outline: 3px solid var(--fa-glass-accent);
   outline-offset: 2px;
+}
+.fa-glass-link-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+.fa-glass-link-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.fa-glass-link-input {
+  min-height: 2.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  font: inherit;
+}
+.fa-glass-link-cmd-wrap code {
+  word-break: break-all;
+}
+.fa-glass-link-error {
+  margin: 0.25rem 0;
+  font-weight: 700;
+  color: var(--fa-glass-ink);
 }
 .fa-glass-tiles {
   align-self: stretch;

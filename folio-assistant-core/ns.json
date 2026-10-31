@@ -66,6 +66,21 @@
       "layer": "core"
     },
     {
+      "@id": "folio-assistant-core:graphTypology/dsa",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "dsa",
+      "comment": "Data sharing agreements: signed legal text at an immutable URL with its SHA-256 checksum, a DCAT 3 dcat:Resource / dcat:Distribution record, and an ODRL 2.2 Agreement citing the distribution via dcterms:source (DSA B3)",
+      "prefLabel": "dsa",
+      "definition": "Data sharing agreements: signed legal text at an immutable URL with its SHA-256 checksum, a DCAT 3 dcat:Resource / dcat:Distribution record, and an ODRL 2.2 Agreement citing the distribution via dcterms:source (DSA B3)",
+      "notation": "folio-assistant-core:graphTypology/dsa",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/v0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/v0/ns",
+      "layer": "core"
+    },
+    {
       "@id": "folio-assistant-core:graphTypology/glossary",
       "@type": [
         "bootstrap:GraphTypology",

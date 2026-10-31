@@ -2155,6 +2155,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m22",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -2319,6 +2323,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Report",
       "@type": "bootstrap:ProcessNode",
       "name": "Note the bean, summarise on the issue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Rebuild and republish the repository's site"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",

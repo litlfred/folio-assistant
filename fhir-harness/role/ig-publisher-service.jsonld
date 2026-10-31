@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "IG publisher + validator",
+      "title": "IG publisher + validator",
+      "notation": "ig-publisher-service",
+      "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
+      ]
+    }
+  ]
+}

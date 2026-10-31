@@ -154,6 +154,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/block-change-summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "block-change-summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Post-delivery content block change summary for a folio edit-set: extract changed block labels across `.md`, `.ts` and content-type sibling files, present a per-chapter table with `.md`-first GitHub blob links, modified sibling links, local viewer anchors, and change categories. Refines `delivery-summary` for content folios."
+        }
+      ],
+      "skos:notation": "block-change-summary",
+      "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/block-change-summary.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/corpus-commit-contract",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -259,6 +279,86 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/dsa-catalogue-status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "dsa-catalogue-status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Set the life-cycle status (`adms:status`, W3C DCAT 3 §6.4.30) on a Data Sharing Agreement's DCAT 3 catalogue record when the agreement is amended, renewed, terminated, or expires, while keeping all published versions readable at their immutable URLs (DSA building block B3, process step P14.5 `Task_SetStatus`)."
+        }
+      ],
+      "skos:notation": "dsa-catalogue-status",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/dsa-catalogue-status.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/dsa-checksum",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "dsa-checksum"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compute and record the SHA-256 cryptographic digest of a signed Data Sharing Agreement's legal text as a W3C DCAT 3 `spdx:checksum` (`spdx:Checksum` with `spdx:checksumAlgorithm_sha256` and 64-character lowercase hex `spdx:checksumValue`), verified by `check:dsa-hash` (DSA building block B3, process steps P2.2 `Task_Hash` and P2.2a `Task_HashSummary`)."
+        }
+      ],
+      "skos:notation": "dsa-checksum",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/dsa-checksum.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/dsa-dcat-record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "dsa-dcat-record"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the W3C DCAT 3 `dcat:Resource` and `dcat:Distribution` catalogue record for a Data Sharing Agreement (`dcat:downloadURL`, `spdx:checksum`, `odrl:hasPolicy`) and link versions with `dcat:version` and `dcat:previousVersion` (DSA building block B3, process step P2.4–5 `Task_Catalogue`)."
+        }
+      ],
+      "skos:notation": "dsa-dcat-record",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/dsa-dcat-record.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/dsa-odrl-source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "dsa-odrl-source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`)."
+        }
+      ],
+      "skos:notation": "dsa-odrl-source",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/dsa-odrl-source.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/dublin-core-renderings",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -296,6 +396,146 @@
       ],
       "skos:notation": "filing-dublin-core",
       "dcterms:source": "folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-board-diagram-interchange",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-board-diagram-interchange"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's board-diagram-interchange skill: binds processes/ui/board-place-note.bpmn and board-relocate.bpmn, folio board filters over pages and block kinds, and note-to-board arrow direction."
+        }
+      ],
+      "skos:notation": "folio-board-diagram-interchange",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-board-diagram-interchange.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-board-windows",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-board-windows"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's board-windows skill: binds processes/ui/board-open-close.bpmn, folio-glass pinning (todo/<id> and landing/<slot>), and content-type card chrome ([x], [linksrc], [edit])."
+        }
+      ],
+      "skos:notation": "folio-board-windows",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-board-windows.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-content-lifecycle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-content-lifecycle"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's content-lifecycle skills (content-author, content-feedback, content-plan, content-publish, content-review, content-test, content-validate, evidence-appraisal): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules."
+        }
+      ],
+      "skos:notation": "folio-content-lifecycle",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-content-lifecycle.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-content-profiles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-content-profiles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's content-profiles skill: how a document folio is structured prose and how a paper folio extends it, block-kind discovery across block-kinds/ graphs, profile-check enforcement, and the TeX-free document render path."
+        }
+      ],
+      "skos:notation": "folio-content-profiles",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-content-profiles.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-editorial-workflow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-editorial-workflow"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's editor, content-graph, md-authoring, canonical-watcher, and uses-editorial-review skills: routes glossary and notation work to ontologist and glossary-build, bibliography audits to bib-qa, and term-ordering checks to glossary-terms."
+        }
+      ],
+      "skos:notation": "folio-editorial-workflow",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-editorial-workflow.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-getting-started",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-getting-started"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's getting-started skill: binds processes/conduct/getting-started.bpmn and decisions/folio-intent.dmn, interprets describeRepository() content-type markers (folio, harness, dak, sushi), and routes new-content and specialised IG/DAK creation requests."
+        }
+      ],
+      "skos:notation": "folio-getting-started",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-getting-started.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/folio-repo-conversion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio-repo-conversion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content-folio half of the harness's repo-conversion skill: outside-content evidence and refutation candidate scanning, content-type marker declarations, and dispatching library and content buckets to document-intake and folio authoring."
+        }
+      ],
+      "skos:notation": "folio-repo-conversion",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/folio-repo-conversion.md",
       "skos:note": "candidate"
     },
     {
@@ -556,6 +796,26 @@
       ],
       "skos:notation": "review-comments",
       "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/review-comments.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/review-sheet-script",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "review-sheet-script"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes."
+        }
+      ],
+      "skos:notation": "review-sheet-script",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md",
       "skos:note": "candidate"
     },
     {

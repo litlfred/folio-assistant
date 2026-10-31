@@ -4,6 +4,15 @@
     {
       "@base": "https://litlfred.github.io/folio/",
       "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+      "cat-harness:agentSubject": {
+        "@type": "@id"
+      },
+      "cat-harness:planSubject": {
+        "@type": "@id"
+      },
+      "cat-harness:roleSubject": {
+        "@type": "@id"
+      },
       "cat-harness:underPolicy": {
         "@type": "@id"
       }
@@ -23,6 +32,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ClaimBean",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_ClaimBean",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -39,6 +51,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#2",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_BranchAndAnnounce",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_BranchAndAnnounce",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -55,6 +70,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#3",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Implement",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_Implement",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -71,6 +89,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#4",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunGates",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_RunGates",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -87,6 +108,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#5",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CommitAndOpenPR",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_CommitAndOpenPR",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -103,6 +127,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#6",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Diagnose",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_Diagnose",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -119,6 +146,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#7",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunGates",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_RunGates",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -135,6 +165,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#8",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_PrepareMerge",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_PrepareMerge",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -151,6 +184,9 @@
       "@type": "Association",
       "activity": "code-change-review--issue-1015-prefix-is-stub#9",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CloseBean",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/code-change-review#Task_CloseBean",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     }

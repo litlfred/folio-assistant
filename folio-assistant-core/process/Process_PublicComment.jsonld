@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
@@ -24,8 +24,8 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/StartEvent_BlockFeedback",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested"
       ],
-      "nodeCount": 20,
-      "flowCount": 19,
+      "nodeCount": 21,
+      "flowCount": 20,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
@@ -87,10 +87,18 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_GroupedToAssign",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToReroute",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_GroupedToAssign",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Assign",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },

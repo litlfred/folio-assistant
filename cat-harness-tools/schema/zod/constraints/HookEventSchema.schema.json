@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/HookEvent",
+  "definitions": {
+    "HookEvent": {
+      "type": "string",
+      "enum": [
+        "SessionStart",
+        "PreToolUse",
+        "PostToolUse",
+        "PreCommit",
+        "PostCommit",
+        "UserPromptSubmit",
+        "Stop"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/HookEventSchema.schema.json",
+  "title": "HookEventSchema",
+  "description": "Generated from `HookEventSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  }
+}

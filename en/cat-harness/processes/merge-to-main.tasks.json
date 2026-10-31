@@ -50,10 +50,6 @@
       "href": "../../../reference/skill-instructions/harness-projections.html"
      },
      {
-      "name": "ig-ast-delta",
-      "href": "../../../reference/skill-instructions/ig-ast-delta.html"
-     },
-     {
       "name": "kg-separation",
       "href": "../../../reference/skill-instructions/kg-separation.html"
      },
@@ -471,6 +467,47 @@
    "name": "Confirm main's CI on the merge commit",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ConfirmBase",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main",
+     "href": "../../../reference/skill-instructions/merge-to-main.html"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns",
+      "href": "../../../reference/skill-instructions/merge-conflict-patterns.html"
+     },
+     {
+      "name": "merge-queue",
+      "href": "../../../reference/skill-instructions/merge-queue.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "ref-stewardship",
+      "href": "../../../reference/skill-instructions/ref-stewardship.html"
+     }
+    ]
+   }
+  },
+  "Task_Republish": {
+   "id": "Task_Republish",
+   "name": "Rebuild and republish the repository's site",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [

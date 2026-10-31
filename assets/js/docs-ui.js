@@ -6740,6 +6740,11 @@
     function libraryMetaRows(a, key, entry) {
       var rows = [["Title", (entry && entry.title && entry.title !== entry.id) ? entry.title : a.title]];
       if (!entry) {
+        if (key.indexOf("linked/") === 0) {
+          rows.push(["Disposition", "referenced (linked by URL)"]);
+          if (a && a.href) rows.push(["URL", a.href]);
+          return rows;
+        }
         rows.push(["Library", key.split("/")[0]]);
         return rows;
       }
@@ -6818,6 +6823,7 @@
       var i = key.indexOf("/");
       if (i <= 0 || i === key.length - 1) return null;
       var instance = key.slice(0, i);
+      if (instance === "linked") return null;
       var id = key.slice(i + 1);
       var library = withBase("/cat-harness/library/" + encodeURIComponent(instance) + "/");
       return { instance: instance, id: id, library: library,
@@ -6931,6 +6937,10 @@
       var label = String(a.title || "").replace(/\s+/g, " ").trim();
       var isLibrary = zoomKindOf(a) === "library";
       var place = isLibrary ? libraryPlaceOf(key) : null;
+      var href = place ? place.entry : safeHref(a.href);
+      // WHERE A PRESS GOES: the entry page until the index names a visualizer,
+      // or the external URL for a linked document (R28).
+      var opens = place ? place.entry : (isLibrary ? href || "" : "");
       var card = el("article", {
         class: "fa-glass-asset",
         "data-fa-asset": key,
@@ -6940,22 +6950,13 @@
         // A library card OPENS (issue #1900), so it is a stop in the tab
         // order: zoomed to its cover the title link is not drawn, and Enter on
         // the card is then the only key into the entry.
-        tabindex: place ? "0" : "-1",
+        tabindex: opens ? "0" : "-1",
       });
-      // WHERE A PRESS GOES: the entry page until the index names a visualizer.
-      var opens = place ? place.entry : "";
-      if (place) card.setAttribute("data-fa-opens", opens);
+      if (opens) card.setAttribute("data-fa-opens", opens);
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
       var face = el("div", { class: "fa-glass-asset-face", "data-fa-grip": "" });
       var ava = glassAvatarFor(a, prefs.avatars);
       if (ava) face.appendChild(ava);
-      // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
-      // store is `localStorage`, which the reader's own devtools can
-      // rewrite, so a value sanitised on the way in is not a value that is
-      // safe on the way out. The boundary is where the URL reaches an
-      // `href`, and that is here. A LIBRARY card's title links its entry —
-      // the address composed from its key, the same one a click opens.
-      var href = place ? place.entry : safeHref(a.href);
       face.appendChild(href
         ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
         : el("span", { class: "fa-glass-asset-name" }, a.title));
@@ -7042,7 +7043,7 @@
         if (card.getAttribute("data-fa-moving") === "true") return;
         // ENTER OPENS a library card — the keyboard half of the click below.
         // Not in move mode: there Enter is "done moving" (`wireMove`).
-        if (place && e.key === "Enter" && !e.defaultPrevented) {
+        if (opens && e.key === "Enter" && !e.defaultPrevented) {
           e.preventDefault();
           window.location.assign(opens);
         }
@@ -7097,7 +7098,7 @@
       var pressAt = null;
       card.addEventListener("pointerdown", function (e) { pressAt = { x: e.clientX, y: e.clientY }; });
       card.addEventListener("click", function (e) {
-        if (!place) return;
+        if (!opens) return;
         if (e.button !== 0 || e.defaultPrevented) return;
         if (e.target.closest && e.target.closest("button, a, [data-fa-control], input, select, textarea")) return;
         if (card.getAttribute("data-fa-moving") === "true") return;
@@ -7788,8 +7789,175 @@
      * panel's own header row, and the strip below it is the tiles. Hidden,
      * the panel slides down to that header row — still the panel, still
      * holding the way back. */
+    /* LINK A DOCUMENT (bean `95sk`, R28) — a reader action on the glass that
+     * links an external document by URL onto their folio glass and shows the
+     * `bun run cat folio:create --link` command that records it as a
+     * `referenced` node in `library/<slug>/`. */
+    function slugifyLinkTitle(s) {
+      return String(s || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+    function buildLinkDocument(body) {
+      body.appendChild(el("p", { class: "fa-glass-panel-status" },
+        "Link an external document by URL onto your folio glass. To commit it into the repository's library as a referenced source, run the command shown below."));
+      var form = el("form", { class: "fa-glass-link-form", novalidate: "novalidate" });
+
+      var urlField = el("div", { class: "fa-glass-link-field" });
+      urlField.appendChild(el("label", { class: "fa-glass-choice-label", for: "fa-glass-link-url" }, "Document URL"));
+      var urlInput = el("input", {
+        type: "url",
+        id: "fa-glass-link-url",
+        class: "fa-glass-link-input",
+        placeholder: "https://example.org/guideline",
+        required: "required",
+      });
+      urlField.appendChild(urlInput);
+      form.appendChild(urlField);
+
+      var titleField = el("div", { class: "fa-glass-link-field" });
+      titleField.appendChild(el("label", { class: "fa-glass-choice-label", for: "fa-glass-link-title" }, "Title"));
+      var titleInput = el("input", {
+        type: "text",
+        id: "fa-glass-link-title",
+        class: "fa-glass-link-input",
+        placeholder: "Document title",
+        required: "required",
+      });
+      titleField.appendChild(titleInput);
+      form.appendChild(titleField);
+
+      var slugField = el("div", { class: "fa-glass-link-field" });
+      slugField.appendChild(el("label", { class: "fa-glass-choice-label", for: "fa-glass-link-slug" }, "Slug (optional)"));
+      var slugInput = el("input", {
+        type: "text",
+        id: "fa-glass-link-slug",
+        class: "fa-glass-link-input",
+        placeholder: "my-guideline",
+      });
+      slugField.appendChild(slugInput);
+      form.appendChild(slugField);
+
+      var cmdWrap = el("p", { class: "fa-glass-panel-status fa-glass-link-cmd-wrap" }, "Repository command: ");
+      var cmdCode = el("code", { "data-fa-link-command": "" });
+      cmdWrap.appendChild(cmdCode);
+      form.appendChild(cmdWrap);
+
+      function resolvedSlug() {
+        var raw = slugInput.value.trim();
+        if (raw) return raw;
+        var fromTitle = slugifyLinkTitle(titleInput.value);
+        if (fromTitle) return fromTitle;
+        return "linked-doc";
+      }
+      function updateCommandPreview() {
+        var u = urlInput.value.trim() || "<url>";
+        var t = (titleInput.value.trim() || "<title>").replace(/"/g, "\\\"");
+        var s = resolvedSlug();
+        cmdCode.textContent = "bun run cat folio:create --link \"" + u + "\" --slug " + s + " --title \"" + t + "\"";
+      }
+      urlInput.addEventListener("input", updateCommandPreview);
+      titleInput.addEventListener("input", updateCommandPreview);
+      slugInput.addEventListener("input", updateCommandPreview);
+      updateCommandPreview();
+
+      var err = el("p", { class: "fa-glass-link-error", role: "alert", hidden: "hidden" });
+      form.appendChild(err);
+
+      var submit = el("button", { type: "submit", class: "fa-glass-reset fa-glass-link-submit" }, "Link document");
+      form.appendChild(submit);
+
+      var listHost = el("div", { class: "fa-glass-linked-host" });
+      function renderLinkedList() {
+        while (listHost.firstChild) listHost.removeChild(listHost.firstChild);
+        var all = folioAssets();
+        var keys = Object.keys(all).filter(function (k) { return k.indexOf("linked/") === 0; }).sort();
+        if (keys.length === 0) return;
+        var ul = el("ul", { class: "fa-glass-todo-list fa-glass-linked-list" });
+        keys.forEach(function (k) {
+          var item = all[k];
+          var li = el("li", {
+            class: "fa-glass-todo",
+            "data-fa-library-item": k,
+            "data-fa-library-title": item.title || k,
+            "data-fa-library-href": safeHref(item.href) || "",
+            "data-fa-library-kind": "library",
+          });
+          var row = el("div", { class: "fa-glass-todo-row", "data-fa-pullout-host": "" });
+          var a = safeHref(item.href)
+            ? el("a", { class: "fa-glass-todo-summary", href: safeHref(item.href) }, item.title || k)
+            : el("span", { class: "fa-glass-todo-summary" }, item.title || k);
+          row.appendChild(a);
+          li.appendChild(row);
+          ul.appendChild(li);
+        });
+        listHost.appendChild(ul);
+        paintLibraryRows();
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var rawUrl = urlInput.value.trim();
+        var rawTitle = titleInput.value.trim();
+        var slug = resolvedSlug();
+        // Bound straight from safeHref, so the `href: safe` below is checked by
+        // construction (scripts/tests/href-safety.test.ts); safeHref(undefined)
+        // is undefined, so a non-http(s) URL is still refused.
+        var safe = safeHref(/^https?:\/\/\S+$/i.test(rawUrl) ? rawUrl : undefined);
+        if (!safe) {
+          err.textContent = "Enter an http:// or https:// URL to link a document.";
+          err.removeAttribute("hidden");
+          urlInput.focus();
+          return;
+        }
+        if (!rawTitle) {
+          err.textContent = "Enter a title for the linked document.";
+          err.removeAttribute("hidden");
+          titleInput.focus();
+          return;
+        }
+        if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
+          err.textContent = "Slug must use lower-case letters, digits and hyphens.";
+          err.removeAttribute("hidden");
+          slugInput.focus();
+          return;
+        }
+        err.setAttribute("hidden", "hidden");
+        err.textContent = "";
+        displayInFolio("linked/" + slug, {
+          title: rawTitle,
+          href: safe,
+          kind: "library",
+        });
+        glassLive.textContent = "Linked " + rawTitle + " onto your folio glass.";
+        urlInput.value = "";
+        titleInput.value = "";
+        slugInput.value = "";
+        updateCommandPreview();
+        renderLinkedList();
+      });
+
+      body.appendChild(form);
+      body.appendChild(listHost);
+      renderLinkedList();
+    }
+
     var dock = el("div", { class: "fa-glass-dock" });
     var dockHead = el("div", { class: "fa-glass-dock-head" });
+    var linkDocBtn = el("button", {
+      type: "button",
+      class: "fa-glass-link-doc",
+      "data-fa-glass-action": "link-document",
+      "aria-expanded": "false",
+      "aria-controls": "fa-glass-panel",
+      title: "Link an external document by URL into your folio",
+    }, "Link a document");
+    panelButtons["glass-link-document"] = linkDocBtn;
+    linkDocBtn.addEventListener("click", function () {
+      openPanel("glass-link-document", "Link a document", buildLinkDocument);
+    });
+    dockHead.appendChild(linkDocBtn);
     var stripToggle = el("button", {
       type: "button",
       class: "fa-glass-strip-toggle",
@@ -8074,7 +8242,10 @@
           status.textContent = "The harness configuration could not be read. That is not the same as there being none.";
           return;
         }
-        status.textContent = c.harnesses.length + " harnesses here, " + c.associated.length + " associated.";
+        // `subscribed` (issue #1719) is absent from a harness.json built before
+        // the field existed; absent reads as none, never as an error.
+        var subscribed = c.subscribed || [];
+        status.textContent = c.harnesses.length + " harnesses here, " + c.associated.length + " associated, " + subscribed.length + " subscribed.";
         var wrap = el("div", { class: "fa-hc", "data-fa-hc-view": selected ? "detail" : "list" });
         var list = el("div", { class: "fa-hc-list" });
         var detail = el("div", { class: "fa-hc-detail", "aria-live": "polite" });
@@ -8139,7 +8310,28 @@
           h.appendChild(el("code", {}, item.name));
           detail.appendChild(h);
           var acts = el("p", { class: "fa-hc-actions" });
-          if (kind === "associated") {
+          if (kind === "subscribed") {
+            acts.appendChild(link(item.url, "Open at the pin ↗", "Open " + item.title + " at its pinned commit"));
+            acts.appendChild(editLink(link(item.editHref, "✎ Its repository", "Edit " + item.title + " in its own repository")));
+            detail.appendChild(acts);
+            var srows = [
+              { key: "name", value: item.name },
+              { key: "repository", value: item.repository },
+              { key: "ref", value: item.ref },
+              { key: "subscription", value: item.subscription },
+              { key: "harness", value: item.chosen ? "chosen, not yet instantiated" : "not chosen: referenced only" },
+            ];
+            if (item.note) srows.push({ key: "note", value: item.note });
+            srows.push({ key: "declared by", value: item.declaredBy.join(", ") });
+            var st = table(srows);
+            // The rows of a subscription are edited where it is DECLARED.
+            Array.prototype.forEach.call(st.querySelectorAll("tbody td.fa-hc-skills"), function (td) {
+              td.appendChild(link(withBase("/reference/skill-instructions/kg-subscription.html"), "kg-subscription"));
+            });
+            detail.appendChild(st);
+            detail.appendChild(el("p", { class: "fa-hc-note" },
+              "Subscribed: pinned, and not instantiated here. Its parts are copied only when chosen, through the five gates."));
+          } else if (kind === "associated") {
             acts.appendChild(link(item.url, "Open ↗", "Open " + item.title + " (its own site)"));
             if (item.editHref) acts.appendChild(editLink(link(item.editHref, "✎ Its repository", "Edit " + item.title + " in its own repository")));
             detail.appendChild(acts);
@@ -8181,6 +8373,7 @@
           { id: "instantiated", label: "Instantiated here", items: c.harnesses.filter(function (x) { return x.group === "instantiated"; }) },
           { id: "checkout", label: "In this checkout", items: c.harnesses.filter(function (x) { return x.group === "checkout"; }) },
           { id: "associated", label: "Associated ↗ remote", items: c.associated },
+          { id: "subscribed", label: "Subscribed ↗ remote", items: subscribed },
         ];
         var chosen = null;
         groups.forEach(function (g) {
@@ -8193,7 +8386,7 @@
             var li = el("li", {});
             var b = el("button", { type: "button", class: "fa-hc-item", "aria-current": "false" }, item.title);
             if (item.title !== item.name) b.appendChild(el("code", {}, item.name));
-            var kind = g.id === "associated" ? "associated" : "local";
+            var kind = g.id === "associated" || g.id === "subscribed" ? g.id : "local";
             b.addEventListener("click", function () { show(kind, item, b); });
             buttons.push(b);
             li.appendChild(b);
@@ -8329,7 +8522,7 @@
       Array.prototype.slice.call(strip.querySelectorAll("[data-fa-strip-item]")).forEach(function (n) {
         strip.removeChild(n);
       });
-      Object.keys(panelButtons).forEach(function (k) { if (k !== "glass-more") delete panelButtons[k]; });
+      Object.keys(panelButtons).forEach(function (k) { if (k !== "glass-more" && k !== "glass-link-document") delete panelButtons[k]; });
       var waiting = false;
       stripIds.forEach(function (id) {
         var node = null;
@@ -12428,7 +12621,7 @@
 
     var box = document.getElementById("fa-nav-open");
     // NO ☰ AND NO [x] (#1757 on the rail, ob3m finding 8 here). The avatar
-    // below is the one control: it pins the bar open and closes it.
+    // below pins a closed bar open, and goes home from an open one.
 
     /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
      * starts hidden, click avatar opens for a split second then returns to
@@ -12438,7 +12631,8 @@
      *
      * From 50rem up it is now the bar's toggle: pin open (lifting stay-closed),
      * or close (setting it, so the hover peek does not hold it open under the
-     * pointer). Home is still one click away, as ⌂ at the foot of the bar and
+     * pointer). (Superseded 2026-10-30, below: the ⌂ row is gone and an open
+     * bar's avatar goes home.) Home was one click away, as ⌂ at the foot and
      * as the first page. Below 50rem the theme's ☰ owns the menu and the
      * avatar stays the home link. With no script it is the home link too. */
     var avatar = bar.querySelector(".site-title");
@@ -12452,29 +12646,27 @@
         }
         avatar.setAttribute("aria-controls", bar.id || "");
         avatar.setAttribute("aria-expanded", box.checked ? "true" : "false");
-        avatar.title = box.checked ? "Close navigation" : "Open navigation";
+        avatar.title = box.checked ? "Go to the landing page" : "Open navigation, or go to the landing page once it is open";
       };
       if (!bar.id) bar.id = "fa-side-bar";
       label();
       box.addEventListener("change", label);
+      /* AN OPEN BAR'S AVATAR GOES HOME -- owner, 2026-10-30: *"who eblmen not
+       * clicable to go to landing page. also dont need home on bottomof
+       * harnes navbars."* The ⌂ row at the foot is gone, so the avatar is the
+       * way home. It still pins a CLOSED bar open, which is the touch case
+       * (no hover to peek it open); once the bar is open, by hover, focus or
+       * the pin, the click is the theme's home link. */
       avatar.addEventListener("click", function (e) {
         if (!wide.matches) return;
+        // `(hover: hover)`: a touch screen reports :hover on the tap itself,
+        // which would send its first tap home instead of opening the bar.
+        var canHover = window.matchMedia("(hover: hover)").matches;
+        if (box.checked || (canHover && bar.matches(":hover")) || bar.matches(":focus-visible, :has(:focus-visible)")) return;
         e.preventDefault();
-        box.checked = !box.checked;
-        // Closed under the pointer, the hover peek would hold it open, so the
-        // peek is withheld -- until the pointer leaves the bar, not for good.
-        applyNavPref(box.checked ? null : "closed");
-        if (!box.checked) {
-          bar.addEventListener("pointerleave", function release() {
-            bar.removeEventListener("pointerleave", release);
-            if (!box.checked) applyNavPref(null);
-          });
-        }
+        box.checked = true;
+        applyNavPref(null);
         label();
-        // Closing must drop focus too: the bar also opens on `:focus-within`
-        // (the keyboard path), so a focused avatar held it open after the
-        // click that closed it. Measured: 264px wide with the pointer away.
-        if (!box.checked) avatar.blur();
       });
     }
   }

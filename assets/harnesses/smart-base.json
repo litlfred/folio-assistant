@@ -8,7 +8,7 @@
       "action": "add .github/workflows/pages.yml — bootstrap-tools' own is the pattern: stage the site with scripts/site.ts and commit it onto gh-pages as a full replace"
     },
     "counts": {
-      "done": 34,
+      "done": 35,
       "not-done": 1,
       "could-not-determine": 3,
       "stated": 0
@@ -27,6 +27,13 @@
         "what": "fhir-harness, which smart-base needs, is beside it and parses",
         "state": "done",
         "detail": "fhir-harness"
+      },
+      {
+        "id": "needs:who-iris",
+        "namedBy": "smart-base",
+        "what": "who-iris, which smart-base needs, is beside it and parses",
+        "state": "done",
+        "detail": "who-iris"
       },
       {
         "id": "directory:smart-base-site-docs",
@@ -71,9 +78,9 @@
         "detail": "holds library"
       },
       {
-        "id": "directory:library-9789240116191-eng-l1-extraction",
+        "id": "directory:l1-extraction-9789240116191-eng",
         "namedBy": "smart-base",
-        "what": "declared directory library/9789240116191-eng/l1-extraction/ exists",
+        "what": "declared directory l1-extractions/9789240116191-eng/ exists",
         "state": "done",
         "detail": "holds l1-extraction"
       },

@@ -9,10 +9,10 @@
       "@type": "cat-harness:Tool",
       "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
       "install": {
-        "cli": "scripts/setup-lean-toolchain.sh"
+        "cli": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
       },
       "invoke": {
-        "shell": "bun run cat lean:setup-toolchain"
+        "shell": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
       },
       "io": {
         "inputs": [],

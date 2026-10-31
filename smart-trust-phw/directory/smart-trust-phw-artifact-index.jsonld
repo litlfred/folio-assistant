@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-artifact-index.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-phw-artifact-index",
+      "path": "fhir-artifact-index/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/fhir-artifact-index"
+      ],
+      "description": "The artefact index for smart-trust-phw. `index.json`, `menu.json`, `releases.json` and `package.tgz` are NOT COMMITTED: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`builtAtPublish`, fhir-harness#124). `ig-identity.json` and the README stay committed. Bean nr5p.",
+      "readmePath": "fhir-artifact-index/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-artifact-index"
+    }
+  ]
+}

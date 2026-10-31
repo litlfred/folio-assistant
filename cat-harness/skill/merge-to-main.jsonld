@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "merge-to-main",
       "title": "Merge to `main` — a sub-process with its own gate",
-      "description": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository.",
+      "description": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, site republished, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-to-main.md",
-      "instructionLines": 279,
+      "instructionLines": 295,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

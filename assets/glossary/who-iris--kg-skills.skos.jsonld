@@ -14,6 +14,46 @@
       "dcterms:source": "Skills of who-iris"
     },
     {
+      "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills/iris-cdn-exporter",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "iris-cdn-exporter"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IRIS CDN Exporter agent — how WHO IRIS is exported onto Cloudflare — a git repository on Cloudflare Artifacts and R2 behind the CDN — with an initial load (metadata and PDFs), a nightly change ingest over the DSpace REST API, a weekly reconciliation, and one signed release per run. What the agent decides, what the pipeline does, and the no-churn rule both obey."
+        }
+      ],
+      "skos:notation": "iris-cdn-exporter",
+      "dcterms:source": "who-iris/skills/iris-cdn-exporter.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills/iris-cdn-signing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "iris-cdn-signing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How an IRIS CDN release is packaged, signed and verified using published standards only: a BagIt bag (RFC 8493), a detached JWS (RFC 7515 App. F) with ES256 (RFC 7518), and the key published in a did:web DID document whose publicKeyJwk carries an x5c chain up to WHO's signing key. No GDHCN trust list is assumed."
+        }
+      ],
+      "skos:notation": "iris-cdn-signing",
+      "dcterms:source": "who-iris/skills/iris-cdn-signing.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills/iris-dspace",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -51,6 +91,26 @@
       ],
       "skos:notation": "iris-oxigraph",
       "dcterms:source": "who-iris/skills/iris-oxigraph.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills/iris-rest-feed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/who-iris/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "iris-rest-feed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to read changes from the WHO IRIS DSpace 7 REST API: the nightly \"changed since\" walk over Discovery sorted by lastModified, the weekly reconciliation that stands in for the deletions REST does not report, and the guard that stops a short listing from reading as a mass withdrawal."
+        }
+      ],
+      "skos:notation": "iris-rest-feed",
+      "dcterms:source": "who-iris/skills/iris-rest-feed.md",
       "skos:note": "candidate"
     }
   ]

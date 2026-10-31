@@ -136,7 +136,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site."
+          "@value": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site."
         }
       ],
       "skos:notation": "ig-build-pipeline",
@@ -196,6 +196,26 @@
       ],
       "skos:notation": "ig-publisher-reduction",
       "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-skills/ig-publisher-service-contract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-publisher-service-contract"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read."
+        }
+      ],
+      "skos:notation": "ig-publisher-service-contract",
+      "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/ig-publisher-service-contract.md",
       "skos:note": "candidate"
     },
     {
@@ -271,6 +291,26 @@
       ],
       "skos:notation": "l3-fhir-authoring",
       "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-skills/pcf-consent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "pcf-consent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`."
+        }
+      ],
+      "skos:notation": "pcf-consent",
+      "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/pcf-consent.md",
       "skos:note": "candidate"
     },
     {

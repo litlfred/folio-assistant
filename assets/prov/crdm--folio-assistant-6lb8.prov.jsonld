@@ -4,6 +4,15 @@
     {
       "@base": "https://litlfred.github.io/folio/",
       "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+      "cat-harness:agentSubject": {
+        "@type": "@id"
+      },
+      "cat-harness:planSubject": {
+        "@type": "@id"
+      },
+      "cat-harness:roleSubject": {
+        "@type": "@id"
+      },
       "cat-harness:underPolicy": {
         "@type": "@id"
       }
@@ -23,6 +32,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/BA_Submit",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#BA_Submit",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#business-analyst"
     },
@@ -39,6 +51,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#2",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/A_Detect",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#A_Detect",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -55,6 +70,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#3",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_Feature",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#GW_Feature",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -71,6 +89,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#4",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Issue",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#Call_Issue",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -87,6 +108,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#5",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Needs",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#Call_Needs",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -103,6 +127,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#6",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Requirements",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#Call_Requirements",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -119,6 +146,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8#7",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_DataModel",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements#Call_DataModel",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -135,6 +165,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_DataModel#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel/node/A_Entities",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-data-model#A_Entities",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -151,6 +184,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_DataModel#2",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel/node/A_Relations",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-data-model#A_Relations",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -167,6 +203,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_DataModel#3",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel/node/BA_ConfirmEntities",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-data-model#BA_ConfirmEntities",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#business-analyst"
     },
@@ -183,6 +222,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_DataModel#4",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel/node/S_ConfirmCardinality",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-data-model#S_ConfirmCardinality",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#stakeholder"
     },
@@ -199,6 +241,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_DataModel#5",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel/node/GW_Model",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-data-model#GW_Model",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -215,6 +260,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_DataModel#6",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel/node/A_Declare",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-data-model#A_Declare",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -231,6 +279,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Issue#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Issue/node/A_ScanIssues",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-issue-linking#A_ScanIssues",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -247,6 +298,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Issue#2",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Issue/node/GW_Issue",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-issue-linking#GW_Issue",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -263,6 +317,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Issue#3",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Issue/node/A_AskCreate",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-issue-linking#A_AskCreate",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -279,6 +336,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Needs#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs/node/A_Stakeholders",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-needs#A_Stakeholders",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -295,6 +355,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Needs#2",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs/node/A_Synthesise",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-needs#A_Synthesise",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -311,6 +374,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Needs#3",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs/node/BA_ReviewNeeds",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-needs#BA_ReviewNeeds",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#business-analyst"
     },
@@ -327,6 +393,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Needs#4",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs/node/S_ConfirmNeeds",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-needs#S_ConfirmNeeds",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#stakeholder"
     },
@@ -343,6 +412,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Needs#5",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs/node/GW_Needs",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-needs#GW_Needs",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -359,6 +431,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Requirements#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_MapWorkflow",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements-definition#A_MapWorkflow",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -375,6 +450,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Requirements#2",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_DefineReqs",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements-definition#A_DefineReqs",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -391,6 +469,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Requirements#3",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_CompareOptions",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements-definition#A_CompareOptions",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -407,6 +488,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Requirements#4",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/BA_ReviewReqs",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements-definition#BA_ReviewReqs",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#business-analyst"
     },
@@ -423,6 +507,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Requirements#5",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/owner",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/S_ApproveReqs",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements-definition#S_ApproveReqs",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#stakeholder"
     },
@@ -439,6 +526,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Requirements#6",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_Reqs",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-requirements-definition#GW_Reqs",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     },
@@ -455,6 +545,9 @@
       "@type": "Association",
       "activity": "crdm--folio-assistant-6lb8/Call_Signoff#1",
       "agent": "https://litlfred.github.io/cat-harness/v0/scenarios/actors/claude",
+      "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude",
+      "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_CreateBeans",
+      "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/v0/processes/process/crdm-signoff#A_CreateBeans",
       "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#authoring-agent"
     }

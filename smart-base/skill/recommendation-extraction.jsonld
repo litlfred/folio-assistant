@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/skill/recommendation-extraction.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
@@ -17,7 +17,7 @@
       "title": "recommendation-extraction",
       "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
-      "instructionLines": 407,
+      "instructionLines": 414,
       "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
       "hasInstructions": true,

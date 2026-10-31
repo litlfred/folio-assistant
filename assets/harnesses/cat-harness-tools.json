@@ -5,7 +5,7 @@
     "position": "complete",
     "next": null,
     "counts": {
-      "done": 28,
+      "done": 30,
       "not-done": 0,
       "could-not-determine": 3,
       "stated": 1
@@ -66,7 +66,7 @@
         "namedBy": "cat-harness-tools",
         "what": "declared directory schemas/ exists",
         "state": "done",
-        "detail": "holds code"
+        "detail": "holds schemas, code"
       },
       {
         "id": "directory:cat-harness-tools-scripts",
@@ -167,11 +167,25 @@
         "detail": "holds code"
       },
       {
+        "id": "directory:cat-harness-tools-archimate-schemas",
+        "namedBy": "cat-harness-tools",
+        "what": "declared directory archimate/schemas/ exists",
+        "state": "done",
+        "detail": "holds schemas, code"
+      },
+      {
         "id": "directory:cat-harness-tools-openapi",
         "namedBy": "cat-harness-tools",
         "what": "declared directory openapi/scripts/ exists",
         "state": "done",
         "detail": "holds code"
+      },
+      {
+        "id": "directory:cat-harness-tools-openapi-schemas",
+        "namedBy": "cat-harness-tools",
+        "what": "declared directory openapi/schemas/ exists",
+        "state": "done",
+        "detail": "holds schemas, code"
       },
       {
         "id": "directory:health",
@@ -213,7 +227,7 @@
         "namedBy": "cat-harness-tools",
         "what": "a workflow that builds the site and deploys it to GitHub Pages",
         "state": "done",
-        "detail": ".github/workflows/layer-publish-context.yml"
+        "detail": ".github/workflows/folio-site-publish.yml"
       },
       {
         "id": "site:branch",

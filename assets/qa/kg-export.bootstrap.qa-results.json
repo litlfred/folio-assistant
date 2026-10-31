@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "60e094daff83"
+    "script_hash": "3b458020d1f0"
   },
   "subject": {
     "kind": "graph",
@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 5,
+      "count": 8,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -40,6 +40,18 @@
           "why": "no-tag"
         },
         {
+          "module": "../cat-harness-tools/schemas/harness-root.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../cat-harness-tools/schemas/tools/harness-tools.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../cat-harness-tools/schemas/tools/tool-helpers.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../smart-base/schemas/dak-annexes.ts",
           "why": "no-tag"
         }
@@ -51,5 +63,5 @@
       "entries": []
     }
   },
-  "total": 5
+  "total": 8
 }

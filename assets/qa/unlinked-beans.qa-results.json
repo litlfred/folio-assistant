@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/unlinked-beans.ts",
-    "script_hash": "81c124183535"
+    "script_hash": "387a8598fbff"
   },
   "subject": {
     "kind": "bean-store",
@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1205,
+          "total": 1255,
           "instance": 15,
-          "namedId": 90,
-          "none": 1100
+          "namedId": 96,
+          "none": 1144
         },
         {
           "status": "scrapped",
@@ -31,32 +31,8 @@
     },
     "open-bean-linked-inferred": {
       "summary": "Not a finding: an open bean tied to a task only because its file NAMES a diagram id (inferred — a mention is not a run). Listed so the inference can be checked.",
-      "count": 2,
-      "entries": [
-        {
-          "severity": "info",
-          "bean": "folio-assistant-b5f0",
-          "title": "INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started",
-          "status": "in-progress",
-          "parent": "folio-assistant-zzmr",
-          "basis": "named-id",
-          "named": [
-            "Process_InitializeHarness",
-            "Task_SeedPlan"
-          ]
-        },
-        {
-          "severity": "info",
-          "bean": "folio-assistant-fnx4",
-          "title": "KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer",
-          "status": "in-progress",
-          "parent": "folio-assistant-vuip",
-          "basis": "named-id",
-          "named": [
-            "Process_MaterializeRemote"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "open-bean-linked-instance": {
       "summary": "Not a finding: an open bean a workflow instance names (recorded).",
@@ -65,18 +41,8 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 49,
+      "count": 25,
       "entries": [
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-0om7",
-          "title": "IG previews publish outline.json and rendered-impact.json for the review page",
-          "status": "todo",
-          "parent": "folio-assistant-1xhc",
-          "basis": "none",
-          "group": "folio-assistant-n3h9",
-          "cosine": 0.657
-        },
         {
           "severity": "warning",
           "bean": "folio-assistant-17iw",
@@ -84,68 +50,8 @@
           "status": "todo",
           "parent": "folio-assistant-uhkv",
           "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.389
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-4dj5",
-          "title": "PAPER TEMPLATE WIRING: the sci paper adapter supplies its print preamble to generate-main-tex, and publish.yml uses it (#2117 P2, P5)",
-          "status": "in-progress",
-          "parent": "folio-assistant-7x5n",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.519
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-4fv8",
-          "title": "Placement PR4: whole roles, stories, actors and capabilities move up to their owners",
-          "status": "todo",
-          "parent": "folio-assistant-iirv",
-          "basis": "none",
-          "group": "folio-assistant-9umr",
-          "cosine": 0.783
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-4u5d",
-          "title": "IG artefact index built at publish by fhir-harness from the AST: no IG instance commits fhir-artifact-index/",
-          "status": "in-progress",
-          "parent": "folio-assistant-n3h9",
-          "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.83
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-607f",
-          "title": "UPSTREAM PIN WATCHDOG: red since 2026-10-20 on an undetermined pin, so #1481 has gone stale",
-          "status": "in-progress",
-          "parent": "folio-assistant-rwmf",
-          "basis": "none",
-          "group": "folio-assistant-ksek",
-          "cosine": 0.719
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-61tg",
-          "title": "TOPOLOGY: self-sovereign — own infrastructure, inward-facing, wallets and DAK intake",
-          "status": "todo",
-          "parent": "folio-assistant-o1by",
-          "basis": "none",
-          "group": "folio-assistant-vke6",
-          "cosine": 0.33
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-6g6o",
-          "title": "CI: PR-time Liquid undefined-variable and post-merge regen checks block before merge",
-          "status": "in-progress",
-          "parent": "folio-assistant-ksek",
-          "basis": "none",
-          "group": "folio-assistant-ksek",
-          "cosine": 0.816
+          "group": "folio-assistant-n3h9",
+          "cosine": 0.382
         },
         {
           "severity": "warning",
@@ -155,7 +61,7 @@
           "parent": "folio-assistant-slw1",
           "basis": "none",
           "group": "folio-assistant-7x5n",
-          "cosine": 0.462
+          "cosine": 0.571
         },
         {
           "severity": "warning",
@@ -165,37 +71,17 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.869
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-8fq9",
-          "title": "Placement PR7: tests regroup by concern group, retargeted to cat-harness-tools/",
-          "status": "in-progress",
-          "parent": "folio-assistant-iirv",
-          "basis": "none",
-          "group": "folio-assistant-iirv",
-          "cosine": 0.693
+          "cosine": 0.866
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-8lcl",
           "title": "Separation stage 1b: Zod moves to cat-harness-tools; generated JSON Schema stays in cat-harness",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-iirv",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.871
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-95sk",
-          "title": "FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and reader documents in folio/, cross-library references — wait on the split",
-          "status": "in-progress",
-          "parent": "folio-assistant-vke6",
-          "basis": "none",
-          "group": "folio-assistant-yj32",
-          "cosine": 0.659
+          "cosine": 0.878
         },
         {
           "severity": "warning",
@@ -205,17 +91,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-7x5n",
-          "cosine": 0.648
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-9umr",
-          "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
-          "status": "in-progress",
-          "parent": "folio-assistant-vuip",
-          "basis": "none",
-          "group": "folio-assistant-9umr",
-          "cosine": 0.745
+          "cosine": 0.599
         },
         {
           "severity": "warning",
@@ -224,18 +100,8 @@
           "status": "todo",
           "parent": "folio-assistant-5a3l",
           "basis": "none",
-          "group": "(no epic fits)",
-          "cosine": 0.29
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-dscv",
-          "title": "Markers: what a harness could declare — scan, show, pick (declare, don't slurp)",
-          "status": "in-progress",
-          "parent": "",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.654
+          "group": "folio-assistant-yj32",
+          "cosine": 0.328
         },
         {
           "severity": "warning",
@@ -244,18 +110,8 @@
           "status": "todo",
           "parent": "folio-assistant-slw1",
           "basis": "none",
-          "group": "folio-assistant-ksek",
-          "cosine": 0.418
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-f8wp",
-          "title": "Placement PR8: schemas regroup and move with their importers; library sources by group; residual gate",
-          "status": "in-progress",
-          "parent": "folio-assistant-iirv",
-          "basis": "none",
-          "group": "folio-assistant-iirv",
-          "cosine": 0.752
+          "group": "folio-assistant-7x5n",
+          "cosine": 0.435
         },
         {
           "severity": "warning",
@@ -264,38 +120,18 @@
           "status": "todo",
           "parent": "folio-assistant-5a3l",
           "basis": "none",
-          "group": "(no epic fits)",
-          "cosine": 0.282
+          "group": "folio-assistant-yj32",
+          "cosine": 0.315
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-fwtz",
           "title": "docs-site must rebuild when the bean branch moves (ref + concurrency)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-fs43",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.394
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-h11k",
-          "title": "BLOCK TRANSLATION GAPS: math placeholders, inline-markup placeholders, manifest extraction, locale render path",
-          "status": "todo",
-          "parent": "folio-assistant-slw1",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.54
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-h3tx",
-          "title": "PHASE P4: the Publisher invoked for AST + QA only; a release still cut from a full build and saying so",
-          "status": "in-progress",
-          "parent": "folio-assistant-uhkv",
-          "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.711
+          "cosine": 0.369
         },
         {
           "severity": "warning",
@@ -305,27 +141,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.882
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-inkl",
-          "title": "INGEST: TOC extractor defects 2-5, including the DAK contents collapsing past the trust tests",
-          "status": "todo",
-          "parent": "folio-assistant-slw1",
-          "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.642
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-jbvi",
-          "title": "LIBRARY NODES: outside libraries the platform uses become graph nodes",
-          "status": "in-progress",
-          "parent": "folio-assistant-zzmr",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.672
+          "cosine": 0.862
         },
         {
           "severity": "warning",
@@ -335,17 +151,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.874
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-l1nl",
-          "title": "IG/DAK version-numbering rule and source-of-truth rule (from #222)",
-          "status": "todo",
-          "parent": "folio-assistant-uhkv",
-          "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.764
+          "cosine": 0.853
         },
         {
           "severity": "warning",
@@ -355,7 +161,7 @@
           "parent": "folio-assistant-7x5n",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.8
+          "cosine": 0.795
         },
         {
           "severity": "warning",
@@ -364,8 +170,18 @@
           "status": "in-progress",
           "parent": "folio-assistant-vuip",
           "basis": "none",
-          "group": "folio-assistant-fnx4",
-          "cosine": 0.504
+          "group": "folio-assistant-n3h9",
+          "cosine": 0.455
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-negd",
+          "title": "COMPUTABLE DSAs: public agreement + ODRL, referenced by hash; GDHCN trust; one PDP (#2702, option D)",
+          "status": "todo",
+          "parent": "",
+          "basis": "none",
+          "group": "folio-assistant-7x5n",
+          "cosine": 0.429
         },
         {
           "severity": "warning",
@@ -375,17 +191,7 @@
           "parent": "folio-assistant-0lmb",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.57
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-o1by",
-          "title": "DEPLOYMENT DESCRIPTIONS: place declared actors per deployment, and resolve which Tool runs which task",
-          "status": "in-progress",
-          "parent": "folio-assistant-5a3l",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.542
+          "cosine": 0.608
         },
         {
           "severity": "warning",
@@ -394,8 +200,8 @@
           "status": "todo",
           "parent": "folio-assistant-5a3l",
           "basis": "none",
-          "group": "(no epic fits)",
-          "cosine": 0.272
+          "group": "folio-assistant-yj32",
+          "cosine": 0.309
         },
         {
           "severity": "warning",
@@ -405,37 +211,27 @@
           "parent": "folio-assistant-1xhc",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.712
+          "cosine": 0.66
         },
         {
           "severity": "warning",
-          "bean": "folio-assistant-pzwb",
-          "title": "Placement PR2: finish splitting folio-core and regroup the harness skill topics",
+          "bean": "folio-assistant-q7dh",
+          "title": "check:dsa-hash: validate against official ODRL/DCAT/DCMI contexts, declare it as a Tool",
           "status": "in-progress",
-          "parent": "folio-assistant-9umr",
+          "parent": "folio-assistant-negd",
           "basis": "none",
-          "group": "folio-assistant-iirv",
-          "cosine": 0.76
+          "group": "folio-assistant-negd",
+          "cosine": 0.607
         },
         {
           "severity": "warning",
-          "bean": "folio-assistant-rfuq",
-          "title": "S4 direction and placement: zero wrong-direction edges; placement PR2-PR9; 9umr finale",
+          "bean": "folio-assistant-r29x",
+          "title": "R29 (PAUSED by owner): todos and sticky notes reference things across KG libraries, as one merged kind",
           "status": "todo",
-          "parent": "folio-assistant-7x5n",
+          "parent": "folio-assistant-vke6",
           "basis": "none",
-          "group": "folio-assistant-9umr",
-          "cosine": 0.79
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-rn24",
-          "title": "GATES: content-root gate set follow-ups (smart-ra re-pin, drop the PREREQUISITE_FILES skip)",
-          "status": "todo",
-          "parent": "folio-assistant-3fva",
-          "basis": "none",
-          "group": "folio-assistant-fnx4",
-          "cosine": 0.507
+          "group": "folio-assistant-yj32",
+          "cosine": 0.395
         },
         {
           "severity": "warning",
@@ -445,57 +241,17 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.329
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-saqd",
-          "title": "S5-a: maths code out of cat-harness into folio-assistant-sci's code (#223 partition; 49 MOVE + 10 split)",
-          "status": "in-progress",
-          "parent": "folio-assistant-7x5n",
-          "basis": "none",
-          "group": "folio-assistant-9umr",
-          "cosine": 0.738
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-se3i",
-          "title": "PUBLIC COMMENT: a person can re-route a change set to a different committee by hand",
-          "status": "in-progress",
-          "parent": "folio-assistant-rwmf",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.482
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-t5zb",
-          "title": "AGENT ADVICE PER REPO (phase 2): skill commands, agents, memory and .mcp.json where a repo has content for them",
-          "status": "todo",
-          "parent": "folio-assistant-7x5n",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.656
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-tmo5",
-          "title": "First real KG subscription: litlfred/ihris",
-          "status": "todo",
-          "parent": "folio-assistant-fnx4",
-          "basis": "none",
-          "group": "folio-assistant-fnx4",
-          "cosine": 0.674
+          "cosine": 0.332
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-txue",
           "title": "S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y9r6, vj2p",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-7x5n",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.802
+          "cosine": 0.801
         },
         {
           "severity": "warning",
@@ -505,17 +261,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.716
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-vj2p",
-          "title": "Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository",
-          "status": "todo",
-          "parent": "folio-assistant-iirv",
-          "basis": "none",
-          "group": "folio-assistant-iirv",
-          "cosine": 0.829
+          "cosine": 0.727
         },
         {
           "severity": "warning",
@@ -525,7 +271,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-vke6",
-          "cosine": 0.567
+          "cosine": 0.556
         },
         {
           "severity": "warning",
@@ -535,17 +281,7 @@
           "parent": "folio-assistant-iirv",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.746
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-y9r6",
-          "title": "Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON",
-          "status": "todo",
-          "parent": "folio-assistant-iirv",
-          "basis": "none",
-          "group": "folio-assistant-iirv",
-          "cosine": 0.748
+          "cosine": 0.733
         },
         {
           "severity": "warning",
@@ -555,57 +291,48 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.426
+          "cosine": 0.418
         }
       ]
     },
     "unlinked-group": {
       "summary": "The unlinked open beans grouped by the epic each is nearest to in the store's LSI space (lsi-epics' ranking). A group of 5 or more is a CANDIDATE undocumented process; smaller groups, singletons, and the beans that fit no epic (cosine < 0.3) are listed as such.",
-      "count": 10,
+      "count": 8,
       "entries": [
         {
           "severity": "warning",
           "group": "folio-assistant-iirv",
-          "size": 11,
+          "size": 6,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-iirv",
           "nearest_epic_title": "cat-harness / cat-harness-tools separation",
-          "mean_cosine": 0.796,
+          "mean_cosine": 0.822,
           "terms": [
             "litlfred cat-harness-tools",
             "litlfred cat-harness",
-            "separation drain",
+            "cat-harness bd72c",
+            "tools cat-harness",
             "block lifted",
             "code cat-harness-tools",
-            "cat-harness bd72c",
-            "litlfred folio-assistant-sci",
-            "litlfred folio-assistant-core"
+            "finish goal",
+            "goal code-move"
           ],
           "beans": [
             "folio-assistant-7x5n",
-            "folio-assistant-8fq9",
             "folio-assistant-8lcl",
-            "folio-assistant-f8wp",
             "folio-assistant-iirv",
             "folio-assistant-mgxw",
-            "folio-assistant-pzwb",
             "folio-assistant-txue",
-            "folio-assistant-vj2p",
-            "folio-assistant-w1gy",
-            "folio-assistant-y9r6"
+            "folio-assistant-w1gy"
           ],
           "filed_under": [
-            {
-              "epic": "folio-assistant-iirv",
-              "beans": 6
-            },
             {
               "epic": "folio-assistant-7x5n",
               "beans": 2
             },
             {
-              "epic": "folio-assistant-9umr",
-              "beans": 1
+              "epic": "folio-assistant-iirv",
+              "beans": 2
             }
           ],
           "known_processes": [
@@ -637,39 +364,63 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-7x5n",
-          "size": 9,
+          "group": "folio-assistant-yj32",
+          "size": 6,
           "size_class": "candidate",
-          "nearest_epic": "folio-assistant-7x5n",
-          "nearest_epic_title": "SEPARATION ARC: one workplan consolidating five stalled sessions' GOAL 1 work (S0–S8)",
-          "mean_cosine": 0.575,
+          "nearest_epic": "folio-assistant-yj32",
+          "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
+          "mean_cosine": 0.349,
           "terms": [
-            "prs merged",
-            "cat-harness copy",
-            "viewers thread",
-            "mnt project-files",
-            "committee",
-            "spdx licence",
-            "github index",
-            "generates nodes"
+            "task bank",
+            "independent queues",
+            "epic open",
+            "folio board",
+            "spec-kit split",
+            "manage process",
+            "content model",
+            "milestone ancestor"
           ],
           "beans": [
-            "folio-assistant-4dj5",
-            "folio-assistant-75c5",
-            "folio-assistant-9hxd",
-            "folio-assistant-dscv",
-            "folio-assistant-h11k",
-            "folio-assistant-jbvi",
-            "folio-assistant-o1by",
-            "folio-assistant-se3i",
-            "folio-assistant-t5zb"
+            "folio-assistant-amom",
+            "folio-assistant-fvec",
+            "folio-assistant-oz9e",
+            "folio-assistant-r29x",
+            "folio-assistant-rwmf",
+            "folio-assistant-yj32"
           ],
           "filed_under": [
             {
-              "epic": "folio-assistant-7x5n",
-              "beans": 2
+              "epic": "folio-assistant-vke6",
+              "beans": 1
             }
           ],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-7x5n",
+          "size": 4,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-7x5n",
+          "nearest_epic_title": "SEPARATION ARC: one workplan consolidating five stalled sessions' GOAL 1 work (S0–S8)",
+          "mean_cosine": 0.508,
+          "terms": [
+            "finish leftovers",
+            "drain ingest",
+            "project files",
+            "ingest beans",
+            "arm",
+            "agy",
+            "front matter",
+            "qou"
+          ],
+          "beans": [
+            "folio-assistant-75c5",
+            "folio-assistant-9hxd",
+            "folio-assistant-f0hv",
+            "folio-assistant-negd"
+          ],
+          "filed_under": [],
           "known_processes": [
             {
               "process": "Process_BoardRelocate",
@@ -687,41 +438,83 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-uhkv",
-          "size": 7,
-          "size_class": "candidate",
-          "nearest_epic": "folio-assistant-uhkv",
-          "nearest_epic_title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
-          "mean_cosine": 0.66,
+          "group": "folio-assistant-ksek",
+          "size": 3,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-ksek",
+          "nearest_epic_title": "CI: green PR must mean green main",
+          "mean_cosine": 0.627,
           "terms": [
-            "fhir-harness smart-base",
-            "instantiates smart-base",
-            "litlfred fhir-harness",
-            "publisher ast",
-            "repins fhir-harness",
-            "fhir-harness merged",
-            "core fhir-harness",
-            "fhir-harness opened"
+            "post-merge regen",
+            "cone deploy",
+            "regen run",
+            "cone update",
+            "deploy stamps",
+            "builtatpublish outputs",
+            "main deploy",
+            "full deploy"
+          ],
+          "beans": [
+            "folio-assistant-fwtz",
+            "folio-assistant-ksek",
+            "folio-assistant-p7mb"
+          ],
+          "filed_under": [],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-n3h9",
+          "size": 2,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-n3h9",
+          "nearest_epic_title": "HARNESS the smart-* IG repositories: index.config.json remote mounts, Actions gh-pages switched off, agent-run harnessed publish",
+          "mean_cosine": 0.418,
+          "terms": [
+            "smart-ra public-comment",
+            "smart-base submodule",
+            "public-comment preview",
+            "consent met",
+            "smart-base-clinical",
+            "routine environment",
+            "remote mounts",
+            "staging previews"
           ],
           "beans": [
             "folio-assistant-17iw",
-            "folio-assistant-4u5d",
-            "folio-assistant-h3tx",
-            "folio-assistant-inkl",
-            "folio-assistant-l1nl",
-            "folio-assistant-nvhg",
-            "folio-assistant-uhkv"
+            "folio-assistant-n3h9"
           ],
           "filed_under": [
             {
               "epic": "folio-assistant-uhkv",
-              "beans": 3
-            },
-            {
-              "epic": "folio-assistant-n3h9",
               "beans": 1
             }
           ],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-uhkv",
+          "size": 2,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-uhkv",
+          "nearest_epic_title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
+          "mean_cosine": 0.667,
+          "terms": [
+            "instantiates smart-base",
+            "smart-ig instance",
+            "smart-ig box",
+            "smart-ig dropped",
+            "smart-immunizations instantiates",
+            "dak document",
+            "fhir-harness smart-base",
+            "smart-dak became"
+          ],
+          "beans": [
+            "folio-assistant-nvhg",
+            "folio-assistant-uhkv"
+          ],
+          "filed_under": [],
           "known_processes": [
             {
               "process": "Process_L2Dak",
@@ -747,165 +540,50 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-ksek",
-          "size": 6,
-          "size_class": "candidate",
-          "nearest_epic": "folio-assistant-ksek",
-          "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.655,
+          "group": "folio-assistant-negd",
+          "size": 1,
+          "size_class": "singleton",
+          "nearest_epic": "folio-assistant-negd",
+          "nearest_epic_title": "COMPUTABLE DSAs: public agreement + ODRL, referenced by hash; GDHCN trust; one PDP (#2702, option D)",
+          "mean_cosine": 0.607,
           "terms": [
-            "post-merge regen",
-            "regen run",
-            "cone deploy",
-            "committed inputs",
-            "main deploy",
-            "prs merge",
-            "cone update",
-            "dry run"
+            "official contexts",
+            "dsa steps",
+            "voice review",
+            "dcmi",
+            "dcat",
+            "odrl"
           ],
           "beans": [
-            "folio-assistant-607f",
-            "folio-assistant-6g6o",
-            "folio-assistant-f0hv",
-            "folio-assistant-fwtz",
-            "folio-assistant-ksek",
-            "folio-assistant-p7mb"
+            "folio-assistant-q7dh"
           ],
           "filed_under": [
             {
-              "epic": "folio-assistant-ksek",
-              "beans": 1
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-9umr",
-          "size": 4,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-9umr",
-          "nearest_epic_title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
-          "mean_cosine": 0.764,
-          "terms": [
-            "block lifted",
-            "large-datasets agent-skills",
-            "tools sci",
-            "sci cluster",
-            "cat-harness cat-harness-tools",
-            "folio-assistant-core skills",
-            "later groups",
-            "agent-skills folding"
-          ],
-          "beans": [
-            "folio-assistant-4fv8",
-            "folio-assistant-9umr",
-            "folio-assistant-rfuq",
-            "folio-assistant-saqd"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-7x5n",
-              "beans": 2
-            },
-            {
-              "epic": "folio-assistant-iirv",
-              "beans": 1
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-fnx4",
-          "size": 3,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-fnx4",
-          "nearest_epic_title": "KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer",
-          "mean_cosine": 0.562,
-          "terms": [
-            "smart-ra public-comment",
-            "consent met",
-            "public-comment preview",
-            "smart-base submodule",
-            "litlfred fhir-package-mirror",
-            "routine environment",
-            "remote mounts",
-            "staging previews"
-          ],
-          "beans": [
-            "folio-assistant-n3h9",
-            "folio-assistant-rn24",
-            "folio-assistant-tmo5"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-fnx4",
+              "epic": "folio-assistant-negd",
               "beans": 1
             }
           ],
           "known_processes": [
             {
-              "process": "Process_GettingStarted",
-              "beans": 1
-            },
-            {
-              "process": "Process_MaterializeRemote",
+              "process": "Process_DsaDocumentLifecycle",
               "beans": 1
             }
           ]
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-yj32",
-          "size": 3,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-yj32",
-          "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "mean_cosine": 0.471,
-          "terms": [
-            "folio board",
-            "todo stickies",
-            "milestone ancestor",
-            "pipeline todos",
-            "writable datastore",
-            "epic open",
-            "miro board",
-            "todos beans"
-          ],
-          "beans": [
-            "folio-assistant-95sk",
-            "folio-assistant-rwmf",
-            "folio-assistant-yj32"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-vke6",
-              "beans": 1
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
           "group": "folio-assistant-vke6",
-          "size": 2,
-          "size_class": "small",
+          "size": 1,
+          "size_class": "singleton",
           "nearest_epic": "folio-assistant-vke6",
           "nearest_epic_title": "SPLIT (#223): cut this repo into layers that can depend on each other",
-          "mean_cosine": 0.449,
+          "mean_cosine": 0.556,
           "terms": [
-            "air-gapped infrastructure",
-            "managing wallets",
-            "strawperson position",
-            "incoming dak",
-            "offline run",
-            "five layers",
-            "credentials",
-            "dak content"
+            "cut",
+            "cycles",
+            "harness-layer"
           ],
           "beans": [
-            "folio-assistant-61tg",
             "folio-assistant-vke6"
           ],
           "filed_under": [],
@@ -935,55 +613,9 @@
               "beans": 1
             }
           ]
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-n3h9",
-          "size": 1,
-          "size_class": "singleton",
-          "nearest_epic": "folio-assistant-n3h9",
-          "nearest_epic_title": "HARNESS the smart-* IG repositories: index.config.json remote mounts, Actions gh-pages switched off, agent-run harnessed publish",
-          "mean_cosine": 0.657,
-          "terms": [
-            "preview publishes",
-            "outline",
-            "change alters",
-            "narrative pages",
-            "review page",
-            "uganda"
-          ],
-          "beans": [
-            "folio-assistant-0om7"
-          ],
-          "filed_under": [],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
-          "group": "(no epic fits)",
-          "size": 3,
-          "size_class": "no-fit",
-          "mean_cosine": 0.281,
-          "terms": [
-            "task bank",
-            "independent queues",
-            "crdm drafts",
-            "spec-kit split",
-            "arg-designer mapping",
-            "side-by-side view",
-            "oz9e together",
-            "plan-case link"
-          ],
-          "beans": [
-            "folio-assistant-amom",
-            "folio-assistant-fvec",
-            "folio-assistant-oz9e"
-          ],
-          "filed_under": [],
-          "known_processes": []
         }
       ]
     }
   },
-  "total": 63
+  "total": 35
 }

@@ -366,9 +366,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
@@ -451,6 +451,11 @@
             "name": "verdict",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
             "description": "Written or not, every gate's verdict with its reason, findings, and the PROV-O activity of an accepted write when a step was named."
+          },
+          {
+            "name": "activity",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProvActivity",
+            "description": "The PROV-O activity of an accepted write that named its process, task and role; absent otherwise. Pass it to workflow_complete's `activities` for that step."
           }
         ]
       },

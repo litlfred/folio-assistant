@@ -1,0 +1,75 @@
+{
+  "$ref": "#/definitions/TranslationStatus",
+  "definitions": {
+    "TranslationStatus": {
+      "type": "object",
+      "properties": {
+        "locale": {
+          "type": "string",
+          "minLength": 2
+        },
+        "official": {
+          "type": "boolean"
+        },
+        "stale": {
+          "type": "boolean"
+        },
+        "signedOffBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signedOffAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+        },
+        "sourceHash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "block",
+            "section",
+            "chapter",
+            "folio"
+          ]
+        },
+        "generatedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+        },
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "flaggedForReview": {
+          "type": "boolean"
+        },
+        "flagReason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "locale",
+        "official"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation/TranslationStatusSchema.schema.json",
+  "title": "TranslationStatusSchema",
+  "description": "Generated from `TranslationStatusSchema` in schemas/content/translation.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  }
+}

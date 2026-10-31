@@ -19,9 +19,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9884515df27adc5e565d339366cb129b8b288e1f7632f5626e8d82a2e5d9725c",
-        "bytes": 8579,
-        "sha256": "9884515df27adc5e565d339366cb129b8b288e1f7632f5626e8d82a2e5d9725c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c87d0bcb013e8c45498d08ac89b8d75ac70cb5cd131bd695fbd023324d7af233",
+        "bytes": 10554,
+        "sha256": "c87d0bcb013e8c45498d08ac89b8d75ac70cb5cd131bd695fbd023324d7af233"
       },
       "title": "AGENTS.md — fhir-harness"
     },
@@ -97,6 +97,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/qa",
       "@type": "bootstrap:Subgraph",
       "name": "qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "@type": "bootstrap:Role",
+      "title": "FHIR modeller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "@type": "bootstrap:Role",
+      "title": "IG publisher + validator"
     }
   ],
   "hasSubgraph": [
@@ -109,6 +119,7 @@
   "holdsGraph": [
     "cat-harness:graphTypology/library",
     "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/scenarios",
     "bootstrap:graphTypology/skills",
     "cat-harness:graphTypology/tools"
   ],

@@ -4,7 +4,7 @@ title: Home
 nav_order: 1
 lang: en
 description: "WHO IRIS, catalogued by reference — an ingested copy, not WHO and not live."
-permalink: /
+permalink: /docs/
 ---
 
 {% include landing.html %}
@@ -17,17 +17,18 @@ reference**: the shape of the corpus is modelled here, and only a handful of
 its items are held.
 {: .fs-6 .fw-300 }
 
-[Browse the replica]({{ '/who-iris/' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[The IRIS-style home]({{ '/' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [The catalogue, as a graph]({{ '/docs/who-iris/' | relative_url }}){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 {% include harness_details.html %}
 
 ## What this site is
 
-- **[The replica]({{ '/who-iris/' | relative_url }})** — IRIS's home page,
-  community list, collections and items, rendered from this repository's
-  catalogue and themed as IRIS. It is an **ingested copy**: not WHO, and not
-  live.
+- **[The IRIS-style home]({{ '/' | relative_url }})** — IRIS's home page,
+  rendered from this repository's catalogue and themed as IRIS, at this
+  site's root (owner, 2026-10-30). Each held item links to its library entry
+  page, its one page; communities and collections go to the catalogue page.
+  It is an **ingested copy**: not WHO, and not live.
 - **[The catalogue]({{ '/docs/who-iris/' | relative_url }})** — what the
   catalogue knows, and what it records that it does not know. Every node
   declares whether its bytes are here (`materialized`), elsewhere

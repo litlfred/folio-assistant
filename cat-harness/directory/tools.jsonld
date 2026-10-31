@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/tools"
       ],
-      "description": "Tool definitions, one folder per Tool (tools/<id>/<id>.ts, bean tdir), shared helpers in tools/lib.ts. tools/index.ts loads the folders (toolsFromFolders) and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "description": "Tool definitions, one folder per Tool (tools/<id>/<id>.json, bean tdir). Data only since bean 8lcl (owner card \"A. One coordinated move\", 2026-10-30): the loader (toolsFromFolders) and the shared helpers moved to the tools layer (https://github.com/litlfred/cat-harness-tools/tree/main/schemas/tools) as schemas/tools/harness-tools.ts and schemas/tools/tool-helpers.ts, which is the path a consumer imports. The JSON-LD and JSON Schema renderings are generated.",
       "readmePath": "tools/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/tools"

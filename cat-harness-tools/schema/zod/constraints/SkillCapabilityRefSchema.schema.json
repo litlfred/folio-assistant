@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/SkillCapabilityRef",
+  "definitions": {
+    "SkillCapabilityRef": {
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string"
+        },
+        "degradation": {
+          "type": "string",
+          "enum": [
+            "fail",
+            "warn",
+            "skip",
+            "fallback"
+          ]
+        }
+      },
+      "required": [
+        "capabilityId",
+        "degradation"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillCapabilityRefSchema.schema.json",
+  "title": "SkillCapabilityRefSchema",
+  "description": "Generated from `SkillCapabilityRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  }
+}

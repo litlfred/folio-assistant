@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-30T13:18:21.551Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitSha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitAt": "2026-10-30T14:46:51+02:00",
+  "generatedAt": "2026-10-31T00:48:09.545Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitSha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitAt": "2026-10-31T00:26:36Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -415,7 +415,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "l1-extraction",
       "renderable": false,
-      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest."
+      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/` when the same instance holds the entry, or at `l1-extractions/<entry>/` when the entry lives in another instance (smart-base's handbook extraction, whose source moved to who-iris on 2026-10-30, who-iris#107): the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`: nested in an entry, it is published with the entry beside the entry's manifest; held apart, its own viewer (`scripts/gen-l1-extraction-pages.ts`) publishes it. It is never a folder named for an entry another library holds, which reads as a second copy of that entry and makes the library ingest refuse the duplicate slug."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/web-annex",
@@ -504,7 +504,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/web-annex"
       ],
-      "description": "The annex files themselves, as smart-base's `web-annex` kind (a WHO publication's web annexes, L1 or L2; owner, 2026-10-24, option A), which types them and judges them (`check:web-annexes`). `dak-data-dictionary.json` is Web Annex A of the IMMZ DAK (`annexOf` `smart-immunizations/library/9789240099456-eng`, the held library entry of the DAK `dictionary.md` links to, IRIS 10665/380303; `section` `dak#core-data-elements`; no `iris` of its own, since none could be verified): the core data dictionary workbook (`input/L2/IMMZ DAK_core data dictionary.xlsx`) as `dak-data-dictionary/v1`, written by smart-base's `dak-data-dictionary.ts` (`--annex-of smart-immunizations/library/9789240099456-eng --label \"Web Annex A\" --section dak#core-data-elements`). It records the workbook's sha256: regenerate it, never edit it. It is a sibling of `annexes/` rather than sharing that directory, because each kind owns the `$schema` families of its own directory, and not nested inside it, because a declared directory inside another declared one fails `check:layout-norms` (no typology here declares `within`).",
+      "description": "The annex files themselves, as smart-base's `web-annex` kind (a WHO publication's web annexes, L1 or L2; owner, 2026-10-24, option A), which types them and judges them (`check:web-annexes`). `dak-data-dictionary.json` is Web Annex A of the IMMZ DAK (`annexOf` `who-iris/library/9789240099456-eng`, the held library entry of the DAK `dictionary.md` links to, IRIS 10665/380303; `section` `dak#core-data-elements`; no `iris` of its own, since none could be verified): the core data dictionary workbook (`input/L2/IMMZ DAK_core data dictionary.xlsx`) as `dak-data-dictionary/v1`, written by smart-base's `dak-data-dictionary.ts` (`--annex-of who-iris/library/9789240099456-eng --label \"Web Annex A\" --section dak#core-data-elements`). It records the workbook's sha256: regenerate it, never edit it. It is a sibling of `annexes/` rather than sharing that directory, because each kind owns the `$schema` families of its own directory, and not nested inside it, because a declared directory inside another declared one fails `check:layout-norms` (no typology here declares `within`).",
       "readmePath": "web-annexes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-web-annexes"
@@ -597,8 +597,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   }
 }

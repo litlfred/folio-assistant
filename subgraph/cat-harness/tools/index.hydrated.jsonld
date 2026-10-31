@@ -11,7 +11,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "Tool definitions, one folder per Tool (tools/<id>/<id>.ts, bean tdir), shared helpers in tools/lib.ts. tools/index.ts loads the folders (toolsFromFolders) and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "description": "Tool definitions, one folder per Tool (tools/<id>/<id>.json, bean tdir). Data only since bean 8lcl (owner card \"A. One coordinated move\", 2026-10-30): the loader (toolsFromFolders) and the shared helpers moved to the tools layer (https://github.com/litlfred/cat-harness-tools/tree/main/schemas/tools) as schemas/tools/harness-tools.ts and schemas/tools/tool-helpers.ts, which is the path a consumer imports. The JSON-LD and JSON Schema renderings are generated.",
       "fileCount": 0,
       "holdsGraph": [
         "cat-harness:graphTypology/tools"
@@ -1204,7 +1204,7 @@
                 "arg": {
                   "flag": "--paper"
                 },
-                "description": "The paper directory under the content root. Its default names one folio's paper, which is migration debt: pass it explicitly.",
+                "description": "The paper: a directory name under the folio directory, or a path to it. When omitted, the folio's only paper; required when the folio holds several.",
                 "name": "paper",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -1653,7 +1653,7 @@
           },
           "name": "discuss",
           "requirements": {},
-          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion",
+          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/skill/discussion",
           "title": "discussion"
         }
       ],
@@ -1889,7 +1889,7 @@
             "none": true
           },
           "invoke": {
-            "shell": ".github/workflows/feature-staging.yml"
+            "shell": "bun run cat site:workflow stage"
           },
           "io": {
             "inputs": [
@@ -3319,7 +3319,7 @@
               "bun"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps",
+          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/skill/initialization-steps",
           "title": "Per-harness setup position and health"
         }
       ],
@@ -3861,8 +3861,8 @@
           },
           "satisfies": [
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
-            "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
-            "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
+            "https://litlfred.github.io/folio-assistant/bootstrap/skill/bootstrap-graph-emission",
+            "https://litlfred.github.io/folio-assistant/bootstrap/skill/bootstrap-graph-publication"
           ],
           "title": "Knowledge-graph export"
         }
@@ -4128,65 +4128,6 @@
       "path": "tools/l1-complete-check/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/latexmk-compile/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/latexmk-compile.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat latex:compile"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "The TeX source file to compile (e.g. main.tex).",
-                "name": "tex",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "description": "Additional arguments to forward to latexmk.",
-                "name": "args",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine).",
-                "name": "pdf",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              }
-            ]
-          },
-          "name": "latexmk-compile",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bash",
-              "latexmk",
-              "pdflatex"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-compilation",
-          "title": "LaTeX compilation (latexmk)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/latexmk-compile",
-      "path": "tools/latexmk-compile/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/library-viewer/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -4315,7 +4256,7 @@
           "requirements": {
             "network": false
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message",
+          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap/skill/log-message",
           "title": "Log a message to the discussion"
         }
       ],
@@ -5932,7 +5873,7 @@
             "none": true
           },
           "invoke": {
-            "shell": ".github/workflows/docs-site.yml"
+            "shell": "bun run cat site:workflow publish"
           },
           "io": {
             "inputs": [
@@ -8165,6 +8106,11 @@
                 "description": "Written or not, every gate's verdict with its reason, findings, and the PROV-O activity of an accepted write when a step was named.",
                 "name": "verdict",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              },
+              {
+                "description": "The PROV-O activity of an accepted write that named its process, task and role; absent otherwise. Pass it to workflow_complete's `activities` for that step.",
+                "name": "activity",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProvActivity"
               }
             ]
           },
@@ -10634,6 +10580,13 @@
                 "name": "note",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              },
+              {
+                "description": "PROV-O activities a Tool returned while doing this step, verbatim (e.g. skill_update's `activity`). Kept on the step's history entry; each must name this step as its plan.",
+                "name": "activities",
+                "repeated": true,
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProvActivity"
               }
             ],
             "outputs": [

@@ -50,16 +50,34 @@
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/input.schema.json",
-      "instructionLines": 117,
+      "instructionLines": 124,
       "instructionsPath": "skills/content/fhir-ig-authoring/ig-publication.md",
       "name": "ig-publication",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3376ec3a9358e7893c4513f2a890d014ccead2255294cbf360b06216e3af951b",
-        "bytes": 5460,
-        "sha256": "3376ec3a9358e7893c4513f2a890d014ccead2255294cbf360b06216e3af951b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/398319c4497bfcac26f42d8cacecd60a708d0cd80905d3b905d5b97f997b33b4",
+        "bytes": 5914,
+        "sha256": "398319c4497bfcac26f42d8cacecd60a708d0cd80905d3b905d5b97f997b33b4"
       },
       "title": "ig-publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "instructionLines": 47,
+      "instructionsPath": "skills/content/fhir-ig-authoring/ig-publisher-service-contract.md",
+      "name": "ig-publisher-service-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a80c5c86fe3beeef2e90ee7d8ae115cbf6804de6872250aa83a24200a5c6123",
+        "bytes": 2292,
+        "sha256": "7a80c5c86fe3beeef2e90ee7d8ae115cbf6804de6872250aa83a24200a5c6123"
+      },
+      "title": "IG publisher + validator — the role's contract"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
@@ -79,6 +97,24 @@
         "sha256": "ecb07f7eb769486d52d022caf2b01e71c117d5be8cbfe17ca5ec873ed51a907c"
       },
       "title": "l3-fhir-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "instructionLines": 303,
+      "instructionsPath": "skills/content/fhir-ig-authoring/pcf-consent.md",
+      "name": "pcf-consent",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b78bf0e6ff11d20bdb49d4a79c89a19e1d448d963040677037e50363755ccdf",
+        "bytes": 21948,
+        "sha256": "5b78bf0e6ff11d20bdb49d4a79c89a19e1d448d963040677037e50363755ccdf"
+      },
+      "title": "pcf-consent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/terminology-management",

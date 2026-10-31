@@ -605,6 +605,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="dsa"] {
+  /* a document sheet with text lines and a verification tick — a signed agreement text paired with its cryptographic hash check and ODRL policy */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 2h9l5 5v15H6V2zm8 1.5V8h4.5M9 12h6m-6 3h6m-3 3l1.5 1.5L16.5 17' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="glossary"] {
   /* an open book — terms somebody looks up, not terms a machine mints */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -724,6 +731,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="smart-trust-phw"] {
+  /* a bifold wallet with a clasp — the personal health wallet, in WHO blue */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 7h15a2 2 0 012 2v8a2 2 0 01-2 2H3V7zM3 7l2-3h11l2 3M15 13h3v2h-3z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="who-iris"] {
   /* an open book — a repository of published documents, in WHO blue */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -821,6 +835,7 @@
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
   .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
+  .fa-avatar[data-fa-kind="dsa"] { background-color: hsl(205 46% 34%); }
   .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
   .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
   .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 46% 34%); }
@@ -838,6 +853,7 @@
   .fa-avatar[data-fa-kind="smart-base"] { background-color: hsl(199 46% 34%); }
   .fa-avatar[data-fa-kind="smart-immunizations"] { background-color: hsl(352 46% 34%); }
   .fa-avatar[data-fa-kind="smart-trust"] { background-color: hsl(199 46% 34%); }
+  .fa-avatar[data-fa-kind="smart-trust-phw"] { background-color: hsl(199 46% 34%); }
   .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 46% 34%); }
   .fa-avatar { background-color: hsl(0 46% 34%); }
 }
@@ -925,6 +941,7 @@
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
     .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
+    .fa-avatar[data-fa-kind="dsa"] { background-color: hsl(205 46% 34%); }
     .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
     .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
     .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 46% 34%); }
@@ -942,6 +959,7 @@
     .fa-avatar[data-fa-kind="smart-base"] { background-color: hsl(199 46% 34%); }
     .fa-avatar[data-fa-kind="smart-immunizations"] { background-color: hsl(352 46% 34%); }
     .fa-avatar[data-fa-kind="smart-trust"] { background-color: hsl(199 46% 34%); }
+    .fa-avatar[data-fa-kind="smart-trust-phw"] { background-color: hsl(199 46% 34%); }
     .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 46% 34%); }
     .fa-avatar { background-color: hsl(0 46% 34%); }
   }
@@ -1030,6 +1048,7 @@
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
   .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
+  .fa-avatar[data-fa-kind="dsa"] { background-color: hsl(205 42% 72%); }
   .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
   .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
   .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 42% 72%); }
@@ -1047,6 +1066,7 @@
   .fa-avatar[data-fa-kind="smart-base"] { background-color: hsl(199 42% 72%); }
   .fa-avatar[data-fa-kind="smart-immunizations"] { background-color: hsl(352 42% 72%); }
   .fa-avatar[data-fa-kind="smart-trust"] { background-color: hsl(199 42% 72%); }
+  .fa-avatar[data-fa-kind="smart-trust-phw"] { background-color: hsl(199 42% 72%); }
   .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 42% 72%); }
   .fa-avatar { background-color: hsl(0 42% 72%); }
 }
@@ -1134,6 +1154,7 @@
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
     .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
+    .fa-avatar[data-fa-kind="dsa"] { background-color: hsl(205 42% 72%); }
     .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
     .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
     .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 42% 72%); }
@@ -1151,6 +1172,7 @@
     .fa-avatar[data-fa-kind="smart-base"] { background-color: hsl(199 42% 72%); }
     .fa-avatar[data-fa-kind="smart-immunizations"] { background-color: hsl(352 42% 72%); }
     .fa-avatar[data-fa-kind="smart-trust"] { background-color: hsl(199 42% 72%); }
+    .fa-avatar[data-fa-kind="smart-trust-phw"] { background-color: hsl(199 42% 72%); }
     .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 42% 72%); }
     .fa-avatar { background-color: hsl(0 42% 72%); }
   }
@@ -1241,6 +1263,7 @@
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
   .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
+  .fa-avatar[data-fa-kind="dsa"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
   .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
   .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
   .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
@@ -1258,6 +1281,7 @@
   .fa-avatar[data-fa-kind="smart-base"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
   .fa-avatar[data-fa-kind="smart-immunizations"][data-fa-trash="true"] { background-color: hsl(352 16% 52%); }
   .fa-avatar[data-fa-kind="smart-trust"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
+  .fa-avatar[data-fa-kind="smart-trust-phw"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
   .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
 }
 
@@ -1344,6 +1368,7 @@
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
     .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
+    .fa-avatar[data-fa-kind="dsa"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
     .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
     .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
     .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
@@ -1361,6 +1386,7 @@
     .fa-avatar[data-fa-kind="smart-base"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
     .fa-avatar[data-fa-kind="smart-immunizations"][data-fa-trash="true"] { background-color: hsl(352 16% 52%); }
     .fa-avatar[data-fa-kind="smart-trust"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
+    .fa-avatar[data-fa-kind="smart-trust-phw"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
     .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
   }
 }
@@ -1447,6 +1473,7 @@
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
   .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
+  .fa-avatar[data-fa-kind="dsa"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
   .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
   .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
   .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
@@ -1464,6 +1491,7 @@
   .fa-avatar[data-fa-kind="smart-base"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
   .fa-avatar[data-fa-kind="smart-immunizations"][data-fa-trash="true"] { background-color: hsl(352 14% 56%); }
   .fa-avatar[data-fa-kind="smart-trust"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
+  .fa-avatar[data-fa-kind="smart-trust-phw"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
   .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
 }
 
@@ -1550,6 +1578,7 @@
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
     .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
+    .fa-avatar[data-fa-kind="dsa"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
     .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
     .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
     .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
@@ -1567,6 +1596,7 @@
     .fa-avatar[data-fa-kind="smart-base"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
     .fa-avatar[data-fa-kind="smart-immunizations"][data-fa-trash="true"] { background-color: hsl(352 14% 56%); }
     .fa-avatar[data-fa-kind="smart-trust"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
+    .fa-avatar[data-fa-kind="smart-trust-phw"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
     .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
   }
 }

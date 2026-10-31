@@ -906,9 +906,9 @@
         "skos:Concept"
       ],
       "label": "l1-extraction",
-      "comment": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest.",
+      "comment": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/` when the same instance holds the entry, or at `l1-extractions/<entry>/` when the entry lives in another instance (smart-base's handbook extraction, whose source moved to who-iris on 2026-10-30, who-iris#107): the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`: nested in an entry, it is published with the entry beside the entry's manifest; held apart, its own viewer (`scripts/gen-l1-extraction-pages.ts`) publishes it. It is never a folder named for an entry another library holds, which reads as a second copy of that entry and makes the library ingest refuse the duplicate slug.",
       "prefLabel": "l1-extraction",
-      "definition": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest.",
+      "definition": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/` when the same instance holds the entry, or at `l1-extractions/<entry>/` when the entry lives in another instance (smart-base's handbook extraction, whose source moved to who-iris on 2026-10-30, who-iris#107): the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`: nested in an entry, it is published with the entry beside the entry's manifest; held apart, its own viewer (`scripts/gen-l1-extraction-pages.ts`) publishes it. It is never a folder named for an entry another library holds, which reads as a second copy of that entry and makes the library ingest refuse the duplicate slug.",
       "notation": "cat-harness:graphTypology/l1-extraction",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns",
@@ -1225,6 +1225,21 @@
       "prefLabel": "software-library",
       "definition": "Outside libraries a layer imports or vendors -- one generated `software-library` node per library per layer, with the version and sha512 its `bun.lock` pins, its SPDX licence, its range, whether it is a dev dependency, the files that import it and the shim that types it. Shares its core with `tool-release`.",
       "notation": "cat-harness:graphTypology/software-library",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/subscribed-harnesses",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "subscribed-harnesses",
+      "comment": "The state directories of each harness instantiated from a KG subscription, one home per subscription and harness, kept apart from the read-only snapshots.",
+      "prefLabel": "subscribed-harnesses",
+      "definition": "The state directories of each harness instantiated from a KG subscription, one home per subscription and harness, kept apart from the read-only snapshots.",
+      "notation": "cat-harness:graphTypology/subscribed-harnesses",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns",
       "layer": "harness"

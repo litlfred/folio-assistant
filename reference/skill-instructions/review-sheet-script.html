@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(312)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > ul > li:nth-child(312) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(131) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > ul > li:nth-child(312) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(312) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>The review sheet’s Apps Script | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="The review sheet’s Apps Script" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/review-sheet-script.html" /><meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/review-sheet-script.html" /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="The review sheet’s Apps Script" /><script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"The review sheet’s Apps Script","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/review-sheet-script.html"}</script><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-review-sheet-script",
+    "src": "../../assets/qa/reference-skill-instructions-review-sheet-script/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-review-sheet-script/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=573c7a318c07"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=59c1d8d3ff0a" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/review-sheet-script.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#trusting-the-script","label":"Trusting the script"},{"href":"#drafting-mode-editors-and-contributors-feedback","label":"Drafting mode: editors’ and contributors’ feedback"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>The review sheet's Apps Script</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md"><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="the-review-sheets-apps-script"><a href="#the-review-sheets-apps-script" class="anchor-heading" aria-labelledby="the-review-sheets-apps-script"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The review sheet’s Apps Script
+  
+  
+</h1><p>The sheet itself, its tabs and who writes each column are the
+<a href="../../reference/skill-instructions/public-comment.html"><code class="language-plaintext highlighter-rouge">public-comment</code></a> skill’s (§”The live review sheet”).
+This skill is the script that keeps that sheet’s links current, and the Tool
+<code class="language-plaintext highlighter-rouge">review-sheet-sync</code> that builds it.</p><p>Links inside a cell’s text (a section, a page, a “No. n” in a joined column)
+cannot come from a formula: a formula makes at most one link per cell. They
+are rich text, and rich text goes stale the moment the sheet changes. So the
+sheet keeps them itself, with a Google Apps Script bound to it (owner,
+2026-10-30: “Apps Script in the sheet”). Never paste them by hand from an
+agent: it costs about 30 kB of tool output per 30 rows, and the next edit
+undoes it.</p><p><strong>What it keeps current.</strong> Columns are found by header text, so people may
+move them.</p><div class="table-wrapper"><table><thead><tr><th>tab</th><th>column</th><th>becomes</th></tr></thead><tbody><tr><td>Review Public Comments</td><td>No.</td><td>a link to the comment’s page (<code class="language-plaintext highlighter-rouge">commentUrl</code> + its ref from Agent’s <em>Comment ref</em>)</td></tr><tr><td>Review Public Comments</td><td>Sections</td><td>each section number, appendix, named section or chapter links to its first page in the draft</td></tr><tr><td>Review Public Comments</td><td>Page</td><td>each printed page or range links to that page</td></tr><tr><td>Review Public Comments</td><td>Agentic status</td><td>one line per pull request of the PC’s change-sets (Agent’s <em>Pull request (change set)</em>), <code class="language-plaintext highlighter-rouge">&lt;repo&gt;#n (status, completed) · what it changed</code> (the repository in the link text, because Sheets’ link popup cuts the URL short): the PR linked; the PC’s Agentic status and the matching line of <em>Agent completed (UTC, change set)</em> in bold; then the matching line of <em>What the PRs changed (change set)</em>. A PC in several change-sets lists all of their PRs, each once. With no PR, the status alone</td></tr><tr><td>Review Public Comments</td><td>Line no(s) / Table / Figure</td><td>each <code class="language-plaintext highlighter-rouge">p.N</code> and each <code class="language-plaintext highlighter-rouge">line(s) N–M</code> / <code class="language-plaintext highlighter-rouge">L N</code> links to its page. Draft line numbers restart, so a line is placed on the page, near the row’s own pages, whose numbered lines hold it</td></tr><tr><td>Review Change Sets</td><td>Sections, Pages</td><td>the union over the change-set’s comments, sorted by page, each linked</td></tr><tr><td>Review Change Sets</td><td>Agentic status</td><td>the same, per change-set; the status is its PCs’ Agentic statuses, each once</td></tr><tr><td>Review Change Sets</td><td>Public Comments</td><td><code class="language-plaintext highlighter-rouge">No. n (Status) · comment</code>, status in bold, joined by a blank line</td></tr><tr><td>Review Change Sets</td><td>Suggested Revisions, PC Architect Feedback, Dispositions</td><td><code class="language-plaintext highlighter-rouge">No. n · text</code>, one per comment</td></tr></tbody></table></div><p>Every <code class="language-plaintext highlighter-rouge">No. n</code> in Review Change Sets links to <code class="language-plaintext highlighter-rouge">#gid=&lt;Review Public Comments&gt;&amp;range=A&lt;row&gt;</code>.
+Do not link to a named range by <code class="language-plaintext highlighter-rouge">#rangeid=</code>: Sheets shows “Invalid range”
+for a named range whose id was set through the API.</p><p><strong>Build it.</strong> From the folio’s repository root, with the platform mounted:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts <span class="nt">--repo</span> <span class="nb">.</span> <span class="nt">--out</span> Code.gs
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">Code.gs</code> is not committed. It is rebuilt from the config, so attach it to
+the thread or hand it over directly.</p><p><strong>Install it, once per sheet.</strong> A person does this, from the sheet owner’s
+account, because Google asks the owner to authorise the script:</p><ol><li>Open the sheet, then <strong>Extensions → Apps Script</strong>.</li><li>Replace everything in <code class="language-plaintext highlighter-rouge">Code.gs</code> with the built file, and save.</li><li>In the function list beside <strong>Run</strong> and <strong>Debug</strong>, pick
+<strong>installTriggers</strong> (not <code class="language-plaintext highlighter-rouge">onOpen</code>, which only adds the menu), and press
+<strong>Run</strong>. Allow access when asked.</li><li>Reload the sheet. A <strong>Review links</strong> menu appears.</li></ol><p><code class="language-plaintext highlighter-rouge">installTriggers</code> runs a full refresh, then installs two triggers: every edit
+of the three tabs marks the sheet dirty, and every five minutes a dirty sheet
+is rebuilt. <strong>Review links → Refresh now</strong> rebuilds at once.</p><p><strong>How to tell it works.</strong> The first run of <code class="language-plaintext highlighter-rouge">installTriggers</code> takes about 20
+seconds for 800 rows and its execution log ends “Execution completed” (a
+one-second run means <code class="language-plaintext highlighter-rouge">onOpen</code> was picked). Then No. is a blue link, and
+hovering a <code class="language-plaintext highlighter-rouge">No. n</code> on Review Change Sets shows a row such as A327. Failed
+runs are listed with their error under <strong>Executions</strong> (the clock icon) in the
+Apps Script editor. An agent checks from outside by reading a No. cell’s
+formula (<code class="language-plaintext highlighter-rouge">=HYPERLINK(…)</code>) and a joined cell’s text-format runs.</p><p><strong>Protected columns.</strong> The script runs as the account that installed it, so
+it writes the grey and green columns even when they are protected, as long as
+that account is an editor of the protected ranges. Install it from the
+owner’s account.</p><p><strong>Reuse it for another document’s public comment.</strong> Nothing in the template
+names a document. Give the new folio:</p><ol><li>The frozen review version in <code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/</code>, with its
+<code class="language-plaintext highlighter-rouge">pdf-line-map.json</code>, and the folio’s <code class="language-plaintext highlighter-rouge">review-anchors.json</code> (the extraction
+described in <code class="language-plaintext highlighter-rouge">public-comment</code> §”The one fact everything rests on” makes both).</li><li>A <code class="language-plaintext highlighter-rouge">draft/</code> redirect on its site to the library viewer, or use the full
+viewer address as <code class="language-plaintext highlighter-rouge">draftUrl</code>.</li><li><p><code class="language-plaintext highlighter-rouge">review/public-comment/sheet-sync.json</code>:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"anchors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio/&lt;doc&gt;/review-anchors.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lineMap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"library/&lt;slug&gt;/pdf-line-map.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"draftUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://&lt;site&gt;/draft/#page="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"commentUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://&lt;site&gt;/en/folio-assistant-core/public-comments/folio/&lt;doc&gt;/index.html#"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"namedSections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"CR"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Client Registry"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"aliases"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"how to use the guidance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How to use this guidance"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"tabs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"RPC"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Review Public Comments"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"lines"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Line no(s) / Table / Figure"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">namedSections</code> lists the unnumbered sections reviewers cite by name, and
+their abbreviations, which are matched only in capitals. <code class="language-plaintext highlighter-rouge">aliases</code> gives
+other names for front-matter chapters. <code class="language-plaintext highlighter-rouge">tabs</code> and <code class="language-plaintext highlighter-rouge">columns</code> override the
+defaults in <code class="language-plaintext highlighter-rouge">build-review-sheet-script.ts</code> only where the new sheet’s
+headers differ. The printed-to-PDF offset and the last printed page are
+read from the line map.</p></li><li>A sheet with the tabs above, Agent’s <em>No.</em>, <em>Comment ref</em> and
+<em>Change-sets</em> columns filled, then build and install as above.</li></ol><p><strong>Test it without a sheet.</strong> <code class="language-plaintext highlighter-rouge">bun test folio-assistant-core/tools/review-sheet-sync/review-sheet.test.ts</code>
+builds the script for a small fake folio and runs it against a fake of the
+Apps Script services over the three tabs. It checks every link and join in
+the table above, the Agentic status lines, and the edit-and-timer refresh. It
+proves the template and the builder agree with this skill. It does not prove
+a given sheet has the script installed or current: that is <strong>How to tell it
+works</strong>. Change the template, the builder or this table only together with
+that test.</p><p><strong>Rebuild and paste again</strong> when the review anchors change, the draft link
+moves, or a tab or a header the script reads is renamed. Renaming a header
+the script reads, without rebuilding, leaves that column unlinked; it fails
+nothing.</p><h2 id="trusting-the-script"><a href="#trusting-the-script" class="anchor-heading" aria-labelledby="trusting-the-script"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Trusting the script
+  
+  
+</h2><p>A copy of a sheet carries its Apps Script, so anyone starting from a
+template, us or someone else, should know what they are running.</p><ul><li><strong>Nothing runs until the sheet’s owner allows it.</strong> Editors of the sheet
+never run it. The owner runs <code class="language-plaintext highlighter-rouge">installTriggers</code>; Google then shows the
+scopes and the triggers run as the owner.</li><li><strong>This sheet only.</strong> The template starts with <code class="language-plaintext highlighter-rouge">@OnlyCurrentDoc</code>, so the
+consent screen asks for “this spreadsheet”, not all of the owner’s
+spreadsheets. The script uses only SpreadsheetApp, PropertiesService,
+LockService and ScriptApp: no UrlFetchApp, mail or Drive, so it sends
+nothing out. The test fails if one of those appears.</li><li><strong>Check a copy against its source.</strong> The header names the
+folio-assistant-core commit it was built from. Build again at that
+commit with the folio’s config and compare; or ignore the copied script
+and paste one you built yourself.</li><li><strong>“Google hasn’t verified this app.”</strong> Bound scripts are unverified, so
+the owner clicks Advanced to continue. Publishing as a verified Workspace
+add-on would remove the warning; not done while the users are our own
+sheets.</li></ul><h2 id="drafting-mode-editors-and-contributors-feedback"><a href="#drafting-mode-editors-and-contributors-feedback" class="anchor-heading" aria-labelledby="drafting-mode-editors-and-contributors-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Drafting mode: editors’ and contributors’ feedback
+  
+  
+</h2><p>Before a document goes to public comment, editors and contributors give
+feedback on the working draft (owner, 2026-10-30, for dth-hrh). That needs a
+simpler sheet: no Public Comment Source, no Review Public Comments, no TWGs.
+Each row of feedback <em>is</em> a change set (CS: a list of related comments on one
+topic), and each change set gets a GitHub issue.</p><p><strong>Tabs.</strong></p><div class="table-wrapper"><table><thead><tr><th>tab</th><th>who writes</th><th>columns</th></tr></thead><tbody><tr><td><strong>Contributor Feedback</strong></td><td>people, plus the Apps Script</td><td>one row per change set. Grey, mechanical: <strong>Change-set</strong> (the script gives a used row the next <code class="language-plaintext highlighter-rouge">CS-nnn</code> once; it stays with the row). Blue, people: <strong>Title</strong> (human-controlled), <strong>Sections</strong> (a multi-select dropdown of the document’s table of contents; the script links each choice to its place on the document page), any number of <strong>Contributor Feedback</strong> columns (each contributor signs with initials). Orange: <strong>Ready for agent</strong>, <strong>Ready for merge</strong> (Yes/No, editors). Green, from Agent by the script: <strong>Issue</strong> (<code class="language-plaintext highlighter-rouge">&lt;repo&gt;#n</code>, linked), <strong>Agentic status</strong> (as in public-comment mode: one line per PR, <code class="language-plaintext highlighter-rouge">&lt;repo&gt;#n (status, completed) · what it changed</code>)</td></tr><tr><td><strong>Agent</strong></td><td>the agent only</td><td>one row per change set: Change-set, Issue (URL), Agentic status, Pull request (change set), What the PRs changed (change set), Agent completed (UTC, change set)</td></tr><tr><td><strong>TOC</strong> (hidden)</td><td>the script</td><td>the Sections dropdown’s list and each entry’s link. Rewritten on every refresh, so it follows the document</td></tr></tbody></table></div><p>Colours as in public-comment mode: grey mechanical, blue human, orange
+editor gates, green agent-derived.</p><p><strong>Table of contents.</strong> Built from the folio’s <code class="language-plaintext highlighter-rouge">review-anchors.json</code>: each
+chapter (<code class="language-plaintext highlighter-rouge">Ch 3 Digital Transformation Approach</code>), each numbered section
+(<code class="language-plaintext highlighter-rouge">3.1 DIIG alignment</code>) and each unnumbered section, prefixed by its chapter
+(<code class="language-plaintext highlighter-rouge">Ch 3 · Objectives and key messages</code>). A multi-select cell joins its choices
+with <code class="language-plaintext highlighter-rouge">, </code>, so commas in titles become <code class="language-plaintext highlighter-rouge">;</code>. Each links to
+<code class="language-plaintext highlighter-rouge">sectionUrl</code> + the anchor (<code class="language-plaintext highlighter-rouge">sec:3-1</code>, <code class="language-plaintext highlighter-rouge">chap:&lt;dir&gt;</code>), which the document page
+carries as element ids.</p><p><strong>Config</strong>, <code class="language-plaintext highlighter-rouge">review/drafting/sheet-sync.json</code>:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"drafting"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"anchors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio/&lt;doc&gt;/review-anchors.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"sectionUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://&lt;site&gt;/en/&lt;doc&gt;/#"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">tabs</code> and <code class="language-plaintext highlighter-rouge">columns</code> (<code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">draftAgent</code>) override the headers as in
+public-comment mode. Build with <code class="language-plaintext highlighter-rouge">--config review/drafting/sheet-sync.json</code>
+and install as above. The Sections dropdown is a data validation “dropdown
+from a range” on <code class="language-plaintext highlighter-rouge">TOC!A2:A</code> with <strong>Allow multiple selections</strong> ticked; set it
+once in the template (the Sheets API cannot tick that box), and copies keep it.</p><p><strong>The agent’s part: every change set has an issue.</strong> On each sync, for every
+Contributor Feedback row with a Change-set:</p><ol><li>If the Agent tab has no row for it, add one (Change-set, Agentic status
+<code class="language-plaintext highlighter-rouge">Not started</code>).</li><li>If that row has no Issue, open a GitHub issue in the folio’s repository:
+title <code class="language-plaintext highlighter-rouge">CS-nnn: &lt;Title&gt;</code> (or the first feedback line while Title is
+empty), body the linked sections, every Contributor Feedback cell
+verbatim, and a link back to the sheet row. Write its URL into Issue.</li><li>When feedback is added to a row later, comment the new text on its issue.</li><li>Work a change set only when <strong>Ready for agent</strong> is Yes; its PRs say
+<code class="language-plaintext highlighter-rouge">Closes #n</code> for the change set’s issue, and go to Agent’s PR columns.</li></ol><p>Title stays the contributors’: the agent never writes it (in public-comment
+mode, by contrast, Review Change Sets’ Title is agent-derived and green).</p><p><strong>Feedback from the site.</strong> A folio with
+<code class="language-plaintext highlighter-rouge">.github/ISSUE_TEMPLATE/block-feedback.yml</code> (copy the shared
+<code class="language-plaintext highlighter-rouge">templates/issue-forms/block-feedback.yml</code>) gets 📣 feedback links that open
+that form with Content, Section, Block, page and Source prefilled; the
+contributor picks a Type and writes Comment and Proposed change. On each
+sync the agent lists open issues labelled <code class="language-plaintext highlighter-rouge">feedback</code> that no Agent row
+names, and for each appends a Contributor Feedback row from
+<code class="language-plaintext highlighter-rouge">tools/review-sheet-sync/feedback-issue.ts</code> (<code class="language-plaintext highlighter-rouge">feedbackRow</code>): Sections the
+block’s TOC entry, Title a draft (<code class="language-plaintext highlighter-rouge">&lt;section&gt;: &lt;first sentence&gt;</code>, which
+people may rewrite), Contributor Feedback <code class="language-plaintext highlighter-rouge">@login (Type): comment</code> plus
+<code class="language-plaintext highlighter-rouge">Proposed: …</code>. The script then gives it a CS id, and the agent writes the
+issue’s URL into that change set’s Agent row: the feedback issue <em>is</em> the
+change set’s issue, so step 2 above opens none. A comment added to the
+issue later is added to the row’s next empty Contributor Feedback cell.</p><p><strong>Linked templates.</strong> Each mode keeps one template sheet in the
+informatics.avengers Drive, laid out as above, script installed, no rows.
+A new document starts from its “make a copy” link
+(<code class="language-plaintext highlighter-rouge">https://docs.google.com/spreadsheets/d/&lt;template id&gt;/copy</code>); then replace
+the config block of Code.gs with the new folio’s build and run
+installTriggers.</p><div class="table-wrapper"><table><thead><tr><th>mode</th><th>template (owned by informatics.avengers)</th><th>make a copy</th></tr></thead><tbody><tr><td>public-comment</td><td>Folio Assistant - Public Comment Review Template, <code class="language-plaintext highlighter-rouge">14PtLd2U_tBQV5OHoEEVRJK1EKfsbZEBPP_MIqo2E3o4</code></td><td>https://docs.google.com/spreadsheets/d/14PtLd2U_tBQV5OHoEEVRJK1EKfsbZEBPP_MIqo2E3o4/copy</td></tr><tr><td>drafting</td><td>Folio Assistant - Contributor Template, <code class="language-plaintext highlighter-rouge">1PtcNJgLQIA1BjapU51pAQzqQjGylBHYNKlCPzZkwVag</code></td><td>https://docs.google.com/spreadsheets/d/1PtcNJgLQIA1BjapU51pAQzqQjGylBHYNKlCPzZkwVag/copy</td></tr></tbody></table></div><p>A copy keeps tabs, colours, dropdowns and formulas. It does not keep
+protected ranges (re-add them: Agent whole tab; the grey and green
+columns), and its TOC tab is empty until the script’s first refresh. A
+document’s own sheet is named in its <code class="language-plaintext highlighter-rouge">sheet-sync.json</code> as <code class="language-plaintext highlighter-rouge">sheet</code> (the
+spreadsheet id), so the agent’s sync knows where to read and write.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/41150189192"><code>51690a5</code></a> &middot; 2026-10-31T00:44:37Z</p></footer></div></div><div class="search-overlay"></div></div></body></html>

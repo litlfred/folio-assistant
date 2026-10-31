@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/HarnessSiteBuild",
+  "definitions": {
+    "HarnessSiteBuild": {
+      "type": "object",
+      "properties": {
+        "home": {
+          "type": "string"
+        },
+        "pre": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+          }
+        },
+        "sourceSteps": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+          }
+        },
+        "siteSteps": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessSiteBuildSchema.schema.json",
+  "title": "HarnessSiteBuildSchema",
+  "description": "Generated from `HarnessSiteBuildSchema` in schemas/kg/harness-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  }
+}

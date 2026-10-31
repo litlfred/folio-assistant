@@ -5,6 +5,24 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-change-summary",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Post-delivery content block change summary for a folio edit-set: extract changed block labels across `.md`, `.ts` and content-type sibling files, present a per-chapter table with `.md`-first GitHub blob links, modified sibling links, local viewer anchors, and change categories. Refines `delivery-summary` for content folios.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 116,
+      "instructionsPath": "skills/content/content-lifecycle-ext/block-change-summary.md",
+      "name": "block-change-summary",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/58ab174c52f519ab1a978f31597b293ea3d4290537cbc6e02b8b1922dd91236f",
+        "bytes": 5196,
+        "sha256": "58ab174c52f519ab1a978f31597b293ea3d4290537cbc6e02b8b1922dd91236f"
+      },
+      "title": "Block Change Summary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/corpus-commit-contract",
       "@type": "bootstrap:Skill",
       "ambiguous": false,

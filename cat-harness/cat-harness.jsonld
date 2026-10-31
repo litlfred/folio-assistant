@@ -366,29 +366,29 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-30T13:17:59.191Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitSha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitAt": "2026-10-30T14:46:51+02:00",
+  "generatedAt": "2026-10-31T00:47:52.491Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitSha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitAt": "2026-10-31T00:26:36Z",
   "sourceTreeDirty": true,
-  "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
+  "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "Skill": 248,
-    "Actor": 33,
-    "Capability": 24,
+    "Actor": 31,
+    "Capability": 18,
     "SkillPackage": 18,
     "Decision": 10,
     "Task": 8,
     "Process": 75,
-    "SequenceFlow": 1037,
+    "SequenceFlow": 1038,
     "Lane": 171,
-    "ProcessNode": 1004,
-    "Tool": 165,
-    "Schema": 180,
+    "ProcessNode": 1005,
+    "Tool": 164,
+    "Schema": 177,
     "ExternalSchema": 28,
-    "GraphTypology": 52,
-    "Role": 46,
-    "Subgraph": 38,
+    "GraphTypology": 53,
+    "Role": 44,
+    "Subgraph": 39,
     "Asset": 5
   },
   "@graph": [
@@ -418,7 +418,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/block-density.md",
-      "instructionLines": 116,
+      "instructionLines": 122,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -479,7 +479,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/md-authoring.md",
-      "instructionLines": 135,
+      "instructionLines": 134,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -527,7 +527,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
-      "instructionLines": 118,
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -655,7 +655,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/devils-advocate-watcher.md",
-      "instructionLines": 487,
+      "instructionLines": 486,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -718,7 +718,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/chapter-complexity-review.md",
-      "instructionLines": 220,
+      "instructionLines": 223,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -734,7 +734,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/one-voice-integration-watcher.md",
-      "instructionLines": 292,
+      "instructionLines": 294,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -750,7 +750,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/one-voice-style-guide.md",
-      "instructionLines": 230,
+      "instructionLines": 228,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -765,23 +765,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/one-voice-audit.md",
-      "instructionLines": 315,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
-      "name": "ig-publisher-service-contract",
-      "title": "IG publisher + validator — the role's contract",
-      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle"
-      ],
-      "instructionsPath": "skills/authoring/content-lifecycle/ig-publisher-service-contract.md",
-      "instructionLines": 47,
+      "instructionLines": 312,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -796,7 +780,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-author.md",
-      "instructionLines": 51,
+      "instructionLines": 50,
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-author/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-author/output.schema.json",
       "hasInstructions": true,
@@ -813,7 +797,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-validate.md",
-      "instructionLines": 35,
+      "instructionLines": 33,
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-validate/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-validate/output.schema.json",
       "hasInstructions": true,
@@ -845,7 +829,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/evidence-appraisal.md",
-      "instructionLines": 98,
+      "instructionLines": 94,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -860,7 +844,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
-      "instructionLines": 99,
+      "instructionLines": 96,
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/output.schema.json",
       "hasInstructions": true,
@@ -1039,12 +1023,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "repo-conversion",
       "title": "/repo-conversion — folio-assistant over a repo that already has a life",
-      "description": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along.",
+      "description": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, lists the content markers (an IG, a DAK, processes, beans, library, Lean, folio manifests) the harness could declare and declares only the ones the person picks, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, asks whether their PDFs/notes/drafts can come along, or asks what else in a repository an existing harness could declare.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
-      "instructionLines": 225,
+      "instructionLines": 263,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1060,7 +1044,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/getting-started.md",
-      "instructionLines": 303,
+      "instructionLines": 302,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1332,7 +1316,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/kg-separation.md",
-      "instructionLines": 454,
+      "instructionLines": 486,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1667,7 +1651,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1705,
+      "instructionLines": 1735,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1939,7 +1923,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/large-datasets"
       ],
       "instructionsPath": "skills/library/large-datasets/kg-subscription.md",
-      "instructionLines": 237,
+      "instructionLines": 245,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2019,7 +2003,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 159,
+      "instructionLines": 180,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2307,7 +2291,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/process-state.md",
-      "instructionLines": 256,
+      "instructionLines": 298,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2629,7 +2613,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-drain.md",
-      "instructionLines": 220,
+      "instructionLines": 222,
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bean-drain/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bean-drain/output.schema.json",
       "hasInstructions": true,
@@ -2663,7 +2647,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 955,
+      "instructionLines": 981,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2818,12 +2802,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "merge-to-main",
       "title": "Merge to `main` — a sub-process with its own gate",
-      "description": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository.",
+      "description": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, site republished, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-to-main.md",
-      "instructionLines": 279,
+      "instructionLines": 295,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2918,6 +2902,22 @@
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/ref-stewardship.md",
       "instructionLines": 195,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "signing",
+      "title": "Signing — the process, not the code",
+      "description": "What any signature in the harness must answer, whatever it covers: who signs, what bytes are signed, which signature suites are accepted and who decides that, where the key is kept, which route signs (API or person, by reach), and what a verifier must check and record. Suites are named by the identifiers the standards already define. Signing is done by the parties' own systems; the harness verifies. Read before you add a signature slot, a trust anchor, a verifier, or a process that signs anything.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/signing.md",
+      "instructionLines": 227,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3350,7 +3350,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/delivery-summary.md",
-      "instructionLines": 156,
+      "instructionLines": 72,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3557,7 +3557,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/qa-report-signing.md",
-      "instructionLines": 133,
+      "instructionLines": 142,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3733,7 +3733,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit"
       ],
       "instructionsPath": "skills/sdlc/spec-kit/spec-kit.md",
-      "instructionLines": 315,
+      "instructionLines": 323,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3749,7 +3749,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit"
       ],
       "instructionsPath": "skills/sdlc/spec-kit/spec-template.md",
-      "instructionLines": 111,
+      "instructionLines": 112,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4308,7 +4308,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/board-diagram-interchange.md",
-      "instructionLines": 115,
+      "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4340,7 +4340,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/board-windows.md",
-      "instructionLines": 379,
+      "instructionLines": 377,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4568,10 +4568,7 @@
           "test"
         ]
       },
-      "hasCapability": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
-      ],
+      "hasCapability": [],
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer"
       ],
@@ -4680,7 +4677,6 @@
       },
       "hasCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
         "https://litlfred.github.io/folio-assistant/cat-harness/capability/jekyll"
       ],
       "mayTakeRole": [
@@ -4912,54 +4908,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/fhir-modeller",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
-      "localId": "fhir-modeller",
-      "actorKind": "person",
-      "title": "FHIR Modeller",
-      "description": "L3 machine-readable artifact creator who translates L2 specifications into FHIR Implementation Guide artifacts using FSH, SUSHI, CQL, and IG Publisher.",
-      "meta": {
-        "smartBaseAnalog": "SGAuthoring.Persona.FHIRModeller",
-        "lifecycle": [
-          "author",
-          "validate",
-          "test"
-        ]
-      },
-      "hasCapability": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler",
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
-      ],
-      "mayTakeRole": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
-        "https://litlfred.github.io/folio-assistant/cat-harness/role/author"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ig-publisher-service",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
-      "localId": "ig-publisher-service",
-      "actorKind": "system",
-      "title": "IG Publisher Service",
-      "description": "System actor providing FHIR IG Publisher build and QA reporting.",
-      "meta": {
-        "provider": "docker",
-        "image": "folio-assistant-smart-guidelines"
-      },
-      "hasCapability": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
-      ],
-      "mayTakeRole": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service"
-      ],
-      "permissionName": [
-        "qa-reporting"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-adjudicator",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
       "localId": "untainted-adjudicator",
@@ -5008,23 +4956,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
-      "localId": "ig-publisher",
-      "name": "FHIR IG Publisher",
-      "description": "HL7 FHIR Implementation Guide Publisher for building and validating FHIR IGs.",
-      "detection": {
-        "method": "command",
-        "command": "java -jar ${IG_PUBLISHER_JAR:-/opt/ig-publisher/publisher.jar} --version"
-      },
-      "satisfiesStatement": [
-        "req:fhir-validation#ig-publisher-qa"
-      ],
-      "requiresCapability": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-connector",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
       "localId": "github-connector",
@@ -5036,20 +4967,6 @@
       }
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
-      "localId": "fhir-validator",
-      "name": "HL7 FHIR Validator",
-      "description": "HL7's standalone FHIR resource validator. Distinct from ig-publisher, which builds a whole IG: this validates individual resources and profiles against a package, and is what an L3 authoring loop runs between builds.",
-      "detection": {
-        "method": "command",
-        "command": "java -jar ${FHIR_VALIDATOR_JAR:-/opt/fhir-validator/validator_cli.jar} -version"
-      },
-      "requiresCapability": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
       "localId": "signing-api",
@@ -5058,17 +4975,6 @@
       "detection": {
         "method": "env-var",
         "variable": "FOLIO_SIGNING_ENDPOINT"
-      }
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
-      "localId": "pandoc",
-      "name": "Pandoc",
-      "description": "Universal document converter. The document adapter's whole render path goes through it: Markdown → HTML and Markdown → PDF, neither of which needs a TeX installation.",
-      "detection": {
-        "method": "command",
-        "command": "pandoc --version"
       }
     },
     {
@@ -5122,17 +5028,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/html-pdf-engine",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
-      "localId": "html-pdf-engine",
-      "name": "TeX-free PDF engine",
-      "description": "An HTML-to-PDF engine pandoc can drive without LaTeX — weasyprint, prince, or wkhtmltopdf. Probed as weasyprint, the recommended one; document_render_pdf accepts any of the three and names the missing ones rather than falling back to latexmk.",
-      "detection": {
-        "method": "command",
-        "command": "weasyprint --version"
-      }
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-read",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
       "localId": "git-read",
@@ -5142,23 +5037,6 @@
         "method": "command",
         "command": "git rev-parse --git-dir"
       }
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
-      "localId": "sushi-compiler",
-      "name": "SUSHI Compiler",
-      "description": "FSH (FHIR Shorthand) to FHIR JSON compiler.",
-      "detection": {
-        "method": "command",
-        "command": "sushi --version"
-      },
-      "satisfiesStatement": [
-        "req:fhir-validation#sushi-compile"
-      ],
-      "requiresCapability": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime"
-      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/deploy-access",
@@ -5259,17 +5137,6 @@
       }
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/latex-compiler",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
-      "localId": "latex-compiler",
-      "name": "LaTeX Compiler",
-      "description": "Full LaTeX distribution with latexmk and biber for document compilation.",
-      "detection": {
-        "method": "command",
-        "command": "latexmk --version"
-      }
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
       "localId": "java-runtime",
@@ -5357,8 +5224,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
@@ -5690,6 +5556,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/secrets",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-management",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage",
@@ -31155,8 +31022,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Merge to main",
-      "summary": "Land ONE pull request on `main`, in any repository, as its own step with its own gate: read the head's evidence live, establish that the owner authorised THIS merge, record the authorisation, merge pinned to the evaluated head, then confirm the base, re-pin d…",
-      "description": "Land ONE pull request on `main`, in any repository, as its own step with its own gate: read the head's evidence live, establish that the owner authorised THIS merge, record the authorisation, merge pinned to the evaluated head, then confirm the base, re-pin downstream mounts and report. Every process that ends in a write to `main` CALLS this rather than inlining it: `merge-train.bpmn` (Call_MergeToMain, once per member, in train order) and `crdm-close.bpmn` (Call_MergeToMain, after the sign-off is recorded); `prepare-merge-auto` Phase 4 runs it by hand. Skill: `merge-to-main`.\n\nWHY IT EXISTS. 2026-10-09: one session merged seven PRs into `main` across seven repositories that run no CI, reading the owner's \"fix all issues until green\" as permission to merge; a safety classifier flagged it as \"Merge Without Review\". Until then merging was a line at the end of other procedures, and no step could refuse it.\n\nTWO GATES, BOTH COMPUTED. GW_Evidence reads `decisions/merge-evidence.dmn` over the head's facts; GW_Authorised reads `decisions/merge-authorisation.dmn` over what authorisation was found and the CI state. A hand-supplied outcome is refused at both. A repository with NO CI is `none`, never green: it takes the `no-ci` branch, which runs the repository's own gates locally and can never be covered by a standing waiver.\n\nTHE AUTHORISATION IS RECORDED BEFORE THE MERGE (Task_RecordAuthorisation, not relaxable), in the shape `index.config.json` uses for a trust consent: by, on, ref, evidence (the owner's words, verbatim). A broad instruction about the work (\"fix all issues until green\", \"ship it\", \"prepare-merge\") is `instruction-only` and routes to `ask`.\n\nNOT MERGED IS A NORMAL ENDING. Hand-back, not-yet, could-not-determine, held and refused all end with the PR open. Nothing is closed and no branch is deleted on any path.",
+      "summary": "Land ONE pull request on `main`, in any repository, as its own step with its own gate: read the head's evidence live, establish that the owner authorised THIS merge, record the authorisation, merge pinned to the evaluated head, then confirm the base, republis…",
+      "description": "Land ONE pull request on `main`, in any repository, as its own step with its own gate: read the head's evidence live, establish that the owner authorised THIS merge, record the authorisation, merge pinned to the evaluated head, then confirm the base, republish the repository's site, re-pin downstream mounts and report. Every process that ends in a write to `main` CALLS this rather than inlining it: `merge-train.bpmn` (Call_MergeToMain, once per member, in train order) and `crdm-close.bpmn` (Call_MergeToMain, after the sign-off is recorded); `prepare-merge-auto` Phase 4 runs it by hand. Skill: `merge-to-main`.\n\nWHY IT EXISTS. 2026-10-09: one session merged seven PRs into `main` across seven repositories that run no CI, reading the owner's \"fix all issues until green\" as permission to merge; a safety classifier flagged it as \"Merge Without Review\". Until then merging was a line at the end of other procedures, and no step could refuse it.\n\nTWO GATES, BOTH COMPUTED. GW_Evidence reads `decisions/merge-evidence.dmn` over the head's facts; GW_Authorised reads `decisions/merge-authorisation.dmn` over what authorisation was found and the CI state. A hand-supplied outcome is refused at both. A repository with NO CI is `none`, never green: it takes the `no-ci` branch, which runs the repository's own gates locally and can never be covered by a standing waiver.\n\nTHE AUTHORISATION IS RECORDED BEFORE THE MERGE (Task_RecordAuthorisation, not relaxable), in the shape `index.config.json` uses for a trust consent: by, on, ref, evidence (the owner's words, verbatim). A broad instruction about the work (\"fix all issues until green\", \"ship it\", \"prepare-merge\") is `instruction-only` and routes to `ask`.\n\nNOT MERGED IS A NORMAL ENDING. Hand-back, not-yet, could-not-determine, held and refused all end with the PR open. Nothing is closed and no branch is deleted on any path.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/merge-to-main.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/merge-to-main.bpmn",
@@ -31164,8 +31031,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Start_Merge"
       ],
-      "nodeCount": 22,
-      "flowCount": 23,
+      "nodeCount": 23,
+      "flowCount": 24,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -31347,6 +31214,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ConfirmBase",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Repin",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
@@ -31802,6 +31677,29 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Rebuild and republish the repository's site",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Repin",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
       "name": "Re-pin downstream mounts, as PRs",
@@ -31817,7 +31715,7 @@
       "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m22"
@@ -39959,7 +39857,7 @@
           {
             "name": "paper",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "The paper directory under the content root. Its default names one folio's paper, which is migration debt: pass it explicitly.",
+            "description": "The paper: a directory name under the folio directory, or a path to it. When omitted, the folio's only paper; required when the folio holds several.",
             "required": false,
             "arg": {
               "flag": "--paper"
@@ -40351,7 +40249,7 @@
       },
       "requirements": {},
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/bootstrap/skill/discussion"
       ]
     },
     {
@@ -40549,7 +40447,7 @@
         "none": true
       },
       "invoke": {
-        "shell": ".github/workflows/feature-staging.yml"
+        "shell": "bun run cat site:workflow stage"
       },
       "io": {
         "inputs": [
@@ -41741,7 +41639,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+        "https://litlfred.github.io/folio-assistant/bootstrap/skill/initialization-steps"
       ]
     },
     {
@@ -42213,8 +42111,8 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
+        "https://litlfred.github.io/folio-assistant/bootstrap/skill/bootstrap-graph-emission",
+        "https://litlfred.github.io/folio-assistant/bootstrap/skill/bootstrap-graph-publication"
       ]
     },
     {
@@ -42434,56 +42332,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/latexmk-compile.jsonld",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
-      "name": "latexmk-compile",
-      "title": "LaTeX compilation (latexmk)",
-      "description": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run cat latex:compile"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "tex",
-            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The TeX source file to compile (e.g. main.tex).",
-            "required": true,
-            "arg": {
-              "positional": 0
-            }
-          },
-          {
-            "name": "args",
-            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
-            "description": "Additional arguments to forward to latexmk.",
-            "required": false
-          }
-        ],
-        "outputs": [
-          {
-            "name": "pdf",
-            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine)."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bash",
-          "latexmk",
-          "pdflatex"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-compilation"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/library-viewer.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "library-viewer",
@@ -42601,7 +42449,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/bootstrap/skill/log-message"
       ]
     },
     {
@@ -43983,7 +43831,7 @@
         "none": true
       },
       "invoke": {
-        "shell": ".github/workflows/docs-site.yml"
+        "shell": "bun run cat site:workflow publish"
       },
       "io": {
         "inputs": [
@@ -45924,6 +45772,11 @@
             "name": "verdict",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
             "description": "Written or not, every gate's verdict with its reason, findings, and the PROV-O activity of an accepted write when a step was named."
+          },
+          {
+            "name": "activity",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProvActivity",
+            "description": "The PROV-O activity of an accepted write that named its process, task and role; absent otherwise. Pass it to workflow_complete's `activities` for that step."
           }
         ]
       },
@@ -48045,6 +47898,13 @@
             "arg": {
               "stdin": true
             }
+          },
+          {
+            "name": "activities",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProvActivity",
+            "description": "PROV-O activities a Tool returned while doing this step, verbatim (e.g. skill_update's `activity`). Kept on the step's history entry; each must name this step as its plan.",
+            "required": false,
+            "repeated": true
           }
         ],
         "outputs": [
@@ -48308,24 +48168,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "precision-scalar",
-      "title": "precision-scalar",
-      "summary": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
-      "module": "schemas/precision-scalar.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/refactor-strategy",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "refactor-strategy",
-      "title": "refactor-strategy",
-      "summary": "Lean proof-refactoring strategy database.",
-      "module": "schemas/refactor-strategy.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "test-preload",
@@ -48341,15 +48183,6 @@
       "title": "types",
       "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
       "module": "schemas/types.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocab-mapping-fhir",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "vocab-mapping-fhir",
-      "title": "vocab-mapping-fhir",
-      "summary": "FHIR ConceptMap ⇄ vocabulary mapping tables: ι (represent) and π (produce).",
-      "module": "schemas/vocab-mapping-fhir.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
@@ -48567,7 +48400,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "prov",
       "title": "prov",
-      "summary": "W3C PROV-O: the record of a task being performed. Issue #1180.",
+      "summary": "W3C PROV-O: the record of a task or decision being performed. Issue #1180,",
       "module": "schemas/content/prov.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
@@ -49886,15 +49719,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "openapi",
-      "title": "openapi",
-      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
-      "module": "openapi/schemas/openapi.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archimate",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "archimate",
@@ -49902,6 +49726,15 @@
       "summary": "The ArchiMate harness's shapes: what an instance declares, and how an Archi",
       "module": "archimate/schemas/archimate.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "openapi",
+      "title": "openapi",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "module": "openapi/schemas/openapi.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/dcmi-terms",
@@ -50668,6 +50501,14 @@
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness/schema/substrate-snapshot"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/subscribed-harnesses",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "subscribed-harnesses",
+      "renderable": false,
+      "summary": "The state directories of each harness instantiated from a KG subscription, one home per subscription and harness, kept apart from the read-only snapshots.",
+      "validatorNotApplicable": "a home holds the subscribed harness's own state directories, whose nodes are typed by THAT harness's graph typologies (its snapshot names them), not by this one; `kg:instantiate` writes only directories and `.gitkeep` files, which have no shape to parse."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/translation-sources",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "translation-sources",
@@ -50720,10 +50561,12 @@
         "person"
       ],
       "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-affordances",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
@@ -50851,8 +50694,7 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-review",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification"
       ]
     },
     {
@@ -50887,7 +50729,9 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/confirmation-waiver",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-separation",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/sub-kg-lifecycle",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/swimlane-glossary"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/swimlane-glossary",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring"
       ]
     },
     {
@@ -50980,19 +50824,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/code-lists",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/vocabulary-authority"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
-      "prefLabel": "FHIR modeller",
-      "title": "FHIR modeller",
-      "notation": "fhir-modeller",
-      "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "person"
-      ],
-      "hasSkill": []
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
@@ -51256,7 +51087,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-separation",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/sub-kg-lifecycle",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
@@ -51319,21 +51149,6 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
-      "prefLabel": "IG publisher + validator",
-      "title": "IG publisher + validator",
-      "notation": "ig-publisher-service",
-      "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "system"
-      ],
-      "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract"
       ]
     },
     {
@@ -51657,7 +51472,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/tools"
       ],
-      "description": "Tool definitions, one folder per Tool (tools/<id>/<id>.ts, bean tdir), shared helpers in tools/lib.ts. tools/index.ts loads the folders (toolsFromFolders) and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "description": "Tool definitions, one folder per Tool (tools/<id>/<id>.json, bean tdir). Data only since bean 8lcl (owner card \"A. One coordinated move\", 2026-10-30): the loader (toolsFromFolders) and the shared helpers moved to the tools layer (https://github.com/litlfred/cat-harness-tools/tree/main/schemas/tools) as schemas/tools/harness-tools.ts and schemas/tools/tool-helpers.ts, which is the path a consumer imports. The JSON-LD and JSON Schema renderings are generated.",
       "readmePath": "tools/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/tools"
@@ -51692,10 +51507,28 @@
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/substrate-snapshot"
       ],
       "title": "Subscribed substrates",
-      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run cat kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. A subgraph fetched in metadata mode (`kg:materialize --nodes`) lands under `<id>/nodes/<subgraph path>/`: its published `index.hydrated.jsonld` and a `nodes.json` record with its sha256. Written by `bun run cat kg:materialize`; never edited by hand.",
+      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run cat kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. A subgraph fetched in metadata mode (`kg:materialize --nodes`) lands under `<id>/nodes/<subgraph path>/`: its published `index.hydrated.jsonld` and a `nodes.json` record with its sha256. Written by `bun run cat kg:materialize`; never edited by hand. Nothing else writes here: an instantiated harness's state lives in `subscribed-harnesses/` (owner, 2026-10-30, bean `w1gy` finding 1, option C, \"split the directory\").",
       "readmePath": "subscriptions/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscriptions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "subscribed-harnesses",
+      "path": "subscribed-harnesses/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/subscribed-harnesses"
+      ],
+      "title": "Subscribed harness state",
+      "description": "The state directories of each harness this instance instantiates from a KG subscription: `<subscription>/<harness>/<state path>/`, one home per chosen harness, each state directory the harness declares created with a `.gitkeep`. Written by `bun run cat kg:instantiate`; the harness's processes write into it after that. Never at the repository root, where a harness named after a staged instance would write into that instance's directory (gap G11), and never under `subscriptions/`, which holds upstream's bytes and is read-only.",
+      "readmePath": "subscribed-harnesses/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/code-lists",
@@ -51762,7 +51595,7 @@
         "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas",
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/cat-harness"
       ],
-      "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
+      "description": "The per-skill JSON Schemas and the schema documents the harness declares. Since bean 8lcl (owner card \"A. One coordinated move\", 2026-10-30) the Zod sources of the content-object model live in the tools layer (https://github.com/litlfred/cat-harness-tools/tree/main/schemas); this directory keeps the data. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node.",
       "readmePath": "schemas/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
@@ -52140,7 +51973,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/cat-harness"
       ],
-      "description": "The OpenAPI subgraph — a NAMED SUBGRAPH of the harness, and until 2026-10-07 an instance of its own, `cat-openapi` (repository never created). Owner, 2026-10-07: *\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo.\"* It holds the machinery for OpenAPI 3 documents rather than documents: the graph typology `openapi` an instance declares to hold one, the validator for that kind's provenance node, the shapes (`cat-openapi.config.json`, provenance, the subset of OpenAPI 3 the pages read) and the rendering sub-pipeline that gives every operation a page and an IRI. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `openapi-validators`, `openapi-typologies`, `openapi-schemas`, `openapi-scripts` — are declared FROM WITHIN, in `openapi/graph.json` (#980), never reached down to from here. Bean `s4ta`.",
+      "description": "The OpenAPI subgraph — a NAMED SUBGRAPH of the harness, and until 2026-10-07 an instance of its own, `cat-openapi` (repository never created). Owner, 2026-10-07: *\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo.\"* It holds the machinery for OpenAPI 3 documents rather than documents: the graph typology `openapi` an instance declares to hold one, the validator for that kind's provenance node, the shapes (`cat-openapi.config.json`, provenance, the subset of OpenAPI 3 the pages read) and the rendering sub-pipeline that gives every operation a page and an IRI. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the graphs inside it — `openapi-validators` and `openapi-typologies` — are declared FROM WITHIN, in `openapi/graph.json` (#980); its schema and scripts are code, so the tools layer (https://github.com/litlfred/cat-harness-tools) holds them (`cat-harness-tools-openapi-schemas`, `cat-harness-tools-openapi`; beans `70lx`, `8lcl`), never reached down to from here. Bean `s4ta`.",
       "readmePath": "openapi/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi"
@@ -52157,7 +51990,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/cat-harness"
       ],
-      "description": "The ArchiMate subgraph — a NAMED SUBGRAPH of the harness, on the `openapi` subgraph's pattern (owner, 2026-10-09: *\"need new specialixed harness (like openapi) for archimate content in the KG\"*). It holds the machinery for ArchiMate models rather than models: the graph typology `archimate` an instance declares to hold them, the validator for the instance's `cat-archimate.config.json`, the reader for Archi's native format, and the rendering sub-pipeline that gives every view, element and relationship a page and an IRI and draws every view as SVG from the model's own diagram — no Archi install. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `archimate-validators`, `archimate-typologies`, `archimate-schemas`, `archimate-scripts` — are declared FROM WITHIN, in `archimate/graph.json` (#980). First instance: smart-ra's DPI-H reference architecture models.",
+      "description": "The ArchiMate subgraph — a NAMED SUBGRAPH of the harness, on the `openapi` subgraph's pattern (owner, 2026-10-09: *\"need new specialixed harness (like openapi) for archimate content in the KG\"*). It holds the machinery for ArchiMate models rather than models: the graph typology `archimate` an instance declares to hold them, the validator for the instance's `cat-archimate.config.json`, the reader for Archi's native format, and the rendering sub-pipeline that gives every view, element and relationship a page and an IRI and draws every view as SVG from the model's own diagram — no Archi install. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the graphs inside it — `archimate-validators` and `archimate-typologies` — are declared FROM WITHIN, in `archimate/graph.json` (#980); its schema and scripts are code, so the tools layer (https://github.com/litlfred/cat-harness-tools) holds them (`cat-harness-tools-archimate-schemas`, `cat-harness-tools-archimate`; beans `70lx`, `8lcl`). First instance: smart-ra's DPI-H reference architecture models.",
       "readmePath": "archimate/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/archimate"
@@ -54663,6 +54496,708 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F01",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F01",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F02",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F02",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F03",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F03",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F04",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F04",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F05",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F05",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F06",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F06",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F07",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F07",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F08",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F08",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F09",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F09",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F13",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F13",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F14",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F14",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F15",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F15",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F16",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F16",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F17",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F17",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F18",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F18",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F18"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F19",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F19",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F19"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F20",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F20",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F21",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F21",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F22",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F22",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F22"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F23",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F23",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F23"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F24",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F24",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F24"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F25",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F25",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F25"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F26",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F26",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F26"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F27",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F27",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F27"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F28",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F28",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F28"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F29",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F29",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F29"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F30",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F30",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F30"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F31",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F40",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F40",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F40"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F41",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F41",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F41"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F42",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F42",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F42"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F43",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F43",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F43"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F44",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F44",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F44"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F45",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F45",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F45"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F46",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F46",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F46"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F47",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F47",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F47"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F48",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F48",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F48"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F49",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F49",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F49"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F50",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F50",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F50"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F51",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F60",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F60",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F60"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F61",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F61",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F61"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F62",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F62",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F62"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F63",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F63",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F63"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F64",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F64",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F64"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F65",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F65",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F65"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F66",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F66",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F66"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F67",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F67",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F67"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F68",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F68",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F68"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F69",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F69",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F69"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F70",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F70",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F70"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F71",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F71",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F71"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F72",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F72",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F72"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F73",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F73",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F73"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/flow/F74",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F74",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F74"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Call_BeanClosePublished",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanClosePublished",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanClosePublished"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Call_BeanOpen",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Call_PublicComment",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/End_BeanNotYours",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYours",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/End_BeanNotYoursChange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYoursChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYoursChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/End_Ended",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_Ended",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_Ended"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/End_InForce",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_InForce",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_InForce"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/End_RenewedByGrant",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_RenewedByGrant",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_RenewedByGrant"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ChangeKind",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_CiteComputable",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteComputable",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteComputable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_CiteJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_CommentJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CommentJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CommentJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_Computable",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_Computable",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_Computable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_DraftMerge",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_PublicComment",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_PublicComment",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_PublicComment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_WidensJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/GW_WidensUse",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Start_Change",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Change",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Change"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Start_Request",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Request",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_DecideGrants",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_EndDuties",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_Hash",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_Publish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_Render",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_Review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_Sign",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Editing",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
@@ -55479,6 +56014,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_ask"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GettingStarted/flow/Flow_chosen",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_chosen",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_chosen"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GettingStarted/flow/Flow_confirm",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_confirm",
@@ -55687,6 +56228,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GettingStarted/node/Task_ChooseHarnessed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ChooseHarnessed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ChooseHarnessed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GettingStarted/node/Task_ConfirmImport",
@@ -56431,6 +56978,732 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate",
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F13",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F13",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F14",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F14",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F6b",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/flow/F9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/lane/Lane_CfStore",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfStore",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfStore"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/End_Loaded",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/GW_Fixity",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/GW_More",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/flow/N9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/lane/Lane_CfGit",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/lane/Lane_Exporter",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Call_Rebuild",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Call_SignPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/End_Done",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/End_NoChange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_NoChange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_NoChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/GW_Any",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/GW_Any"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Start_Nightly",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_FetchChanged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_ListChanged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_ReadCursor",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_Review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnNightly/node/Task_WriteRecords",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/flow/R9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/End_Refused",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Task_Compare",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P6b",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/flow/P9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/End_Failed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/End_Published",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/End_Unchanged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Start_Candidate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1DocumentIngestion",
@@ -58323,6 +59596,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToRecommend"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToReroute",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToReroute",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToReroute"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriage",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToTriage",
@@ -58495,6 +59774,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_RerouteChangeSet",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage",
@@ -59541,6 +60826,18 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/fhir-modeller",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ig-publisher-service",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/l1-extraction-reviewer",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
@@ -59661,6 +60958,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-content-type",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-identity",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
@@ -59677,6 +60979,11 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-releases",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/iti-108-consent-client",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
     },
@@ -59701,6 +61008,21 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/odrl-to-fhir-r5-permission",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pcf-consent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/public-comment",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld"
@@ -59709,6 +61031,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/recommendation-strength",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/refactor-strategy",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/reference",
@@ -59724,6 +61051,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping-fhir",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
@@ -59766,6 +61098,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-actions",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-actions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/block-change-summary",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-change-summary",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-change-summary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/build-docs",
@@ -59906,6 +61244,30 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-structure"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dsa-catalogue-status",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dsa-checksum",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dsa-dcat-record",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dsa-odrl-source",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dublin-core-renderings",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dublin-core-renderings",
@@ -59946,6 +61308,48 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/filing-dublin-core",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/filing-dublin-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-board-diagram-interchange",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-diagram-interchange",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-diagram-interchange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-board-windows",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-windows",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-windows"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-content-lifecycle",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-content-profiles",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-profiles",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-profiles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-editorial-workflow",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-editorial-workflow",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-editorial-workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-getting-started",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-getting-started",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-getting-started"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/folio-repo-conversion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-repo-conversion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-repo-conversion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/formal-accuracy",
@@ -60044,6 +61448,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-reduction"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-service-contract",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-render-jekyll",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
@@ -60062,6 +61472,18 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-theme"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/iris-cdn-exporter",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/iris-cdn-signing",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/iris-dspace",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
@@ -60072,6 +61494,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
       "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/iris-rest-feed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l1-coverage",
@@ -60132,6 +61560,12 @@
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/skill/l4-application-build",
       "sameAs": "http://smart.who.int/base/skill/l4-application-build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l4-application-run-local",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/skill/l4-application-run-local",
+      "sameAs": "http://smart.who.int/base/skill/l4-application-run-local"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-authoring",
@@ -60296,10 +61730,28 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/oxigraph-catalogue-search"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/paper-chapter-complexity",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-chapter-complexity",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-chapter-complexity"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/paper-importer",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-importer",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-importer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/paper-voice-audit",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-voice-audit",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-voice-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pcf-consent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/plan-request-gate",
@@ -60456,6 +61908,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-sheet-script",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-critical-thinking",
@@ -60702,12 +62160,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-audit",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-audit"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-service-contract",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-publisher-service-contract"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-author",
@@ -61508,6 +62960,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ref-stewardship"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/signing",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-witness",
@@ -62216,18 +63674,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/actor/clinical-sme"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/fhir-modeller",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/actor/fhir-modeller",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/actor/fhir-modeller"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/ig-publisher-service",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ig-publisher-service",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ig-publisher-service"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-adjudicator",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-adjudicator",
@@ -62246,34 +63692,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/actor/local-sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/ig-publisher",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/github-connector",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-connector",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-connector"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/fhir-validator",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/signing-api",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/pandoc",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/docling",
@@ -62300,22 +63728,10 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pdfplumber"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/html-pdf-engine",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/html-pdf-engine",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/html-pdf-engine"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-read",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-read",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-read"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/sushi-compiler",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/deploy-access",
@@ -62364,12 +63780,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/latex-compiler",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/capability/latex-compiler",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/capability/latex-compiler"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/java-runtime",
@@ -73238,6 +74648,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/flow/m21b",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21b",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m21b"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/flow/m22",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain#flow/m22",
@@ -73380,6 +74796,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ConfirmBase",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ConfirmBase"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/node/Task_Republish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain/node/Task_Repin",
@@ -76706,12 +78128,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/l1-complete-check.jsonld"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/tools/latexmk-compile.jsonld",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/latexmk-compile.jsonld",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/latexmk-compile.jsonld"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/tools/library-viewer.jsonld",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/library-viewer.jsonld",
@@ -77348,18 +78764,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/lean-packages"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/refactor-strategy",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/refactor-strategy",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/refactor-strategy"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-preload",
@@ -77370,12 +78774,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping-fhir",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocab-mapping-fhir",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocab-mapping-fhir"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-package",
@@ -78386,16 +79784,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/window-stack"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/archimate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archimate",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/dcmi-terms",
@@ -78650,12 +80048,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/fhir-modeller",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/translation-coordinator",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
@@ -78744,12 +80136,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ig-publisher-service",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
-      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/attestation-service",
@@ -78864,6 +80250,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscriptions",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscriptions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/subscribed-harnesses",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/code-lists",
@@ -79102,8 +80494,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   }
 }

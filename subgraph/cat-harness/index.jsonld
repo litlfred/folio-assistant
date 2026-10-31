@@ -170,6 +170,11 @@
       "name": "software-library"
     },
     {
+      "@id": "cat-harness:graphTypology/subscribed-harnesses",
+      "@type": "bootstrap:GraphTypology",
+      "name": "subscribed-harnesses"
+    },
+    {
       "@id": "cat-harness:graphTypology/substrate-snapshot",
       "@type": "bootstrap:GraphTypology",
       "name": "substrate-snapshot"
@@ -335,16 +340,6 @@
       "title": "End user"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/fhir-modeller",
-      "@type": "bootstrap:Actor",
-      "title": "FHIR Modeller"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ig-publisher-service",
-      "@type": "bootstrap:Actor",
-      "title": "IG Publisher Service"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ingestion-agent",
       "@type": "bootstrap:Actor",
       "title": "Ingestion engine"
@@ -434,9 +429,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4f71154c7f4d4b287a3df6f520e610168f143fe8f95e903e488123b19c32fc37",
-        "bytes": 19883,
-        "sha256": "4f71154c7f4d4b287a3df6f520e610168f143fe8f95e903e488123b19c32fc37"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/041e33bd7fda880e933f2276d2a692ac6aa9535458110b34d0cfd0a3b032dea2",
+        "bytes": 19882,
+        "sha256": "041e33bd7fda880e933f2276d2a692ac6aa9535458110b34d0cfd0a3b032dea2"
       },
       "title": "AGENTS.md — cat-harness"
     },
@@ -467,9 +462,9 @@
       "@type": "bootstrap:Asset",
       "name": "npm-manifest",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/acb742c1817fc86b5fa3be5777824fc3f69c75f0934fd39075a118b7f2e7c6aa",
-        "bytes": 2136,
-        "sha256": "acb742c1817fc86b5fa3be5777824fc3f69c75f0934fd39075a118b7f2e7c6aa"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db697fcbc05a710033cd8ff47679e06a850b60c731316842a52ddcccb5e6e2ce",
+        "bytes": 1062,
+        "sha256": "db697fcbc05a710033cd8ff47679e06a850b60c731316842a52ddcccb5e6e2ce"
       },
       "title": "package.json"
     },
@@ -478,9 +473,9 @@
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/63aced582365a7903fbb9cdbfd7d240bbcbfc7e56d39d415dff372c520ea17c4",
-        "bytes": 7738,
-        "sha256": "63aced582365a7903fbb9cdbfd7d240bbcbfc7e56d39d415dff372c520ea17c4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6d1bce94a6a4fb0e52a0313884571901d881d27690873a99476c70a3ff1e294a",
+        "bytes": 7813,
+        "sha256": "6d1bce94a6a4fb0e52a0313884571901d881d27690873a99476c70a3ff1e294a"
       },
       "title": "Unkinded families — cat-harness"
     },
@@ -510,11 +505,6 @@
       "name": "Docling (layout-aware PDF parsing)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/fhir-validator",
-      "@type": "cat-harness:Capability",
-      "name": "HL7 FHIR Validator"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
       "@type": "cat-harness:Capability",
       "name": "Git Push"
@@ -540,16 +530,6 @@
       "name": "Graphviz"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/html-pdf-engine",
-      "@type": "cat-harness:Capability",
-      "name": "TeX-free PDF engine"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/ig-publisher",
-      "@type": "cat-harness:Capability",
-      "name": "FHIR IG Publisher"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime",
       "@type": "cat-harness:Capability",
       "name": "Java Runtime"
@@ -560,19 +540,9 @@
       "name": "Jekyll"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/latex-compiler",
-      "@type": "cat-harness:Capability",
-      "name": "LaTeX Compiler"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime",
       "@type": "cat-harness:Capability",
       "name": "Node.js Runtime"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pandoc",
-      "@type": "cat-harness:Capability",
-      "name": "Pandoc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pdfplumber",
@@ -598,11 +568,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api",
       "@type": "cat-harness:Capability",
       "name": "Signing API"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/capability/sushi-compiler",
-      "@type": "cat-harness:Capability",
-      "name": "SUSHI Compiler"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations",
@@ -714,6 +679,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/site-chrome",
       "@type": "bootstrap:Subgraph",
       "name": "site-chrome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscribed-harnesses",
+      "@type": "bootstrap:Subgraph",
+      "name": "subscribed-harnesses",
+      "title": "Subscribed harness state"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/subscriptions",
@@ -1014,16 +985,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "@type": "bootstrap:Role",
       "title": "Feedback provider"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
-      "@type": "bootstrap:Role",
-      "title": "FHIR modeller"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/ig-publisher-service",
-      "@type": "bootstrap:Role",
-      "title": "IG publisher + validator"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -1677,12 +1638,6 @@
       "title": "pinned-terminology"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/precision-scalar",
-      "@type": "cat-harness:Schema",
-      "name": "precision-scalar",
-      "title": "precision-scalar"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/process-element-id",
       "@type": "cat-harness:Schema",
       "name": "process-element-id",
@@ -1759,12 +1714,6 @@
       "@type": "cat-harness:Schema",
       "name": "ref-window",
       "title": "ref-window"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/refactor-strategy",
-      "@type": "cat-harness:Schema",
-      "name": "refactor-strategy",
-      "title": "refactor-strategy"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/referenced-source",
@@ -2179,12 +2128,6 @@
       "@type": "cat-harness:Schema",
       "name": "vocab-mapping",
       "title": "vocab-mapping"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocab-mapping-fhir",
-      "@type": "cat-harness:Schema",
-      "name": "vocab-mapping-fhir",
-      "title": "vocab-mapping-fhir"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vocabulary",

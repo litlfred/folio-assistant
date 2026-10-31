@@ -366,17 +366,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/iris-pages.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "iris-pages",
-      "title": "IRIS replica and catalogue pages",
-      "description": "Render who-iris's replica of the IRIS site, its docs pages, and the catalogue visualiser who-iris declares — what the catalogue knows and what it records that it does not know — at that visualiser's declared route.",
+      "title": "who-iris catalogue and docs pages",
+      "description": "Render who-iris's docs pages and the catalogue visualiser who-iris declares — what the catalogue knows and what it records that it does not know — at that visualiser's declared route, plus the library's withheld list and the IRIS replica's home page, the one replica page left (owner, 2026-10-30).",
       "install": {
         "none": true
       },
@@ -393,13 +393,22 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built (the tree `compose-docs --shell` wrote): write only the catalogue page into it, at its route in who-iris's own site, plus a forwarding page at the declared route. A site build passes it (`visualiser-writers.ts`).",
+            "required": false,
+            "arg": {
+              "flag": "--catalogue-into"
+            }
           }
         ],
         "outputs": [
           {
             "name": "pages",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The replica under `site/`, the docs under `docs/`, and the catalogue page under the published site directory."
+            "description": "The replica's home page at `site/index.html` (and its translations), the docs under `docs/`, and the catalogue page under the published site directory."
           }
         ]
       },

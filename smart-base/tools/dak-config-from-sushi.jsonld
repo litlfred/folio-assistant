@@ -366,16 +366,16 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/tools/dak-config-from-sushi.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "dak-config-from-sushi",
-      "title": "sushi-config.yaml → dak.config.json",
+      "title": "sushi-config.yaml → index.config.json#contentTypes.dak",
       "description": "Derive the DAK configuration from `sushi-config.yaml` plus repository and branch context.",
       "install": {
         "none": true
@@ -402,7 +402,7 @@
           {
             "name": "dakConfig",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`dak.config.json` — ours, per bean `cz17`. Upstream still writes `dak.json`."
+            "description": "`index.config.json` (`contentTypes.dak`) — ours, per bean `cz17`. Upstream still writes `dak.json`."
           }
         ]
       },

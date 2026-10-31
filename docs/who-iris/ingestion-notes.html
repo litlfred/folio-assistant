@@ -14,6 +14,43 @@
     --iris-ingested: #006666;      /* --info */
     --iris-col: 1140px;
     --iris-pad: 1.5rem;
+    /* TEXT roles, split from the grounds they share a colour with in light
+       mode, so dark mode can give each its own value. */
+    --iris-link: var(--iris-accent);
+    --iris-heading: var(--iris-dark);
+    --iris-paper: #fff;
+    --iris-cdn: var(--iris-ingested);
+    --iris-tag-bg: #e2eaf0;
+    --iris-mat: #1d5c1d; --iris-mat-edge: #94BA65; --iris-mat-bg: #f0f6e9;
+    --iris-unk: #7a4a10; --iris-unk-edge: #ec9433; --iris-unk-bg: #fdf4e8;
+  }
+  /* DARK MODE (owner, 2026-10-30: "dark mode of main display of who-iris is
+     still white"). The replica is IRIS's light page; in dark the same roles
+     take dark grounds and light inks, keyed on the site's scheme switch
+     (data-fa-scheme) and else the OS, as the rail and page-layout.css are.
+     Text pairs are at least 4.5:1 (WCAG AA); the accent ground darkens so
+     white on it is too. Same values in both blocks. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-fa-scheme="light"]) {
+      --iris-surface: #0d1117; --iris-ink: #e6edf3; --iris-edge: #3d444d;
+      --iris-wash: #151b23; --iris-breadcrumb-bg: #151b23; --iris-muted: #9198a1;
+      --iris-paper: #161b22; --iris-accent: #0b6a9a; --iris-link: #6cb6ff;
+      --iris-heading: #79c0ff; --iris-current: #f0883e; --iris-cdn: #56d4d4;
+      --iris-tag-bg: #1c2d3d;
+      --iris-mat: #8fd18f; --iris-mat-edge: #4d7a2a; --iris-mat-bg: rgba(148,186,101,.16);
+      --iris-unk: #f0c27a; --iris-unk-edge: #8a6420; --iris-unk-bg: rgba(236,148,51,.16);
+      color-scheme: dark;
+    }
+  }
+  :root[data-fa-scheme="dark"] {
+    --iris-surface: #0d1117; --iris-ink: #e6edf3; --iris-edge: #3d444d;
+    --iris-wash: #151b23; --iris-breadcrumb-bg: #151b23; --iris-muted: #9198a1;
+    --iris-paper: #161b22; --iris-accent: #0b6a9a; --iris-link: #6cb6ff;
+    --iris-heading: #79c0ff; --iris-current: #f0883e; --iris-cdn: #56d4d4;
+    --iris-tag-bg: #1c2d3d;
+    --iris-mat: #8fd18f; --iris-mat-edge: #4d7a2a; --iris-mat-bg: rgba(148,186,101,.16);
+    --iris-unk: #f0c27a; --iris-unk-edge: #8a6420; --iris-unk-bg: rgba(236,148,51,.16);
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   body {
@@ -30,7 +67,7 @@
      pages are mounted verbatim, so the harness's narrow-viewport.css never
      reaches them. Breaking the string beats widening the page. */
   :not(pre) > code { overflow-wrap: anywhere; }
-  a { color: var(--iris-accent); text-decoration: none; }
+  a { color: var(--iris-link); text-decoration: none; }
   a:hover, a:focus { text-decoration: underline; }
 
   /* ── The banner. Not decoration: it is requirement 1. ───────────────── */
@@ -47,21 +84,21 @@
   .ingested .langnote { margin: 0.45rem 0 0; font-size: 0.88rem; }
 
   /* ── Masthead. NO WHO logo, by instruction — a wordmark in type. ────── */
-  header.mast { background: #fff; border-bottom: 1px solid var(--iris-edge); }
+  header.mast { background: var(--iris-paper); border-bottom: 1px solid var(--iris-edge); }
   .mast .wrap { display: flex; align-items: center; gap: 1rem; padding-top: 1.1rem; padding-bottom: 1.1rem; }
   .wordmark { display: flex; align-items: baseline; gap: 0.55rem; }
   .wordmark .org {
     font-size: 1.05rem; font-weight: 700; line-height: 1.15;
-    color: var(--iris-accent); max-width: 11rem;
+    color: var(--iris-link); max-width: 11rem;
   }
   .wordmark .bar { width: 1px; align-self: stretch; background: var(--iris-edge); }
   .wordmark .stack { display: flex; flex-direction: column; }
-  .wordmark .iris { font-size: 2.1rem; font-weight: 700; color: var(--iris-accent); letter-spacing: -0.02em; line-height: 1; }
+  .wordmark .iris { font-size: 2.1rem; font-weight: 700; color: var(--iris-link); letter-spacing: -0.02em; line-height: 1; }
   .wordmark .iris .dot { color: var(--iris-current); }
-  .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
+  .wordmark .sub { font-size: 0.78rem; color: var(--iris-link); line-height: 1.2; }
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
-  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  .cdn { font-size: 0.88em; color: var(--iris-cdn); }
   /* TRANSLATED text set in the code face (a size, a container path). Arabic is
      cursive, and a monospace face gives every letter its own cell, so on the ar
      page "ميغابايت" rendered as eight separate letters (bean lffo). There it
@@ -104,9 +141,9 @@
     padding: 0.12rem 0.45rem; border-radius: 3px; border: 1px solid;
     vertical-align: 0.12em;
   }
-  .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
-  .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
-  .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+  .state.materialized { color: var(--iris-mat); border-color: var(--iris-mat-edge); background: var(--iris-mat-bg); }
+  .state.referenced   { color: var(--iris-heading); border-color: var(--iris-edge); background: var(--iris-wash); }
+  .state.unknown      { color: var(--iris-unk); border-color: var(--iris-unk-edge); background: var(--iris-unk-bg); }
   /* The KG view's tables. Deliberately plainer than the replica's furniture:
      this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
      it as IRIS would invite a reader to take its counts for IRIS's. */
@@ -170,7 +207,7 @@
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
     border: 1px solid var(--iris-edge); border-inline-end: none;
     border-radius: 0; border-start-start-radius: 4px; border-end-start-radius: 4px;
-    background: #fff; color: var(--iris-ink);
+    background: var(--iris-paper); color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
@@ -192,7 +229,7 @@
   .search-results-panel h3 {
     margin: 0 0 0.8rem;
     font-size: 1.05rem;
-    color: var(--iris-dark);
+    color: var(--iris-heading);
   }
   .search-results-list {
     list-style: none;
@@ -236,7 +273,7 @@
   }
   mark.search-mark {
     background: #ffeb3b;
-    color: inherit;
+    color: #212529;
     padding: 0 2px;
     border-radius: 2px;
   }
@@ -281,7 +318,7 @@
   }
   table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
   table.reqs th.rid {
-    width: 3.2rem; white-space: nowrap; font-weight: 700; color: var(--iris-accent);
+    width: 3.2rem; white-space: nowrap; font-weight: 700; color: var(--iris-link);
   }
   table.reqs td.why { color: var(--iris-muted); }
   table.reqs code { font-size: 0.87em; }
@@ -336,12 +373,12 @@
     .searchbar button { border-radius: 0 0 4px 4px; }
     .sub { flex-direction: column; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-4sydep69bq.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script><script src="../../assets/js/vendor/lunr.min.js" defer></script><script src="../../assets/js/just-the-docs.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"scenarios","label":"Scenarios","path":"/en/cat-harness/scenarios/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-4sydep69bq","here":"/docs/who-iris/ingestion-notes.html"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search this site" autocomplete="off"><label for="search-input" class="search-label"><span class="sr-only">Search this site</span></label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a> from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-22739062vm9.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script><script src="../../assets/js/vendor/lunr.min.js" defer></script><script src="../../assets/js/just-the-docs.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"scenarios","label":"Scenarios","path":"/en/cat-harness/scenarios/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"software-library","label":"Software libraries","note":"no viewer by design"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-22739062vm9","here":"/docs/who-iris/ingestion-notes.html"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search this site" autocomplete="off"><label for="search-input" class="search-label"><span class="sr-only">Search this site</span></label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a> from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled <em>by reference</em>: 59 nodes of a 273,559-item 361.55 GiB repository, of which <strong>6 items</strong> are held here. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.
 </div></div><header class="mast"><div class="wrap"><div class="wordmark"><span class="org">World Health<br>Organization</span> <span class="bar"></span> <span class="stack"> <span class="iris">iris<span class="dot">.</span></span> <span class="sub">Institutional Repository<br>for Information Sharing</span> </span></div><div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div></div></header><nav class="main"><div class="wrap"><span>Communities &amp; Collections</span> <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span></div></nav><div class="crumbs"><div class="wrap"><a href="index.html">Documentation</a><span class="sep">•</span><span class="here">Ingestion notes</span></div></div><main class="wrap"><h1>What ingesting these documents cost</h1><p class="lede">Every rule below was learned by getting it wrong here first. They live in
 <code>who-iris/skills/iris-dspace.md</code> — <a href="https://github.com/litlfred/who-iris/blob/main/skills/iris-dspace.md">read the skill</a> —
 and this page is generated from that file, so the two cannot drift. There are
-<strong>22</strong> of them, against <strong>3</strong> item(s) in the
-catalogue, <strong>3</strong> of which this repository actually holds the bytes for.</p><div class="caveat"><p><strong>Why a page and not just a skill.</strong> A skill is read by an agent about
+<strong>22</strong> of them, against <strong>48</strong> item(s) in the
+catalogue, <strong>6</strong> of which this repository actually holds the bytes for.</p><div class="caveat"><p><strong>Why a page and not just a skill.</strong> A skill is read by an agent about
   to act. A reader deciding whether to <em>trust</em> what was ingested needs the same
   facts and will not open a skill file to get them. Same text, two audiences, one
   source — the skill.</p></div><h2>Requirements a record can be checked against</h2><table class="reqs"><thead><tr><th>#</th><th>Requirement</th><th>Why, in one line</th></tr></thead><tbody><tr><th class="rid">R1</th><td>Resolve by <strong>Handle</strong> where one exists; treat UUID and govdoc as secondary</td><td class="why">only the Handle is guaranteed outside WHO</td></tr><tr><th class="rid">R2</th><td>Never deduplicate <code>dc.identifier.uri</code></td><td class="why">the second one is evidence of a host that vanished</td></tr><tr><th class="rid">R3</th><td>Preserve repetition on <strong>every</strong> field, not a known list</td><td class="why">four fields repeat in a single record; assume more do</td></tr><tr><th class="rid">R4</th><td>Treat an absent <code>language</code> as <em>unasserted</em>, never as <code>en</code></td><td class="why">both states occur in one record</td></tr><tr><th class="rid">R5</th><td>Carry <code>dc.subject.mesh</code> as a <strong>controlled</strong> value with its authority</td><td class="why">it can be resolved and subsumed; a keyword cannot</td></tr><tr><th class="rid">R6</th><td>Model bitstreams per <strong>bundle</strong>, with size and format on the bitstream</td><td class="why">an item is not a file</td></tr><tr><th class="rid">R7</th><td>Model containment as a list of <strong>paths</strong></td><td class="why">four levels deep, and multiple mappings are legal</td></tr><tr><th class="rid">R8</th><td>Never infer metadata from the PDF when a record exists</td><td class="why">OCR off a title page catalogued the WHO Editorial Style Manual as <em>Abies</em></td></tr><tr><th class="rid">R9</th><td>Record what the source says even when it contradicts the file</td><td class="why"><code>dc.description</code> says <code>30 p.</code>; the PDF has <strong>33</strong></td></tr><tr><th class="rid">R10</th><td>An item with no known collection carries <code>parents: []</code> — never a guessed one</td><td class="why">held-and-unplaceable is a STATE; inventing containment is unfalsifiable</td></tr><tr><th class="rid">R11</th><td>Key a node by <strong>path</strong> when its UUID is not in the capture</td><td class="why">an invented UUID resolves to nothing while looking authoritative</td></tr><tr><th class="rid">R12</th><td>Keep the <strong>page captured</strong> and the <strong>identifier</strong> apart</td><td class="why"><code>/items/&lt;uuid&gt;/full</code> is what was fetched; the Handle is what the item IS</td></tr><tr><th class="rid">R13</th><td>A <code>materialized</code> claim must name bytes that EXIST, and something must check it</td><td class="why">see <code>yl5w</code>: three claims resolved to nothing and the gate said &quot;clean&quot;</td></tr><tr><th class="rid">R14</th><td>Read a storage figure in the units that round-trip its own bytes</td><td class="why">IRIS prints &quot;GB&quot; for what its byte counts make <strong>GiB</strong> — a 7% error</td></tr><tr><th class="rid">R15</th><td>Never fall back to a parent URL when an item has no upstream URI</td><td class="why">&quot;no upstream URI recorded&quot; is the answer; the front page is a lie that resolves</td></tr><tr><th class="rid">R16</th><td>A partial transcription must SAY it is partial</td><td class="why">a truncated abstract that does not declare itself cannot be told from a short one</td></tr><tr><th class="rid">R17</th><td>Hold what you hold: model the bitstreams whose bytes are here</td><td class="why">the handbook lists <strong>8</strong> upstream; this repository has <strong>1</strong></td></tr><tr><th class="rid">R18</th><td>Do not &quot;correct&quot; a record that looks wrong</td><td class="why">the English-titled editorial manual really does carry an <strong>Italian</strong> ISBN</td></tr><tr><th class="rid">R19</th><td>A derived figure must round-trip the figure it was derived from</td><td class="why">the site total claimed to be <code>361.55 × 1024³</code> and rendered as <strong>361.56</strong></td></tr><tr><th class="rid">R20</th><td>An item count and a file count are different denominators</td><td class="why">273,559 against 1,057,223 — a fraction built from the wrong one is off by 3.86×</td></tr><tr><th class="rid">R21</th><td><strong>Mint stable URIs at the extractor (Upstream Skolemization)</strong></td><td class="why">Anonymous compound nodes become unresolvable blank nodes downstream; minting <code>https://iris.who.int/entity/item/{handle}#{prop}_{idx}</code> at extraction enables zero-pass graph compilation</td></tr><tr><th class="rid">R22</th><td><strong>Append-only streaming partition writes</strong></td><td class="why">A 300,000 item corpus cannot accumulate uncompressed in working memory; write quads directly to partition file streams</td></tr></tbody></table><h2>Settled 2026-09-21 — bean <code>yl5w</code></h2><p>Every ORIGINAL <code>localPath</code> in this catalogue named

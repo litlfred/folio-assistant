@@ -141,9 +141,17 @@
       "via": "authoring-agent"
      },
      {
+      "name": "folio-getting-started",
+      "href": "../../../reference/skill-instructions/folio-getting-started.html"
+     },
+     {
       "name": "folio-init",
       "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
+     },
+     {
+      "name": "folio-repo-conversion",
+      "href": "../../../reference/skill-instructions/folio-repo-conversion.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -448,9 +456,17 @@
       "via": "authoring-agent"
      },
      {
+      "name": "folio-getting-started",
+      "href": "../../../reference/skill-instructions/folio-getting-started.html"
+     },
+     {
       "name": "folio-init",
       "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
+     },
+     {
+      "name": "folio-repo-conversion",
+      "href": "../../../reference/skill-instructions/folio-repo-conversion.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -828,9 +844,17 @@
       "via": "authoring-agent"
      },
      {
+      "name": "folio-getting-started",
+      "href": "../../../reference/skill-instructions/folio-getting-started.html"
+     },
+     {
       "name": "folio-init",
       "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
+     },
+     {
+      "name": "folio-repo-conversion",
+      "href": "../../../reference/skill-instructions/folio-repo-conversion.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -993,6 +1017,80 @@
       "name": "workflow-state",
       "href": "../../../reference/skill-instructions/workflow-state.html",
       "via": "authoring-agent"
+     }
+    ]
+   }
+  },
+  "Task_ChooseHarnessed": {
+   "id": "Task_ChooseHarnessed",
+   "name": "Choose what the harness reads",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ChooseHarnessed",
+   "lane": "User (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
+   "skills": [
+    {
+     "name": "repo-conversion",
+     "href": "../../../reference/skill-instructions/repo-conversion.html"
+    },
+    {
+     "name": "interaction-modality",
+     "href": "../../../reference/skill-instructions/interaction-modality.html"
+    }
+   ],
+   "calls": {
+    "name": "Ask the person",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
+    "diagram": "ask-the-person.html"
+   },
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "dispatch-agent",
+      "href": "../../../reference/skill-instructions/dispatch-agent.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html"
+     },
+     {
+      "name": "interaction-modality",
+      "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "repo-conversion",
+      "href": "../../../reference/skill-instructions/repo-conversion.html"
      }
     ]
    }
@@ -1204,9 +1302,17 @@
       "via": "authoring-agent"
      },
      {
+      "name": "folio-getting-started",
+      "href": "../../../reference/skill-instructions/folio-getting-started.html"
+     },
+     {
       "name": "folio-init",
       "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
+     },
+     {
+      "name": "folio-repo-conversion",
+      "href": "../../../reference/skill-instructions/folio-repo-conversion.html"
      },
      {
       "name": "gate-tree-mutation",
@@ -1511,9 +1617,17 @@
       "via": "authoring-agent"
      },
      {
+      "name": "folio-getting-started",
+      "href": "../../../reference/skill-instructions/folio-getting-started.html"
+     },
+     {
       "name": "folio-init",
       "href": "../../../reference/skill-instructions/folio-init.html",
       "via": "authoring-agent"
+     },
+     {
+      "name": "folio-repo-conversion",
+      "href": "../../../reference/skill-instructions/folio-repo-conversion.html"
      },
      {
       "name": "gate-tree-mutation",

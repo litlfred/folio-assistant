@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/GlassStrip",
+  "definitions": {
+    "GlassStrip": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "chrome": {
+                "type": "string",
+                "enum": [
+                  "todos",
+                  "filter",
+                  "settings"
+                ]
+              }
+            },
+            "required": [
+              "chrome"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/GlassStripSchema.schema.json",
+  "title": "GlassStripSchema",
+  "description": "Generated from `GlassStripSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+    "pr": "main",
+    "run": "41150189192"
+  }
+}

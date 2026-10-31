@@ -2,7 +2,7 @@
   "$schema": "folio-voices-index/v1",
   "tile": {
     "voices": {
-      "count": 49,
+      "count": 48,
       "unit": "voices"
     }
   },
@@ -34,7 +34,6 @@
         "address-editorial-authoring-agent",
         "address-evidence-agent",
         "address-feedback-provider",
-        "address-fhir-modeller",
         "address-ingestion-agent",
         "address-integration-watcher",
         "address-librarian",
@@ -549,39 +548,6 @@
           "cites": "scenarios/roles.json",
           "citesInstance": "litlfred/cat-harness",
           "quote": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below."
-        }
-      ]
-    },
-    {
-      "id": "address-fhir-modeller",
-      "title": "Addressing the FHIR modeller",
-      "description": "How to write for a reader acting as FHIR modeller. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
-      "instance": "folio-assistant-core",
-      "path": "folio-assistant-core/skills/voices/address-fhir-modeller",
-      "provenance": "house",
-      "overlaySeverity": "major",
-      "criterion": "voice-overlay-address-fhir-modeller",
-      "sources": [
-        {
-          "title": "Role `fhir-modeller` — its persona, in the cat-harness role graph"
-        }
-      ],
-      "hasInstructions": false,
-      "provenanceFlags": [],
-      "rules": [
-        {
-          "id": "address-fhir-modeller-register",
-          "title": "Specification register",
-          "description": "Specification register. Cardinalities, invariants, must-support. Assume the standard is known.",
-          "category": "register",
-          "severity": "minor",
-          "patterns": 0,
-          "terminology": 0,
-          "judgementOnly": true,
-          "citation": "kg-node",
-          "cites": "scenarios/roles.json",
-          "citesInstance": "litlfred/cat-harness",
-          "quote": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
         }
       ]
     },
@@ -3067,7 +3033,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-007",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "7",
           "quote": "The updated Classification of Digital Interventions, Services and Applications in Health (CDISAH) is a set of categorizations that links how digital health interventions"
         },
@@ -3082,7 +3048,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-024",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "24 (printed 12)",
           "quote": "DIGITAL HEALTH INTERVENTION: A discrete technology functionality – or capability – designed to achieve a specific objective addressing a health system challenge. Examples of digital health interventions include decision support, targeted client communications, and stock notifications"
         },
@@ -3097,7 +3063,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-023",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "23 (printed 11)",
           "quote": "BOTTLENECKS: Specific gaps or problems in the workflow of delivering health services specific to a health programme area, persona or process (for example, “health workers have difficulty keeping track of when pregnant women are due for an antenatal care visit”), in contrast to a health system challenge, which is a general representation of the problem across any health programme area (for example, “loss to follow-up”)."
         },
@@ -3112,7 +3078,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-010",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "10",
           "quote": "Interventions for Persons: Persons are members of the public who are potential or current users of health services, including health prevention and wellness activities. Other terms that have been used to describe individuals in this group include ‘patients’, ‘clients’ and ‘health service users’."
         },
@@ -3127,7 +3093,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-011",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "11",
           "quote": "one may implement a digital health intervention, such as “targeted communication to persons”, in order to address a health system challenge, such as “lack of service utilisation,” to achieve an overarching eHealth outcome of “improving individuals’ access to knowledge resources and support for better management of their health”"
         },
@@ -3142,7 +3108,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-024",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "24 (printed 12)",
           "quote": "DIGITAL HEALTH OUTCOME: The desired change in the health system or services by using digital health interventions. May also be known as an eHealth outcome"
         },
@@ -3157,7 +3123,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-024",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "24 (printed 12)",
           "quote": "accompanied by a governance framework, operational plan, human resources and related activities for its successful execution"
         },
@@ -3172,7 +3138,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-004",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "4",
           "quote": "The first edition of this publication was published under the following title “Classification of digital health interventions v1.0: a shared language to describe the uses of digital technology for health” with a WHO reference number - WHO/RHR/18.06. The first edition is being reissued under the correct title"
         }
@@ -3219,7 +3185,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240101197-eng#page-008",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "vi (PDF p. 8)",
           "quote": "In the health context, the process of digitally automating and simplifying processes to streamline individual health programmes and reduce manual efforts for greater efficiency. Digitalization is the second step in digital transformation"
         },
@@ -3234,7 +3200,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240093362-eng#sec-002-glossary",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "x (PDF p. 11)",
           "quote": "In the context of health care, a list of health service users compiled for the purposes of tracking care, aggregating activities or health outcomes, or identifying health service users who need specific interventions."
         },
@@ -3264,7 +3230,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240093362-eng#sec-002-glossary",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "ix (PDF p. 10)",
           "quote": "PCPOSS encompass various services and application types, including community-based information systems, decision support systems, electronic medical (or health) record systems and personal health records"
         },
@@ -3279,7 +3245,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240116191-eng#page-010",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "1 (PDF p. 10)",
           "quote": "In contrast, transactional data—such as batch numbers, manufacturing dates, and serial numbers—varies with each specific instance of the product."
         },
@@ -3294,7 +3260,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240116191-eng#page-008",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "vii (PDF p. 8)",
           "quote": "In this handbook, the terms ‘generic product,’ ‘product,’ or ‘product information’ pertain to the general identifying details of a health product, excluding any manufacturer-specific information."
         },
@@ -3309,7 +3275,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240101197-eng#page-008",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "vi (PDF p. 8)",
           "quote": "A paper-based or software tool that supports the management and/or operations of the health supply chain."
         },
@@ -3324,7 +3290,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240116191-eng#page-012",
-          "citesInstance": "litlfred/smart-base",
+          "citesInstance": "litlfred/who-iris",
           "pages": "3 (PDF p. 12)",
           "quote": "This handbook complements the DIIG by providing a structured approach to implementing a national product catalogue (NPC) for standardized product master data management."
         },
@@ -4186,10 +4152,10 @@
     }
   ],
   "totals": {
-    "voices": 49,
-    "rules": 180,
+    "voices": 48,
+    "rules": 179,
     "citingLibrary": 138,
-    "citingKgNode": 42,
+    "citingKgNode": 41,
     "mechanical": 35
   }
 }

@@ -370,14 +370,14 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-30T13:18:19.531Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitSha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitAt": "2026-10-30T14:46:51+02:00",
+  "generatedAt": "2026-10-31T00:48:08.008Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitSha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitAt": "2026-10-31T00:26:36Z",
   "sourceTreeDirty": true,
-  "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
+  "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 23,
+    "Skill": 24,
     "Process": 7,
     "SequenceFlow": 122,
     "Lane": 17,
@@ -441,7 +441,7 @@
       "title": "recommendation-extraction",
       "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
-      "instructionLines": 407,
+      "instructionLines": 414,
       "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
       "hasInstructions": true,
@@ -636,6 +636,19 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
     {
+      "@id": "http://smart.who.int/base/skill/l4-application-run-local",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l4-application-run-local",
+      "title": "l4-application-run-local",
+      "description": "Run an L4 application that is already built, on the agent's own machine, against a clean IG build, so a person can try or demonstrate it before anything is hosted. Read before starting a local copy of an L4 app for a review, a demo or a country adaptation check.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l4-application-run-local.md",
+      "instructionLines": 41,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
       "@id": "http://smart.who.int/base/skill/grade",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "grade",
@@ -655,7 +668,7 @@
       "title": "dak-preprocessing",
       "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index — and how it runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
-      "instructionLines": 182,
+      "instructionLines": 267,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -668,7 +681,7 @@
       "title": "toolchain-ownership",
       "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
-      "instructionLines": 136,
+      "instructionLines": 137,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -719,7 +732,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "DIIG — from a health system bottleneck to a costed implementation plan",
       "summary": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it.",
-      "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `smart-base/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
+      "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `who-iris/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
       "enforcement": "advisory",
       "sourcePath": "methodologies/processes/diig-investment-path.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn",
@@ -4612,7 +4625,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "l1-extraction",
       "renderable": false,
-      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest."
+      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/` when the same instance holds the entry, or at `l1-extractions/<entry>/` when the entry lives in another instance (smart-base's handbook extraction, whose source moved to who-iris on 2026-10-30, who-iris#107): the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`: nested in an entry, it is published with the entry beside the entry's manifest; held apart, its own viewer (`scripts/gen-l1-extraction-pages.ts`) publishes it. It is never a folder named for an entry another library holds, which reads as a second copy of that entry and makes the library ingest refuse the duplicate slug."
     },
     {
       "@id": "http://smart.who.int/base/role/l1-extraction-reviewer",
@@ -4727,16 +4740,16 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
       ],
-      "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.",
+      "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice. IRIS PUBLICATIONS LIVE IN WHO-IRIS. On 2026-10-30 the twelve WHO IRIS publications ingested here moved to litlfred/who-iris (who-iris#107, the owner's \"pre-CDN preview\"): cite them as `{instance: \"litlfred/who-iris\"}`, and `library/<slug>` evidence resolves through the who-iris mount. This library keeps the sources that are not IRIS items. smart-base's own L1 extraction of an IRIS handbook is not a library entry and lives in `l1-extractions/`.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/library"
     },
     {
-      "@id": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction",
+      "@id": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
-      "name": "library-9789240116191-eng-l1-extraction",
-      "path": "library/9789240116191-eng/l1-extraction/",
+      "name": "l1-extraction-9789240116191-eng",
+      "path": "l1-extractions/9789240116191-eng/",
       "contentSource": {
         "kind": "directory",
         "declaredIn": "default"
@@ -4744,9 +4757,9 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/l1-extraction"
       ],
-      "description": "What the recommendation-extraction skill read out of `9789240116191-eng` (Digital transformation handbook for health product catalogue): the L1 A-Box graph `l1.json`, the L2 scenario candidates `scenarios/scenario-candidates.l2.json`, and the curation, vocabulary and run context behind them. Declared so it is part of the knowledge graph rather than files beside it, and therefore PUBLISHED with its source (owner, 2026-10-12, bean 8pzh item 1: \"a and b\"). A SEPARATE declaration from `library/` though it nests inside it, as `methodologies/processes/` is beside `methodologies/`: a directory entry names one graph, and `l1-extraction` is a different typology. One entry per extracted library entry, never a wildcard: `scripts/l1-extraction-declared.test.ts` fails when an `l1-extraction/` directory on disk is undeclared, or a declaration names one that is not there.",
+      "description": "What the recommendation-extraction skill read out of library entry `9789240116191-eng` (Digital transformation handbook for health product catalogue), which lives in who-iris since 2026-10-30 (who-iris#107): the L1 A-Box graph `l1.json`, the L2 scenario candidates `scenarios/scenario-candidates.l2.json`, and the curation, vocabulary and run context behind them. smart-base's own analysis (owner, 2026-10-16: \"l1-extraction is part of smart-base\"), so it stays here, at `l1-extractions/<entry>/`, and cites its source entry wherever that entry is held. Declared so it is part of the knowledge graph and published (owner, 2026-10-12, bean 8pzh item 1). It sat inside `library/<entry>/` until the entry moved; a library folder holding only the extraction then read as a second copy of the entry, and folio-assistant's library ingest refused the duplicate slug. One entry per extracted library entry, never a wildcard: `scripts/l1-extraction-declared.test.ts` fails when an `l1-extractions/<entry>/` on disk is undeclared, or a declaration names one that is not there.",
       "fileCount": 0,
-      "inSubgraph": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction"
+      "inSubgraph": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng"
     },
     {
       "@id": "http://smart.who.int/base/directory/methodologies",
@@ -4811,7 +4824,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/fhir-artifact-index"
       ],
-      "description": "The IG's artefact index. `index.json`, `menu.json`, `releases.json` and `package.tgz` are NOT COMMITTED: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`builtAtPublish`, fhir-harness#124), as smart-immunizations' are. Until then they were reconstructed by `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1): 225 artefacts known, 47 materialized -- the DAK API surface, whose JSON Schemas and OpenAPI have no other home, against resource JSON that does. What stays committed here is `dak/`, the annexes the ingested index pointed at, and the upstream report. `dak/` sits INSIDE this directory rather than beside it, so one entry covers both the index and the bytes it points at; a sibling would be an undeclared directory holding the very bytes the index claims to have, which is the `dh4f` shape. NOTHING HERE IS AUTHORED: `ingest:ig:check` re-derives it and a hand-edit is a defect the next check either overwrites or reports. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`. UNTIL plan Q4 (bean `rbz3`, 2026-10-02) IT ALSO HELD `chrome.json`; the chrome is the TEMPLATE's styling, so it now lives in `themes/` beside the template's theme, and ships with the harness. When it was here, it was a THIRD provenance in one directory rather than a second copy of an existing one: `index.json` is harvested from an IG's published output, `menu.json` (smart-trust's) is read from its `sushi-config.yaml`, and `chrome.json` is resolved from the `fhir.template` packages its `ig.ini` names -- `fhir.base.template` and `who.template.root`, separate repositories the IG merely depends on. An IG declares its appearance in NO file it owns, which is why the chrome could not be folded into either of the other two. It lives at smart-base so every WHO SMART IG (through `smart-ig`) inherits one answer instead of each re-copying it; `schemas/ig-chrome.ts` carries why the consumer NAMES this instance rather than walking `needs` to it, and the layering gap that forces it, which is `nsbb`'s.",
+      "description": "The IG's artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are NOT COMMITTED: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`builtAtPublish`, fhir-harness#124; `sidecars/` via this layer's `ig-site:sidecars` step, bean `4u5d`), as smart-immunizations' are. Until then they were reconstructed by the retired `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1), with the DAK API surface committed under `dak/` (retired in bean `4u5d`). What stays committed here is `upstream-report-CDHIv1toCDHIv2.md` and `README.md`. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`. UNTIL plan Q4 (bean `rbz3`, 2026-10-02) IT ALSO HELD `chrome.json`; the chrome is the TEMPLATE's styling, so it now lives in `themes/` beside the template's theme, and ships with the harness. When it was here, it was a THIRD provenance in one directory rather than a second copy of an existing one: `index.json` is harvested from an IG's published output, `menu.json` (smart-trust's) is read from its `sushi-config.yaml`, and `chrome.json` is resolved from the `fhir.template` packages its `ig.ini` names -- `fhir.base.template` and `who.template.root`, separate repositories the IG merely depends on. An IG declares its appearance in NO file it owns, which is why the chrome could not be folded into either of the other two. It lives at smart-base so every WHO SMART IG (through `smart-ig`) inherits one answer instead of each re-copying it; `schemas/ig-chrome.ts` carries why the consumer NAMES this instance rather than walking `needs` to it, and the layering gap that forces it, which is `nsbb`'s.",
       "readmePath": "fhir-artifact-index/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-artifact-index"
@@ -5212,7 +5225,7 @@
       "@id": "http://smart.who.int/base/tools/dak-config-from-sushi.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "dak-config-from-sushi",
-      "title": "sushi-config.yaml → dak.config.json",
+      "title": "sushi-config.yaml → index.config.json#contentTypes.dak",
       "description": "Derive the DAK configuration from `sushi-config.yaml` plus repository and branch context.",
       "install": {
         "none": true
@@ -5239,7 +5252,7 @@
           {
             "name": "dakConfig",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`dak.config.json` — ours, per bean `cz17`. Upstream still writes `dak.json`."
+            "description": "`index.config.json` (`contentTypes.dak`) — ours, per bean `cz17`. Upstream still writes `dak.json`."
           }
         ]
       },
@@ -5465,7 +5478,7 @@
         "network": true
       },
       "satisfies": [
-        "http://smart.who.int/base/skill/l4-application-build"
+        "http://smart.who.int/base/skill/l4-application-run-local"
       ]
     },
     {
@@ -5967,6 +5980,12 @@
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/skill/dak-postprocessing",
       "sameAs": "http://smart.who.int/base/skill/dak-postprocessing"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-run-local",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/skill/l4-application-run-local",
+      "sameAs": "http://smart.who.int/base/skill/l4-application-run-local"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#skill/grade",
@@ -7613,10 +7632,10 @@
       "sameAs": "http://smart.who.int/base/directory/library"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/library-9789240116191-eng-l1-extraction",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/l1-extraction-9789240116191-eng",
       "deprecated": true,
-      "isReplacedBy": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction",
-      "sameAs": "http://smart.who.int/base/directory/library-9789240116191-eng-l1-extraction"
+      "isReplacedBy": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng",
+      "sameAs": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/methodologies",
@@ -7765,8 +7784,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   }
 }

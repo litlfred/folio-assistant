@@ -155,6 +155,42 @@
           "title": "The Milnor exposition standard"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-chapter-complexity",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The paper-folio half of the harness's chapter-complexity-review and block-density skills: the mathematical block-kind classifier for logical vs. storytelling backward edges, cross-paper uses[] filtering, and table-extraction and density rules for formal statement blocks.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+          "instructionLines": 74,
+          "instructionsPath": "skills/content/authoring-math/paper-chapter-complexity.md",
+          "name": "paper-chapter-complexity",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0df92554ea27cb4f77a590f756987bc4b33e17789b99854baa776568633acf81",
+            "bytes": 3778,
+            "sha256": "0df92554ea27cb4f77a590f756987bc4b33e17789b99854baa776568633acf81"
+          },
+          "title": "Paper chapter complexity and block density"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-voice-audit",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The paper-folio half of the harness's one-voice-audit, one-voice-integration-watcher, and one-voice-style-guide: scholarly voice across proof bodies, pdflatex Unicode crash remediation, mathematical hedging patterns, conditional-theorem banners, and paper watcher triggers.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+          "instructionLines": 68,
+          "instructionsPath": "skills/content/authoring-math/paper-voice-audit.md",
+          "name": "paper-voice-audit",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bfbcd90f2129d01d9f5ca48309abc9da8ac49c0b09409fb60e6332b209cb353f",
+            "bytes": 4236,
+            "sha256": "bfbcd90f2129d01d9f5ca48309abc9da8ac49c0b09409fb60e6332b209cb353f"
+          },
+          "title": "Paper voice audit and watcher rules"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -483,9 +519,9 @@
           "instructionsPath": "skills/content/folio-paper-adapter/latex-build-cache.md",
           "name": "latex-build-cache",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57601c477952ed0a72cc946eb0bb99b62557359f168432a99d594340df53210c",
-            "bytes": 10499,
-            "sha256": "57601c477952ed0a72cc946eb0bb99b62557359f168432a99d594340df53210c"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c457620a6e5d718b61c55a7d4d16d1fa8a13d7888acaa54115e6cf658da189b5",
+            "bytes": 10501,
+            "sha256": "c457620a6e5d718b61c55a7d4d16d1fa8a13d7888acaa54115e6cf658da189b5"
           },
           "title": "LaTeX build performance — findings + what's safe"
         },
@@ -572,9 +608,9 @@
           "instructionsPath": "skills/content/folio-paper-adapter/lean-completeness-audit.md",
           "name": "lean-completeness-audit",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f4802420bf0362fbc6c95c0949d7e47456a5ce61eb82eee3b10ad17fa28047bd",
-            "bytes": 11356,
-            "sha256": "f4802420bf0362fbc6c95c0949d7e47456a5ce61eb82eee3b10ad17fa28047bd"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/61ed35051c83fa67d1df7da679199ac0f6d90f6dbbc959ab64abf59279f9f1b4",
+            "bytes": 11378,
+            "sha256": "61ed35051c83fa67d1df7da679199ac0f6d90f6dbbc959ab64abf59279f9f1b4"
           },
           "title": "Lean Completeness Audit Skill"
         },
@@ -626,9 +662,9 @@
           "instructionsPath": "skills/content/folio-paper-adapter/lean-formal-graph.md",
           "name": "lean-formal-graph",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5351915445c7bf3bb850ea7f4f01c16d0f6279ef349dc92411a4b39feff9b968",
-            "bytes": 5827,
-            "sha256": "5351915445c7bf3bb850ea7f4f01c16d0f6279ef349dc92411a4b39feff9b968"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/af9f9449a75bc094d7532ff07fdc31e012873804b6011cfe1391685ace905847",
+            "bytes": 5833,
+            "sha256": "af9f9449a75bc094d7532ff07fdc31e012873804b6011cfe1391685ace905847"
           },
           "title": "Lean formal dependency graph"
         },
@@ -734,9 +770,9 @@
           "instructionsPath": "skills/content/folio-paper-adapter/lean-witness-audit.md",
           "name": "lean-witness-audit",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9e1e454a2389b0607539e1430b5d960bfd08f425851247c0837069f721b72248",
-            "bytes": 6744,
-            "sha256": "9e1e454a2389b0607539e1430b5d960bfd08f425851247c0837069f721b72248"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d498e757e317ef638dc5ae1507988315e54b9d142f5bc16c307c637b613b6be6",
+            "bytes": 6746,
+            "sha256": "d498e757e317ef638dc5ae1507988315e54b9d142f5bc16c307c637b613b6be6"
           },
           "title": "Lean Witness Audit Skill"
         },
@@ -896,9 +932,9 @@
           "instructionsPath": "skills/content/folio-paper-adapter/proof-simplifier.md",
           "name": "proof-simplifier",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d596bc49aaf83dbf5e9f631cf752a98508518640b6def918e0546268805ab66f",
-            "bytes": 13201,
-            "sha256": "d596bc49aaf83dbf5e9f631cf752a98508518640b6def918e0546268805ab66f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/050722ea3a98610ecac98d3e2f5f5391c934d410672be184ded9d033d1d28c16",
+            "bytes": 13200,
+            "sha256": "050722ea3a98610ecac98d3e2f5f5391c934d410672be184ded9d033d1d28c16"
           },
           "title": "Proof Simplifier"
         },
@@ -968,9 +1004,9 @@
           "instructionsPath": "skills/content/folio-paper-adapter/q-usage-watcher.md",
           "name": "q-usage-watcher",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0f1501c8948feedac0c9bf337599a62a844593feb4679978140caa93847e9fbd",
-            "bytes": 17664,
-            "sha256": "0f1501c8948feedac0c9bf337599a62a844593feb4679978140caa93847e9fbd"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e803737003e62db3dd8d4e8850e6ba1bb205b7de750c18b2e92872b84716fa39",
+            "bytes": 17695,
+            "sha256": "e803737003e62db3dd8d4e8850e6ba1bb205b7de750c18b2e92872b84716fa39"
           },
           "title": "/q-usage-watcher"
         },

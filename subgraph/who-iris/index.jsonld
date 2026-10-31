@@ -14,9 +14,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a0087f34db6f68d91a9d320fb5b71a34a56a34c3fa5b498ebb19e73392eae30b",
-        "bytes": 3929,
-        "sha256": "a0087f34db6f68d91a9d320fb5b71a34a56a34c3fa5b498ebb19e73392eae30b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f77c38b7638c7f4f9123c90e2040407701558d59807a11775aed12f1553f2ba",
+        "bytes": 4642,
+        "sha256": "8f77c38b7638c7f4f9123c90e2040407701558d59807a11775aed12f1553f2ba"
       },
       "title": "AGENTS.md — who-iris"
     },
@@ -67,6 +67,12 @@
       "name": "who-iris-docs"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-libraries",
+      "@type": "bootstrap:Subgraph",
+      "name": "who-iris-libraries",
+      "title": "Software libraries"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scripts",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-scripts"
@@ -99,11 +105,13 @@
   ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/"
   ],
   "holdsGraph": [
     "cat-harness:graphTypology/library",
+    "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/skills",
     "cat-harness:graphTypology/tools"
   ],

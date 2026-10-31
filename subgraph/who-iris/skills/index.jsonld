@@ -10,13 +10,35 @@
       "name": "who-iris-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
+      "@type": "bootstrap:Skill",
+      "name": "iris-cdn-exporter",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7162da646ea82784d178dc924d7c039771c2350405635638880938b01b29d980",
+        "bytes": 4759,
+        "sha256": "7162da646ea82784d178dc924d7c039771c2350405635638880938b01b29d980"
+      },
+      "title": "The IRIS CDN Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
+      "@type": "bootstrap:Skill",
+      "name": "iris-cdn-signing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d0f1df56875252961a0769bd80bf4402bea1e480569b205e917cf431dd87195a",
+        "bytes": 6002,
+        "sha256": "d0f1df56875252961a0769bd80bf4402bea1e480569b205e917cf431dd87195a"
+      },
+      "title": "Signing and verifying an IRIS CDN release"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
       "@type": "bootstrap:Skill",
       "name": "iris-dspace",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f88572dc0050076ae1dfc4392eb3c308078d0c0132743ed13e840e828be7ac2d",
-        "bytes": 15235,
-        "sha256": "f88572dc0050076ae1dfc4392eb3c308078d0c0132743ed13e840e828be7ac2d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0de69fac8e6f7a33938a512c15f682ea9a4a35f20b769761754248137d168c4b",
+        "bytes": 15306,
+        "sha256": "0de69fac8e6f7a33938a512c15f682ea9a4a35f20b769761754248137d168c4b"
       },
       "title": "IRIS, DSpace and Dublin Core"
     },
@@ -30,6 +52,17 @@
         "sha256": "d87efa3ec8500f99616d23e807e0059579f8175374ddd30d580b0781ddf070ea"
       },
       "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
+      "@type": "bootstrap:Skill",
+      "name": "iris-rest-feed",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b97f2c3a68f945e81ed232b284cbe8e0ef83bbfcf814340f478c813b0890bd1a",
+        "bytes": 3649,
+        "sha256": "b97f2c3a68f945e81ed232b284cbe8e0ef83bbfcf814340f478c813b0890bd1a"
+      },
+      "title": "Reading IRIS changes over DSpace REST"
     }
   ],
   "hasSubgraph": [

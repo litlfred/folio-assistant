@@ -6,7 +6,7 @@ digraph "folio_assistant_core" {
   edge [color="#1b2432", fontcolor="#1b2432", fontname="Helvetica", fontsize=9];
   subgraph "cluster_pkg_folio_assistant_core_folio_assistant_core_docs" {
     label=<<b>folio-assistant-core/folio-assistant-core-docs</b><br/><i>«docs»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
-    "n_folio_assistant_core_folio_assistant_core_docs_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (17 named)</i></td></tr></table>>];
+    "n_folio_assistant_core_folio_assistant_core_docs_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (18 named)</i></td></tr></table>>];
     "grid_pkg_folio_assistant_core_folio_assistant_core_docs_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_folio_assistant_core_folio_assistant_core_docs_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
@@ -203,6 +203,12 @@ digraph "folio_assistant_core" {
     "grid_pkg_folio_assistant_core_beans_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_folio_assistant_core_beans_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_folio_assistant_core_folio_assistant_core_libraries" {
+    label=<<b>folio-assistant-core/folio-assistant-core-libraries</b><br/><i>«software-library»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "folio_assistant_core_folio_assistant_core_libraries_software_library_1_0_0_software_library_1_0_0" [fillcolor="#f4f4f1", class="fa_uml_kind_software_library", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>software-library/1.0.0</b></td></tr><tr><td><i>«json: SoftwareLibraryKind»</i></td></tr><tr><td align="left">name [1] : string</td></tr><tr><td align="left">version [1] : string</td></tr><tr><td align="left">digest [1] : object</td></tr><tr><td align="left">source [1] : object</td></tr><tr><td align="left">licence [1] : string</td></tr><tr><td align="left">licenceSource [1] : string</td></tr><tr><td align="left">range [0..1] : string</td></tr><tr><td align="left">dev [0..1] : boolean</td></tr><tr><td align="left">vendored [0..1] : object</td></tr><tr><td align="left">layer [0..1] : string</td></tr><tr><td align="left">usedBy [0..*] : string[]</td></tr><tr><td align="left">shim [0..1] : string</td></tr><tr><td align="left">$schema [1] : string</td></tr></table>>];
+    "grid_pkg_folio_assistant_core_folio_assistant_core_libraries_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_folio_assistant_core_folio_assistant_core_libraries_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_folio_assistant_core_health" {
     label=<<b>folio-assistant-core/health</b><br/><i>«health»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "folio_assistant_core_health_Threshold" [fillcolor="#f4e6e6", class="fa_uml_kind_health", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Threshold</b></td></tr><tr><td><i>«json: HealthReportSchema»</i></td></tr><tr><td align="left">metric [1] : string</td></tr><tr><td align="left">value [1] : number</td></tr><tr><td align="left">unit [1] : string</td></tr><tr><td align="left">basis [1] : string</td></tr><tr><td align="left">severity [1] : critical | major | minor</td></tr></table>>];
@@ -243,7 +249,7 @@ digraph "folio_assistant_core" {
   }
   subgraph "cluster_pkg_folio_assistant_core_docs_source" {
     label=<<b>folio-assistant-core/docs-source</b><br/><i>«docs»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
-    "n_folio_assistant_core_docs_source_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (17 named)</i></td></tr></table>>];
+    "n_folio_assistant_core_docs_source_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (18 named)</i></td></tr></table>>];
     "grid_pkg_folio_assistant_core_docs_source_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_folio_assistant_core_docs_source_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
@@ -388,6 +394,8 @@ digraph "folio_assistant_core" {
   "folio_assistant_core_memory_MemoryNode" -> "grid_pkg_folio_assistant_core_memory_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_beans_top" -> "n_folio_assistant_core_beans_beans" [style=invis, class="kg-graph-anchor"];
   "n_folio_assistant_core_beans_beans" -> "grid_pkg_folio_assistant_core_beans_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_libraries_top" -> "folio_assistant_core_folio_assistant_core_libraries_software_library_1_0_0_software_library_1_0_0" [style=invis, class="kg-graph-anchor"];
+  "folio_assistant_core_folio_assistant_core_libraries_software_library_1_0_0_software_library_1_0_0" -> "grid_pkg_folio_assistant_core_folio_assistant_core_libraries_bottom" [style=invis, class="kg-graph-anchor"];
   "folio_assistant_core_health_Threshold" -> "folio_assistant_core_health_Check" [style=invis, class="kg-graph-anchor"];
   "folio_assistant_core_health_Measurement" -> "folio_assistant_core_health_HealthReport" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_health_top" -> "folio_assistant_core_health_Threshold" [style=invis, class="kg-graph-anchor"];
@@ -412,32 +420,32 @@ digraph "folio_assistant_core" {
   "n_folio_assistant_core_workflows_workflow_state" -> "grid_pkg_folio_assistant_core_workflows_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_docs_source_top" -> "n_folio_assistant_core_docs_source_docs" [style=invis, class="kg-graph-anchor"];
   "n_folio_assistant_core_docs_source_docs" -> "grid_pkg_folio_assistant_core_docs_source_bottom" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folio_assistant_core_docs_bottom" -> "grid_pkg_folio_assistant_core_folio_assistant_core_validators_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folio_assistant_core_translations_bottom" -> "grid_pkg_folio_assistant_core_core_code_lists_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folio_assistant_core_block_typologies_bottom" -> "grid_pkg_folio_assistant_core_core_qa_checkers_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folio_assistant_core_content_adapters_bottom" -> "grid_pkg_folio_assistant_core_core_pipeline_plugins_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folio_assistant_core_validators_bottom" -> "grid_pkg_folio_assistant_core_core_pipeline_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_code_lists_bottom" -> "grid_pkg_folio_assistant_core_folio_assistant_core_typologies_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_qa_checkers_bottom" -> "grid_pkg_folio_assistant_core_core_schemas_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_pipeline_plugins_bottom" -> "grid_pkg_folio_assistant_core_folios_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_pipeline_bottom" -> "grid_pkg_folio_assistant_core_glossary_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folio_assistant_core_typologies_bottom" -> "grid_pkg_folio_assistant_core_core_tools_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_schemas_bottom" -> "grid_pkg_folio_assistant_core_core_adapters_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_folios_bottom" -> "grid_pkg_folio_assistant_core_core_src_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_glossary_bottom" -> "grid_pkg_folio_assistant_core_core_scripts_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_tools_bottom" -> "grid_pkg_folio_assistant_core_core_templates_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_adapters_bottom" -> "grid_pkg_folio_assistant_core_core_library_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_src_bottom" -> "grid_pkg_folio_assistant_core_core_methodologies_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_scripts_bottom" -> "grid_pkg_folio_assistant_core_core_skills_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_templates_bottom" -> "grid_pkg_folio_assistant_core_core_processes_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_library_bottom" -> "grid_pkg_folio_assistant_core_scenarios_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_methodologies_bottom" -> "grid_pkg_folio_assistant_core_qa_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_skills_bottom" -> "grid_pkg_folio_assistant_core_memory_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_core_processes_bottom" -> "grid_pkg_folio_assistant_core_beans_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_docs_bottom" -> "grid_pkg_folio_assistant_core_core_code_lists_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_translations_bottom" -> "grid_pkg_folio_assistant_core_core_qa_checkers_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_block_typologies_bottom" -> "grid_pkg_folio_assistant_core_core_pipeline_plugins_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_content_adapters_bottom" -> "grid_pkg_folio_assistant_core_core_pipeline_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_validators_bottom" -> "grid_pkg_folio_assistant_core_folio_assistant_core_typologies_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_code_lists_bottom" -> "grid_pkg_folio_assistant_core_core_schemas_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_qa_checkers_bottom" -> "grid_pkg_folio_assistant_core_folios_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_pipeline_plugins_bottom" -> "grid_pkg_folio_assistant_core_glossary_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_pipeline_bottom" -> "grid_pkg_folio_assistant_core_core_tools_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_typologies_bottom" -> "grid_pkg_folio_assistant_core_core_adapters_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_schemas_bottom" -> "grid_pkg_folio_assistant_core_core_src_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folios_bottom" -> "grid_pkg_folio_assistant_core_core_scripts_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_glossary_bottom" -> "grid_pkg_folio_assistant_core_core_templates_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_tools_bottom" -> "grid_pkg_folio_assistant_core_core_library_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_adapters_bottom" -> "grid_pkg_folio_assistant_core_core_methodologies_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_src_bottom" -> "grid_pkg_folio_assistant_core_core_skills_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_scripts_bottom" -> "grid_pkg_folio_assistant_core_core_processes_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_templates_bottom" -> "grid_pkg_folio_assistant_core_scenarios_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_library_bottom" -> "grid_pkg_folio_assistant_core_qa_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_methodologies_bottom" -> "grid_pkg_folio_assistant_core_memory_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_skills_bottom" -> "grid_pkg_folio_assistant_core_beans_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_core_processes_bottom" -> "grid_pkg_folio_assistant_core_folio_assistant_core_libraries_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_scenarios_bottom" -> "grid_pkg_folio_assistant_core_health_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_qa_bottom" -> "grid_pkg_folio_assistant_core_voices_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_memory_bottom" -> "grid_pkg_folio_assistant_core_defs_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_core_beans_bottom" -> "grid_pkg_folio_assistant_core_notes_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_health_bottom" -> "grid_pkg_folio_assistant_core_workflows_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_core_voices_bottom" -> "grid_pkg_folio_assistant_core_docs_source_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_folio_assistant_core_libraries_bottom" -> "grid_pkg_folio_assistant_core_workflows_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_core_health_bottom" -> "grid_pkg_folio_assistant_core_docs_source_top" [style=invis, class="kg-graph-anchor"];
 }

@@ -17,7 +17,7 @@
 //
 // Keeping it in step. `remote_theme` in `_config.yml` pins v0.12.0; when that
 // pin moves, re-copy the new version's file and re-apply every hunk marked
-// `2tfy`, `mm2n`, `1br0` or `lrzn` — `initSearch` and the helpers above it, the setter at the top of
+// `2tfy`, `mm2n`, `1br0`, `lrzn` or `fa-theme-switch` (cat-harness#820) — `initSearch` and the helpers above it, the setter at the top of
 // `searchLoaded`, and the focus trigger in `jtd.onReady`. Everything else must
 // stay byte-identical to the gem.
 (function (jtd, undefined) {
@@ -622,15 +622,41 @@ function searchLoaded(index, docs) {
 
 // Switch theme
 
+// fa-theme-switch:begin (cat-harness#820)
+// The gem's setTheme rewrites the first stylesheet's href. That unloads the
+// sheet painting the page, and a script-set href does not hold paint, so the
+// page shows unstyled (serif text, a page-wide search icon) until the new file
+// arrives. Here the new sheet loads BESIDE the old one, render-blocking while
+// the head parses, and the old one goes only once the new one has loaded.
+// getTheme reports a sheet still loading, so a second call does not swap again.
 jtd.getTheme = function() {
-  var cssFileHref = document.querySelector('[rel="stylesheet"]').getAttribute('href');
+  var pending = document.querySelector('link[data-jtd-theme-pending]');
+  var cssFileHref = (pending || document.querySelector('[rel="stylesheet"]')).getAttribute('href');
   return cssFileHref.substring(cssFileHref.lastIndexOf('-') + 1, cssFileHref.length - 4);
 }
 
 jtd.setTheme = function(theme) {
+  var href = '/folio-assistant/assets/css/just-the-docs-' + theme + '.css';
+  var pending = document.querySelector('link[data-jtd-theme-pending]');
+  if (pending) pending.parentNode.removeChild(pending);
   var cssFile = document.querySelector('[rel="stylesheet"]');
-  cssFile.setAttribute('href', '/folio-assistant/assets/css/just-the-docs-' + theme + '.css');
+  if (cssFile.getAttribute('href') === href) return;
+  var next = document.createElement('link');
+  next.rel = 'stylesheet';
+  next.setAttribute('data-jtd-theme-pending', '');
+  if (document.readyState === 'loading') next.setAttribute('blocking', 'render');
+  next.onload = function() {
+    next.removeAttribute('data-jtd-theme-pending');
+    next.removeAttribute('blocking');
+    if (cssFile.parentNode) cssFile.parentNode.removeChild(cssFile);
+  };
+  next.onerror = function() {
+    if (next.parentNode) next.parentNode.removeChild(next);
+  };
+  next.href = href;
+  cssFile.parentNode.insertBefore(next, cssFile.nextSibling);
 }
+// fa-theme-switch:end
 
 // Note: pathname can have a trailing slash on a local jekyll server
 // and not have the slash on GitHub Pages

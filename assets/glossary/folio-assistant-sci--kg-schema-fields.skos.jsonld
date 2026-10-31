@@ -527,6 +527,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.mathpaperconstraintcontext.laketreecontainsbasename",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MathpaperConstraintContext.lakeTreeContainsBasename"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Basename lookup under a Lake package root (for the `lean.ref` fallback)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#MathpaperConstraintContext.lakeTreeContainsBasename",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.mathpaperconstraintcontext.leancontent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MathpaperConstraintContext.leanContent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lean sibling stub content (for the §3b-cond kind check), if the file exists."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#MathpaperConstraintContext.leanContent",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.proofblock.computation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -581,6 +619,329 @@
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.of",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/precision-scalar.precisionscalar.dps",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "precisionScalar.dps"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Significant decimal digits in `value`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/precision-scalar.ts#precisionScalar.dps",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/precision-scalar.precisionscalar.value",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "precisionScalar.value"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Signed decimal: optional `-`, integer part, optional `.<frac>`, optional `[eE][+-]?<int>` exponent. Includes uppercase `E` and explicit positive sign on the exponent — both produced by various MPFR / mpmath formatting paths."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/precision-scalar.ts#precisionScalar.value",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.leanversionrange.max",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LeanVersionRange.max"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "e.g. `\"4.30.0\"`. Omit for \"no known upper bound\"."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#LeanVersionRange.max",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.leanversionrange.min",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LeanVersionRange.min"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "e.g. `\"4.17.0\"`. Omit for \"no lower bound known\"."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#LeanVersionRange.min",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.leanversionrange.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LeanVersionRange.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Free-text note on why a bound exists (which lemma moved, etc.)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#LeanVersionRange.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.caveat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.caveat"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why NOT to apply this in some cases. Populated where known."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.caveat",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One-line statement of the rewrite."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.example",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.example"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Illustrative before/after, always populated — it is the doc."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.example",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.expected_gain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.expected_gain"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Expected gain, as a rough multiplier on the affected span (0.5 = \"about half the length/cost\"). Indicative only; the measured `proof-compile-cost` metric is the real evidence."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.expected_gain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable kebab-case id, e.g. `drop-by-exact-wrapper`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lean versions this is known-good for. An empty/absent range means UNKNOWN, not \"all versions\" — the query treats it as non-applicable under strict gating, because an unbounded claim is exactly the assumption that breaks on upgrade."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.match",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.match"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Regex (JS syntax, source form) matching the shape to rewrite. Optional: some strategies are structural and only an agent can recognise them."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.match",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.replace",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.replace"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Replacement template, when the rewrite is purely mechanical."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.replace",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Provenance — paper, PR, or observation that produced it."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategy.superseded_by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategy.superseded_by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For `deprecated`: the strategy that replaces this one."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.superseded_by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategyfile.dollar-schema",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategyFile.$schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Schema marker — value: `refactor-strategy/v1`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategyFile.$schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields/refactor-strategy.refactorstrategyfile.family",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefactorStrategyFile.family"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Grouping label, e.g. `mechanical`, `structural`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategyFile.family",
       "skos:note": "candidate"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "$schema": "folio-library-document/v1",
   "id": "who-2019-ncov-digital-certificates-vaccination-20211-eng",
-  "title": "who-2019-ncov-digital-certificates-vaccination-20211-eng",
+  "title": "Digital documentation of COVID-19 certificates: vaccination status: technical specifications and implementation guidance, 27 August 2021",
   "variant": "pdf",
   "pages": 99,
   "tocSource": "inferred",
@@ -753,38 +753,41 @@
       "labelStart": "A",
       "labelEnd": "1",
       "words": 4787,
-      "summary": null,
+      "summary": {
+        "text": "Presents the front matter of the WHO interim guidance Digital Documentation of COVID-19 Certificates: Vaccination Status (DDCC:VS) — Technical Specifications and Implementation Guidance (27 August 2021, WHO/2019-nCoV/Digital_certificates/vaccination/2021.1), including copyright and licensing notices, the table of contents, acknowledgements, abbreviations, a glossary of technical and data-protection terms, and the Executive Summary. The Executive Summary defines the DDCC:VS as a digitally signed HL7 FHIR representation of COVID-19 vaccination events supporting two primary scenarios (Continuity of Care and Proof of Vaccination) across paper and digital formats without requiring a smartphone, and outlines the minimum policy, data, and service requirements (including Health Certificate Identifiers, a Generation Service, and a Registry Service).",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "world bank",
+          "term": "covid vaccination",
           "heading": false
         },
         {
-          "term": "bank consultant",
+          "term": "vaccination certificate",
           "heading": false
         },
         {
-          "term": "sars-cov test",
+          "term": "vaccination card",
           "heading": false
         },
         {
-          "term": "covid certificate",
+          "term": "vaccination status",
           "heading": false
         },
         {
-          "term": "international certificate",
+          "term": "paper vaccination",
           "heading": false
         },
         {
-          "term": "digital certificates",
+          "term": "vaccination scenario",
           "heading": false
         },
         {
-          "term": "sars-cov infection",
+          "term": "covid vaccines",
           "heading": false
         },
         {
-          "term": "digital record",
+          "term": "signed fhir",
           "heading": false
         }
       ],
@@ -801,18 +804,17 @@
       "labelStart": "1",
       "labelEnd": "1",
       "words": 184,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 1 by framing the global COVID-19 pandemic context and the need for countries to provide verifiable records of COVID-19 vaccination status that augment fraud- and loss-prone paper cards while respecting human rights, equity, ethical considerations, and data protection principles.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "coronavirus",
           "heading": false
         },
         {
-          "term": "values",
-          "heading": false
-        },
-        {
-          "term": "record",
+          "term": "vaccination",
           "heading": false
         },
         {
@@ -820,11 +822,15 @@
           "heading": false
         },
         {
-          "term": "document",
+          "term": "record",
           "heading": false
         },
         {
-          "term": "protection",
+          "term": "values",
+          "heading": false
+        },
+        {
+          "term": "document",
           "heading": false
         }
       ],
@@ -841,22 +847,29 @@
       "labelStart": "1",
       "labelEnd": "2",
       "words": 211,
-      "summary": null,
+      "summary": {
+        "text": "States the purpose of the document in Section 1.1: to provide a software-agnostic baseline set of requirements, a core data set, and a digital-signature approach based on free and open standards so Member States can design, adapt, and deploy interoperable DDCC:VS solutions in paper-plus-barcode or digital formats.",
+        "status": "draft"
+      },
       "keywords": [
-        {
-          "term": "member states",
-          "heading": false
-        },
         {
           "term": "document",
           "heading": true
         },
         {
-          "term": "baseline",
+          "term": "member states",
           "heading": false
         },
         {
-          "term": "digital",
+          "term": "ddcc",
+          "heading": false
+        },
+        {
+          "term": "covid",
+          "heading": false
+        },
+        {
+          "term": "vaccination",
           "heading": false
         },
         {
@@ -864,11 +877,7 @@
           "heading": false
         },
         {
-          "term": "requirements",
-          "heading": false
-        },
-        {
-          "term": "ddcc",
+          "term": "baseline",
           "heading": false
         }
       ],
@@ -885,19 +894,22 @@
       "labelStart": "2",
       "labelEnd": "2",
       "words": 61,
-      "summary": null,
+      "summary": {
+        "text": "Identifies the primary target audience in Section 1.2 as national authorities responsible for creating or overseeing COVID-19 digital vaccination certificate solutions, along with supporting government partners, international organizations, NGOs, local businesses, and trade associations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "audience",
           "heading": true
         },
         {
-          "term": "tasked",
+          "term": "businesses",
           "heading": false
         },
         {
-          "term": "deploying",
-          "heading": false
+          "term": "target",
+          "heading": true
         }
       ],
       "extract": "The primary target audience of this document is national authorities tasked with creating or overseeing the development of a digital vaccination certificate solution for COVID-19. The document may also be useful to government partners such as local businesses, international organizations, non- governmental organizations and trade associations, that may be required to support Member States in developing or deploying",
@@ -913,39 +925,42 @@
       "labelStart": "2",
       "labelEnd": "3",
       "words": 429,
-      "summary": null,
+      "summary": {
+        "text": "Defines the in-scope and out-of-scope boundaries in Section 1.3: in-scope elements cover ethical and data-protection principles, Continuity of Care and Proof of Vaccination use cases, the core data set, the HL7 FHIR implementation guide, and national trust framework considerations, whereas SARS-CoV-2 test and infection/recovery certificates, immunity-passport policy decisions, AEFI reporting, rollout monitoring, country-specific 2D barcode identity-binding algorithms, and selective disclosure functionality are out of scope.",
+        "status": "draft"
+      },
       "keywords": [
+        {
+          "term": "vaccination certificate",
+          "heading": false
+        },
+        {
+          "term": "vaccination status",
+          "heading": false
+        },
+        {
+          "term": "digital vaccination",
+          "heading": false
+        },
+        {
+          "term": "ddcc",
+          "heading": false
+        },
+        {
+          "term": "guidance document",
+          "heading": false
+        },
         {
           "term": "identity binding",
           "heading": false
-        },
-        {
-          "term": "signed digital",
-          "heading": false
-        },
-        {
-          "term": "digital documentation",
-          "heading": false
-        },
-        {
-          "term": "scope",
-          "heading": true
         },
         {
           "term": "member state",
           "heading": false
         },
         {
-          "term": "scenarios",
-          "heading": false
-        },
-        {
-          "term": "covered",
-          "heading": false
-        },
-        {
-          "term": "recovery",
-          "heading": false
+          "term": "scope",
+          "heading": true
         }
       ],
       "extract": "1.3.1. In scope This document specifically focuses on how to digitally document COVID-19 vaccination status and attest that an individual has received a vaccine (i.e. how to provide a signed digital vaccination certificate). Two priority scenarios are described in Table 1: Continuity of Care and Proof of Vaccination. This document describes a specification for a signed digital vaccination certificate, including:",
@@ -961,30 +976,29 @@
       "labelStart": "3",
       "labelEnd": "5",
       "words": 817,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the foundational assumptions in Section 1.4 regarding Member States' responsibilities in setting up and operating a DDCC:VS solution, including legal and human-rights compliance, preventing digital exclusion via paper-and-barcode support indexed by a Health Certificate Identifier (HCID), establishing a national Public Key Infrastructure (PKI) with root and document signer certificates (DSCs) not tied to individual health workers, and operating DDCC:VS Generation, Registry, and optional Repository services.",
+        "status": "draft"
+      },
       "keywords": [
-        {
-          "term": "member state",
-          "heading": false
-        },
         {
           "term": "sign ddcc",
           "heading": false
-        },
-        {
-          "term": "digital record",
-          "heading": false
-        },
-        {
-          "term": "assumptions",
-          "heading": true
         },
         {
           "term": "paper card",
           "heading": false
         },
         {
+          "term": "member state",
+          "heading": false
+        },
+        {
           "term": "private keys",
+          "heading": false
+        },
+        {
+          "term": "vaccination card",
           "heading": false
         },
         {
@@ -993,6 +1007,10 @@
         },
         {
           "term": "pha",
+          "heading": false
+        },
+        {
+          "term": "digital record",
           "heading": false
         }
       ],
@@ -1009,22 +1027,25 @@
       "labelStart": "5",
       "labelEnd": "5",
       "words": 106,
-      "summary": null,
+      "summary": {
+        "text": "Describes the methods in Section 1.5 used to develop the guidance, highlighting the creation of the multisectoral Smart Vaccination Certificate Working Group and consultations with WHO Member States and partner organizations to ensure software-agnostic, globally implementable standards.",
+        "status": "draft"
+      },
       "keywords": [
+        {
+          "term": "vaccination certificates",
+          "heading": false
+        },
+        {
+          "term": "vaccines",
+          "heading": false
+        },
         {
           "term": "supporting development",
           "heading": false
         },
         {
           "term": "working group",
-          "heading": false
-        },
-        {
-          "term": "learnings",
-          "heading": false
-        },
-        {
-          "term": "signs",
           "heading": false
         }
       ],
@@ -1041,14 +1062,29 @@
       "labelStart": "5",
       "labelEnd": "5",
       "words": 214,
-      "summary": null,
+      "summary": {
+        "text": "Lists related and baseline WHO guidance documents in Section 1.6 covering risk-based international travel, public health and social measures (PHSMs), International Health Regulations (2005) Emergency Committee statements, COVID-19 vaccination monitoring, home-based immunization records, and national vaccine deployment plans.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "committee regarding",
+          "term": "covid vaccination",
           "heading": false
         },
         {
+          "term": "guidance documents",
+          "heading": true
+        },
+        {
           "term": "coronavirus disease",
+          "heading": false
+        },
+        {
+          "term": "interim guidance",
+          "heading": false
+        },
+        {
+          "term": "committee regarding",
           "heading": false
         },
         {
@@ -1057,18 +1093,6 @@
         },
         {
           "term": "international travel",
-          "heading": false
-        },
-        {
-          "term": "risk-based approach",
-          "heading": false
-        },
-        {
-          "term": "documents",
-          "heading": true
-        },
-        {
-          "term": "covid",
           "heading": false
         }
       ],
@@ -1085,18 +1109,21 @@
       "labelStart": "5",
       "labelEnd": "6",
       "words": 77,
-      "summary": null,
+      "summary": {
+        "text": "Notes in Section 1.7 that the DDCC:VS core data set guidance can be used to generate artefacts conformant with other international initiatives, such as the ICAO Visible Digital Seals for Non-Constrained Environments (VDS-NC) guidelines and the EU Digital COVID Certificate, and points to the WHO DDCC FHIR Implementation Guide.",
+        "status": "draft"
+      },
       "keywords": [
-        {
-          "term": "initiatives",
-          "heading": true
-        },
         {
           "term": "ddcc",
           "heading": false
         },
         {
-          "term": "artefacts",
+          "term": "initiatives",
+          "heading": true
+        },
+        {
+          "term": "certificate",
           "heading": false
         }
       ],
@@ -1113,7 +1140,10 @@
       "labelStart": "6",
       "labelEnd": "6",
       "words": 104,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 2 by emphasizing that ethical considerations—such as equity and equitable access—and data protection principles must inform both the technical design criteria and national deployments of any DDCC:VS solution.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ethical considerations",
@@ -1124,7 +1154,7 @@
           "heading": true
         },
         {
-          "term": "deployments",
+          "term": "ddcc",
           "heading": false
         }
       ],
@@ -1141,7 +1171,10 @@
       "labelStart": "6",
       "labelEnd": "12",
       "words": 3032,
-      "summary": null,
+      "summary": {
+        "text": "Details the ethical considerations for designing and deploying a DDCC:VS in Section 2.1, examining public health objectives (promoting welfare, preventing health inequities and digital exclusion, and maintaining public trust), procedural values (transparency, inclusiveness, accountability, and responsiveness), ethical risks of 'health pass' uses amid scientific uncertainties and unequal vaccine access, and six core recommendations for domestic implementation.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "ethical considerations",
@@ -1152,11 +1185,7 @@
           "heading": true
         },
         {
-          "term": "ethical issues",
-          "heading": false
-        },
-        {
-          "term": "ethical problems",
+          "term": "covid vaccination",
           "heading": false
         },
         {
@@ -1164,15 +1193,19 @@
           "heading": false
         },
         {
-          "term": "scientific evidence",
+          "term": "covid vaccine",
           "heading": false
         },
         {
-          "term": "current proposed",
+          "term": "vaccination record",
           "heading": false
         },
         {
-          "term": "pass",
+          "term": "ethical problems",
+          "heading": false
+        },
+        {
+          "term": "ethical issues",
           "heading": false
         }
       ],
@@ -1189,14 +1222,17 @@
       "labelStart": "12",
       "labelEnd": "15",
       "words": 1458,
-      "summary": null,
+      "summary": {
+        "text": "Establishes seven fundamental data protection principles for DDCC:VS in Section 2.2 to guide national authorities and safeguard privacy and human rights: lawful basis, legitimate use and fair processing; transparency; purpose limitation and specification; proportionality, necessity and data minimization; confidentiality and security (including breach notification); data subject rights, complaint and legal redress; and independent oversight and accountability.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "protection principles",
+          "term": "ddcc",
           "heading": true
         },
         {
-          "term": "ddcc",
+          "term": "protection principles",
           "heading": true
         },
         {
@@ -1204,15 +1240,11 @@
           "heading": false
         },
         {
-          "term": "unauthorized disclosure",
-          "heading": false
-        },
-        {
           "term": "specified purposes",
           "heading": false
         },
         {
-          "term": "personal",
+          "term": "unauthorized disclosure",
           "heading": false
         },
         {
@@ -1220,7 +1252,11 @@
           "heading": false
         },
         {
-          "term": "human rights",
+          "term": "legal redress",
+          "heading": false
+        },
+        {
+          "term": "retained",
           "heading": false
         }
       ],
@@ -1237,7 +1273,10 @@
       "labelStart": "15",
       "labelEnd": "15",
       "words": 27,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 2.3 by stating that the preceding ethical considerations and data protection principles directly informed the formulation of the DDCC:VS design criteria.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "Due to the ethical considerations and data protection principles outlined above, the following design criteria were considered when formulating the requirements for implementing a DDCC:VS for the",
       "extractCut": false
@@ -1252,7 +1291,10 @@
       "labelStart": "15",
       "labelEnd": "16",
       "words": 543,
-      "summary": null,
+      "summary": {
+        "text": "Lists the 11 DDCC:VS design criteria (completing Section 2.3, including preventing inequities, online/offline paper and digital accessibility, non-discrimination across formats, zero cost to vaccinated individuals, open standards without vendor lock-in, environmental sustainability, health-system integration, data minimization, anti-fraud mechanisms, and manual paper verification fallback) and introduces Section 3 on the Continuity of Care scenario.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "care scenario",
@@ -1263,19 +1305,11 @@
           "heading": true
         },
         {
-          "term": "member states",
-          "heading": false
-        },
-        {
-          "term": "policy frameworks",
-          "heading": false
-        },
-        {
-          "term": "built",
-          "heading": false
-        },
-        {
           "term": "ddcc",
+          "heading": false
+        },
+        {
+          "term": "member states",
           "heading": false
         },
         {
@@ -1283,7 +1317,15 @@
           "heading": false
         },
         {
-          "term": "verification",
+          "term": "policy frameworks",
+          "heading": false
+        },
+        {
+          "term": "vaccination",
+          "heading": false
+        },
+        {
+          "term": "covid",
           "heading": false
         }
       ],
@@ -1300,15 +1342,18 @@
       "labelStart": "16",
       "labelEnd": "18",
       "words": 534,
-      "summary": null,
+      "summary": {
+        "text": "Defines the physical settings (Care Site and Data Entry Site), key personas (Table 2: Subject of Care, DDCC:VS Holder, Vaccinator, Data Entry Personnel, and Public Health Authority), and core digital services (Table 3: Digital Health Solution and DDCC:VS Generation Service) for the Continuity of Care scenario in Section 3.1.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "key personas",
           "heading": true
         },
         {
-          "term": "digital services",
-          "heading": true
+          "term": "vaccination event",
+          "heading": false
         },
         {
           "term": "care site",
@@ -1319,15 +1364,15 @@
           "heading": false
         },
         {
-          "term": "fhir document",
-          "heading": false
+          "term": "digital services",
+          "heading": true
         },
         {
           "term": "ddcc",
           "heading": false
         },
         {
-          "term": "location",
+          "term": "fhir document",
           "heading": false
         },
         {
@@ -1348,14 +1393,29 @@
       "labelStart": "18",
       "labelEnd": "24",
       "words": 1637,
-      "summary": null,
+      "summary": {
+        "text": "Describes the Continuity of Care workflows and use cases in Section 3.2 (illustrated in Figures 3–6 and Table 4), comparing three pathways—Paper First (UC001), Offline Digital (UC002), and Online Digital (UC003)—from care-site presentation and vaccine administration to paper-card HCID recording and HL7 FHIR digital certificate generation, and notes how the WHO DDCC FHIR Implementation Guide operationalizes these workflows.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "care site",
+          "term": "ddcc paper",
           "heading": false
         },
         {
-          "term": "care scenario",
+          "term": "ddcc holder",
+          "heading": false
+        },
+        {
+          "term": "paper card",
+          "heading": false
+        },
+        {
+          "term": "paper record",
+          "heading": false
+        },
+        {
+          "term": "paper certificate",
           "heading": false
         },
         {
@@ -1363,24 +1423,12 @@
           "heading": true
         },
         {
-          "term": "paper record",
+          "term": "care scenario",
           "heading": false
         },
         {
-          "term": "ddcc paper",
+          "term": "care site",
           "heading": false
-        },
-        {
-          "term": "records core",
-          "heading": false
-        },
-        {
-          "term": "digital form",
-          "heading": false
-        },
-        {
-          "term": "workflows",
-          "heading": true
         }
       ],
       "extract": "The Continuity of Care scenario is summarized in Fig. 3. The workflow’s actors and settings, and its related high-level requirements, may be described as follows. 1. A Subject of Care presents at a care site. The identity of the Subject of Care is established as per Member State processes and norms. The Subject of Care MAY present an existing DDCC:VS card to inform the care delivery process. The Vaccinator MAY",
@@ -1396,38 +1444,41 @@
       "labelStart": "24",
       "labelEnd": "27",
       "words": 1338,
-      "summary": null,
+      "summary": {
+        "text": "Presents Table 5 in Section 3.3, specifying 36 high-level functional requirements (`DDCC.FXNREQ.001` through `DDCC.FXNREQ.036`) across the Paper First (UC001), Offline Digital (UC002), and Online Digital (UC003) Continuity of Care use cases, covering patient identification, paper card issuance and replacement, HCID barcode association, offline data capture and validation, and FHIR generation and digital signing.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "care scenario",
           "heading": true
         },
         {
-          "term": "functional requirements",
-          "heading": true
+          "term": "vaccination card",
+          "heading": false
+        },
+        {
+          "term": "paper vaccination",
+          "heading": false
         },
         {
           "term": "fxnreq",
           "heading": false
         },
         {
-          "term": "offline digital",
+          "term": "vaccination registration",
           "heading": false
         },
         {
-          "term": "paper card",
+          "term": "functional requirements",
+          "heading": true
+        },
+        {
+          "term": "ddcc",
           "heading": false
         },
         {
-          "term": "online digital",
-          "heading": false
-        },
-        {
-          "term": "generation service",
-          "heading": false
-        },
-        {
-          "term": "hcids",
+          "term": "card holder",
           "heading": false
         }
       ],
@@ -1444,10 +1495,13 @@
       "labelStart": "27",
       "labelEnd": "27",
       "words": 99,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 4 on the Proof of Vaccination scenario, explaining that it relies on a Public Health Authority having a trusted means to digitally sign an HL7 FHIR document representing the DDCC:VS core data set for purposes defined by Member States in compliance with their legal and policy frameworks.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "scenario",
+          "term": "vaccination scenario",
           "heading": true
         },
         {
@@ -1455,7 +1509,7 @@
           "heading": true
         },
         {
-          "term": "frameworks",
+          "term": "ddcc",
           "heading": false
         }
       ],
@@ -1472,30 +1526,29 @@
       "labelStart": "27",
       "labelEnd": "29",
       "words": 675,
-      "summary": null,
+      "summary": {
+        "text": "Defines the verification site setting, key personas (Table 6: DDCC:VS Holder, Verifier, National PHA, and International PHA), and digital services (Table 7: Health Certificate Identifier, Status Checking Application, DDCC:VS Generation Service, DDCC:VS Registry Service, and optional DDCC:VS Repository Service) for the Proof of Vaccination scenario in Section 4.1.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "key personas",
           "heading": true
         },
         {
-          "term": "digital services",
-          "heading": true
-        },
-        {
-          "term": "registry service",
+          "term": "vaccination scenario",
           "heading": false
         },
         {
-          "term": "generation service",
+          "term": "vaccination status",
           "heading": false
         },
         {
-          "term": "fhir document",
+          "term": "national pha",
           "heading": false
         },
         {
-          "term": "pha",
+          "term": "covid vaccination",
           "heading": false
         },
         {
@@ -1503,7 +1556,11 @@
           "heading": false
         },
         {
-          "term": "proof",
+          "term": "fhir document",
+          "heading": false
+        },
+        {
+          "term": "registry service",
           "heading": false
         }
       ],
@@ -1520,38 +1577,41 @@
       "labelStart": "29",
       "labelEnd": "37",
       "words": 1901,
-      "summary": null,
+      "summary": {
+        "text": "Details the Proof of Vaccination service relationships (Figure 7) and verification workflows in Section 4.2 (Figures 8–12 and Table 8), comparing four verification use cases—Manual Verification (UC004), Offline Cryptographic Verification (UC005), Online Status Check for a National DDCC:VS (UC006), and Online Status Check for an International DDCC:VS (UC007)—and noting their operationalization in the WHO DDCC FHIR Implementation Guide.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "check online",
+          "term": "pha ddcc",
           "heading": false
+        },
+        {
+          "term": "vaccination",
+          "heading": true
         },
         {
           "term": "cryptographic verification",
           "heading": false
         },
         {
-          "term": "pha ddcc",
+          "term": "verifies ddcc",
           "heading": false
         },
         {
-          "term": "receives claim",
-          "heading": false
-        },
-        {
-          "term": "status check",
-          "heading": false
-        },
-        {
-          "term": "international pha",
-          "heading": false
-        },
-        {
-          "term": "perform check",
+          "term": "vaccination claim",
           "heading": false
         },
         {
           "term": "authorized pha",
+          "heading": false
+        },
+        {
+          "term": "ddcc holder",
+          "heading": false
+        },
+        {
+          "term": "vaccination scenario",
           "heading": false
         }
       ],
@@ -1568,14 +1628,21 @@
       "labelStart": "37",
       "labelEnd": "40",
       "words": 1157,
-      "summary": null,
+      "summary": {
+        "text": "Presents Table 9 in Section 4.3, specifying functional requirements (`DDCC.FXNREQ.037` through `DDCC.FXNREQ.061`) across the four Proof of Vaccination verification use cases (UC004–UC007), covering anti-fraud markings on paper cards, barcode scanning, offline signature verification and logging, online registry queries, data minimization during verification, PKI and DSC maintenance, SMS-based checks, and cross-border PHA verification and fraud notification.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "functional requirements",
+          "term": "vaccination scenario",
           "heading": true
         },
         {
-          "term": "verification request",
+          "term": "vaccination card",
+          "heading": false
+        },
+        {
+          "term": "vaccination certificate",
           "heading": false
         },
         {
@@ -1583,23 +1650,19 @@
           "heading": false
         },
         {
+          "term": "verification request",
+          "heading": false
+        },
+        {
           "term": "fxnreq",
           "heading": false
         },
         {
-          "term": "scenario",
+          "term": "functional requirements",
           "heading": true
         },
         {
-          "term": "paper cards",
-          "heading": false
-        },
-        {
-          "term": "registry service",
-          "heading": false
-        },
-        {
-          "term": "pha",
+          "term": "paper vaccination",
           "heading": false
         }
       ],
@@ -1616,14 +1679,17 @@
       "labelStart": "40",
       "labelEnd": "40",
       "words": 129,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 5 on the DDCC:VS core data set, explaining that it comprises the critical Subject of Care and vaccination-event data elements required for interoperability across the Continuity of Care and Proof of Vaccination scenarios, either used directly or mapped from existing terminologies, with a full data dictionary provided in Web Annex A.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "core",
+          "term": "ddcc",
           "heading": true
         },
         {
-          "term": "ddcc",
+          "term": "core",
           "heading": true
         },
         {
@@ -1631,7 +1697,7 @@
           "heading": false
         },
         {
-          "term": "driven",
+          "term": "elements",
           "heading": false
         }
       ],
@@ -1648,14 +1714,25 @@
       "labelStart": "40",
       "labelEnd": "42",
       "words": 577,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the core data set principles in Section 5.1—data minimization, open standards, implementability on both paper and digital formats, and integration with broader immunization information systems (EIRs, DHIS2, Vigiflow)—and recommends HL7 FHIR (based on the International Patient Summary) and ICD-11 as the preferred open standard and terminology system, with ICD-10, ATC, and SNOMED CT GPS mappings supported.",
+        "status": "draft"
+      },
       "keywords": [
+        {
+          "term": "vaccination certificate",
+          "heading": false
+        },
         {
           "term": "core",
           "heading": true
         },
         {
-          "term": "reporting systems",
+          "term": "ddcc",
+          "heading": false
+        },
+        {
+          "term": "digital vaccination",
           "heading": false
         },
         {
@@ -1663,23 +1740,15 @@
           "heading": false
         },
         {
-          "term": "content model",
-          "heading": false
-        },
-        {
           "term": "principle",
           "heading": false
         },
         {
-          "term": "aligned",
+          "term": "reporting systems",
           "heading": false
         },
         {
-          "term": "implementation guide",
-          "heading": false
-        },
-        {
-          "term": "ddcc",
+          "term": "content model",
           "heading": false
         }
       ],
@@ -1696,26 +1765,17 @@
       "labelStart": "42",
       "labelEnd": "48",
       "words": 1766,
-      "summary": null,
+      "summary": {
+        "text": "Defines the DDCC:VS core data elements in Section 5.2 across three tables: Table 10 (header section identifying the Subject of Care: name, date of birth, unique identifier, and sex), Table 11 (vaccination event data for each dose: vaccine/prophylaxis, brand, manufacturer or market authorization holder, batch number, vaccination date, valid-from date, dose number, total doses, country, administering centre, health worker signature or ID, targeted disease, and next-dose due date), and Table 12 (certificate metadata: issuer, HCID, certificate validity dates, and schema version). It also introduces Section 6 on the National Trust Architecture and PKI chain of trust (Figure 13) for signing and verifying a DDCC:VS.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "optional recommended",
           "heading": false
         },
         {
-          "term": "required conditional",
-          "heading": false
-        },
-        {
-          "term": "following iso",
-          "heading": false
-        },
-        {
-          "term": "complete date",
-          "heading": false
-        },
-        {
-          "term": "element label",
+          "term": "vaccination certificate",
           "heading": false
         },
         {
@@ -1723,11 +1783,23 @@
           "heading": false
         },
         {
+          "term": "verifying ddcc",
+          "heading": false
+        },
+        {
           "term": "certificate metadata",
           "heading": false
         },
         {
-          "term": "member state",
+          "term": "vaccine received",
+          "heading": false
+        },
+        {
+          "term": "vaccine brand",
+          "heading": false
+        },
+        {
+          "term": "vaccine manufacturer",
           "heading": false
         }
       ],
@@ -1744,7 +1816,10 @@
       "labelStart": "48",
       "labelEnd": "49",
       "words": 312,
-      "summary": null,
+      "summary": {
+        "text": "Explains the three-step process for digitally signing a DDCC:VS in Section 6.1 (illustrated in Figure 14): generating a root certificate key pair, signing Document Signer Certificate (DSC) key pairs with the root private key, and hashing the vaccination data and signing the document hash with the DSC private key.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "signed hash",
@@ -1759,23 +1834,23 @@
           "heading": false
         },
         {
-          "term": "dsc key",
-          "heading": false
+          "term": "ddcc",
+          "heading": true
         },
         {
           "term": "signing",
           "heading": true
         },
         {
-          "term": "ddcc",
-          "heading": true
-        },
-        {
-          "term": "key pair",
+          "term": "dsc key",
           "heading": false
         },
         {
           "term": "pha generates",
+          "heading": false
+        },
+        {
+          "term": "key pair",
           "heading": false
         }
       ],
@@ -1792,7 +1867,10 @@
       "labelStart": "49",
       "labelEnd": "50",
       "words": 298,
-      "summary": null,
+      "summary": {
+        "text": "Describes the four-step process for verifying a DDCC:VS digital signature in Section 6.2 (illustrated in Figure 15), where a Verifier computes the document hash, reads the signed hash, decrypts it using the DSC public key to confirm data integrity and signer authenticity, and validates the DSC signature using the PHA's root certificate public key.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "signed hash",
@@ -1811,19 +1889,19 @@
           "heading": false
         },
         {
-          "term": "document signer",
-          "heading": false
-        },
-        {
           "term": "ddcc",
           "heading": true
+        },
+        {
+          "term": "document signer",
+          "heading": false
         },
         {
           "term": "signature",
           "heading": true
         },
         {
-          "term": "private key",
+          "term": "verifier",
           "heading": false
         }
       ],
@@ -1840,14 +1918,17 @@
       "labelStart": "50",
       "labelEnd": "51",
       "words": 234,
-      "summary": null,
+      "summary": {
+        "text": "Explains the mathematical and operational basis for trusting a DDCC:VS signature in Section 6.3, noting how asymmetric cryptography guarantees authenticity and non-repudiation while PKI provides trusted public-key distribution and key revocation mechanisms.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "private key",
+          "term": "public keys",
           "heading": false
         },
         {
-          "term": "public keys",
+          "term": "private key",
           "heading": false
         },
         {
@@ -1859,15 +1940,15 @@
           "heading": false
         },
         {
-          "term": "material",
-          "heading": false
-        },
-        {
-          "term": "corresponding",
-          "heading": false
+          "term": "ddcc",
+          "heading": true
         },
         {
           "term": "pki",
+          "heading": false
+        },
+        {
+          "term": "holder",
           "heading": false
         }
       ],
@@ -1884,14 +1965,17 @@
       "labelStart": "51",
       "labelEnd": "53",
       "words": 842,
-      "summary": null,
+      "summary": {
+        "text": "Outlines national governance considerations in Section 7 for operating a DDCC:VS trust framework at the PHA and Member State levels, comparing Root Certificate Authority and Master List approaches for sharing authorized DSCs and specifying policy requirements for certificate issuance, verification rules, revocation and remedy procedures, and cross-border data management and privacy protection.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "governance considerations",
-          "heading": true
+          "term": "issuing ddcc",
+          "heading": false
         },
         {
-          "term": "member state",
+          "term": "counterfeit ddcc",
           "heading": false
         },
         {
@@ -1899,23 +1983,23 @@
           "heading": false
         },
         {
+          "term": "national governance",
+          "heading": true
+        },
+        {
           "term": "trusted verifiers",
           "heading": false
         },
         {
-          "term": "state establishes",
-          "heading": false
-        },
-        {
-          "term": "issuing ddcc",
-          "heading": false
-        },
-        {
-          "term": "governance mechanisms",
-          "heading": false
+          "term": "governance considerations",
+          "heading": true
         },
         {
           "term": "verify ddcc",
+          "heading": false
+        },
+        {
+          "term": "member state",
           "heading": false
         }
       ],
@@ -1932,26 +2016,29 @@
       "labelStart": "53",
       "labelEnd": "54",
       "words": 313,
-      "summary": null,
+      "summary": {
+        "text": "Introduces Section 8 on implementation considerations, contrasting two strategic approaches for Member States: deploying a short-term DDCC:VS solution with a defined sunset roadmap for the COVID-19 emergency versus building a long-term digital vaccination certificate infrastructure that supports routine immunization records and broader digital health initiatives.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "implementation considerations",
-          "heading": true
+          "term": "covid pandemic",
+          "heading": false
         },
         {
           "term": "short-term ddcc",
           "heading": false
         },
         {
-          "term": "covid pandemic",
+          "term": "implementation considerations",
+          "heading": true
+        },
+        {
+          "term": "member states",
           "heading": false
         },
         {
           "term": "international concern",
-          "heading": false
-        },
-        {
-          "term": "member states",
           "heading": false
         },
         {
@@ -1963,7 +2050,7 @@
           "heading": false
         },
         {
-          "term": "digital",
+          "term": "immediate",
           "heading": false
         }
       ],
@@ -1980,18 +2067,13 @@
       "labelStart": "54",
       "labelEnd": "56",
       "words": 1006,
-      "summary": null,
+      "summary": {
+        "text": "Provides pre-deployment checklists and key questions in Section 8.1 organized by the WHO/ITU National eHealth Strategy Toolkit and Digital Implementation Investment Guide (DIIG) components: strategy and investment, infrastructure, legislation/policy/compliance, leadership and governance, workforce, services and applications, standards and interoperability, and evolving health content.",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "phone adoption",
-          "heading": false
-        },
-        {
           "term": "implementing ddcc",
-          "heading": false
-        },
-        {
-          "term": "mobile phone",
           "heading": false
         },
         {
@@ -1999,7 +2081,15 @@
           "heading": false
         },
         {
-          "term": "existing digital",
+          "term": "phone adoption",
+          "heading": false
+        },
+        {
+          "term": "technical specifications",
+          "heading": false
+        },
+        {
+          "term": "mobile phone",
           "heading": false
         },
         {
@@ -2007,7 +2097,7 @@
           "heading": false
         },
         {
-          "term": "value added",
+          "term": "vaccinators",
           "heading": false
         },
         {
@@ -2028,7 +2118,10 @@
       "labelStart": "56",
       "labelEnd": "57",
       "words": 673,
-      "summary": null,
+      "summary": {
+        "text": "Details key factors for Public Health Authorities to consider when procuring and partnering with external solution developers in Section 8.2, including clear terms of reference, fixed-price versus time-and-materials contracts, realistic phased timelines, single supplier versus consortium models, measurable KPIs, supplier expertise and project management track records, communication and cultural alignment, long-term partnership potential, and intellectual property and software licensing rights.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "solution",
@@ -2039,19 +2132,11 @@
           "heading": false
         },
         {
-          "term": "supplier",
+          "term": "demonstrate solid",
           "heading": false
         },
         {
-          "term": "performance indicators",
-          "heading": false
-        },
-        {
-          "term": "project",
-          "heading": false
-        },
-        {
-          "term": "work",
+          "term": "suppliers",
           "heading": false
         },
         {
@@ -2059,7 +2144,15 @@
           "heading": false
         },
         {
-          "term": "expertise",
+          "term": "work",
+          "heading": false
+        },
+        {
+          "term": "price",
+          "heading": false
+        },
+        {
+          "term": "performance indicators",
           "heading": false
         }
       ],
@@ -2076,7 +2169,10 @@
       "labelStart": "57",
       "labelEnd": "59",
       "words": 729,
-      "summary": null,
+      "summary": {
+        "text": "Examines cost categories and budget drivers for short- and long-term DDCC:VS implementations in Section 8.3, presenting Table 13 across six lifecycle phases: ongoing governance and staffing, development and technology setup, deployment (hardware, testing, training, roll-out, and outreach), integration and interoperability, scaling (printing, human resources, IT licensing, and IT scalability), and sustained operations.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "cost category",
@@ -2091,23 +2187,23 @@
           "heading": false
         },
         {
+          "term": "vaccination certificate",
+          "heading": false
+        },
+        {
+          "term": "ddcc",
+          "heading": false
+        },
+        {
           "term": "digital solution",
           "heading": false
         },
         {
-          "term": "key cost",
+          "term": "refresher training",
           "heading": false
         },
         {
           "term": "trust frameworks",
-          "heading": false
-        },
-        {
-          "term": "end-user",
-          "heading": false
-        },
-        {
-          "term": "member states",
           "heading": false
         }
       ],
@@ -2124,14 +2220,13 @@
       "labelStart": "59",
       "labelEnd": "60",
       "words": 233,
-      "summary": null,
+      "summary": {
+        "text": "Lists additional resources to support DDCC:VS implementation in Section 8.4, including the WHO DDCC:VS HL7 FHIR Implementation Guide and core data dictionary, example implementations and compatible software (EU Digital COVID Certificate and Gateway, OpenSRP FHIR Core, India's DIVOC, OpenHIE DDCC Transactions Mediator), ICAO VDS-NC and OpenHIE specifications, the WHO DIIG, and WHO international travel guidance.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "openhie ddcc",
-          "heading": false
-        },
-        {
-          "term": "fhir implementation",
           "heading": false
         },
         {
@@ -2139,15 +2234,11 @@
           "heading": false
         },
         {
-          "term": "digital covid",
+          "term": "vaccination certificates",
           "heading": false
         },
         {
-          "term": "guide implementation",
-          "heading": false
-        },
-        {
-          "term": "core smart",
+          "term": "fhir implementation",
           "heading": false
         },
         {
@@ -2155,7 +2246,15 @@
           "heading": false
         },
         {
-          "term": "technical specifications",
+          "term": "smart vaccination",
+          "heading": false
+        },
+        {
+          "term": "travel guidance",
+          "heading": false
+        },
+        {
+          "term": "digital covid",
           "heading": false
         }
       ],
@@ -2172,38 +2271,41 @@
       "labelStart": "60",
       "labelEnd": "62",
       "words": 1090,
-      "summary": null,
+      "summary": {
+        "text": "Provides the numbered bibliography of 40 references cited throughout the DDCC:VS technical specifications and implementation guidance.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "accessed june",
           "heading": false
         },
         {
-          "term": "publications item",
+          "term": "covid vaccine",
           "heading": false
         },
         {
-          "term": "website",
+          "term": "covid vaccination",
           "heading": false
         },
         {
-          "term": "emergency committee",
+          "term": "organization news",
           "heading": false
         },
         {
-          "term": "geneva",
+          "term": "news item",
           "heading": false
         },
         {
-          "term": "international travel",
+          "term": "int news",
           "heading": false
         },
         {
-          "term": "implementing risk-based",
+          "term": "organization newsroom",
           "heading": false
         },
         {
-          "term": "snomed international",
+          "term": "coronavirus disease",
           "heading": false
         }
       ],
@@ -2220,7 +2322,10 @@
       "labelStart": "62",
       "labelEnd": "63",
       "words": 14,
-      "summary": null,
+      "summary": {
+        "text": "Presents the section divider and Annex 1 header introducing the annexes of the DDCC:VS guidance document.",
+        "status": "draft"
+      },
       "keywords": [],
       "extract": "DDCC:VS - Technical Specifications and Implementation Guidance, 27 August 2021 Page 63 Annex 1",
       "extractCut": false
@@ -2235,11 +2340,22 @@
       "labelStart": "63",
       "labelEnd": "64",
       "words": 139,
-      "summary": null,
+      "summary": {
+        "text": "Presents Annex 1, showing an illustrative example (adapted from Sonder Design) of an A6 booklet-style paper DDCC:VS vaccination card featuring a Health Certificate Identifier (HCID), QR codes, and inside/outside layouts (Figures A1.1 and A1.2).",
+        "status": "draft"
+      },
       "keywords": [
         {
-          "term": "illustrative",
+          "term": "vaccination",
           "heading": true
+        },
+        {
+          "term": "vaccination certificate",
+          "heading": false
+        },
+        {
+          "term": "vaccination card",
+          "heading": false
         },
         {
           "term": "ddcc",
@@ -2247,14 +2363,6 @@
         },
         {
           "term": "member states",
-          "heading": false
-        },
-        {
-          "term": "digital",
-          "heading": true
-        },
-        {
-          "term": "certificate",
           "heading": false
         }
       ],
@@ -2271,22 +2379,21 @@
       "labelStart": "64",
       "labelEnd": "65",
       "words": 230,
-      "summary": null,
+      "summary": {
+        "text": "Presents Annex 2 (Table A2.1), defining the standardized business process mapping symbols—pool, swim lane, start event, end event, activity/task, sequence flow, message flow, and gateway—used in the Continuity of Care and Proof of Vaccination workflow diagrams.",
+        "status": "draft"
+      },
       "keywords": [
-        {
-          "term": "business process",
-          "heading": true
-        },
         {
           "term": "swim lane",
           "heading": false
         },
         {
-          "term": "event notes",
-          "heading": false
+          "term": "business process",
+          "heading": true
         },
         {
-          "term": "end event",
+          "term": "event notes",
           "heading": false
         },
         {
@@ -2294,11 +2401,15 @@
           "heading": false
         },
         {
+          "term": "end event",
+          "heading": false
+        },
+        {
           "term": "pool",
           "heading": false
         },
         {
-          "term": "symbol",
+          "term": "depict",
           "heading": false
         }
       ],
@@ -2315,19 +2426,26 @@
       "labelStart": "65",
       "labelEnd": "68",
       "words": 1088,
-      "summary": null,
+      "summary": {
+        "text": "Presents Annex 3, setting out 15 guiding principles for mapping existing classifications and terminologies to ICD-11 and other WHO Family of International Classifications (WHO-FIC) standards, covering use-case definition, unidirectional single-purpose maps, transparent documentation, producer involvement, quality assurance and gold-standard usage validation, versioning and maintenance, manual and computational mapping workflows, equivalence and cardinality definitions, machine-readability, and mapping to the ICD-11 foundation component.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "who-fic classifications",
           "heading": true
         },
         {
-          "term": "automated maps",
+          "term": "unidirectional maps",
           "heading": false
         },
         {
           "term": "mapping",
           "heading": true
+        },
+        {
+          "term": "automated maps",
+          "heading": false
         },
         {
           "term": "map specialists",
@@ -2338,15 +2456,11 @@
           "heading": false
         },
         {
-          "term": "mapping process",
-          "heading": false
-        },
-        {
-          "term": "source terminology",
-          "heading": false
-        },
-        {
           "term": "target terminology",
+          "heading": false
+        },
+        {
+          "term": "mapping process",
           "heading": false
         }
       ],
@@ -2363,10 +2477,17 @@
       "labelStart": "68",
       "labelEnd": "72",
       "words": 1331,
-      "summary": null,
+      "summary": {
+        "text": "Presents Annex 4, providing an accessible primer on Public Key Infrastructure (PKI), public–private key pairs, X.509 digital certificates, and how certificate authorities, Document Signer Certificates (DSCs), and the DDCC:VS Registry Service work together to sign and cryptographically verify vaccination certificates.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "public key",
+          "heading": true
+        },
+        {
+          "term": "pki",
           "heading": true
         },
         {
@@ -2374,11 +2495,7 @@
           "heading": false
         },
         {
-          "term": "pki",
-          "heading": true
-        },
-        {
-          "term": "private key",
+          "term": "vaccination certificate",
           "heading": false
         },
         {
@@ -2386,15 +2503,15 @@
           "heading": false
         },
         {
+          "term": "private public",
+          "heading": false
+        },
+        {
           "term": "digital certificate",
           "heading": false
         },
         {
-          "term": "encrypted information",
-          "heading": false
-        },
-        {
-          "term": "key pairs",
+          "term": "verifier",
           "heading": false
         }
       ],
@@ -2411,11 +2528,18 @@
       "labelStart": "72",
       "labelEnd": "77",
       "words": 2759,
-      "summary": null,
+      "summary": {
+        "text": "Presents Annex 5 (Table A5.1), specifying 64 generic non-functional requirements (`DDCC.NFXNREQ.001` through `DDCC.NFXNREQ.064`) for DDCC:VS digital solutions across 11 categories: accessibility, availability (SLAs), current and forecast capacity, disaster recovery/business continuity/resilience, performance/response time, security and privacy, regulation and compliance, reliability, horizontal and vertical scalability, supportability, usability, and data retention/archiving.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "non-functional requirements",
           "heading": true
+        },
+        {
+          "term": "nfxnreq",
+          "heading": false
         },
         {
           "term": "retention archiving",
@@ -2426,23 +2550,19 @@
           "heading": false
         },
         {
-          "term": "nfxnreq",
+          "term": "increased load",
           "heading": false
         },
         {
-          "term": "system alerts",
+          "term": "load balancing",
           "heading": false
         },
         {
-          "term": "business continuity",
+          "term": "archive operation",
           "heading": false
         },
         {
-          "term": "system administrator",
-          "heading": false
-        },
-        {
-          "term": "adding extra",
+          "term": "system load",
           "heading": false
         }
       ],
@@ -2459,7 +2579,10 @@
       "labelStart": "77",
       "labelEnd": "82",
       "words": 836,
-      "summary": null,
+      "summary": {
+        "text": "Presents Annex 6, illustrating an Open Health Information Exchange (OpenHIE)-based architectural blueprint (Figure A6.1) for point-of-care DDCC:VS issuance and describing how OpenHIE registries and repositories—Terminology Services, Client Registry, Facility Registry, Health Worker Registry, Product Catalogue, and Shared Health Record (SHR)—supply and persist DDCC:VS core data elements.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "openhie",
@@ -2470,7 +2593,7 @@
           "heading": false
         },
         {
-          "term": "openhie architecture",
+          "term": "vaccine administration",
           "heading": false
         },
         {
@@ -2478,19 +2601,19 @@
           "heading": false
         },
         {
-          "term": "architectural",
-          "heading": true
-        },
-        {
           "term": "client registry",
           "heading": false
         },
         {
-          "term": "facility name",
+          "term": "openhie architecture",
           "heading": false
         },
         {
-          "term": "accessed june",
+          "term": "facility registry",
+          "heading": false
+        },
+        {
+          "term": "facility name",
           "heading": false
         }
       ],
@@ -2541,15 +2664,11 @@
   "withheld": false,
   "keywords": [
     {
+      "term": "ddcc vaccination",
+      "heading": true
+    },
+    {
       "term": "pha ddcc",
-      "heading": false
-    },
-    {
-      "term": "international ddcc",
-      "heading": false
-    },
-    {
-      "term": "ddcc paper",
       "heading": false
     },
     {
@@ -2557,15 +2676,19 @@
       "heading": false
     },
     {
+      "term": "ddcc paper",
+      "heading": false
+    },
+    {
       "term": "signing ddcc",
       "heading": true
     },
     {
-      "term": "ddcc holder",
+      "term": "international ddcc",
       "heading": false
     },
     {
-      "term": "digital certificate",
+      "term": "ddcc holder",
       "heading": false
     },
     {
@@ -2577,7 +2700,7 @@
       "heading": false
     },
     {
-      "term": "digital solution",
+      "term": "national ddcc",
       "heading": false
     },
     {
@@ -2585,7 +2708,7 @@
       "heading": false
     },
     {
-      "term": "openhie ddcc",
+      "term": "vaccination certificate",
       "heading": false
     }
   ],
@@ -3199,7 +3322,7 @@
     }
   ],
   "links": {
-    "repo": "litlfred/smart-immunizations",
+    "repo": "litlfred/who-iris",
     "branch": "main",
     "dir": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng"
   }

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 51,
+      "count": 25,
       "unit": "open beans"
     }
   },
@@ -139,15 +139,15 @@
     {
       "id": "folio-assistant-0om7",
       "title": "IG previews publish outline.json and rendered-impact.json for the review page",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T13:20:00Z",
-      "updatedAt": "2026-10-30T12:00:00Z",
-      "preview": "Found walking #215 on smart-immunizations-uganda#12 (see lx2s). The IG route's review page says \"No outline on this build: the folio's build did not publish outline.json\" and \"This build published no rendered-impact.json, so which rendered pages the change alters is not known\". The folio route publishes both; the IG route (fhir-harness#158) does not yet.\n\n## Done when\n- [ ] an IG preview publishes",
+      "updatedAt": "2026-10-30T17:36:00Z",
+      "preview": "Found walking #215 on smart-immunizations-uganda#12 (see lx2s). The IG route's review page says \"No outline on this build: the folio's build did not publish outline.json\" and \"This build published no rendered-impact.json, so which rendered pages the change alters is not known\". The folio route publishes both; the IG route (fhir-harness#158) does not yet.\n\n## Done when\n- [x] an IG preview publishes",
       "file": "beans/defs/folio-assistant-0om7--ig-review-page-outline-and-rendered-impact.md"
     },
     {
@@ -519,6 +519,22 @@
       "file": "beans/defs/folio-assistant-2ee5--merge-refused-1955-handed-back.md"
     },
     {
+      "id": "folio-assistant-2egb",
+      "title": "PROV decision record cites Consent id + versionId (PCF8)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-a7c1"
+      ],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T16:44:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-2egb--prov-decision-record-cites-consent-id-versionid.md"
+    },
+    {
       "id": "folio-assistant-2h76",
       "title": "STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan 'state' branch, session-start mount at state/",
       "status": "completed",
@@ -657,6 +673,20 @@
       "updatedAt": "2026-10-16T06:30:00Z",
       "preview": "Issue #877 https://github.com/litlfred/folio-assistant/issues/877\n\nThe owner, 2026-09-22: *\"WHO dgital health needs a once voice. also lots of process in DIIG for digital transformation. the DIIG is a basis for the digital trasnformation handbooks. ingest docs, make methodlolgies subgraphs for project management.digital trasnform processes\"*, and on placement: *\"same as other smart-* now in corpus",
       "file": "beans/defs/folio-assistant-2yyh--smart-base-harness-the-who-digital-health-corpus-i.md"
+    },
+    {
+      "id": "folio-assistant-2z1t",
+      "title": "dsa document kind: legal text URL + SHA-256, ODRL Agreement, DCAT record, hash check (DSA B3)",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T14:05:00Z",
+      "updatedAt": "2026-10-30T20:30:35Z",
+      "preview": "Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.\n\nIn `folio-assistant-core` (content vocabulary). **Existing specs only (owner, 2026-10-30 14:39Z):** the kind defines no fields of its own. Its `nodeSchemas` are `external` references ",
+      "file": "beans/defs/folio-assistant-2z1t--dsa-document-kind-legal-text-url-sha-256-odrl.md"
     },
     {
       "id": "folio-assistant-3025",
@@ -925,6 +955,20 @@
       "file": "beans/defs/folio-assistant-3x2o--two-generated-skill-pages-name-a-source-directory.md"
     },
     {
+      "id": "folio-assistant-3z44",
+      "title": "PROV decision records cite agreement + grant; hash-chained log (DSA B4)",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T14:05:00Z",
+      "updatedAt": "2026-10-30T16:00:00Z",
+      "preview": "Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.\n\n`prov.ts` / `prov-record.ts` already record runs with `underPolicy`; add agreement URL + digest (and grant id once B5 exists), and a hash chain. Depends on B3.\n\n## Done when\n- [x] Edi",
+      "file": "beans/defs/folio-assistant-3z44--prov-decision-records-cite-agreement-grant-hash.md"
+    },
+    {
       "id": "folio-assistant-42u5",
       "title": "#1955 hand-off to the merge manager: kept merged with main by its session, by hand",
       "status": "completed",
@@ -1098,14 +1142,14 @@
     {
       "id": "folio-assistant-4dj5",
       "title": "PAPER TEMPLATE WIRING: the sci paper adapter supplies its print preamble to generate-main-tex, and publish.yml uses it (#2117 P2, P5)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T11:55:00Z",
-      "updatedAt": "2026-10-30T12:40:00Z",
+      "updatedAt": "2026-10-30T17:15:00Z",
       "preview": "The platform half of [#2117](https://github.com/litlfred/folio-assistant/issues/2117) still open after #2118.\nThe template exists at `folio-assistant-sci/adapters/paper/latex/paper-preamble.tex`,\nbut its README says \"Not yet wired\":\n\n- **P2.** `generate-main-tex.ts` (cat-harness-tools) still defaults `--preamble` to the\n  deleted `cat-harness/latex/preamble.tex`. Pointing it at sci from the core w",
       "file": "beans/defs/folio-assistant-4dj5--paper-adapter-supplies-print-template-and-publish.md"
     },
@@ -1140,16 +1184,14 @@
     {
       "id": "folio-assistant-4fv8",
       "title": "Placement PR4: whole roles, stories, actors and capabilities move up to their owners",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-iirv",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-pzwb"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-16T06:30:00Z",
+      "updatedAt": "2026-10-30T20:20:00Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-4fv8--placement-pr4-whole-roles-stories-actors-and-capab.md"
     },
@@ -1270,14 +1312,14 @@
     {
       "id": "folio-assistant-4u5d",
       "title": "IG artefact index built at publish by fhir-harness from the AST: no IG instance commits fhir-artifact-index/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-n3h9",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T14:30:00Z",
-      "updatedAt": "2026-10-30T11:45:00Z",
+      "updatedAt": "2026-10-30T18:20:00Z",
       "preview": "## Parent\n\nfolio-assistant-n3h9\n\nRelated: folio-assistant-p7mb (build derived artefacts at publish).\n\nOwner, 2026-10-23: \"fhir-artifact-index/ → shouldn't that be a part of fhir-harness?\" and \"1 and implement\" (plan, then implement). Plan: litlfred/fhir-harness#124. Thread \"fhir-harness IG viewers\".\n\n## Why\n\nsmart-trust and smart-base commit `fhir-artifact-index/` (index, menu, releases; 1.3 to 1.",
       "file": "beans/defs/folio-assistant-4u5d--ig-artifact-index-built-at-publish-by-fhir-harness.md"
     },
@@ -1422,6 +1464,20 @@
       "file": "beans/defs/folio-assistant-5akx--keyedbyschema-and-directorystorageschema-were-two.md"
     },
     {
+      "id": "folio-assistant-5bkm",
+      "title": "who-iris: look up IRIS UUIDs, handles, records and PDFs for the 11 items moved from smart-base",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T17:45:00Z",
+      "updatedAt": "2026-10-30T21:24:00Z",
+      "preview": "For agy, because iris.who.int is blocked from the cloud sandbox. Part of litlfred/who-iris#107 and #108. The owner asked on 2026-10-30 for agy to retrieve these.\n\nOn 2026-10-30, 11 IRIS publications moved from smart-base into who-iris. None of them recorded a DSpace UUID, Handle, collection or Dublin Core record, so their catalogue nodes are keyed by ISBN or govdoc number:\n\n| who-iris node file | ",
+      "file": "beans/defs/folio-assistant-5bkm--who-iris-look-up-iris-uuids-handles-for-11-items.md"
+    },
+    {
       "id": "folio-assistant-5blc",
       "title": "Digital Transformation Handbook (DTH): a voice, an L1 document subtype on Reference Architecture + DIIG concepts, and a source of methodologies / processes / glossary",
       "status": "completed",
@@ -1552,14 +1608,14 @@
     {
       "id": "folio-assistant-607f",
       "title": "UPSTREAM PIN WATCHDOG: red since 2026-10-20 on an undetermined pin, so #1481 has gone stale",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T11:55:00Z",
-      "updatedAt": "2026-10-30T12:19:00Z",
+      "updatedAt": "2026-10-30T19:50:00Z",
       "preview": "`upstream-pins.yml` failed on its 2026-10-20 and 2026-10-27 runs at the step\n\"Refuse to report success on an undetermined pin\". Because of that, issue\n[#1481](https://github.com/litlfred/folio-assistant/issues/1481), which the job edits\nin place, was last updated 2026-10-13 and no longer shows the current state.\n\nLikely cause: a pinned dependency moved during the repo split, so the check can't\nres",
       "file": "beans/defs/folio-assistant-607f--upstream-pin-watchdog-red-undetermined-pin.md"
     },
@@ -1608,14 +1664,14 @@
     {
       "id": "folio-assistant-61tg",
       "title": "TOPOLOGY: self-sovereign — own infrastructure, inward-facing, wallets and DAK intake",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o1by",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T08:55:37Z",
-      "updatedAt": "2026-10-26T13:20:00Z",
+      "updatedAt": "2026-10-30T16:40:00Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"self-soveringn mode: like soveregion cloud but hosted on own infrastructure, in\nL4-L5 context may have data stores like hapi. not designed for external facing\nservices. more for managing wallets. have incoming DAK content. bean up to may\nstrwperson and create issue to review these.\"\n\n## Strawperson position, to ",
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
     },
@@ -1708,14 +1764,14 @@
     {
       "id": "folio-assistant-6g6o",
       "title": "CI: PR-time Liquid undefined-variable and post-merge regen checks block before merge",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ksek",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:43:02Z",
-      "updatedAt": "2026-10-24T15:05:00Z",
+      "updatedAt": "2026-10-30T19:46:00Z",
       "preview": "Rule: a check that today runs only after merge gets a PR-time half wherever it can run on a PR, counted by merge-guard. PR: https://github.com/litlfred/folio-assistant/pull/2633 (branch claude/pr-time-postmerge-checks, head 7d2ea91). What it does: liquid-undefined.yml is called (workflow_call) as a job of Feature Staging's own run after stage hands off the Jekyll source, so a red check makes the P",
       "file": "beans/defs/folio-assistant-6g6o--ci-pr-time-liquid-undefined-variable-and-post-merg.md"
     },
@@ -1746,6 +1802,20 @@
       "updatedAt": "2026-09-23T20:12:11Z",
       "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [x] gates green, PR open\n\n## Summary of Changes\n\nMerged in #1172 (aabdc87): data-modelling.md steps 8 (dependents point at the general node; the g",
       "file": "beans/defs/folio-assistant-6hf2--a-data-modelling-guidance-dependents-point-at-the.md"
+    },
+    {
+      "id": "folio-assistant-6jnx",
+      "title": "PCF follow-up: one Consent evaluator in fhir-harness; read PurposeOfUse and Consent from published packages",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T16:55:00Z",
+      "updatedAt": "2026-10-30T17:56:00Z",
+      "preview": "Owner card 2026-10-30 16:47Z, thread \"Drain PCF beans\": \"A. Merge mine now, fix after\". [fhir-harness#207](https://github.com/litlfred/fhir-harness/pull/207), [#208](https://github.com/litlfred/fhir-harness/pull/208), [#209](https://github.com/litlfred/fhir-harness/pull/209) and [smart-trust-phw#3](https://github.com/litlfred/smart-trust-phw/pull/3) merged; this bean fixes the two root-cause probl",
+      "file": "beans/defs/folio-assistant-6jnx--pcf-one-consent-evaluator-in-fhir-harness-published-code-lists.md"
     },
     {
       "id": "folio-assistant-6lb8",
@@ -2167,14 +2237,14 @@
     {
       "id": "folio-assistant-8fq9",
       "title": "Placement PR7: tests regroup by concern group, retargeted to cat-harness-tools/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-26T13:20:00Z",
+      "updatedAt": "2026-10-30T17:15:00Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-8fq9--placement-pr7-tests-regroup-by-concern-group-retar.md"
     },
@@ -2209,18 +2279,14 @@
     {
       "id": "folio-assistant-8lcl",
       "title": "Separation stage 1b: Zod moves to cat-harness-tools; generated JSON Schema stays in cat-harness",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
-      "blocking": [
-        "folio-assistant-y9r6"
-      ],
-      "blockedBy": [
-        "folio-assistant-f8wp"
-      ],
+      "blocking": [],
+      "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-16T06:55:00Z",
+      "updatedAt": "2026-10-30T20:37:00Z",
       "preview": "Stage 1b of the split plan: the 205 Zod `schemas/*.ts` move to `cat-harness-tools/schemas/`; `cat-harness/schemas/` gets **generated** JSON Schema (one per declared node kind, `$id` under `iriBase`), as bootstrap does (`xsqm` ruling 1). `bunfig.toml` preload follows.\n\nOrder: D4 option 3 (owner, 2026-10-01) — after placement PR8, which regroups the same `schemas/` tree and moves the 28 above-harnes",
       "file": "beans/defs/folio-assistant-8lcl--separation-stage-1b-zod-moves-to-cat-harness-tools.md"
     },
@@ -2367,14 +2433,14 @@
     {
       "id": "folio-assistant-95sk",
       "title": "FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and reader documents in folio/, cross-library references — wait on the split",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T17:59:01Z",
-      "updatedAt": "2026-10-30T11:10:00Z",
+      "updatedAt": "2026-10-30T19:50:00Z",
       "preview": "Carried over from `j2if` on 2026-09-23, on the owner's choice \"Move to split, close\". The source of truth for the wording is `cat-harness/docs/architecture/folio-board-requirements.md` §\"The folio is a convention, not a page — R24 to R29\". Quoted here so this bean can be read on its own:\n\n| | requirement | state 2026-09-23 |\n|---|---|---|\n| **R24** | the folio visualisation is `cat-harness`'s, and",
       "file": "beans/defs/folio-assistant-95sk--folio-as-convention-r24-r27r29-the-folio-on-any-ha.md"
     },
@@ -2577,14 +2643,14 @@
     {
       "id": "folio-assistant-9umr",
       "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-10-21T17:24:00Z",
+      "updatedAt": "2026-10-30T17:04:00Z",
       "preview": "Owner 2026-09-29: 'declared sub-graphs of cat-harness based on semantic concern (see sibling work on bootstrap definitions as named subset). dont need a separate facet. built into location.' Ruled 2026-09-30: **eight groups, KG + library move first**.\n\nA Subgraph is bootstrap's term (cat-harness/schemas/graph.ts): 'a named subset of Node Instances: a Declaration's directory entry, with its id, its",
       "file": "beans/defs/folio-assistant-9umr--concern-subgraphs-cat-harness-skills-live-in-one-d.md"
     },
@@ -2657,6 +2723,24 @@
       "updatedAt": "2026-10-06T19:30:00Z",
       "preview": "G2+G3 of the arc plan.\n\n## Done when\n- [x] y5si, ybp4 completed with PR evidence (#1599, #1687)\n- [x] ejye, 7dek completed (#1758, #1760); ~~ybwt~~ carried on its own bean, see the 2026-10-06 summary. Its one open box is code work, not bookkeeping\n- [x] fnx4 boxes ticked for slices merged in #1721\n- [x] w2gr step 3b list recorded on 70lx so the move happens once\n\n\n## The sweep, measured 2026-10-03",
       "file": "beans/defs/folio-assistant-a4of--s1-bookkeeping-truth-close-merged-beans-reconcile.md"
+    },
+    {
+      "id": "folio-assistant-a7c1",
+      "title": "odrl:obtainConsent duty met by a matching active PCF Consent (PCF6)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [
+        "folio-assistant-2egb"
+      ],
+      "blockedBy": [
+        "folio-assistant-jx7m"
+      ],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T17:58:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-a7c1--odrl-obtainconsent-duty-met-by-a-matching-active-pcf-consent.md"
     },
     {
       "id": "folio-assistant-a8wy",
@@ -2805,14 +2889,14 @@
     {
       "id": "folio-assistant-b5f0",
       "title": "INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:23:54Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
+      "updatedAt": "2026-10-30T19:45:00Z",
       "preview": "Owner, 2026-09-20, across three messages:\n\n> \"migration to cat-harness.config.json as an instance declaration in root.\n> also need bootstrap.config.json to declare its instance data upon\n> initialization. this should be part of ALL harness initializations. (not\n> dependency, but initiation = create UI/start workflow beans todos, install\n> directories etc. to a working state). this is a 'Working KG",
       "file": "beans/defs/folio-assistant-b5f0--instantiation-what-it-means-to-instantiate-a-harne.md"
     },
@@ -2915,6 +2999,20 @@
       "updatedAt": "2026-10-16T06:40:49Z",
       "preview": "cat-harness e29c6429 (70lx stage 1a) moved scripts/ and the rest of its code to cat-harness-tools (d8d42ab). The index on #2518 (head 90148ed) still pins the pre-move pair, and its root `cat` names cat-harness/scripts/run-script.ts, so no checkout can run cat-harness main. Related: folio-assistant-txue (S5 code out of cat-harness).\n\nStacked on #2518 as branch claude/post-70lx-repin (#2518 is drive",
       "file": "beans/defs/folio-assistant-beaf--post-70lx-re-pin-matched-cat-harness-tools-pins-an.md"
+    },
+    {
+      "id": "folio-assistant-bjl8",
+      "title": "Pin ihe.iti.pcf 1.1.0 and ihe.iti.vhl 1.0.0-comment in phw sushi-config; reference by canonical URL only (PCF3)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T17:00:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-bjl8--pin-ihe-iti-pcf-1-1-0-and-ihe-iti-vhl-1-0-0-comment-in-phw-s.md"
     },
     {
       "id": "folio-assistant-bkea",
@@ -3241,6 +3339,20 @@
       "file": "beans/defs/folio-assistant-cjvs--190-dangling-refs-in-the-kg-137-ts-import-28-md-li.md"
     },
     {
+      "id": "folio-assistant-ck7q",
+      "title": "agy: re-extract page 116 of PAHO 9789275119532_eng.pdf for smart-immunizations (img-p116-1 was committed empty)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T18:20:00Z",
+      "updatedAt": "2026-10-30T18:45:30Z",
+      "preview": "For agy (the owner's local agent): cloud sessions cannot reach iris.paho.org (proxy CONNECT 403, checked 2026-10-30 18:15Z).\n\nIssue: [litlfred/smart-immunizations#76](https://github.com/litlfred/smart-immunizations/issues/76). [smart-immunizations#75](https://github.com/litlfred/smart-immunizations/pull/75) removed the 0-byte `library/9789275119532-eng/images/img-p116-1.png` and its `images.json` ",
+      "file": "beans/defs/folio-assistant-ck7q--agy-re-extract-page-116-of-paho-9789275119532.md"
+    },
+    {
       "id": "folio-assistant-clzd",
       "title": "check:import-direction — cat-harness imports nothing above it; content adapters declared by their instance (#1737)",
       "status": "completed",
@@ -3481,14 +3593,14 @@
     {
       "id": "folio-assistant-dscv",
       "title": "Markers: what a harness could declare — scan, show, pick (declare, don't slurp)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T13:20:00Z",
-      "updatedAt": "2026-10-30T13:20:00Z",
+      "updatedAt": "2026-10-30T18:00:00Z",
       "preview": "Owner, 2026-10-30T12:41Z: \"a harness can point to a repo, but doesnt want to automatically slurpo up all content in a repo. harness desclares what it it pays attention to in the repo.\" 12:43Z: a process/skill that looks through the repo for KG content markers (sushi-config etc.) and generates a list of what can be harnessed and potentially declared in index.config.json. 12:44Z: link it to harness ",
       "file": "beans/defs/folio-assistant-dscv--markers-what-a-harness-could-declare-scan-show-pick.md"
     },
@@ -3505,6 +3617,22 @@
       "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
+    },
+    {
+      "id": "folio-assistant-dy4p",
+      "title": "PCF BPMN processes A/B/C in phw input/business-processes, trust-anchor neutral (PCF4)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-sl5v"
+      ],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T17:58:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-dy4p--pcf-bpmn-processes-a-b-c-in-phw-input-business-processes-tru.md"
     },
     {
       "id": "folio-assistant-e0hw",
@@ -3765,16 +3893,14 @@
     {
       "id": "folio-assistant-f8wp",
       "title": "Placement PR8: schemas regroup and move with their importers; library sources by group; residual gate",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
-      "blocking": [
-        "folio-assistant-8lcl"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-29T15:05:00Z",
+      "updatedAt": "2026-10-30T20:37:00Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-f8wp--placement-pr8-schemas-regroup-and-move-with-their.md"
     },
@@ -3865,14 +3991,14 @@
     {
       "id": "folio-assistant-fnx4",
       "title": "KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:54:31Z",
-      "updatedAt": "2026-10-02T22:49:41Z",
+      "updatedAt": "2026-10-30T15:05:00Z",
       "preview": "Issue #1719. Proposal: `cat-harness/docs/proposals/kg-subscriptions.md`.\n\nOwner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at least one harness); materialise some or all subgraphs and assets; instantiate harnesses so they reach the navbar; list known substrates in cat-harness; a visualizer; an MVP inside the folio separation.\n\n## Done when\n- [x] 1 schema: `subscriptions` on",
       "file": "beans/defs/folio-assistant-fnx4--kg-subscriptions-subscribe-to-an-external-kg-mater.md"
     },
@@ -3907,14 +4033,14 @@
     {
       "id": "folio-assistant-fwtz",
       "title": "docs-site must rebuild when the bean branch moves (ref + concurrency)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:29:09Z",
-      "updatedAt": "2026-10-23T16:40:00Z",
+      "updatedAt": "2026-10-30T21:29:30Z",
       "preview": "Arc fs43 §4 `site` row, second half. `docs-site.yml` now MOUNTS the tip-keyed graphs before the generators run (PR #2052), so the build reads the work plan wherever it lives. What is missing is the TRIGGER: after the cutover a bean edit is a push to `cat/cat-harness/beans` and nothing rebuilds the site.\n\nAdding `branches: [main, cat/cat-harness/beans]` is NOT the fix on its own, and that is the fi",
       "file": "beans/defs/folio-assistant-fwtz--docs-site-must-rebuild-when-the-bean-branch-moves.md"
     },
@@ -4177,15 +4303,15 @@
     {
       "id": "folio-assistant-h11k",
       "title": "BLOCK TRANSLATION GAPS: math placeholders, inline-markup placeholders, manifest extraction, locale render path",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:45:00Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
-      "preview": "Split from folio-assistant#206, which closed on 2026-10-30 because every requirement it listed is on main. These are the open gaps from `cat-harness/docs/proposals/translation-block-audit.md`, as measured on main on 2026-10-30.\n\n## Done when\n- [ ] G1: math is protected through extraction. Today `$a*b*c$` comes out as `$abc$`, and a `- x + y` row inside `$$…$$` is read as a list item. Subscripts al",
+      "updatedAt": "2026-10-30T19:50:00Z",
+      "preview": "Split from folio-assistant#206, which closed on 2026-10-30 because every requirement it listed is on main. These are the open gaps from `cat-harness/docs/proposals/translation-block-audit.md`, as measured on main on 2026-10-30.\n\n## Done when\n- [x] G1: math is protected through extraction. Today `$a*b*c$` comes out as `$abc$`, and a `- x + y` row inside `$$…$$` is read as a list item. Subscripts al",
       "file": "beans/defs/folio-assistant-h11k--block-level-translation-gaps-math-inline-markup.md"
     },
     {
@@ -4205,14 +4331,14 @@
     {
       "id": "folio-assistant-h3tx",
       "title": "PHASE P4: the Publisher invoked for AST + QA only; a release still cut from a full build and saying so",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:32:21Z",
-      "updatedAt": "2026-10-29T08:00:00Z",
+      "updatedAt": "2026-10-30T19:41:00Z",
       "preview": "Phase P4 of `ig-publisher-reduction` (approved 2026-09-30 as written). Opened in the 2026-10-01 phased-transition review.\n\n**Exit criterion:** a release is still cut from a full build, and the artefact **says which** it came from.\n\n**Blocked by `a9tx`** (P3's prerequisite: AST measurements on a real IG; needs `packages.fhir.org`, unreachable from these sessions). Nothing to build before P3 lands, ",
       "file": "beans/defs/folio-assistant-h3tx--phase-p4-the-publisher-invoked-for-ast-qa-only-a-r.md"
     },
@@ -4551,15 +4677,15 @@
     {
       "id": "folio-assistant-inkl",
       "title": "INGEST: TOC extractor defects 2-5, including the DAK contents collapsing past the trust tests",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:45:00Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
-      "preview": "Bean for folio-assistant#2302. The core work is merged (#2303, #2388, cat-harness-tools#803). These four of the five defects ritikarawlani measured on 2026-10-07 are still open:\n\n## Done when\n- [ ] (2) levels are consistent with nesting\n- [ ] (3) a running header is no longer read as a contents entry (DDCC)\n- [ ] (4) no entry is left without a section\n- [ ] (5) the DAK's contents no longer collaps",
+      "updatedAt": "2026-10-30T14:20:00Z",
+      "preview": "Bean for folio-assistant#2302. The core work is merged (#2303, #2388, cat-harness-tools#803). These four of the five defects ritikarawlani measured on 2026-10-07 are still open:\n\n## Done when\n- [x] (2) levels are consistent with nesting\n- [x] (3) a running header is no longer read as a contents entry (DDCC)\n- [x] (4) no entry is left without a section\n- [x] (5) the DAK's contents no longer collaps",
       "file": "beans/defs/folio-assistant-inkl--toc-extractor-defects-2-5.md"
     },
     {
@@ -4749,16 +4875,30 @@
     {
       "id": "folio-assistant-jbvi",
       "title": "LIBRARY NODES: outside libraries the platform uses become graph nodes",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T07:53:21Z",
-      "updatedAt": "2026-10-30T12:15:00Z",
+      "updatedAt": "2026-10-30T17:50:00Z",
       "preview": "On 2026-10-24 at 07:53Z the owner chose \"B + bean for library nodes\" on the 0uu2 card about `cat-harness-tools/types/`. That choice keeps `types/` and declares it, and asks for this bean.\n\n## The gap\n\nNo node kind exists for an outside library the platform depends on, such as bpmn-moddle, dmn-moddle, playwright or katex. What the graph knows about them is scattered:\n- `package.json` dependencies, ",
       "file": "beans/defs/folio-assistant-jbvi--library-nodes-outside-libraries-the-platform-uses.md"
+    },
+    {
+      "id": "folio-assistant-jfbm",
+      "title": "One-way renderer: ODRL Agreement to FHIR R5 Permission (output only)",
+      "status": "completed",
+      "type": "task",
+      "priority": "low",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T19:24:00Z",
+      "updatedAt": "2026-10-30T21:44:00Z",
+      "preview": "Owner card 2026-10-30 19:23Z \"A: Yes, later bean\": FHIR R5 Permission (Trial Use) approved **for output only**. ODRL stays the source of truth; nothing reads Permission back. Home: smart-trust-server (repo to be created by the owner). Issue: litlfred/folio-assistant#2702.\n\nMapping (from the 14:15Z analysis in this thread): permission/prohibition to `rule.type` permit/deny; conflict strategy to `co",
+      "file": "beans/defs/folio-assistant-jfbm--odrl-to-fhir-r5-permission-renderer-one-way.md"
     },
     {
       "id": "folio-assistant-jj2w",
@@ -4845,6 +4985,24 @@
       "file": "beans/defs/folio-assistant-jwoc--prov-o-qaqc-report-over-workflow-instances-the-age.md"
     },
     {
+      "id": "folio-assistant-jx7m",
+      "title": "consentToOdrl(): PCF Basic + Additional PurposeOfUse to ODRL Sets, plus four implicit-policy Sets (PCF5)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [
+        "folio-assistant-a7c1",
+        "folio-assistant-r9vk",
+        "folio-assistant-y0o0"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T16:56:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-jx7m--consenttoodrl-pcf-basic-additional-purposeofuse-to-odrl-sets.md"
+    },
+    {
       "id": "folio-assistant-jzba",
       "title": "CREDENTIALS (ii): secrets:check — declared needs vs workflow usage vs secret names vs expiry registry",
       "status": "completed",
@@ -4887,6 +5045,20 @@
       "file": "beans/defs/folio-assistant-k3tw--gate-red-on-main-docs-datatranslationsjson-is-stal.md"
     },
     {
+      "id": "folio-assistant-k4sp",
+      "title": "Run SUSHI on smart-trust-phw main with all packages and fix any errors",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T19:36:00Z",
+      "updatedAt": "2026-10-30T20:30:40Z",
+      "preview": "From thread \"Drain PCF beans\", 2026-10-30. Cloud sessions cannot fetch two of phw's packages, `ihe.iti.vhl#1.0.0-comment` and `smart.who.int.pcmt-vaxprequal#current`. Run there, SUSHI 3.21.0 on [smart-trust-phw](https://github.com/litlfred/smart-trust-phw) main (4077fba) reports 14 errors: the two failed downloads plus 12 that follow from them (patient-nationality, logical-target and artifact-vers",
+      "file": "beans/defs/folio-assistant-k4sp--run-sushi-on-smart-trust-phw-main-and-fix-errors.md"
+    },
+    {
       "id": "folio-assistant-k59d",
       "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
       "status": "completed",
@@ -4913,6 +5085,20 @@
       "updatedAt": "2026-10-14T15:45:00Z",
       "preview": "Layer of f6gq beside core; needs pxtk. The largest: ~740 imports in 286 files.\n\n## Done when\n\n- [x] the imports become package imports — cat-harness-tools `b61b9fd`: 1,048 specifiers rewritten to `@litlfred/cat-harness/…` / `@litlfred/bootstrap-tools/…`; the only `../` left is a generated string (`adapters/mcp-server/server.ts:130`)\n- [x] the pin check — satisfied by the owner ruling below: the mo",
       "file": "beans/defs/folio-assistant-k6g5--cat-harness-tools-imports-as-packages.md"
+    },
+    {
+      "id": "folio-assistant-k6nw",
+      "title": "who-iris: ingest six IRIS items the owner listed on 2026-10-30 (NHWA / health workforce)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T22:52:00Z",
+      "updatedAt": "2026-10-31T00:29:00Z",
+      "preview": "For agy, because iris.who.int is blocked from the cloud sandbox (re-probed 2026-10-30T22:50Z: proxy refuses the connection; WebFetch fails too). The owner asked on 2026-10-30T22:48Z to ingest these six items into the litlfred/who-iris KG `library/`. Work in litlfred/who-iris only (a litlfred repo, not WHO's).\n\nThe HWR / National Health Workforce Accounts (NHWA) thread needs these, especially the N",
+      "file": "beans/defs/folio-assistant-k6nw--who-iris-ingest-six-iris-items-owner-2026-10-30.md"
     },
     {
       "id": "folio-assistant-k6tw",
@@ -5211,14 +5397,14 @@
     {
       "id": "folio-assistant-l1nl",
       "title": "IG/DAK version-numbering rule and source-of-truth rule (from #222)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:41:00Z",
-      "updatedAt": "2026-10-30T12:41:00Z",
+      "updatedAt": "2026-10-30T19:55:00Z",
       "preview": "Leftovers of litlfred/folio-assistant#222 (\"current state IG publisher pipeline\"), which the owner closed on 2026-10-30 (decision card, option A). Phase 1 is documented (fhir-harness `ig-build-pipeline.md`, smart-base pre/post-processing skills) and the phase II beans (a9tx, w8rv) are completed. Two rules were asked for and never written:\n\n1. **Version numbering.** A SEMVER rule for IG and DAK ver",
       "file": "beans/defs/folio-assistant-l1nl--ig-dak-version-numbering-rule-and-source-of-trut.md"
     },
@@ -5883,6 +6069,20 @@
       "file": "beans/defs/folio-assistant-ndp0--next-cat-harness-re-pin-breaks-the-root-claudesett.md"
     },
     {
+      "id": "folio-assistant-negd",
+      "title": "COMPUTABLE DSAs: public agreement + ODRL, referenced by hash; GDHCN trust; one PDP (#2702, option D)",
+      "status": "todo",
+      "type": "epic",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T14:05:00Z",
+      "updatedAt": "2026-10-30T14:05:00Z",
+      "preview": "Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.\n\nBlocks B1–B14, milestones M1 (in-instance, B1–B4), M2 (server-to-server, B5–B7, B9), M3 (QR + agents, B8, B10, B12), M4 (wallets, B11, B13). Only B1, B2+B3 are beans so far; the rest ",
+      "file": "beans/defs/folio-assistant-negd--computable-dsas-public-agreement-odrl-referenc.md"
+    },
+    {
       "id": "folio-assistant-nf2z",
       "title": "WORKFLOW TOOLS SEE NO PROCESS: from the repo root workflow_list reports none — diagrams live in dependencies, the resolver is root-only",
       "status": "completed",
@@ -5953,6 +6153,22 @@
       "file": "beans/defs/folio-assistant-np6o--cat-harness-kind-registry-point-the-6-shapes-70lx.md"
     },
     {
+      "id": "folio-assistant-nr5p",
+      "title": "Declare smart-trust-phw as a harness instance and mount it (PCF1)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [
+        "folio-assistant-sl5v"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T17:00:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-nr5p--declare-smart-trust-phw-as-a-harness-instance-and-mount-it.md"
+    },
+    {
       "id": "folio-assistant-nrrf",
       "title": "branch-archaeology skill: classify every remote branch against main by patch-id, report-only, content branches are salvage-review",
       "status": "completed",
@@ -6011,14 +6227,14 @@
     {
       "id": "folio-assistant-o1by",
       "title": "DEPLOYMENT DESCRIPTIONS: place declared actors per deployment, and resolve which Tool runs which task",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T08:45:00Z",
-      "updatedAt": "2026-10-30T12:34:00Z",
+      "updatedAt": "2026-10-30T19:17:00Z",
       "preview": "Owner, 2026-10-24: \"sovergign cloud is one of several potential deployment scenarios for agents and Tools. we need a comprehensive way to descirbe this.\" Analysis: https://claude.ai/artifact/TauEHEAz5d2wgFinqZEqb8. The owner chose \"proposal first\": cat-harness `docs/proposals/deployment-descriptions.md`. No code until the owner has reviewed it.\n\nChildren: 23a3 (schema), v3zw (resolver), jog4 (exam",
       "file": "beans/defs/folio-assistant-o1by--deployment-descriptions-placing-actors-matching-tool.md"
     },
@@ -6214,7 +6430,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T07:55:00Z",
-      "updatedAt": "2026-10-30T11:10:00Z",
+      "updatedAt": "2026-10-30T21:29:30Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
@@ -6419,16 +6635,14 @@
     {
       "id": "folio-assistant-pzwb",
       "title": "Placement PR2: finish splitting folio-core and regroup the harness skill topics",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-9umr",
-      "blocking": [
-        "folio-assistant-4fv8"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:00Z",
-      "updatedAt": "2026-10-29T08:05:00Z",
+      "updatedAt": "2026-10-30T20:37:00Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-pzwb--placement-pr2-finish-splitting-folio-core-and-regr.md"
     },
@@ -6473,6 +6687,20 @@
       "updatedAt": "2026-10-26T14:03:00Z",
       "preview": "## What this is\n\nOwner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), verbatim across four\nturns because each one moved the scope:\n\n> learn skills for document review for large things like a DAK or L1 digital\n> transofrmation hadbook. use it to develop tools in redendering/visauatlion as\n> part of docuemnt editiing and review process. will use feature branch\n> /staging for comparison against main",
       "file": "beans/defs/folio-assistant-q4jm--large-document-review-a-review-visualiser-for-a-fo.md"
+    },
+    {
+      "id": "folio-assistant-q7dh",
+      "title": "check:dsa-hash: validate against official ODRL/DCAT/DCMI contexts, declare it as a Tool",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T20:40:00Z",
+      "updatedAt": "2026-10-30T23:30:30Z",
+      "preview": "Follow-up to bean `2z1t` (litlfred/folio-assistant-core#249, merged 2026-10-30 20:30Z). Issue: litlfred/folio-assistant#2702.\n\n## What is left\n1. `folio-assistant-core` `check-dsa-hash.ts` checks field names against hand-written lists of ODRL 2.2, DCAT 3 and DCMI Terms. Bean `2z1t` said to validate against the official published JSON-LD contexts, never a hand-written copy. Vendor (pinned, hashed) ",
+      "file": "beans/defs/folio-assistant-q7dh--dsa-hash-check-official-contexts-and-tool.md"
     },
     {
       "id": "folio-assistant-q7ds",
@@ -6713,6 +6941,20 @@
       "file": "beans/defs/folio-assistant-r0tm--adapters-closure-yj6r-ruling-request-hoist-adapter.md"
     },
     {
+      "id": "folio-assistant-r29x",
+      "title": "R29 (PAUSED by owner): todos and sticky notes reference things across KG libraries, as one merged kind",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T19:50:00Z",
+      "updatedAt": "2026-10-30T19:50:00Z",
+      "preview": "Split out of `folio-assistant-95sk` on 2026-10-30, when 95sk closed with R24, R27 and R28 met. The wording comes from `cat-harness/docs/architecture/folio-board-requirements.md` §\"The folio is a convention, not a page — R24 to R29\":\n\n> **R29** todos and sticky notes MAY reference things **across** KG libraries.\n\n**PAUSED.** On 2026-10-24 the owner said: *\"R29. dont do stickies. pause that for now.",
+      "file": "beans/defs/folio-assistant-r29x--r29-todos-and-sticky-notes-reference-across-kg-l.md"
+    },
+    {
       "id": "folio-assistant-r3ei",
       "title": "f017 follow-up: review the remaining input sites that block ~57 checks from the input-hash skip",
       "status": "completed",
@@ -6769,6 +7011,20 @@
       "file": "beans/defs/folio-assistant-r5wu--subgraph-node-pattern-follow-up-convert-the-other.md"
     },
     {
+      "id": "folio-assistant-r7cq",
+      "title": "PCF: owner consent rules 2 and 4 in the evaluator, ITI-108 client and phw processes",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T19:32:00Z",
+      "updatedAt": "2026-10-30T19:32:00Z",
+      "preview": "Owner card 2026-10-30 19:27Z approved four consent rules; card 19:29Z said to put them into the repos now. Text: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (before B2) and `dsa-processes.md` (before P10). Rules 1–3 go into folio-assistant-core's dsa-document-lifecycle BPMN (DSA thread). This bean covers the PCF side. Issue: [folio-assistant#2702](https://github.com/litlf",
+      "file": "beans/defs/folio-assistant-r7cq--pcf-owner-consent-rules-version-pinning-and-registry-cache.md"
+    },
+    {
       "id": "folio-assistant-r939",
       "title": "SMART-* SEPARATION stage B: FHIR-generic IG schemas and ingest scripts move into fhir-harness; wrong-direction skill edges",
       "status": "completed",
@@ -6795,6 +7051,22 @@
       "updatedAt": "2026-10-06T14:24:10Z",
       "preview": "Follow-up to #1901 / #2264. The artefact pages (gen-ig-pages) draw their own JS footer from assets/ig-footer.json: it lacks the © year (copyrightYear is in sushi-config.yaml, not the package) and its Table of Contents link points at the site root instead of toc.html. Goal: the artefact pages' footer matches the IG site pages' footer exactly — same facts from one source, same links, each link only ",
       "file": "beans/defs/folio-assistant-r93y--ig-artefact-pages-one-footer-same-facts-and-links.md"
+    },
+    {
+      "id": "folio-assistant-r9vk",
+      "title": "ITI-108 Consent Registry read client (PCF7)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-jx7m"
+      ],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T16:56:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-r9vk--iti-108-consent-registry-read-client.md"
     },
     {
       "id": "folio-assistant-ramz",
@@ -6855,17 +7127,15 @@
     {
       "id": "folio-assistant-rfuq",
       "title": "S4 direction and placement: zero wrong-direction edges; placement PR2-PR9; 9umr finale",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
-      "blocking": [
-        "folio-assistant-txue"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:14:34Z",
-      "updatedAt": "2026-10-26T13:20:00Z",
-      "preview": "Absorbs zlmp, yj6r, zhg2, r3gy, 2j2r, iirv pzwb/63wl/4fv8/tlat/apcg/8fq9/f8wp/p9bu, 9umr finale. Placement PRs run ONE AT A TIME.\n\n## Done when\n- [ ] import-direction and reference-direction at 0 wrong-direction edges\n- [x] 2j2r readers follow the checkout\n- [ ] placement PR2..PR9 merged\n- [ ] 9umr: last five tool skills out of folio-core\n\n\n## Owner rulings 2026-10-01\n- large-datasets -> subgraph ",
+      "updatedAt": "2026-10-30T20:37:00Z",
+      "preview": "Absorbs zlmp, yj6r, zhg2, r3gy, 2j2r, iirv pzwb/63wl/4fv8/tlat/apcg/8fq9/f8wp/p9bu, 9umr finale. Placement PRs run ONE AT A TIME.\n\n## Done when\n- [x] import-direction and reference-direction at 0 wrong-direction edges (litlfred/cat-harness-tools#938, litlfred/cat-harness#763, litlfred/folio-assistant-core#256, litlfred/fhir-harness#213)\n- [x] 2j2r readers follow the checkout\n- [x] placement PR2..P",
       "file": "beans/defs/folio-assistant-rfuq--s4-direction-and-placement-zero-wrong-direction-ed.md"
     },
     {
@@ -6929,15 +7199,15 @@
     {
       "id": "folio-assistant-rn24",
       "title": "GATES: content-root gate set follow-ups (smart-ra re-pin, drop the PREREQUISITE_FILES skip)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:45:00Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
-      "preview": "Bean for cat-harness-tools#281. The decision is made and implemented: smart-ra is held to its own gate set (cat-harness-tools#288; `scripts/lib/root-gate-set.ts`, `.github/scripts/layer-pr-checks/run-gates.py`).\n\n## Done when\n- [ ] smart-ra's `index.lock.json` is re-pinned off cat-harness-tools 954ef7b, through the consent-recorded `mount:remote --seed` together with a cat-harness re-pin\n- [ ] the",
+      "updatedAt": "2026-10-30T18:30:00Z",
+      "preview": "Bean for cat-harness-tools#281. The decision is made and implemented: smart-ra is held to its own gate set (cat-harness-tools#288; `scripts/lib/root-gate-set.ts`, `.github/scripts/layer-pr-checks/run-gates.py`).\n\n## Done when\n- [x] smart-ra's `index.lock.json` is re-pinned off cat-harness-tools 954ef7b, through the consent-recorded `mount:remote --seed` together with a cat-harness re-pin (`litlfre",
       "file": "beans/defs/folio-assistant-rn24--content-root-gate-set-follow-ups.md"
     },
     {
@@ -7095,6 +7365,20 @@
       "file": "beans/defs/folio-assistant-s4ta--openapi-harness-a-subgraph-for-openapi-documentati.md"
     },
     {
+      "id": "folio-assistant-s4v2",
+      "title": "ODRL duties, required assignee, purpose/date constraints (DSA B1+B2)",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T14:05:00Z",
+      "updatedAt": "2026-10-30T19:35:00Z",
+      "preview": "Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.\n\nIn `cat-harness/schemas/content/odrl.ts`: add `duty` (odrl:delete, attribute, inform, obtainConsent); require `assignee` on Agreement (ODRL 2.2); left operands purpose (HL7 PurposeOfU",
+      "file": "beans/defs/folio-assistant-s4v2--odrl-duties-required-assignee-purpose-date-const.md"
+    },
+    {
       "id": "folio-assistant-s8nu",
       "title": "Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one",
       "status": "completed",
@@ -7111,14 +7395,14 @@
     {
       "id": "folio-assistant-saqd",
       "title": "S5-a: maths code out of cat-harness into folio-assistant-sci's code (#223 partition; 49 MOVE + 10 split)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:16:24Z",
-      "updatedAt": "2026-10-26T13:20:00Z",
+      "updatedAt": "2026-10-31T00:05:00Z",
       "preview": "Story S5 (txue), with/after 70lx. Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(#223 code partition; S5)', instance=cat-harness, target folio-assistant-sci: MOVE 49, AMBIGUOUS 10 (owner Q4: SPLIT — generic pipeline -> cat-harness-tools, Lean/LaTeX checkers -> sci code plugged into it). Plus smart-base 3, fhir-harness 2, core 1. One agent at a time.\n## Done when",
       "file": "beans/defs/folio-assistant-saqd--s5-a-maths-code-out-of-cat-harness-into-folio-assi.md"
     },
@@ -7139,14 +7423,14 @@
     {
       "id": "folio-assistant-se3i",
       "title": "PUBLIC COMMENT: a person can re-route a change set to a different committee by hand",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T11:55:00Z",
-      "updatedAt": "2026-10-30T12:42:30Z",
+      "updatedAt": "2026-10-30T17:45:00Z",
       "preview": "From [#197](https://github.com/litlfred/folio-assistant/issues/197) — the last open ask on that issue, from @Chine-E on 2026-10-16:\n\n> I need the ability for a human to manually re-route a change set if a human\n> decides that the change set should be handled by a different committee.\n\nEverything else #197 asked for landed under epic `q4jm` (beans `xtpc`, `v26p`, `uphx`, `423d`).\nToday the committe",
       "file": "beans/defs/folio-assistant-se3i--public-comment-human-reroutes-change-set-to-committee.md"
     },
@@ -7177,6 +7461,24 @@
       "updatedAt": "2026-10-06T05:23:38Z",
       "preview": "Issue #2219. Owner chose B: same chrome as folio-assistant on mounted pages (fa-translation-meta + docs-ui band globe), every declared locale shown, untranslated ones greyed. No new UI.\n\n## Future work, NOT done here\n- C: make the who-iris replica's UI strings translatable (pot from gen-iris-pages.ts, per-locale builds at /<loc>/who-iris/ or /who-iris/<loc>/), and teach translation-index.ts to see",
       "file": "beans/defs/folio-assistant-sg87--mounted-instance-pages-carry-the-docs-locale-globe.md"
+    },
+    {
+      "id": "folio-assistant-sl5v",
+      "title": "Library entries for IHE PCF 1.1.0 and VHL 1.0.0-comment (hashed, Dublin Core, CC BY 4.0) (PCF2)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [
+        "folio-assistant-dy4p"
+      ],
+      "blockedBy": [
+        "folio-assistant-nr5p"
+      ],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T17:58:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-sl5v--library-entries-for-ihe-pcf-1-1-0-and-vhl-1-0-0-comment-hash.md"
     },
     {
       "id": "folio-assistant-smbc",
@@ -7437,14 +7739,14 @@
     {
       "id": "folio-assistant-t5zb",
       "title": "AGENT ADVICE PER REPO (phase 2): skill commands, agents, memory and .mcp.json where a repo has content for them",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "low",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-24T13:20:00Z",
-      "updatedAt": "2026-10-30T11:10:00Z",
+      "updatedAt": "2026-10-30T17:15:00Z",
       "preview": "Phase 2 of the owner's option D (card 2026-10-24 13:15Z). After the index (folio-assistant-e0uk), give repos that publish `user_invocable` skills or define agents (today cat-harness 33, folio-assistant-sci 15, folio-assistant-core 2) the rest of the agent surface: `gen-skill-commands.ts` commands, agents + memory, per-vendor agent files (31ni), and an `.mcp.json` where the MCP skill server runs st",
       "file": "beans/defs/folio-assistant-t5zb--agent-advice-per-repo-phase-2-commands-agents-and-me.md"
     },
@@ -7579,15 +7881,15 @@
     {
       "id": "folio-assistant-tmo5",
       "title": "First real KG subscription: litlfred/ihris",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fnx4",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-29T12:20:00Z",
-      "updatedAt": "2026-10-30T12:45:00Z",
-      "preview": "## Parent\n\nfolio-assistant-fnx4\n\n## Why\n\nfnx4's own \"Done when\" box \"first real subscription: `litlfred/ihris`\" is unchecked, and no instance declares a real subscription yet. All earlier children are completed, so this records the remaining work as an open child for `check:bean-rollup`.\n\n## Done when\n- [ ] an instance declares a `subscriptions` entry for `litlfred/ihris` and it materialises\n\n_202",
+      "updatedAt": "2026-10-30T15:05:00Z",
+      "preview": "## Parent\n\nfolio-assistant-fnx4\n\n## Why\n\nfnx4's own \"Done when\" box \"first real subscription: `litlfred/ihris`\" is unchecked, and no instance declares a real subscription yet. All earlier children are completed, so this records the remaining work as an open child for `check:bean-rollup`.\n\n## Done when\n- [x] an instance declares a `subscriptions` entry for `litlfred/ihris` and it materialises (`lit",
       "file": "beans/defs/folio-assistant-tmo5--first-real-kg-subscription-litlfred-ihris.md"
     },
     {
@@ -7677,16 +7979,14 @@
     {
       "id": "folio-assistant-txue",
       "title": "S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y9r6, vj2p",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-rfuq"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-01T08:14:34Z",
-      "updatedAt": "2026-10-21T17:56:00Z",
+      "updatedAt": "2026-10-30T20:37:00Z",
       "preview": "D1: all cat-harness code -> cat-harness-tools. One agent at a time.\n\n## Done when\n- [x] 70lx: server/tools/routes/rbac/auth/mcp moved; MCP server lists the same tools\n- [ ] 8lcl Zod moved; JSON Schema stays\n- [ ] y9r6 no .ts in cat-harness content\n- [ ] vj2p each instance hosts its own outputs\n\n## State 2026-10-09\n- 70lx (stage 1a): completed. y9r6 (1c): completed (closed on #1702). 8lcl (1b): tod",
       "file": "beans/defs/folio-assistant-txue--s5-code-out-of-cat-harness-stages-1a-1d-70lx-absor.md"
     },
@@ -7945,16 +8245,14 @@
     {
       "id": "folio-assistant-vj2p",
       "title": "Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-y9r6"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-01T06:58:02Z",
-      "updatedAt": "2026-10-26T13:20:00Z",
+      "updatedAt": "2026-10-30T17:36:00Z",
       "preview": "Stage 1d of the split plan: `cat-harness` is self-contained.\n\n- **Hosted outputs about higher instances (≈560 files)** — owner D3 (2026-10-01), **option 2**: each instance hosts the generated outputs about ITSELF (`<instance>/uml/`, `<instance>/docs/`), not the checkout root. Main sets: `uml/overview/<instance>` 188, `docs/uml/overview` 94, `docs/assets/img/uml/*` ≈211, `docs/cat-harness/{catalogu",
       "file": "beans/defs/folio-assistant-vj2p--separation-stage-1d-cat-harness-is-self-contained.md"
     },
@@ -8112,7 +8410,7 @@
         "folio-assistant-mgxw"
       ],
       "createdAt": "2026-10-01T08:14:34Z",
-      "updatedAt": "2026-10-23T13:45:00Z",
+      "updatedAt": "2026-10-30T15:05:00Z",
       "preview": "Absorbs syzb, fnx4 cutover path, 4475. G11 (slice-7 layout vs staged dirs) is a prerequisite.\n\n## Done when\n- [ ] import-consumed instances are submodules\n- [ ] read-consumed instances are subscriptions\n- [x] in-tree copies removed per instance on owner OK\n\n\n## Amended — owner 2026-10-06 (options 1+2)\nCutover mechanism replaced, following the remote-mount ruling (bean 0mpw):\n- **code** an instance",
       "file": "beans/defs/folio-assistant-w0at--s8-cut-over-submodule-if-imported-subscription-if.md"
     },
@@ -8140,7 +8438,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:02Z",
-      "updatedAt": "2026-10-30T12:25:00Z",
+      "updatedAt": "2026-10-30T18:10:00Z",
       "preview": "Stage 5 of the split plan: QA from scratch. Fresh clones of bootstrap, bootstrap-tools, cat-harness, cat-harness-tools as siblings in an empty directory: `bun install --frozen-lockfile`, `tsc`, `bun test`, closure, the rehearsal, every `:check` in `cat-harness-tools/package.json`; link audit (0 broken, 0 leaving except declared URLs); names-outside audit (every remaining mention of folio-assistant",
       "file": "beans/defs/folio-assistant-w1gy--separation-stage-5-qa-both-new-repositories-from-f.md"
     },
@@ -8801,6 +9099,22 @@
       "file": "beans/defs/folio-assistant-xxh4--agent-memory-target-github-copilot-not-implemented.md"
     },
     {
+      "id": "folio-assistant-y0o0",
+      "title": "pcf-consent skill (model, translate, decide) (PCF9)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-jx7m"
+      ],
+      "createdAt": "2026-10-30T15:46:00Z",
+      "updatedAt": "2026-10-30T16:56:00Z",
+      "preview": "IHE PCF adoption, owner card 2026-10-30 15:44Z \"A: Approve, take all advice\": PCF 1.1.0 (Trial Implementation) and FHIR R4 Consent (Trial Use) approved; no IUA claim; home smart-trust-phw; IHE source via library snapshots + pinned FHIR package, profiles referenced by URL only; Basic consent first. Plan: `/mnt/project-files/dsa-analysis/ihe-pcf-vhl-options.md` §5. Issue: litlfred/folio-assistant#27",
+      "file": "beans/defs/folio-assistant-y0o0--pcf-consent-skill-model-translate-decide.md"
+    },
+    {
       "id": "folio-assistant-y1w9",
       "title": "MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent",
       "status": "completed",
@@ -8845,18 +9159,14 @@
     {
       "id": "folio-assistant-y9r6",
       "title": "Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-iirv",
-      "blocking": [
-        "folio-assistant-vj2p"
-      ],
-      "blockedBy": [
-        "folio-assistant-8lcl"
-      ],
+      "blocking": [],
+      "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-16T06:30:00Z",
+      "updatedAt": "2026-10-30T19:55:00Z",
       "preview": "Stage 1c of the split plan — FR-7, content holds no code. Owner D2 (2026-10-01), option 1: convert to JSON data, validated by the tools on read.\n\n- 189 block manifests + 7 translation nodes → `<block>.json`; `readBlockManifest` accepts `.json`\n- 100 `defineTool` literals (4 files) → one JSON tool node each under `cat-harness/tools/<stub>/`; `discover.ts` (in tools since 1a) validates with `ToolDef",
       "file": "beans/defs/folio-assistant-y9r6--separation-stage-1c-cat-harness-content-holds-no-c.md"
     },
@@ -8957,6 +9267,20 @@
       "updatedAt": "2026-10-05T04:57:30Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> showing who-iris w/ existing materialized assets with themed harness.\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `kupb` | IRIS CATALOGUE — a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample i",
       "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md"
+    },
+    {
+      "id": "folio-assistant-ygge",
+      "title": "folio-assistant-sci resolves @litlfred/cat-harness in a sibling layout (w1gy F17)",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-iirv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T20:15:00Z",
+      "updatedAt": "2026-10-30T21:22:00Z",
+      "preview": "Finding F17 of the w1gy fresh-clone QA (/mnt/project-files/w1gy-qa-2026-10-30/QA-cat-harness.md). When folio-assistant-sci is cloned beside bootstrap, bootstrap-tools, cat-harness and cat-harness-tools, 10 cat-harness tests fail (for example \"composition, in whatever checkout this runs\" and \"block kinds are discovered\"). The cause: sci's `schemas/mathpaper-vocabulary.ts` imports `@litlfred/cat-har",
+      "file": "beans/defs/folio-assistant-ygge--sci-resolves-cat-harness-in-a-sibling-layout.md"
     },
     {
       "id": "folio-assistant-ygk5",
@@ -9083,6 +9407,20 @@
       "updatedAt": "2026-10-29T07:55:00Z",
       "preview": "Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, no LeanArchitect; an elaborated formal-edge extractor; tools and skills in folio-assistant-sci, never in core (\"f-a-core has high level processes only, no tooling\").\n\n## Todo\n- [x] core: `elaborated` source label, `isElaborated`, and one `summarizeSources` rule shared by the reader (content-graph.ts) and the writer (le",
       "file": "beans/defs/folio-assistant-yxob--formal-edge-extractor-in-folio-assistant-sci-gener.md"
+    },
+    {
+      "id": "folio-assistant-yy40",
+      "title": "B4 audit trail: cite agreement with standard terms (prov:used + DCAT spdx:checksum + VC id)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-negd",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-30T19:20:41Z",
+      "updatedAt": "2026-10-30T20:10:00Z",
+      "preview": "Owner card 2026-10-30 19:16Z: \"Merge, fix by bean\". litlfred/cat-harness#753 (beans `3z44`, `2egb`) lands as is, ported to litlfred/cat-harness-tools#975 because bean `8lcl` moved `schemas/` there. This bean then replaces the fields #753 invented with existing open standards. Issue: litlfred/folio-assistant#2702.\n\nBackground: `/mnt/project-files/dsa-analysis/existing-schemas-options.md` (the table",
+      "file": "beans/defs/folio-assistant-yy40--b4-audit-trail-cite-agreement-with-standard-terms.md"
     },
     {
       "id": "folio-assistant-yy4u",
@@ -9362,8 +9700,8 @@
       ]
     },
     {
-      "blocker": "folio-assistant-8lcl",
-      "blocked": "folio-assistant-y9r6",
+      "blocker": "folio-assistant-a7c1",
+      "blocked": "folio-assistant-2egb",
       "declaredOn": [
         "blocked_by"
       ]
@@ -9380,13 +9718,6 @@
       "blocked": "folio-assistant-4ak5",
       "declaredOn": [
         "blocking"
-      ]
-    },
-    {
-      "blocker": "folio-assistant-f8wp",
-      "blocked": "folio-assistant-8lcl",
-      "declaredOn": [
-        "blocked_by"
       ]
     },
     {
@@ -9427,6 +9758,27 @@
     {
       "blocker": "folio-assistant-hx65",
       "blocked": "folio-assistant-rmi6",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
+      "blocker": "folio-assistant-jx7m",
+      "blocked": "folio-assistant-a7c1",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
+      "blocker": "folio-assistant-jx7m",
+      "blocked": "folio-assistant-r9vk",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
+      "blocker": "folio-assistant-jx7m",
+      "blocked": "folio-assistant-y0o0",
       "declaredOn": [
         "blocked_by"
       ]
@@ -9474,6 +9826,13 @@
       ]
     },
     {
+      "blocker": "folio-assistant-nr5p",
+      "blocked": "folio-assistant-sl5v",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
       "blocker": "folio-assistant-pyds",
       "blocked": "folio-assistant-70lx",
       "declaredOn": [
@@ -9481,15 +9840,8 @@
       ]
     },
     {
-      "blocker": "folio-assistant-pzwb",
-      "blocked": "folio-assistant-4fv8",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
-      "blocker": "folio-assistant-rfuq",
-      "blocked": "folio-assistant-txue",
+      "blocker": "folio-assistant-sl5v",
+      "blocked": "folio-assistant-dy4p",
       "declaredOn": [
         "blocked_by"
       ]
@@ -9516,13 +9868,6 @@
       ]
     },
     {
-      "blocker": "folio-assistant-y9r6",
-      "blocked": "folio-assistant-vj2p",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
       "blocker": "folio-assistant-z9hh",
       "blocked": "folio-assistant-gz47",
       "declaredOn": [
@@ -9530,14 +9875,7 @@
       ]
     }
   ],
-  "findings": [
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-pzwb",
-      "blocks": "folio-assistant-4fv8",
-      "detail": "blocks `folio-assistant-4fv8` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    }
-  ],
+  "findings": [],
   "plan": {
     "milestones": [
       {
@@ -9577,18 +9915,18 @@
         "status": "in-progress",
         "epics": 8,
         "total": 37,
-        "closed": 34,
-        "open": 3,
-        "inProgress": 2,
+        "closed": 36,
+        "open": 1,
+        "inProgress": 0,
         "todo": 1,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.918918918918919
+        "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 47,
-    "openTotal": 51,
-    "coveredOpen": 3,
+    "orphanOpen": 23,
+    "openTotal": 25,
+    "coveredOpen": 1,
     "duplicateIds": 0
   }
 }

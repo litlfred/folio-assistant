@@ -332,7 +332,7 @@
             "none": true
           },
           "invoke": {
-            "shell": "bun run cat latex:preflight"
+            "shell": "bun run folio-assistant-sci/pipeline/latex-preflight.ts"
           },
           "io": {
             "inputs": [
@@ -380,6 +380,65 @@
       "path": "tools/latex-preflight/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latexmk-compile/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latexmk-compile.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat latex:compile"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The TeX source file to compile (e.g. main.tex).",
+                "name": "tex",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Additional arguments to forward to latexmk.",
+                "name": "args",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine).",
+                "name": "pdf",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "latexmk-compile",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bash",
+              "latexmk",
+              "pdflatex"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-compilation",
+          "title": "LaTeX compilation (latexmk)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/latexmk-compile",
+      "path": "tools/latexmk-compile/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-audit/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -391,7 +450,7 @@
             "none": true
           },
           "invoke": {
-            "shell": "bun run cat lean:audit"
+            "shell": "bun run folio-assistant-sci/scripts/lean-audit.ts"
           },
           "io": {
             "inputs": [
@@ -617,7 +676,7 @@
             "none": true
           },
           "invoke": {
-            "shell": "bun run cat lean:coverage"
+            "shell": "bun run folio-assistant-sci/scripts/lean-coverage.ts"
           },
           "io": {
             "inputs": [
@@ -1145,10 +1204,10 @@
           "@type": "cat-harness:Tool",
           "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
           "install": {
-            "cli": "scripts/setup-lean-toolchain.sh"
+            "cli": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
           },
           "invoke": {
-            "shell": "bun run cat lean:setup-toolchain"
+            "shell": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
           },
           "io": {
             "inputs": [],

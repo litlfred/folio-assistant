@@ -1,6 +1,6 @@
 # Placement audit — every skill, tool, scenario, process and role checked against its layer (2026-10-01)
 
-**Status:** read-only audit for the separation arc (epic bean `folio-assistant-7x5n`, issue [#1770](https://github.com/litlfred/folio-assistant/issues/1770), story S4 `rfuq`). **Nothing was moved.** The plan it serves is `cat-harness/docs/proposals/separation-arc-2026-10-01.md` (on branch `claude/blissful-ride-c2f26u`). Every row is in [`placement-audit-2026-10-01.json`](placement-audit-2026-10-01.json): `{kind, id, path, instance, concern, verdict, target, signal, evidence, pr}`.
+**Status:** read-only audit for the separation arc (epic bean `folio-assistant-7x5n`, issue [#1770](https://github.com/litlfred/folio-assistant/issues/1770), story S4 `rfuq`). **Nothing was moved.** *Amended 2026-10-30 (bean `saqd`):* eight rows that the heuristic sent to sci or core are reclassified as `CODE` rows that stay in cat-harness-tools: `gen-content-graph-uml.ts`, `content-graph-analysis.py`, `artefact-verification.json`, `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `schemas/translation.ts`. Each `signal` gives the measurement; the counts below include the change. The plan it serves is `cat-harness/docs/proposals/separation-arc-2026-10-01.md` (on branch `claude/blissful-ride-c2f26u`). Every row is in [`placement-audit-2026-10-01.json`](placement-audit-2026-10-01.json): `{kind, id, path, instance, concern, verdict, target, signal, evidence, pr}`.
 
 **Measured at:** `origin/main` `cdb0a018c4a`, with the `bootstrap` (`f70a56c`) and `bootstrap-tools` (`920c772`) submodules initialised. **2266 items** across 20 kinds in 14 instance directories (`smart-l1`, `smart-dak`, `smart-ig` and `smart-immunizations` hold none of these kinds yet: only a declaration and QA results).
 
@@ -25,12 +25,12 @@
 | methodology | 21 |  |  |  |  |  | 21 |
 | code-list | 6 | 6 | 1 |  |  |  | 13 |
 | template | 3 | 16 |  | 1 |  |  | 20 |
-| schema | 87 | 25 | 8 | 186 |  | 1 | 307 |
+| schema | 87 | 25 | 8 | 187 |  |  | 307 |
 | source-descriptor |  | 2 |  |  |  |  | 2 |
 | library-entry | 45 | 14 |  |  |  |  | 59 |
-| script-group | 115 | 28 | 2 | 407 |  |  | 552 |
-| code-group | 9 | 32 | 1 | 192 |  | 9 | 243 |
-| **all** | **945** | **295** | **89** | **790** | **127** | **20** | **2266** |
+| script-group | 115 | 26 | 2 | 409 |  |  | 552 |
+| code-group | 9 | 31 | 1 | 197 |  | 5 | 243 |
+| **all** | **945** | **292** | **89** | **798** | **127** | **15** | **2266** |
 
 `CODE` means "executable in cat-harness → cat-harness-tools" (D1). `TO-JSON` means "placed right, but the `.ts` node becomes data" (D2). Neither changes the instance that owns the *knowledge*. A `SPLIT` either divides an item or keeps it and inverts its upward references; its `signal` says which.
 
@@ -44,10 +44,10 @@
 | bootstrap | 20 | 20 | 0 | 0 | 0 |
 | bootstrap-tools | 49 | 47 | 0 | 2 | 0 |
 | cat-harness | 1652 | 447 | 87 | 1102 | 33 |
-| cat-harness-tools | 7 | 7 | 0 | 0 | 798 |
+| cat-harness-tools | 7 | 7 | 0 | 0 | 806 |
 | fhir-harness | 57 | 36 | 14 | 7 | 36 |
-| folio-assistant-core | 150 | 133 | 4 | 13 | 96 |
-| folio-assistant-sci | 176 | 161 | 14 | 1 | 156 |
+| folio-assistant-core | 150 | 133 | 4 | 13 | 95 |
+| folio-assistant-sci | 176 | 161 | 14 | 1 | 149 |
 | large-datasets | 23 | 0 | 0 | 23 | 0 |
 | smart-base | 38 | 28 | 8 | 2 | 33 |
 | smart-trust | 2 | 2 | 0 | 0 | 1 |
@@ -65,7 +65,7 @@ Which existing bean each non-OK row belongs to (iirv placement PR2–PR9: `pzwb`
 | 8lcl (S5 1b) | 181 |
 | y9r6 (S5 1c) | 127 |
 | unplanned | 106 |
-| unplanned (#223 code partition; S5) | 73 |
+| unplanned (#223 code partition; S5) | 65 |
 | 4fv8 (PR4) | 70 |
 | 70lx (S5 1a) + 8fq9 (PR7) | 52 |
 | unplanned (7x5n S4 subgraph ruling) | 38 |
@@ -77,6 +77,7 @@ Which existing bean each non-OK row belongs to (iirv placement PR2–PR9: `pzwb`
 | #1735 (S3) | 7 |
 | tlat (PR5) | 5 |
 | mer2 (S6) + 70lx | 4 |
+| saqd (2026-10-30 reclassification) | 8 |
 
 `p9bu` (PR9) owns no row here: it moves docs pages, which are outside this audit's kinds. `8fq9` (PR7) appears only beside `70lx`, because the tests it regroups are code that S5 moves first.
 
@@ -121,7 +122,7 @@ One Python script (≈900 lines, kept out of the tree because it is not small; t
 | PR4: 14 roles move up | agreed, plus **`qc-reviewer` and `build-pipeline` SPLIT** | both still list fhir-harness skills in the harness `roles.json`; those edges belong in `fhir-harness/scenarios/roles.json` `extensions` (the PR0b overlay already holds the rest) |
 | PR8 / §4 issue 4: "28 schemas above the harness", by category only | named here: **20 schemas, 28 rows with their tests**: `block-kinds`, `board`, `board-positions`, `builders`, `carried-note`, `constraints`, `dak`, `dak-blocks`, `dak-content-type`, `formal-ref`, `formalization-types`, `front-matter`, `ig-chrome`, `ig-menu`, `ig-metadata-index`, `lean-packages`, `note-anchor`, `refactor-strategy`, `types`, `window-stack` | the 28 were never listed by name; the categories (content, boards, DAK/IG/FSH, sci) are applied to files by name. `fsh-guts.ts` is not moved: fsh-guts is a checkout-root graph (PR0a) |
 
-## AMBIGUOUS — owner questions (20 rows, 7 questions)
+## AMBIGUOUS — owner questions (15 rows, 7 questions)
 
 Each question gives the context, the options, and a recommendation, so it can be answered from this page.
 
@@ -146,12 +147,13 @@ Each question gives the context, the options, and a recommendation, so it can be
 - *Recommendation:* **(b)**: the Milnor standard is a paper style; markdown rendering checks are generic once the math examples move.
 - *If unanswered:* the skills stay in cat-harness and keep their upward links, which `check:reference-direction` keeps reporting.
 
-**Q4. Content-pipeline modules that read as paper/Lean code but are imported by other harness modules** (10 rows: `translation.ts`, `content-graph.ts`, `lean-lexer.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-checkers-q-usage.ts`, `qa-checkers-voice.ts`, `qa-criteria-registry.ts`, `render-latex.ts`, `render-value.ts`)
+**Q4. Content-pipeline modules that read as paper/Lean code but are imported by other harness modules** (10 rows: `translation.ts`, `content-graph.ts`, `lean-lexer.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-checkers-q-usage.ts`, `qa-checkers-voice.ts`, `qa-criteria-registry.ts`, `render-latex.ts`, `render-value.ts`; 5 of them reclassified 2026-10-30, below)
 
 - *Context:* They carry sci vocabulary (Lean lexing, LaTeX rendering, q-usage and voice QA checkers, the QA criteria registry), so rule 2 says `folio-assistant-sci`. But 3–12 non-test cat-harness modules import each one, so moving them alone creates harness → sci imports.
 - *Options:* (a) move each with its importers to `folio-assistant-sci` (the qou-era pipeline becomes sci code); (b) split: generic pipeline core to `cat-harness-tools`, the math checkers to sci; (c) keep all of `content/pipeline/` in `cat-harness-tools` as the shared pipeline for now.
 - *Recommendation:* **(b)**, done inside S5: it is the only option that leaves no upward import and does not drag the document path into sci.
 - *If unanswered:* S5 moves these modules to cat-harness-tools with the rest of `content/pipeline/` (option c by default).
+- *Reclassified 2026-10-30 (bean `saqd`):* `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `translation.ts` are generic and imported by 3–11 non-test cat-harness-tools modules each, so they are now `CODE` rows that stay in cat-harness-tools. `qa-checkers-q-usage.ts` moves to sci; the rest remain open.
 
 **Q5. Form of the large-datasets and agent-skills subgraphs**
 
@@ -721,7 +723,6 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 | verdict | path | target | concern | signal | PR |
 |---|---|---|---|---|---|
-| AMBIGUOUS | `cat-harness/schemas/translation.ts` | `folio-assistant-sci/schemas/translation.ts` | library | rule 2 says folio-assistant-sci (sci vocabulary) but 3 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/schemas/board-positions.test.ts` | `folio-assistant-core/schemas/board-positions.test.ts` | sdlc | owner ruling 4B (2026-09-30): schemas above the harness move now, with their importers (placement §4 issue 4); boards are a core concern (PR2 ui/boards, PR3 board-*.bpmn); heuristic said CODE | pzwb (PR2) |
 | MOVE | `cat-harness/schemas/board-positions.ts` | `folio-assistant-core/schemas/board-positions.ts` | ui | owner ruling 4B (2026-09-30): schemas above the harness move now, with their importers (placement §4 issue 4); boards are a core concern (PR2 ui/boards, PR3 board-*.bpmn); heuristic said CODE | pzwb (PR2) |
 | MOVE | `cat-harness/schemas/board.test.ts` | `folio-assistant-core/schemas/board.test.ts` | sdlc | owner ruling 4B (2026-09-30): schemas above the harness move now, with their importers (placement §4 issue 4); boards are a core concern (PR2 ui/boards, PR3 board-*.bpmn); heuristic said CODE | pzwb (PR2) |
@@ -756,7 +757,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `folio-assistant-core/schemas/fhir-artifact-index.ts` | `fhir-harness/schemas/fhir-artifact-index.ts` | content | rule 2 vs users: subject is fhir but used at/below folio-assistant-core by ['cat-harness']; keep a generic stub, move the fhir body | unplanned (#223 code partition; S5) |
 | SPLIT | `folio-assistant-core/schemas/materialization.ts` | `cat-harness-tools/schemas/library/materialization-state.ts (states + fixity) + the rest stays in folio-assistant-core` | library | placement ruling 2 (A) / PR5 tlat: the state vocabulary and fixity move down; under D1 + "tools below core" the Zod lands in cat-harness-tools, not cat-harness; heuristic said OK | tlat (PR5) |
 
-<details markdown="1"><summary>collapsed: OK 87, CODE 186</summary>
+<details markdown="1"><summary>collapsed: OK 87, CODE 187</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -767,7 +768,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | cat-harness | conduct |  | 3 |  |
 | cat-harness | content | 20 | 53 |  |
 | cat-harness | kg |  | 16 |  |
-| cat-harness | library |  | 14 |  |
+| cat-harness | library |  | 15 |  |
 | cat-harness | process | 6 | 7 |  |
 | cat-harness | sdlc | 2 | 74 |  |
 | cat-harness | tools |  | 3 |  |
@@ -832,14 +833,12 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 | verdict | path | target | concern | signal | PR |
 |---|---|---|---|---|---|
-| MOVE | `cat-harness/scripts/artefact-verification.json` | `folio-assistant-core/scripts/artefact-verification.json` | sdlc | rule 1: code reaches folio-assistant-core; above cat-harness-tools after "tools below core" | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/bib-papers-list.txt` | `folio-assistant-sci/scripts/bib-papers-list.txt` | library | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/check-duplicate-decls.ts` | `folio-assistant-sci/scripts/check-duplicate-decls.ts` | sdlc | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/check-self-discharging-instances.ts` | `folio-assistant-sci/scripts/check-self-discharging-instances.ts` | sdlc | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/dak-pdf.ts` | `smart-base/scripts/dak-pdf.ts` | ui | rule 2+4: executable whose subject is smart (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/docker-latex-build/` | `folio-assistant-sci/scripts/docker-latex-build/` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/extract-candidates.py` | `folio-assistant-sci/scripts/extract-candidates.py` | library | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
-| MOVE | `cat-harness/scripts/gen-content-graph-uml.ts` | `folio-assistant-sci/scripts/gen-content-graph-uml.ts` | ui | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/lean-audit.ts` | `folio-assistant-sci/scripts/lean-audit.ts` | sdlc | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/lean-build-bg.sh` | `folio-assistant-sci/scripts/lean-build-bg.sh` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/scripts/lean-compile-audit.sh` | `folio-assistant-sci/scripts/lean-compile-audit.sh` | sdlc | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
@@ -863,7 +862,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `cat-harness/scripts/eval/` | `cat-harness-tools/scripts/eval/ (generic) + folio-assistant-sci, smart-base` | content | rule 1: code reaches folio-assistant-sci, smart-base — move the reaching files up ("tools below core"), the rest to cat-harness-tools | unplanned (#223 code partition; S5) |
 | SPLIT | `cat-harness/scripts/translation/` | `cat-harness-tools/scripts/translation/ (generic) + smart-base` | library | rule 1: code reaches smart-base — move the reaching files up ("tools below core"), the rest to cat-harness-tools | unplanned (#223 code partition; S5) |
 
-<details markdown="1"><summary>collapsed: OK 115, CODE 407</summary>
+<details markdown="1"><summary>collapsed: OK 115, CODE 409</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -877,9 +876,9 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | cat-harness | kg | 2 | 29 |  |
 | cat-harness | library |  | 34 |  |
 | cat-harness | process | 1 | 25 |  |
-| cat-harness | sdlc | 5 | 149 |  |
+| cat-harness | sdlc | 5 | 150 |  |
 | cat-harness | tools |  | 7 |  |
-| cat-harness | ui | 1 | 61 |  |
+| cat-harness | ui | 1 | 62 |  |
 | cat-harness-tools | content | 5 |  |  |
 | cat-harness-tools | kg | 1 |  |  |
 | cat-harness-tools | sdlc | 1 |  |  |
@@ -906,13 +905,9 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 | verdict | path | target | concern | signal | PR |
 |---|---|---|---|---|---|
-| AMBIGUOUS | `cat-harness/content/pipeline/content-graph.ts` | `folio-assistant-sci/content/pipeline/content-graph.ts` | kg | rule 2 says folio-assistant-sci (sci vocabulary) but 8 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | AMBIGUOUS | `cat-harness/content/pipeline/lean-lexer.ts` | `folio-assistant-sci/content/pipeline/lean-lexer.ts` | content | rule 2 says folio-assistant-sci (sci vocabulary) but 8 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
-| AMBIGUOUS | `cat-harness/content/pipeline/markdown-ast.ts` | `folio-assistant-sci/content/pipeline/markdown-ast.ts` | content | rule 2 says folio-assistant-sci (sci vocabulary) but 3 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
-| AMBIGUOUS | `cat-harness/content/pipeline/profile-check.ts` | `folio-assistant-sci/content/pipeline/profile-check.ts` | sdlc | rule 2 says folio-assistant-sci (sci vocabulary) but 3 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | AMBIGUOUS | `cat-harness/content/pipeline/qa-checkers-q-usage.ts` | `folio-assistant-sci/content/pipeline/qa-checkers-q-usage.ts` | sdlc | rule 2 says folio-assistant-sci (sci vocabulary) but 3 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | AMBIGUOUS | `cat-harness/content/pipeline/qa-checkers-voice.ts` | `folio-assistant-sci/content/pipeline/qa-checkers-voice.ts` | sdlc | rule 2 says folio-assistant-sci (sci vocabulary) but 7 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
-| AMBIGUOUS | `cat-harness/content/pipeline/qa-criteria-registry.ts` | `folio-assistant-sci/content/pipeline/qa-criteria-registry.ts` | sdlc | rule 2 says folio-assistant-sci (sci vocabulary) but 12 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | AMBIGUOUS | `cat-harness/content/pipeline/render-latex.ts` | `folio-assistant-sci/content/pipeline/render-latex.ts` | ui | rule 2 says folio-assistant-sci (sci vocabulary) but 4 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | AMBIGUOUS | `cat-harness/content/pipeline/render-value.ts` | `folio-assistant-sci/content/pipeline/render-value.ts` | ui | rule 2 says folio-assistant-sci (sci vocabulary) but 5 harness modules import it. Q: (a) move it up with those importers, (b) split the sci part out, (c) keep it in cat-harness-tools as shared pipeline | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/content/pipeline/_folio-chapter-profiles.qou.ts` | `folio-assistant-sci/content/pipeline/_folio-chapter-profiles.qou.ts` | content | rule 2+4: executable whose subject is sci (vocabulary signal; 1 harness importer(s) must move with it or invert) | unplanned (#223 code partition; S5) |
@@ -923,7 +918,6 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/content/pipeline/conditional-class-banner-audit.ts` | `folio-assistant-sci/content/pipeline/conditional-class-banner-audit.ts` | sdlc | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/content/pipeline/conjectural-propagation-audit.ts` | `folio-assistant-sci/content/pipeline/conjectural-propagation-audit.ts` | sdlc | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/content/pipeline/conjectural-propagation-sweep.ts` | `folio-assistant-sci/content/pipeline/conjectural-propagation-sweep.ts` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
-| MOVE | `cat-harness/content/pipeline/content-graph-analysis.py` | `folio-assistant-sci/content/pipeline/content-graph-analysis.py` | kg | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/content/pipeline/export-json.ts` | `folio-assistant-sci/content/pipeline/export-json.ts` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/content/pipeline/fsh-cone.ts` | `fhir-harness/content/pipeline/fsh-cone.ts` | content | rule 2+4: executable whose subject is fhir (vocabulary signal; 1 harness importer(s) must move with it or invert) | unplanned (#223 code partition; S5) |
 | MOVE | `cat-harness/content/pipeline/generate-index.ts` | `folio-assistant-sci/content/pipeline/generate-index.ts` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
@@ -949,16 +943,16 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/content/pipeline/wall-violations-sweep.ts` | `folio-assistant-sci/content/pipeline/wall-violations-sweep.ts` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | SPLIT | `cat-harness/content/pipeline/script-sidecars/` | `cat-harness-tools/content/pipeline/script-sidecars/ (generic) + folio-assistant-sci` | content | rule 1: code reaches folio-assistant-sci — move the reaching files up ("tools below core"), the rest to cat-harness-tools | unplanned (#223 code partition; S5) |
 
-<details markdown="1"><summary>collapsed: OK 9, CODE 192</summary>
+<details markdown="1"><summary>collapsed: OK 9, CODE 197</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | conduct |  | 2 |  |
-| cat-harness | content | 7 | 78 |  |
-| cat-harness | kg |  | 7 |  |
+| cat-harness | content | 7 | 79 |  |
+| cat-harness | kg |  | 9 |  |
 | cat-harness | library |  | 26 |  |
 | cat-harness | process |  | 6 |  |
-| cat-harness | sdlc |  | 46 |  |
+| cat-harness | sdlc |  | 48 |  |
 | cat-harness | tools |  | 10 |  |
 | cat-harness | ui |  | 17 |  |
 | folio-assistant-core | content | 1 |  |  |

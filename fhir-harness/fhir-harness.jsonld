@@ -370,24 +370,38 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-30T13:18:09.139Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitSha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
-  "sourceCommitAt": "2026-10-30T14:46:51+02:00",
+  "generatedAt": "2026-10-31T00:48:00.379Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitSha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
+  "sourceCommitAt": "2026-10-31T00:26:36Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 16,
+    "Skill": 18,
     "Process": 5,
     "SequenceFlow": 75,
     "Lane": 21,
     "ProcessNode": 74,
-    "GraphTypology": 13,
-    "Subgraph": 14,
+    "GraphTypology": 14,
+    "Role": 2,
+    "Subgraph": 15,
     "Asset": 3,
     "Tool": 33
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ig-publisher-service-contract",
+      "title": "IG publisher + validator — the role's contract",
+      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "instructionsPath": "skills/content/fhir-ig-authoring/ig-publisher-service-contract.md",
+      "instructionLines": 47,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
@@ -417,6 +431,19 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "pcf-consent",
+      "title": "pcf-consent",
+      "description": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`.",
+      "instructionsPath": "skills/content/fhir-ig-authoring/pcf-consent.md",
+      "instructionLines": 303,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "fhir-validation",
@@ -436,7 +463,7 @@
       "name": "ig-publication",
       "title": "ig-publication",
       "instructionsPath": "skills/content/fhir-ig-authoring/ig-publication.md",
-      "instructionLines": 117,
+      "instructionLines": 124,
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
       "hasInstructions": true,
@@ -489,9 +516,9 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "ig-build-pipeline",
       "title": "ig-build-pipeline",
-      "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
+      "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 608,
+      "instructionLines": 736,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -504,7 +531,7 @@
       "title": "ig-render-jekyll",
       "description": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
       "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
-      "instructionLines": 299,
+      "instructionLines": 310,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -543,7 +570,7 @@
       "title": "fhir-ig-create",
       "description": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide.",
       "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
-      "instructionLines": 182,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3101,6 +3128,13 @@
       "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
     },
     {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "scenarios",
+      "renderable": false,
+      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "docs",
@@ -3148,6 +3182,40 @@
       "name": "glossary",
       "renderable": false,
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "FHIR modeller",
+      "title": "FHIR modeller",
+      "notation": "fhir-modeller",
+      "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "IG publisher + validator",
+      "title": "IG publisher + validator",
+      "notation": "ig-publisher-service",
+      "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-translations",
@@ -3316,6 +3384,22 @@
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+      ],
+      "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, the actors in `actors/`, and the capabilities in `capabilities/`. The `fhir-modeller` and `ig-publisher-service` roles, actors, stories and FHIR IG capability probes moved here from cat-harness in placement PR4 (bean `4fv8`), beside the FHIR IG processes and skills they bind.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs",
@@ -5193,6 +5277,12 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publisher-service-contract",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
@@ -5203,6 +5293,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/pcf-consent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation",
@@ -6339,6 +6435,18 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/End_FullBuild"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-translations",
@@ -6399,6 +6507,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/scenarios",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios",
+      "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-docs",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs",
@@ -6443,8 +6557,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "71f74d2d6f5abdc4d6df2a869fcc3a8809655119",
+    "sha": "51690a5b5ab1f258c4640fb7a1dcf33fc7db8a63",
     "pr": "main",
-    "run": "41057942184"
+    "run": "41150189192"
   }
 }

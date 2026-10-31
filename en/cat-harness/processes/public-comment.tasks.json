@@ -207,6 +207,67 @@
     ]
    }
   },
+  "Task_RerouteChangeSet": {
+   "id": "Task_RerouteChangeSet",
+   "name": "Re-route a change-set to another committee, with a reason",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
+   "lane": "Review committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
   "Task_Assign": {
    "id": "Task_Assign",
    "name": "Assign to committee members",
@@ -324,6 +385,11 @@
     "title": "Editor",
     "skills": [
      {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
       "name": "content-author",
       "href": "../../../reference/skill-instructions/content-author.html",
       "via": "author"
@@ -345,6 +411,11 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html",
       "via": "author"
      },
      {
@@ -393,6 +464,10 @@
     "title": "Author",
     "skills": [
      {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
       "name": "content-author",
       "href": "../../../reference/skill-instructions/content-author.html"
      },
@@ -407,6 +482,10 @@
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
      },
      {
       "name": "evidence-appraisal",
@@ -481,10 +560,6 @@
      {
       "name": "harness-projections",
       "href": "../../../reference/skill-instructions/harness-projections.html"
-     },
-     {
-      "name": "ig-ast-delta",
-      "href": "../../../reference/skill-instructions/ig-ast-delta.html"
      },
      {
       "name": "kg-separation",
@@ -582,10 +657,6 @@
      {
       "name": "harness-projections",
       "href": "../../../reference/skill-instructions/harness-projections.html"
-     },
-     {
-      "name": "ig-ast-delta",
-      "href": "../../../reference/skill-instructions/ig-ast-delta.html"
      },
      {
       "name": "kg-separation",

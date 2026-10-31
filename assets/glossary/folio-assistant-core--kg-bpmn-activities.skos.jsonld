@@ -1574,6 +1574,546 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.call_beancloseended",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanCloseEnded",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanCloseEnded",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.call_beanclosepublished",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean [bean-close]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+        }
+      ],
+      "skos:notation": "Call_BeanClosePublished",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanClosePublished",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.call_beanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.call_beanopenchange",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the bean [bean-open]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+        }
+      ],
+      "skos:notation": "Call_BeanOpenChange",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanOpenChange",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.call_publiccomment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Public comment on the template [public-comment]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Comments on the frozen, line-numbered review version of the public template are placed, triaged, weighed and decided (public-comment.bpmn). Private annexes are never circulated."
+        }
+      ],
+      "skos:notation": "Call_PublicComment",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_PublicComment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_agreeterms",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.1 · Agree purpose, datasets, period, duties and trust anchors"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parties agree the purpose, the datasets, the period, the conditions and duties, which trust anchors each side accepts, and the legal basis the sharing rests on (consent, treatment, public-health law or a research waiver). This sets what the text must say; it is a negotiation between people."
+        }
+      ],
+      "skos:notation": "Task_AgreeTerms",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_AgreeTerms",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_assignversion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P2.1 · Assign the version and its immutable URL [content-publish]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Each signed version gets its own immutable URL (for example /dsa/42/v3). A 'latest' URL may exist; nothing cites it. A new version never overwrites an old one. This fixed-version URL is the one a Consent cites (consent rule 2), and a computable agreement's ODRL policy uid is set to it (P2.3)."
+        }
+      ],
+      "skos:notation": "Task_AssignVersion",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_AssignVersion",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_catalogue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P2.4–5 · Write the DCAT 3 record and link versions [dsa-dcat-record]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One DCAT 3 record: the agreement as a catalogued resource, each file a dcat:Distribution with dcat:downloadURL and spdx:checksum; datasets it covers carry odrl:hasPolicy. Versions are linked with DCAT 3 versioning (previous version, version, current version)."
+        }
+      ],
+      "skos:notation": "Task_Catalogue",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Catalogue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_checkodrl",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.4 · Check the ODRL against the text [content-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Computable only. A person checks that the ODRL says what the text says, and signs it off. A program can check the ODRL is well formed; it cannot check that it matches the text. The check includes the consent duty: present when the legal basis is consent, absent otherwise (consent rule 1)."
+        }
+      ],
+      "skos:notation": "Task_CheckOdrl",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_CheckOdrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_consentcitation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P2.2b · State the fixed-version URL and hash a Consent cites [content-publish]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Consent-based only. The version's publication metadata states the fixed-version URL (P2.1) and the hash (P2.2) that a Consent cites in FHIR R4 Consent.policy.uri (consent rule 2), never the 'latest' URL. For a computable agreement that URL is also the ODRL policy uid (P2.3): a Consent counts only when its Consent.policy.uri equals the agreement's ODRL policy uid, so the two are the same string."
+        }
+      ],
+      "skos:notation": "Task_ConsentCitation",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_ConsentCitation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_decidechange",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decide: amend, renew or end"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parties decide what happens to the agreement. Deciding to amend or terminate is human; expiry of a computable agreement is already enforced by its ODRL dateTime constraint."
+        }
+      ],
+      "skos:notation": "Task_DecideChange",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_DecideChange",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_decidegrants",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P14.2 · Decide what happens to existing grants"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Existing grants keep citing the old hash. The parties decide, per agreement: they stay valid until expiry, or they are revoked and reissued against the new version (in smart-trust). The old version stays readable."
+        }
+      ],
+      "skos:notation": "Task_DecideGrants",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_DecideGrants",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_deriveodrl",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.3 · Derive the ODRL 2.2 Agreement"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Computable only. One assigner and one assignee (ODRL 2.2 §2.1.3), permissions and prohibitions with target assets (§2.2), constraints (§2.5.1) and duties (§2.6.3), written as JSON-LD. Purposes from HL7 PurposeOfUse. Consent rule 1: the Agreement carries the odrl:obtainConsent duty only when the legal basis recorded in P1.2a is consent."
+        }
+      ],
+      "skos:notation": "Task_DeriveOdrl",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_DeriveOdrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_endduties",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Revoke grants and start end-of-agreement duties"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "All grants are revoked (P13) and the end-of-agreement duties start: return or delete the data, then check them (P12). Those are server processes in smart-trust; this step records that the parties started them."
+        }
+      ],
+      "skos:notation": "Task_EndDuties",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_EndDuties",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P2.2 · Record the SHA-256 of each file [dsa-checksum]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compute SHA-256 (FIPS 180-4) of the signed text, and of the ODRL file if there is one, recorded as DCAT 3 spdx:checksum and verified by check:dsa-hash."
+        }
+      ],
+      "skos:notation": "Task_Hash",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Hash",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_hashsummary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P2.2a · Hash the plain-language summary with the agreement [dsa-checksum]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Consent-based only. Record the SHA-256 of the plain-language summary beside the agreement's, in the same version (consent rule 3). The summary a person consented to can then be checked against the agreement it summarises; a changed summary is a new version."
+        }
+      ],
+      "skos:notation": "Task_HashSummary",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_HashSummary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_newconsentneeded",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P14.3 · Record that new consent is needed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The amendment widens use, so a Consent citing the old version's URL and hash does not cover the new version (consent rule 2). Record on the bean, and in the new version's text, that new consent is needed; the new version gets its own plain-language summary (P1.2b). Asking each person again is the trust layer's."
+        }
+      ],
+      "skos:notation": "Task_NewConsentNeeded",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_NewConsentNeeded",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_odrlcitestext",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P2.3 · Make the ODRL cite the text by URL and hash [dsa-odrl-source]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The ODRL policy names the signed text distribution with dcterms:source (DCMI Terms), pointing at the immutable URL whose spdx:checksum was just recorded. Its uid is that same fixed-version URL, the URL a Consent cites in Consent.policy.uri (consent rule 2)."
+        }
+      ],
+      "skos:notation": "Task_OdrlCitesText",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_OdrlCitesText",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_plainsummary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.2b · Draft the plain-language summary [document-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Consent-based only. Write a plain-language summary of the agreement in the same document folio: what it lets the recipient do with the person's data, in words the person can read. Consent rule 3: every agreement that needs consent publishes this summary, hashed with the agreement (P2.2a), and the summary is what the person consents to. It is reviewed, rendered and versioned with the text."
+        }
+      ],
+      "skos:notation": "Task_PlainSummary",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_PlainSummary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_publish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish the version at its URL [content-publish]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Publish the files at the version's immutable URL. If the parties' names are sensitive, publish only the template and the hash of the signed instance. A consent-based agreement publishes its plain-language summary and its hash with the text (consent rule 3). Check before publishing (consent rule 2): a computable agreement's ODRL policy uid equals this version's fixed-version URL, the URL a Consent cites; if they differ, the version is not published."
+        }
+      ],
+      "skos:notation": "Task_Publish",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Publish",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_recordlegalbasis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.2a · Record the legal basis [normative-statements]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The text states the legal basis the parties agreed in P1.1 as a normative statement: consent, treatment, public-health law, or a research waiver. Consent rule 1: only an agreement whose legal basis is consent carries the odrl:obtainConsent duty; treatment, public-health law and research waivers do not rest on consent. The gateway that follows, the ODRL and the reviewers all read the basis from this statement."
+        }
+      ],
+      "skos:notation": "Task_RecordLegalBasis",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_RecordLegalBasis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_render",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render the text to HTML / PDF [document-publishing]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render the agreed text to the form that will be signed (HTML and PDF), without a TeX installation. A consent-based agreement's plain-language summary is rendered with it."
+        }
+      ],
+      "skos:notation": "Task_Render",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Render",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the draft agreement [content-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Legal and policy review of the whole draft. Reviewers comment on blocks through review-comments; review says which review skill answers which question. For a consent-based agreement the reviewers also check that the plain-language summary says what the text says, since it is what the person consents to (consent rule 3)."
+        }
+      ],
+      "skos:notation": "Task_Review",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Review",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_setstatus",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P14.5 · Set the catalogue status to ended [dsa-catalogue-status]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Set the life-cycle status of the agreement's DCAT 3 record (DCAT 3 §6.4.30). The published versions stay readable at their URLs."
+        }
+      ],
+      "skos:notation": "Task_SetStatus",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_SetStatus",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_sign",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.6 · Sign"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The signatories sign: wet ink, or an electronic signature under national law. Technically a detached JWS (RFC 7515) or CMS (RFC 5652); PAdES for a signed PDF needs the owner's approval."
+        }
+      ],
+      "skos:notation": "Task_Sign",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Sign",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_splitannexes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.5 · Split public terms from private annexes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Split the agreement into a public template and private annexes (security controls, named staff). Only the hash of a private annex is ever published."
+        }
+      ],
+      "skos:notation": "Task_SplitAnnexes",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_SplitAnnexes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_dsadocumentlifecycle.task_writetext",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "P1.2 · Write the legal text [document-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the agreement as a document folio: one normative statement per clause the parties must keep, through normative-statements. The text says which governs if it and a machine-readable form disagree (suggested: the text)."
+        }
+      ],
+      "skos:notation": "Task_WriteText",
+      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_WriteText",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_editing.call_beanclose",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2294,6 +2834,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_gettingstarted.task_chooseharnessed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Choose what the harness reads"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The person picks which of the content markers the scan found the harness declares in index.config.json, and nothing is declared unpicked. A PERSON'S STEP: the scan's `markers` that are not yet declared are offered as selectable options — one per marker, each with its paths and what declaring it means, plus \"none of these\" — and the person picks which parts of the repository to load into the KG. A tap card where the host has one; otherwise a numbered pick-list with a stated default. Never a typed reply. The default declares NOTHING: a harness that declared every marker it found would be slurping the repository, which is what this step exists to prevent. Only the picks reach Task_Scaffold, which declares exactly those in index.config.json. With no undeclared marker found, nothing is asked. The same question is put after setup by running the scan with `--markers` (repo-conversion §2a)."
+        }
+      ],
+      "skos:notation": "Task_ChooseHarnessed",
+      "dcterms:source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ChooseHarnessed",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_gettingstarted.task_confirmimport",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2486,7 +3046,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the instance's config inline in its entry; no <slug>.config.json, bean ymvt), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present."
+          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the instance's config inline in its entry; no <slug>.config.json, bean ymvt), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. On the overlay path it declares in index.config.json exactly the markers picked at Task_ChooseHarnessed, and none it was not given. Refuses rather than overwrites when a folio is already present."
         }
       ],
       "skos:notation": "Task_Scaffold",
@@ -2506,7 +3066,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read-only. Classifies candidates into library/ (external source) and content/ (authored here), and reports what it could not classify as its own bucket rather than forcing every file into one of the two."
+          "@value": "Read-only. Classifies candidates into library/ (external source) and content/ (authored here), and reports what it could not classify as its own bucket rather than forcing every file into one of the two. Its fourth section, `markers`, lists the content markers it found — sushi-config.yaml, a legacy dak.json, .bpmn processes, a beans store, library/, Lean, folio manifests — each with its paths, whether index.config.json already declares it (declared, not-declared, or unknown), and the snippet that would. `bun run cat-harness-tools/scripts/scan-repo-content.ts --json`, a plain command any agent host can run."
         }
       ],
       "skos:notation": "Task_ScanRepo",
@@ -3466,7 +4026,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval."
+          "@value": "A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-committee / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval."
         }
       ],
       "skos:notation": "Task_GroupChangeSets",
@@ -3506,7 +4066,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received."
+          "@value": "public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received. When the review is also kept in a shared Google Sheet, build its Apps Script with Tool review-sheet-sync (from review/public-comment/sheet-sync.json) and have the sheet's owner install it once (Extensions, Apps Script, run installTriggers): the sheet then keeps its page, section, line and comment links and its change-set joins current by itself."
         }
       ],
       "skos:notation": "Task_Ingest",
@@ -3531,6 +4091,26 @@
       ],
       "skos:notation": "Task_ProposeChangeSets",
       "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_reroutechangeset",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-route a change-set to another committee, with a reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment-changesets reroute, or cs-committee: <TWG> — <why> on GitHub from a person in the committee or editor lane (bean se3i, issue #197). Moves the change-set to another TWG review committee and records who, when, from, to and why on the change-set record, so re-ingesting comments never resets it. Person-only (userTask): agents cannot re-route a change-set on their own."
+        }
+      ],
+      "skos:notation": "Task_RerouteChangeSet",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_RerouteChangeSet",
       "skos:note": "candidate"
     },
     {

@@ -29,13 +29,6 @@
         "detail": "bootstrap"
       },
       {
-        "id": "needs:bootstrap-tools",
-        "namedBy": "cat-harness",
-        "what": "bootstrap-tools, which cat-harness needs, is beside it and parses",
-        "state": "done",
-        "detail": "bootstrap-tools"
-      },
-      {
         "id": "directory:cat-harness-validators",
         "namedBy": "cat-harness",
         "what": "declared directory validators/ exists",
@@ -62,6 +55,13 @@
         "what": "declared directory subscriptions/ exists",
         "state": "done",
         "detail": "holds substrate-snapshot"
+      },
+      {
+        "id": "directory:subscribed-harnesses",
+        "namedBy": "cat-harness",
+        "what": "declared directory subscribed-harnesses/ exists",
+        "state": "done",
+        "detail": "holds subscribed-harnesses"
       },
       {
         "id": "directory:code-lists",

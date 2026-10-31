@@ -1,0 +1,98 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Health Link Payload (DRAFT) API",
+    "description": "Health Link Payload (DRAFT)\n\nA Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)\n\n\n",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-HealthLinkPayload.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-HealthLinkPayload",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-HealthLinkPayload.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-HealthLinkPayload",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-HealthLinkPayload.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-HealthLinkPayload": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/trust-phw/StructureDefinition-HealthLinkPayload.schema.json",
+        "title": "Health Link Payload (DRAFT)",
+        "description": "Health Link Payload (DRAFT)\n\nA Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)\n\n\n",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "HealthLinkPayload",
+            "description": "Resource type identifier for HealthLinkPayload logical model"
+          },
+          "url": {
+            "type": "string",
+            "description": "Manifest URL for this Health Link"
+          },
+          "key": {
+            "type": "string",
+            "description": "Decryption key for processing files returned in the manifest. 43 characters, consisting of 32 random bytes base64urlencoded."
+          },
+          "exp": {
+            "type": "string",
+            "description": "Optional. Number representing expiration time in Epoch seconds, as a hint to help the Health Link Receiving Application determine if this QR is stale. (Note: epoch times should be parsed into 64-bit numeric types.)"
+          },
+          "flag": {
+            "type": "string",
+            "description": "Optional. String created by concatenating single-character flags in alphabetical order:\n'L' indicates the Health Link is intended for long-term use and manifest content can evolve over time; \n'P' indicates the Health Link requires a Passcode to resolves; and 'U' indicates the Health Link's url resolves to a single encrypted file accessible via GET, bypassing the manifest and SHALL NOT be used in combination with P."
+          },
+          "label": {
+            "type": "string",
+            "description": "Optional. String no longer than 80 characters that provides a short description of the data behind the Health Link."
+          },
+          "v": {
+            "type": "string",
+            "description": "Optional. Integer representing the Health Links protocol version this Health Link conforms to. MAY be omitted when the default value (1) applies."
+          },
+          "type": {
+            "type": "string",
+            "description": "Classifying type code to distinguish different types of health links.  If not present then the Health Link is a SMART Health Link."
+          }
+        },
+        "required": [
+          "resourceType",
+          "url",
+          "key"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/trust-phw/StructureDefinition/HealthLinkPayload"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

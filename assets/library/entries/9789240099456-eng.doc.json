@@ -1,7 +1,7 @@
 {
   "$schema": "folio-library-document/v1",
   "id": "9789240099456-eng",
-  "title": "Digital adaptation kit for immunizations",
+  "title": "Digital adaptation kit for immunizations: operational requirements for implementing WHO recommendations in digital systems",
   "variant": "pdf",
   "pages": 100,
   "tocSource": "inferred",
@@ -314,38 +314,41 @@
       "labelStart": "A",
       "labelEnd": "5",
       "words": 5867,
-      "summary": null,
+      "summary": {
+        "text": "Front matter and opening Overview of the 2024 WHO 'Digital adaptation kit for immunizations: operational requirements for implementing WHO recommendations in digital systems' (SMART Guidelines collection), including licensing, acknowledgements, abbreviations, a glossary of digital health and immunization terms, and the Background section. It situates person-centred point-of-service systems (PCPOSS) and electronic immunization registries (EIRs) within the national digital health architecture (Fig. 1) and highlights WHO's recommendation on combining digital tracking of clients' health status with decision support (Box 2).",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "adaptation kit",
           "heading": false
         },
         {
-          "term": "digital adaptation",
+          "term": "record immunization",
           "heading": false
         },
         {
-          "term": "adaptation kits",
+          "term": "immunization doses",
           "heading": false
         },
         {
-          "term": "person-centred point-of-service",
+          "term": "supplementary immunization",
           "heading": false
         },
         {
-          "term": "decision-support logic",
+          "term": "vaccination record",
           "heading": false
         },
         {
-          "term": "digital systems",
+          "term": "routine immunization",
           "heading": false
         },
         {
-          "term": "digital application",
+          "term": "polio vaccine",
           "heading": false
         },
         {
-          "term": "digital tracking",
+          "term": "individual immunization",
           "heading": false
         }
       ],
@@ -362,7 +365,10 @@
       "labelStart": "5",
       "labelEnd": "6",
       "words": 353,
-      "summary": null,
+      "summary": {
+        "text": "Outlines the specific WHO Classification of Digital Health Interventions (CDHI) incorporated into the immunizations Digital Adaptation Kit (DAK) for person-centred point-of-service systems, spanning client enrolment, longitudinal tracking, structured and unstructured clinical records, decision-support prompts and checklists, client reminders, and routine indicator aggregation. It also details the conditions for WHO Recommendation 8 on combining digital tracking with decision support and situates L2 DAKs within the five-layer SMART guidelines progression.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "digital adaptation",
@@ -373,11 +379,11 @@
           "heading": false
         },
         {
-          "term": "digital tracking",
+          "term": "manage person-centred",
           "heading": false
         },
         {
-          "term": "manage person-centred",
+          "term": "digital tracking",
           "heading": false
         },
         {
@@ -385,15 +391,15 @@
           "heading": false
         },
         {
-          "term": "kit",
-          "heading": true
-        },
-        {
           "term": "daks",
           "heading": false
         },
         {
-          "term": "vision",
+          "term": "kit",
+          "heading": true
+        },
+        {
+          "term": "decision support",
           "heading": false
         }
       ],
@@ -410,18 +416,17 @@
       "labelStart": "6",
       "labelEnd": "8",
       "words": 447,
-      "summary": null,
+      "summary": {
+        "text": "Presents the core objectives of the immunizations DAK: ensuring adherence to WHO clinical, public health, and data-use guidelines; establishing a shared language between immunization programme managers and digital health developers; and providing a generic starting point of workflows, core data elements, and decision-support logic for EIRs. It includes Fig. 2 illustrating the five knowledge layers (L1 narrative to L5 dynamic executable models) of the SMART guidelines continuum.",
+        "status": "draft"
+      },
       "keywords": [
-        {
-          "term": "digital adaptation",
-          "heading": false
-        },
         {
           "term": "adaptation kits",
           "heading": false
         },
         {
-          "term": "functional requirements",
+          "term": "digital adaptation",
           "heading": false
         },
         {
@@ -429,19 +434,23 @@
           "heading": false
         },
         {
+          "term": "functional requirements",
+          "heading": false
+        },
+        {
+          "term": "localised",
+          "heading": false
+        },
+        {
           "term": "software developers",
           "heading": false
         },
         {
-          "term": "digital systems",
+          "term": "dak",
           "heading": false
         },
         {
           "term": "dynamic",
-          "heading": false
-        },
-        {
-          "term": "dak",
           "heading": false
         }
       ],
@@ -458,18 +467,25 @@
       "labelStart": "8",
       "labelEnd": "11",
       "words": 1288,
-      "summary": null,
+      "summary": {
+        "text": "Describes the eight interlinked components of the WHO SMART guidelines DAK—(1) health interventions and recommendations, (2) generic personas, (3) user scenarios, (4) generic business processes and workflows, (5) core data elements, (6) decision-support logic, (7) indicators and performance metrics, and (8) high-level functional and non-functional requirements—summarizing each component's purpose, outputs, and local adaptation needs in Table 1 and explaining the structured identifier conventions (`IMMZ.*`) in Box 3.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "adaptation kit",
           "heading": true
         },
         {
-          "term": "digital adaptation",
-          "heading": true
+          "term": "immz",
+          "heading": false
         },
         {
           "term": "decision-support logic",
+          "heading": false
+        },
+        {
+          "term": "non-functional requirement",
           "heading": false
         },
         {
@@ -477,19 +493,15 @@
           "heading": false
         },
         {
-          "term": "immz",
+          "term": "digital adaptation",
+          "heading": true
+        },
+        {
+          "term": "functional requirement",
           "heading": false
         },
         {
           "term": "generic business",
-          "heading": false
-        },
-        {
-          "term": "business process",
-          "heading": false
-        },
-        {
-          "term": "targeted personas",
           "heading": false
         }
       ],
@@ -506,12 +518,11 @@
       "labelStart": "11",
       "labelEnd": "11",
       "words": 347,
-      "summary": null,
+      "summary": {
+        "text": "Explains the methodology used to develop the immunizations DAK, beginning with a mapping and desk review of WHO immunization position papers, clinical guidelines, and the WHO Immunization Data Portal to extract workflows, decision-support logic, indicators, and a terminology-mapped data dictionary. It notes the iterative technical consultations and validation with WHO Department of Immunization, Vaccines and Biologicals teams and external experts, along with conflict-of-interest declarations.",
+        "status": "draft"
+      },
       "keywords": [
-        {
-          "term": "clinical guidelines",
-          "heading": false
-        },
         {
           "term": "dak",
           "heading": false
@@ -521,11 +532,19 @@
           "heading": false
         },
         {
-          "term": "digital",
-          "heading": true
+          "term": "guidance documents",
+          "heading": false
         },
         {
-          "term": "digital systems",
+          "term": "clinical guidelines",
+          "heading": false
+        },
+        {
+          "term": "daks",
+          "heading": false
+        },
+        {
+          "term": "contributors",
           "heading": false
         },
         {
@@ -533,11 +552,7 @@
           "heading": false
         },
         {
-          "term": "relevant",
-          "heading": false
-        },
-        {
-          "term": "teams",
+          "term": "algorithms",
           "heading": false
         }
       ],
@@ -554,38 +569,41 @@
       "labelStart": "11",
       "labelEnd": "84",
       "words": 25302,
-      "summary": null,
+      "summary": {
+        "text": "Provides instructions on how health programme managers, business analysts, and digital health teams should adapt and use the DAK across country implementation phases (Fig. 3), followed by the full specification of Components 1 through 8 of the immunizations DAK. It details the included WHO immunization guidelines and interventions, generic personas (e.g. vaccinator, programme manager, caregiver), user scenarios, BPMN workflows (client registration, vaccination, stock management, AEFI reporting, defaulter tracing, and reporting), data dictionary structure and spreadsheet links, DMN decision-support logic tables, coverage and dropout indicators, and functional/non-functional system requirements.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "adaptation kit",
           "heading": true
         },
         {
-          "term": "digital adaptation",
-          "heading": true
-        },
-        {
-          "term": "duplicate client",
+          "term": "measles contraindications",
           "heading": false
         },
         {
-          "term": "query client",
+          "term": "measles schedule",
           "heading": false
         },
         {
-          "term": "worker personas",
+          "term": "hepatitis contraindications",
           "heading": false
         },
         {
-          "term": "client record",
+          "term": "vaccine schedule",
           "heading": false
         },
         {
-          "term": "update client",
+          "term": "process immz",
           "heading": false
         },
         {
-          "term": "client reminder",
+          "term": "vaccines client",
+          "heading": false
+        },
+        {
+          "term": "dose schedule",
           "heading": false
         }
       ],
@@ -602,14 +620,25 @@
       "labelStart": "84",
       "labelEnd": "86",
       "words": 875,
-      "summary": null,
+      "summary": {
+        "text": "Lists the 37 numbered bibliographic references cited across the WHO Digital Adaptation Kit for Immunizations, covering World Health Assembly digital health resolutions, SMART guidelines foundational papers, WHO vaccine position papers and routine immunization summary tables, EIR planning and data quality guides, and interoperability standards.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "world bank",
           "heading": false
         },
         {
-          "term": "digital square",
+          "term": "sci pract",
+          "heading": false
+        },
+        {
+          "term": "computer-based decision",
+          "heading": false
+        },
+        {
+          "term": "immunization registry",
           "heading": false
         },
         {
@@ -617,23 +646,15 @@
           "heading": false
         },
         {
-          "term": "digital interventions",
-          "heading": false
-        },
-        {
           "term": "geneva",
           "heading": false
         },
         {
-          "term": "digital adaptation",
+          "term": "digit",
           "heading": false
         },
         {
-          "term": "united nations",
-          "heading": false
-        },
-        {
-          "term": "med inform",
+          "term": "clinical decision",
           "heading": false
         }
       ],
@@ -650,7 +671,10 @@
       "labelStart": "86",
       "labelEnd": "90",
       "words": 1697,
-      "summary": null,
+      "summary": {
+        "text": "Presents the Annex providing step-by-step guidance and a field-by-field template for adding or amending data elements in the DAK data dictionary when adapting to local paper registers and reporting requirements. It explains how to document activity and form IDs, data types, validation rules, multiple-choice options, and concept-map relationship equivalence to standardized terminologies such as ICD-11, LOINC, and SNOMED CT, followed by annex references.",
+        "status": "draft"
+      },
       "keywords": [
         {
           "term": "element label",
@@ -661,11 +685,11 @@
           "heading": false
         },
         {
-          "term": "past pregnancies",
+          "term": "quantity subtype",
           "heading": false
         },
         {
-          "term": "column",
+          "term": "column blank",
           "heading": false
         },
         {
@@ -673,15 +697,15 @@
           "heading": false
         },
         {
-          "term": "terminology code",
+          "term": "multiple-choice question",
           "heading": false
         },
         {
-          "term": "aggregate indicator",
+          "term": "paper forms",
           "heading": false
         },
         {
-          "term": "source concept",
+          "term": "paper registers",
           "heading": false
         }
       ],
@@ -730,27 +754,31 @@
   "withheld": false,
   "keywords": [
     {
-      "term": "digital adaptation",
-      "heading": true
-    },
-    {
       "term": "adaptation kit",
       "heading": true
-    },
-    {
-      "term": "recommendations personas",
-      "heading": false
     },
     {
       "term": "decision-support logic",
       "heading": true
     },
     {
-      "term": "requirements recommendations",
+      "term": "routine immunizations",
       "heading": false
     },
     {
-      "term": "digital system",
+      "term": "immunization record",
+      "heading": false
+    },
+    {
+      "term": "logic personas",
+      "heading": false
+    },
+    {
+      "term": "immunization schedule",
+      "heading": false
+    },
+    {
+      "term": "elements personas",
       "heading": false
     },
     {
@@ -758,23 +786,19 @@
       "heading": false
     },
     {
-      "term": "digital interventions",
-      "heading": true
-    },
-    {
       "term": "process immz",
       "heading": false
     },
     {
-      "term": "indicators workflows",
+      "term": "immunization activity",
       "heading": false
     },
     {
-      "term": "decision logic",
+      "term": "immunization doses",
       "heading": false
     },
     {
-      "term": "worker personas",
+      "term": "paper immunization",
       "heading": false
     }
   ],
@@ -1715,7 +1739,7 @@
     }
   ],
   "links": {
-    "repo": "litlfred/smart-immunizations",
+    "repo": "litlfred/who-iris",
     "branch": "main",
     "dir": "library/9789240099456-eng"
   }

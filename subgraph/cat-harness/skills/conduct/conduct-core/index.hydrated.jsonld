@@ -85,9 +85,9 @@
       "name": "ask-the-person",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6d26fc4a84418e488adb2643e89fefc4be6a2f2616e7766872ff18e1e05b0b94",
-        "bytes": 2737,
-        "sha256": "6d26fc4a84418e488adb2643e89fefc4be6a2f2616e7766872ff18e1e05b0b94"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae49bcbdfb0a2b65f51dca1ca233c06871fe018c2e05c94c82e841c3985e4770",
+        "bytes": 2792,
+        "sha256": "ae49bcbdfb0a2b65f51dca1ca233c06871fe018c2e05c94c82e841c3985e4770"
       },
       "title": "Ask the person"
     },
@@ -176,13 +176,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-      "instructionLines": 303,
+      "instructionLines": 302,
       "instructionsPath": "skills/conduct/conduct-core/getting-started.md",
       "name": "getting-started",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/41b3d0b4bc54c3d32cefe038a5168632a2281c4d9b49516b5d8bc29abab36374",
-        "bytes": 17768,
-        "sha256": "41b3d0b4bc54c3d32cefe038a5168632a2281c4d9b49516b5d8bc29abab36374"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d4e0d93cd7fb63951fbec7980c111bdcaf51d8ee1d7c56ccdcf318d9367c6491",
+        "bytes": 17812,
+        "sha256": "d4e0d93cd7fb63951fbec7980c111bdcaf51d8ee1d7c56ccdcf318d9367c6491"
       },
       "title": "/getting-started — what did they actually ask for?"
     },
@@ -228,18 +228,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along.",
+      "description": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, lists the content markers (an IG, a DAK, processes, beans, library, Lean, folio manifests) the harness could declare and declares only the ones the person picks, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, asks whether their PDFs/notes/drafts can come along, or asks what else in a repository an existing harness could declare.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-      "instructionLines": 225,
+      "instructionLines": 263,
       "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
       "name": "repo-conversion",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/289de306060d9e84e147a618468d9ad8175e05075da6b6dbd72878ab8e9592f3",
-        "bytes": 12723,
-        "sha256": "289de306060d9e84e147a618468d9ad8175e05075da6b6dbd72878ab8e9592f3"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0b7628be43e896515c1f256023f54555ddc056949432af945e3964622514acab",
+        "bytes": 14986,
+        "sha256": "0b7628be43e896515c1f256023f54555ddc056949432af945e3964622514acab"
       },
       "title": "/repo-conversion — folio-assistant over a repo that already has a life"
     },

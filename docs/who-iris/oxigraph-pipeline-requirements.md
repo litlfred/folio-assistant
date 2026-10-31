@@ -9,42 +9,30 @@ This document defines where **Oxigraph (WASM & CLI)** fits into the `folio-assis
 
 ## 1. Pipeline Architecture & Placement
 
-```mermaid
-flowchart TD
-    subgraph BuildServer ["1. Build Server / Ingestion Pipeline"]
-        DSpace["Upstream DSpace / Captured Records"] --> Extract["Extraction Pipeline\n(catalogue/nodes, site/dublin-core)"]
-        Extract --> Norm["Solution A Skolemizer\n(build-iris-oxigraph.ts)"]
-        Norm -->|Zero Blank Nodes| TierEngine["2-Tier Graph Partition Engine"]
-        TierEngine --> Tier1["Tier 1: who-iris-spine.nq\n(Hierarchy, Handles, Title, Access Gates)"]
-        TierEngine --> Tier2["Tier 2: community_{id}.nq\n(MeSH, Abstracts, Spatial, Authorities)"]
-        TierEngine --> Full["who-iris-dataset.nq\n(Monolithic Merged Graph)"]
-        TierEngine --> Manifest["subgraph-manifest.json"]
-        TierEngine --> Queries["queries.json\n(Prepared Queries)"]
-        Tier1 --> Gzip["Gzip / Brotli Compression"]
-        Tier2 --> Gzip
-        Full --> Gzip
-        Gzip --> Dist["_site/dist/oxigraph/"]
-        Manifest --> Dist
-        Queries --> Dist
-    end
+This pipeline is modelled in BPMN on the platform, not drawn here. The
+diagrams below are rendered from the cat-harness process files, which are the
+source of truth:
 
-    subgraph QAGates ["2. Validation & QA Gates"]
-        Dist --> BuildCheck["Oxigraph In-Process Verify\n(SPARQL QA Gates & Zero Bnodes)"]
-        BuildCheck -->|Pass| Publish["Publish to CDN / gh-pages"]
-    end
+- **Package and distribute partitioned N-Quads** (spine, community partitions,
+  manifest, prepared queries):
+  [`processes/kg/nquads-distribution.bpmn`](https://github.com/litlfred/cat-harness/blob/main/processes/kg/nquads-distribution.bpmn)
 
-    subgraph Distribution ["3. Static Distribution Layer (CDN)"]
-        Publish --> CDN["Static Edge / CDN\n(Immutable Cache: 1 Year)"]
-        Blobs["PDF / Cover Bitstreams\n(Static Blobs)"] --> CDN
-    end
+  <img src="https://cdn.jsdelivr.net/gh/litlfred/cat-harness@main/docs/assets/img/workflows/nquads-distribution.svg" alt="BPMN: package and distribute partitioned N-Quads and named queries" style="max-width:100%">
 
-    subgraph EdgeClients ["4. Edge Execution & Consumption"]
-        CDN -->|1. Bootstrap: Fetch Spine + Manifest| WebClient["Browser Portal\n(Oxigraph WASM Store)"]
-        CDN -->|2. On-Demand: Fetch Community Slice| WebClient
-        CDN -->|Fetch Blob URL| PDFViewer["Browser PDF Viewer"]
-        CDN -->|Fetch or Local Query| Agent["Coding Agent / MCP Tool\n(Local Oxigraph Engine)"]
-    end
-```
+- **Run a prepared SPARQL query in Oxigraph** (browser WASM or local engine):
+  [`processes/kg/named-query-execution.bpmn`](https://github.com/litlfred/cat-harness/blob/main/processes/kg/named-query-execution.bpmn)
+
+  <img src="https://cdn.jsdelivr.net/gh/litlfred/cat-harness@main/docs/assets/img/workflows/named-query-execution.svg" alt="BPMN: named query execution" style="max-width:100%">
+
+How this instance feeds that pipeline from IRIS, and publishes the result to
+Cloudflare, is in [IRIS CDN Exporter: processes](iris-cdn-export.md). That
+process calls `nquads-distribution` for its nightly full rebuild.
+
+The stages, in short: (1) ingest and skolemize, (2) partition into a spine plus
+one graph per community, (3) compress and write the manifest and prepared
+queries, (4) run SPARQL QA gates, (5) publish to the CDN with an immutable
+cache policy, (6) load the spine in the browser and mount community partitions
+on demand.
 
 ---
 
@@ -75,6 +63,8 @@ flowchart TD
   - *Authoritative handles:* Every item must declare an authoritative Handle (`10665/...`).
 
 ### Stage 3: Static CDN Distribution
+
+> **Owner, 2026-10-30:** exported data is published to **Cloudflare** (R2 behind the Cloudflare CDN, with the release history in a git repository on Cloudflare Artifacts), not to GitHub Pages. The `_site/` paths below are the **preview** build, which keeps only the three items held today. See [IRIS CDN Exporter: deployment](iris-cdn-deployment.md).
 - The generated assets are copied to `_site/who-iris/dist/oxigraph/` alongside the HTML replica:
   - `who-iris-spine.nq.gz` (Tier 1: Global Routing Spine backbone)
   - `subgraph-manifest.json` (Dynamic partition manifest & topology index)

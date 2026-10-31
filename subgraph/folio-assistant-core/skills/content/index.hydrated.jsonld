@@ -9,6 +9,24 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-change-summary",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Post-delivery content block change summary for a folio edit-set: extract changed block labels across `.md`, `.ts` and content-type sibling files, present a per-chapter table with `.md`-first GitHub blob links, modified sibling links, local viewer anchors, and change categories. Refines `delivery-summary` for content folios.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 116,
+          "instructionsPath": "skills/content/content-lifecycle-ext/block-change-summary.md",
+          "name": "block-change-summary",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/58ab174c52f519ab1a978f31597b293ea3d4290537cbc6e02b8b1922dd91236f",
+            "bytes": 5196,
+            "sha256": "58ab174c52f519ab1a978f31597b293ea3d4290537cbc6e02b8b1922dd91236f"
+          },
+          "title": "Block Change Summary"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/corpus-commit-contract",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -100,13 +118,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 157,
+          "instructionLines": 159,
           "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
           "name": "block-actions",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/06c806242f67b44f52fa7062f306261ec30a770f9197f08a86f39670673af56f",
-            "bytes": 8319,
-            "sha256": "06c806242f67b44f52fa7062f306261ec30a770f9197f08a86f39670673af56f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dfa29a5ef90042325a3fd34bf51950c42747ef04fee44ac22a8b7dbb661322c5",
+            "bytes": 8464,
+            "sha256": "dfa29a5ef90042325a3fd34bf51950c42747ef04fee44ac22a8b7dbb661322c5"
           },
           "title": "Block actions: [edit] and [feedback] on every block"
         },
@@ -168,6 +186,204 @@
           "title": "document-structure"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Set the life-cycle status (`adms:status`, W3C DCAT 3 §6.4.30) on a Data Sharing Agreement's DCAT 3 catalogue record when the agreement is amended, renewed, terminated, or expires, while keeping all published versions readable at their immutable URLs (DSA building block B3, process step P14.5 `Task_SetStatus`).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 55,
+          "instructionsPath": "skills/content/folio-document-adapter/dsa-catalogue-status.md",
+          "name": "dsa-catalogue-status",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/593f13779b7601bcf7a5e77aaa6bdd44813d23a22723221f67760d52c3e38ce1",
+            "bytes": 2339,
+            "sha256": "593f13779b7601bcf7a5e77aaa6bdd44813d23a22723221f67760d52c3e38ce1"
+          },
+          "title": "`dsa-catalogue-status` — Set the catalogue status when an agreement changes or ends (P14.5)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Compute and record the SHA-256 cryptographic digest of a signed Data Sharing Agreement's legal text as a W3C DCAT 3 `spdx:checksum` (`spdx:Checksum` with `spdx:checksumAlgorithm_sha256` and 64-character lowercase hex `spdx:checksumValue`), verified by `check:dsa-hash` (DSA building block B3, process steps P2.2 `Task_Hash` and P2.2a `Task_HashSummary`).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 79,
+          "instructionsPath": "skills/content/folio-document-adapter/dsa-checksum.md",
+          "name": "dsa-checksum",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f05d6077a04037a3e20b753d18cfca34389f9a85205f54a736704e95584d6cae",
+            "bytes": 3434,
+            "sha256": "f05d6077a04037a3e20b753d18cfca34389f9a85205f54a736704e95584d6cae"
+          },
+          "title": "`dsa-checksum` — Compute and record the SHA-256 of the legal text (P2.2)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Write the W3C DCAT 3 `dcat:Resource` and `dcat:Distribution` catalogue record for a Data Sharing Agreement (`dcat:downloadURL`, `spdx:checksum`, `odrl:hasPolicy`) and link versions with `dcat:version` and `dcat:previousVersion` (DSA building block B3, process step P2.4–5 `Task_Catalogue`).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 66,
+          "instructionsPath": "skills/content/folio-document-adapter/dsa-dcat-record.md",
+          "name": "dsa-dcat-record",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a581a62225095e622b5b9736694ebf21dcfadddac7080f5cb5a667156a4225d1",
+            "bytes": 3458,
+            "sha256": "a581a62225095e622b5b9736694ebf21dcfadddac7080f5cb5a667156a4225d1"
+          },
+          "title": "`dsa-dcat-record` — Write the DCAT 3 record and link versions (P2.4–5)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 92,
+          "instructionsPath": "skills/content/folio-document-adapter/dsa-odrl-source.md",
+          "name": "dsa-odrl-source",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8",
+            "bytes": 3421,
+            "sha256": "022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8"
+          },
+          "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-diagram-interchange",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's board-diagram-interchange skill: binds processes/ui/board-place-note.bpmn and board-relocate.bpmn, folio board filters over pages and block kinds, and note-to-board arrow direction.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 35,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-board-diagram-interchange.md",
+          "name": "folio-board-diagram-interchange",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1aa61c6fabc7edc78c204f52c2fe9c6925a63a4a6c289e5d8d38de14ecd0027f",
+            "bytes": 1531,
+            "sha256": "1aa61c6fabc7edc78c204f52c2fe9c6925a63a4a6c289e5d8d38de14ecd0027f"
+          },
+          "title": "Folio board diagram interchange"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-windows",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's board-windows skill: binds processes/ui/board-open-close.bpmn, folio-glass pinning (todo/<id> and landing/<slot>), and content-type card chrome ([x], [linksrc], [edit]).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 40,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-board-windows.md",
+          "name": "folio-board-windows",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ac650c64210109b3cb8e0a13dcb412402d4aa50557831ad2d26dc5998701b9d",
+            "bytes": 1775,
+            "sha256": "7ac650c64210109b3cb8e0a13dcb412402d4aa50557831ad2d26dc5998701b9d"
+          },
+          "title": "Folio board windows and glass pinning"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's content-lifecycle skills (content-author, content-feedback, content-plan, content-publish, content-review, content-test, content-validate, evidence-appraisal): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 59,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-content-lifecycle.md",
+          "name": "folio-content-lifecycle",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b9eab5129173ff5227942a673ec45efb4a9302696b987a2d7d473b0d64a11876",
+            "bytes": 3477,
+            "sha256": "b9eab5129173ff5227942a673ec45efb4a9302696b987a2d7d473b0d64a11876"
+          },
+          "title": "Folio content lifecycle and evidence appraisal"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-profiles",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's content-profiles skill: how a document folio is structured prose and how a paper folio extends it, block-kind discovery across block-kinds/ graphs, profile-check enforcement, and the TeX-free document render path.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 49,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-content-profiles.md",
+          "name": "folio-content-profiles",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1538fbdc5024572d2894ff4f58755cbe1e511f7cf9194a08915e0f0439753c9d",
+            "bytes": 2457,
+            "sha256": "1538fbdc5024572d2894ff4f58755cbe1e511f7cf9194a08915e0f0439753c9d"
+          },
+          "title": "Folio content profiles — `document` base and `paper` extension"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-editorial-workflow",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's editor, content-graph, md-authoring, canonical-watcher, and uses-editorial-review skills: routes glossary and notation work to ontologist and glossary-build, bibliography audits to bib-qa, and term-ordering checks to glossary-terms.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 44,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-editorial-workflow.md",
+          "name": "folio-editorial-workflow",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/03486f160d9ef2b5d82c3501494fe0c36421889951dce66955fdc6e8f7d822d5",
+            "bytes": 2427,
+            "sha256": "03486f160d9ef2b5d82c3501494fe0c36421889951dce66955fdc6e8f7d822d5"
+          },
+          "title": "Folio editorial workflow — glossary, bibliography, and block routing"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-getting-started",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's getting-started skill: binds processes/conduct/getting-started.bpmn and decisions/folio-intent.dmn, interprets describeRepository() content-type markers (folio, harness, dak, sushi), and routes new-content and specialised IG/DAK creation requests.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 53,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-getting-started.md",
+          "name": "folio-getting-started",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b305702980c1ead47221fe245c85d105a52f0305c6441b6561634d48121b00ff",
+            "bytes": 3000,
+            "sha256": "b305702980c1ead47221fe245c85d105a52f0305c6441b6561634d48121b00ff"
+          },
+          "title": "Folio getting started — content-type triage and routing"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-repo-conversion",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The content-folio half of the harness's repo-conversion skill: outside-content evidence and refutation candidate scanning, content-type marker declarations, and dispatching library and content buckets to document-intake and folio authoring.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 55,
+          "instructionsPath": "skills/content/folio-document-adapter/folio-repo-conversion.md",
+          "name": "folio-repo-conversion",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6ec0b7281be08007729a018cd35d963e735c0f475c89d516fd37c2f3381afc49",
+            "bytes": 2973,
+            "sha256": "6ec0b7281be08007729a018cd35d963e735c0f475c89d516fd37c2f3381afc49"
+          },
+          "title": "Folio repository conversion — markers, orphaned evidence, and intake handoff"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -194,16 +410,34 @@
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
           "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
-          "instructionLines": 347,
+          "instructionLines": 544,
           "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
           "name": "public-comment",
           "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4b41b36ce7f22b692b5475abdcfcf5a559009e8b89b774eaf56885528ef06f9a",
-            "bytes": 19643,
-            "sha256": "4b41b36ce7f22b692b5475abdcfcf5a559009e8b89b774eaf56885528ef06f9a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf197367f05bef51d090093d519d5e565c07584eced3395371403e20cdd47875",
+            "bytes": 34789,
+            "sha256": "bf197367f05bef51d090093d519d5e565c07584eced3395371403e20cdd47875"
           },
           "title": "public-comment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 243,
+          "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
+          "name": "review-sheet-script",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a3ee5cfc6fc0fc353a4182b00fcc833568a7864bddba00c92d001d7997f24d3",
+            "bytes": 14254,
+            "sha256": "2a3ee5cfc6fc0fc353a4182b00fcc833568a7864bddba00c92d001d7997f24d3"
+          },
+          "title": "The review sheet's Apps Script"
         }
       ],
       "holdsGraph": [
