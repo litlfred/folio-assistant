@@ -2820,6 +2820,36 @@
     return natural / column >= AUTO_MIN_RATIO;
   }
 
+  /* THE BAND A FULL-WIDTH FIGURE MAY USE: the viewport minus the nav rail.
+     Owner, 2026-10-31, with a screenshot of a BPMN pool whose lane labels
+     were under the rail: "full width images/diagrma/etc should not be cut off
+     by LHS nav". Full width used to run from x=0, but from 50rem up the rail
+     is `position: fixed` over that strip, so the figure's start edge was
+     hidden. Below 50rem the theme's sidebar is an in-flow bar on top, takes
+     no strip, and the band is the whole viewport, as before. The rail is
+     MEASURED rather than read from `--fa-nav-collapsed`, so an open, pinned
+     or RTL rail is right without knowing which state it is in. */
+  function navRail() {
+    return document.querySelector(".side-bar") || document.querySelector("nav.fa-nav");
+  }
+
+  function fullWidthBand() {
+    var vw = document.documentElement.clientWidth;
+    var band = { left: 0, right: vw };
+    var rail = navRail();
+    if (!rail) return band;
+    var pos = getComputedStyle(rail).position;
+    if (pos !== "fixed" && pos !== "sticky") return band;
+    var r = rail.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) return band;
+    // A rail at the start edge (left in LTR, right in RTL). A rail that spans
+    // most of the width is a top bar, not a side rail, and takes nothing.
+    if (r.width >= vw / 2) return band;
+    if (r.left <= 1) band.left = Math.max(0, r.right);
+    else if (r.right >= vw - 1) band.right = Math.min(vw, r.left);
+    return band;
+  }
+
   function markFullWidthOnRoot() {
     document.documentElement.classList.toggle(
       "fa-has-fullwidth",
@@ -10502,16 +10532,21 @@
     // theme's geometry, and clientWidth excludes the scrollbar, which 100vw
     // does not.
     function applyFullWidth() {
-      if (!scope.classList.contains("is-fullwidth")) {
-        scope.style.marginLeft = "";
-        scope.style.width = "";
-        return;
-      }
       scope.style.marginLeft = "";
+      scope.style.marginRight = "";
       scope.style.width = "";
-      var left = scope.getBoundingClientRect().left;
-      scope.style.marginLeft = -left + "px";
-      scope.style.width = document.documentElement.clientWidth + "px";
+      if (!scope.classList.contains("is-fullwidth")) return;
+      var box = scope.getBoundingClientRect();
+      var band = fullWidthBand();
+      // A block with a set width anchors to its START edge and ignores the
+      // other margin, so RTL moves the right margin. Moving the left one in
+      // RTL did nothing and the figure ran off the left of the window.
+      if (getComputedStyle(scope).direction === "rtl") {
+        scope.style.marginRight = (box.right - band.right) + "px";
+      } else {
+        scope.style.marginLeft = (band.left - box.left) + "px";
+      }
+      scope.style.width = (band.right - band.left) + "px";
       markPannable();
     }
     wide.addEventListener("click", function () {
@@ -10525,6 +10560,17 @@
     });
     // The measured offset is only right for the width it was measured at.
     window.addEventListener("resize", applyFullWidth);
+    // Opening the rail pushes the content column over, so the band moves
+    // without the window resizing, and both slide on a CSS transition. Watch
+    // the rail and the column: each fires on every frame of the slide, and
+    // the last one lands after it, so the figure settles where they do.
+    if (typeof ResizeObserver === "function") {
+      var ro = new ResizeObserver(applyFullWidth);
+      var rail = navRail();
+      var column = document.querySelector(".main");
+      if (rail) ro.observe(rail);
+      if (column) ro.observe(column);
+    }
 
     // Scroll pass-through in full width.
     //
