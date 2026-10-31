@@ -25816,6 +25816,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/prov.provactivityobjectschema.prov-wasinformedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProvActivityObjectSchema.prov:wasInformedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "W3C PROV-O `prov:wasInformedBy`: the activity (or activities) this one was informed by, by `@id`. The workflow engine writes it on a Tool activity kept on a step, naming the step's own activity (bean `w1gy`, folio-assistant#875 FR-005). An array when several, as JSON-LD writes several values of one property."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/prov.ts#ProvActivityObjectSchema.prov:wasInformedBy",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/prov.provchainverifyoptions.consentpolicyuids",
       "@type": "skos:Concept",
       "skos:inScheme": {

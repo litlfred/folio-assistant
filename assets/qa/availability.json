@@ -1,12 +1,12 @@
 {
   "$schema": "folio-qa-availability/v1",
-  "source": "fetched",
+  "source": "checkout",
   "requested": [
-    "main/c27093c3d1d22bbcff486142d3bb54cce9a8c2e7",
+    "main/e7be5d6790904a690bfbb6a8377778ded5e1f946",
     "main"
   ],
-  "key": "main/c27093c3d1d22bbcff486142d3bb54cce9a8c2e7",
-  "reason": "fetched main/c27093c3d1d22bbcff486142d3bb54cce9a8c2e7 from qa-reports (exact main/<sha> entry for this commit wins over the checkout)",
+  "key": "main/0a1c95dcabf9fbdb6e6491c5d931b8f3f06c2f5e",
+  "reason": "the checkout holds the QA corpus (still committed), so it is published as checked out; qa-reports also has main/0a1c95dcabf9fbdb6e6491c5d931b8f3f06c2f5e",
   "expected": {
     "witnesses": 101,
     "results": 18

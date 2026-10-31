@@ -15645,6 +15645,13 @@
           "array": true
         },
         {
+          "name": "prov:wasInformedBy",
+          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "W3C PROV-O `prov:wasInformedBy`: the activity (or activities) this one"
+        },
+        {
           "name": "cat-harness:underPolicy",
           "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
           "optional": false,

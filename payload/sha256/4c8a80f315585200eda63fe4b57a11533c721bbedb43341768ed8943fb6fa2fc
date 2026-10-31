@@ -547,6 +547,7 @@
     "render": "bun run cat-harness-tools/scripts/render-pipeline.ts",
     "render:bpmn": "bun run cat-harness-tools/scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run cat-harness-tools/scripts/publish-check.ts render:bpmn",
+    "bpmn:detangle": "bun run cat-harness-tools/scripts/bpmn-detangle.ts",
     "bpmn:checklist": "bun run cat-harness-tools/scripts/bpmn-checklist.ts",
     "bpmn:checklist:check": "bun run cat-harness-tools/scripts/bpmn-checklist.ts --check",
     "render:order": "bun run cat-harness-tools/scripts/render-pipeline.ts --dry-run",
