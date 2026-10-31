@@ -15,3 +15,7 @@ Session https://claude.ai/code/session_01Qmmkt9MhQCZs54m2YPoyXp (thread "Finish 
   - bootstrap-tools#55 → 541195a (comments reworded as links)
   - cat-harness-tools#1121 → 0bf6efb (guards on 39 tests, 3 test bug fixes, `restoringTracked()`)
 - Open: F21. In the bare sibling layout bootstrap-tools can't resolve zod, because only the repository under test is installed. Waiting on an owner card (option A: install every sibling). w1gy's boxes stay unticked until F21 is answered, and mgxw closes with w1gy.
+
+## Completed, 2026-10-31 13:25Z
+
+The owner chose option A for F21 (12:40Z, install every sibling) and the card "A. Merge both now" (13:22Z). Merged bootstrap-tools#58 (72344e1, zod 4.6.6) and cat-harness-tools#1131 (9da064c, README). A fresh-clone run with every sibling installed has 0 tsc errors and 0 test failures outside the baseline. The addendum to `QA-cat-harness-tools.md` lists every fix commit. cat-harness passed on 2026-10-30 (note above). Both boxes are ticked, and mgxw closes with this bean.

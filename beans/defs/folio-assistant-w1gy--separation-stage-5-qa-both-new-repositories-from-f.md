@@ -2,7 +2,7 @@
 # folio-assistant-w1gy
 $schema: bean/1.0.0
 title: 'Separation stage 5: QA both new repositories from fresh sibling clones'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
@@ -15,8 +15,8 @@ Stage 5 of the split plan: QA from scratch. Fresh clones of bootstrap, bootstrap
 Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0–6, decisions D1–D6, "Owner rulings, 2026-10-01") and `placement-proposal.md` (PR0–PR9, §6 "Owner rulings, 2026-09-30").
 
 ## Done when
-- [ ] `QA-cat-harness.md` and `QA-cat-harness-tools.md` written in the `QA-bootstrap{,-tools}.md` format, both passing
-- [ ] every fix QA found is a commit in the new repository, listed in the QA report
+- [x] `QA-cat-harness.md` and `QA-cat-harness-tools.md` written in the `QA-bootstrap{,-tools}.md` format, both passing
+- [x] every fix QA found is a commit in the new repository, listed in the QA report
 
 ## State 2026-10-09
 The repositories exist and are seeded (`iai8`, #2517), so this stage is now unblocked and is QA of the live repositories.
