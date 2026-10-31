@@ -1750,6 +1750,14 @@ jobs:
       - name: the cat-harness content instance holds no code
         run: bun run cat check:content-code-free
 
+      # The two security gates the content layers added (core's, and sci's
+      # over its workflows) ran nowhere in this composition: the same
+      # "no check script is unrun" finding (folio-assistant#2781).
+      - name: core security gate
+        run: bun run cat check:core-security-gate
+      - name: sci workflow security
+        run: bun run cat check:workflows:security
+
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
       #
