@@ -2,11 +2,11 @@
 # folio-assistant-towy
 $schema: bean/1.0.0
 title: 'smart-base issue skills: issue body reaches an LLM unfenced and LLM-chosen labels are applied unchecked'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -32,3 +32,5 @@ _2026-10-31T04:20Z_ — Filed by the group C security review, session https://cl
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-base/pull/255 (`fence_untrusted` added in `prompt_loader.py` and applied to `ISSUE_TITLE`/`ISSUE_BODY` in `classify_issue_action.py` and `dak_authoring_action.py`; `ALLOWED_LABELS` allowlist enforced in `classify_issue_action.py`; `pip install --require-hashes --no-deps -r .github/skills/requirements.lock` wired in the 4 issue-skill workflows).
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

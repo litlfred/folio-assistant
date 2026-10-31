@@ -2,7 +2,7 @@
 # folio-assistant-6zcw
 $schema: bean/1.0.0
 title: 'folio-assistant-sci cannot run the security gate'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-false-green
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T08:24:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-sb31
 ---
 
@@ -29,3 +29,5 @@ folio-assistant itself: `check-workflow-injection` passes (12 constrained expres
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:24:00Z_ — PR open: https://github.com/litlfred/folio-assistant-sci/pull/158 (wires `check:workflows:security` / `scripts/check-workflows-security.ts` and `scripts/check-workflows-security.test.ts` in `folio-assistant-sci`, checking action/reusable-workflow SHA pinning, top-level workflow permissions, workflow injection, secret leaks, and lockfile advisory floors in `sci`'s CI).
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

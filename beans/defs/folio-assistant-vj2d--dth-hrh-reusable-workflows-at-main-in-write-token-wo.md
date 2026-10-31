@@ -2,14 +2,14 @@
 # folio-assistant-vj2d
 $schema: bean/1.0.0
 title: 'dth-hrh: reusable workflows at @main in write-token workflows (security:gate fails)'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T08:21:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-3o2w
 ---
 
@@ -27,3 +27,5 @@ The other callers (`qa-sweep*.yml`, `site-publish.yml`, `section-title-audit.yml
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:21:00Z_ — Fixed in https://github.com/litlfred/dth-hrh/pull/62 (`litlfred/folio-assistant-core/.github/workflows/public-comment*.yml` SHA-pinned to `41aad5c88e76b00790bba0347f47f2465c4df92a # main` in `wg-comment.yml` and `wg-comment-check.yml`; `unpinnedActions` reports 0 unpinned).
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

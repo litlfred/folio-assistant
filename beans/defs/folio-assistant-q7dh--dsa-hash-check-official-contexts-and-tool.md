@@ -2,11 +2,11 @@
 # folio-assistant-q7dh
 $schema: bean/1.0.0
 title: 'check:dsa-hash: validate against official ODRL/DCAT/DCMI contexts, declare it as a Tool'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-30T20:40:00Z
-updated_at: 2026-10-31T02:56:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-negd
 ---
 
@@ -33,3 +33,5 @@ _2026-10-31T02:56:00Z_ — Merged latest `origin/main` into all 3 open PRs (and 
 - `litlfred/folio-assistant-core#303` (`63f8f6e`): 11/11 checks passing (`No new failures (tests and gates)`, `Prepare the PR side (and typecheck)`, all 4 base/head shards)
 - `litlfred/cat-harness#818` (`ba8872f2`): 7/7 checks passing (`No new failures (tests and gates)`, `Prepare the PR side (and typecheck)`, all 4 head shards)
 - `litlfred/cat-harness-tools#1034` (`8d7d2cd`): 9/9 checks passing (`Typecheck`, `Tests (no new failures)`, `Index gates (no new failures)`, `Standalone (no new failures)`, `bun test` base/head, `standalone` base/head)
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

@@ -2,11 +2,11 @@
 # folio-assistant-wyez
 $schema: bean/1.0.0
 title: 'fhir-harness bun.lock: 17 dependency advisories (7 high), node-forge and zod'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -32,3 +32,5 @@ _2026-10-31T04:20Z_ — Filed by the group C security review, session https://cl
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/fhir-harness/pull/247 (`zod` bumped to `^4.6.7`, `overrides` added in `package.json` for `node-forge@^1.4.2`, `zod@^4.6.7`, `minimatch@^11.0.3`, `glob@^14.0.3`, `csv-parse@^7.0.3`; `bun audit` now reports 0 critical/high/moderate, 1 low in `deepmerge@4.3.1`).
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

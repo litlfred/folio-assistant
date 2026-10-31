@@ -2,14 +2,14 @@
 # folio-assistant-a3fj
 $schema: bean/1.0.0
 title: 'Dependency advisories: 7 high, 12 moderate in smart-trust, who-iris and dth-hrh installs'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T08:21:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-3o2w
 ---
 
@@ -31,3 +31,5 @@ _2026-10-31T08:21:00Z_ — Fixed across all 3 repos (`bun audit` verified at 0 h
 - `litlfred/smart-trust`: https://github.com/litlfred/smart-trust/pull/99 (`overrides` for `zod`, `undici`, `@fastify/busboy`, `csv-parse`, `katex` in `package.json` + committed `bun.lock`)
 - `litlfred/who-iris`: https://github.com/litlfred/who-iris/pull/143 (`overrides` for `zod`, `undici`, `@fastify/busboy`, `katex` in `package.json` + refreshed `bun.lock`)
 - `litlfred/dth-hrh`: https://github.com/litlfred/dth-hrh/pull/62 (`zod` bumped to `^4.6.6`, `overrides` for `zod`, `undici`, `@fastify/busboy`, `csv-parse`, `katex` in `package.json` + refreshed `bun.lock`)
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

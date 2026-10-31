@@ -2,11 +2,11 @@
 # folio-assistant-vl71
 $schema: bean/1.0.0
 title: 'smart-base ghbuild.yml runs ~36 scripts curled from WorldHealthOrganization/smart-base@main with a write token'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -30,3 +30,5 @@ _2026-10-31T04:20Z_ — Filed by the group C security review, session https://cl
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-base/pull/255 (`SCRIPTS_BASE_COMMIT`/`SCRIPTS_BASE_URL` pinned to immutable 40-hex commit SHA `49178a48d460bb53acf6e90d8c0aee3f0146d8f7` in `litlfred/smart-base` with one-step git checkout seeding for downstream callers; `stamp_deploy.py` pinned by commit SHA and verified against SHA-256 `4a82437fb69a894b4539b638cdf4caa08e4f5dca3cedfcee3a80164c2d977022`).
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.

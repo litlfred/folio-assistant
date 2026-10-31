@@ -2,11 +2,11 @@
 # folio-assistant-plxg
 $schema: bean/1.0.0
 title: 'lxml parses repository XML with default entity resolution (smart-base)'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T20:26:05Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -27,3 +27,5 @@ _2026-10-31T04:20Z_ — Filed by the group C security review, session https://cl
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:25Z_ — Fixed in https://github.com/litlfred/smart-base/pull/255 (shared `safe_xml_parser` helper with `resolve_entities=False, no_network=True, huge_tree=False` in `input/scripts/safe_xml.py` and `.github/skills/common/safe_xml.py`, wired across all 8 `lxml` parsers).
+
+_2026-10-31T20:26:05Z_ — All fix PRs merged (owner card choice A, 2026-10-31 20:22Z, thread "Drain workplan, issues and beans"); bean completed.
