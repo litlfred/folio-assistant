@@ -130,6 +130,7 @@ on:
 permissions:
   contents: write  # required to push to the gh-pages branch
   issues: write    # the publication manager's alert (bean vigi): one tracking issue
+  actions: read    # bean fwtz: download the newest writer-records artifact for the writers dry run
 
 # A deploy: never cancelled in progress, since a run cancelled mid-build or
 # mid-push is a deploy dropped (owner, 2026-10-23). Without cancel-in-progress
@@ -287,8 +288,8 @@ jobs:
         run: bun run cat derive:publish
 
       # BEAN fwtz, OPTION B, AS A DRY RUN (owner card 2026-10-31, "rerun and
-      # measure"). The previous deploy published what each writer read and
-      # wrote (`writer-cone/records.json`, from a run with `record_writers`).
+      # measure"). `writer-records.yml`, run after each deploy, uploads what
+      # each writer read and wrote (artifact `writer-records`).
       # Against it, `writer-cone-verify.ts` says which writers this build
       # could have skipped, and whether skipping them would have been right:
       # every recorded output must equal what the full run above just wrote.
@@ -304,10 +305,13 @@ jobs:
           set -eu
           S=cat-harness-tools/scripts/writer-cone-verify.ts
           if [ ! -f "$S" ]; then echo "this tools pin has no $S: no dry run"; exit 0; fi
-          P="$RUNNER_TEMP/prev-writer-records.json"
-          if ! gh api -H "Accept: application/vnd.github.raw" "repos/$REPO/contents/writer-cone/records.json?ref=gh-pages" > "$P" 2>/dev/null; then
-            echo "the live site has no writer records yet: nothing to judge"; exit 0
+          # The newest records `writer-records.yml` uploaded after a deploy.
+          D="$RUNNER_TEMP/prev-writer-records"; mkdir -p "$D"
+          URL=$(gh api "repos/$REPO/actions/artifacts?name=writer-records&per_page=1" --jq '.artifacts[0] | select(.expired == false) | .archive_download_url' 2>/dev/null || true)
+          if [ -z "$URL" ] || ! gh api "$URL" > "$D/a.zip" 2>/dev/null || ! unzip -q -o "$D/a.zip" -d "$D"; then
+            echo "no writer records recorded yet: nothing to judge"; exit 0
           fi
+          P="$D/records.json"
           bun run "$S" --prev "$P" --out "$RUNNER_TEMP/writer-verdicts.json" --summary "$GITHUB_STEP_SUMMARY"
 
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is

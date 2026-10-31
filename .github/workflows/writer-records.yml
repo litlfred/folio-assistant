@@ -1,0 +1,87 @@
+# WRITER RECORDS FOR THE RERUN-AND-MEASURE DEPLOY — bean `fwtz`, option B
+# (owner card 2026-10-31, "rerun and measure").
+#
+# After each docs-site deploy on main, build the site's inputs the same way
+# docs-site does and run `derive:publish` with every writer under strace
+# (cat-harness-tools `writer-cone.ts`). The result, what each writer read and
+# wrote, is uploaded as the artifact `writer-records`. The NEXT docs-site run
+# downloads the newest one and judges, after its own full build, which
+# writers it could have skipped and whether that would have been right
+# (`writer-cone-verify.ts`).
+#
+# Why a workflow of its own, not a step of docs-site: strace costs a traced
+# script 3-10x (bean 4rbc), so recording inside the deploy would delay every
+# publish. And docs-site keeps only the newest pending run, so a manual
+# record run there is cancelled by the next push (run 41196478832 was).
+# This one publishes nothing, pushes nothing, and skips nothing.
+name: Writer records (bean fwtz)
+
+on:
+  workflow_run:
+    workflows: ["Docs site (GitHub Pages)"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+# One recording at a time; a newer deploy's recording replaces a stale one.
+concurrency:
+  group: writer-records
+  cancel-in-progress: true
+
+jobs:
+  record:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # The commit the deploy built, not whatever main is now.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Mount the layers from the lock
+        shell: bash
+        run: bash .github/mount-from-lock.sh --root .
+      - name: Install deps
+        run: bun install --frozen-lockfile
+      - name: Mount the subgraphs kept on branches
+        run: bun run cat state:mount
+      - name: Build the IG artefact indexes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+      - name: Build the mounted IG instances' pages
+        run: bun run smart:pages
+      - name: Produce the QA working copy (some writers read it)
+        run: bun run cat qa:working-copy
+      - name: Generate the mounted SMART IG instances' pages
+        run: bun run smart:pages:publish
+      - name: Java runtime the PlantUML release declares
+        uses: ./.github/actions/plantuml-java
+      - name: Install Chromium for the BPMN drawings
+        run: npx --yes playwright install --with-deps chromium
+      - name: strace
+        run: |
+          if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
+      - name: derive:publish, every writer traced
+        env:
+          CAT_WRITER_RECORD: '1'
+          GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          start=$(date +%s)
+          bun run cat derive:publish
+          echo "traced derive:publish took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload the records
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: writer-records
+          path: build/writer-cone/records.json
+          retention-days: 14
+          if-no-files-found: error
