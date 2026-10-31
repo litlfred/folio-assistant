@@ -1341,7 +1341,7 @@ jobs:
           # deploy cannot silently replace it; the failure is an annotation,
           # not a blocked preview.
           # Which derive:publish writers this preview skipped, and why the rest ran (bean fwtz).
-          { grep -E 'writer skip|skipped |[^ ]+ runs: ' "$RUNNER_TEMP/derive.log" || true; } > ./_site/writer-skip.txt 2>/dev/null || true
+          { grep -E 'writer skip|skipped |[^ ]+ runs: |^  ran ' "$RUNNER_TEMP/derive.log" || true; } > ./_site/writer-skip.txt 2>/dev/null || true
           RECORD=./_site/staging-preview.json
           git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
             || rm -f "$RECORD"
