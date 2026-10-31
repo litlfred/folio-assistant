@@ -3503,6 +3503,15 @@ jobs:
           # tomorrow without deciding shows up as `undeclared` rather than joining
           # a backlog nobody reads.
           bun run cat check:kind-validators:require-all
+          # Bean `8lcl` (stage 1b, owner card option A): the Zod is in
+          # cat-harness-tools, and cat-harness publishes the GENERATED JSON
+          # Schema, one `schemas/kinds/<kind>.schema.json` per harness kind
+          # that has a runnable validator, `$id` = its path. A kind with none
+          # gets no file and the run names why. Red on a missing or stale file
+          # or an `$id` that is not its path; the fix is `kind:json-schemas`
+          # in cat-harness, then a re-pin. Reads the same resolution as the
+          # line above, so the two cannot disagree about a kind's Zod.
+          bun run cat kind:json-schemas:check
           bun run cat uml:overview:check
           bun run cat check:artifact-index
           # smart-trust, smart-base and smart-immunizations are REMOTE MOUNTS of
