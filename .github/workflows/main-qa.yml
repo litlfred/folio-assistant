@@ -14,6 +14,9 @@
 #
 # Like `post-merge-regen.yml`, this reacts to main and never pushes to it. It
 # repairs nothing: it reports.
+#
+# TRIGGERS, ACTUAL: `workflow_run` of "Code-quality gates" on main, and
+# nothing else. The pushes named above trigger that workflow, not this one.
 name: Post-merge QA of main
 
 on:
