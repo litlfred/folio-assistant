@@ -801,6 +801,14 @@
       "isTest": true
     },
     {
+      "module": "cat-harness-tools/schemas/harness-root.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "harness-root.test",
+      "graphNode": "undeclared",
+      "summary": "`harnessRoot()` takes the cat-harness beside this layer before the one a",
+      "isTest": true
+    },
+    {
       "module": "cat-harness-tools/schemas/harness-root.ts",
       "instance": "cat-harness-tools",
       "name": "harness-root",
@@ -4048,9 +4056,10 @@
         },
         {
           "name": "@graph",
-          "type": "z.array(GraphExportNodeSchema)",
+          "type": "z.array(z.union([GraphExportNodeSchema, GraphExportTombstoneSchema]))",
           "optional": false,
-          "array": true
+          "array": true,
+          "doc": "Subjects, and for one release a tombstone per pre-path `#fragment` (https://github.com/litlfred/cat-harness-tools/issues/958)."
         },
         {
           "name": "omitted",
@@ -4075,8 +4084,50 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "bootstrap-tools/schemas/graph-export.ts#GraphExportNodeSchema"
+        "bootstrap-tools/schemas/graph-export.ts#GraphExportNodeSchema",
+        "bootstrap-tools/schemas/graph-export.ts#GraphExportTombstoneSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/graph-export.ts#GraphExportTombstoneSchema",
+      "name": "GraphExportTombstoneSchema",
+      "module": "bootstrap-tools/schemas/graph-export.ts",
+      "kind": "zod-object",
+      "doc": "An old `<doc>#<kind>/<id>` fragment, kept for one release after subjects",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "deprecated",
+          "type": "z.literal(true)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "isReplacedBy",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sameAs",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -80950,6 +81001,14 @@
     {
       "from": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema",
       "to": "bootstrap-tools/schemas/graph-export.ts#GraphExportNodeSchema",
+      "via": "@graph",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema",
+      "to": "bootstrap-tools/schemas/graph-export.ts#GraphExportTombstoneSchema",
       "via": "@graph",
       "kind": "field",
       "optional": false,

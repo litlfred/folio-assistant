@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "20a1f00b4c35bbaac21efdb98d496dcad257da54",
+    "head": "7b18706d7cf0770455b162ababe93b45aa944534",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "20a1f00b4c35bbaac21efdb98d496dcad257da54",
+        "ref": "7b18706d7cf0770455b162ababe93b45aa944534",
         "mounted": true
       },
       {
@@ -18,7 +18,70 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "20a1f00b4c35bbaac21efdb98d496dcad257da54",
+        "ref": "7b18706d7cf0770455b162ababe93b45aa944534",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/schemas/graph-export.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "schemas/graph-export.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/scripts/export-graph.test.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "scripts/export-graph.test.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/scripts/export-graph.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "scripts/export-graph.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/scripts/render-bpmn.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "scripts/render-bpmn.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/scripts/site.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "scripts/site.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/scripts/subgraph-jsonld.test.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "scripts/subgraph-jsonld.test.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
+        "mounted": true
+      },
+      {
+        "path": "bootstrap-tools/scripts/subgraph-jsonld.ts",
+        "status": "modified",
+        "repository": "litlfred/bootstrap-tools",
+        "upstreamPath": "scripts/subgraph-jsonld.ts",
+        "ref": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "instance": "bootstrap-tools",
         "mounted": true
       },
       {
@@ -26,7 +89,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "glossary/generated/folio-assistant-core/kg-bpmn-activities.glossary.json",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -35,7 +98,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-committee.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -44,7 +107,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-committee.checklist.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -53,7 +116,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-make.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -62,7 +125,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-make.checklist.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -71,7 +134,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-publish.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -80,7 +143,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-publish.checklist.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -89,7 +152,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-stage.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -98,7 +161,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review-stage.checklist.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -107,7 +170,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -116,7 +179,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/content-change-review.checklist.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -125,7 +188,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/contributor-feedback.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -134,7 +197,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/contributor-feedback.checklist.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -143,7 +206,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "processes/content/public-comment.bpmn",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -152,7 +215,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "schemas/review-comment.ts",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -161,7 +224,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "scripts/tests/adjudication-marker.test.ts",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -170,7 +233,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "scripts/tests/content-change-review.test.ts",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -179,7 +242,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "skills/content/content-lifecycle-ext/review-comments.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -188,7 +251,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -197,7 +260,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ar/processes/content-change-review-committee.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -206,7 +269,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ar/processes/content-change-review-make.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -215,7 +278,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ar/processes/content-change-review-publish.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -224,7 +287,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ar/processes/content-change-review-stage.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -233,7 +296,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ar/processes/content-change-review.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -242,7 +305,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ar/processes/public-comment.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -251,7 +314,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/es/processes/content-change-review-committee.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -260,7 +323,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/es/processes/content-change-review-make.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -269,7 +332,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/es/processes/content-change-review-publish.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -278,7 +341,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/es/processes/content-change-review-stage.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -287,7 +350,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/es/processes/content-change-review.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -296,7 +359,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/es/processes/public-comment.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -305,7 +368,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/fr/processes/content-change-review-committee.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -314,7 +377,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/fr/processes/content-change-review-make.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -323,7 +386,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/fr/processes/content-change-review-publish.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -332,7 +395,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/fr/processes/content-change-review-stage.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -341,7 +404,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/fr/processes/content-change-review.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -350,7 +413,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/fr/processes/public-comment.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -359,7 +422,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ru/processes/content-change-review-committee.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -368,7 +431,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ru/processes/content-change-review-make.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -377,7 +440,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ru/processes/content-change-review-publish.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -386,7 +449,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ru/processes/content-change-review-stage.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -395,7 +458,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ru/processes/content-change-review.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -404,7 +467,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/ru/processes/public-comment.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -413,7 +476,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/zh/processes/content-change-review-committee.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -422,7 +485,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/zh/processes/content-change-review-make.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -431,7 +494,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/zh/processes/content-change-review-publish.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -440,7 +503,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/zh/processes/content-change-review-stage.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -449,7 +512,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/zh/processes/content-change-review.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       },
@@ -458,17 +521,24 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant-core",
         "upstreamPath": "translations/zh/processes/public-comment.pot",
-        "ref": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "ref": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "instance": "folio-assistant-core",
         "mounted": true
       }
     ],
     "repins": [
       {
+        "instance": "bootstrap-tools",
+        "repository": "litlfred/bootstrap-tools",
+        "from": "b7fb762ba968a6868bbe5004144ddf78023eb9c7",
+        "to": "541195a79efc3d1fd08b72fd51a6b262bc08793c",
+        "files": 7
+      },
+      {
         "instance": "folio-assistant-core",
         "repository": "litlfred/folio-assistant-core",
         "from": "ebff26c3110fe06bfa6100ec68c89ab43079b027",
-        "to": "c871239506e79a0a7dfa1db7fa22b8e81e5b3d34",
+        "to": "30a1d19da390803d1c4efac3e30b399276fc5209",
         "files": 49
       }
     ]
@@ -521,6 +591,48 @@
       }
     ],
     "undetermined": [
+      {
+        "input": "bootstrap-tools/schemas/graph-export.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-schemas (the branch changes bootstrap-tools/schemas/graph-export.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "d2433d06b95c8ba0ccebd372bbf35ae1cf86ad3c83e70e34eef6252407844ff6"
+      },
+      {
+        "input": "bootstrap-tools/scripts/export-graph.test.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/export-graph.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "3687f10a5fc846b2990ab59245c3c6c55c334d0d403b51e8fb501b9125e3f761"
+      },
+      {
+        "input": "bootstrap-tools/scripts/export-graph.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/export-graph.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "c6fc60dfb762881648a91219d6818611293d44f0e6072e218fa1e5abecce2afb"
+      },
+      {
+        "input": "bootstrap-tools/scripts/render-bpmn.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/render-bpmn.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b6365b44be00b2db26c3a89c3aad47246f44ecda9755c529041db2b16c01bc0e"
+      },
+      {
+        "input": "bootstrap-tools/scripts/site.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/site.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "9781c71729903d6fb664bf72b8e97d1d1b4d18628a53a863586ad2ec2e6d498e"
+      },
+      {
+        "input": "bootstrap-tools/scripts/subgraph-jsonld.test.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/subgraph-jsonld.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "442bc718a6fe563920cc07b7fe3b1d549ef5e39f67c42cb676daa22e0d88f59b"
+      },
+      {
+        "input": "bootstrap-tools/scripts/subgraph-jsonld.ts",
+        "reason": "the staging cone carries bootstrap-tools/bootstrap-tools-scripts (the branch changes bootstrap-tools/scripts/subgraph-jsonld.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "d163fad46bb8d6955bba490cc80bc4f86384e3ab1111b7bf59f4a76cd0bf6681"
+      },
       {
         "input": "folio-assistant-core/glossary/generated/folio-assistant-core/kg-bpmn-activities.glossary.json",
         "reason": "the staging cone carries folio-assistant-core/glossary (the branch changes folio-assistant-core/glossary/generated/folio-assistant-core/kg-bpmn-activities.glossary.json); the pages rendered from them are not mapped file by file",
@@ -819,9 +931,9 @@
   },
   "qa": {
     "status": "not-base",
-    "beforeCommit": "aa193432ed6adfd16f39bae2932baff96fc428e2",
-    "baseCommit": "c27093c3d1d22bbcff486142d3bb54cce9a8c2e7",
-    "measured": 19516,
+    "beforeCommit": "c27093c3d1d22bbcff486142d3bb54cce9a8c2e7",
+    "baseCommit": "0a1c95dcabf9fbdb6e6491c5d931b8f3f06c2f5e",
+    "measured": 19637,
     "notInCone": [
       {
         "path": "api/classes/folio-assistant_schemas_kind-validator.ValidatorRefError.html",
@@ -16784,6 +16896,12 @@
         "via": []
       },
       {
+        "path": "assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld",
         "change": "changed",
         "role": "data",
@@ -16904,6 +17022,138 @@
         "via": []
       },
       {
+        "path": "assets/img/workflows/SGAuthoring.DAKLifecycle.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/activity-log.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/actor-role-administration.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/adjudication.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/archimate-publish.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ask-the-person.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/atomic-mass-drift-check.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/authoring-a-document.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/authoring-a-paper.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/bean-close.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/bean-drain.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/bean-lifecycle.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/bean-open.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/board-open-close.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/board-place-note.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/board-relocate.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ci-health-watch.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/classify-and-code-content.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/code-change-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/code-quality-gates.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/complete-initialization.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-acquisition.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/img/workflows/content-change-review-committee.svg",
         "change": "added",
         "role": "data",
@@ -16929,6 +17179,588 @@
       },
       {
         "path": "assets/img/workflows/content-change-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/content-lifecycle.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/contributor-feedback.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/copy-into-folio.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/copy-out-materialized.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-close.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-data-model.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-deliver.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-issue-linking.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-needs.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-requirements-definition.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-requirements.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/crdm-signoff.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/criterion-adjudication.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/dak-l3-ig.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/deep-document-research.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/diig-investment-path.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/discussion.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/docs-site-publish.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/document-ingestion.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/draft-to-publication.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/dsa-document-lifecycle.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/editing-hci-validation.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/evidence-retrieval.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/feature-staging.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/getting-started.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/graph-detanglement.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/human-agent-discussion.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/human-translation-workflow.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ig-ast-cache.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ig-ast-delta-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ig-incremental-build.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ingest-build-l1-kg.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ingest-derive-content.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ingest-extract-structure.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ingest-l1-completeness-gate.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/ingest-theme.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/initialize-harness.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/iris-cdn-initial-load.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/iris-cdn-nightly.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/iris-cdn-reconcile.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/iris-cdn-sign-publish.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/jsonld-drift-check.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/kg-separation.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/kg-to-portal.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/l1-document-ingestion.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/l2-component-edit-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/l2-dak-authoring.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/l3-fhir-pipeline.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/lean-docs-publish.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/log-message.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/materialize-remote.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/merge-base.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/merge-refusal.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/merge-to-main.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/merge-train.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/methodology-from-source.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/mount-dependency.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/mount-subgraph.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/named-query-execution.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/narrative-code-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/nquads-distribution.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/options-analysis.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/pr-checks-present.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/public-comment.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/publish-alert.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/publish-verification.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/qa-publish.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/qa-report-signing.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/questionnaire-wireframe-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/refresh-materialized.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/related-work.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/render-kg-to-cdn.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/render-kg-to-github-pages.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/repository-health-watch.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/requirements-filing.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/review-code.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/review-narrative.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/review-task.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/sample-import.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/secure-agent-permissions.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/session-state-machine.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/slice-sqlite-publish.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/smart-guideline-end-to-end.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/sme-test-data-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/staging-render-log.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/stalled-agent-triage.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/sub-kg-lifecycle.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/subscribe-kg.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/swot-analysis.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/test-data-curation.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/test-plan-execution.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/theme-ui-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/translation-workflow.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/upstream-pin-watch.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/upstream-version-adoption.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/voice-review.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/workflows/wireframe-design-review.svg",
         "change": "changed",
         "role": "data",
         "via": []
@@ -17216,7 +18048,13 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.aac97ec8e026b74fe503b1273b0fcc9fc82e4536c996bc34bff38cfa8a18f3f3.sqlite3",
+        "path": "assets/schemas/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.a8b9cb95b4daf5d0b45477977401931ea29fdad8fbbd02ac31f788a99e503b08.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
@@ -49592,12 +50430,6 @@
         "via": []
       },
       {
-        "path": "smart-trust/fhir-artifact-index/index.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
         "path": "smart-trust/fhir-artifact-index/package.tgz",
         "change": "changed",
         "role": "data",
@@ -52455,9 +53287,10 @@
       },
       {
         "dir": "(root)",
-        "count": 15,
+        "count": 16,
         "sample": [
           ".nojekyll",
+          "404.html",
           "build.json",
           "cat-harness-code-lists.jsonld",
           "cat-harness-glossary.json",

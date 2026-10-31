@@ -14,6 +14,25 @@
       "dcterms:source": "Schema fields of bootstrap-tools"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/graph-export.graphexportschema.at-graph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphExportSchema.@graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Subjects, and for one release a tombstone per pre-path `#fragment` (https://github.com/litlfred/cat-harness-tools/issues/958)."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.@graph",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/graph-export.graphexportschema.comment",
       "@type": "skos:Concept",
       "skos:inScheme": {

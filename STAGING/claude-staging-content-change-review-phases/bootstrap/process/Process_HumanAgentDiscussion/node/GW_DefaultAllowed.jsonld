@@ -1,0 +1,14 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap/process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap/process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Did the caller allow a default?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap/process/Process_HumanAgentDiscussion"
+    }
+  ]
+}

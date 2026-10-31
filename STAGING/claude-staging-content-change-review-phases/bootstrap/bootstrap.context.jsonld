@@ -1,0 +1,91 @@
+{
+  "@context": {
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
+    "processes": "https://litlfred.github.io/bootstrap/v0/processes/ns#",
+    "bpmn": "http://www.omg.org/spec/BPMN/20100524/MODEL#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "deprecated": {
+      "@id": "owl:deprecated",
+      "@type": "xsd:boolean"
+    },
+    "isReplacedBy": {
+      "@id": "dcterms:isReplacedBy",
+      "@type": "@id"
+    },
+    "sameAs": {
+      "@id": "owl:sameAs",
+      "@type": "@id"
+    },
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "label": "rdfs:label",
+    "comment": "rdfs:comment",
+    "wasAttributedTo": {
+      "@id": "prov:wasAttributedTo",
+      "@type": "@id"
+    },
+    "title": "dcterms:title",
+    "description": "dcterms:description",
+    "summary": "dcterms:abstract",
+    "requires": {
+      "@id": "dcterms:requires",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "foaf:depiction",
+      "@type": "@id"
+    },
+    "calledElement": {
+      "@id": "bpmn:calledElement",
+      "@type": "@id"
+    },
+    "isPartOf": {
+      "@id": "dcterms:isPartOf",
+      "@type": "@id"
+    },
+    "type": {
+      "@id": "dcterms:type",
+      "@type": "@id"
+    },
+    "source": {
+      "@id": "dcterms:source",
+      "@type": "@id"
+    },
+    "sourceRef": {
+      "@id": "bpmn:sourceRef",
+      "@type": "@id"
+    },
+    "targetRef": {
+      "@id": "bpmn:targetRef",
+      "@type": "@id"
+    },
+    "flowNodeRef": {
+      "@id": "bpmn:flowNodeRef",
+      "@type": "@id"
+    },
+    "versionInfo": "owl:versionInfo",
+    "generatedAtTime": {
+      "@id": "prov:generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "wasDerivedFrom": {
+      "@id": "prov:wasDerivedFrom",
+      "@type": "@id"
+    },
+    "omitted": {
+      "@id": "bootstrap:buildOmitted",
+      "@type": "@json"
+    },
+    "counts": {
+      "@id": "bootstrap:buildCounts",
+      "@type": "@json"
+    },
+    "problems": {
+      "@id": "bootstrap:buildProblems",
+      "@type": "@json"
+    }
+  }
+}
