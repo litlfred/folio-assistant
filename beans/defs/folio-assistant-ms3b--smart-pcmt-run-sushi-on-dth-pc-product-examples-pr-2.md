@@ -2,7 +2,7 @@
 # folio-assistant-ms3b
 $schema: bean/1.0.0
 title: 'smart-pcmt#2: run sushi on the dth-pc product examples (agy, local)'
-status: todo
+status: in-progress
 type: task
 priority: high
 tags:
@@ -10,7 +10,7 @@ tags:
     - sushi
     - dth-figures
 created_at: 2026-10-31T12:42:00Z
-updated_at: 2026-10-31T12:42:00Z
+updated_at: 2026-10-31T12:42:30Z
 ---
 
 **For agy** (owner, 2026-10-31 12:40Z: "make bean for agy"). Cloud sandboxes cannot reach packages.fhir.org, and the fork's `ghbuild` check does not run sushi, so sushi has not been run on https://github.com/litlfred/smart-pcmt/pull/2.
