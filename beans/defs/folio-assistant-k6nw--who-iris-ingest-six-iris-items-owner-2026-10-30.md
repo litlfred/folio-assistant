@@ -2,11 +2,11 @@
 # folio-assistant-k6nw
 $schema: bean/1.0.0
 title: 'who-iris: ingest six IRIS items the owner listed on 2026-10-30 (NHWA / health workforce)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-30T22:52:00Z
-updated_at: 2026-10-31T00:08:00Z
+updated_at: 2026-10-31T00:29:00Z
 ---
 
 For agy, because iris.who.int is blocked from the cloud sandbox (re-probed 2026-10-30T22:50Z: proxy refuses the connection; WebFetch fails too). The owner asked on 2026-10-30T22:48Z to ingest these six items into the litlfred/who-iris KG `library/`. Work in litlfred/who-iris only (a litlfred repo, not WHO's).
@@ -51,3 +51,5 @@ _2026-10-31T00:08:00Z_ — All six WHO IRIS items materialized and ingested (L1-
 | 4 | `dc583bce-4e95-4e27-9b2e-7b98bbe8a144` | `10665/275473` | *National health workforce accounts: implementation guide* (2018) | ISBN `9789241514446` | `1. Headquarters > Publications` (`collection/hq-publications`) | `9789241514446-eng` |
 | 5 | `c8db7b21-da29-4432-a6d7-61ffe3b2c1c1` | `10665/259360` | *National health workforce accounts: a handbook* (1st ed., 2017) | ISBN `9789241513111` | `1. Headquarters > Publications` (`collection/hq-publications`) | `9789241513111-eng` |
 | 6 | `bb4009bc-943c-4116-88e3-fe4f6cf1a400` | `10665/386519` | *National health workforce accounts: health workforce levels and trends 2026* | ISBN `9789240122925` (electronic), `9789240122932` (print) | `1. Headquarters > Publications` (`collection/hq-publications`) | `9789240122925-eng` |
+
+_2026-10-31T00:29Z_ — who-iris#134 merged (54806ed) on the owner's card "A. Merge now".
