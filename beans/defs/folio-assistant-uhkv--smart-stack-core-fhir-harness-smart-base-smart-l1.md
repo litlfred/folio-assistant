@@ -156,15 +156,10 @@ h3tx, qvxh), and `check:bean-rollup` refuses a completed parent over open
 children. Only the smart-ig box is settled.
 
 
-## smart-ig dropped, 2026-10-23
-
-Owner, 2026-10-23: "F c, dont need smart-ig as a layer". smart-l1 and
-smart-dak became document kinds on 2026-10-01 (#1767), and smart-ig is not
-made a layer or a document kind. An IG such as smart-trust or
-smart-immunizations instantiates smart-base directly. The stack is
-core → fhir-harness → smart-base, with the L1 and DAK document kinds in
-smart-base.
-
-The epic stays open: six children are still open (2ipj, a9tx, cydz, fm9n,
-h3tx, qvxh), and `check:bean-rollup` refuses a completed parent over open
-children. Only the smart-ig box is settled.
+_2026-10-31T15:35:00Z_ — Child rollup and SMART stack updates:
+- All six previously open children listed above (`2ipj`, `a9tx`, `cydz`, `fm9n`, `h3tx`, `qvxh`), together with `nsbb`, `wm63`, `kn0t`, `rjug`, and `ylj7`, are now `completed` (`52` of `53` children under `uhkv` completed).
+- The sole remaining open child under `uhkv` is `folio-assistant-17iw` (`todo`: *MIGRATION: public-health and health-system process catalogues move from smart-base to WHO/who-iris once it is live*).
+- Active `smart-base` and downstream IG PRs opened/updated today:
+  - [`litlfred/smart-pcmt#1`](https://github.com/litlfred/smart-pcmt/pull/1) (`d5b54bb` on `claude/harness-smart-pcmt`): harnesses `smart-pcmt` as a `smart-base` IG instance downstream of `dth-pc` (incorporating merged `smart-pcmt#2` `d7ffb0e`, `#3` `51c9b7c`, and `#4` `c7c4928`).
+  - [`litlfred/smart-base#256`](https://github.com/litlfred/smart-base/pull/256) (`3e135ba`, merged on `main`): DTH voice inherits `smart-ra` from its source.
+  - Open `smart-base` PRs: [`#244`](https://github.com/litlfred/smart-base/pull/244) (`ac788fa`, `dth-authoring.bpmn`), [`#246`](https://github.com/litlfred/smart-base/pull/246) (`97a6d1e`, DAK kind logical-model fields), [`#249`](https://github.com/litlfred/smart-base/pull/249) (`3b03b9d`, `dth-authoring` & `dth-l1-to-l2-ingest` skills), [`#255`](https://github.com/litlfred/smart-base/pull/255) (`44699c5`, security review fixes for `plxg`, `towy`, `vl71`, `ylu8`), [`#257`](https://github.com/litlfred/smart-base/pull/257) (`3017d04`, `.github/main-qa-gates.json`), [`#258`](https://github.com/litlfred/smart-base/pull/258) (`de8ae42`, L2 DTH document kind, `step-table` schema, cross-instance glossary & ArchiMate checks), and [`#259`](https://github.com/litlfred/smart-base/pull/259) (`c906d77`, DTH governance and planning schemas proposal).

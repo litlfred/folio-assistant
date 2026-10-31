@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T10:50:00Z
-updated_at: 2026-10-31T10:50:00Z
+updated_at: 2026-10-31T15:35:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -22,3 +22,5 @@ Rules from the placement proposal: references move with the subject; generated t
 - [ ] kg-qa sidecars are relocated, none deleted
 
 _2026-10-31T10:50Z_ — Created and claimed by the "Finish GOAL 1 beans" thread. Session https://claude.ai/code/session_01Qmmkt6Hy5kLsKxGLMzk88s.
+
+_2026-10-31T15:35:00Z_ — Related `cat-harness/library/` schema and routing updates merged on `main` today: [`litlfred/cat-harness#858`](https://github.com/litlfred/cat-harness/pull/858) (`5c81979`, baselining the two library `figure-data/` families) and [`litlfred/cat-harness-tools#1141`](https://github.com/litlfred/cat-harness-tools/pull/1141) (`4cc52ac`, allowing `figure-data/` in a library entry and routing its two families); open library ingestion PR [`litlfred/cat-harness#849`](https://github.com/litlfred/cat-harness/pull/849) (`6725d1d`, 25 BPMN/DMN comprehension papers for `e0jh`) and staged branch `agy/crdm-sources` (`54e6586`, PHII 2023 & PATH 2012 CRDM sources for `max2`) will follow the `library/<group>/<slug>/` layout once the group assignment is approved.

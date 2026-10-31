@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-31T08:35:00Z
+updated_at: 2026-10-31T15:35:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -73,3 +73,5 @@ Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 _2026-10-30T20:37:00Z_ — Placement PR2–PR9 (`pzwb`, `63wl`, `4fv8`, `tlat`, `apcg`, `8fq9`, `f8wp`, `p9bu`) and `vj2p` are now all `completed`, and both `check:import-direction` and `check:reference-direction` report **0 wrong-direction** across `cat-harness` (and across all 12 instances in `folio-assistant` at `27d72c8d91`). Remaining open children under `iirv`: `8lcl` (generated JSON Schema half in flight in `cat-harness#794` + `cat-harness-tools#995`), `w1gy`, and `ygge`.
 
 _2026-10-31T08:35:00Z_ — `folio-assistant-8lcl` (stage 1b) and `folio-assistant-txue` (S5) are now `completed` (`cat-harness#794` and `cat-harness-tools#995` merged on `main`; `check:content-code-free` at 0 code files; `kind:json-schemas:check` and `check:node-iris` green). Remaining open children under `iirv`: `w1gy` and `ygge`.
+
+_2026-10-31T15:35:00Z_ — `folio-assistant-ygge` (F17) and `folio-assistant-w1gy` (stage 5 fresh-clone QA, plus `mgxw`) are now both `completed` (`cat-harness#853` `02c4725`, `bootstrap-tools#55` `541195a`, `cat-harness-tools#1121` `0bf6efb`, `bootstrap-tools#58` `72344e1`, and `cat-harness-tools#1131` `9da064c` merged on `main`, with 0 tsc errors and 0 test failures outside the baseline in a fresh sibling clone). Open follow-up PRs on `cat-harness-tools`: [`litlfred/cat-harness-tools#1151`](https://github.com/litlfred/cat-harness-tools/pull/1151) (`3c12af1`, removing two upward layer mentions in `graph-typology-registry.ts` comments) and [`litlfred/cat-harness-tools#1142`](https://github.com/litlfred/cat-harness-tools/pull/1142) (`c6c20ac`, repairing `cat-tools-g7ls` `status: done` → `completed` and skipping generated `README.md` in bean readers). 29 of 30 children under `iirv` are now `completed`; the sole remaining open child is `folio-assistant-6fez` (`Library sources regroup: cat-harness/library/ into library/<group>/<slug>/`, split from `f8wp`).

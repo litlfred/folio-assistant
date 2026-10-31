@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-30T21:29:30Z
+updated_at: 2026-10-31T15:35:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -127,3 +127,12 @@ _2026-10-31T04:08:00Z_ — Inspected `litlfred/cat-harness` `post-merge-regen.ym
 3. **Fixes in [`litlfred/cat-harness#839`](https://github.com/litlfred/cat-harness/pull/839) (`fix/p7mb-post-merge-regen-clean`, `f9856f74`)**:
    - Declare 13 missing `builtAtPublish` entries in `cat-harness.json` and `.gitignore` (5 cross-instance `docs/assets/glossary/*.skos.jsonld` exports, 3 `docs/en/cat-harness/{sme-case-verdict,test-data-fixed,test-data-generated}/` directories, 5 cross-instance `docs/assets/img/workflows/*.svg` BPMN renderings) and `git rm` the 5 tracked cross-instance SKOS files.
    - Refresh stale committed files (`glossary/glossary-ledger.json`, `external-schemas/dcmi-terms.json`, `docs/assets/img/workflows/merge-to-main.svg`, `processes/sdlc/{sme-test-data-review,test-data-curation}.checklist.md`, `site-chrome/assets/js/navbar.js`, and 50 `translations/{ar,es,fr,ru,zh}/{concepts,guides,start}/*.po` files).
+
+_2026-10-31T15:35:00Z_ — Additional `post-merge-regen` scoping/input fixes and `test/results/` removal (`tfqf` / `7mwa`):
+- **Open [`litlfred/cat-harness-tools#1152`](https://github.com/litlfred/cat-harness-tools/pull/1152) (`fa36384` on `fix/ksek-post-merge-regen-scope`, verified conflict-free with `#1081` `b055e03`)**:
+  - `scripts/post-merge-regen.ts`: includes off-checkout `storage` directories (`test/results/` on `qa-reports`, `site/` on `gh-pages`) in `publishTimeDeclarations(repoRoot)` alongside `decl.builtAtPublish`, and scopes `committedMoves` to the target repository via `inTargetScope(repoRoot, instance)` (excluding `tipLocations(repoRoot)` state mounts in all runs, scoping layer runs to `cleanInstance/`, and excluding `mountedInstanceRoots(repoRoot)` in index runs).
+  - `.github/workflows/layer-post-merge-regen.yml`: installs `./fa/.github/actions/plantuml-java` and runs `bun run cat ig-index:build` + `bun run cat smart:pages` before `bun run cat post-merge:regen`, and guards `gh pr create` with a compare-URL `::warning::` fallback when `GITHUB_TOKEN` lacks PR-creation permission.
+- **Open [`litlfred/folio-assistant#2857`](https://github.com/litlfred/folio-assistant/pull/2857) (`6edcaed` on `fix/ksek-post-merge-regen-inputs`)**:
+  - `.github/workflows/post-merge-regen.yml`: runs `./.github/actions/plantuml-java`, `bun run cat ig-index:build`, `bun run cat smart:pages`, `bun run cat qa:working-copy`, and `bun run cat derive:publish` before `bun run cat post-merge:regen` (with `QA_WORKING_COPY_BUILDING: "1"`).
+- **Merged `cat-harness/test/results/` removal (`tfqf` / `7mwa`)**:
+  - [`litlfred/cat-harness#857`](https://github.com/litlfred/cat-harness/pull/857) (`eef8750`), [`litlfred/cat-harness-tools#1143`](https://github.com/litlfred/cat-harness-tools/pull/1143) (`1517ad4`), and [`#1148`](https://github.com/litlfred/cat-harness-tools/pull/1148) (`8990f3d`) merged on `main`, removing committed `test/results/` from `cat-harness` (index re-pin open in [`litlfred/folio-assistant#2855`](https://github.com/litlfred/folio-assistant/pull/2855) `f445a71`).
