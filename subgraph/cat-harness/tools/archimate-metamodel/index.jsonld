@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/archimate-metamodel/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-metamodel.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "archimate-metamodel",
+      "title": "Derive the metamodel an ArchiMate model uses, and check it against ArchiMate's relationship table"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/archimate-metamodel",
+  "path": "tools/archimate-metamodel/"
+}

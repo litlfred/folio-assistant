@@ -366,10 +366,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-31T03:50:35.685Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/24a29d767de217e0c4e014cf8c59e236b4796d71",
-  "sourceCommitSha": "24a29d767de217e0c4e014cf8c59e236b4796d71",
-  "sourceCommitAt": "2026-10-31T04:30:47+01:00",
+  "generatedAt": "2026-10-31T04:24:25.190Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/33153b04834d302d618400a80a8293a78a6f0fd3",
+  "sourceCommitSha": "33153b04834d302d618400a80a8293a78a6f0fd3",
+  "sourceCommitAt": "2026-10-31T04:00:27Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -379,11 +379,11 @@
     "SkillPackage": 18,
     "Decision": 10,
     "Task": 8,
-    "Process": 75,
-    "SequenceFlow": 1038,
-    "Lane": 171,
-    "ProcessNode": 1005,
-    "Tool": 164,
+    "Process": 76,
+    "SequenceFlow": 1045,
+    "Lane": 173,
+    "ProcessNode": 1012,
+    "Tool": 167,
     "Schema": 177,
     "ExternalSchema": 28,
     "GraphTypology": 53,
@@ -1444,7 +1444,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/uml-overview.md",
-      "instructionLines": 190,
+      "instructionLines": 200,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4255,12 +4255,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "archimate-models",
       "title": "ArchiMate models — every view, element and relationship a node",
-      "description": "ArchiMate models as knowledge-graph content: how an instance declares the Archi models it holds, what the `archimate` subgraph gives every model, view, element and relationship (an IRI, a thin page, and every view drawn as SVG from the model's own diagram), how to version the models, how to wire them into a folio's staging build and navbar, and why no Java, no Archi CLI and no Archi HTML report is ever part of the pipeline. Read before adding, publishing or rendering an `.archimate` file, before citing an ArchiMate element from prose, and before reaching for Archi's own tooling in CI.",
+      "description": "ArchiMate models as knowledge-graph content: how an instance declares the Archi models it holds, what the `archimate` subgraph gives every model, view, element and relationship (an IRI, a thin page, and every view drawn as SVG from the model's own diagram, and its metamodel derived and checked), how to version the models, how to wire them into a folio's staging build and navbar, how to count and lower the crossed lines in a view before committing it, why every view carries a plain-language key, why names are the source's own terms linked to their SKOS concepts, and why no Java, no Archi CLI and no Archi HTML report is ever part of the pipeline. Read before adding, authoring, publishing or rendering an `.archimate` file, before citing an ArchiMate element from prose, and before reaching for Archi's own tooling in CI.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/archimate-models.md",
-      "instructionLines": 157,
+      "instructionLines": 283,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6926,6 +6926,247 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_10",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_11",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Publish an ArchiMate model — every picture derived from it",
+      "summary": "An ArchiMate model is authored in Archi and committed; everything a reader sees is derived from it by three mechanical Tools, in order, in the pipeline lane: `archimate-check` (it parses and resolves), `archimate-metamodel` (the element types and relationship…",
+      "description": "An ArchiMate model is authored in Archi and committed; everything a reader sees is derived from it by three mechanical Tools, in order, in the pipeline lane: `archimate-check` (it parses and resolves), `archimate-metamodel` (the element types and relationship patterns it uses, each checked against ArchiMate's relationship table), and `archimate-pages` (a page and an IRI for every view, element and relationship, every view drawn, and the \"Metamodel in use\" page). No step draws a diagram by hand, and none runs Archi or a JVM (skill `archimate-models`).\n\nOwner, 2026-10-31: \"i dont really like native UML, rather derived\", then \"make mechanical tools as parts of skills/processes\". A metamodel used to be a hand-drawn view of placeholder elements named after their types; here it is the second step's output, so it cannot disagree with the model.",
+      "enforcement": "strict",
+      "sourcePath": "processes/ui/archimate-publish.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/ui/archimate-publish.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/archimate-publish.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish"
+      ],
+      "nodeCount": 7,
+      "flowCount": 7,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Metamodel",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Metamodel",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Pages",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_FixModel",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_FixModel",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Pages",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/End_Process_ArchimatePublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Model author",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "CI/CD Pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Model committed from Archi",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Check the model parses and resolves",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_1",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Metamodel",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Derive the metamodel in use",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Every relationship allowed by ArchiMate?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_4",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_FixModel",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Fix the relationship in Archi",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Pages",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Write pages, drawings and the metamodel page",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/End_Process_ArchimatePublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Model published; every picture derived",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_7"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
@@ -38903,6 +39144,222 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-crossings.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "archimate-crossings",
+      "title": "Count the tangles in ArchiMate views: lines crossing lines, and lines through boxes",
+      "description": "For each view, as `render-view.ts` draws it, count the pairs of lines that cross and the lines that run through a box they do not connect (groups, and boxes that hold one of the line's ends, excepted). With `--view` it lists each tangle by the boxes it joins; with `--max` it is a gate.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:crossings"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "model",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The `.archimate` file (plain XML or Archi's zipped archive).",
+            "required": true,
+            "arg": {
+              "flag": "--model"
+            }
+          },
+          {
+            "name": "view",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "One view, by its Archi id (`id-<hex>`) or its page slug (e.g. `1-central-health-workforce-registry`). A slug, not free text, so no shell payload can ride on it. Absent: every view in the model.",
+            "required": false,
+            "arg": {
+              "flag": "--view"
+            }
+          },
+          {
+            "name": "max",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
+            "description": "Exit 1 if any view has more tangles than this.",
+            "required": false,
+            "arg": {
+              "flag": "--max"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Print JSON instead of one line per view.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "tangles",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Per view: crossings and lines through a box."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-detangle.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "archimate-detangle",
+      "title": "Lower the tangles in ArchiMate views: re-route lines and swap same-size boxes in a row",
+      "description": "Searches for a less tangled drawing of each view: a line may be re-routed straight or orthogonally (an L, or a Z through a free lane between boxes), and two same-size boxes in the same parent and row or column may swap places. A change is kept only if it lowers crossings + lines through boxes + lines drawn on top of each other. Without `--apply` it reports before and after per view; with it, the model is written back in place, only the moved boxes' bounds and the re-routed lines' bendpoints changing.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:detangle"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "model",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The `.archimate` file (plain XML or Archi's zipped archive).",
+            "required": true,
+            "arg": {
+              "flag": "--model"
+            }
+          },
+          {
+            "name": "view",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
+            "description": "One view, by its Archi id (`id-<hex>`) or its page slug (e.g. `1-central-health-workforce-registry`). A slug, not free text, so no shell payload can ride on it. Absent: every view in the model.",
+            "required": false,
+            "arg": {
+              "flag": "--view"
+            }
+          },
+          {
+            "name": "routes-only",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Never move a box; only re-route lines.",
+            "required": false,
+            "arg": {
+              "flag": "--routes-only"
+            }
+          },
+          {
+            "name": "apply",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Write the model back in place.",
+            "required": false,
+            "arg": {
+              "flag": "--apply"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Print JSON instead of one line per view.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Per view: tangles before and after, and the swaps and routes made."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-metamodel.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "archimate-metamodel",
+      "title": "Derive the metamodel an ArchiMate model uses, and check it against ArchiMate's relationship table",
+      "description": "For each model an instance's `cat-archimate.config.json` names: the element types it uses, with counts; every (source type, relationship, target type) pattern its relationships follow, with counts and ids; whether ArchiMate's relationship table (Appendix B of ArchiMate 3.2, as Archi holds it, committed as `archimate/schemas/archimate-relationships.json` in the tools layer) allows each pattern; and the placeholder elements, named after their own type, that a hand-drawn metamodel leaves in a model. Prints a report, JSON, Graphviz DOT or a Mermaid class diagram. `archimate-pages` draws the same result on each model's \"Metamodel in use\" page, so the metamodel is derived, never drawn.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:metamodel"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The instance root whose ArchiMate models are read.",
+            "required": true,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "model",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ArchimateModelId",
+            "description": "One model's id from the config; absent, every model. Required for `--format dot` and `mmd`.",
+            "required": false,
+            "arg": {
+              "flag": "--model"
+            }
+          },
+          {
+            "name": "format",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ArchimateMetamodelFormat",
+            "description": "`text` (default), `json`, `dot` or `mmd`.",
+            "required": false,
+            "arg": {
+              "flag": "--format"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Exit 1 when any relationship follows a pattern ArchiMate does not allow. Placeholders are reported, never fatal.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "metamodel",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "The report, or the metamodel as `archimate-metamodel/v1` JSON, DOT or Mermaid, on stdout."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-pages.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "archimate-pages",
@@ -64454,6 +64911,108 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/End_Process_RenderLog"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/flow/SF_Process_ArchimatePublish_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/lane/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/A_Check",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/A_Metamodel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Metamodel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/GW_Allowed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/A_FixModel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_FixModel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_FixModel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/A_Pages",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Pages",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ArchimatePublish/node/End_Process_ArchimatePublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/End_Process_ArchimatePublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/End_Process_ArchimatePublish"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IngestTheme",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme",
@@ -77762,6 +78321,24 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-check.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/archimate-crossings.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-crossings.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-crossings.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/archimate-detangle.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-detangle.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-detangle.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/archimate-metamodel.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-metamodel.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-metamodel.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/tools/archimate-pages.jsonld",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-pages.jsonld",
@@ -80494,8 +81071,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "24a29d767de217e0c4e014cf8c59e236b4796d71",
+    "sha": "33153b04834d302d618400a80a8293a78a6f0fd3",
     "pr": "main",
-    "run": "41164686924"
+    "run": "41166738437"
   }
 }

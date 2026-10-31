@@ -166,6 +166,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.basis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.basis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How the match was made: `same-elements` when the figure shows exactly the view's elements, `by-eye` when a person compared the two pictures."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.basis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.block",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.block"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document block holding the figure, relative to the instance root."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.block",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the document calls it, e.g. `Figure 3.7.1`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.model",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.model"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The model's id, as in `models`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.model",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.view",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.view"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The view's Archi id."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.view",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigmodelschema.description",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -258,6 +353,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigSchema.directory",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigschema.figures",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigSchema.figures"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's figures that are views of these models."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigSchema.figures",
       "skos:note": "candidate"
     },
     {
@@ -22849,6 +22963,196 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MemberFactsSchema.unblocks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodel.notallowed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Metamodel.notAllowed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relationships following a pattern ArchiMate does not allow."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#Metamodel.notAllowed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodel.placeholderrelationships",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Metamodel.placeholderRelationships"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relationships with a placeholder at either end: the hand-drawn metamodel, left out of `patterns`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#Metamodel.placeholderRelationships",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodelpattern.allowed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MetamodelPattern.allowed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Allowed by ArchiMate's table; undefined when the table does not know a type."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelPattern.allowed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodelpattern.relationship",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MetamodelPattern.relationship"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The relationship type as the model reader gives it, e.g. `Realization`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelPattern.relationship",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodelpattern.relationships",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MetamodelPattern.relationships"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The relationships that follow it, by id, in model order."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelPattern.relationships",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodeltype.elements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MetamodelType.elements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Elements of this type, placeholders not counted."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelType.elements",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.metamodeltype.ids",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MetamodelType.ids"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Their ids, in model order: what a reader opens from the type's box."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelType.ids",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.relationshiptableschema.allowed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTableSchema.allowed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Source type → target type → the key letters allowed between them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#RelationshipTableSchema.allowed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.relationshiptableschema.archimateversion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTableSchema.archimateVersion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The ArchiMate version the table encodes (Archi's `<relationships version>`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#RelationshipTableSchema.archimateVersion",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/metamodel.relationshiptableschema.keys",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTableSchema.keys"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Key letter → Archi relationship type, e.g. `r` → `RealizationRelationship`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/metamodel.ts#RelationshipTableSchema.keys",
       "skos:note": "candidate"
     },
     {

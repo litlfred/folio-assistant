@@ -5,6 +5,86 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
+      "@type": "bootstrap:Process",
+      "name": "Publish an ArchiMate model — every picture derived from it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_4",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_5",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish#flow/SF_Process_ArchimatePublish_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Author",
+      "@type": "cat-harness:Lane",
+      "name": "Model author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/lane/Lane_Pipeline",
+      "@type": "cat-harness:Lane",
+      "name": "CI/CD Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Check",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check the model parses and resolves"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_FixModel",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fix the relationship in Archi"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Metamodel",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Derive the metamodel in use"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/A_Pages",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write pages, drawings and the metamodel page"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/End_Process_ArchimatePublish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Model published; every picture derived"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/GW_Allowed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every relationship allowed by ArchiMate?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish/node/Start_Process_ArchimatePublish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Model committed from Archi"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme",
       "@type": "bootstrap:Process",
       "name": "Ingestion subprocess — ingest a theme"

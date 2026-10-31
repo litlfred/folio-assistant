@@ -1938,6 +1938,12 @@
     "zod/tool-run/ToolRunRecordSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-run/ToolRunRecordSchema.schema.json"
     },
+    "zod/tool-types/ArchimateMetamodelFormatSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ArchimateMetamodelFormatSchema.schema.json"
+    },
+    "zod/tool-types/ArchimateModelIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ArchimateModelIdSchema.schema.json"
+    },
     "zod/tool-types/BeanIdSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/BeanIdSchema.schema.json"
     },
@@ -2307,11 +2313,17 @@
     "zod/tile-count/TileCountsSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tile-count/TileCountsSchema.schema.json"
     },
+    "zod/archimate/ArchimateConfigFigureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigFigureSchema.schema.json"
+    },
     "zod/archimate/ArchimateConfigModelSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigModelSchema.schema.json"
     },
     "zod/archimate/ArchimateConfigSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigSchema.schema.json"
+    },
+    "zod/metamodel/RelationshipTableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/metamodel/RelationshipTableSchema.schema.json"
     },
     "zod/openapi/OpenApiConfigDocumentSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiConfigDocumentSchema.schema.json"
@@ -2341,8 +2353,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "24a29d767de217e0c4e014cf8c59e236b4796d71",
+    "sha": "33153b04834d302d618400a80a8293a78a6f0fd3",
     "pr": "main",
-    "run": "41164686924"
+    "run": "41166738437"
   }
 }

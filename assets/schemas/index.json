@@ -192,6 +192,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
+      "instance": "cat-harness-tools",
+      "name": "metamodel",
+      "graphNode": "undeclared",
+      "summary": "The metamodel a model actually uses, derived from the model and checked",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/archimate/schemas/slugs.ts",
       "instance": "cat-harness-tools",
       "name": "slugs",
@@ -6477,6 +6485,72 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigure",
+      "name": "ArchimateConfigFigure",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema",
+      "name": "ArchimateConfigFigureSchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
+      "doc": "A figure in the instance's document that IS a view of a model: the link",
+      "fields": [
+        {
+          "name": "block",
+          "type": "z .string() .regex(/\\.md$/, \"a document block, a .md file\") .refine((f) => !f.startsWith(\"/\") && !f.split(\"/\").includes…",
+          "optional": false,
+          "array": false,
+          "doc": "The document block holding the figure, relative to the instance root."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the document calls it, e.g. `Figure 3.7.1`."
+        },
+        {
+          "name": "model",
+          "type": "z.string().regex(SEGMENT)",
+          "optional": false,
+          "array": false,
+          "doc": "The model's id, as in `models`."
+        },
+        {
+          "name": "view",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The view's Archi id."
+        },
+        {
+          "name": "basis",
+          "type": "z.enum([\"same-elements\", \"by-eye\"])",
+          "optional": false,
+          "array": false,
+          "doc": "How the match was made: `same-elements` when the figure shows exactly"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "SEGMENT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigModelSchema",
       "name": "ArchimateConfigModelSchema",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
@@ -6545,11 +6619,19 @@
           "type": "z.array(ArchimateConfigModelSchema).min(1)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "figures",
+          "type": "z.array(ArchimateConfigFigureSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The document's figures that are views of these models."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema",
         "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigModelSchema"
       ],
       "unresolved": [],
@@ -7018,6 +7100,238 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/metamodel.ts#Metamodel",
+      "name": "Metamodel",
+      "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "\"archimate-metamodel/v1\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "archimateVersion",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "types",
+          "type": "MetamodelType[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "patterns",
+          "type": "MetamodelPattern[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "placeholders",
+          "type": "Array<{ id: string; type: string; name: string }>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "placeholderRelationships",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Relationships with a placeholder at either end: the hand-drawn metamodel, left out of `patterns`."
+        },
+        {
+          "name": "notAllowed",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Relationships following a pattern ArchiMate does not allow."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelPattern",
+        "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelType"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelPattern",
+      "name": "MetamodelPattern",
+      "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "source",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "relationship",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The relationship type as the model reader gives it, e.g. `Realization`."
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "allowed",
+          "type": "boolean | undefined",
+          "optional": false,
+          "array": false,
+          "doc": "Allowed by ArchiMate's table; undefined when the table does not know a type."
+        },
+        {
+          "name": "relationships",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "The relationships that follow it, by id, in model order."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelType",
+      "name": "MetamodelType",
+      "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "layer",
+          "type": "ArchimateLayer",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "elements",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Elements of this type, placeholders not counted."
+        },
+        {
+          "name": "ids",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Their ids, in model order: what a reader opens from the type's box."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateLayer"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/metamodel.ts#RelationshipTable",
+      "name": "RelationshipTable",
+      "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/metamodel.ts#RelationshipTableSchema",
+      "name": "RelationshipTableSchema",
+      "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
+      "kind": "zod-object",
+      "doc": "ArchiMate's relationship table as Archi holds it, written by `import-archi-relationships.ts`.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(RELATIONSHIP_TABLE_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "archimateVersion",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The ArchiMate version the table encodes (Archi's `<relationships version>`)."
+        },
+        {
+          "name": "source",
+          "type": "z .object({ repository: z.string().url(), commit: z.string().regex(/^[0-9a-f]{40}$/), path: z.string().min(1), license:…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keys",
+          "type": "z.record(z.string().regex(/^[a-z]$/), z.string().regex(/Relationship$/))",
+          "optional": false,
+          "array": false,
+          "doc": "Key letter → Archi relationship type, e.g. `r` → `RealizationRelationship`."
+        },
+        {
+          "name": "allowed",
+          "type": "z.record(z.string().min(1), z.record(z.string().min(1), z.string().regex(/^[a-z]*$/)))",
+          "optional": false,
+          "array": false,
+          "doc": "Source type → target type → the key letters allowed between them."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "RELATIONSHIP_TABLE_TAG",
+        "z"
+      ],
+      "exported": true
     },
     {
       "id": "cat-harness-tools/openapi/schemas/openapi.ts#OpenApiConfig",
@@ -58573,6 +58887,40 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/tools/tool-types.ts#ArchimateMetamodelFormatSchema",
+      "name": "ArchimateMetamodelFormatSchema",
+      "module": "cat-harness-tools/schemas/tools/tool-types.ts",
+      "kind": "zod-enum",
+      "doc": "What `archimate-metamodel` prints.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "text",
+        "json",
+        "dot",
+        "mmd",
+        "A plain-text report, archimate-metamodel/v1 JSON, Graphviz DOT, or a Mermaid class diagram."
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/tool-types.ts#ArchimateModelIdSchema",
+      "name": "ArchimateModelIdSchema",
+      "module": "cat-harness-tools/schemas/tools/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "The id of one ArchiMate model in an instance's `cat-archimate.config.json`,",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/tools/tool-types.ts#BeanIdSchema",
       "name": "BeanIdSchema",
       "module": "cat-harness-tools/schemas/tools/tool-types.ts",
@@ -81257,6 +81605,14 @@
     },
     {
       "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema",
+      "via": "figures",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigSchema",
       "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigModelSchema",
       "via": "models",
       "kind": "field",
@@ -81342,6 +81698,30 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/metamodel.ts#Metamodel",
+      "to": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelPattern",
+      "via": "patterns",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/metamodel.ts#Metamodel",
+      "to": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelType",
+      "via": "types",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/metamodel.ts#MetamodelType",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateLayer",
+      "via": "layer",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness-tools/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
@@ -92753,6 +93133,15 @@
     }
   ],
   "nodeKinds": [
+    {
+      "id": "archimate-relationship-table/v1",
+      "source": "family",
+      "decl": "cat-harness-tools/archimate/schemas/metamodel.ts#RelationshipTableSchema",
+      "instance": "cat-harness-tools",
+      "typologies": [
+        "schemas"
+      ]
+    },
     {
       "id": "attestations",
       "source": "typology",

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 26,
+      "count": 50,
       "unit": "open beans"
     }
   },
@@ -405,6 +405,20 @@
       "file": "beans/defs/folio-assistant-1ple--state-mount-follows-an-absolute-marker-path-out-of.md"
     },
     {
+      "id": "folio-assistant-1sc6",
+      "title": "smart-trust: release.yml is broken and over-privileged (checkout@v2, ::set-output, empty tag ref)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "low",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** correctness, security. **Rule:** `scz-least-privilege`. **Severity:** low: manual dispatch only.\n\n**Evidence** (`.github/workflows/release.yml`, smart-trust `496290a`):\n\n- `:3-7` grants `contents, pages, id-token, pull-requests: write` to every job, including the `check` job that only reads a file.\n- `:22` `actions/checkout@v2` (Node 12, long deprecated).\n- `:24` `ref: ${{ github.eve",
+      "file": "beans/defs/folio-assistant-1sc6--smart-trust-release-workflow-is-broken-and-over-privi.md"
+    },
+    {
       "id": "folio-assistant-1xrg",
       "title": "state:visualizer:check cannot fail on a declaration that points at its own page (the '4 of 7 render a shell' premise was a FALSE FINDING — retracted)",
       "status": "completed",
@@ -759,6 +773,20 @@
       "file": "beans/defs/folio-assistant-32f6--prefix-the-harnesss-special-branches-with-cat-qa-r.md"
     },
     {
+      "id": "folio-assistant-33iz",
+      "title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
+      "status": "todo",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "Group C of the owner's full security and QA review of KG-harnessed code (2026-10-31): fhir-harness `21d0fc5`, smart-base `a9d57a2`, smart-ra `f8d210b`, smart-immunizations `0f2b0d9`. Sibling of cat-harness-tools epic `cat-tools-sr31`.\n\nMethod: cat-harness `skills/conduct/security/` (security.md boundary table, injection-boundaries, path-containment, zero-trust-handover), the 16 rules of `voices/se",
+      "file": "beans/defs/folio-assistant-33iz--security-and-qa-review-of-the-fhir-and-smart-layer.md"
+    },
+    {
       "id": "folio-assistant-3432",
       "title": "BRANCH-ONLY RULING REQUEST: r0tm is a draft decision with a recommendation and a safe default, reachable from no ancestor of main",
       "status": "completed",
@@ -855,6 +883,20 @@
       "updatedAt": "2026-10-07T05:07:00Z",
       "preview": "Found 2026-09-26 while measuring `lvk9`, and **pre-existing rather than introduced\nby it** — proven below.\n\n`cleanMarkdownText` strips an inline code span and strips emphasis markers, but\nwhen a code span is WRAPPED in emphasis it does neither cleanly, and it is not\nconsistent about which way it fails:\n\n| input | output |\n|---|---|\n| ``` **`clarity-defn-single`** — fail if x ``` | `\"**** — fail if",
       "file": "beans/defs/folio-assistant-3mo4--extraction-cleanmarkdowntext-leaves-literal-in-a-m.md"
+    },
+    {
+      "id": "folio-assistant-3o2w",
+      "title": "SECURITY REVIEW 2026-10-31, group D: smart-trust, who-iris, dth-hrh, bootstrap",
+      "status": "todo",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "The owner asked (2026-10-31 03:51Z, thread \"Security review all harnessed KG code\") for a full QA and security review of all code harnessed in a KG, with findings recorded per the SOPs. This epic holds group D's public findings. The sibling epic for cat-harness and cat-harness-tools is `cat-tools-sr31` in the cat-harness-tools store.\n\nReviewed heads (main): smart-trust `496290a`, who-iris `df8f63f",
+      "file": "beans/defs/folio-assistant-3o2w--security-review-2026-10-31-group-d-smart-trust-who.md"
     },
     {
       "id": "folio-assistant-3p7c",
@@ -1890,6 +1932,20 @@
       "file": "beans/defs/folio-assistant-6rmv--b10e-1168-instance-references-are-ownerrepo-everyw.md"
     },
     {
+      "id": "folio-assistant-6zcw",
+      "title": "folio-assistant-sci cannot run the security gate",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:01:56Z",
+      "updatedAt": "2026-10-31T04:01:56Z",
+      "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** false-green · **Severity:** minor\n\nSame shape as folio-core-0dy3, measured",
+      "file": "beans/defs/folio-assistant-6zcw--folio-assistant-sci-cannot-run-the-security-gate.md"
+    },
+    {
       "id": "folio-assistant-6ztw",
       "title": "Node kinds: generic pages at /<locale>/<declaring>/<kind>/[<harness>/[<path>]] (#2195 PR 2)",
       "status": "completed",
@@ -2219,6 +2275,20 @@
       "updatedAt": "2026-10-02T16:45:00Z",
       "preview": "Re-seed the FHIR AST cache orphan branches on litlfred/smart-trust (fhir-ast/smart.who.int.trust) and litlfred/smart-base (fhir-ast/smart.who.int.base) from the current main. The previous seeds were from an earlier commit and may be stale after main merge.\n\n## Done when\n- [x] smart-trust re-seeded — `fhir-ast/smart.who.int.trust` @ `2bc91d0`, 678 resources, 671 edges, 677 fsh-index entries, source",
       "file": "beans/defs/folio-assistant-8ao5--re-seed-fhir-ast-caches-for-smart-trust-and-smart-base.md"
+    },
+    {
+      "id": "folio-assistant-8eyy",
+      "title": "Lake cache extraction checks member paths but not member types",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:01:56Z",
+      "updatedAt": "2026-10-31T04:01:56Z",
+      "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** minor\n\nfolio-assistant-sci at `f0d44d9`. Security",
+      "file": "beans/defs/folio-assistant-8eyy--lake-cache-extraction-checks-member-paths-but-not.md"
     },
     {
       "id": "folio-assistant-8ez4",
@@ -2711,6 +2781,20 @@
       "file": "beans/defs/folio-assistant-a1ku--generate-a-papers-leanblueprint-layout-blueprintsr.md"
     },
     {
+      "id": "folio-assistant-a3fj",
+      "title": "Dependency advisories: 7 high, 12 moderate in smart-trust, who-iris and dth-hrh installs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** security (dependencies). **Rule:** `scz-review-dependency-changes`. **Severity:** normal: build-time tooling, not served code; `check-dependency-advisories` is warn-only by design.\n\n**Evidence** (`bun audit` after `bun install`, 2026-10-31):\n\n- smart-trust: 24 (7 high, 12 moderate, 5 low). dth-hrh: 24 (7 high, 12 moderate, 5 low). who-iris: 21 (6 high, 11 moderate, 4 low).\n- High: `u",
+      "file": "beans/defs/folio-assistant-a3fj--dependency-advisories-7-high-in-smart-trust-who-iris.md"
+    },
+    {
       "id": "folio-assistant-a4of",
       "title": "S1 bookkeeping truth: close merged beans, reconcile fnx4 boxes, fold w2gr 3b into 70lx",
       "status": "completed",
@@ -2857,6 +2941,34 @@
       "updatedAt": "2026-10-07T17:47:00Z",
       "preview": "Owner ruling 2026-10-06 (session_012qoycyCSGidZqW245vXhze): 'this needs to be addressed before repo split'. Most root files are monorepo tooling, not the platform.\n\n## Target root\npackage.json + bun.lock (minimal workspace stub — bun needs both at the workspace root), .gitignore/.gitattributes/.gitmodules, AGENTS.md/CLAUDE.md/GEMINI.md, .mcp.json, .beans.yml, LICENSE/NOTICE/LICENSE-CONTENT.md/THIR",
       "file": "beans/defs/folio-assistant-ar1s--root-de-pollution-before-the-repo-split-tooling-co.md"
+    },
+    {
+      "id": "folio-assistant-aso6",
+      "title": "deploy-folio runs branch scripts with production secrets and no permissions block",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:01:56Z",
+      "updatedAt": "2026-10-31T04:01:56Z",
+      "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** major\n\nfolio-assistant `.github/workflows/deploy-",
+      "file": "beans/defs/folio-assistant-aso6--deploy-folio-runs-branch-scripts-with-production-s.md"
+    },
+    {
+      "id": "folio-assistant-avcq",
+      "title": "terminology-sw.js says no request reaches the network, but unanswered cross-origin requests go out",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** correctness · **severity:** minor\n\n**Where:** litlfred/fhir-harness `scripts/terminology-sw.js` header (lines 2-5: \"every request to another origin is answered from this site … and none reaches the network\") against line 44: `if (!a) return fetch(e.request);`.\n\n**Evidence:** when `faTerminologyMap.answer` has no answer, the service worker forwards the original cross-origin request. W",
+      "file": "beans/defs/folio-assistant-avcq--terminology-sw-js-says-no-request-reaches-the-netw.md"
     },
     {
       "id": "folio-assistant-ax6r",
@@ -3563,6 +3675,20 @@
       "file": "beans/defs/folio-assistant-dmx1--distributed-graph-kinds-each-harness-declares-the.md"
     },
     {
+      "id": "folio-assistant-dnrj",
+      "title": "bootstrap: graph.schema.json lets a Subgraph path or Asset src be absolute or climb with ..",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** security (path containment). **Rule:** `scz-every-input-is-suspect`; skill `path-containment`. **Severity:** normal: a schema gap, closed today only in one consumer.\n\n**Evidence** (bootstrap `3ce2b5d`): `schemas/graph.schema.json` describes `directories[].path` (line 41, also 273) as \"relative to the declaration\" and `assets[].src` (line 134, also 349) as \"relative to the declaration",
+      "file": "beans/defs/folio-assistant-dnrj--bootstrap-graph-schema-lets-a-subgraph-path-or-asset.md"
+    },
+    {
       "id": "folio-assistant-doy3",
       "title": "tipLocations/resolveTipLocation read only legacy storage — a source-declared branch subgraph is invisible to branch-store's CLI and StateStore",
       "status": "completed",
@@ -3945,6 +4071,20 @@
       "updatedAt": "2026-10-24T08:25:00Z",
       "preview": "Owner, 2026-10-03, after the SPDX 3 analysis (bean `sd5v`) found that **nothing\nconsumes an SPDX document** today: *\"Ask a consumer first\"*, then *\"leave a bean\nto ask downstream user feedback\"*.\n\n## Why this exists\n\nThe applicability proposal\n(`cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md`) rated a\nrelease SBOM and an SPDX `kg-to-portal` manifest as worth building **if** a\nconsum",
       "file": "beans/defs/folio-assistant-ffv7--ask-downstream-would-a-kg-to-portal-consumer-read.md"
+    },
+    {
+      "id": "folio-assistant-fg31",
+      "title": "Shell-string and rm -rf hygiene: fsh-cone execSync and smart-base mount-platform.sh",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security · **severity:** minor (not exploitable as written) · **rules:** scz-value-never-becomes-program-text, scz-refuse-never-repair\n\n**Where and evidence:**\n- fhir-harness `scripts/fsh-cone.ts:738-740`: `execSync(`git ${args}`)` builds a shell string. Today the values are `Number(--history)` and SHAs from `git rev-list`, so nothing can break out, but the shape is the one the voice",
+      "file": "beans/defs/folio-assistant-fg31--shell-string-and-rm-rf-hygiene-fsh-cone-execsync-a.md"
     },
     {
       "id": "folio-assistant-fgkb",
@@ -4427,6 +4567,20 @@
       "file": "beans/defs/folio-assistant-hfiu--ci-a-layer-pr-merges-only-after-a-green-folio-assi.md"
     },
     {
+      "id": "folio-assistant-hgxs",
+      "title": "smart-immunizations package-lock.json: 27 advisories (1 critical tar, 14 high) via the npm dependency",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security · **severity:** major (advisory) · **rule:** scz-review-dependency-changes\n\n**Where:** litlfred/smart-immunizations `package.json` (dependencies `fsh-sushi ^3.16.5` and `npm ^11.5.2`) and its `package-lock.json`, from `npm audit --package-lock-only` on 2026-10-31.\n\n**Evidence:** critical `tar <=7.5.20` (hardlink path traversal, arbitrary file overwrite); high: axios, brace-e",
+      "file": "beans/defs/folio-assistant-hgxs--smart-immunizations-package-lock-json-27-advisorie.md"
+    },
+    {
       "id": "folio-assistant-hh7g",
       "title": "B10a (#1168): memory front matter agents: → references (kind agent), like todos",
       "status": "completed",
@@ -4511,6 +4665,20 @@
       "updatedAt": "2026-10-29T08:05:00Z",
       "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph kind exist",
       "file": "beans/defs/folio-assistant-hs08--migration-the-content-folio-rename-has-reached-the.md"
+    },
+    {
+      "id": "folio-assistant-hto2",
+      "title": "Installs that fall back from the lockfile: smart-trust site-publish, who-iris checks, dth-hrh session hook",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** security (supply chain). **Rule:** `scz-review-dependency-changes`; injection-boundaries \"a pin that falls back is not a pin\". **Severity:** normal.\n\n**Evidence** (`check-lockfile-pinning.ts`):\n\n- smart-trust `.github/workflows/site-publish.yml:109` `bun install --no-save` in each mounted layer, with no lockfile (flagged NEW).\n- who-iris `.github/workflows/checks.yml:53` plain `bun i",
+      "file": "beans/defs/folio-assistant-hto2--installs-that-fall-back-from-the-lockfile-smart-trus.md"
     },
     {
       "id": "folio-assistant-hupw",
@@ -6313,6 +6481,20 @@
       "file": "beans/defs/folio-assistant-o57z--swe-debate-250723348v1-competitive-multi-agent-deb.md"
     },
     {
+      "id": "folio-assistant-o8tv",
+      "title": "folio-assistant-sci builds shell strings from file names and paths",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:01:56Z",
+      "updatedAt": "2026-10-31T04:01:56Z",
+      "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** major\n\nfolio-assistant-sci at `f0d44d9`. Rule `sc",
+      "file": "beans/defs/folio-assistant-o8tv--folio-assistant-sci-builds-shell-strings-from-file.md"
+    },
+    {
       "id": "folio-assistant-oh78",
       "title": "ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link",
       "status": "completed",
@@ -6563,6 +6745,20 @@
       "updatedAt": "2026-10-07T21:38:22Z",
       "preview": "Owner 2026-10-07 asked to adopt the zero-trust-handover methodology (drafted, NOT adopted in #2390), with an adversarial analysis. methodology-adoption step 7: its named origin, NIST SP 800-207, is not held. It is a US-government work, so it can be ingested in full.\n\n## Done when\n- [x] NIST SP 800-207 ingested as library evidence, cited in the node\n- [x] node holds the METHOD; application lives in",
       "file": "beans/defs/folio-assistant-pk0z--adopt-zero-trust-handover-ingest-its-primary-nist.md"
+    },
+    {
+      "id": "folio-assistant-plxg",
+      "title": "lxml parses repository XML with default entity resolution (smart-base)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security · **severity:** minor (inputs are repository-authored) · **rule:** scz-every-input-is-suspect\n\n**Where:** litlfred/smart-base `.github/skills/bpmn_author/validators/bpmn_xml_validator.py:37`, `swimlane_validator.py:48`, `bpmn_import/validators/swimlane_actor_validator.py:42` (`etree.fromstring`), `input/scripts/extract_translations.py:452,501` and `inject_translations.py:473",
+      "file": "beans/defs/folio-assistant-plxg--lxml-parses-repository-xml-with-default-entity-res.md"
     },
     {
       "id": "folio-assistant-pomp",
@@ -7355,6 +7551,20 @@
       "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md"
     },
     {
+      "id": "folio-assistant-rx8k",
+      "title": "smart-trust: Visual Studio state committed under .vs/",
+      "status": "todo",
+      "type": "bug",
+      "priority": "low",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** provenance (hygiene). **Rule:** `scz-secrets-never-in-text` (preventive). **Severity:** low.\n\n**Evidence:** smart-trust `496290a` tracks `.vs/ProjectSettings.json`, `.vs/VSWorkspaceState.json`, `.vs/slnx.sqlite` and `.vs/smart-ig-starter-kit/v17/.suo`. These are per-user IDE state (opened files, local paths, a SQLite index) and can carry local paths or other machine data. No secret w",
+      "file": "beans/defs/folio-assistant-rx8k--smart-trust-visual-studio-state-committed-under-vs.md"
+    },
+    {
       "id": "folio-assistant-s32v",
       "title": "QA: agentic audit of large redundant rendered content that can load from the KG",
       "status": "completed",
@@ -7953,6 +8163,20 @@
       "file": "beans/defs/folio-assistant-tndo--mvp-undefined-zmdo-is-blocked-on-an-mvp-for-two-la.md"
     },
     {
+      "id": "folio-assistant-towy",
+      "title": "smart-base issue skills: issue body reaches an LLM unfenced and LLM-chosen labels are applied unchecked",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security · **severity:** minor while dormant, major if the triggers return · **rules:** scz-screen-handover-fields, scz-report-never-extends-the-plan, scz-pin-third-party-by-full-sha\n\n**Where:** litlfred/smart-base `.github/skills/dak_authoring/actions/classify_issue_action.py:150-177` and `dak_authoring_action.py:31-47`; workflows `classify-issue.yml`, `skill-l1-review.yml`, `skill-",
+      "file": "beans/defs/folio-assistant-towy--smart-base-issue-skills-issue-body-reaches-an-llm.md"
+    },
+    {
       "id": "folio-assistant-tqv4",
       "title": "CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it",
       "status": "completed",
@@ -8219,6 +8443,20 @@
       "file": "beans/defs/folio-assistant-v8n5--harness-theming-the-who-iris-board-tile-navbar-and.md"
     },
     {
+      "id": "folio-assistant-vbhb",
+      "title": "sci and folio-assistant pin tools and workflows to moving refs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:01:56Z",
+      "updatedAt": "2026-10-31T04:01:56Z",
+      "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** minor\n\nRule `scz-pin-third-party-by-full-sha`.\n\n-",
+      "file": "beans/defs/folio-assistant-vbhb--sci-and-folio-assistant-pin-tools-and-workflows-to.md"
+    },
+    {
       "id": "folio-assistant-veiu",
       "title": "FHIR-HARNESS: clear the exclusion-gate baseline to zero (wm63 stream 2)",
       "status": "completed",
@@ -8275,6 +8513,20 @@
       "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
     },
     {
+      "id": "folio-assistant-vj2d",
+      "title": "dth-hrh: reusable workflows at @main in write-token workflows (security:gate fails)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** security (supply chain). **Rule:** `scz-pin-third-party-by-full-sha`. **Severity:** normal: first-party code, but the gate's blocking check fails.\n\n**Evidence** (`security-gate.ts` on dth-hrh `ffb89eb`: `action-sha-pinning — fail: 2 unpinned`):\n\n- `.github/workflows/wg-comment-check.yml:18` `litlfred/folio-assistant-core/.github/workflows/public-comment-check.yml@main`, with `content",
+      "file": "beans/defs/folio-assistant-vj2d--dth-hrh-reusable-workflows-at-main-in-write-token-wo.md"
+    },
+    {
       "id": "folio-assistant-vj2p",
       "title": "Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository",
       "status": "completed",
@@ -8317,6 +8569,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Issue #223 — cut this repo into layers that can depend on each other without\ncycles.\n\n`zlmp` is the gate: a lower layer importing from a higher one becomes a circular\ndependency BETWEEN REPOSITORIES the moment the cut happens, so that count has to\nreach zero before anything else here is safe. `x4a6` is a worked example of what\nblocks until it does — `docs/` cannot be declared because `folio` is co",
       "file": "beans/defs/folio-assistant-vke6--split-223-cut-this-repo-into-layers-that-can-depen.md"
+    },
+    {
+      "id": "folio-assistant-vl71",
+      "title": "smart-base ghbuild.yml runs ~36 scripts curled from WorldHealthOrganization/smart-base@main with a write token",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security (RED FLAG, blocking) · **severity:** major · **rules:** scz-pin-third-party-by-full-sha, scz-audit-what-you-run, scz-least-privilege\n\n**Where:** litlfred/smart-base `.github/workflows/ghbuild.yml` lines 152-157 (`SCRIPTS_BASE_URL=https://raw.githubusercontent.com/WorldHealthOrganization/smart-base/main`), then 36 `curl -L -f -o input/scripts/*.py \"${SCRIPTS_BASE_URL}/…\"` ste",
+      "file": "beans/defs/folio-assistant-vl71--smart-base-ghbuild-yml-runs-36-scripts-curled-from.md"
     },
     {
       "id": "folio-assistant-vljz",
@@ -8777,6 +9043,20 @@
       "file": "beans/defs/folio-assistant-wnhh--run-sushi-ig-publisher-locally-needs-packagesfhiro.md"
     },
     {
+      "id": "folio-assistant-wox6",
+      "title": "Dependency advisories: happy-dom critical, node-forge, zod, undici",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:01:56Z",
+      "updatedAt": "2026-10-31T04:01:56Z",
+      "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** major\n\nRule `scz-review-dependency-changes`. `bun",
+      "file": "beans/defs/folio-assistant-wox6--dependency-advisories-happy-dom-critical-node-forg.md"
+    },
+    {
       "id": "folio-assistant-wp49",
       "title": "TEST MODE: benchmarking output is a report, and deliberately not KG content",
       "status": "completed",
@@ -8845,6 +9125,34 @@
       "updatedAt": "2026-10-24T09:50:00Z",
       "preview": "Moved out of `5yhm` when it closed (owner, 2026-10-24, Q7). Not blocked.\n\nA scheme id such as `kg-tools` is shared by every instance's extraction. Term ids are unique across instances only by observation (0 collisions in 2,876). The glossary page answers `unknown` on a collision; the record should not depend on that.\n\n## Done when\n- [x] the per-scheme record in the term-mapping result is keyed by ",
       "file": "beans/defs/folio-assistant-wvzp--terminology-key-the-per-scheme-mapping-record-by-in.md"
+    },
+    {
+      "id": "folio-assistant-wyez",
+      "title": "fhir-harness bun.lock: 17 dependency advisories (7 high), node-forge and zod",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security · **severity:** major (advisory) · **rule:** scz-review-dependency-changes\n\n**Where:** litlfred/fhir-harness `bun.lock`, from `bun audit` on 2026-10-31.\n\n**Evidence:**\n- `node-forge@1.4.0` (via `@aehrc/sdc-populate > fhirclient > isomorphic-webcrypto > expo-random > expo > @expo/cli`): 6 high, incl. RSA PKCS#1 v1.5 signature verification accepting extra DigestAlgorithm eleme",
+      "file": "beans/defs/folio-assistant-wyez--fhir-harness-bun-lock-17-dependency-advisories-7-h.md"
+    },
+    {
+      "id": "folio-assistant-x09n",
+      "title": "Unpinned third-party actions in write-token workflows (smart-base, smart-ra, smart-immunizations)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security (RED FLAG, blocking) · **severity:** major · **rule:** scz-pin-third-party-by-full-sha (security.md row \"a third-party action → a runner\": `security:gate` blocks this)\n\n**Where (tag or branch refs, no SHA):**\n- smart-ra `release.yml`: `actions/checkout@v2` (line 22) and `WorldHealthOrganization/smart-html/.github/workflows/release.yml@main` (38) with `contents`, `pages`, `id",
+      "file": "beans/defs/folio-assistant-x09n--unpinned-third-party-actions-in-write-token-workfl.md"
     },
     {
       "id": "folio-assistant-x2ay",
@@ -8957,6 +9265,20 @@
       "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18:\n\n> instead of beans/ and beans/workflow lets do beans/ beans/defs and\n> beans/workflows with beans/ being a bean graph with a definitions node and\n> workflow node\n\nClarified by the owner when asked whether the graph is a declaration or an\nartefact:\n\n> a real graph, move content out of harness config. make beangraph schema.\n\n## What changes\n\n| | before (bean `",
       "file": "beans/defs/folio-assistant-x89g--bean-graph-beans-is-a-real-graph-with-defs-and-wor.md"
+    },
+    {
+      "id": "folio-assistant-xbfx",
+      "title": "smart-trust: 12 unpinned actions and reusable workflows in write-token workflows (security:gate fails)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-3o2w",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:10:00Z",
+      "updatedAt": "2026-10-31T04:10:00Z",
+      "preview": "**Category:** security (supply chain). **Rule:** `scz-pin-third-party-by-full-sha`. **Severity:** high: the gate's blocking check fails, and the workflows hold `contents: write`.\n\n**Evidence** (`security-gate.ts` → `action-sha-pinning — fail: 12 unpinned outside exempt staging workflows`; smart-trust `496290a`):\n\n| file:line | uses |\n|---|---|\n| `.github/workflows/fhirbuild.yml:25` | `litlfred/sma",
+      "file": "beans/defs/folio-assistant-xbfx--smart-trust-12-unpinned-actions-and-reusable-workflow.md"
     },
     {
       "id": "folio-assistant-xcyh",
@@ -9355,6 +9677,20 @@
       "updatedAt": "2026-10-07T17:18:00Z",
       "preview": "Found 2026-09-27 while answering the owner's question *\"how resolve/gate/qa escape\nimports?\"* — sibling to `zlmp` under the same SPLIT epic, and **not** a reopening\nof it.\n\n## Two axes, and only one of them has ever been driven to zero\n\n`zlmp` drove the MODULE axis to zero: `check:partition` reports **0**\nwrong-direction edges today, and that is correct on its own terms — it measures\nedges between",
       "file": "beans/defs/folio-assistant-yj6r--escapes-15-instance-boundary-imports-checkpartitio.md"
+    },
+    {
+      "id": "folio-assistant-ylu8",
+      "title": "Workflows with no permissions block run with the repository's default token",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-33iz",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:20:00Z",
+      "updatedAt": "2026-10-31T04:20:00Z",
+      "preview": "**Category:** security · **severity:** minor · **rule:** scz-least-privilege\n\n**Where:** no top-level or job-level `permissions:` in smart-base `release.yml` and `fhirbuild.yml`; smart-immunizations `release.yml` and `fhirbuild.yml`; smart-ra `fhirbuild.yml` and `ghbuild.yml`. Each then inherits whatever default the repository setting gives `GITHUB_TOKEN`, and the `release.yml` ones pass it on to ",
+      "file": "beans/defs/folio-assistant-ylu8--workflows-with-no-permissions-block-run-with-the-r.md"
     },
     {
       "id": "folio-assistant-ymvt",
@@ -9970,8 +10306,8 @@
         "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 24,
-    "openTotal": 26,
+    "orphanOpen": 48,
+    "openTotal": 50,
     "coveredOpen": 1,
     "duplicateIds": 0
   }
