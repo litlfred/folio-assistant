@@ -1,0 +1,97 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:es/installation",
+  "block": "Installation",
+  "locale": "es",
+  "paths": {
+    "md": "docs/start/installation.md"
+  },
+  "po": "translations/es/start/installation.po",
+  "source_hashes": {
+    "md": "b89522b47499",
+    "po": "ac5c285c3c29"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "b89522b47499",
+          "po": "ac5c285c3c29"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T22:27:55.789Z",
+        "reviewed_sha": "79e0344935d1bdb70e042c99ce4102a592101e23",
+        "severity": "minor",
+        "metrics": {
+          "translated": 31,
+          "total": 54,
+          "pct": 57
+        },
+        "notes": "23 of 54 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "b89522b47499",
+          "po": "ac5c285c3c29"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T22:27:55.792Z",
+        "reviewed_sha": "79e0344935d1bdb70e042c99ce4102a592101e23",
+        "metrics": {
+          "checked": 31,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "1 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "b89522b47499",
+          "po": "ac5c285c3c29"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T22:27:55.794Z",
+        "reviewed_sha": "79e0344935d1bdb70e042c99ce4102a592101e23",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 6,
+          "translated": 31
+        },
+        "notes": "6 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-31T22:27:55.796Z"
+}
