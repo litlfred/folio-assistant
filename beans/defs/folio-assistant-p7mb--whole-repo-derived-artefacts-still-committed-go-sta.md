@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-31T21:00:00Z
+updated_at: 2026-10-31T21:25:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -158,6 +158,9 @@ _2026-10-31T20:25:00Z_ — Evening merges and open green PRs across `cat-harness
   - [`litlfred/smart-base#257`](https://github.com/litlfred/smart-base/pull/257) (`ce2ee669` / `3017d04a`, `fix/239-main-qa-gates`): declares `.github/main-qa-gates.json` for `smart-base`.
   - [`litlfred/who-iris#145`](https://github.com/litlfred/who-iris/pull/145) (`0d541d55` / `3728eb03`, `fix/123-main-qa-gates`): declares `.github/main-qa-gates.json` for `who-iris`.
   - [`litlfred/who-iris#146`](https://github.com/litlfred/who-iris/pull/146) (`9d4bff45` / `81e0a951`, `feat/104-iris-cdn-exporter-followups`): `#104` IRIS CDN exporter follow-ups and live DSpace REST fixes.
+  - [`litlfred/who-iris#147`](https://github.com/litlfred/who-iris/pull/147) (`f1003a0` / `d755e9c`, `claude/sc-figures-fig-no-dot`), [`#149`](https://github.com/litlfred/who-iris/pull/149) (`7314adf1` / `16136429`, `claude/diig-phases-figure-data`, merged `2026-10-31T21:20:28Z`), and [`#151`](https://github.com/litlfred/who-iris/pull/151) (`df6f0767` / `8290fdee`, `claude/repin-layers-2026-10-31`): SC figure renders, DIIG Fig. 1.1.1 / PC Figs. 4 & 5 shared figure data, and layer re-pins on `who-iris` `main`.
+  - [`litlfred/folio-assistant-core#396`](https://github.com/litlfred/folio-assistant-core/pull/396) (`a0aba763` / `093671b3`, `claude/authoring-document-compact`), [`#444`](https://github.com/litlfred/folio-assistant-core/pull/444) (`59559c29` / `7b804b70`, `claude/ready-loop`), and [`#445`](https://github.com/litlfred/folio-assistant-core/pull/445) (`da059928` / `0a4b1295`, `claude/escape-version-review-sheet`): compact BPMN layouts (`authoring-a-document`, `public-comment`), review-sheet ready loop & per-comment Confirmed checkbox, and code-span escaping for `<time>`/`<version>`.
+  - [`litlfred/cat-harness-tools#1181`](https://github.com/litlfred/cat-harness-tools/pull/1181) (`612fde25` / `5f5d1c22`, `claude/anchor-offset-site-bar`), [`#1184`](https://github.com/litlfred/cat-harness-tools/pull/1184) (`2ea402ee` / `493e722d`, `claude/review-inline-default`), and [`#1186`](https://github.com/litlfred/cat-harness-tools/pull/1186) (`b5e81dc8` / `f505cf5e`, `claude/fhir-rail-row`): anchor offset below staging banner & site bar, default Inline mode on review page, and `[fhir]` rail row linking FHIR IG just-the-docs renders.
 - **Open green PRs & index re-pins**:
   - [`litlfred/cat-harness#873`](https://github.com/litlfred/cat-harness/pull/873) (`efa249ce`, `fix/bpmn-svgs-bootstrap-tools-72344e1`): regenerates BPMN SVGs with `bootstrap-tools@72344e1` (`#54`).
   - [`litlfred/cat-harness-tools#1176`](https://github.com/litlfred/cat-harness-tools/pull/1176) (`b52bc65` / `581678dd`, `fix/kg-audit-check-skip-prior-carry`): skips prior adversarial review lookup in `kg-audit --check` when sidecar is absent on disk.
