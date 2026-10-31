@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-31T17:05:00Z
+updated_at: 2026-10-31T20:25:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -249,3 +249,4 @@ _2026-10-31T15:35:00Z_ — Follow-up updates on Option B writer-records, preview
   - [`litlfred/cat-harness-tools#1156`](https://github.com/litlfred/cat-harness-tools/pull/1156) (merged as `10ebb8b`: `rail-standalone-pages` computes each page's rail once per owner and depth, ~30x faster), re-pinned in [`litlfred/folio-assistant#2858`](https://github.com/litlfred/folio-assistant/pull/2858) (merged as `66c527d`, head `6aa82ae`, stamping KG export step times).
   - [`litlfred/folio-assistant#2860`](https://github.com/litlfred/folio-assistant/pull/2860) (merged as `2243eb7c`): previews publish `STAGING/<slug>/writer-skip.txt` with the writer-skip header, every skipped writer, and the reason each of the remaining writers ran.
   - [`litlfred/cat-harness-tools#1168`](https://github.com/litlfred/cat-harness-tools/pull/1168) (merged as `73436998`): `parseTrace` (`scripts/ci-cone.ts`), `readTraceFile` (`scripts/writer-cone.ts`), and `scripts/derive-at-publish.ts` add `rewriteAsInput` so when a writer (`node-kind:pages`, `glossary:page`, `smart:pages`, `docs:pages`) reads a committed file and rewrites it and no writer declares that file as an output, it is kept as an input (`rewritten`) with its state after the run (and dropped if another writer also writes or rewrites that file). Merged cleanly into [`litlfred/cat-harness-tools#1129`](https://github.com/litlfred/cat-harness-tools/pull/1129) at `186a652`.
+  - [`litlfred/cat-harness-tools#1172`](https://github.com/litlfred/cat-harness-tools/pull/1172) (merged as `6a9a5b3`, `claude/skip-shared-digests`): `derive:publish` times each writer (`run` line + duration) and shares a single digest memo across skip decisions; wired into previews in open [`litlfred/folio-assistant#2861`](https://github.com/litlfred/folio-assistant/pull/2861) (`claude/preview-writer-times-fwtz`, `f23ef92c`).

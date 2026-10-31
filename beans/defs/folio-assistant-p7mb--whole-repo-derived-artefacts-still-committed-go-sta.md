@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-31T16:18:00Z
+updated_at: 2026-10-31T20:25:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -136,3 +136,21 @@ _2026-10-31T15:35:00Z_ — Additional `post-merge-regen` scoping/input fixes and
   - `.github/workflows/post-merge-regen.yml`: runs `./.github/actions/plantuml-java`, `bun run cat ig-index:build`, `bun run cat smart:pages`, `bun run cat qa:working-copy`, and `bun run cat derive:publish` before `bun run cat post-merge:regen` (with `QA_WORKING_COPY_BUILDING: "1"`).
 - **Merged `cat-harness/test/results/` removal (`tfqf` / `7mwa`)**:
   - [`litlfred/cat-harness#857`](https://github.com/litlfred/cat-harness/pull/857) (`eef8750`), [`litlfred/cat-harness-tools#1143`](https://github.com/litlfred/cat-harness-tools/pull/1143) (`1517ad4`), and [`#1148`](https://github.com/litlfred/cat-harness-tools/pull/1148) (`8990f3d`) merged on `main`, removing committed `test/results/` from `cat-harness` (index re-pin open in [`litlfred/folio-assistant#2855`](https://github.com/litlfred/folio-assistant/pull/2855) `b1fce77`; adversarial-review attestations restored on `main` in [`litlfred/cat-harness#863`](https://github.com/litlfred/cat-harness/pull/863) `920dce8` and [`litlfred/cat-harness-tools#1158`](https://github.com/litlfred/cat-harness-tools/pull/1158) `7465b33`; `fa#2781` `cat-harness` derived refresh and cross-instance `builtAtPublish` from [`litlfred/cat-harness#865`](https://github.com/litlfred/cat-harness/pull/865) `b3fde5e` consolidated into [`litlfred/cat-harness#839`](https://github.com/litlfred/cat-harness/pull/839) `4885d43d` and `#865` closed; `check:reference-direction` fix **Merged on `main`** in [`litlfred/cat-harness-tools#1160`](https://github.com/litlfred/cat-harness-tools/pull/1160) `53dd38d`).
+
+_2026-10-31T20:25:00Z_ — Evening merges and open green PRs across `cat-harness-tools`, `folio-assistant-core`, `cat-harness`, `bootstrap`, `smart-base`, and `folio-assistant`:
+- **Merged on `main`**:
+  - [`litlfred/cat-harness-tools#1171`](https://github.com/litlfred/cat-harness-tools/pull/1171) (`2060d8a`, `claude/node-kinds-keep-mounted-baselines`): `node-kinds` leaves a mounted layer's baseline to its own repository.
+  - [`litlfred/cat-harness-tools#1173`](https://github.com/litlfred/cat-harness-tools/pull/1173) (`3f95be0`, `claude/reference-direction-validators-desc`): fixes three `fa#2862` reds (`check:reference-direction` validator note, `l1-sidecar-owner` test, `qa-store` path check).
+  - [`litlfred/folio-assistant-core#439`](https://github.com/litlfred/folio-assistant-core/pull/439) (`14e68e9`, `claude/figure-validators-point-at-kinds`): points the two figure validators at their node kinds.
+  - [`litlfred/folio-assistant-core#441`](https://github.com/litlfred/folio-assistant-core/pull/441) (`3f996a2`, `claude/stickies-iris-refresh`): regenerates `stickies.json` with current IRIS sticky text.
+  - [`litlfred/cat-harness#868`](https://github.com/litlfred/cat-harness/pull/868) (`caf25c0`, `claude/pot-hand-back`): regenerates `hand-back-to-discussion` translation templates after `#864`.
+  - [`litlfred/cat-harness-tools#1107`](https://github.com/litlfred/cat-harness-tools/pull/1107) (`b03f70f`, `claude/drop-nav-activation`): drops the dead `site-bar` nav activation style so one nav edit stops rewriting every page.
+  - [`litlfred/cat-harness-tools#1075`](https://github.com/litlfred/cat-harness-tools/pull/1075) (`b16d541`, `claude/detangle-slide`): `archimate-detangle` slides a box into free space inside its own parent.
+  - [`litlfred/folio-assistant#2847`](https://github.com/litlfred/folio-assistant/pull/2847) (`d0c9151d`, `claude/public-comment-withdrawal`): re-pins `cat-harness-tools@62f6439` and `folio-assistant-core@c4a1e8d` (subprocess click-through, withdrawal, linked prose, staging flash fix).
+- **Open green PRs & index re-pins**:
+  - [`litlfred/cat-harness#870`](https://github.com/litlfred/cat-harness/pull/870) (`7f06480d`, `fix/hand-back-skill-contract-staging-links`): inlines `ask-the-person` refs and adds `stagingLinks` in `hand-back-to-discussion` contracts.
+  - [`litlfred/cat-harness-tools#1176`](https://github.com/litlfred/cat-harness-tools/pull/1176) (`b52bc65` / `581678dd`, `fix/kg-audit-check-skip-prior-carry`): skips prior adversarial review lookup in `kg-audit --check` when sidecar is absent on disk.
+  - [`litlfred/cat-harness-tools#1178`](https://github.com/litlfred/cat-harness-tools/pull/1178) (`49f9c1e`, `fix/translation-test-collapsed-floor`): updates collapsed-pair floor after `683afc26` obsoleted pre-G3 code-span msgids.
+  - [`litlfred/bootstrap#35`](https://github.com/litlfred/bootstrap/pull/35) (`8785b20`, `fix/bpmn-svgs-bootstrap-tools-72344e1`): regenerates BPMN SVGs with `bootstrap-tools@72344e1` (`#54`).
+  - [`litlfred/smart-base#261`](https://github.com/litlfred/smart-base/pull/261) (`50e1435`, `fix/bpmn-svgs-bootstrap-tools-72344e1`): re-pins `bootstrap-tools@72344e1` and regenerates BPMN SVGs.
+  - [`litlfred/folio-assistant#2862`](https://github.com/litlfred/folio-assistant/pull/2862) (`claude/repin-core-figure-kinds`, `eb371776`): re-pins `folio-assistant-core@14e68e9` (figure node kinds) and `cat-harness-tools`.
