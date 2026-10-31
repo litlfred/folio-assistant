@@ -1942,6 +1942,16 @@ jobs:
             rm -rf "pages/STAGING/$STAGING_SLUG"
             mkdir -p "pages/STAGING/$STAGING_SLUG"
             cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
+            # Store only what differs from the live site (owner, 2026-10-31:
+            # "if asset not changed in staging then link to main asset").
+            # Compared against the gh-pages tip just fetched, so the live
+            # copy a dropped file falls back to is the one being served. The
+            # preview's worker (staging-sw.js) serves the dropped files from
+            # the live site and puts the banner back on its pages.
+            if [ -f cat-harness-tools/scripts/staging-share.ts ]; then
+              bun run cat-harness-tools/scripts/staging-share.ts apply \
+                --root pages --preview "pages/STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG"
+            fi
             # Writes into the directory and never pushes: this step already
             # holds the checkout and the retry loop, and a second pusher racing
             # those is a new way to lose a deploy.
