@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/role/translation-adjudicator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/role/translation-adjudicator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Translation adjudicator",
+      "title": "Translation adjudicator",
+      "notation": "translation-adjudicator",
+      "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator"
+    }
+  ]
+}

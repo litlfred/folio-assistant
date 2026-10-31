@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/schema/openapi.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/schema/openapi",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "openapi",
+      "title": "openapi",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "module": "openapi/schemas/openapi.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/directory/openapi",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/openapi"
+    }
+  ]
+}

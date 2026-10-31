@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/deterministic-and-agentic.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/deterministic-and-agentic",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "deterministic-and-agentic",
+      "title": "The deterministic-to-agentic spectrum",
+      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/deterministic-and-agentic.md",
+      "instructionLines": 282,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deterministic-and-agentic"
+    }
+  ]
+}

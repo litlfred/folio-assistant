@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckStaged.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckStaged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Check what was staged",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/role/site-publisher",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/skill/render-kg-to-github-pages"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckStaged"
+    }
+  ]
+}

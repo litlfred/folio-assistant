@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/skill/archiving-arxiv.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/skill/archiving-arxiv",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "archiving-arxiv",
+      "title": "Materializing from arXiv",
+      "description": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
+      "instructionsPath": "skills/library/cataloguing/archiving-arxiv.md",
+      "instructionLines": 173,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/archiving-arxiv"
+    }
+  ]
+}

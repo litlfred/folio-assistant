@@ -1,0 +1,90 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-block-screenshots/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-block-screenshots.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat block:screenshots"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--changeset"
+            },
+            "description": "The preview's `changeset.json`: which blocks changed, and their kind on each side.",
+            "name": "changeset",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--base"
+            },
+            "description": "The published main site, as a directory (the publish branch's root).",
+            "name": "base",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--head"
+            },
+            "description": "The staging build's site directory.",
+            "name": "head",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where to write `visual-diff.json` and `visual/`: the site root, so the review page finds them.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--count"
+            },
+            "description": "Print how many changed blocks would be pictured, and stop, so a caller installs a browser only when there is work.",
+            "name": "count",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`<out>/visual-diff.json` and `<out>/visual/*.png`. A per-block summary goes to stderr.",
+            "name": "visual-diff",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "folio-block-screenshots",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "chromium"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+      "title": "Folio block screenshots"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/folio-block-screenshots",
+  "path": "tools/folio-block-screenshots/"
+}

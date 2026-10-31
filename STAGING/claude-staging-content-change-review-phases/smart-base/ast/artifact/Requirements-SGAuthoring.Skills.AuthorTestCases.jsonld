@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Requirements-SGAuthoring.Skills.AuthorTestCases.jsonld",
+  "@type": "fhir:Requirements",
+  "dcterms:identifier": "Requirements/SGAuthoring.Skills.AuthorTestCases",
+  "schema:name": "SkillAuthorTestCases",
+  "dcterms:title": "Can author test cases",
+  "dcterms:description": "Capability to create TestPlan, TestScript, and example instances for validation of L3 artifacts.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Formal Requirements",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/Requirements/SGAuthoring.Skills.AuthorTestCases"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/Requirements/SGAuthoring.Skills.AuthorTestCases--18a3d429.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

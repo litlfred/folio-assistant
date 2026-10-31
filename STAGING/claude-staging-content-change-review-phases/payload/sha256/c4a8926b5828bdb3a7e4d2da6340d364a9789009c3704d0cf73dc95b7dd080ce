@@ -1,0 +1,196 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "ihe-iti-vhl-1-0-0-comment",
+  "blocks": [
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s001-ihe-it-infrastructure-technical-framework-supple.md",
+      "narrative": null,
+      "content": "# IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s002-overview-and-bibliographic-identity",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Overview and Bibliographic Identity",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s002-overview-and-bibliographic-identity.md",
+      "narrative": null,
+      "content": "## Overview and Bibliographic Identity\n\nThe **IHE IT Infrastructure Technical Framework Supplement: Verifiable Health Links (VHL)** specifies actors, transactions, and trust-list interactions for issuing, presenting, verifying, and redeeming cryptographically verifiable links to health documents and FHIR resources across organizational and jurisdictional boundaries.\n\n| Field | Value |\n|---|---|\n| **Title** | IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL) |\n| **Canonical URL** | `https://profiles.ihe.net/ITI/VHL` |\n| **Versioned Specification URL** | `https",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s003-volume-1-verifiable-health-links-vhl-actors-tran",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Volume 1 — Verifiable Health Links (VHL) Actors, Transactions, and Trust-Anchor Neutrality",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s003-volume-1-verifiable-health-links-vhl-actors-tran.md",
+      "narrative": null,
+      "content": "## Volume 1 — Verifiable Health Links (VHL) Actors, Transactions, and Trust-Anchor Neutrality",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s004-actors-and-responsibilities",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Actors and Responsibilities",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s004-actors-and-responsibilities.md",
+      "narrative": null,
+      "content": "### Actors and Responsibilities\n\nVHL defines four core actors that participate in the issuance and redemption of a Verifiable Health Link:\n\n| Actor | ActorDefinition Canonical | Role in VHL |\n|---|---|---|\n| **VHL Holder** | `https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder` | Individual (or personal health wallet application acting on the individual's behalf) that requests generation of a VHL from a VHL Sharer (`[ITI-YY3]`) and presents the VHL to a VHL Receiver (`[ITI-YY4]`). |\n| **VHL Sharer** | `https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLSharer` | System that publishes i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s005-trust-anchor-neutrality",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Trust-Anchor Neutrality",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s005-trust-anchor-neutrality.md",
+      "narrative": null,
+      "content": "### Trust-Anchor Neutrality\n\nIHE VHL is **trust-anchor neutral** by design. The **Trust Anchor** actor represents any trust framework authority capable of accepting PKI material (`[ITI-YY1]`) and distributing verifiable trust lists (`[ITI-YY2]`). The **WHO Global Digital Health Certification Network (GDHCN)** is one possible Trust Anchor implementation among others (such as national health PKI roots, regional cross-border trust networks, or bilateral federation anchors). No VHL transaction hardcodes a single trust network host; participants resolve issuer and receiver keys through the configur",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s006-composite-grouping-with-ihe-pcf-privacy-consent-",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Composite Grouping with IHE PCF (Privacy Consent on FHIR)",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s006-composite-grouping-with-ihe-pcf-privacy-consent-.md",
+      "narrative": null,
+      "content": "### Composite Grouping with IHE PCF (Privacy Consent on FHIR)\n\nWhen a **VHL Sharer** is grouped with IHE PCF actors (**Consent Recorder**, **Consent Registry**, and/or **Consent Authorization Server**):\n\n1. Before or during VHL issuance (`[ITI-YY3]`), the VHL Holder records or selects a patient privacy consent directive stored via **PCF Access Consent `[ITI-108]`**, scoping which documents, purposes of use, recipients, or validity periods the VHL covers.\n2. When a **VHL Receiver** redeems the VHL via **Retrieve Manifest `[ITI-YY5]`**, the **VHL Sharer** evaluates the active PCF `Consent` direc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Volume 2 — VHL Transactions ([ITI-YY1] through [ITI-YY5])",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy.md",
+      "narrative": null,
+      "content": "## Volume 2 — VHL Transactions ([ITI-YY1] through [ITI-YY5])",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s008-summary-of-vhl-transactions",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Summary of VHL Transactions",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s008-summary-of-vhl-transactions.md",
+      "narrative": null,
+      "content": "### Summary of VHL Transactions\n\n| Transaction Code | Transaction Name | Initiator | Responder | Description |\n|---|---|---|---|---|\n| **`[ITI-YY1]`** | **Submit PKI Material with DID** | VHL Sharer / VHL Receiver | Trust Anchor | Submits public key material (DID document / JWK Set / X.509 certificate metadata) to the Trust Anchor for inclusion in the trust network's published key list. |\n| **`[ITI-YY2]`** | **Retrieve Trust List with DID** | VHL Receiver / VHL Sharer | Trust Anchor | Retrieves the signed trust list (DID document / JWK Set) from the Trust Anchor to verify signatures on VHL pay",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s009-operationdefinition-generate-vhl-generate-vhl-it",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "OperationDefinition: Generate VHL (`$generate-vhl`, `[ITI-YY3]`)",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s009-operationdefinition-generate-vhl-generate-vhl-it.md",
+      "narrative": null,
+      "content": "### OperationDefinition: Generate VHL (`$generate-vhl`, `[ITI-YY3]`)\n\nThe `GenerateVHL` operation (`https://profiles.ihe.net/ITI/VHL/OperationDefinition/GenerateVHL`, code `generate-vhl`) is invoked on a **VHL Sharer** at the system level (`POST [base]/$generate-vhl`). It accepts subject identification, optional document selection or folder references, expiration / passcode parameters, and consent directive references, and returns the signed VHL payload for storage on the VHL Holder's Personal Health Wallet.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Volume 3 — Conformance Artefacts in `ihe.iti.vhl@1.0.0-comment`",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-.md",
+      "narrative": null,
+      "content": "## Volume 3 — Conformance Artefacts in `ihe.iti.vhl@1.0.0-comment`\n\n| ResourceType | ID | Title | Canonical URL |\n|---|---|---|---|\n| `ImplementationGuide` | `ihe.iti.vhl` | Verifiable Health Links (VHL) | `https://profiles.ihe.net/ITI/VHL/ImplementationGuide/ihe.iti.vhl` |\n| `ActorDefinition` | `VHLHolder` | VHL Holder | `https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder` |\n| `ActorDefinition` | `VHLSharer` | VHL Sharer | `https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLSharer` |\n| `ActorDefinition` | `VHLReceiver` | VHL Receiver | `https://profiles.ihe.net/ITI/VHL/ActorDefinitio",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

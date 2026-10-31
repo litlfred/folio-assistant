@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/externalSchema/who-smart-base.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/externalSchema/who-smart-base",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "who-smart-base",
+      "title": "WHO SMART Guidelines base IG",
+      "authority": "other",
+      "specVersion": "v1.0.0",
+      "specUse": "reads",
+      "specUrl": "https://smart.who.int/base/",
+      "namespace": [
+        "http://smart.who.int/base/StructureDefinition/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/who-smart-base"
+    }
+  ]
+}

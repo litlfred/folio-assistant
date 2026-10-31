@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/process/Process_Ingestion/node/Task_Place.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/process/Process_Ingestion/node/Task_Place",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Place it in uploads/ by a declared route",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/process/Process_Ingestion/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/upload-routes"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/process/Process_Ingestion#flow/Flow_i1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/process/Process_Ingestion#flow/Flow_i2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_Place"
+    }
+  ]
+}

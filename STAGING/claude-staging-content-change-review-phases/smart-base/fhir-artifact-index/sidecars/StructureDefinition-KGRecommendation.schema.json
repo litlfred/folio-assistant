@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGRecommendation.schema.json",
+  "title": "Knowledge graph L1: Recommendation",
+  "description": "A normative statement from a WHO guideline. Kinds other than a graded recommendation (context-specific, research-only, good practice statement, no-recommendation) are the same node with a different kind. statement is verbatim and is the only stored copy. intervention, population, setting, provider and timing are verbatim slots taken from the statement, its remarks, or the enclosing caption or heading. setting absorbs the former conditionality. identifier is the published number (e.g. A.1.1), used in the IRI; sub-recommendations append their letter. Class IRI: http://smart.who.int/kg/recommendation.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGRecommendation",
+      "description": "Resource type identifier for KGRecommendation logical model"
+    },
+    "@context": {
+      "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to external JSON-LD context"
+        },
+        {
+          "type": "object",
+          "description": "Inline JSON-LD context",
+          "properties": {
+            "@version": {
+              "type": "number",
+              "const": 1.1
+            },
+            "fhir": {
+              "type": "string",
+              "const": "http://hl7.org/fhir/"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "type": "array",
+          "description": "Array of JSON-LD context objects/URIs",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type identifier for KGRecommendation logical model",
+      "examples": [
+        "LogicalModel-KGRecommendation"
+      ]
+    },
+    "identifier": {
+      "type": "string",
+      "description": "The published number (e.g. A.1.1); sub-recommendations append their letter."
+    },
+    "statement": {
+      "type": "string",
+      "description": "The recommendation, VERBATIM; the only stored copy."
+    },
+    "kind": {
+      "$ref": "./ValueSet-KGRecommendationKindVS.schema.json",
+      "description": "What sort of normative statement this is."
+    },
+    "direction": {
+      "$ref": "./ValueSet-KGRecommendationDirectionVS.schema.json",
+      "description": "For or against."
+    },
+    "strength": {
+      "$ref": "./ValueSet-KGRecommendationStrengthVS.schema.json",
+      "description": "GRADE strength."
+    },
+    "overallCertainty": {
+      "$ref": "./ValueSet-KGCertaintyVS.schema.json",
+      "description": "GRADE certainty of evidence."
+    },
+    "justification": {
+      "type": "string",
+      "description": "The printed justification, verbatim."
+    },
+    "status": {
+      "$ref": "./ValueSet-KGRecommendationStatusVS.schema.json",
+      "description": "Whether a recommendation is still in force."
+    },
+    "changeStatus": {
+      "$ref": "./ValueSet-KGChangeStatusVS.schema.json",
+      "description": "Whether this edition of a consolidated guideline introduces, updates or carries a recommendation or indicator unchanged."
+    },
+    "intervention": {
+      "type": "string",
+      "description": "Verbatim slot: the intervention, quoted from the statement, a remark, caption or heading."
+    },
+    "interventionType": {
+      "$ref": "./ValueSet-KGInterventionTypeVS.schema.json",
+      "description": "DRAFT."
+    },
+    "population": {
+      "type": "string",
+      "description": "Verbatim slot: the population."
+    },
+    "setting": {
+      "type": "string",
+      "description": "Verbatim slot: the setting (absorbs the former conditionality)."
+    },
+    "provider": {
+      "type": "string",
+      "description": "Verbatim slot: who provides it."
+    },
+    "timing": {
+      "type": "string",
+      "description": "Verbatim slot: when."
+    },
+    "contentHash": {
+      "type": "string",
+      "description": "sha256 of the normalised statement; unchanged on re-extraction means current."
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGRecommendation"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        },
+        "jsonld:valuesets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "const": [
+            "KGCertaintyVS",
+            "KGChangeStatusVS",
+            "KGInterventionTypeVS",
+            "KGRecommendationDirectionVS",
+            "KGRecommendationKindVS",
+            "KGRecommendationStatusVS",
+            "KGRecommendationStrengthVS"
+          ]
+        },
+        "jsonld:contextTemplate": {
+          "type": "object",
+          "const": {
+            "@version": 1.1,
+            "fhir": "http://hl7.org/fhir/",
+            "KGCertaintyVS": "http://smart.who.int/base/ValueSet-KGCertaintyVS.jsonld",
+            "KGChangeStatusVS": "http://smart.who.int/base/ValueSet-KGChangeStatusVS.jsonld",
+            "KGInterventionTypeVS": "http://smart.who.int/base/ValueSet-KGInterventionTypeVS.jsonld",
+            "KGRecommendationDirectionVS": "http://smart.who.int/base/ValueSet-KGRecommendationDirectionVS.jsonld",
+            "KGRecommendationKindVS": "http://smart.who.int/base/ValueSet-KGRecommendationKindVS.jsonld",
+            "KGRecommendationStatusVS": "http://smart.who.int/base/ValueSet-KGRecommendationStatusVS.jsonld",
+            "KGRecommendationStrengthVS": "http://smart.who.int/base/ValueSet-KGRecommendationStrengthVS.jsonld"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDHIv2.3.displays.json",
+  "title": "Digital Health Interventions for Health Management and Support Personnel Display Values",
+  "description": "Display values for Digital Health Interventions for Health Management and Support Personnel ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "description": "Display values for a specific code fragment by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "3": {
+      "en": "Health management and support personnel"
+    },
+    "3.1": {
+      "en": "Human resource management"
+    },
+    "3.1.1": {
+      "en": "List health workforce cadres and related identification information"
+    },
+    "3.1.2": {
+      "en": "Monitor performance of healthcare provider(s)"
+    },
+    "3.1.3": {
+      "en": "Manage registration/certification of healthcare provider(s)"
+    },
+    "3.1.4": {
+      "en": "Record training credentials of healthcare provider(s)"
+    },
+    "3.1.5": {
+      "en": "Manage health workforce activities"
+    },
+    "3.2": {
+      "en": "Supply chain management"
+    },
+    "3.2.1": {
+      "en": "Manage inventory and distribution of health commodities"
+    },
+    "3.2.2": {
+      "en": "Notify stock levels of health commodities"
+    },
+    "3.2.3": {
+      "en": "Monitor cold-chain sensitive commodities"
+    },
+    "3.2.4": {
+      "en": "Register licensed drugs and health commodities"
+    },
+    "3.2.5": {
+      "en": "Manage procurement of commodities"
+    },
+    "3.2.6": {
+      "en": "Report counterfeit or substandard drugs by persons"
+    },
+    "3.3": {
+      "en": "Public health event notification"
+    },
+    "3.3.1": {
+      "en": "Notification of public health events from point of diagnosis"
+    },
+    "3.4": {
+      "en": "Civil Registration and Vital Statistics (CRVS)"
+    },
+    "3.4.1": {
+      "en": "Notify, register and certify birth event"
+    },
+    "3.4.2": {
+      "en": "Notify, register and certify death event"
+    },
+    "3.5": {
+      "en": "Health system financial management"
+    },
+    "3.5.1": {
+      "en": "Register and verify health coverage scheme membership of persons"
+    },
+    "3.5.2": {
+      "en": "Track and manage insurance billing and claims processes"
+    },
+    "3.5.3": {
+      "en": "Transmit and manage payments to health facilities"
+    },
+    "3.5.4": {
+      "en": "Transmit and manage routine payroll payment to healthcare provider(s)"
+    },
+    "3.5.5": {
+      "en": "Transmit or manage financial incentives to healthcare provider(s)"
+    },
+    "3.5.6": {
+      "en": "Manage and plan budget allocations, revenue and expenditures"
+    },
+    "3.5.7": {
+      "en": "Determine level of subsidies for health coverage schemes"
+    },
+    "3.5.8": {
+      "en": "Collect health insurance contributions"
+    },
+    "3.6": {
+      "en": "Equipment and asset management"
+    },
+    "3.6.1": {
+      "en": "Monitor status and maintenance of health equipment"
+    },
+    "3.6.2": {
+      "en": "Track regulation and licensing of medical equipment"
+    },
+    "3.7": {
+      "en": "Facility management"
+    },
+    "3.7.1": {
+      "en": "List health facilities and related information"
+    },
+    "3.7.2": {
+      "en": "Assess health facilities"
+    },
+    "3.8": {
+      "en": "Person-centred health certificate management"
+    },
+    "3.8.1": {
+      "en": "Register and store current health certificate information"
+    },
+    "3.8.2": {
+      "en": "Retrieve and validate current health certificate information"
+    },
+    "3.8.3": {
+      "en": "Revoke and update health certificate"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDHIv2.3",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-10-20T16:07:28+00:00"
+}

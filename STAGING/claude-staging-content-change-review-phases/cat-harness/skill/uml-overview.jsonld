@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/uml-overview.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/uml-overview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "uml-overview",
+      "title": "UML overview: generated from declarations and schemas, never drawn",
+      "description": "Read, regenerate or extend the UML class diagrams of a harness: one per harness and one per named sub-graph it declares, plus the harness object model. Every box is generated from a declaration and a schema, never drawn by hand, so a wrong diagram is fixed at the declaration or the schema, and a dashed \"could not determine\" box is a finding about the registry.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/uml-overview.md",
+      "instructionLines": 200,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/uml-overview"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/tools",
+      "@type": "bootstrap:Subgraph",
+      "name": "tools"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/bpmn-to-fsh/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dak-api-hub/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dak-config-from-sushi/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dmn-to-html/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/dmn-to-questionnaire/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/extract-dak/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/immz-schedule-app-local/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-extraction-pages/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-recommendation-candidates/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-recommendation-scenarios/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-transcription-verbatim/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/smart-fhir-cache-seed/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/smart-liquid-variables/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/terminology-lookup/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

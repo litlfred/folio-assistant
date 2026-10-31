@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant-core",
+      "description": "Cold start for work in this layer, and the one rule specific to it: core owns content vocabulary, the harness owns the harness. Declared 2026-09-20 (issue #592) — the file existed and nothing declared it, which is the `v8gh` property: an undeclared file is one no checker has a reason to look at.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/asset/agent-instructions"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/get-neighbors/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/get-neighbors.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "List the nodes adjacent to one node, out (what it depends on) or in (what depends on it), to a given depth and optionally over named edge terms only. An unknown edge term is reported, never silently dropped.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/graph.ts"
+        },
+        "mcp": {
+          "tool": "get_neighbors"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "Node @id or authored label, e.g. `thm:main`.",
+            "name": "id",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "`out` (default), `in` or `both`.",
+            "name": "direction",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "description": "Traversal depth, 1-6 (default 1).",
+            "name": "hops",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          },
+          {
+            "description": "A LIST of edge terms (uses, interprets, cites, contains, ...) to restrict to. Omit for all.",
+            "name": "edges",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "JSON: the neighbours, each with the edge path that reached it.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "get-neighbors",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/corpus-grep",
+      "title": "Walk the content graph from one node"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/get-neighbors",
+  "path": "tools/get-neighbors/"
+}

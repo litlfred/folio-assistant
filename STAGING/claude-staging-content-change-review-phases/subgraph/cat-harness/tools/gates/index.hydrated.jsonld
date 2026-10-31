@@ -1,0 +1,66 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gates/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gates.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat gates"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--all"
+            },
+            "description": "Add the jobs that need a browser; the default is the fast set.",
+            "name": "all",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--list"
+            },
+            "description": "Print the derived gates and exit, running none.",
+            "name": "list",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One line per gate, then a pass count or the failures. Three exit codes, because two cannot carry the distinction: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "gates",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress"
+      ],
+      "title": "The platform's quality gates"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/gates",
+  "path": "tools/gates/"
+}

@@ -1,0 +1,1042 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2405.14766v2",
+  "blocks": [
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p001-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../images/img-p001-1.png",
+      "narrative": "draft",
+      "content": "Figure 1 (left): Public Health Large Language Model (LLM) Evaluation Areas. The schematic breaks public health free text processing into three sub-domains: (1) burden, including symptoms, morbidity, and mortality; (2) risk factors, including behavioral, biological, and environmental drivers; and (3) interventions, covering surveillance and control measures.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p001-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../images/img-p001-2.png",
+      "narrative": "draft",
+      "content": "Figure 1 (right): Task Evaluation Micro-F1 Scores by Model across 16 public health classification and extraction tasks. Llama-3.3-70B-Instruct achieves the highest performance on 8 of 16 tasks, with open-weight models showing high performance (>80% micro-F1) on structured classification but dropping below 60% on contact and causal classification.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Evaluating Large Language Models for Public Health\nClassification and Extraction Tasks\nJoshua Harris1,†, Timothy Laurence1, Leo Loman1, Fan Grayson1, Toby Nonnenmacher1, Harry\nLong1, Loes WalsGriffith1, Amy Douglas1, Holly Fountain1, Stelios Georgiou1, Jo Hardstaff1,\nKathryn Hopkins1, Y-Ling Chi1, Galena Kuyumdzhieva1, Lesley Larkin1, Samuel Collins1, Hamish\nMohammed1, Thomas Finnie1, Luke Hounsome1, Michael Borowitz1, and Steven Riley1\n1. UK Health Security Agency\nAbstract\nAdvances in Large Language Models (LLMs) have led to significant interest in\ntheir potential to support human experts acr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Title, authors and abstract of \"Evaluating Large Language Models for Public Health Classification and Extraction Tasks\" by Joshua Harris and colleagues at the UK Health Security Agency. Six external and seven newly annotated datasets are combined into 16 tasks on health burden, epidemiological risk factors and public health interventions, and eleven open-weight LLMs (7-123 billion parameters) are evaluated with zero-shot prompting. Llama-3.3-70B-Instruct is best on 8 of 16 tasks by micro-F1; every open-weight model scores below 60% on some tasks, such as Contact Classification, and above 80% on others, such as GI Illness Classification. On 11 tasks, three GPT-4 and GPT-4o models give results comparable to Llama-3.3-70B. Figure 1 shows the three evaluation areas and each model family's scores.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "There have been rapid improvements in the ability of Large Language Models (LLMs)1\nto perform a broad range of text processing tasks [3, 4, 5]. This has led to significant\ninterest in applying them to support experts across a range of domains [6], including public\nhealth [7, 8, 9].\nPrevious work has often demonstrated considerable variation in how different LLMs perform\non a given task, and that a given LLM’s performance is highly dependent on the type and\nnature of the task involved [10, 11, 12, 13, 14]. Therefore, to understand the potential\neffective application of LLMs within public health",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Introduction. LLM performance varies widely by model and task, so applying LLMs in public health first needs domain-specific evaluations representative of the tasks, text and knowledge experts meet, and the aim is to learn what drives the variation: the model, the task, the text type or the implementation. This initial work covers automated evaluation (excluding LLM-as-a-judge) of natural language understanding tasks such as classification, using in-context learning only. The evaluations are meant to support continual assessment of new models, identify areas where LLMs could be applied, and give a baseline for future fine-tuning; long-form generation tasks judged by experts, and issues such as bias, are left for further work.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methods",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-001-methods.md",
+      "narrative": null,
+      "content": "Evaluation of LLMs is a broad and rapidly growing field of research [15] ranging from\nvery general assessments of capabilities or intelligence [3] to very task specific performance\nresults [17] (Fig. 5). We focus on domain and task specific evaluations of LLMs within\npublic health and provide a review of the relevant literature in Sec. 6.\nThe appropriate evaluation methodology largely depends on three factors: level of generality\n(see Sec. 6.1.1), types of task (see Sec. 6.1.2), and outcome of interest (see Sec. 6.1.3).\nFor our initial evaluations of LLMs within public health, we aim to provid",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Methods overview. Evaluation methodology depends on the level of generality, the type of task and the outcome of interest (reviewed in Section 6), and the paper aims for a broad, automated assessment of classification and extraction tasks. Its components are seven new datasets annotated with public health specialists from internal, synthetic and external text; six existing datasets from prior work; 16 evaluation tasks across three public health sub-domains (Figure 1); and eleven open-weight models from 7 to 123 billion parameters, with three GPT-4 series models (turbo, 4o and 4o-mini) on a subset of 11 tasks for comparison with leading private models.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p003-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-1.png",
+      "narrative": "draft",
+      "content": "Figure 2: Evaluation Tasks by Public Health Area. Hierarchical tree organizing the 16 benchmark tasks into Burden (disease symptoms, surveillance), Risk Factors (causal claims, PubMedQA, risk classification), and Interventions (guidance topic, guidance recommendations, contact classification).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Public Health Evaluation Tasks and Datasets",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-public-health-evaluation-tasks-and-datasets.md",
+      "narrative": null,
+      "content": "Public health is a broad field, intersecting with many different fields and issues in addition\nto conditions treated within healthcare settings [18, 19, 20, 21]. Therefore, to ensure our\nevaluations are representative, the 16 classification and extraction tasks we bring together\ntarget a commensurately broad range of tasks within three key sub-domains of public health:",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The opening of the task and dataset section: because public health spans many fields beyond healthcare, the 16 classification and extraction tasks cover a broad range within three sub-domains, introduced next.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Burden",
+      "pageStart": 3,
+      "pageEnd": 5,
+      "target": "../sections/sec-003-burden.md",
+      "narrative": null,
+      "content": "The range of data used in our evaluation is also broad, because potentially relevant health\ninformation is found in a diverse range of sources: academic literature, electronic health\nrecords, public health guidance, social media, news articles, and questionnaire responses\n[22]. Details of all the tasks, datasets, and annotations are shown in Table 1.\nFigure 2: Evaluation Tasks by Public Health Area. A summary of different tasks which we use to\nevaluate the LLMs, grouped by public health area. See 2.1.1, 2.1.2, and 2.1.3 for full descriptions.\n3\n2.1.1\nBurden\nPublic health aims to mitigate adver",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Burden tasks, with Figure 2 (tasks by area) and Table 1 (all 16 tasks with dataset, type, test-set size, text type, average length, example labels and whether annotations are public). Text sources range from academic literature to social media, news and questionnaires. The burden tasks are NCBI Disease Extraction, scored on de-duplicated MeSH and OMIM codes to ease exact-match problems; Gastrointestinal Illness Classification on about 3,000 Yelp restaurant reviews pre-filtered by GI keywords, which makes it adversarial since every \"no\" review contains such a keyword; GI Illness Symptom Extraction from the reviews annotated as possible illness; ICD-10 Description Classification of whether a description refers to an infection or a primarily infectious disease, on a balanced sample annotated by two analysts; and News Headline Classification of GDELT headlines about avian influenza, five at a time with JSON output. An MMLU Virology task was removed after later work questioned that subset's error rate.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Risk Factors",
+      "pageStart": 5,
+      "pageEnd": 7,
+      "target": "../sections/sec-004-risk-factors.md",
+      "narrative": null,
+      "content": "Epidemiological risk factors are environmental, behavioral, or biological factors that increase\na person’s likelihood of developing disease or injury [36]. Risk factor surveillance is essential\nfor quantifying these risks and developing evidence-based interventions to reduce them [37].\nAddressing risk factors directly may provide a more effective strategy than treating diseases\nonce they arise [38, 39]. We use the following tasks to evaluate LLMs in this sub-domain:\n1. Contact Type Classification: A key challenge during outbreak and pandemic response is\n5\noften rapidly implementing and scaling",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Risk-factor tasks. Contact Type Classification uses a new synthetic dataset generated with GPT-4 in the style of mpox contact-tracing questionnaires and manually annotated; it is hard because the model must apply a detailed protocol given in the prompt, and because the text often discusses sexual activity, which many training datasets avoid. Country Disambiguation maps anonymised place-of-birth answers from GP registration forms, which automated matching failed on, to a country or \"unknown\", standardised with the country-converter package. Food Extraction pulls foods from the GI-annotated Yelp reviews and maps them through a FoodEx 2 lookup to 27 labels relevant to foodborne illness. MMLU Medical Genetics and MMLU Nutrition test basic knowledge by multiple choice.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Interventions",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-005-interventions.md",
+      "narrative": null,
+      "content": "Public health interventions can take many forms [21] [49]. One common way to classify\nthem is into pharmaceutical and non-pharmaceutical interventions [50]. Pharmaceutical\ninterventions predominantly use medical technologies to prevent, diagnose or treat disease.\nVaccination is one particularly common public health pharmaceutical intervention. Public\nhealth non-pharmaceutical interventions generally aim to reduce behavioural risk factors\nand so mitigate various forms of disease. These include nutrition advice or infection control\nthrough hand hygiene.\nPublic health guidance is one of the prima",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The opening of the interventions section. Interventions are commonly split into pharmaceutical ones, such as vaccination, and non-pharmaceutical ones that reduce behavioural risk factors, such as nutrition advice or hand hygiene. Since guidance is a primary way interventions are communicated, the authors introduce four guidance-related evaluations of increasing difficulty, plus tasks on pharmaceutical interventions and biomedical reasoning. The block ends as the first, Guidance Topic Classification, begins.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Summary",
+      "pageStart": 7,
+      "pageEnd": 9,
+      "target": "../sections/sec-006-summary.md",
+      "narrative": null,
+      "content": "pages from the gov.uk web page. The text was extracted and manually categorised\n(Sec. 7) into one of eight broad health topics based on which team wrote the guidance\n(e.g. Radiation, Sexually Transmitted Infections, etc.). The LLM is prompted with the\nsummary page and the list of possible health topics and asked to return the single health\ntopic that is most suitable for the text.\n2. Guidance Recommendation Classification: Recommendations are a crucial component\nof public health guidance. Demonstrating an LLM’s ability to identify recommendations\nis an essential prerequisite to other processin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The intervention tasks, continued (the extraction places them under a \"Summary\" heading), and the task summary. Guidance Topic Classification assigns UKHSA gov.uk summary pages to one of eight health topics by authoring team. Guidance Recommendation Classification asks yes or no whether a chunk of UKHSA guidance contains a clear actionable recommendation, on 489 annotated chunks. Health Advice Classification labels PubMed sentences as no, weak or strong advice (HealthAdvice, 10,845 sentences), and Health Causal Claims Classification labels PubMed conclusion sentences as no relation, correlational, conditional causal or direct causal. BioDex Drugs Extraction takes the drugs in adverse drug event reports from 1,558 articles chunked to at most 6,000 characters, and PubMedQA answers an abstract's title question yes, no or maybe in the reasoning-required setting. The summary notes the balance of general and public-health-specific tasks and of external and internal datasets.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation Methodology",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-007-evaluation-methodology.md",
+      "narrative": null,
+      "content": "Our aim is to provide a consistent assessment of LLMs across tasks, rather than attempt\nto achieve the highest possible performance for any given model and task combination.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A one-line opening of the evaluation methodology: the aim is a consistent assessment across tasks, not the highest possible score for each model and task.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompting",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-008-prompting.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sampling",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-009-sampling.md",
+      "narrative": null,
+      "content": "prompt2 evaluations should provide a reasonable lower bound for each model’s performance,\nwith potentially significant gains possible from more advanced pipelines.\nModel Name\nBase Model\nPrecision\nModel Size\nAuthor\nHost\nParams (bn)\nContext (toks)\nFlan-T5-xxl [55]\nFlan-T5-xxl\nFP16\n11\n2048\nGoogle\nInternal API\nMistral-7B-Instruct-v0.2 [56]\nMistral-7B\nFP16\n7\n32768\nMistral\nInternal API\nMistral-Large-Instruct\nMistral-Large\nINT4-AWQ\n123\n128000\nMistral\nInternal API\nStable-Beluga-2 [57]\nLlama-2-70B [45]\nFP16\n70\n4096\nStability-AI + Meta\nInternal API\nLlama-3-70B-Instruct [58]\nLlama-3-70B\nFP16\n70\n8192\nMeta",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The end of a footnoted remark and Table 2 (the extraction places them under a \"Sampling\" heading). Zero-shot evaluations should give a reasonable lower bound on each model's performance, with possibly large gains from more advanced pipelines. Table 2 lists the evaluated models with base model, precision, size, context length, author and host: Flan-T5-xxl, Mistral-7B-Instruct-v0.2, Mistral-Large-Instruct (123B, INT4-AWQ), Stable-Beluga-2 (Llama-2-70B), Llama-3 8B and 70B, Llama-3.1 8B and 70B and Llama-3.3-70B in FP16 and INT4-AWQ, Gemma-2-27b-it and Command-R, all on an internal API, plus gpt-4-turbo, gpt-4o-mini and gpt-4o through the OpenAI API.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Large Language Models",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-010-large-language-models.md",
+      "narrative": null,
+      "content": "We focus on evaluating open-\nsource/weight LLMs that we host internally to ensure comparability of results, as well as for data\nprotection. We run all models in FP16 precision where feasible. We include the latest GPT-4 models\nfor comparison on a subset of tasks.\n2.2.1\nLarge Language Models\nIn our initial evaluations we assess eleven open-weight LLMs ranging from 7 billion to 123\nbillion parameters (including the Llama-2 and 3, Mistral, Command-R, Gemma, and Flan-T5\nbase models), see Table 2. We also investigate the performance impact of INT-4 quantization\nacross the Llama-3 family of models.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Large language models. The table caption explains that open-weight models are hosted internally for comparability and data protection, in FP16 where feasible, with GPT-4 models on a subset of tasks. The eleven open-weight models span 7 to 123 billion parameters across the Llama-2 and 3, Mistral, Command-R, Gemma and Flan-T5 families, and the effect of INT-4 quantization is studied on the Llama-3 family. Models run on an internal API on UKHSA high-performance computing with HuggingFace models, transformers and vLLM, which lets restricted datasets stay on UKHSA systems and keeps quantisation, prompt templates, versions and generation settings under control. GPT-4 Turbo and GPT-4o are accessed through the OpenAI API, but not on all tasks, mainly because of data restrictions; the block ends mid-sentence.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-011-results.md",
+      "narrative": null,
+      "content": "the three areas for comparison.\n2.2.2\nPrompting\nFor all tasks, we report zero-shot prompting results. Additionally, for a subset of more\ncomplex tasks we also investigate few-shot prompting results.\nWe use the prompt templates provided by the model authors where available. This leads to\nsome variation in prompt content due to the availability of system prompts in some templates.\nHowever, we aim to keep the informational content consistent across prompts as far as\npossible.\n2.2.3\nSampling\nFor all tasks, we use greedy decoding in order to generate reproducible results.\n2.2.4",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Prompting and sampling (the extraction places them under a \"Results\" heading). Zero-shot results are reported for every task, with few-shot prompting also studied on some harder tasks. The model authors' prompt templates are used where available, which varies prompt content somewhat, for example in system prompts, while keeping the informational content as consistent as possible. Greedy decoding is used throughout for reproducibility.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dataset Splits",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-012-dataset-splits.md",
+      "narrative": null,
+      "content": "We use a 20-80 validation-test split for all tasks, where only the validation set is used for\nprompt development; this avoids overfitting the prompt to the test set, which we use to\nquantify performance in this paper.\n2.2.5",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Dataset splits: a 20-80 validation-test split for every task, with only the validation set used for prompt development so the prompts are not overfitted to the test set used to report performance.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation Metrics",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-013-evaluation-metrics.md",
+      "narrative": null,
+      "content": "In this paper we primarily report the micro and macro F1 scores for each task. The F1\nscore is calculated as the harmonic mean of precision3 (positive predictive value) and recall4\n(sensitivity). The micro-F1 score is calculated by weighting each label according to its\nfrequency in the dataset, while the macro-F1 score is calculated weighting each label equally.\nIt is also important to note that for single label classification tasks the micro-F1 score is\nequivalent to accuracy.\nOur headline measure of performance is micro-F1, as we are assessing raw performance\nrather than accounting for poten",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Evaluation metrics, the start of the results, and Table 3. Micro- and macro-F1 are reported, micro-F1 being the headline (for single-label classification it equals accuracy). Extraction uses exact string matching, with outputs outside the label set counted as incorrect; classification uses exact matching after light clean-up, with more advanced standardisation for Country Disambiguation, NCBI Disease Extraction and Food Extraction. Open-weight models are discussed first since they ran on every task. Table 3 gives zero-shot micro-F1 for the eleven open-weight models on the 16 tasks: Llama-3.3-70B has the best mean task rank (2.50), followed by Llama-3.1-70B (2.94) and Llama-3-70B (3.12), and Mistral-Large was run in INT-4 AWQ.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Model Results",
+      "pageStart": 11,
+      "pageEnd": 12,
+      "target": "../sections/sec-014-model-results.md",
+      "narrative": null,
+      "content": "Table 3 shows the performance of models on different tasks. Llama-3.3-70B-Instruct is the\nhighest scoring open-weight model (or equal highest) across 8 of the 16 tasks according to\nmicro-F1.\nFlan-T5-xxl, Llama-3-8B-Instruct, Llama-3.1-8B-Instruct, and Mistral-7B-Instruct-v0.2\nwere each the worst performing model on at least one task. The authors note that smaller\nmodels appear to have outputs that are more fragile with respect to the exact wording of the\nprompt. This means that particularly low performance on a given task may be more related\nto a failure of the model to understand the prompter",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Model results. Llama-3.3-70B-Instruct is the highest or equal highest open-weight model on 8 of the 16 tasks. Flan-T5-xxl, Llama-3-8B, Llama-3.1-8B and Mistral-7B were each worst on at least one task, and the authors note that smaller models seem more fragile to prompt wording, so a low score may reflect misreading the prompt rather than inability. Scaling from Llama-3-8B to Llama-3-70B adds more than 10 percentage points on MMLU Genetics, MMLU Nutrition, Health Advice and Causal Relations, and moving from a Llama-2-70B to a Llama-3-70B base also helps; each Llama 3 70B version has a better mean task rank than the last. Mistral-Large's relatively weak results may stem from its INT-4 quantization.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p012-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-1.png",
+      "narrative": "draft",
+      "content": "Figure 3: Comparison of zero-shot and few-shot prompting on Contact Classification. Shows that few-shot in-context examples provide modest gains for smaller models but diminishing returns for 70B+ frontier models on difficult contact categorization.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Task Results",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/sec-015-task-results.md",
+      "narrative": null,
+      "content": "We find significant variability in performance across tasks. For tasks like ICD-10 Description\nClassification all of the models classify text with a high level of accuracy, with the minimum\nmicro-F1 score achieved 85%. Similarly, for other tasks like Gastrointestinal Illness Classifi-\ncation, Country Disambiguation, and Food Extraction, all models achieve micro-F1 scores\nabove 80%.\nHowever, some tasks still appear challenging for the LLMs evaluated, with no LLM getting\nover 60% micro-F1 on any of BioDex Drugs Extraction, and Contact Classification using\nzero-shot prompts.\n3.3",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Task results. Performance varies greatly across tasks: every model scores at least 85% micro-F1 on ICD-10 Description Classification, and above 80% on GI Illness Classification, Country Disambiguation and Food Extraction, but no model exceeds 60% on BioDex Drugs Extraction or Contact Classification with zero-shot prompts.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Few-shot Prompting",
+      "pageStart": 12,
+      "pageEnd": 13,
+      "target": "../sections/sec-016-few-shot-prompting.md",
+      "narrative": null,
+      "content": "To investigate the potential impact of using more advanced prompting techniques on chal-\nlenging tasks, we evaluate the impact of few-shot prompting on the hardest internal and\nexternal classification tasks.\nFor the hardest of our internally annotated tasks, Contact Classification, we use a 10-shot\nprompt illustrating how to apply the protocol in difficult edge cases. We find substantial\nimprovements across models, see Fig. 3. With the exception of Flan-T5-xxl and Llama-3.1-\n8B, all other models see greater than 10 percentage point increases in micro-F1 scores over\nthe zero-shot setting.\nFigur",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Few-shot prompting on the hardest tasks (Figures 3 and 4). A 10-shot prompt for Contact Classification, showing how to apply the protocol to difficult edge cases, raises micro-F1 by more than 10 percentage points for every model except Flan-T5-xxl and Llama-3.1-8B. A 7-shot prompt for Health Causal Claims Classification (shown in Figure 7) gives generally similar gains, again except Flan-T5-xxl, which was strong zero-shot, consistent with Chen et al.'s results for GPT-4 and GPT-3.5. Relative rankings shift too: Llama-3-8B is lowest zero-shot but beats Flan-T5-xxl and Mistral-7B few-shot. The authors suggest the gains come from these tasks needing nuanced distinctions between user-defined labels, which matters in public health, where definitions and protocols change over time.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p013-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../images/img-p013-1.png",
+      "narrative": "draft",
+      "content": "Figure 4: Comparison of zero-shot and few-shot prompting on Health Causal Claims Classification. Contrasts zero-shot baseline against 7-shot prompting across evaluated LLM architectures.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "GPT-4 and GPT-4o Comparison",
+      "pageStart": 13,
+      "pageEnd": 14,
+      "target": "../sections/sec-017-gpt-4-and-gpt-4o-comparison.md",
+      "narrative": null,
+      "content": "Finally, to understand how current open-weight models compare on extraction and classifica-\ntion tasks to some of the highest performing private models, we evaluate three GPT-4 and\nGPT-4o models on 11 of the 16 tasks, see Table 4.\nWe find GPT-4-Turbo, GPT-4o, and GPT-4o-Mini perform well across all tasks and are\nthe highest scoring models overall on 5 of the 11. The GPT-4 series models particularly\n13\nLlama-3.3\n70B\nGPT-4o\nMini\nGPT-4\nTurbo\nGPT-4o\nTask Name\nNCBI Disease Extraction\n0.88\n0.79\n0.83\n0.85\nGI Classification\n0.94\n0.92\n0.84\n0.87\nGI Symptom Extraction\n0.90\n0.90\n0.89\n0.86\nBioDex Drugs Ext",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "GPT-4 and GPT-4o comparison (Table 4). GPT-4-Turbo, GPT-4o and GPT-4o-mini were evaluated on 11 of the 16 tasks; they perform well throughout and are the top models on 5 of the 11, outperforming open-weight models notably on MMLU Genetics (0.98 for GPT-4o against 0.86 for Llama-3.3-70B). Across all tasks, though, the best GPT-4 models perform comparably to Llama-3.3-70B-Instruct, which leads on NCBI Disease Extraction, GI Classification and PubMedQA.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Quantization Performance Impact",
+      "pageStart": 14,
+      "pageEnd": 15,
+      "target": "../sections/sec-018-quantization-performance-impact.md",
+      "narrative": null,
+      "content": "The significant memory requirements of LLMs means a range of model quantization methods\nhave been explored to reduce the total footprint of a model with a given number of parameters.\nThese approaches change the format and precision in which the model parameters are stored\nto reduce the number of bits required for each parameter. However, the trade-off is that\nquantization will also impact model behavior, potentially degrading performance when\ncompared to the model in its original format.\nLlama-3.1-8B diff (ppts)\nLlama-3.1-70B diff (ppts)\nLlama-3.3-70B diff (ppts)\nTask Name\nNCBI Disease Extract",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Quantization impact (Table 5). Quantization stores parameters at lower precision to save memory but may degrade behaviour. INT-4 Activation-aware Weight Quantization (AWQ), which cuts parameter memory by about 70%, was tested on Llama 3.1 8B, Llama 3.1 70B and Llama 3.3 70B. The impact was limited: the average micro-F1 change against FP16 was −1.3 percentage points for Llama 3.1 8B, the largest degradation, and −0.2 for both 70B models, with the biggest single drop −8.8 points for Llama 3.1 8B on Causal Relations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 15,
+      "pageEnd": 17,
+      "target": "../sections/sec-019-discussion.md",
+      "narrative": null,
+      "content": "We see research developing automated evaluations of LLMs on representative public health\nfree text, tasks, and knowledge as crucial for future successful deployment in real world use\ncases. This work introduces a set of these evaluations for Natural Language Understanding\ntasks in order to provide an initial assessment of both LLMs’ applicability in general and to\ncompare the performance of individual LLMs.\nOverall, we find LLMs of all sizes perform strongly on the simpler public health classification\ntasks across all three areas (burden, risk factors, and interventions) and types of free text",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Discussion. LLMs of all sizes do well on the simpler classification tasks across all three areas and text types, which the authors see as a promising sign that they may already help process some public health text, for example structuring free text into new datasets, handling volumes too large for manual review such as during pandemics, or assuring the quality of manual annotation as a low-risk use. Tasks needing very specific knowledge (Contact Type Classification) or long-document extraction (BioDex) remain poor zero-shot. Further points: few-shot and possibly chain-of-thought prompting help on hard tasks; long extraction suffers from wrong or too many spans; public benchmarks often lack well-defined annotation protocols and contain some anomalous labels; weak scores often come from output-format failures, such as Flan-T5-xxl's invalid JSON on News Headlines, so the evaluations likely underestimate bespoke pipelines; Llama-3.3-70B is comparable to GPT-4 models; INT-4 quantization costs little; fine-tuned models are often competitive; and detailed protocols developed with epidemiologists helped both annotators and prompts.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 17,
+      "pageEnd": 27,
+      "target": "../sections/sec-020-conclusion.md",
+      "narrative": null,
+      "content": "Whilst the general capability of LLMs has grown rapidly [3, 4, 5], assessing their performance\non public health specific knowledge, tasks, and free text is an important prerequisite for\nsuccessful real-world applications. In this work we take a first step towards evaluating and\nunderstanding the applicability of LLMs to public health via a broad range of automated\nLLM evaluations on representative tasks and anonymised or synthetic free-text.\nOur initial results suggest that LLMs may already be useful tools to support public health\nexperts extract information from a wide variety of free text so",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Conclusion, acknowledgments, ethical considerations and references. Evaluating LLMs on public-health-specific tasks and text is a prerequisite for real use, and the initial results suggest they may already help experts extract information from varied free text, supporting surveillance, interventions and research. Performance varies between models and tasks, so each application needs validation, context-specific risk assessment and tests of known limitations such as output fragility and bias; future work covers long-form generation tasks, fine-tuned models and new tasks and models. Ethically, only public, synthetic or anonymised data and lower-risk tasks were used, and the results are said not to be sufficient to endorse deploying software without in-context assessment. The references span LLM surveys and models, medical and domain benchmarks, the evaluation datasets, and quantization and serving tools.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p027-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../images/img-p027-1.png",
+      "narrative": "draft",
+      "content": "Figure 5: LLM Evaluation Spectrum. Plots evaluation approaches along domain specificity (general NLP to public health specific) and task complexity (broad capability to narrow actionable operational tasks).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix: Literature on Domain Specific Evaluations",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../sections/sec-021-appendix-literature-on-domain-specific-evaluatio.md",
+      "narrative": null,
+      "content": "Evaluation of LLMs is a broad and rapidly growing field of research [15] ranging from very\ngeneral assessments of capabilities or intelligence to very task specific performance results\n(Fig. 5).\nHowever, while researchers have developed evaluations for related fields, there is limited\nliterature assessing open-weight LLMs in a standardised way across a variety of public health\nspecific tasks and data.\nFigure 5: LLM Evaluation Spectrum. In this paper we focus on a combination of domain and\ntask specific LLM evaluations within public health in order to inform our understanding of where\nLLMs may",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Appendix: literature on domain-specific evaluations. LLM evaluation ranges from general capability assessments to task-specific results (Figure 5, which marks where this paper sits), and the authors find limited literature evaluating open-weight LLMs in a standardised way across public-health-specific tasks and data.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Approaches to Domain Specific LLM Evaluations",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../sections/sec-022-approaches-to-domain-specific-llm-evaluations.md",
+      "narrative": null,
+      "content": "Domain specific evaluations of LLMs can take a number of forms depending on several",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A one-line opening, cut off mid-sentence: domain-specific LLM evaluations can take several forms depending on several factors.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Level of Generality",
+      "pageStart": 27,
+      "pageEnd": 29,
+      "target": "../sections/sec-023-level-of-generality.md",
+      "narrative": null,
+      "content": "6.1.1\nLevel of Generality\nDomain specific evaluations often lie on a spectrum, from assessing the potential applicability\nof an LLM for a domain in general (e.g Medicine [5]) to assessing an LLM on a single\nspecific task within a domain (e.g diagnosing neuro-ophthalmic diseases [71]).\nGeneral domain evaluations often draw on existing human assessments and exams. For\nexample, in Medicine using questions from (or in the style of) the US Medical Licensing\nExamination (USMLE) [72, 73, 74, 75], in Law the US Bar Exam [76, 77], or using human\nexams for given subjects [4, 78, 79, 80]. However, bespok",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Level of generality and types of task. Domain evaluations range from general ones, often built from human exams such as the USMLE or the Bar Exam or as benchmarks like LawBench, MultiMedQA and FinBen, to task-specific ones with newly annotated data, such as neuro-ophthalmic diagnosis or statutory reasoning; general ones suit broad capability comparison and model selection, and specific ones are needed before real deployment or use on private data. Classification and extraction (NLU) tasks can be scored like traditional data science with accuracy, precision, recall and F1, while free-text generation (NLG) is hard to score automatically, for example with ROUGE, so it often relies on human experts, which is costly, subjective and hard to scale; LLM-as-a-judge is being explored, but it is unclear which domains LLMs are qualified to judge, a particular concern for public health.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Outcome of Interest",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/sec-024-outcome-of-interest.md",
+      "narrative": null,
+      "content": "The appropriate methodology for domain specific evaluations is also strongly influenced\nby the exact outcome researchers are interested in assessing. For NLU tasks, the potential\noutcomes of interest can range from those focused on test set performance (e.g accuracy),\nwhich we look at in this paper, to broader considerations such as bias and robustness.\nFor automated evaluations the literature largely uses performance metrics, with a particular\nfocus on F1 scores [68, 70, 30, 51, 28]. For specific tasks these high level metrics are often\nsupplemented with further class specific analysis [30].",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Outcome of interest. For NLU tasks outcomes range from test-set performance, the focus of this paper, to bias and robustness. Automated evaluations mostly use F1 scores, sometimes with class-level analysis. Bias and fairness matter greatly for public health; beyond general LLM bias benchmarks, task-level bias checks compare predictions or errors across individual or group characteristics, and in the UK must consider protected characteristics under the Equality Act and health equity frameworks such as CORE20PLUS. Such evaluations are best done with the actual text, task and deployment process to be used in production.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Summary",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/sec-025-summary.md",
+      "narrative": null,
+      "content": "Overall, our aim with this work is to provide initial assessments of LLMs within public\nhealth. To cover the broadest range of models and areas, we focus on automated domain\nspecific evaluations across a range of relevant NLU tasks, see Fig. 6.\n6.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Summary of the approach: to cover the most models and areas, the paper focuses on automated, domain-specific evaluations across relevant NLU tasks (Figure 6).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Existing Evaluations of LLMs in Public Health and Related Fields",
+      "pageStart": 29,
+      "pageEnd": 30,
+      "target": "../sections/sec-026-existing-evaluations-of-llms-in-public-health-an.md",
+      "narrative": null,
+      "content": "The literature contains a number of existing domain specific NLU LLM evaluations that are\nrelevant for public health, some of which we adopt relevant sub-sets of within our evaluations.\n29\nFigure 6: Overview of Evaluations. We focus on automated evaluations of classification and\nextraction tasks.\n6.2.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A short opening of the review of existing evaluations: the literature has several domain-specific NLU evaluations relevant to public health, some of which this paper adopts, with Figure 6 summarising the evaluations as automated classification and extraction tasks.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p030-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../images/img-p030-1.png",
+      "narrative": "draft",
+      "content": "Figure 6: Overview of Evaluations. Diagram depicting the automated pipeline flow from raw free-text guideline inputs through prompt formatting, LLM inference, and automated micro-F1 scoring against gold-standard annotations.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Disease and Health Issue Classification and Extraction",
+      "pageStart": 30,
+      "pageEnd": 31,
+      "target": "../sections/sec-027-disease-and-health-issue-classification-and-extr.md",
+      "narrative": null,
+      "content": "Classifying and extracting potential diseases and health issues from free text is an important\ntask within public health analysis and has significant overlap with the Medical domain.\nZhang et al. [68] evaluate ChatGPT (GPT-3.5) and GPT-4 at the single label task of disease\nclassification from electronic health records (EHRs). GPT-4 with zero-shot prompting was\nfound to achieve between 0.75 and 0.96 F1 score across the 5 diseases and outperformed\nGPT-3.5 on 4 of the 5 diseases. Sensitivity analysis suggested few-shot with Chain of\nThought (CoT) prompting improved GPT-4’s performance.\nSimilarly,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Prior work on disease and health-issue classification and extraction. Zhang et al. found zero-shot GPT-4 reached 0.75 to 0.96 F1 classifying five diseases from health records, beating GPT-3.5 on four, with few-shot chain-of-thought helping further. Guo et al. found GPT-4 beat GPT-3.5 on six social-media health classification tasks with F1 between 0.35 and 0.8. Rare diseases are of particular interest because novel pathogens are poorly covered in pre-training: on RareBench GPT-4 led and the 7B open models trailed, and Shyr et al. found ChatGPT reached 0.41 to 0.47 F1 on the RareDis corpus with relaxed matching, from 0.15 for symptoms to 0.76 for rare diseases, with exact matching scoring much worse.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Drug and Intervention Extraction",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/sec-028-drug-and-intervention-extraction.md",
+      "narrative": null,
+      "content": "Extracting relevant Pharmaceutical interventions from free text is another common task in\npublic health free text processing.\nD’Oosterlinck et al. [29] propose BioDEX, a dataset of PubMed articles about Adverse Drug\nEvents (ADE) and their corresponding ground truth ADE extractions. BioDEX is used to\nevaluate GPT-3.5 and GPT-4 LLMs with few-shot prompting, this achieves an overall F1\nscore of approximately 0.5 at extracting the 4 core ADE report attributes (patient sex, serious\nevent, reactions and drugs), currently well below expert level. Due to the length of the papers\nthe few-shot prompts a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Prior work on drug and intervention extraction. On BioDEX, few-shot GPT-3.5 and GPT-4 reached about 0.5 F1 on four core adverse drug event attributes, well below expert level, with long papers truncated to fit the context. Agrawal et al. found GPT-3 with a resolver generally exceeded 0.6 F1 on extracting interventions and disambiguating acronyms in clinical notes, while noting exact-match difficulties. Bisercic et al. reported over 90% accuracy on 4 of 5 tasks generating structured JSON from medical reports with one-shot chain-of-thought prompting and output validation. Chen et al. evaluated GPT-4 and GPT-3.5 on the HealthAdvice and CausalRelation datasets, with GPT-4 slightly ahead at 0.65-0.77 macro-F1 using few-shot chain-of-thought.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Relevant Sub-sets of General Evaluations",
+      "pageStart": 31,
+      "pageEnd": 33,
+      "target": "../sections/sec-029-relevant-sub-sets-of-general-evaluations.md",
+      "narrative": null,
+      "content": "In addition to these domain specific evaluations in the literature, it is also important to note\nthat there are subsets of general LLM evaluations that are relevant for public health (although\ndetailed breakdowns of subset results often are not reported).\nThe Massive Multitask Language Understanding (MMLU) benchmark [34] has subsets\n31\ncovering general medical and scientific knowledge. More importantly, it also contains\nsubsets relating to virology, genetics, and nutrition, that are particularly relevant for some\npublic health sub-fields.\nAlso relevant for public health is the PubMedQA [54] Bi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Relevant subsets of general benchmarks. MMLU has subsets on medical and scientific knowledge, including virology, genetics and nutrition. PubMedQA, now part of MultiMedQA, has a labelled subset of 1,000 articles whose title questions are answered yes, no or maybe from the abstract, useful for testing inference of conclusions from evidence. MMMU has a public health subset, but it is multimodal and outside this paper's scope.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix: Annotations",
+      "pageStart": 33,
+      "pageEnd": 35,
+      "target": "../sections/sec-030-appendix-annotations.md",
+      "narrative": null,
+      "content": "Seven of the datasets we use to evaluate LLM performance are datasets annotated in col-\nlaboration with public health specialists in the relevant sub-fields of public health. Given\nthe comprehensive nature of this evaluation, the detail of the exact approach to manual\nannotation is left for future public health specific papers. However, this appendix provides\na summary of the level of rigour used to ensure high quality annotations that would be\nreproducible by other human experts (in order to give LLMs a chance at producing similar\nresults).\nDataset\nOrigin\nAnnotation approach\nAnnotation confid",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Appendix: annotations (Tables 6 and 7). Seven datasets were annotated with public health specialists, with full methods left for later papers. For GI Illness Classification a protocol was applied independently by at least two reviewers to 200 reviews with over 90% agreement and the rest assigned to single reviewers; GI symptom and food extraction were done by one reviewer with a second checking uncertain cases; ICD-10 labels draw on disease experts, the literature and existing labels; news headlines had a single reviewer with spot checks. Contact Type data was labelled by GPT-4 at generation and by two independent reviewers with over 90% agreement; Country Disambiguation had single reviewers with spot checks and some inherently ambiguous labels; Guidance Topic labels follow the authoring UKHSA team; and Guidance Recommendation used two reviewers on 100 examples with over 90% agreement before single-reviewer labelling.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p035-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "target": "../images/img-p035-1.png",
+      "narrative": "draft",
+      "content": "Figure 7: Example Few Shot Prompt for Health Causal Claims Classification. Full text box demonstrating the 7-shot prompt structure, system instructions, and few-shot demonstrations used for model queries.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/prose-sec-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix: Example Prompts",
+      "pageStart": 35,
+      "pageEnd": 36,
+      "target": "../sections/sec-031-appendix-example-prompts.md",
+      "narrative": null,
+      "content": "Figure 7: Example Few Shot Prompt for Health Causal Claims Classification. This is an example\nof the 7 shot prompt used in the Health Causal Claims Classification task structured with the Stable-\nBeluga-2 prompt template. Few-shot examples taken from Yu et al. [52].\n35\nFigure 8: Example Zero Shot Prompt for NCBI Disease Extraction. This is an example of the zero\nshot prompt used in the NCBI Disease Extraction task structured with the Stable-Beluga-2 prompt\ntemplate.\n36",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Appendix: example prompts. Figure 7 shows the 7-shot prompt for Health Causal Claims Classification in the Stable-Beluga-2 template, with examples from Yu et al., and Figure 8 the zero-shot prompt for NCBI Disease Extraction in the same template.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2405.14766v2/blocks/figure-img-p036-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "target": "../images/img-p036-1.png",
+      "narrative": "draft",
+      "content": "Figure 8: Example Zero Shot Prompt for NCBI Disease Extraction. Text box detailing the exact zero-shot prompt framing, input passage, and expected JSON entity extraction format.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    }
+  ]
+}

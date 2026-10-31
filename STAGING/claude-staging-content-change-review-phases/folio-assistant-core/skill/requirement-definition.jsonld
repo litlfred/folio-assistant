@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/skill/requirement-definition.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/skill/requirement-definition",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "requirement-definition",
+      "title": "One definition of a requirement",
+      "description": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name.",
+      "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
+      "instructionLines": 141,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/requirement-definition"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/judge-tree/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/judge-tree.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Run the layer PR-check gates and tests on a composed tree (head) and on its base, or reuse a stored verdict whose digest is the base tree's, compare them with the layer-pr-checks compare scripts, and write a verdict record: {treeDigest, runner {kind agent|github-actions|local, id}, startedAt, finishedAt, gates [{name, exit, seconds, skipped?}], tests {total, failed, new}, verdict green|red|unknown}. With a token it publishes the verdict as the commit status `judge-tree`; `check` answers whether any runner judged a digest green; `sample` re-runs a seeded few gates of a record.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat judge:tree judge"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--lock"
+            },
+            "description": "The index.lock.json whose fixity digests name every instance but the caller.",
+            "name": "lock",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--caller"
+            },
+            "description": "The caller as owner/name (or its lock instance): the entry replaced by its PR tree. Every runner must name it the same way.",
+            "name": "caller",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--caller-dir"
+            },
+            "description": "The caller's git checkout; its HEAD^{tree} (or --sha's) is the PR tree.",
+            "name": "caller-dir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--sha"
+            },
+            "description": "The head commit: whose tree is read from --caller-dir, and where the status is published.",
+            "name": "sha",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+          },
+          {
+            "arg": {
+              "flag": "--root"
+            },
+            "description": "The mounted index with the caller swapped in, where run-gates.py runs.",
+            "name": "root",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The own instance(s) run-gates.py judges; repeatable.",
+            "name": "instance",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+          },
+          {
+            "arg": {
+              "flag": "--base-verdict"
+            },
+            "description": "A stored verdict record standing in for the base run; refused unless its treeDigest is the base tree's (--base-tree).",
+            "name": "base-verdict",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--base-root"
+            },
+            "description": "A mounted base tree to run the gates on instead.",
+            "name": "base-root",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--test-path"
+            },
+            "description": "What `bun test` runs on each side; none means no tests.",
+            "name": "test-path",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--publish"
+            },
+            "description": "Post the commit status `judge-tree` when GITHUB_TOKEN/GH_TOKEN is set; without one, the record file is the verdict.",
+            "name": "publish",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The verdict record, `<records-dir>/<treeDigest>.json` unless --out names it; valid against the tools layer's `schemas/verdict-record.schema.json`. Three exit codes: 0 green, 1 red, 2 COULD NOT DETERMINE (no judging scripts, a stored base verdict for another tree, a compare script that crashed, or no gate ran). 2 is never green, and neither is a verdict for another digest.",
+            "name": "record",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "judge-tree",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun",
+          "python3",
+          "git"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge"
+      ],
+      "title": "Judge a tree and record the verdict by digest"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/judge-tree",
+  "path": "tools/judge-tree/"
+}

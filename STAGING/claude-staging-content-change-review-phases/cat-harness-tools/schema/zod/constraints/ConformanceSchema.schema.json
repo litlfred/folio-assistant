@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/Conformance",
+  "definitions": {
+    "Conformance": {
+      "type": "string",
+      "enum": [
+        "SHALL",
+        "SHOULD",
+        "MAY",
+        "SHALL NOT"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ConformanceSchema.schema.json",
+  "title": "ConformanceSchema",
+  "description": "Generated from `ConformanceSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

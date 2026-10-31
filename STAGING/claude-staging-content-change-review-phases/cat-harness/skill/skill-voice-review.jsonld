@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/skill-voice-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/skill/skill-voice-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "skill-voice-review",
+      "title": "Skill voice review",
+      "description": "Reviews a skill against a voice that judges skills — the base `agent-skill-authoring` voice or a vendor override such as Claude's, Gemini CLI's or OpenAI's — rule by rule, with each rule's citation open, and records the verdicts with `voice:review`. Use when `skill-voice-review-current` reports a skill never reviewed or reviewed before the skill or the voice changed, or when asked whether a skill follows a vendor's authoring guidance. The agent half of that axis; the mechanical half, in `scripts/skill-voice-review.ts`, only says whether a current review exists.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
+      "instructionLines": 102,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/skill-voice-review"
+    }
+  ]
+}

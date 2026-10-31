@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "CodeSystem-KGResolutionStatus.jsonld",
+  "@type": "fhir:CodeSystem",
+  "dcterms:identifier": "CodeSystem/KGResolutionStatus",
+  "schema:name": "KGResolutionStatus",
+  "dcterms:title": "Knowledge graph L1: resolution status",
+  "dcterms:description": "Whether a citation string has been matched to what it cites. `ambiguous` is a legitimate terminal state — two publications with similar titles is a question for a person — and must not be collapsed to resolved. Source: smart-kg ontology/l1/l1.json valueSets \"resolution-status\"; docs/SCOPE.md.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Terminology: Code Systems",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/CodeSystem/KGResolutionStatus"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-base/CodeSystem-KGResolutionStatus.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

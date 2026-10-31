@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/BlockAttestations",
+  "definitions": {
+    "BlockAttestations": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "qa-attestations/v1"
+        },
+        "family": {
+          "type": "string",
+          "const": "block-qa"
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ]
+        },
+        "criteria": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "family",
+        "subject",
+        "criteria"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BlockAttestationsSchema.schema.json",
+  "title": "BlockAttestationsSchema",
+  "description": "Generated from `BlockAttestationsSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

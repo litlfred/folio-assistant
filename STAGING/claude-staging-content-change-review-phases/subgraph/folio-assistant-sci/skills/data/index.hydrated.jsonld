@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/data/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/reference-dataset-ingestion",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as {{ <instance>.library.<entry>.<slug> }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a \"vendored snapshot\" of someone else's numbers.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+      "instructionLines": 95,
+      "instructionsPath": "skills/data/reference-dataset-ingestion.md",
+      "name": "reference-dataset-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2ae2811886b5404c41803e29e6302da0998fc05900b4c9c43cb4378c5d8e06aa",
+        "bytes": 4258,
+        "sha256": "2ae2811886b5404c41803e29e6302da0998fc05900b4c9c43cb4378c5d8e06aa"
+      },
+      "title": "Reference dataset ingestion"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/data",
+  "path": "skills/data/"
+}

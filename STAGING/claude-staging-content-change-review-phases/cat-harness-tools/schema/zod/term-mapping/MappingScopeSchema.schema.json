@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/MappingScope",
+  "definitions": {
+    "MappingScope": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "enum": [
+            "skos",
+            "fhir"
+          ]
+        },
+        "consulted": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "via": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unreachable_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "target",
+        "consulted",
+        "via"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/MappingScopeSchema.schema.json",
+  "title": "MappingScopeSchema",
+  "description": "Generated from `MappingScopeSchema` in schemas/content/term-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

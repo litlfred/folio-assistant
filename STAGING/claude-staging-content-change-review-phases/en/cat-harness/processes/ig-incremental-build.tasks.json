@@ -1,0 +1,1392 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IgIncremental",
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
+ "tasks": {
+  "Task_Restore": {
+   "id": "Task_Restore",
+   "name": "Restore derived state",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Restore",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_LogEnvError": {
+   "id": "Task_LogEnvError",
+   "name": "Log the environment error on the bean",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogEnvError",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_FullBuild": {
+   "id": "Task_FullBuild",
+   "name": "Full publisher build",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_FullBuild",
+   "lane": "Publisher + validator services (JVM)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+    "title": "IG publisher + validator",
+    "skills": [
+     {
+      "name": "fhir-validation",
+      "href": "../../../reference/skill-instructions/fhir-validation.html"
+     },
+     {
+      "name": "ig-publication",
+      "href": "../../../reference/skill-instructions/ig-publication.html"
+     },
+     {
+      "name": "ig-publisher-service-contract",
+      "href": "../../../reference/skill-instructions/ig-publisher-service-contract.html"
+     }
+    ]
+   }
+  },
+  "Task_Cone": {
+   "id": "Task_Cone",
+   "name": "Compute the cone of the change (fsh-cone --changed)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Cone",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_ConeReport": {
+   "id": "Task_ConeReport",
+   "name": "Post the cone report on the PR",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ConeReport",
+   "lane": "PR reviewer / QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
+   "skills": [
+    {
+     "name": "quality-control",
+     "href": "../../../reference/skill-instructions/quality-control.html"
+    },
+    {
+     "name": "quality-control",
+     "href": "../../../reference/skill-instructions/quality-control.html"
+    },
+    {
+     "name": "quality-control",
+     "href": "../../../reference/skill-instructions/quality-control.html"
+    }
+   ],
+   "role": {
+    "name": "qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+    "title": "QC reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "evidence-review",
+      "href": "../../../reference/skill-instructions/evidence-review.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../reference/skill-instructions/untainted-verification.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_Checkout": {
+   "id": "Task_Checkout",
+   "name": "Restricted checkout of the backward cone",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Checkout",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Sushi": {
+   "id": "Task_Sushi",
+   "name": "SUSHI on the restricted tank",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Sushi",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_ContextLoad": {
+   "id": "Task_ContextLoad",
+   "name": "Load or reuse the warm context (fhir_context_load)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ContextLoad",
+   "lane": "Publisher + validator services (JVM)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+    "title": "IG publisher + validator",
+    "skills": [
+     {
+      "name": "fhir-validation",
+      "href": "../../../reference/skill-instructions/fhir-validation.html"
+     },
+     {
+      "name": "ig-publication",
+      "href": "../../../reference/skill-instructions/ig-publication.html"
+     },
+     {
+      "name": "ig-publisher-service-contract",
+      "href": "../../../reference/skill-instructions/ig-publisher-service-contract.html"
+     }
+    ]
+   }
+  },
+  "Task_Validate": {
+   "id": "Task_Validate",
+   "name": "Validate the cone (fhir_validate)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate",
+   "lane": "Publisher + validator services (JVM)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Services",
+   "skills": [
+    {
+     "name": "fhir-validation",
+     "href": "../../../reference/skill-instructions/fhir-validation.html"
+    }
+   ],
+   "role": {
+    "name": "ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+    "title": "IG publisher + validator",
+    "skills": [
+     {
+      "name": "fhir-validation",
+      "href": "../../../reference/skill-instructions/fhir-validation.html"
+     },
+     {
+      "name": "ig-publication",
+      "href": "../../../reference/skill-instructions/ig-publication.html"
+     },
+     {
+      "name": "ig-publisher-service-contract",
+      "href": "../../../reference/skill-instructions/ig-publisher-service-contract.html"
+     }
+    ]
+   }
+  },
+  "Task_LogFindings": {
+   "id": "Task_LogFindings",
+   "name": "Log findings on the bean",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogFindings",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_Render": {
+   "id": "Task_Render",
+   "name": "Re-render the cone's records (fhir_narrative · skip lists)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Render",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Merge": {
+   "id": "Task_Merge",
+   "name": "Merge restored and rebuilt records",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Merge",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Index": {
+   "id": "Task_Index",
+   "name": "Rebuild the meta-index (ig_metaindex_rebuild)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Index",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Site": {
+   "id": "Task_Site",
+   "name": "Assemble the site (template · Jekyll)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Site",
+   "lane": "Incremental build (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Qa": {
+   "id": "Task_Qa",
+   "name": "QC gates on the aggregate QA",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Qa",
+   "lane": "PR reviewer / QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
+   "skills": [
+    {
+     "name": "quality-control",
+     "href": "../../../reference/skill-instructions/quality-control.html"
+    }
+   ],
+   "role": {
+    "name": "qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+    "title": "QC reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "evidence-review",
+      "href": "../../../reference/skill-instructions/evidence-review.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../reference/skill-instructions/untainted-verification.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_QcBeans": {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_QcBeans",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_DeployPreview": {
+   "id": "Task_DeployPreview",
+   "name": "Deploy the preview site",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_DeployPreview",
+   "lane": "PR reviewer / QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
+   "role": {
+    "name": "qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+    "title": "QC reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "evidence-review",
+      "href": "../../../reference/skill-instructions/evidence-review.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../reference/skill-instructions/untainted-verification.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_Deploy": {
+   "id": "Task_Deploy",
+   "name": "Deploy the site [content-publish]",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Deploy",
+   "lane": "Publication manager — deploy and seed",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_PubMgr",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Seed": {
+   "id": "Task_Seed",
+   "name": "Seed the cache from the green build (ig-cache seed · verify · promote)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Seed",
+   "lane": "Publication manager — deploy and seed",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_PubMgr",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,899 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/library",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "L1 source content for the TEST side of a FHIR implementation guide -- what the repo taxonomy's Test repos define (FHIR test plans, the Gherkin test-language dialect, configuration for the Interoperability Test Bed) -- with no WHO, DAK or SMART assumption. First entries (bean `y4uj`, issue #1614 item 4): the R5 TestPlan resource's source (`hl7-2023-fhir-r5-testplan`, CC0), the Cucumber Gherkin reference (`cucumber-2024-gherkin-reference`, MIT) and the EC Interoperability Test Bed's README (`isaitb-2026-interoperability-test-bed-readme`, EUPL-1.2). Here and not in the WHO SMART Base IG's `library/` because nothing about them is WHO's; not in `cat-harness/library/` because that library holds ONLY sources a platform methodology cites (`library-ref.test.ts`), and none cites these. The id is the conventional `library`, so this entry OVERRIDES the default rather than joining it. Declared WITH its entries in one commit, per bean dh4f.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/library",
+      "name": "library",
+      "path": "library/",
+      "readmePath": "library/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/cucumber-2024-gherkin-reference/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/cucumber-2024-gherkin-reference/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/cucumber-2024-gherkin-reference/manifest.jsonld",
+          "title": "Gherkin Reference"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/cucumber-2024-gherkin-reference/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s001-gherkin-reference",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s001-gherkin-reference.jsonld",
+              "title": "Gherkin Reference"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s002-keywords",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s002-keywords.jsonld",
+              "title": "Keywords"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s003-feature",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s003-feature.jsonld",
+              "title": "Feature"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s004-descriptions",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s004-descriptions.jsonld",
+              "title": "Descriptions"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s005-rule",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s005-rule.jsonld",
+              "title": "Rule"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s006-example",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s006-example.jsonld",
+              "title": "Example"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s007-steps",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s007-steps.jsonld",
+              "title": "Steps"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s008-given",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s008-given.jsonld",
+              "title": "Given"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s009-when",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s009-when.jsonld",
+              "title": "When"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s010-then",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s010-then.jsonld",
+              "title": "Then"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s011-and-but",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s011-and-but.jsonld",
+              "title": "And, But"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s012-background",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s012-background.jsonld",
+              "title": "Background"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s013-tips-for-using-background",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s013-tips-for-using-background.jsonld",
+              "title": "Tips for using Background"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s014-scenario-outline",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s014-scenario-outline.jsonld",
+              "title": "Scenario Outline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s015-examples",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s015-examples.jsonld",
+              "title": "Examples"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s016-step-arguments",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s016-step-arguments.jsonld",
+              "title": "Step Arguments"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s017-doc-strings",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s017-doc-strings.jsonld",
+              "title": "Doc Strings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s018-data-tables",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s018-data-tables.jsonld",
+              "title": "Data Tables"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s019-table-cell-escaping",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s019-table-cell-escaping.jsonld",
+              "title": "Table Cell Escaping"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s020-data-table-api",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s020-data-table-api.jsonld",
+              "title": "Data Table API"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/blocks/prose-s021-spoken-languages",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/cucumber-2024-gherkin-reference/blocks/prose-s021-spoken-languages.jsonld",
+              "title": "Spoken Languages"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/cucumber-2024-gherkin-reference/blocks",
+          "path": "library/cucumber-2024-gherkin-reference/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/cucumber-2024-gherkin-reference/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s001-gherkin-reference",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s001-gherkin-reference.jsonld",
+              "title": "Gherkin Reference"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s002-keywords",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s002-keywords.jsonld",
+              "title": "Keywords"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s003-feature",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s003-feature.jsonld",
+              "title": "Feature"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s004-descriptions",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s004-descriptions.jsonld",
+              "title": "Descriptions"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s005-rule",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s005-rule.jsonld",
+              "title": "Rule"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s006-example",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s006-example.jsonld",
+              "title": "Example"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s007-steps",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s007-steps.jsonld",
+              "title": "Steps"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s008-given",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s008-given.jsonld",
+              "title": "Given"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s009-when",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s009-when.jsonld",
+              "title": "When"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s010-then",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s010-then.jsonld",
+              "title": "Then"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s011-and-but",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s011-and-but.jsonld",
+              "title": "And, But"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s012-background",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s012-background.jsonld",
+              "title": "Background"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s013-tips-for-using-background",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s013-tips-for-using-background.jsonld",
+              "title": "Tips for using Background"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s014-scenario-outline",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s014-scenario-outline.jsonld",
+              "title": "Scenario Outline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s015-examples",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s015-examples.jsonld",
+              "title": "Examples"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s016-step-arguments",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s016-step-arguments.jsonld",
+              "title": "Step Arguments"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s017-doc-strings",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s017-doc-strings.jsonld",
+              "title": "Doc Strings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s018-data-tables",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s018-data-tables.jsonld",
+              "title": "Data Tables"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s019-table-cell-escaping",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s019-table-cell-escaping.jsonld",
+              "title": "Table Cell Escaping"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s020-data-table-api",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s020-data-table-api.jsonld",
+              "title": "Data Table API"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/cucumber-2024-gherkin-reference/sections/s021-spoken-languages",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/cucumber-2024-gherkin-reference/sections/s021-spoken-languages.jsonld",
+              "title": "Spoken Languages"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/cucumber-2024-gherkin-reference/sections",
+          "path": "library/cucumber-2024-gherkin-reference/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/cucumber-2024-gherkin-reference",
+      "path": "library/cucumber-2024-gherkin-reference/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/hl7-2023-fhir-r5-testplan/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/hl7-2023-fhir-r5-testplan/manifest.jsonld",
+          "title": "FHIR R5 (5.0.0) — TestPlan resource"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s001-source-testplan-testplan-introduction-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s001-source-testplan-testplan-introduction-xml.jsonld",
+              "title": "source/testplan/testplan-introduction.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s002-source-testplan-testplan-notes-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s002-source-testplan-testplan-notes-xml.jsonld",
+              "title": "source/testplan/testplan-notes.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s003-source-testplan-structuredefinition-testplan-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s003-source-testplan-structuredefinition-testplan-xml.jsonld",
+              "title": "source/testplan/structuredefinition-TestPlan.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s004-source-testplan-bundle-testplan-search-params-xm",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s004-source-testplan-bundle-testplan-search-params-xm.jsonld",
+              "title": "source/testplan/bundle-TestPlan-search-params.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s005-source-testplan-codesystem-testplan-counttype-xm",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s005-source-testplan-codesystem-testplan-counttype-xm.jsonld",
+              "title": "source/testplan/codesystem-testplan-counttype.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s006-source-testplan-codesystem-testplan-status-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s006-source-testplan-codesystem-testplan-status-xml.jsonld",
+              "title": "source/testplan/codesystem-testplan-status.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s007-source-testplan-list-testplan-examples-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s007-source-testplan-list-testplan-examples-xml.jsonld",
+              "title": "source/testplan/list-TestPlan-examples.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s008-source-testplan-list-testplan-operations-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s008-source-testplan-list-testplan-operations-xml.jsonld",
+              "title": "source/testplan/list-TestPlan-operations.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s009-source-testplan-list-testplan-packs-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s009-source-testplan-list-testplan-packs-xml.jsonld",
+              "title": "source/testplan/list-TestPlan-packs.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s010-source-testplan-testplan-definition-mapping-exce",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s010-source-testplan-testplan-definition-mapping-exce.jsonld",
+              "title": "source/testplan/testplan-definition-mapping-exceptions.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s011-source-testplan-testplan-example-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s011-source-testplan-testplan-example-xml.jsonld",
+              "title": "source/testplan/testplan-example.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s012-source-testplan-testplan-examples-header-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s012-source-testplan-testplan-examples-header-xml.jsonld",
+              "title": "source/testplan/testplan-examples-header.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s013-source-testplan-testplan-fivews-mapping-exceptio",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s013-source-testplan-testplan-fivews-mapping-exceptio.jsonld",
+              "title": "source/testplan/testplan-fivews-mapping-exceptions.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s014-source-testplan-valueset-testplan-counttype-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s014-source-testplan-valueset-testplan-counttype-xml.jsonld",
+              "title": "source/testplan/valueset-testplan-counttype.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/blocks/prose-s015-source-testplan-valueset-testplan-status-xml",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s015-source-testplan-valueset-testplan-status-xml.jsonld",
+              "title": "source/testplan/valueset-testplan-status.xml"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/hl7-2023-fhir-r5-testplan/blocks",
+          "path": "library/hl7-2023-fhir-r5-testplan/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/hl7-2023-fhir-r5-testplan/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s001-source-testplan-testplan-introduction-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s001-source-testplan-testplan-introduction-xml.jsonld",
+              "title": "source/testplan/testplan-introduction.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s002-source-testplan-testplan-notes-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s002-source-testplan-testplan-notes-xml.jsonld",
+              "title": "source/testplan/testplan-notes.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s003-source-testplan-structuredefinition-testplan-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s003-source-testplan-structuredefinition-testplan-xml.jsonld",
+              "title": "source/testplan/structuredefinition-TestPlan.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s004-source-testplan-bundle-testplan-search-params-xm",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s004-source-testplan-bundle-testplan-search-params-xm.jsonld",
+              "title": "source/testplan/bundle-TestPlan-search-params.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s005-source-testplan-codesystem-testplan-counttype-xm",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s005-source-testplan-codesystem-testplan-counttype-xm.jsonld",
+              "title": "source/testplan/codesystem-testplan-counttype.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s006-source-testplan-codesystem-testplan-status-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s006-source-testplan-codesystem-testplan-status-xml.jsonld",
+              "title": "source/testplan/codesystem-testplan-status.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s007-source-testplan-list-testplan-examples-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s007-source-testplan-list-testplan-examples-xml.jsonld",
+              "title": "source/testplan/list-TestPlan-examples.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s008-source-testplan-list-testplan-operations-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s008-source-testplan-list-testplan-operations-xml.jsonld",
+              "title": "source/testplan/list-TestPlan-operations.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s009-source-testplan-list-testplan-packs-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s009-source-testplan-list-testplan-packs-xml.jsonld",
+              "title": "source/testplan/list-TestPlan-packs.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s010-source-testplan-testplan-definition-mapping-exce",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s010-source-testplan-testplan-definition-mapping-exce.jsonld",
+              "title": "source/testplan/testplan-definition-mapping-exceptions.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s011-source-testplan-testplan-example-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s011-source-testplan-testplan-example-xml.jsonld",
+              "title": "source/testplan/testplan-example.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s012-source-testplan-testplan-examples-header-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s012-source-testplan-testplan-examples-header-xml.jsonld",
+              "title": "source/testplan/testplan-examples-header.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s013-source-testplan-testplan-fivews-mapping-exceptio",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s013-source-testplan-testplan-fivews-mapping-exceptio.jsonld",
+              "title": "source/testplan/testplan-fivews-mapping-exceptions.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s014-source-testplan-valueset-testplan-counttype-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s014-source-testplan-valueset-testplan-counttype-xml.jsonld",
+              "title": "source/testplan/valueset-testplan-counttype.xml"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/hl7-2023-fhir-r5-testplan/sections/s015-source-testplan-valueset-testplan-status-xml",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/hl7-2023-fhir-r5-testplan/sections/s015-source-testplan-valueset-testplan-status-xml.jsonld",
+              "title": "source/testplan/valueset-testplan-status.xml"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/hl7-2023-fhir-r5-testplan/sections",
+          "path": "library/hl7-2023-fhir-r5-testplan/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/hl7-2023-fhir-r5-testplan",
+      "path": "library/hl7-2023-fhir-r5-testplan/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/isaitb-2026-interoperability-test-bed-readme/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/isaitb-2026-interoperability-test-bed-readme/manifest.jsonld",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/isaitb-2026-interoperability-test-bed-readme/manifest.jsonld",
+          "title": "Interoperability Test Bed"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/isaitb-2026-interoperability-test-bed-readme/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s001-readme-md",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s001-readme-md.jsonld",
+              "title": "README.md"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s002-interoperability-test-bed",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s002-interoperability-test-bed.jsonld",
+              "title": "Interoperability Test Bed"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s003-about-this-repository",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s003-about-this-repository.jsonld",
+              "title": "About this repository"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s004-documentation",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s004-documentation.jsonld",
+              "title": "Documentation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s005-technology-stack",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s005-technology-stack.jsonld",
+              "title": "Technology stack"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s006-configuration-properties",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s006-configuration-properties.jsonld",
+              "title": "Configuration properties"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s007-build-for-development",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s007-build-for-development.jsonld",
+              "title": "Build for development"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s008-prerequisites",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s008-prerequisites.jsonld",
+              "title": "Prerequisites"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s009-additional-test-bed-components",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s009-additional-test-bed-components.jsonld",
+              "title": "Additional Test Bed components"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s010-test-engine-gitb-srv",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s010-test-engine-gitb-srv.jsonld",
+              "title": "Test engine (gitb-srv)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s011-frontend-gitb-ui",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s011-frontend-gitb-ui.jsonld",
+              "title": "Frontend (gitb-ui)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s012-option-1-work-on-angular-ui-through-play-applica",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s012-option-1-work-on-angular-ui-through-play-applica.jsonld",
+              "title": "Option 1: Work on Angular UI through Play application"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s013-option-2-work-on-angular-ui-standalone",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s013-option-2-work-on-angular-ui-standalone.jsonld",
+              "title": "Option 2: Work on Angular UI standalone"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s014-build-for-deployment",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s014-build-for-deployment.jsonld",
+              "title": "Build for deployment"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s015-build-using-development-tools",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s015-build-using-development-tools.jsonld",
+              "title": "Build using development tools"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s016-test-engine-gitb-srv",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s016-test-engine-gitb-srv.jsonld",
+              "title": "Test engine (gitb-srv)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s017-frontend-gitb-ui",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s017-frontend-gitb-ui.jsonld",
+              "title": "Frontend (gitb-ui)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s018-database-gitb-mysql",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s018-database-gitb-mysql.jsonld",
+              "title": "Database (gitb-mysql)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s019-session-cache-gitb-redis",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s019-session-cache-gitb-redis.jsonld",
+              "title": "Session cache (gitb-redis)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s020-create-the-overall-service",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s020-create-the-overall-service.jsonld",
+              "title": "Create the overall service"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s021-build-using-docker-compose",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s021-build-using-docker-compose.jsonld",
+              "title": "Build using Docker Compose"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s022-using-the-application",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s022-using-the-application.jsonld",
+              "title": "Using the application"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s023-licence",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s023-licence.jsonld",
+              "title": "Licence"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s024-legal-notice",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s024-legal-notice.jsonld",
+              "title": "Legal notice"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s025-contact",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s025-contact.jsonld",
+              "title": "Contact"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s026-see-also",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s026-see-also.jsonld",
+              "title": "See also"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/isaitb-2026-interoperability-test-bed-readme/blocks",
+          "path": "library/isaitb-2026-interoperability-test-bed-readme/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/isaitb-2026-interoperability-test-bed-readme/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s001-readme-md",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s001-readme-md.jsonld",
+              "title": "README.md"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s002-interoperability-test-bed",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s002-interoperability-test-bed.jsonld",
+              "title": "Interoperability Test Bed"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s003-about-this-repository",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s003-about-this-repository.jsonld",
+              "title": "About this repository"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s004-documentation",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s004-documentation.jsonld",
+              "title": "Documentation"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s005-technology-stack",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s005-technology-stack.jsonld",
+              "title": "Technology stack"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s006-configuration-properties",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s006-configuration-properties.jsonld",
+              "title": "Configuration properties"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s007-build-for-development",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s007-build-for-development.jsonld",
+              "title": "Build for development"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s008-prerequisites",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s008-prerequisites.jsonld",
+              "title": "Prerequisites"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s009-additional-test-bed-components",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s009-additional-test-bed-components.jsonld",
+              "title": "Additional Test Bed components"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s010-test-engine-gitb-srv",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s010-test-engine-gitb-srv.jsonld",
+              "title": "Test engine (gitb-srv)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s011-frontend-gitb-ui",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s011-frontend-gitb-ui.jsonld",
+              "title": "Frontend (gitb-ui)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s012-option-1-work-on-angular-ui-through-play-applica",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s012-option-1-work-on-angular-ui-through-play-applica.jsonld",
+              "title": "Option 1: Work on Angular UI through Play application"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s013-option-2-work-on-angular-ui-standalone",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s013-option-2-work-on-angular-ui-standalone.jsonld",
+              "title": "Option 2: Work on Angular UI standalone"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s014-build-for-deployment",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s014-build-for-deployment.jsonld",
+              "title": "Build for deployment"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s015-build-using-development-tools",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s015-build-using-development-tools.jsonld",
+              "title": "Build using development tools"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s016-test-engine-gitb-srv",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s016-test-engine-gitb-srv.jsonld",
+              "title": "Test engine (gitb-srv)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s017-frontend-gitb-ui",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s017-frontend-gitb-ui.jsonld",
+              "title": "Frontend (gitb-ui)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s018-database-gitb-mysql",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s018-database-gitb-mysql.jsonld",
+              "title": "Database (gitb-mysql)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s019-session-cache-gitb-redis",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s019-session-cache-gitb-redis.jsonld",
+              "title": "Session cache (gitb-redis)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s020-create-the-overall-service",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s020-create-the-overall-service.jsonld",
+              "title": "Create the overall service"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s021-build-using-docker-compose",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s021-build-using-docker-compose.jsonld",
+              "title": "Build using Docker Compose"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s022-using-the-application",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s022-using-the-application.jsonld",
+              "title": "Using the application"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s023-licence",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s023-licence.jsonld",
+              "title": "Licence"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s024-legal-notice",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s024-legal-notice.jsonld",
+              "title": "Legal notice"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s025-contact",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s025-contact.jsonld",
+              "title": "Contact"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/isaitb-2026-interoperability-test-bed-readme/sections/s026-see-also",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/s026-see-also.jsonld",
+              "title": "See also"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/isaitb-2026-interoperability-test-bed-readme/sections",
+          "path": "library/isaitb-2026-interoperability-test-bed-readme/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/isaitb-2026-interoperability-test-bed-readme",
+      "path": "library/isaitb-2026-interoperability-test-bed-readme/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library",
+  "path": "library/"
+}

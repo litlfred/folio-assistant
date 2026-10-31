@@ -1,0 +1,548 @@
+{
+  "$ref": "#/definitions/LibraryIndex",
+  "definitions": {
+    "LibraryIndex": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-library-index/v1"
+        },
+        "tile": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "count",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instance": {
+                "type": "string"
+              },
+              "dir": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "extractedTitle": {
+                "type": "string"
+              },
+              "provenance": {
+                "type": "string"
+              },
+              "rung": {
+                "type": "string",
+                "enum": [
+                  "paged",
+                  "tabular",
+                  "referenced",
+                  "recording",
+                  "none"
+                ]
+              },
+              "docId": {
+                "type": "string"
+              },
+              "sourceFile": {
+                "type": "string"
+              },
+              "sourceSha256": {
+                "type": "string"
+              },
+              "arxiv": {
+                "type": "string"
+              },
+              "doi": {
+                "type": "string"
+              },
+              "documentClass": {
+                "type": "string"
+              },
+              "sections": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "blocks": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "images": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ocrPages": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "hasOcr": {
+                "type": "boolean"
+              },
+              "hasManifest": {
+                "type": "boolean"
+              },
+              "hasStructure": {
+                "type": "boolean"
+              },
+              "hasImagesJson": {
+                "type": "boolean"
+              },
+              "readme": {
+                "type": "string",
+                "format": "uri"
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\/[a-z0-9][a-z0-9._/-]*$"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "view": {
+                "type": "string",
+                "pattern": "^\\/[a-z0-9][a-z0-9._/-]*\\/$"
+              },
+              "viewable": {
+                "type": "string",
+                "enum": [
+                  "pdf",
+                  "image"
+                ]
+              },
+              "pageStart": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "pageEnd": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "words": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "chars": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "upload": {
+                "type": "string",
+                "enum": [
+                  "match",
+                  "differs",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "uploadInstance": {
+                "type": "string"
+              },
+              "referencedBy": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    },
+                    "from": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "instance",
+                    "from",
+                    "count"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "withheld": {
+                "type": "string",
+                "minLength": 1
+              },
+              "withheldBy": {
+                "type": "object",
+                "properties": {
+                  "gates": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "gate": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "verdict": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "gate",
+                        "verdict"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "record": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "page": {
+                        "type": "string",
+                        "pattern": "^\\/"
+                      },
+                      "uri": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "avatar": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  },
+                  "src": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": [
+                      "cover",
+                      "figure"
+                    ]
+                  }
+                },
+                "required": [
+                  "href",
+                  "src",
+                  "source"
+                ],
+                "additionalProperties": false
+              },
+              "summaries": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "summarised": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "backlog": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "draft": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "confirmed": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "stale": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "rejected": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "notSummarised": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "unreadable": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "empty": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "prose",
+                  "summarised",
+                  "backlog",
+                  "draft",
+                  "confirmed",
+                  "stale",
+                  "rejected",
+                  "notSummarised",
+                  "unreadable",
+                  "empty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "instance",
+              "dir",
+              "title",
+              "provenance",
+              "rung",
+              "docId",
+              "sourceFile",
+              "sourceSha256",
+              "arxiv",
+              "doi",
+              "documentClass",
+              "sections",
+              "blocks",
+              "images",
+              "ocrPages",
+              "hasOcr",
+              "hasManifest",
+              "hasStructure",
+              "hasImagesJson",
+              "pageStart",
+              "pageEnd",
+              "words",
+              "chars",
+              "bytes",
+              "upload",
+              "uploadInstance"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "uploads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "file",
+                  "intake"
+                ]
+              },
+              "instance": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ext": {
+                "type": "string"
+              },
+              "ingestedBy": {
+                "type": "string"
+              },
+              "docId": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "declaredFiles": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "file",
+              "kind",
+              "instance",
+              "path",
+              "bytes",
+              "ext",
+              "ingestedBy",
+              "docId",
+              "title",
+              "declaredFiles"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "queues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "instance": {
+                "type": "string"
+              },
+              "dir": {
+                "type": "string"
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ingested": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "uningested": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "instance",
+              "dir",
+              "total",
+              "ingested",
+              "uningested"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "refScan": {
+          "type": "object",
+          "properties": {
+            "unreadable": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "unreadable"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "entries",
+        "uploads",
+        "queues"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryIndexSchema.schema.json",
+  "title": "LibraryIndexSchema",
+  "description": "Generated from `LibraryIndexSchema` in schemas/ui/site-indexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

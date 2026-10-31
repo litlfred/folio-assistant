@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/ToolSelection",
+  "definitions": {
+    "ToolSelection": {
+      "type": "object",
+      "properties": {
+        "when": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limits": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cost": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "when",
+        "limits",
+        "cost"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolSelectionSchema.schema.json",
+  "title": "ToolSelectionSchema",
+  "description": "Generated from `ToolSelectionSchema` in schemas/tools/tool.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

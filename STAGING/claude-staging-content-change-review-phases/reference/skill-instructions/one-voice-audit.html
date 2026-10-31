@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(207)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > ul > li:nth-child(207) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(131) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > ul > li:nth-child(207) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(207) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>One-Voice Audit | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="One-Voice Audit" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="One-Voice Audit" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-one-voice-audit",
+    "src": "../../assets/qa/reference-skill-instructions-one-voice-audit/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-one-voice-audit/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=573c7a318c07"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=59c1d8d3ff0a" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/one-voice-audit.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-voice-is-addressed-to-the-role-not-carried-by-it","label":"The voice is addressed TO the role, not carried by it"},{"href":"#role","label":"Role"},{"href":"#when-to-use","label":"When to use"},{"href":"#workflow","label":"Workflow","children":[{"href":"#1-sweep-greps","label":"Sweep (greps)","icon":"1","depth":1},{"href":"#2-triage-by-category","label":"Triage by category","icon":"2","depth":1},{"href":"#3-apply-mechanical-fixes","label":"Apply mechanical fixes","icon":"3","depth":1},{"href":"#4-kick-back-to-author-for-items-where","label":"Kick back to author for items where:","icon":"4","depth":1},{"href":"#5-output","label":"Output","icon":"5","depth":1}],"fold":"5 sub-sections"},{"href":"#qa-report-integration","label":"QA report integration","children":[{"href":"#cli-primitives","label":"CLI primitives","depth":1},{"href":"#multi-reviewer-writes-when-an-agent-adjudicates","label":"Multi-reviewer writes (when an agent adjudicates)","depth":1}],"fold":"2 sub-sections"},{"href":"#cross-references","label":"Cross-references"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>One-Voice Audit</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/one-voice-audit.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/authoring/authoring-core/one-voice-audit.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/one-voice-audit.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/authoring/authoring-core/one-voice-audit.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h2 id="the-voice-is-addressed-to-the-role-not-carried-by-it"><a href="#the-voice-is-addressed-to-the-role-not-carried-by-it" class="anchor-heading" aria-labelledby="the-voice-is-addressed-to-the-role-not-carried-by-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The voice is addressed TO the role, not carried by it
+  
+  
+</h2><p>Before writing or auditing a block, resolve its audience: the role, its
+<code class="language-plaintext highlighter-rouge">persona</code> in <code class="language-plaintext highlighter-rouge">scenarios/roles.json</code>, the voice profiles that address it, and
+the user stories told as it.</p><p><strong>A block sits in a lane; the lane is a role; the role is who the prose is
+for.</strong> The audience is not restated per block — copying it onto every block
+invites the two to disagree, and a per-block audience contradicting its lane
+is worse than none because it looks authoritative.</p><div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">readRoleGraph</span><span class="p">,</span> <span class="nx">roleForLane</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./schemas/role-graph</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">loadVoices</span><span class="p">,</span> <span class="nx">voiceActiveIn</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./schemas/voices</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">readUserStories</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./schemas/user-story</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">role</span> <span class="o">=</span> <span class="nf">roleForLane</span><span class="p">(</span><span class="nf">readRoleGraph</span><span class="p">(</span><span class="dl">"</span><span class="s2">scenarios</span><span class="dl">"</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nx">laneName</span><span class="p">,</span> <span class="nx">explicitRef</span><span class="p">);</span>
+<span class="nx">role</span><span class="p">?.</span><span class="nx">persona</span>                                             <span class="c1">// who this reader is</span>
+<span class="nf">loadVoices</span><span class="p">(</span><span class="nx">core</span><span class="p">).</span><span class="nf">filter</span><span class="p">((</span><span class="nx">v</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nf">voiceActiveIn</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="p">{</span> <span class="na">role</span><span class="p">:</span> <span class="nx">role</span><span class="p">?.</span><span class="nx">id</span> <span class="p">}))</span> <span class="c1">// how to address them</span>
+<span class="nf">readUserStories</span><span class="p">(</span><span class="dl">"</span><span class="s2">scenarios</span><span class="dl">"</span><span class="p">)?.</span><span class="nx">stories</span><span class="p">.</span><span class="nf">filter</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">role</span><span class="p">.</span><span class="nx">role</span> <span class="o">===</span> <span class="nx">role</span><span class="p">?.</span><span class="nx">id</span><span class="p">)</span> <span class="c1">// what they came to do</span>
+</code></pre></div></div><p><strong>This file is the default, not the answer.</strong> Where a voice addresses the
+role, that wins. The guidance here applies when no role has been resolved.</p><p><strong>Why a voice points at the role rather than this file inferring it.</strong> Voice
+does not follow from persona: the same reader is addressed differently in a
+normative standard and in a tutorial. Declaring it as a voice profile bound to
+the role (<code class="language-plaintext highlighter-rouge">activeIn.roles</code>) is what lets the authoring agent and the QA agent
+judge against the <em>same</em> rule — otherwise a voice finding is one agent’s taste
+against another’s, which is unreviewable. The role names no voice and no story
+(#1168): each points at the role, so one is added without editing the role.</p><p><code class="language-plaintext highlighter-rouge">bun run cat kg:audit</code> reports a reader role with no persona (<code class="language-plaintext highlighter-rouge">role-has-persona</code>)
+or no story told as it (<code class="language-plaintext highlighter-rouge">role-has-story</code>); <code class="language-plaintext highlighter-rouge">bun run cat check:voices</code> lists the
+roles with a persona that no voice addresses. System, external and acted-upon
+roles are <code class="language-plaintext highlighter-rouge">n/a</code>: nothing in them reads prose.</p><h1 id="one-voice-audit"><a href="#one-voice-audit" class="anchor-heading" aria-labelledby="one-voice-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One-Voice Audit
+  
+  
+</h1><h2 id="role"><a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+  
+  
+</h2><p>The project speaks with <strong>one voice</strong>: an authoritative, scholarly,
+third-person voice making claims about its subject matter.
+<strong>Scholarly voice is the default</strong> for narrative <code class="language-plaintext highlighter-rouge">.md</code> and any
+content-type sibling bodies that carry exposition — exceptions
+require an explicit author marker (<code class="language-plaintext highlighter-rouge">tags: ["non-scholarly-voice-exception"]</code>
+on the block’s <code class="language-plaintext highlighter-rouge">.ts</code> manifest, with a <code class="language-plaintext highlighter-rouge">notes</code> field on the QA report
+recording the rationale). Content types with a TeX or formal-proof layer
+supply their own voice-audit refinements and link down to this skill.
+Anything that breaks that voice is a
+violation. Common breakages:</p><ol><li><strong>Status markers</strong> in body prose — <code class="language-plaintext highlighter-rouge">✅ Done</code>, <code class="language-plaintext highlighter-rouge">(TODO)</code>, <code class="language-plaintext highlighter-rouge">(TBD)</code>,
+<code class="language-plaintext highlighter-rouge">**Pending.**</code>, etc. These are work-tracker speech (content TODOs
+belong in the work-plan store, not in the published content).</li><li><strong>Emoji used as content</strong> — <code class="language-plaintext highlighter-rouge">✅</code>, <code class="language-plaintext highlighter-rouge">❌</code>, <code class="language-plaintext highlighter-rouge">⚠</code>, <code class="language-plaintext highlighter-rouge">🔧</code>, <code class="language-plaintext highlighter-rouge">🚧</code> outside of
+tables. Even in tables, these belong only when used as compact
+comparison markers (✓ matches / ✗ diverges); never as work status.</li><li><strong>First-person work tone</strong> — “we’ll add X”, “let me”, “needs more
+work”, “I’ll fix this”.</li><li><strong>Time-stamped notes</strong> — “as of 2025-…”, “after the recent push”,
+“in the current draft” — signals draft state, not published authority.</li><li><strong>Unicode characters that don’t compile or render reliably</strong> — <code class="language-plaintext highlighter-rouge">↦</code> U+21A6,
+<code class="language-plaintext highlighter-rouge">⁻</code> U+207B, <code class="language-plaintext highlighter-rouge">√</code> U+221A, <code class="language-plaintext highlighter-rouge">─</code> U+2500, <code class="language-plaintext highlighter-rouge">✅</code> U+2705, etc. — outside
+fenced code when the target rendering pipeline cannot map them.</li><li><strong>AI / status-update phrasing (LLM tells)</strong> — “Let me think about
+this”, “Here’s what I did”, “I’ll go ahead and”, “Note that we
+should”, “Great question”, repeated First/Second/Third bullet
+cadence, over-use of “essentially” / “comprehensive” / “leverage”
+/ “streamline” / “robust” / “delve into”.</li><li><strong>Non-scholarly default tone</strong> — block prose or expository sibling
+comment that drifts into lecturer cadence (“So what we’re going to do is
+…”), journalistic register (“In a surprising twist, …”), or
+second-person address (“You will see that …”) without explicit
+author opt-out.</li><li><strong>Block placement does not fit section/chapter</strong> — a block whose
+topic, kind, or register is incongruent with its surrounding
+section. Symptoms: a <code class="language-plaintext highlighter-rouge">definition</code> in a “Discussion” section, a
+statement block outside its chapter’s dependency chain, a <code class="language-plaintext highlighter-rouge">prose</code> block
+that introduces a topic the chapter does not subsequently cover.</li><li><strong>Deprecated notation usage</strong> — any symbol or convention that the
+project’s notation register marks as deprecated, used in place of
+its canonical form. The notation register is the authoritative
+target; a deprecated symbol appearing in content is a defect unless
+the block explicitly discusses the deprecated form.</li><li><strong>Domain-boundary mismatch</strong> — if the project partitions its
+content into domains with declared boundaries (e.g. a generic vs.
+specialised treatment, separate model files), a block must not
+silently cross that boundary. A block on the generic side must not
+quietly specialise; a specialisation must declare itself. (Adapt
+the specific boundary rule to the project’s architecture; if the
+project has no such partition, this criterion is inert.)</li><li><strong>Hedging / “exposition simplifies” framing</strong> — the project
+derives its results from its established arguments. It does not
+need “structural argument” / “morally correct” / “essentially the
+X” / “heuristically” / “simplification for exposition” / “broadly
+speaking” / “loosely speaking” / “in some sense” / “conceptually
+analogous” patches as a substitute for the actual argument. These are
+signs that either
+(a) the argument IS in the content and the hedge is length cruft,
+or (b) the block is asserting an unsupported analogy and should be
+demoted to a remark with <code class="language-plaintext highlighter-rouge">interprets:</code> or removed. Prefer (a) —
+strip the hedge — unless the block author flags a real gap.
+Common phrases (case-insensitive, multi-word):
+    <ul><li><code class="language-plaintext highlighter-rouge">structural argument</code></li><li><code class="language-plaintext highlighter-rouge">morally correct</code>, <code class="language-plaintext highlighter-rouge">morally a</code>, <code class="language-plaintext highlighter-rouge">morally</code></li><li><code class="language-plaintext highlighter-rouge">essentially the</code>, <code class="language-plaintext highlighter-rouge">essentially a</code>, <code class="language-plaintext highlighter-rouge">essentially zero</code>,
+<code class="language-plaintext highlighter-rouge">essentially complete</code></li><li><code class="language-plaintext highlighter-rouge">heuristically (replaced|exploitable|the)</code></li><li><code class="language-plaintext highlighter-rouge">simplification for exposition</code>,
+<code class="language-plaintext highlighter-rouge">simplifies (the )?exposition</code></li><li><code class="language-plaintext highlighter-rouge">for context</code>, <code class="language-plaintext highlighter-rouge">by way of background</code>,
+<code class="language-plaintext highlighter-rouge">broadly speaking</code>, <code class="language-plaintext highlighter-rouge">loosely speaking</code>, <code class="language-plaintext highlighter-rouge">in some sense</code>,
+<code class="language-plaintext highlighter-rouge">conceptually analogous</code></li><li><code class="language-plaintext highlighter-rouge">amounts to</code>, <code class="language-plaintext highlighter-rouge">amount(s|ed) to</code>,
+<code class="language-plaintext highlighter-rouge">(reformulated|reformulation) as</code>
+Exceptions: (i) the phrase IS the canonical term of art and
+removing it changes the claim (e.g. “essentially zero” inside a
+results table, or a domain term of art defined by the content type);
+(ii) the block has an explicit
+<code class="language-plaintext highlighter-rouge">tags: ["non-scholarly-voice-exception"]</code> opt-out.</li></ul></li></ol><h2 id="when-to-use"><a href="#when-to-use" class="anchor-heading" aria-labelledby="when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to use
+  
+  
+</h2><ul><li>As a sub-pass of <code class="language-plaintext highlighter-rouge">editor</code> whenever content is added or edited.</li><li>Before <code class="language-plaintext highlighter-rouge">prepare-merge</code> on any branch.</li><li>On demand: “audit one-voice”, “find status leaks”, “clean up
+TODO markers”.</li><li>As the <strong>adjudicator</strong> for the non-automated criteria
+(<code class="language-plaintext highlighter-rouge">voice-scholarly-default</code>, <code class="language-plaintext highlighter-rouge">voice-ai-slop</code>,
+<code class="language-plaintext highlighter-rouge">fit-section-chapter</code>) dispatched by
+<a href="../../reference/skill-instructions/one-voice-integration-watcher.html"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a>.
+When invoked in this mode, write a reviewer entry to the
+block’s sidecar <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> rather than (or in addition
+to) reporting in chat — see <em>§ QA report integration</em> below.</li></ul><h2 id="workflow"><a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
+  
+  
+</h2><h3 id="1-sweep-greps"><a href="#1-sweep-greps" class="anchor-heading" aria-labelledby="1-sweep-greps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Sweep (greps)
+  
+  
+</h3><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CONTENT</span><span class="o">=</span>content/&lt;folio-dir&gt;
+
+<span class="c"># Status emoji + comparison markers in .md</span>
+<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"[✅❌⚠⏳🔧🚧☑☒]|✓|✗|★"</span> <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
+
+<span class="c"># Work-tracker words (case-insensitive, word-bounded)</span>
+<span class="nb">grep</span> <span class="nt">-rEni</span> <span class="s2">"</span><span class="se">\b</span><span class="s2">(todo|fixme|xxx|wip|to-do|tbd|in progress|pending review)</span><span class="se">\b</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
+
+<span class="c"># "Done" / "Completed" as status (avoid false positives like "is done")</span>
+<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"</span><span class="se">\*\*</span><span class="s2">Done</span><span class="se">\*\*</span><span class="s2">|</span><span class="se">\*\*</span><span class="s2">Completed</span><span class="se">\*\*</span><span class="s2">|</span><span class="se">\b</span><span class="s2">DONE</span><span class="se">\b</span><span class="s2">|</span><span class="se">\b</span><span class="s2">COMPLETED</span><span class="se">\b</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
+
+<span class="c"># First-person work tone</span>
+<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"</span><span class="se">\b</span><span class="s2">(we'll add|I'll add|let me|needs more work|note to self|we should fix)</span><span class="se">\b</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
+
+<span class="c"># Unicode chars that fail or render unreliably in target pipelines</span>
+<span class="nb">grep</span> <span class="nt">-rEn</span> <span class="s2">"↦|⁻|√|─|✅|·|²"</span> <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
+
+<span class="c"># Hedging / "essentially" / "morally" / "heuristically" (criterion 11)</span>
+<span class="nb">grep</span> <span class="nt">-rEni</span> <span class="se">\</span>
+  <span class="s2">"structural argument|</span><span class="se">\b</span><span class="s2">morally</span><span class="se">\b</span><span class="s2">|essentially (the |a |zero|complete)|heuristically (replaced|exploitable|the)|simplification for exposition|simplifies (the )?exposition|for context|by way of background|broadly speaking|loosely speaking|in some sense|conceptually analogous|amount(s|ed) to|(reformulated|reformulation) as"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$CONTENT</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s2">"*.md"</span>
+
+<span class="c"># Section / subsection / chapter TITLE coherence (chapter-scoped —</span>
+<span class="c"># runs on chapter manifests, not blocks): auto-split " : &lt;tag&gt;"</span>
+<span class="c"># artifacts, trailing colons, over-long / compound titles. Hard</span>
+<span class="c"># defects exit 1; emits a per-chapter agent worklist.</span>
+bun run pipeline/qa-section-title-audit.ts
+</code></pre></div></div><h3 id="2-triage-by-category"><a href="#2-triage-by-category" class="anchor-heading" aria-labelledby="2-triage-by-category"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Triage by category
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>Category</th><th>Examples</th><th>Fix pattern</th></tr></thead><tbody><tr><td><strong>A. Status leak</strong></td><td><code class="language-plaintext highlighter-rouge">✅ Done</code>, <code class="language-plaintext highlighter-rouge">(TODO)</code>, <code class="language-plaintext highlighter-rouge">(TBD)</code> (with no follow-up content)</td><td><strong>Delete.</strong> If the work item is still relevant, file it in the work-plan store.</td></tr><tr><td><strong>B. Comparison-table marker</strong></td><td><code class="language-plaintext highlighter-rouge">✓</code> / <code class="language-plaintext highlighter-rouge">✗</code> in a results table (one cell wide, replaces redundant prose)</td><td><strong>Keep — but only in tables.</strong> ✓/✗ in body prose → replace with words (“matches”, “diverges”).</td></tr><tr><td><strong>C. Warning callout</strong></td><td><code class="language-plaintext highlighter-rouge">⚠ *…*</code>, <code class="language-plaintext highlighter-rouge">**⚠ WARNING:**</code></td><td><strong>Replace</strong> with <code class="language-plaintext highlighter-rouge">**Caveat.**</code> or <code class="language-plaintext highlighter-rouge">**Warning.**</code> (no symbol).</td></tr><tr><td><strong>D. Star marker</strong> <code class="language-plaintext highlighter-rouge">★</code></td><td>“best fit”, “preferred”, “closure”</td><td><strong>Keep in tables when meaning is column-scoped.</strong> In body prose → replace with explicit word.</td></tr><tr><td><strong>E. Unicode crash</strong></td><td><code class="language-plaintext highlighter-rouge">↦</code>, <code class="language-plaintext highlighter-rouge">⁻</code>, <code class="language-plaintext highlighter-rouge">√</code>, <code class="language-plaintext highlighter-rouge">─</code>, <code class="language-plaintext highlighter-rouge">✅</code>, <code class="language-plaintext highlighter-rouge">·</code>, <code class="language-plaintext highlighter-rouge">²</code></td><td>Replace with the target pipeline’s supported notation or strip box-drawing comments.</td></tr><tr><td><strong>F. First-person work tone</strong></td><td>“we’ll add”, “I’ll fix”</td><td><strong>Rewrite in passive/scholarly voice.</strong> Often a sign the sentence shouldn’t exist at all.</td></tr><tr><td><strong>G. Hedging</strong></td><td>“structural argument”, “morally correct”, “essentially the X”, “heuristically”, “simplification for exposition”, “amounts to”</td><td><strong>Strip</strong> if the actual argument IS in the content (most cases). <strong>Demote</strong> to <code class="language-plaintext highlighter-rouge">remark</code> with <code class="language-plaintext highlighter-rouge">interprets:</code> if the block is asserting an unsupported analogy. <strong>Keep</strong> only if (i) the phrase is a term of art or (ii) the block has <code class="language-plaintext highlighter-rouge">tags: ["non-scholarly-voice-exception"]</code>.</td></tr><tr><td><strong>H. Banner-in-prose</strong></td><td><code class="language-plaintext highlighter-rouge">&gt; **Status: ...**</code>, <code class="language-plaintext highlighter-rouge">&gt; **Caveat (over-permissive...)...**</code>, <code class="language-plaintext highlighter-rouge">&gt; **Status (May 2026):...**</code>, <code class="language-plaintext highlighter-rouge">&gt; **Refined-framing note...**</code></td><td><strong>Migrate to <code class="language-plaintext highlighter-rouge">authorNotes</code> field</strong> on the block’s <code class="language-plaintext highlighter-rouge">.ts</code> manifest. Author-tracking notes belong as metadata, not in scholarly prose. The render pipeline skips them by default; a <code class="language-plaintext highlighter-rouge">WITH_AUTHOR_NOTES=1</code> env var exposes them in working drafts. <strong>EXCEPTION:</strong> structural condition banners defined by the content type that are part of the statement itself are not author notes — keep in prose.</td></tr><tr><td><strong>I. Audit-doc reference in content</strong></td><td><code class="language-plaintext highlighter-rouge">docs/audits/...</code>, <code class="language-plaintext highlighter-rouge">[audit](../../../docs/audits/...)</code>, <code class="language-plaintext highlighter-rouge">per audit</code>, <code class="language-plaintext highlighter-rouge">see audit doc</code></td><td><strong>Remove.</strong> Published content must NOT reference internal audit documents. If the audit contains a result needed in the content, promote the result to a content block and cite that block instead. Empirical observations belong in audit docs only, never in published <code class="language-plaintext highlighter-rouge">.md</code> blocks.</td></tr><tr><td><strong>J. Empirical fit in scholarly prose</strong></td><td>“within X% of [reference value]”, “matches to Y ppm”, “≈ Z (close to…)”, “near-match”, “numerical observation”</td><td><strong>Remove from published content.</strong> Empirical comparisons are audit-doc material. Published content states the derived result; the audit doc records how well it matches experiment, unless the content type defines a formal precision-statement exception.</td></tr><tr><td><strong>K. Title coherence</strong></td><td>section/subsection title ending in <code class="language-plaintext highlighter-rouge">" : vs"</code> / <code class="language-plaintext highlighter-rouge">" : generation"</code> / <code class="language-plaintext highlighter-rouge">" : characterisation"</code> / <code class="language-plaintext highlighter-rouge">" : comparison"</code>; a comma-list title of 3+ concepts; a title meaningless without its chapter</td><td><strong>Rewrite from the section’s story</strong> — read the section’s intro block, make it short + coherent against its responsible parent (project→chapter→section→subsection) and distinct from the sibling. Surfaced by <code class="language-plaintext highlighter-rouge">qa-section-title-audit.ts</code>; conventions in <code class="language-plaintext highlighter-rouge">one-voice-style-guide</code> §Title Conventions.</td></tr></tbody></table></div><h3 id="3-apply-mechanical-fixes"><a href="#3-apply-mechanical-fixes" class="anchor-heading" aria-labelledby="3-apply-mechanical-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Apply mechanical fixes
+  
+  
+</h3><p>These are safe to do without author approval:</p><ul><li>Delete Category A status leaks.</li><li>Convert Category C warnings: <code class="language-plaintext highlighter-rouge">⚠ *X*</code> → <code class="language-plaintext highlighter-rouge">*Caveat: X*</code> or
+<code class="language-plaintext highlighter-rouge">**⚠ WARNING:** X</code> → <code class="language-plaintext highlighter-rouge">**Warning.** X</code>.</li><li>Fix Category E Unicode crashes (use the target pipeline’s equivalents;
+strip box-drawing).</li><li>Replace clear-cut Category B/D markers in <strong>body prose</strong> (not
+tables) with words.</li><li>Remove Category I audit-doc references from published <code class="language-plaintext highlighter-rouge">.md</code> files.</li><li>Strip Category J empirical fits from scholarly prose (move to audit).</li><li>Migrate Category H banners to <code class="language-plaintext highlighter-rouge">authorNotes</code> field (extract banner
+text → push as <code class="language-plaintext highlighter-rouge">{ kind, date?, body }</code> entry on the block’s <code class="language-plaintext highlighter-rouge">.ts</code>
+manifest; remove blockquote from <code class="language-plaintext highlighter-rouge">.md</code>). Skip structural
+statement banners defined by the content type.</li></ul><h3 id="4-kick-back-to-author-for-items-where"><a href="#4-kick-back-to-author-for-items-where" class="anchor-heading" aria-labelledby="4-kick-back-to-author-for-items-where"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Kick back to author for items where:
+  
+  
+</h3><ul><li>A <code class="language-plaintext highlighter-rouge">TBD</code> marks a <strong>genuine open question</strong> — author knows the
+resolution. Skill must not unilaterally delete.</li><li>A table is so dense with <code class="language-plaintext highlighter-rouge">★</code>/<code class="language-plaintext highlighter-rouge">✓</code>/<code class="language-plaintext highlighter-rouge">✗</code> markers that replacing them
+with words would balloon the table; author should decide whether
+the compact markers are acceptable scholarly form for that table.</li><li>Transitional phrasing inside <strong>expository derivations</strong> (“We have
+shown…”, “It remains to verify…”) that looks like work tracking but
+is actually structural — author judgement on tone.</li></ul><p>For each kickback, post a work-plan item with:</p><ul><li><code class="language-plaintext highlighter-rouge">targetLabel</code> of the affected block</li><li>A short description of the violation</li><li>Suggested fix or “needs author rewrite”</li></ul><h3 id="5-output"><a href="#5-output" class="anchor-heading" aria-labelledby="5-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Output
+  
+  
+</h3><p>Report back with:</p><ul><li><strong>Fixed in this pass</strong> — file:line list of mechanical fixes applied</li><li><strong>Kicked back</strong> — work-plan entries created, requiring author attention</li><li><strong>Verified clean</strong> — files swept and clean</li></ul><h2 id="qa-report-integration"><a href="#qa-report-integration" class="anchor-heading" aria-labelledby="qa-report-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QA report integration
+  
+  
+</h2><p>The watcher persists every finding to the block’s sibling
+<code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> file (schema: <code class="language-plaintext highlighter-rouge">schemas/sdlc/block-qa.ts</code>).
+Per-criterion staleness is keyed by SHA-256 prefix of the source
+files at audit time — when the <code class="language-plaintext highlighter-rouge">.md</code> (or <code class="language-plaintext highlighter-rouge">.ts</code> / content-type sibling) is later
+edited, the recorded <code class="language-plaintext highlighter-rouge">field_hash</code> no longer matches, and the
+criterion is stale.</p><h3 id="cli-primitives"><a href="#cli-primitives" class="anchor-heading" aria-labelledby="cli-primitives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CLI primitives
+  
+  
+</h3><ul><li><p><strong>Sweep</strong> — runs every automated criterion on a content root and
+writes / updates the sidecars:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content
+bun run pipeline/qa-sweep.ts &lt;folio-dir&gt;/&lt;chapter&gt;
+</code></pre></div></div></li><li><p><strong>Staleness map</strong> — reports which blocks have fresh / stale /
+missing audits per criterion:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content
+bun run pipeline/qa-staleness.ts &lt;folio-dir&gt;/&lt;chapter&gt;
+</code></pre></div></div></li><li><p><strong>CI gate</strong> — fail the build if any block has critical findings
+or no sidecar:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run pipeline/qa-sweep.ts &lt;folio-dir&gt; <span class="nt">--ci</span>
+</code></pre></div></div></li></ul><h3 id="multi-reviewer-writes-when-an-agent-adjudicates"><a href="#multi-reviewer-writes-when-an-agent-adjudicates" class="anchor-heading" aria-labelledby="multi-reviewer-writes-when-an-agent-adjudicates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multi-reviewer writes (when an agent adjudicates)
+  
+  
+</h3><p>When invoked by the watcher for one of the non-automated criteria
+(<code class="language-plaintext highlighter-rouge">voice-scholarly-default</code>, <code class="language-plaintext highlighter-rouge">voice-ai-slop</code>, <code class="language-plaintext highlighter-rouge">fit-section-chapter</code>),
+<strong>append</strong> a new entry to the corresponding criterion’s array.
+<strong>Never delete</strong> prior entries. Reviewer identity must be
+<code class="language-plaintext highlighter-rouge">{ kind: "agent", id: "one-voice-audit", version: "&lt;model id&gt;" }</code>
+for agent runs and <code class="language-plaintext highlighter-rouge">{ kind: "human", id: "&lt;github-login&gt;" }</code> for
+manual adjudications.</p><p>An entry’s shape:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"field_hash"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"md"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;12-char-sha&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;…&gt;"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"fail"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"warn"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"n/a"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"critical"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"major"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">"minor"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;file:line: verbatim quote&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"reviewer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"one-voice-audit"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"reviewed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;ISO-8601 UTC&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"reviewed_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;main HEAD at audit time&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;rationale / context&gt;"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>The current verdict for a criterion is the most-recent entry whose
+<code class="language-plaintext highlighter-rouge">field_hash</code> matches the present source files. Human entries
+outrank agent entries; agent entries outrank script entries — but
+<em>only</em> when the higher-rank entry’s <code class="language-plaintext highlighter-rouge">field_hash</code> is still fresh.</p><h2 id="cross-references"><a href="#cross-references" class="anchor-heading" aria-labelledby="cross-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-references
+  
+  
+</h2><ul><li><a href="../../reference/skill-instructions/one-voice-integration-watcher.html"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a> —
+the watcher that drives this skill in audit-as-sidecar mode.</li><li><code class="language-plaintext highlighter-rouge">markdown-render-check</code> — catches Unicode crashes and <code class="language-plaintext highlighter-rouge">+</code>-bullet
+failures <em>before</em> push; complementary preventive skill.</li><li><code class="language-plaintext highlighter-rouge">readability-editing</code> — broader prose tightening; one-voice is a
+subset.</li><li><code class="language-plaintext highlighter-rouge">editor</code> — invokes this skill as a sub-pass on content changes.</li><li>A content type’s proof-trimming skill, where it has one: for trimming
+proofs that contain work-tracker language disguised as expository
+structure. The layer that ships the content type names this skill from
+its side.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

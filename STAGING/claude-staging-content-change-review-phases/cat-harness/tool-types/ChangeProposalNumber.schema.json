@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/tool-types/ChangeProposalNumber.schema.json",
+  "title": "ChangeProposalNumber",
+  "type": "integer",
+  "exclusiveMinimum": 0,
+  "maximum": 9007199254740991,
+  "description": "A change-proposal number — a pull request on GitHub, a merge request on GitLab",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/TranslationConfig",
+  "definitions": {
+    "TranslationConfig": {
+      "type": "object",
+      "properties": {
+        "defaultLocale": {
+          "default": "en",
+          "type": "string",
+          "minLength": 2
+        },
+        "supportedLocales": {
+          "default": [
+            "ar",
+            "zh",
+            "en",
+            "fr",
+            "ru",
+            "es"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "translationDir": {
+          "default": "translations",
+          "type": "string",
+          "minLength": 1
+        },
+        "potGranularity": {
+          "default": "block",
+          "type": "string",
+          "enum": [
+            "block",
+            "chapter",
+            "folio"
+          ]
+        },
+        "officialRequired": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation/TranslationConfigSchema.schema.json",
+  "title": "TranslationConfigSchema",
+  "description": "Generated from `TranslationConfigSchema` in schemas/content/translation.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

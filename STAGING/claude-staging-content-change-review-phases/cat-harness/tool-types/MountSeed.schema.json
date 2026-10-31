@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/tool-types/MountSeed.schema.json",
+  "title": "MountSeed",
+  "type": "string",
+  "pattern": "^[a-z0-9][a-z0-9-]*=[A-Za-z0-9][A-Za-z0-9-]*\\/[A-Za-z0-9._-]+@[0-9a-f]{40}$",
+  "description": "A remote instance to seed, e.g. <instance>=<owner>/<repo>@<40-hex sha>",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

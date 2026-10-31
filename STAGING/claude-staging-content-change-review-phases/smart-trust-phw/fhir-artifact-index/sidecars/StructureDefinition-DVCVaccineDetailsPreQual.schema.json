@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/trust-phw/StructureDefinition-DVCVaccineDetailsPreQual.schema.json",
+  "title": "PreQual - Vaccine Details",
+  "description": "Vaccine Data elements from the Pre Qual Database",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "DVCVaccineDetailsPreQual",
+      "description": "Resource type identifier for DVCVaccineDetailsPreQual logical model"
+    },
+    "vaccine[x]": {
+      "type": "object",
+      "description": "Vaccine or prophylaxis product"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of vaccination"
+    },
+    "issuer": {
+      "type": "object",
+      "description": "Relevant authoring responsible for issuing the certificate, or for overseeing the administration center"
+    },
+    "clinicianName": {
+      "type": "string",
+      "description": "Name of supervising clinician, of relevant authority responsible for issuing this certificate, or for overseeing the administering centre"
+    },
+    "manufacturer": {
+      "type": "object",
+      "description": "Manufacturer of vaccine or prophylaxis"
+    },
+    "batchNo": {
+      "type": "object",
+      "description": "Batch No. of vaccine or prophylaxis"
+    },
+    "validity": {
+      "type": "object",
+      "description": "Certificate valid from... until..."
+    }
+  },
+  "required": [
+    "resourceType",
+    "vaccine[x]",
+    "date",
+    "manufacturer",
+    "batchNo",
+    "validity"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetailsPreQual"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetails"
+        }
+      }
+    }
+  ]
+}

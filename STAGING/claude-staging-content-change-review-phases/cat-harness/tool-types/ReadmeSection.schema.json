@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-content-change-review-phases/cat-harness/tool-types/ReadmeSection.schema.json",
+  "title": "ReadmeSection",
+  "type": "string",
+  "enum": [
+    "folio:toc",
+    "folio:lean-coverage",
+    "folio:lean-modules",
+    "folio:simulators",
+    "folio:workflows",
+    "skills:index"
+  ],
+  "description": "A generated README section, named by its marker.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

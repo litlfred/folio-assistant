@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/NamespaceIndex",
+  "definitions": {
+    "NamespaceIndex": {
+      "type": "object",
+      "properties": {
+        "prefixLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "entryCount": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "shards": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "prefixLength",
+        "entryCount",
+        "shards"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/NamespaceIndexSchema.schema.json",
+  "title": "NamespaceIndexSchema",
+  "description": "Generated from `NamespaceIndexSchema` in schemas/kg/id-lookup.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-content-change-review-phases",
+    "sha": "d40dcf7f4b18eacdbea82678ff89d1660355256e",
+    "pr": "claude/staging-content-change-review-phases",
+    "run": "41193697546"
+  }
+}

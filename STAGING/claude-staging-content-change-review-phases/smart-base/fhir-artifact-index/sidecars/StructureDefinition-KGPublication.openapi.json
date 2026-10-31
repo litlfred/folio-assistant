@@ -1,0 +1,275 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: Publication API",
+    "description": "A WHO publication: a guideline of any of the handbook's types, a position paper, a summary table, a classification, implementation guidance, or a supplement. Metadata follows Dublin Core. identifiers is a list of {type, value}; type is from identifier-type, and the first of isbn, iris-handle, doi, issn, url builds the IRI, so an edition change is a new publication. issued and modified are Dublin Core. reviewBy is the handbook's review-by date (§12.5.1). sha256 pins the PDF. Derives from DublinCore (smart-base input/fsh/models/DublinCore.fsh); title, creator, publisher, language, rights are its elements. Class IRI: http://smart.who.int/kg/publication.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-KGPublication.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-KGPublication",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-KGPublication.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-KGPublication",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-KGPublication.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-KGPublication": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-KGPublication.schema.json",
+        "title": "Knowledge graph L1: Publication",
+        "description": "A WHO publication: a guideline of any of the handbook's types, a position paper, a summary table, a classification, implementation guidance, or a supplement. Metadata follows Dublin Core. identifiers is a list of {type, value}; type is from identifier-type, and the first of isbn, iris-handle, doi, issn, url builds the IRI, so an edition change is a new publication. issued and modified are Dublin Core. reviewBy is the handbook's review-by date (§12.5.1). sha256 pins the PDF. Derives from DublinCore (smart-base input/fsh/models/DublinCore.fsh); title, creator, publisher, language, rights are its elements. Class IRI: http://smart.who.int/kg/publication.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "KGPublication",
+            "description": "Resource type identifier for KGPublication logical model"
+          },
+          "@context": {
+            "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri",
+                "description": "URI reference to external JSON-LD context"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON-LD context",
+                "properties": {
+                  "@version": {
+                    "type": "number",
+                    "const": 1.1
+                  },
+                  "fhir": {
+                    "type": "string",
+                    "const": "http://hl7.org/fhir/"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "array",
+                "description": "Array of JSON-LD context objects/URIs",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "@type": {
+            "type": "string",
+            "description": "JSON-LD type identifier for KGPublication logical model",
+            "examples": [
+              "LogicalModel-KGPublication"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "A name given to the resource"
+          },
+          "creator": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An entity responsible for making the resource"
+          },
+          "subject": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The topic of the resource"
+          },
+          "description": {
+            "type": "string",
+            "description": "An account of the resource"
+          },
+          "publisher": {
+            "type": "string",
+            "description": "An entity responsible for making the resource available"
+          },
+          "contributor": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An entity responsible for making contributions to the resource"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "A point or period of time associated with an event in the lifecycle of the resource"
+          },
+          "type": {
+            "$ref": "./ValueSet-KGIdentifierTypeVS.schema.json",
+            "description": "The identifier's kind."
+          },
+          "format": {
+            "type": "string",
+            "description": "The file format, physical medium, or dimensions of the resource"
+          },
+          "identifier": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An unambiguous reference to the resource within a given context"
+          },
+          "source": {
+            "type": "string",
+            "description": "A related resource from which the described resource is derived"
+          },
+          "language": {
+            "type": "string",
+            "description": "A language of the resource"
+          },
+          "relation": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A related resource"
+          },
+          "coverage": {
+            "type": "string",
+            "description": "The spatial or temporal topic of the resource"
+          },
+          "rights": {
+            "type": "string",
+            "description": "Information about rights held in and over the resource"
+          },
+          "issued": {
+            "type": "string",
+            "format": "date",
+            "description": "Dublin Core dcterms:issued — date of formal issuance (YYYY, YYYY-MM or YYYY-MM-DD)."
+          },
+          "modified": {
+            "type": "string",
+            "format": "date",
+            "description": "Dublin Core dcterms:modified — date the publication was changed."
+          },
+          "version": {
+            "type": "string",
+            "description": "Edition or version, as printed."
+          },
+          "identifiers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "FHIR BackboneElement"
+            },
+            "description": "Typed identifiers; the first of isbn, iris-handle, doi, issn, url builds the IRI."
+          },
+          "id": {
+            "type": "object",
+            "description": "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."
+          },
+          "modifierExtension": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "FHIR Extension"
+            },
+            "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+          },
+          "value": {
+            "type": "string",
+            "description": "The identifier, as printed."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Where the publication is published."
+          },
+          "sha256": {
+            "type": "string",
+            "description": "Hash of the PDF; pins the source."
+          },
+          "publicationType": {
+            "$ref": "./ValueSet-KGPublicationTypeVS.schema.json",
+            "description": "What kind of publication this is."
+          },
+          "grcStatus": {
+            "$ref": "./ValueSet-KGGrcStatusVS.schema.json",
+            "description": "Whether the Guideline Review Committee approved the publication."
+          },
+          "reviewBy": {
+            "type": "string",
+            "format": "date",
+            "description": "The handbook's review-by date (§12.5.1)."
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/base/StructureDefinition/KGPublication"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://smart.who.int/base/StructureDefinition/DublinCore"
+              },
+              "jsonld:valuesets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "const": [
+                  "KGGrcStatusVS",
+                  "KGIdentifierTypeVS",
+                  "KGPublicationTypeVS"
+                ]
+              },
+              "jsonld:contextTemplate": {
+                "type": "object",
+                "const": {
+                  "@version": 1.1,
+                  "fhir": "http://hl7.org/fhir/",
+                  "KGGrcStatusVS": "http://smart.who.int/base/ValueSet-KGGrcStatusVS.jsonld",
+                  "KGIdentifierTypeVS": "http://smart.who.int/base/ValueSet-KGIdentifierTypeVS.jsonld",
+                  "KGPublicationTypeVS": "http://smart.who.int/base/ValueSet-KGPublicationTypeVS.jsonld"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

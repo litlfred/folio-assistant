@@ -1,0 +1,1054 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2607.14456v1",
+  "title": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution",
+  "variant": "pdf",
+  "pages": null,
+  "tocSource": "none",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "page-001",
+      "number": null,
+      "title": "Page 1",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 658,
+      "summary": {
+        "text": "Title, abstract, and opening of Section 1 (Introduction) of Borman et al. (Commonwealth Bank of Australia, SCALE workshop at ICML 2026), \"Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution\". Abstract: evaluates a specialist workflow that compiles deterministic BPMN 2.0 diagrams into executable ReAct agents against generalist coding agents (Roo and Cline), reporting ~9-20 percentage points higher tool-use exactness, 2-4x lower penalty-adjusted latency, 3x fewer tool-call errors, >95% lower generation token cost, and zero repair iterations. Section 1 contrasts generalist IDE and multi-agent frameworks (Roo, Cline, FLOW, AFLOW, AutoGen, MetaGPT), which incur high planning/token overhead and cross-generation inconsistency, with specialist templated workflows where the LLM performs localised reasoning within predefined steps.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "generalist agents",
+          "heading": false
+        },
+        {
+          "term": "ide extensions",
+          "heading": false
+        },
+        {
+          "term": "sapkota",
+          "heading": false
+        },
+        {
+          "term": "specialist",
+          "heading": false
+        },
+        {
+          "term": "roo",
+          "heading": false
+        },
+        {
+          "term": "cline",
+          "heading": false
+        },
+        {
+          "term": "business process",
+          "heading": false
+        },
+        {
+          "term": "australia",
+          "heading": false
+        }
+      ],
+      "extract": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution Harris Borman * 1 Herman Wandabwa * 1 Fusun Yu 1 Sandeepa Kannangara 1 Justin Liu 1 Anna Leontjeva 1 Ritchie Ng 1 Abstract Large Language Models (LLMs) have acceler- ated the adoption of software development agents, now widely available as Integrated Development Environment (IDE) extensions and standalone applications. While",
+      "extractCut": true
+    },
+    {
+      "id": "page-002",
+      "number": null,
+      "title": "Page 2",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 814,
+      "summary": {
+        "text": "Continuation of Section 1, Section 1.1 (Business Processes), and start of Section 2.1 (BPMN and Traditional Workflow Execution). Argues that although specialist workflows require higher upfront design effort, they suit repeated or large-scale deployment by producing consistent outputs and scoping active context to the minimum needed per subtask, avoiding long-context degradation and lowering token cost as standard operating procedures evolve. The authors compile BPMN 2.0 models into a ReAct-style control graph where each BPMN node defines a typed tool contract and node-local policy, and the control plane enforces branches/joins, per-node context scoping, and contract-derived runtime validation with targeted retries. Section 1.1 motivates BPMN as an auditable enterprise workflow representation, and Section 2.1 introduces deterministic rule-based BPMN engines.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "specialist workflows",
+          "heading": false
+        },
+        {
+          "term": "generalist agentic",
+          "heading": false
+        },
+        {
+          "term": "generalist systems",
+          "heading": false
+        },
+        {
+          "term": "bpmn",
+          "heading": false
+        },
+        {
+          "term": "context management",
+          "heading": false
+        },
+        {
+          "term": "business process",
+          "heading": false
+        },
+        {
+          "term": "business processes",
+          "heading": false
+        },
+        {
+          "term": "maintaining performance",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 forms localised reasoning, making small, context-sensitive adjustments within predefined steps rather than constructing the full solution from first principles. These systems usually require greater upfront effort because the workflow must be manually designed and validated. This makes them less suitable for short-lived use cases such as demos or proof-of-concept",
+      "extractCut": true
+    },
+    {
+      "id": "page-003",
+      "number": null,
+      "title": "Page 3",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 816,
+      "summary": {
+        "text": "Remainder of Section 2 (Literature Review: 2.1 BPMN and Traditional Workflow Execution, 2.2 LLMs and Agentic Workflows, 2.3 BPMN and LLM Integration) and Section 3 / 3.1 (Methodology: Workflow Selection). Reviews limitations of static BPMN execution under unstructured inputs, general-purpose LLM agentic architectures (ReAct, Tree-of-Thoughts, PAL, AFLOW, MaAS), and prior text-to-BPMN modelling work. Section 3.1 introduces ten author-constructed deterministic BPMN workflows spanning 9 to 52 nodes across e-commerce, cost optimisation, risk, and information retrieval, noting the absence of an established BPMN-to-agent execution benchmark and acknowledging design-bias and determinism scope limits.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "agentic workflows",
+          "heading": false
+        },
+        {
+          "term": "bpmn",
+          "heading": false
+        },
+        {
+          "term": "automation tasks",
+          "heading": false
+        },
+        {
+          "term": "executable agentic",
+          "heading": false
+        },
+        {
+          "term": "der aalst",
+          "heading": false
+        },
+        {
+          "term": "structural complexity",
+          "heading": false
+        },
+        {
+          "term": "van der",
+          "heading": false
+        },
+        {
+          "term": "business process",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 While robust in predictable environments, they provide limited support for dynamic or context-sensitive decision- making (Van Der Aalst et al., 2020). Prior work has tried to address this through agent-based automation (Wooldridge & Jennings, 1995), adaptive workflow systems (Reichert & Weber, 2012), context-aware frameworks (Rosemann et al., 2008), and",
+      "extractCut": true
+    },
+    {
+      "id": "page-004",
+      "number": null,
+      "title": "Page 4",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 709,
+      "summary": {
+        "text": "Sections 3.2 (Agentic System Design), 3.3 (Proposed System), and start of Section 4.1 (Baseline Systems and Experimental Setup). Explains why the target is a ReAct agent rather than a fixed DAG (adaptability to runtime conditions, scalability to dynamic multi-step coordination, and natural-language prompt editability). Section 3.3 details the five-stage specialist pipeline: (1) BPMN parsing into tasks, decision gateways, and API calls; (2) reusable API client service generation; (3) per-node tool/context generation; (4) iterative self-verification and refinement of each tool; and (5) agent assembly behind a FastAPI service. Section 4.1 describes the comparison against VS Code extensions Roo and Cline on identical BPMN 2.0 XML, API specs, and backend LLM, and notes that AutoGen, MetaGPT, and FLOW failed to produce working end-to-end agents.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "workflow logic",
+          "heading": false
+        },
+        {
+          "term": "react agent",
+          "heading": false
+        },
+        {
+          "term": "api service",
+          "heading": false
+        },
+        {
+          "term": "api specifications",
+          "heading": false
+        },
+        {
+          "term": "system generates",
+          "heading": false
+        },
+        {
+          "term": "proposed system",
+          "heading": false
+        },
+        {
+          "term": "roo",
+          "heading": false
+        },
+        {
+          "term": "cline",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 to settings involving ambiguity, stochasticity, or open-ended human decision making. The results should therefore be interpreted as evidence for structured, deterministic process settings rather than as a claim of universal representative- ness. 3.2. Agentic System Design Although these workflows could be executed using a fixed Directed Acyclic Graph (DAG), and",
+      "extractCut": true
+    },
+    {
+      "id": "page-005",
+      "number": null,
+      "title": "Page 5",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 601,
+      "summary": {
+        "text": "Figure 1 caption (Proposed System Architecture), conclusion of Section 4.1, Section 4.2 (Evaluation Metrics), and start of Section 4.2.1 (Agent Generation Evaluation). Obtaining 10 compiled, executable agents per workflow across the 10 workflows (9 nodes/10 edges for Weather up to 52 nodes/60 edges for Cart) took 371 generation attempts (300 successes, 71 failures): 117 attempts each for the specialist system and Cline (85.5% success rate) and 137 for Roo (73.0%). The 300 agents were evaluated across 30,543 test cases (~102 per run) covering all control-flow flag combinations; Weather (46.4% failure rate) and Tournament (42.3%) were hardest, while Social, Spam, and News had zero failures. Cross-run coefficient of variation of Tool-Use Exactness was 0.63 (specialist), 0.86 (Cline), and 1.05 (Roo). Section 4.2.1 defines repair iterations and token usage.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "repair iterations",
+          "heading": false
+        },
+        {
+          "term": "successful agents",
+          "heading": false
+        },
+        {
+          "term": "agent generation",
+          "heading": false
+        },
+        {
+          "term": "fastapi service",
+          "heading": false
+        },
+        {
+          "term": "roo",
+          "heading": false
+        },
+        {
+          "term": "cline",
+          "heading": false
+        },
+        {
+          "term": "generation process",
+          "heading": false
+        },
+        {
+          "term": "success rate",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 1. Proposed System Architecture with its GraphFlow controller, failed to autonomously gen- erate the required files without manual agent wiring. FLOW produced high-level task decompositions but not complete, executable code. As none completed even a single work- flow end-to-end, we excluded them from the comparative evaluation, focusing on Roo and Cline as",
+      "extractCut": true
+    },
+    {
+      "id": "page-006",
+      "number": null,
+      "title": "Page 6",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 683,
+      "summary": {
+        "text": "End of Section 4.2.1, Section 4.2.2 (Agent Run Evaluations using GPT-4.1), and Section 4.3 (Results: 4.3.1 Agent Generation Results and 4.3.2 Agent Run Evaluation Results). Defines LLM-as-a-judge Process Adherence, binary Tool-Use Exactness (TUE), and Penalty-Adjusted Latency Latency = T / max(epsilon, C - (M + E + O)) with epsilon = 1. In generation (4.3.1), the specialist system required 0 repair iterations (vs 2.08 for Roo and 1.89 for Cline) and averaged 49.24k input / 5.82k output tokens (~55k total) vs 1,484.46k/17.40k for Roo and 1,029.27k/15.36k for Cline. In agent execution (4.3.2), the specialist system achieved 57.69% TUE (vs 48.62% Cline, 38.11% Roo), 1.27 mean tool-call errors per run (vs 3.19 Cline, 3.22 Roo, mostly missed calls at 0.86 vs 2.05 and 1.76), 54.68% process adherence (vs 51.57% Cline, 42.43% Roo), and 2.49 s penalty-adjusted latency per effective step (vs 6.59 s Cline, 9.08 s Roo).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "specialist system",
+          "heading": false
+        },
+        {
+          "term": "penalty-adjusted latency",
+          "heading": false
+        },
+        {
+          "term": "roo",
+          "heading": false
+        },
+        {
+          "term": "cline",
+          "heading": false
+        },
+        {
+          "term": "tool calls",
+          "heading": false
+        },
+        {
+          "term": "repair iterations",
+          "heading": false
+        },
+        {
+          "term": "tool-call errors",
+          "heading": false
+        },
+        {
+          "term": "tool-use exactness",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 through the successful generation of a complete agent, recording input, output, and total token counts. Our system’s token usage was measured using Langfuse tracing, while Roo and Cline reported their own token consumption. 4.2.2. AGENT RUN EVALUATIONS Each generated agent was evaluated on the following metrics using GPT-4.1 for consistency. 1. Process Adherence:",
+      "extractCut": true
+    },
+    {
+      "id": "page-007",
+      "number": null,
+      "title": "Page 7",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 297,
+      "summary": {
+        "text": "Figure 2 caption (Agent Generation Metrics: repair iterations and input/output token usage), closing discussion of Section 4.3.2, and Section 5 (Conclusion). Summarises how externalised BPMN control flow, targeted context management, and modular prompt/tool/orchestration decomposition yield higher tool-use exactness and process adherence, lower latency and error rates, >95% token savings, and zero repair iterations compared to Roo and Cline. Notes that evaluation is scoped to deterministic workflows under default low-configuration baseline usage and outlines future work on heavily tuned generalist baselines and component-level ablations.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "specialist system",
+          "heading": false
+        },
+        {
+          "term": "repair iterations",
+          "heading": false
+        },
+        {
+          "term": "targeted context",
+          "heading": false
+        },
+        {
+          "term": "generalist",
+          "heading": false
+        },
+        {
+          "term": "context management",
+          "heading": false
+        },
+        {
+          "term": "roo",
+          "heading": false
+        },
+        {
+          "term": "cline",
+          "heading": false
+        },
+        {
+          "term": "assistants",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 2. Agent Generation Metrics: Repair Iterations, Token Usage (Input and Output) for the Specialist System(Custom), Roo, and Cline. the design principles outlined earlier in the paper: con- strained execution via externally specified workflow struc- ture, targeted context management, and modular decompo- sition. Together, these reduce search space and planning",
+      "extractCut": true
+    },
+    {
+      "id": "page-008",
+      "number": null,
+      "title": "Page 8",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 618,
+      "summary": {
+        "text": "Section 6 (GenAI Usage Disclosure: LLMs were used to generate and execute the evaluated agentic workflows and for light editing such as grammar and sentence restructuring) and the first part of References (Aljohani & Do 2025 through Hong et al. 2024).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "url org",
+          "heading": false
+        },
+        {
+          "term": "url https",
+          "heading": false
+        },
+        {
+          "term": "org abs",
+          "heading": false
+        },
+        {
+          "term": "international confer",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "confer ence",
+          "heading": false
+        },
+        {
+          "term": "net forum",
+          "heading": false
+        },
+        {
+          "term": "systems engineering",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 6. GenAI Usage Disclosure In line with our experimental design, LLMs and LLM- powered systems were used to generate and execute the agentic workflows evaluated in this paper. We also used LLMs to enhance our text through light editing tasks such as grammar correction, and sentence restructuring. References Aljohani, A. and Do, H. Promptdebt: A comprehensive study of",
+      "extractCut": true
+    },
+    {
+      "id": "page-009",
+      "number": null,
+      "title": "Page 9",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 620,
+      "summary": {
+        "text": "Continuation of References (IEEE Task Force on Process Mining 2025 through Sapkota et al. 2026).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "url org",
+          "heading": false
+        },
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "org abs",
+          "heading": false
+        },
+        {
+          "term": "der aalst",
+          "heading": false
+        },
+        {
+          "term": "business process",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "process modeling",
+          "heading": false
+        },
+        {
+          "term": "process mining",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 IEEE Task Force on Process Mining. Process mining event logs. https://www.tf-pm.org/resources/ logs, 2025. Accessed 2026-04-21. Jain, A., Paliwal, S., Sharma, M., Vig, L., and Shroff, G. Smartflow: Robotic process automation using LLMs. arXiv preprint arXiv:2405.12842, 2024. doi: 10.48550/arXiv.2405.12842. URL https://arxiv. org/abs/2405.12842. Khattab, O., Singhvi,",
+      "extractCut": true
+    },
+    {
+      "id": "page-010",
+      "number": null,
+      "title": "Page 10",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 617,
+      "summary": {
+        "text": "Conclusion of References (Schick et al. 2023 through Zhang et al. 2025b).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "url https",
+          "heading": false
+        },
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "der aalst",
+          "heading": false
+        },
+        {
+          "term": "net forum",
+          "heading": false
+        },
+        {
+          "term": "process automation",
+          "heading": false
+        },
+        {
+          "term": "van der",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Schick, T., Dwivedi-Yu, J., Dessi, R., Raileanu, R., Lomeli, M., Hambro, E., Zettlemoyer, L., Cancedda, N., and Scialom, T. Toolformer: Language models can teach themselves to use tools. In Advances in Neural In- formation Processing Systems (NeurIPS), 2023. URL https://arxiv.org/abs/2302.04761. Singhal, K., Azizi, S., Tu, T., Mahdavi, S. S., Wei, J., Chung, H. W.,",
+      "extractCut": true
+    },
+    {
+      "id": "page-011",
+      "number": null,
+      "title": "Page 11",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 37,
+      "summary": {
+        "text": "Appendix A / A.1 (Workflow Agent Runs): section heading and caption for Figure 3 (per-workflow agent run evaluation metrics: Tool-Use Exactness, Tool-Call Errors, Latency, and Process Adherence for the specialist system).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "workflow agent",
+          "heading": false
+        },
+        {
+          "term": "tool-call",
+          "heading": false
+        },
+        {
+          "term": "exactness",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 A. Appendix A.1. Workflow Agent Runs Figure 3. Per Workflow Agent Run Evaluation Metrics: Tool-Use Exactness, Tool-Call Errors, Latency and Process Adherence for the Specialist System 11",
+      "extractCut": false
+    },
+    {
+      "id": "page-012",
+      "number": null,
+      "title": "Page 12",
+      "level": 1,
+      "pageStart": 12,
+      "pageEnd": 12,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 275,
+      "summary": {
+        "text": "Appendix A.2 (Workflow Summary Table, Table 1): lists the ten deterministic BPMN evaluation workflows with brief overview, node count, and edge count: Cart (52 nodes, 60 edges), Cost (12, 15), Deal (11, 13), Labelling (13, 16), News (34, 38), Risk (23, 25), Social Media (25, 29), Promotion (18, 19), Tournament (14, 17), and Weather (9, 10).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "fetches",
+          "heading": false
+        },
+        {
+          "term": "eligibility",
+          "heading": false
+        },
+        {
+          "term": "validates",
+          "heading": false
+        },
+        {
+          "term": "social media",
+          "heading": false
+        },
+        {
+          "term": "filters",
+          "heading": false
+        },
+        {
+          "term": "fraud",
+          "heading": false
+        },
+        {
+          "term": "tournament",
+          "heading": false
+        },
+        {
+          "term": "weather",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 A.2. Workflow Summary Table Workflow Brief Overview Nodes Edges Cart Online retail order fulfillment process covering cart validation, payment authorisation, inventory reservation, shipping, delivery monitoring, and refund/reorder handling. 52 60 Cost Fraud cost optimisation workflow that evaluates rules, checks fraud flags, payment status, and recoverability to",
+      "extractCut": true
+    },
+    {
+      "id": "page-013",
+      "number": null,
+      "title": "Page 13",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 33,
+      "summary": {
+        "text": "Appendix A.3 (Key Metrics by Approach): section heading and caption for Figure 4 comparing aggregate agent run evaluation metrics across approaches.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "key metrics",
+          "heading": false
+        },
+        {
+          "term": "icml",
+          "heading": false
+        },
+        {
+          "term": "approach",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 A.3. Key Metrics by Approach Figure 4. Key metrics by approach. Comparison of key metrics across different approaches in agent run evaluation. 13",
+      "extractCut": false
+    },
+    {
+      "id": "page-014",
+      "number": null,
+      "title": "Page 14",
+      "level": 1,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 361,
+      "summary": {
+        "text": "Appendix A.4 (Base Prompt for Agent Generation, Figure 5): verbatim base prompt given to Roo and Cline to create a ReAct agent in `{framework}_agent_experiment_{num}` with `agent.py` (FastAPI service on `localhost:7860` exposing `/chat` and `/get_history`), `tools.py`, and `prompts/agent_prompt.md`, reading `OPENAI_BASE_URL`, `OPENAI_API_KEY`, and `AGENT_LLM` from environment variables and implementing the supplied `<API_SPEC>` and `<BPMN>` blocks without reading other files or executing the code.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "genai powered",
+          "heading": false
+        },
+        {
+          "term": "powered react",
+          "heading": false
+        },
+        {
+          "term": "react agent",
+          "heading": false
+        },
+        {
+          "term": "accepts conversation",
+          "heading": false
+        },
+        {
+          "term": "openai api",
+          "heading": false
+        },
+        {
+          "term": "openai base",
+          "heading": false
+        },
+        {
+          "term": "agent generation",
+          "heading": false
+        },
+        {
+          "term": "tool calls",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 A.4. Base Prompt for Agent Generation Create a GenAI powered ReAct agent in a new folder called {framework} agent experiment {num}. Do not create a state machine, hardcoded implementation or any other implementation, your agent should be a GenAI powered ReAct agent that uses tool calls to complete the task. Do not ask any questions about what implementation to use",
+      "extractCut": true
+    },
+    {
+      "id": "page-015",
+      "number": null,
+      "title": "Page 15",
+      "level": 1,
+      "pageStart": 15,
+      "pageEnd": 15,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 65,
+      "summary": {
+        "text": "Appendix A.5 (BPMN Specifications for Each Workflow): section heading and Figure 6 caption for the online retail cart/order fulfillment BPMN workflow (cart validation, payment authorisation, inventory reservation, shipping or cancellation/backorder routing, delivery monitoring, and delivery confirmation, refund, or reorder).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "cart",
+          "heading": false
+        },
+        {
+          "term": "payment",
+          "heading": false
+        },
+        {
+          "term": "shipping",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 A.5. BPMN Specifications for Each Workflow Figure 6. Online retail cart/order fulfillment workflow. The process validates the cart, authorises payment, reserves inventory, and routes to either fulfillment/shipping or cancellation/backorder handling depending on payment and stock decisions. After shipping, it monitors delivery and branches into delayed/lost handling,",
+      "extractCut": true
+    },
+    {
+      "id": "page-016",
+      "number": null,
+      "title": "Page 16",
+      "level": 1,
+      "pageStart": 16,
+      "pageEnd": 16,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 41,
+      "summary": {
+        "text": "Figure 7 caption: costing/estimation BPMN workflow consisting of a deterministic sequence of data-gathering and calculation tasks with decision gateways selecting cost components and aggregating a final cost/price output.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "costing",
+          "heading": false
+        },
+        {
+          "term": "price",
+          "heading": false
+        },
+        {
+          "term": "gateways",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 7. Costing/estimation workflow. A deterministic sequence of data-gathering and calculation tasks with decision gateways that select which cost components to apply, followed by aggregation into a final cost/price output. 16",
+      "extractCut": false
+    },
+    {
+      "id": "page-017",
+      "number": null,
+      "title": "Page 17",
+      "level": 1,
+      "pageStart": 17,
+      "pageEnd": 17,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 42,
+      "summary": {
+        "text": "Figure 8 caption: deal assessment BPMN workflow evaluating a candidate deal through staged checks and scoring steps and routing via decision gateways to accept, reject, or escalate outcomes.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "deal",
+          "heading": false
+        },
+        {
+          "term": "checks",
+          "heading": false
+        },
+        {
+          "term": "staged",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 8. Deal assessment workflow. The workflow evaluates a candidate deal through staged checks and scoring steps, using decision gateways to route to accept/reject/escalate outcomes based on thresholds and validation checks. 17",
+      "extractCut": false
+    },
+    {
+      "id": "page-018",
+      "number": null,
+      "title": "Page 18",
+      "level": 1,
+      "pageStart": 18,
+      "pageEnd": 18,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 39,
+      "summary": {
+        "text": "Figure 9 caption: rules/criteria-driven labelling/classification BPMN workflow applying sequential checks and gateways to assign labels and/or exclude items.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "labelling",
+          "heading": false
+        },
+        {
+          "term": "terminating",
+          "heading": false
+        },
+        {
+          "term": "exclude",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 9. Labelling/classification workflow. A rules/criteria-driven labelling pipeline that applies sequential checks and uses gateways to assign labels and/or exclude items, terminating once a label decision is reached. 18",
+      "extractCut": false
+    },
+    {
+      "id": "page-019",
+      "number": null,
+      "title": "Page 19",
+      "level": 1,
+      "pageStart": 19,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 43,
+      "summary": {
+        "text": "Figure 10 caption: news processing BPMN workflow that ingests an item, performs validation and enrichment steps, and routes through conditional eligibility/quality branches to categorise, discard, or escalate.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "categorisation",
+          "heading": false
+        },
+        {
+          "term": "eligibility",
+          "heading": false
+        },
+        {
+          "term": "enrichment",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 10. News processing workflow. The process ingests an item, performs validation and enrichment steps, then routes through conditional branches (e.g., eligibility/quality thresholds) to produce a final categorisation/output or a discard/escalation outcome. 19",
+      "extractCut": false
+    },
+    {
+      "id": "page-020",
+      "number": null,
+      "title": "Page 20",
+      "level": 1,
+      "pageStart": 20,
+      "pageEnd": 20,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 44,
+      "summary": {
+        "text": "Figure 11 caption: risk and opportunity classifier BPMN workflow that computes risk/opportunity signals, derives a risk/opportunity/mixed/neutral label, and routes via a decision gateway into high/medium vs low priority handling paths.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "risk opportunity",
+          "heading": false
+        },
+        {
+          "term": "neutral",
+          "heading": false
+        },
+        {
+          "term": "derives",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 11. Risk & opportunity classifier workflow. The workflow computes risk/opportunity signals, derives a final label (risk/opportunity/mixed/neutral), then routes by a decision gateway into different priority/handling paths (e.g., high/medium vs low) before completing. 20",
+      "extractCut": false
+    },
+    {
+      "id": "page-021",
+      "number": null,
+      "title": "Page 21",
+      "level": 1,
+      "pageStart": 21,
+      "pageEnd": 21,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 45,
+      "summary": {
+        "text": "Figure 12 caption: social media BPMN workflow performing content, user, and context checks and routing via decision gateways to allow, flag, or escalate.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "escalate",
+          "heading": false
+        },
+        {
+          "term": "ending",
+          "heading": false
+        },
+        {
+          "term": "multi-step",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 12. Social media workflow. A multi-step pipeline that performs content/user/context checks and then uses decision gateways to choose an action path (e.g., allow, flag, or escalate), ending once an action outcome is produced. 21",
+      "extractCut": false
+    },
+    {
+      "id": "page-022",
+      "number": null,
+      "title": "Page 22",
+      "level": 1,
+      "pageStart": 22,
+      "pageEnd": 22,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 50,
+      "summary": {
+        "text": "Figure 13 caption: customer promotion BPMN workflow that fetches and validates customer profiles, retrieves order history and loyalty points, checks eligibility, segments customers into high/low value tiers, calculates tier-appropriate discounts, generates recommendations, and routes notifications by urgency.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "promotion",
+          "heading": false
+        },
+        {
+          "term": "customer",
+          "heading": false
+        },
+        {
+          "term": "tiers",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 13. Customer promotion workflow. The process fetches and validates customer profiles, retrieves order history and loyalty points, checks promotion eligibility, segments customers into value tiers (high/low), calculates tier-appropriate discounts, generates recommendations, and routes notifications based on promotion urgency. 22",
+      "extractCut": false
+    },
+    {
+      "id": "page-023",
+      "number": null,
+      "title": "Page 23",
+      "level": 1,
+      "pageStart": 23,
+      "pageEnd": 23,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 36,
+      "summary": {
+        "text": "Figure 14 caption: tournament/bracket BPMN workflow advancing participants through staged rounds via decision gateways until a final winner/outcome is determined.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "tournament",
+          "heading": false
+        },
+        {
+          "term": "advancement",
+          "heading": false
+        },
+        {
+          "term": "staged",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 14. Tournament/bracket workflow. The workflow advances items/participants through staged rounds, using decision gateways to determine advancement and termination once a final winner/outcome is determined. 23",
+      "extractCut": false
+    },
+    {
+      "id": "page-024",
+      "number": null,
+      "title": "Page 24",
+      "level": 1,
+      "pageStart": 24,
+      "pageEnd": 24,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 37,
+      "summary": {
+        "text": "Figure 15 caption: deterministic weather BPMN workflow performing data retrieval and transformation steps with conditional availability/threshold branches to produce a final forecast/decision output.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "forecast",
+          "heading": false
+        },
+        {
+          "term": "branches",
+          "heading": false
+        },
+        {
+          "term": "weather",
+          "heading": false
+        }
+      ],
+      "extract": "Published as a workshop paper at SCALE - ICML 2026 Figure 15. Weather workflow. A deterministic sequence of data retrieval and transformation steps with conditional branches (e.g., data availability/threshold checks), culminating in a final forecast/decision output. 24",
+      "extractCut": false
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "pagesCovered": 24,
+  "keywords": [
+    {
+      "term": "agentic workflow",
+      "heading": false
+    },
+    {
+      "term": "workflow agent",
+      "heading": false
+    },
+    {
+      "term": "scale icml",
+      "heading": false
+    },
+    {
+      "term": "workflow generation",
+      "heading": false
+    },
+    {
+      "term": "workflow execution",
+      "heading": false
+    },
+    {
+      "term": "bpmn workflows",
+      "heading": false
+    },
+    {
+      "term": "workshop paper",
+      "heading": false
+    },
+    {
+      "term": "workflow logic",
+      "heading": false
+    },
+    {
+      "term": "promotion workflow",
+      "heading": false
+    },
+    {
+      "term": "specialist workflows",
+      "heading": false
+    },
+    {
+      "term": "workflow structure",
+      "heading": false
+    },
+    {
+      "term": "classification workflow",
+      "heading": false
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/arxiv-2607.14456v1"
+  }
+}

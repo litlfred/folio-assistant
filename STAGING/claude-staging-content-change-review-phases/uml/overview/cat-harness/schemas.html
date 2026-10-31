@@ -1,0 +1,1362 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style><script src="../../../assets/js/vendor/lunr.min.js"></script><script src="../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>UML — cat-harness/schemas | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="UML — cat-harness/schemas" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="UML — cat-harness/schemas" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "uml-overview-cat-harness-schemas",
+    "src": "../../../assets/qa/uml-overview-cat-harness-schemas/page.translation.json",
+    "index": "../../../assets/qa/uml-overview-cat-harness-schemas/qa-index.json",
+    "list": "../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../folio-assistant-core/","jsonld":"../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../build.json"><meta name="fa-fsh-guts-src" content="../../../fsh-guts.json"><link rel="stylesheet" href="../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../assets/css/avatars.css?v=573c7a318c07"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../assets/js/harness-data.js" defer></script><script src="../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../assets/js/kg-render.js" defer></script><script src="../../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../../assets/js/docs-ui.js?v=59c1d8d3ff0a" defer></script><script src="../../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../../assets/js/work-plan.js" defer></script><script src="../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../assets/css/navbar.css"><script src="../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../assets/page-layout.css" data-fa-page-layout><script src="../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-giobbw31pa","here":"/uml/overview/cat-harness/schemas.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#sub-graphs","label":"Sub-graphs"},{"href":"#the-same-model-drawn-by-mermaid","label":"The same model, drawn by Mermaid"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><span>UML — cat-harness/schemas</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 id="uml--cat-harnessschemas"><a href="#uml--cat-harnessschemas" class="anchor-heading" aria-labelledby="uml--cat-harnessschemas"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UML — cat-harness/schemas
+  
+  
+</h1><p>Generated by <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/gen-uml-overview.ts</code> — do not edit. The <code class="language-plaintext highlighter-rouge">schemas</code> sub-graph of <code class="language-plaintext highlighter-rouge">cat-harness</code> (<code class="language-plaintext highlighter-rouge">cat-harness/schemas</code>), with every attribute read from its node schema.</p><p><strong>Sources (same model):</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/overview/cat-harness/schemas.puml">PlantUML</a> · <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/overview/cat-harness/schemas.mmd">Mermaid</a> · <a href="../../../assets/img/uml/overview/cat-harness/schemas.dot">Graphviz DOT</a></p><div class="fa-uml-views"><fieldset class="fa-uml-view-pick"><legend>Layout</legend><input type="radio" name="fa-uml-overview_cat_harness_schemas" id="fa-uml-overview_cat_harness_schemas-portrait" class="fa-uml-pick-portrait" checked="" /><label for="fa-uml-overview_cat_harness_schemas-portrait">Portrait</label> <input type="radio" name="fa-uml-overview_cat_harness_schemas" id="fa-uml-overview_cat_harness_schemas-landscape" class="fa-uml-pick-landscape" /><label for="fa-uml-overview_cat_harness_schemas-landscape">Landscape</label> <input type="radio" name="fa-uml-overview_cat_harness_schemas" id="fa-uml-overview_cat_harness_schemas-interactive" class="fa-uml-pick-interactive" /><label for="fa-uml-overview_cat_harness_schemas-interactive">Interactive</label></fieldset><figure class="bpmn-figure fa-uml-portrait"><img src="../../../assets/img/uml/overview/cat-harness/schemas.svg" alt="UML class diagram of cat-harness/schemas: one package per named sub-graph, one class per node schema, with its data fields. Portrait layout." /></figure><figure class="bpmn-figure fa-uml-landscape"><img src="../../../assets/img/uml/overview/cat-harness/schemas.landscape.svg" alt="UML class diagram of cat-harness/schemas: one package per named sub-graph, one class per node schema, with its data fields. Landscape layout." /></figure><div class="kg-graph fa-uml-interactive fa-figure-scope" id="kg-overview_cat_harness_schemas" data-dot-src="../../../assets/img/uml/overview/cat-harness/schemas.dot" data-label="UML class diagram of cat-harness/schemas, laid out by Graphviz in the browser: drag a node to move it and its edges."><p class="kg-graph-status">The interactive view lays this diagram out in your browser with Graphviz, and needs JavaScript. Without it, pick Portrait or Landscape, or read <a href="../../../assets/img/uml/overview/cat-harness/schemas.dot">the DOT source</a>.</p></div></div><script type="module" src="../../../assets/js/kg-graph.js"></script><div class="table-wrapper"><table><thead><tr><th>sub-graph</th><th>directory</th><th>graph typologies</th><th>node schema</th><th>nodes</th><th>cohesion</th><th>in</th><th>out</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">cat-harness/schemas</code></td><td><code class="language-plaintext highlighter-rouge">cat-harness/schemas</code></td><td>schemas, cat-harness</td><td><code class="language-plaintext highlighter-rouge">schema: skills/ask-the-person/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/ask-the-person/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/bean-drain/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/bean-drain/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/bpmn-authoring/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/bpmn-authoring/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-author/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-author/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-feedback/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-feedback/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-plan/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-plan/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-publish/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-publish/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-review/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-review/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-test/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-test/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-validate/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/content-validate/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/crdm-detect/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/crdm-detect/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/dmn-authoring/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/dmn-authoring/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/staging-review/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/staging-review/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/wireframe-design-review/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/wireframe-design-review/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/wireframe-viewport-check/input.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: skills/wireframe-viewport-check/output.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: staging-comparison.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/bean-defs.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/binary-release.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/board-positions.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/boards.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/code-list.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/fsh-guts.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/health.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/memory.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/policies.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/qa-report.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/scenarios.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/sme-case-verdict.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/substrate-snapshot.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/test-data-fixed.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/test-data-generated.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/test-plan.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/test-report.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/themes.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/todo-feedback.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/todo-items.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/tools.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/translation-sources.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/vocab-mapping.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/voice-vendors.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/voices.schema.json</code>; <code class="language-plaintext highlighter-rouge">schema: kinds/waiver.schema.json</code>; <code class="language-plaintext highlighter-rouge">ext: JSON Schema 2020-12</code></td><td>322</td><td>0.54</td><td>356</td><td>3</td></tr></tbody></table></div><p><em>Nodes, cohesion, in and out</em> are the detangler’s pinned measurements for the same directory (<code class="language-plaintext highlighter-rouge">bun run cat kg:detangle</code>; skill <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-detanglement.md"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a>). <em>Not measured</em> means the detangler does not scan that directory, not that it has no edges.</p><h2 id="sub-graphs"><a href="#sub-graphs" class="anchor-heading" aria-labelledby="sub-graphs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sub-graphs
+  
+  
+</h2><ul><li><a href="../cat-harness.html">← all of cat-harness</a></li></ul><h2 id="the-same-model-drawn-by-mermaid"><a href="#the-same-model-drawn-by-mermaid" class="anchor-heading" aria-labelledby="the-same-model-drawn-by-mermaid"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The same model, drawn by Mermaid
+  
+  
+</h2><p>Kept so the page renders even where the PlantUML image is missing, and because Mermaid nodes carry the CSS class that colours them from <code class="language-plaintext highlighter-rouge">uml.css</code>.</p><pre><code class="language-mermaid">classDiagram
+  direction TB
+  namespace cat_harness__schemas {
+    class cat_harness_schemas_skills_ask_the_person_input_schema_json_Option["Option"] {
+      &lt;&lt;schema: skills/ask-the-person/input.schema.json&gt;&gt;
+      letter [1] string
+      label [1] string
+      does [1] string
+      pro [1] string
+      con [1] string
+      downstream [1] string
+      reversibility [1] string
+    }
+    class cat_harness_schemas_skills_ask_the_person_input_schema_json_Ask_The_Person_Input["Ask The Person Input"] {
+      &lt;&lt;schema: skills/ask-the-person/input.schema.json&gt;&gt;
+      decides [1] string
+      context [1] string
+      glossary [1] map~string~
+      options [2..*] Option[]
+      recommends [1] string
+      because [1] string
+      ifSilent [1] string
+      question [1] string
+      othersPending [1] integer
+      reversible [1] boolean
+    }
+    class cat_harness_schemas_skills_ask_the_person_output_schema_json_Ask_The_Person_Output["Ask The Person Output"] {
+      &lt;&lt;schema: skills/ask-the-person/output.schema.json&gt;&gt;
+      asked [1] object
+      outcome [1] answered | silent | dismissed
+      chosen [1] string | null
+      quote [1] string | null
+      defaultTaken [1] boolean
+      rule [0..1] string
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_bean_drain_input_schema_json_Copy["Copy"] {
+      &lt;&lt;schema: skills/bean-drain/input.schema.json&gt;&gt;
+      repo [1] string
+      ref [1] string
+      defs [1] string
+    }
+    class cat_harness_schemas_skills_bean_drain_input_schema_json_Agent["Agent"] {
+      &lt;&lt;schema: skills/bean-drain/input.schema.json&gt;&gt;
+      name [1] string
+      authors [1..*] string[]
+      self [1] boolean
+    }
+    class cat_harness_schemas_skills_bean_drain_input_schema_json_Bean_Drain_Input["Bean Drain Input"] {
+      &lt;&lt;schema: skills/bean-drain/input.schema.json&gt;&gt;
+      copies [1..*] Copy[]
+      agents [1..*] Agent[]
+      holdings [1] map~any[]~
+      windowHours [1] integer
+      queueFile [1] string
+      repos [0..*] string[]
+    }
+    class cat_harness_schemas_skills_bean_drain_output_schema_json_Result["Result"] {
+      &lt;&lt;schema: skills/bean-drain/output.schema.json&gt;&gt;
+      bean [1] any
+      outcome [1] completed | scrapped | asked-owner | returned-to-todo | blocked
+      prs [0..*] string~uri~[]
+      question [0..1] string~uri~
+    }
+    class cat_harness_schemas_skills_bean_drain_output_schema_json_Bean_Drain_Output["Bean Drain Output"] {
+      &lt;&lt;schema: skills/bean-drain/output.schema.json&gt;&gt;
+      queue [1] any
+      checks [0..*] any[]
+      results [0..*] Result[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input["BPMN Authoring Input"] {
+      &lt;&lt;schema: skills/bpmn-authoring/input.schema.json&gt;&gt;
+      processName [1] string
+      sourceWorkflow [0..1] string
+      existingBpmn [0..1] string
+      participants [0..*] string[]
+    }
+    class cat_harness_schemas_skills_bpmn_authoring_output_schema_json_BPMN_Authoring_Output["BPMN Authoring Output"] {
+      &lt;&lt;schema: skills/bpmn-authoring/output.schema.json&gt;&gt;
+      bpmnFile [1] string
+      diagramFile [0..1] string
+      taskCount [0..1] integer
+      gatewayCount [0..1] integer
+      participantCount [0..1] integer
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_author_input_schema_json_Content_Author_Input["Content Author Input"] {
+      &lt;&lt;schema: skills/content-author/input.schema.json&gt;&gt;
+      contentType [1] document | fhir-ig | lean-proof | bpmn | data-dictionary
+      sourceRef [0..1] string
+      outputDir [0..1] string
+    }
+    class cat_harness_schemas_skills_content_author_output_schema_json_Artifact["Artifact"] {
+      &lt;&lt;schema: skills/content-author/output.schema.json&gt;&gt;
+      path [1] string
+      type [1] string
+      status [0..1] draft | ready-for-validation
+    }
+    class cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output["Content Author Output"] {
+      &lt;&lt;schema: skills/content-author/output.schema.json&gt;&gt;
+      artifacts [0..*] Artifact[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem["FeedbackItem"] {
+      &lt;&lt;schema: skills/content-feedback/input.schema.json&gt;&gt;
+      description [1] string
+      severity [0..1] critical | major | minor | enhancement
+      component [0..1] string
+      reporter [0..1] string
+    }
+    class cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input["Content Feedback Input"] {
+      &lt;&lt;schema: skills/content-feedback/input.schema.json&gt;&gt;
+      source [1] github-issues | survey | implementation-report | clinical-review
+      publishedVersion [0..1] string
+      feedbackItems [0..*] FeedbackItem[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem["TriagedItem"] {
+      &lt;&lt;schema: skills/content-feedback/output.schema.json&gt;&gt;
+      id [1] string
+      priority [1] P0 | P1 | P2 | P3
+      disposition [1] backlog | next-sprint | wont-fix | duplicate | needs-info
+      assignee [0..1] string
+      linkedIssue [0..1] string
+    }
+    class cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output["Content Feedback Output"] {
+      &lt;&lt;schema: skills/content-feedback/output.schema.json&gt;&gt;
+      triagedItems [0..*] TriagedItem[]
+      summary [0..1] object
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_plan_input_schema_json_Content_Plan_Input["Content Plan Input"] {
+      &lt;&lt;schema: skills/content-plan/input.schema.json&gt;&gt;
+      projectName [1] string
+      scope [0..1] string
+      targetDate [0..1] string~date~
+      teamSize [0..1] integer
+      sprintDuration [0..1] 1w | 2w | 3w | 4w
+    }
+    class cat_harness_schemas_skills_content_plan_output_schema_json_Content_Plan_Output["Content Plan Output"] {
+      &lt;&lt;schema: skills/content-plan/output.schema.json&gt;&gt;
+      plan [1] object
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_publish_input_schema_json_Content_Publish_Input["Content Publish Input"] {
+      &lt;&lt;schema: skills/content-publish/input.schema.json&gt;&gt;
+      versionIncrement [1] major | minor | patch
+      releaseNotes [0..1] string
+      target [0..1] github-release | npm | fhir-registry | arxiv
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_publish_output_schema_json_Content_Publish_Output["Content Publish Output"] {
+      &lt;&lt;schema: skills/content-publish/output.schema.json&gt;&gt;
+      version [1] string
+      status [1] published | failed
+      publishedUrl [0..1] string
+      releaseTag [0..1] string
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_review_input_schema_json_Content_Review_Input["Content Review Input"] {
+      &lt;&lt;schema: skills/content-review/input.schema.json&gt;&gt;
+      reviewType [1] l2-to-l3-gate | l3-to-publish-gate | change-assessment | final-signoff
+      contentRef [1] string
+      previousVersion [0..1] string
+      validationReport [0..1] string
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_review_output_schema_json_Finding["Finding"] {
+      &lt;&lt;schema: skills/content-review/output.schema.json&gt;&gt;
+      id [1] string
+      subject [1] string
+      criterion [0..1] string
+      reviewer [1] object
+      severity [0..1] critical | major | minor
+      weight [0..1] blocking | suggestion | praise
+      detail [1] string
+      evidence [0..*] any[]
+      raised_at [0..1] string~date-time~
+    }
+    class cat_harness_schemas_skills_content_review_output_schema_json_Note["Note"] {
+      &lt;&lt;schema: skills/content-review/output.schema.json&gt;&gt;
+      id [1] string
+      author [1] object
+      rationale [1] string
+      cites [1..*] any[]
+      proposed_by [0..1] string
+      written_at [0..1] string~date-time~
+    }
+    class cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output["Content Review Output"] {
+      &lt;&lt;schema: skills/content-review/output.schema.json&gt;&gt;
+      findings [0..*] Finding[]
+      decision [1] object
+      notes [0..*] Note[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_test_input_schema_json_Content_Test_Input["Content Test Input"] {
+      &lt;&lt;schema: skills/content-test/input.schema.json&gt;&gt;
+      targetPath [1] string
+      testPlan [0..1] string
+      testData [0..1] string
+      regressionBaseline [0..1] string
+    }
+    class cat_harness_schemas_skills_content_test_output_schema_json_TestResult["TestResult"] {
+      &lt;&lt;schema: skills/content-test/output.schema.json&gt;&gt;
+      testId [1] string
+      status [1] pass | fail | skipped
+      message [0..1] string
+      duration [0..1] number
+    }
+    class cat_harness_schemas_skills_content_test_output_schema_json_Content_Test_Output["Content Test Output"] {
+      &lt;&lt;schema: skills/content-test/output.schema.json&gt;&gt;
+      overallStatus [1] pass | fail
+      testResults [0..*] TestResult[]
+      coverage [0..1] object
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_validate_input_schema_json_Content_Validate_Input["Content Validate Input"] {
+      &lt;&lt;schema: skills/content-validate/input.schema.json&gt;&gt;
+      targetPath [1] string
+      validationRules [0..*] string[]
+      schemaRefs [0..*] string[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_content_validate_output_schema_json_Result["Result"] {
+      &lt;&lt;schema: skills/content-validate/output.schema.json&gt;&gt;
+      rule [1] string
+      status [1] pass | fail | warning | skipped
+      message [0..1] string
+      location [0..1] string
+    }
+    class cat_harness_schemas_skills_content_validate_output_schema_json_Content_Validate_Output["Content Validate Output"] {
+      &lt;&lt;schema: skills/content-validate/output.schema.json&gt;&gt;
+      overallStatus [1] pass | warnings | errors
+      results [0..*] Result[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input["CRDM Detect Input"] {
+      &lt;&lt;schema: skills/crdm-detect/input.schema.json&gt;&gt;
+      text [1] string
+    }
+    class cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output["CRDM Detect Output"] {
+      &lt;&lt;schema: skills/crdm-detect/output.schema.json&gt;&gt;
+      fires [1] boolean
+      categories [0..*] list~direct-capability | workflow-gap | platform-change | cross-cutting | review-surfaced | self-declared-genre~
+      excluded [1] boolean
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable["InputVariable"] {
+      &lt;&lt;schema: skills/dmn-authoring/input.schema.json&gt;&gt;
+      name [1] string
+      type [1] string | integer | boolean | date | codeable-concept
+    }
+    class cat_harness_schemas_skills_dmn_authoring_input_schema_json_DMN_Authoring_Input["DMN Authoring Input"] {
+      &lt;&lt;schema: skills/dmn-authoring/input.schema.json&gt;&gt;
+      decisionName [1] string
+      inputVariables [0..*] InputVariable[]
+      sourceLogic [0..1] string
+    }
+    class cat_harness_schemas_skills_dmn_authoring_output_schema_json_DMN_Authoring_Output["DMN Authoring Output"] {
+      &lt;&lt;schema: skills/dmn-authoring/output.schema.json&gt;&gt;
+      dmnFile [1] string
+      decisionTableCount [0..1] integer
+      ruleCount [0..1] integer
+      hitPolicy [0..1] UNIQUE | FIRST | PRIORITY | ANY | COLLECT | RULE ORDER
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_skills_staging_review_input_schema_json_Staging_Review_Input["Staging Review Input"] {
+      &lt;&lt;schema: skills/staging-review/input.schema.json&gt;&gt;
+      ask [0..1] string
+      branch [0..1] string
+      pr [0..1] integer
+    }
+    class cat_harness_schemas_skills_staging_review_output_schema_json_Staging_Review_Output["Staging Review Output"] {
+      &lt;&lt;schema: skills/staging-review/output.schema.json&gt;&gt;
+      narrative [1] string
+      startHere [0..1] string~uri~
+      stagingLinks [1] any
+    }
+    class cat_harness_schemas_skills_wireframe_design_review_input_schema_json_Channel["Channel"] {
+      &lt;&lt;schema: skills/wireframe-design-review/input.schema.json&gt;&gt;
+      kind [1] conversation | issue | pull-request
+      url [0..1] string~uri~
+    }
+    class cat_harness_schemas_skills_wireframe_design_review_input_schema_json_Wireframe_Design_Review_Input["Wireframe Design Review Input"] {
+      &lt;&lt;schema: skills/wireframe-design-review/input.schema.json&gt;&gt;
+      use [1] design | as-is
+      topic [1] string
+      surface [1] string
+      intent [0..1] string
+      requirements [0..*] string[]
+      proposal [0..1] string
+      humanReviewer [0..1] string
+      channels [0..*] Channel[]
+      branch [0..1] string
+    }
+    class cat_harness_schemas_skills_wireframe_design_review_output_schema_json_Candidate["Candidate"] {
+      &lt;&lt;schema: skills/wireframe-design-review/output.schema.json&gt;&gt;
+      id [1] string
+      title [0..1] string
+      source [1] string
+      screenshots [1] object
+      staging [0..1] object
+      entries [0..*] any[]
+      outcome [1] chosen | rejected | pending | as-is
+      reason [0..1] string
+    }
+    class cat_harness_schemas_skills_wireframe_design_review_output_schema_json_Wireframe_Design_Review_Output["Wireframe Design Review Output"] {
+      &lt;&lt;schema: skills/wireframe-design-review/output.schema.json&gt;&gt;
+      use [1] design | as-is
+      topic [1] string
+      assetDir [1] string
+      intent [0..1] string
+      candidates [1..*] Candidate[]
+      chosen [0..1] object
+      changedAssets [0..*] any[]
+      stagingLinks [1] any
+    }
+    class cat_harness_schemas_skills_wireframe_viewport_check_input_schema_json_Wireframe_Viewport_Check_Input["Wireframe Viewport Check Input"] {
+      &lt;&lt;schema: skills/wireframe-viewport-check/input.schema.json&gt;&gt;
+      candidates [1..*] string[]
+      out [0..1] string
+    }
+    class cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Candidate["Candidate"] {
+      &lt;&lt;schema: skills/wireframe-viewport-check/output.schema.json&gt;&gt;
+      source [1] string
+      screenshots [1] object
+      entries [0..*] any[]
+    }
+    class cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Wireframe_Viewport_Check_Output["Wireframe Viewport Check Output"] {
+      &lt;&lt;schema: skills/wireframe-viewport-check/output.schema.json&gt;&gt;
+      report [1] string
+      candidates [0..*] Candidate[]
+      stagingLinks [0..1] any
+    }
+    class cat_harness_schemas_staging_comparison_schema_json_Page["Page"] {
+      &lt;&lt;schema: staging-comparison.schema.json&gt;&gt;
+      title [1] string
+      before [0..1] string~uri~
+      after [0..1] string~uri~
+      summary [0..1] string
+    }
+    class cat_harness_schemas_staging_comparison_schema_json_Staging_links["Staging links"] {
+      &lt;&lt;schema: staging-comparison.schema.json&gt;&gt;
+      branch [1] string
+      slug [1] string
+      branchUrl [1] string~uri~
+      pr [0..1] integer
+      mainBaseUrl [1] string~uri~
+      stagingBaseUrl [1] string~uri~
+      pages [0..*] Page[]
+      missing [0..*] string[]
+    }
+    class cat_harness_schemas_kinds_bean_defs_schema_json_Bean_definitions["Bean definitions"] {
+      &lt;&lt;schema: kinds/bean-defs.schema.json&gt;&gt;
+      id [0..1] string
+      title [0..1] string
+      status [0..1] string
+      type [0..1] string
+      priority [0..1] string
+      parent [0..1] string
+      blocking [0..*] string[]
+      blocked_by [0..*] string[]
+      created_at [0..1] string
+      updated_at [0..1] string
+      tags [0..*] string[]
+      issue [0..1] integer | string
+      targets [0..1] string[] | string
+      $schema [1] string
+    }
+    class cat_harness_schemas_kinds_binary_release_schema_json_Asset["Asset"] {
+      &lt;&lt;schema: kinds/binary-release.schema.json&gt;&gt;
+      name [1] string
+      bytes [1] integer
+      digest [0..1] object
+      fetchedFrom [1] string
+      contentType [0..1] string
+      disposition [1] unknown | published | deleted-before-deploy | superseded | expired
+      dispositionReason [0..1] string
+    }
+    class cat_harness_schemas_kinds_binary_release_schema_json_Binary_releases["Binary releases"] {
+      &lt;&lt;schema: kinds/binary-release.schema.json&gt;&gt;
+      $schema [1] 'folio-binary-release/v1'
+      release [1] object
+      origin [1] object
+      assets [0..*] Asset[]
+    }
+    class cat_harness_schemas_kinds_board_positions_schema_json_Board_positions["Board positions"] {
+      &lt;&lt;schema: kinds/board-positions.schema.json&gt;&gt;
+      $schema [1] 'folio-board-positions/v1'
+      boards [1] map~map~object~~
+    }
+    class cat_harness_schemas_kinds_boards_schema_json_Boards["Boards"] {
+      &lt;&lt;schema: kinds/boards.schema.json&gt;&gt;
+      $schema [1] 'folio-board/v1'
+      id [1] string
+      title [1] string
+      filter [0..1] object
+    }
+    class cat_harness_schemas_kinds_code_list_schema_json_Code["Code"] {
+      &lt;&lt;schema: kinds/code-list.schema.json&gt;&gt;
+      code [1] string
+      label [1] string
+      definition [1] string
+      source [0..1] object
+      value [0..1] string
+      status [0..1] active | retired
+    }
+    class cat_harness_schemas_kinds_code_list_schema_json_Code_lists["Code lists"] {
+      &lt;&lt;schema: kinds/code-list.schema.json&gt;&gt;
+      $schema [1] 'folio-code-list/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      source [1] object
+      codes [1..*] Code[]
+    }
+    class cat_harness_schemas_kinds_fsh_guts_schema_json_FSH_guts["FSH guts"] {
+      &lt;&lt;schema: kinds/fsh-guts.schema.json&gt;&gt;
+      $schema [1] 'folio-fsh-guts/v1'
+      title [1] string
+      kind [1] string
+      movedOn [0..1] string
+      movedFrom [0..1] string
+      issue [0..1] string | number
+      bean [0..1] string
+      summary [0..1] string
+    }
+    class cat_harness_schemas_kinds_health_schema_json_Threshold["Threshold"] {
+      &lt;&lt;schema: kinds/health.schema.json&gt;&gt;
+      metric [1] string
+      value [1] number
+      unit [1] string
+      basis [1] string
+      severity [1] critical | major | minor
+    }
+    class cat_harness_schemas_kinds_health_schema_json_Measurement["Measurement"] {
+      &lt;&lt;schema: kinds/health.schema.json&gt;&gt;
+      metric [1] string
+      value [1] number
+      unit [1] string
+      command [1] string
+    }
+    class cat_harness_schemas_kinds_health_schema_json_Finding["Finding"] {
+      &lt;&lt;schema: kinds/health.schema.json&gt;&gt;
+      summary [1] string
+      metric [0..1] string
+      severity [1] critical | major | minor
+      action [1] string
+    }
+    class cat_harness_schemas_kinds_health_schema_json_Check["Check"] {
+      &lt;&lt;schema: kinds/health.schema.json&gt;&gt;
+      id [1] string
+      state [1] ok | finding | unknown
+      summary [1] string
+      thresholds [0..*] Threshold[]
+      measurements [0..*] Measurement[]
+      findings [0..*] Finding[]
+      reason [0..1] string
+    }
+    class cat_harness_schemas_kinds_health_schema_json_Health["Health"] {
+      &lt;&lt;schema: kinds/health.schema.json&gt;&gt;
+      $schema [1] 'health-report/v1'
+      producer [1] object
+      subject [1] object
+      updated_at [1] string
+      verdict [1] clean | findings | unknown
+      checks [1..*] Check[]
+      runContext [0..1] object
+    }
+    class cat_harness_schemas_kinds_memory_schema_json_AlsoAbout["AlsoAbout"] {
+      &lt;&lt;schema: kinds/memory.schema.json&gt;&gt;
+      kind [1] 'block'
+      label [1] string
+    }
+    class cat_harness_schemas_kinds_memory_schema_json_Memory["Memory"] {
+      &lt;&lt;schema: kinds/memory.schema.json&gt;&gt;
+      id [1] string
+      summary [1] string
+      comment [0..1] string
+      createdAt [1] string
+      updatedAt [0..1] string
+      targetLabel [0..1] string
+      anchor [0..1] object
+      alsoAbout [0..*] AlsoAbout[]
+      tags [0..1] object
+      label [1] stable | trap | baseline
+      measured [0..1] object
+      archived [0..1] boolean
+      detail [0..1] string
+      $schema [1] 'folio-memory/v1'
+    }
+    class cat_harness_schemas_kinds_policies_schema_json_Constraint["Constraint"] {
+      &lt;&lt;schema: kinds/policies.schema.json&gt;&gt;
+      leftOperand [1] enum(9)
+      operator [1] enum(18)
+      rightOperand [1] string | string[]
+    }
+    class cat_harness_schemas_kinds_policies_schema_json_Duty["Duty"] {
+      &lt;&lt;schema: kinds/policies.schema.json&gt;&gt;
+      uid [0..1] string
+      action [1] enum(8)
+      target [0..1] string
+      assigner [0..1] string
+      assignee [0..1] string
+      constraint [0..*] object[]
+    }
+    class cat_harness_schemas_kinds_policies_schema_json_Permission["Permission"] {
+      &lt;&lt;schema: kinds/policies.schema.json&gt;&gt;
+      assignee [1] string
+      action [1] string
+      target [0..1] string
+      constraint [0..*] Constraint[]
+      duty [1..*] Duty[]
+    }
+    class cat_harness_schemas_kinds_policies_schema_json_Prohibition["Prohibition"] {
+      &lt;&lt;schema: kinds/policies.schema.json&gt;&gt;
+      assignee [1] string
+      action [1] string
+      target [0..1] string
+      constraint [0..*] Constraint[]
+      duty [1..*] Duty[]
+    }
+    class cat_harness_schemas_kinds_policies_schema_json_Obligation["Obligation"] {
+      &lt;&lt;schema: kinds/policies.schema.json&gt;&gt;
+      uid [0..1] string
+      action [1] enum(8)
+      target [0..1] string
+      assigner [0..1] string
+      assignee [0..1] string
+      constraint [0..*] Constraint[]
+    }
+    class cat_harness_schemas_kinds_policies_schema_json_Policies["Policies"] {
+      &lt;&lt;schema: kinds/policies.schema.json&gt;&gt;
+      @context [1] string | any[] | map~any~
+      @type [1] Set | Offer | Agreement
+      uid [1] string
+      profile [1] string
+      inheritFrom [0..*] string[]
+      conflict [0..1] odrl:perm | odrl:prohibit | odrl:invalid
+      assigner [0..1] string
+      assignee [0..1] string
+      permission [0..*] Permission[]
+      prohibition [0..*] Prohibition[]
+      obligation [1..*] Obligation[]
+    }
+    class cat_harness_schemas_kinds_qa_report_schema_json_QA_reports["QA reports"] {
+      &lt;&lt;schema: kinds/qa-report.schema.json&gt;&gt;
+      $schema [1] 'qa-report/v1'
+      producer [1] dak-script | ig-publisher
+      source [1] object
+      toolchain [0..1] object
+      phase [1] string
+      timestamp [1] string
+      status [1] running | completed | failed
+      summary [1] object
+      details [1] object
+      runContext [0..1] object
+    }
+    class cat_harness_schemas_kinds_scenarios_schema_json_FormerName["FormerName"] {
+      &lt;&lt;schema: kinds/scenarios.schema.json&gt;&gt;
+      name [1] string
+      retiredOn [1] string
+    }
+    class cat_harness_schemas_kinds_scenarios_schema_json_Role["Role"] {
+      &lt;&lt;schema: kinds/scenarios.schema.json&gt;&gt;
+      persona [0..1] string
+      id [1] string
+      title [1] string
+      description [1] string
+      actorKinds [1..*] list~person | agent | system | external~
+      otherNames [0..*] string[]
+      formerNames [0..*] FormerName[]
+      skills [0..*] string[]
+      inherits [0..*] string[]
+      judgementOnly [0..1] boolean
+      requiredCapabilities [0..1] object
+    }
+    class cat_harness_schemas_kinds_scenarios_schema_json_Actor["Actor"] {
+      &lt;&lt;schema: kinds/scenarios.schema.json&gt;&gt;
+      id [1] string
+      title [1] string
+      kind [1] person | agent | system | external
+      description [0..1] string
+      roles [0..*] string[]
+    }
+    class cat_harness_schemas_kinds_scenarios_schema_json_Extension["Extension"] {
+      &lt;&lt;schema: kinds/scenarios.schema.json&gt;&gt;
+      role [1] string
+      skills [1..*] string[]
+    }
+    class cat_harness_schemas_kinds_scenarios_schema_json_Scenarios["Scenarios"] {
+      &lt;&lt;schema: kinds/scenarios.schema.json&gt;&gt;
+      name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
+      extensions [0..*] Extension[]
+    }
+    class cat_harness_schemas_kinds_sme_case_verdict_schema_json_SME_case_verdict_pairs["SME case/verdict pairs"] {
+      &lt;&lt;schema: kinds/sme-case-verdict.schema.json&gt;&gt;
+      id [1] string
+      dataSetRef [1] string
+      subjectKind [1] decision-support | indicator-definition
+      case [0..1] object
+      cohort [0..1] object
+      verdict [1] pass | fail | needs-revision
+      rationale [1] string
+      reviewer [1] object
+      reviewedAt [1] string
+      requirements [0..*] string[]
+      $schema [1] string
+    }
+    class cat_harness_schemas_kinds_substrate_snapshot_schema_json_Substrate_snapshots["Substrate snapshots"] {
+      &lt;&lt;schema: kinds/substrate-snapshot.schema.json&gt;&gt;
+      $schema [1] 'folio-substrate-snapshot/v1'
+      subscription [1] string
+      kind [0..1] substrate | content
+      repository [1] string
+      ref [1] string
+      file [1] string
+      raw [1] string
+      fixity [1] object
+      summary [1] object
+      note [0..1] string
+    }
+    class cat_harness_schemas_kinds_test_data_fixed_schema_json_Record["Record"] {
+      &lt;&lt;schema: kinds/test-data-fixed.schema.json&gt;&gt;
+      id [1] string
+      summary [0..1] string
+      payload [1] any
+      expected [0..1] any
+    }
+    class cat_harness_schemas_kinds_test_data_fixed_schema_json_Fixed_test_data_sets["Fixed test data sets"] {
+      &lt;&lt;schema: kinds/test-data-fixed.schema.json&gt;&gt;
+      id [1] string
+      title [1] string
+      version [1] string
+      contentType [1] string
+      specialisation [0..1] string
+      description [0..1] string
+      kind [1] 'fixed'
+      records [1..*] Record[]
+      citations [0..*] string[]
+      review [0..1] object
+      $schema [1] string
+    }
+    class cat_harness_schemas_kinds_test_data_generated_schema_json_Generated_test_data_recipes["Generated test data recipes"] {
+      &lt;&lt;schema: kinds/test-data-generated.schema.json&gt;&gt;
+      id [1] string
+      title [1] string
+      version [1] string
+      contentType [1] string
+      specialisation [1] string
+      description [0..1] string
+      kind [1] 'generated'
+      template [1] string
+      params [1] map~any~
+      seed [1] integer
+      sha256 [1] string
+      $schema [1] string
+    }
+    class cat_harness_schemas_kinds_test_plan_schema_json_Assertion["Assertion"] {
+      &lt;&lt;schema: kinds/test-plan.schema.json&gt;&gt;
+      id [1] string
+      type [1] required | informative
+      expectation [0..1] string
+    }
+    class cat_harness_schemas_kinds_test_plan_schema_json_TestCase["TestCase"] {
+      &lt;&lt;schema: kinds/test-plan.schema.json&gt;&gt;
+      id [1] string
+      description [0..1] string
+      assertions [1..*] Assertion[]
+      testData [0..*] object[]
+      feature [0..1] string
+      dependsOn [0..*] string[]
+    }
+    class cat_harness_schemas_kinds_test_plan_schema_json_Dependency["Dependency"] {
+      &lt;&lt;schema: kinds/test-plan.schema.json&gt;&gt;
+      description [1] string
+      predecessor [0..1] string
+    }
+    class cat_harness_schemas_kinds_test_plan_schema_json_Test_plan["Test plan"] {
+      &lt;&lt;schema: kinds/test-plan.schema.json&gt;&gt;
+      $schema [1] 'test-plan/v1'
+      id [1] string
+      title [1] string
+      status [1] draft | active | retired | unknown
+      version [1] string
+      description [0..1] string
+      scope [1] object
+      requirements [1..*] string[]
+      testCases [1..*] TestCase[]
+      dependencies [0..*] Dependency[]
+      exitCriteria [1] object
+    }
+    class cat_harness_schemas_kinds_test_report_schema_json_Test_report["Test report"] {
+      &lt;&lt;schema: kinds/test-report.schema.json&gt;&gt;
+      $schema [1] 'test-report/v1'
+      plan [1] object
+      sut [1] object
+      run [1] object
+      status [1] running | completed | aborted
+      started_at [1] string
+      completed_at [0..1] string
+      cases [1] map~object[]~
+      rollup [1] object
+      runContext [0..1] object
+    }
+    class cat_harness_schemas_kinds_themes_schema_json_Override["Override"] {
+      &lt;&lt;schema: kinds/themes.schema.json&gt;&gt;
+      field [1] string
+      source [1] string
+      reason [1] string
+    }
+    class cat_harness_schemas_kinds_themes_schema_json_Themes["Themes"] {
+      &lt;&lt;schema: kinds/themes.schema.json&gt;&gt;
+      $schema [1] 'folio-theme/v1'
+      id [1] string
+      kind [1] sticky | webpage | publication
+      inherits [0..1] object
+      name [0..1] string
+      description [0..1] string
+      palette [0..1] object
+      backdrop [0..1] object
+      layouts [0..1] object
+      overrides [0..*] Override[]
+    }
+    class cat_harness_schemas_kinds_todo_feedback_schema_json_Todo_feedback["Todo feedback"] {
+      &lt;&lt;schema: kinds/todo-feedback.schema.json&gt;&gt;
+      id [1] string
+      summary [1] string
+      comment [1] string
+      status [1] open | in_progress | blocked | resolved | wontfix
+      priority [1] critical | high | medium | low
+      origin [1] agent | human | qc | extracted
+      targetLabel [0..1] string
+      assignee [0..1] string
+      createdAt [1] string
+      updatedAt [0..1] string
+      updatedBy [0..1] string
+      data [0..1] map~any~
+      related [0..*] string[]
+      theme [0..1] string
+      author [0..1] string
+      authorEmail [0..1] string
+    }
+    class cat_harness_schemas_kinds_todo_items_schema_json_AlsoAbout["AlsoAbout"] {
+      &lt;&lt;schema: kinds/todo-items.schema.json&gt;&gt;
+      kind [1] 'block'
+      label [1] string
+    }
+    class cat_harness_schemas_kinds_todo_items_schema_json_Todo_items["Todo items"] {
+      &lt;&lt;schema: kinds/todo-items.schema.json&gt;&gt;
+      id [1] string
+      summary [1] string
+      comment [0..1] string
+      createdAt [1] string
+      updatedAt [0..1] string
+      targetLabel [0..1] string
+      anchor [0..1] object
+      alsoAbout [0..*] AlsoAbout[]
+      tags [0..1] object
+      theme [0..1] string
+      layout [0..1] laptop | mobile | card
+      status [1] string
+      priority [1] string
+      origin [1] string
+      $schema [1] string
+    }
+    class cat_harness_schemas_kinds_tools_schema_json_Remedy["Remedy"] {
+      &lt;&lt;schema: kinds/tools.schema.json&gt;&gt;
+      host [1] string
+      error [0..1] string
+      tool [0..1] string
+      none [0..1] string
+    }
+    class cat_harness_schemas_kinds_tools_schema_json_Maintain["Maintain"] {
+      &lt;&lt;schema: kinds/tools.schema.json&gt;&gt;
+      source [1] string
+      artefact [1] string
+      format [0..1] string
+    }
+    class cat_harness_schemas_kinds_tools_schema_json_Tools["Tools"] {
+      &lt;&lt;schema: kinds/tools.schema.json&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      install [1] object
+      invoke [1] object
+      io [1] object
+      satisfies [1..*] string[]
+      selection [0..1] object
+      requires [0..1] object
+      remedies [0..*] Remedy[]
+      maintains [0..*] Maintain[]
+      downstream [0..1] object
+      renders [0..*] string[]
+      subprocesses [0..*] string[]
+    }
+    class cat_harness_schemas_kinds_translation_sources_schema_json_Translation_sources["Translation sources"] {
+      &lt;&lt;schema: kinds/translation-sources.schema.json&gt;&gt;
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+    class cat_harness_schemas_kinds_vocab_mapping_schema_json_Element["Element"] {
+      &lt;&lt;schema: kinds/vocab-mapping.schema.json&gt;&gt;
+      code [0..1] string
+      display [0..1] string
+      valueSet [0..1] string
+      noMap [0..1] boolean
+      target [0..*] object[]
+      extra [0..1] map~any~
+    }
+    class cat_harness_schemas_kinds_vocab_mapping_schema_json_Group["Group"] {
+      &lt;&lt;schema: kinds/vocab-mapping.schema.json&gt;&gt;
+      source [0..1] string
+      sourceVersion [0..1] string
+      target [0..1] string
+      targetVersion [0..1] string
+      element [1..*] Element[]
+      unmapped [0..1] object
+      extra [0..1] map~any~
+    }
+    class cat_harness_schemas_kinds_vocab_mapping_schema_json_Vocab_mapping["Vocab mapping"] {
+      &lt;&lt;schema: kinds/vocab-mapping.schema.json&gt;&gt;
+      $schema [1] 'folio-vocab-mapping/v1'
+      id [1] string
+      url [0..1] string
+      version [0..1] string
+      name [0..1] string
+      title [0..1] string
+      status [1] draft | active | retired | unknown
+      experimental [0..1] boolean
+      date [0..1] string
+      publisher [0..1] string
+      description [0..1] string
+      purpose [0..1] string
+      copyright [0..1] string
+      sourceScope [0..1] object
+      targetScope [0..1] object
+      property [0..*] map~any~[]
+      additionalAttribute [0..*] map~any~[]
+      group [0..*] Group[]
+      metadata [0..1] map~any~
+    }
+    class cat_harness_schemas_kinds_voice_vendors_schema_json_Source["Source"] {
+      &lt;&lt;schema: kinds/voice-vendors.schema.json&gt;&gt;
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class cat_harness_schemas_kinds_voice_vendors_schema_json_Pattern["Pattern"] {
+      &lt;&lt;schema: kinds/voice-vendors.schema.json&gt;&gt;
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class cat_harness_schemas_kinds_voice_vendors_schema_json_Terminology["Terminology"] {
+      &lt;&lt;schema: kinds/voice-vendors.schema.json&gt;&gt;
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class cat_harness_schemas_kinds_voice_vendors_schema_json_Rule["Rule"] {
+      &lt;&lt;schema: kinds/voice-vendors.schema.json&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class cat_harness_schemas_kinds_voice_vendors_schema_json_Voice_vendors["Voice vendors"] {
+      &lt;&lt;schema: kinds/voice-vendors.schema.json&gt;&gt;
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~string | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+    class cat_harness_schemas_kinds_voices_schema_json_Source["Source"] {
+      &lt;&lt;schema: kinds/voices.schema.json&gt;&gt;
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class cat_harness_schemas_kinds_voices_schema_json_Pattern["Pattern"] {
+      &lt;&lt;schema: kinds/voices.schema.json&gt;&gt;
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class cat_harness_schemas_kinds_voices_schema_json_Terminology["Terminology"] {
+      &lt;&lt;schema: kinds/voices.schema.json&gt;&gt;
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class cat_harness_schemas_kinds_voices_schema_json_Rule["Rule"] {
+      &lt;&lt;schema: kinds/voices.schema.json&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class cat_harness_schemas_kinds_voices_schema_json_Voices["Voices"] {
+      &lt;&lt;schema: kinds/voices.schema.json&gt;&gt;
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~string | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+    class cat_harness_schemas_kinds_waiver_schema_json_Waivers["Waivers"] {
+      &lt;&lt;schema: kinds/waiver.schema.json&gt;&gt;
+      $schema [1] 'folio-waiver/v1'
+      id [1] string
+      grantedBy [1] string
+      quote [1] string
+      gate [1] merge-to-main | bean-close | deletion | swarm-spawn | process-reentry | issue-close
+      scope [1] string
+      grantedAt [1] string
+      expires [1] string
+      bounds [1] string
+    }
+    class cat_harness_schemas_https___json_schema_org_draft_2020_12_schema_listed["29 schema(s) with no properties"] {
+      &lt;&lt;ext: JSON Schema 2020-12&gt;&gt;
+      kinds/archimate [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/attestations [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/basic-cdn-site [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/beans [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/block-kinds [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/cdn-site [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/content-adapters [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/docs [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/document-kinds [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/external-schema [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/interaction [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/issue-marks [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/library [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/merge-queue [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/openapi [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/pipeline-plugins [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/qa-checkers [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/qa [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/schemas [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/session-survey [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/skills [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/software-library [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/sweep-marks [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/swimlane-glossary [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/todos [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/tool-release [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/typologies [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/uploads [1] composed ($ref / allOf / anyOf / oneOf)
+      kinds/validators [1] composed ($ref / allOf / anyOf / oneOf)
+    }
+  }
+  cat_harness_schemas_skills_ask_the_person_input_schema_json_Ask_The_Person_Input *-- "2..*" cat_harness_schemas_skills_ask_the_person_input_schema_json_Option : options
+  cat_harness_schemas_skills_bean_drain_input_schema_json_Bean_Drain_Input *-- "1..*" cat_harness_schemas_skills_bean_drain_input_schema_json_Copy : copies
+  cat_harness_schemas_skills_bean_drain_input_schema_json_Bean_Drain_Input *-- "1..*" cat_harness_schemas_skills_bean_drain_input_schema_json_Agent : agents
+  cat_harness_schemas_skills_bean_drain_output_schema_json_Bean_Drain_Output *-- "0..*" cat_harness_schemas_skills_bean_drain_output_schema_json_Result : results
+  cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
+  cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
+  cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output *-- "0..*" cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem : triagedItems
+  cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output *-- "0..*" cat_harness_schemas_skills_content_review_output_schema_json_Finding : findings
+  cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output *-- "0..*" cat_harness_schemas_skills_content_review_output_schema_json_Note : notes
+  cat_harness_schemas_skills_content_test_output_schema_json_Content_Test_Output *-- "0..*" cat_harness_schemas_skills_content_test_output_schema_json_TestResult : testResults
+  cat_harness_schemas_skills_content_validate_output_schema_json_Content_Validate_Output *-- "0..*" cat_harness_schemas_skills_content_validate_output_schema_json_Result : results
+  cat_harness_schemas_skills_dmn_authoring_input_schema_json_DMN_Authoring_Input *-- "0..*" cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable : inputVariables
+  cat_harness_schemas_skills_wireframe_design_review_input_schema_json_Wireframe_Design_Review_Input *-- "0..*" cat_harness_schemas_skills_wireframe_design_review_input_schema_json_Channel : channels
+  cat_harness_schemas_skills_wireframe_design_review_output_schema_json_Wireframe_Design_Review_Output *-- "1..*" cat_harness_schemas_skills_wireframe_design_review_output_schema_json_Candidate : candidates
+  cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Wireframe_Viewport_Check_Output *-- "0..*" cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Candidate : candidates
+  cat_harness_schemas_staging_comparison_schema_json_Staging_links *-- "0..*" cat_harness_schemas_staging_comparison_schema_json_Page : pages
+  cat_harness_schemas_kinds_binary_release_schema_json_Binary_releases *-- "0..*" cat_harness_schemas_kinds_binary_release_schema_json_Asset : assets
+  cat_harness_schemas_kinds_code_list_schema_json_Code_lists *-- "1..*" cat_harness_schemas_kinds_code_list_schema_json_Code : codes
+  cat_harness_schemas_kinds_health_schema_json_Check *-- "0..*" cat_harness_schemas_kinds_health_schema_json_Threshold : thresholds
+  cat_harness_schemas_kinds_health_schema_json_Check *-- "0..*" cat_harness_schemas_kinds_health_schema_json_Measurement : measurements
+  cat_harness_schemas_kinds_health_schema_json_Check *-- "0..*" cat_harness_schemas_kinds_health_schema_json_Finding : findings
+  cat_harness_schemas_kinds_health_schema_json_Health *-- "1..*" cat_harness_schemas_kinds_health_schema_json_Check : checks
+  cat_harness_schemas_kinds_memory_schema_json_Memory *-- "0..*" cat_harness_schemas_kinds_memory_schema_json_AlsoAbout : alsoAbout
+  cat_harness_schemas_kinds_policies_schema_json_Permission *-- "0..*" cat_harness_schemas_kinds_policies_schema_json_Constraint : constraint
+  cat_harness_schemas_kinds_policies_schema_json_Permission *-- "1..*" cat_harness_schemas_kinds_policies_schema_json_Duty : duty
+  cat_harness_schemas_kinds_policies_schema_json_Policies *-- "0..*" cat_harness_schemas_kinds_policies_schema_json_Permission : permission
+  cat_harness_schemas_kinds_policies_schema_json_Prohibition *-- "0..*" cat_harness_schemas_kinds_policies_schema_json_Constraint : constraint
+  cat_harness_schemas_kinds_policies_schema_json_Prohibition *-- "1..*" cat_harness_schemas_kinds_policies_schema_json_Duty : duty
+  cat_harness_schemas_kinds_policies_schema_json_Policies *-- "0..*" cat_harness_schemas_kinds_policies_schema_json_Prohibition : prohibition
+  cat_harness_schemas_kinds_policies_schema_json_Obligation *-- "0..*" cat_harness_schemas_kinds_policies_schema_json_Constraint : constraint
+  cat_harness_schemas_kinds_policies_schema_json_Policies *-- "1..*" cat_harness_schemas_kinds_policies_schema_json_Obligation : obligation
+  cat_harness_schemas_kinds_scenarios_schema_json_Role *-- "0..*" cat_harness_schemas_kinds_scenarios_schema_json_FormerName : formerNames
+  cat_harness_schemas_kinds_scenarios_schema_json_Scenarios *-- "0..*" cat_harness_schemas_kinds_scenarios_schema_json_Role : roles
+  cat_harness_schemas_kinds_scenarios_schema_json_Scenarios *-- "0..*" cat_harness_schemas_kinds_scenarios_schema_json_Actor : actors
+  cat_harness_schemas_kinds_scenarios_schema_json_Scenarios *-- "0..*" cat_harness_schemas_kinds_scenarios_schema_json_Extension : extensions
+  cat_harness_schemas_kinds_test_data_fixed_schema_json_Fixed_test_data_sets *-- "1..*" cat_harness_schemas_kinds_test_data_fixed_schema_json_Record : records
+  cat_harness_schemas_kinds_test_plan_schema_json_TestCase *-- "1..*" cat_harness_schemas_kinds_test_plan_schema_json_Assertion : assertions
+  cat_harness_schemas_kinds_test_plan_schema_json_Test_plan *-- "1..*" cat_harness_schemas_kinds_test_plan_schema_json_TestCase : testCases
+  cat_harness_schemas_kinds_test_plan_schema_json_Test_plan *-- "0..*" cat_harness_schemas_kinds_test_plan_schema_json_Dependency : dependencies
+  cat_harness_schemas_kinds_themes_schema_json_Themes *-- "0..*" cat_harness_schemas_kinds_themes_schema_json_Override : overrides
+  cat_harness_schemas_kinds_todo_items_schema_json_Todo_items *-- "0..*" cat_harness_schemas_kinds_todo_items_schema_json_AlsoAbout : alsoAbout
+  cat_harness_schemas_kinds_tools_schema_json_Tools *-- "0..*" cat_harness_schemas_kinds_tools_schema_json_Remedy : remedies
+  cat_harness_schemas_kinds_tools_schema_json_Tools *-- "0..*" cat_harness_schemas_kinds_tools_schema_json_Maintain : maintains
+  cat_harness_schemas_kinds_vocab_mapping_schema_json_Group *-- "1..*" cat_harness_schemas_kinds_vocab_mapping_schema_json_Element : element
+  cat_harness_schemas_kinds_vocab_mapping_schema_json_Vocab_mapping *-- "0..*" cat_harness_schemas_kinds_vocab_mapping_schema_json_Group : group
+  cat_harness_schemas_kinds_voice_vendors_schema_json_Voice_vendors *-- "1..*" cat_harness_schemas_kinds_voice_vendors_schema_json_Source : sources
+  cat_harness_schemas_kinds_voice_vendors_schema_json_Rule *-- "0..*" cat_harness_schemas_kinds_voice_vendors_schema_json_Pattern : patterns
+  cat_harness_schemas_kinds_voice_vendors_schema_json_Rule *-- "0..*" cat_harness_schemas_kinds_voice_vendors_schema_json_Terminology : terminology
+  cat_harness_schemas_kinds_voice_vendors_schema_json_Voice_vendors *-- "1..*" cat_harness_schemas_kinds_voice_vendors_schema_json_Rule : rules
+  cat_harness_schemas_kinds_voices_schema_json_Voices *-- "1..*" cat_harness_schemas_kinds_voices_schema_json_Source : sources
+  cat_harness_schemas_kinds_voices_schema_json_Rule *-- "0..*" cat_harness_schemas_kinds_voices_schema_json_Pattern : patterns
+  cat_harness_schemas_kinds_voices_schema_json_Rule *-- "0..*" cat_harness_schemas_kinds_voices_schema_json_Terminology : terminology
+  cat_harness_schemas_kinds_voices_schema_json_Voices *-- "1..*" cat_harness_schemas_kinds_voices_schema_json_Rule : rules
+  cssClass "cat_harness_schemas_skills_ask_the_person_input_schema_json_Option" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_ask_the_person_input_schema_json_Ask_The_Person_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_ask_the_person_output_schema_json_Ask_The_Person_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bean_drain_input_schema_json_Copy" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bean_drain_input_schema_json_Agent" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bean_drain_input_schema_json_Bean_Drain_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bean_drain_output_schema_json_Result" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bean_drain_output_schema_json_Bean_Drain_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_bpmn_authoring_output_schema_json_BPMN_Authoring_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_author_input_schema_json_Content_Author_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_author_output_schema_json_Artifact" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_plan_input_schema_json_Content_Plan_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_plan_output_schema_json_Content_Plan_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_publish_input_schema_json_Content_Publish_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_publish_output_schema_json_Content_Publish_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_review_input_schema_json_Content_Review_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_review_output_schema_json_Finding" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_review_output_schema_json_Note" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_test_input_schema_json_Content_Test_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_test_output_schema_json_TestResult" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_test_output_schema_json_Content_Test_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_validate_input_schema_json_Content_Validate_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_validate_output_schema_json_Result" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_content_validate_output_schema_json_Content_Validate_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_dmn_authoring_input_schema_json_DMN_Authoring_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_dmn_authoring_output_schema_json_DMN_Authoring_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_staging_review_input_schema_json_Staging_Review_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_staging_review_output_schema_json_Staging_Review_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_design_review_input_schema_json_Channel" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_design_review_input_schema_json_Wireframe_Design_Review_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_design_review_output_schema_json_Candidate" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_design_review_output_schema_json_Wireframe_Design_Review_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_viewport_check_input_schema_json_Wireframe_Viewport_Check_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Candidate" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Wireframe_Viewport_Check_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_staging_comparison_schema_json_Page" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_staging_comparison_schema_json_Staging_links" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_bean_defs_schema_json_Bean_definitions" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_binary_release_schema_json_Asset" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_binary_release_schema_json_Binary_releases" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_board_positions_schema_json_Board_positions" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_boards_schema_json_Boards" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_code_list_schema_json_Code" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_code_list_schema_json_Code_lists" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_fsh_guts_schema_json_FSH_guts" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_health_schema_json_Threshold" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_health_schema_json_Measurement" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_health_schema_json_Finding" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_health_schema_json_Check" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_health_schema_json_Health" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_memory_schema_json_AlsoAbout" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_memory_schema_json_Memory" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_policies_schema_json_Constraint" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_policies_schema_json_Duty" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_policies_schema_json_Permission" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_policies_schema_json_Prohibition" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_policies_schema_json_Obligation" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_policies_schema_json_Policies" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_qa_report_schema_json_QA_reports" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_scenarios_schema_json_FormerName" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_scenarios_schema_json_Role" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_scenarios_schema_json_Actor" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_scenarios_schema_json_Extension" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_scenarios_schema_json_Scenarios" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_sme_case_verdict_schema_json_SME_case_verdict_pairs" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_substrate_snapshot_schema_json_Substrate_snapshots" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_data_fixed_schema_json_Record" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_data_fixed_schema_json_Fixed_test_data_sets" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_data_generated_schema_json_Generated_test_data_recipes" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_plan_schema_json_Assertion" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_plan_schema_json_TestCase" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_plan_schema_json_Dependency" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_plan_schema_json_Test_plan" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_test_report_schema_json_Test_report" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_themes_schema_json_Override" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_themes_schema_json_Themes" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_todo_feedback_schema_json_Todo_feedback" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_todo_items_schema_json_AlsoAbout" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_todo_items_schema_json_Todo_items" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_tools_schema_json_Remedy" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_tools_schema_json_Maintain" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_tools_schema_json_Tools" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_translation_sources_schema_json_Translation_sources" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_vocab_mapping_schema_json_Element" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_vocab_mapping_schema_json_Group" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_vocab_mapping_schema_json_Vocab_mapping" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voice_vendors_schema_json_Source" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voice_vendors_schema_json_Pattern" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voice_vendors_schema_json_Terminology" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voice_vendors_schema_json_Rule" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voice_vendors_schema_json_Voice_vendors" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voices_schema_json_Source" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voices_schema_json_Pattern" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voices_schema_json_Terminology" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voices_schema_json_Rule" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_voices_schema_json_Voices" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_kinds_waiver_schema_json_Waivers" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_https___json_schema_org_draft_2020_12_schema_listed" fa_uml_kind_schemas
+</code></pre></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>
