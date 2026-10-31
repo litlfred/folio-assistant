@@ -116,10 +116,21 @@ on:
       - 'folio-assistant.mount-lock.json'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
+    inputs:
+      record_writers:
+        # Bean fwtz, option B (owner card 2026-10-31, "rerun and measure"):
+        # run every derive:publish writer under strace and publish what each
+        # read and wrote (cat-harness-tools `writer-cone.ts`). strace costs a
+        # traced script 3-10x (bean 4rbc), so it is a manual run until that
+        # cost is measured, never part of a push deploy. It skips nothing.
+        description: 'Record what each derive:publish writer reads and writes (slower; skips nothing)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write  # required to push to the gh-pages branch
   issues: write    # the publication manager's alert (bean vigi): one tracking issue
+  actions: read    # bean fwtz: download the newest writer-records artifact for the writers dry run
 
 # A deploy: never cancelled in progress, since a run cancelled mid-build or
 # mid-push is a deploy dropped (owner, 2026-10-23). Without cancel-in-progress
@@ -259,13 +270,49 @@ jobs:
       - name: Install Chromium for the publish-time BPMN drawings (B1)
         run: npx --yes playwright install --with-deps chromium
 
+      - name: strace, for the writer records (bean fwtz)
+        if: ${{ inputs.record_writers }}
+        run: |
+          if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        env:
+          # Bean fwtz: traced writers and build/writer-cone/records.json, only on a manual run that asks.
+          CAT_WRITER_RECORD: ${{ inputs.record_writers && '1' || '' }}
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push
         # made a committed copy stale on main and every open PR (2026-10-05).
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
         run: bun run cat derive:publish
+
+      # BEAN fwtz, OPTION B, AS A DRY RUN (owner card 2026-10-31, "rerun and
+      # measure"). `writer-records.yml`, run after each deploy, uploads what
+      # each writer read and wrote (artifact `writer-records`).
+      # Against it, `writer-cone-verify.ts` says which writers this build
+      # could have skipped, and whether skipping them would have been right:
+      # every recorded output must equal what the full run above just wrote.
+      # `skip-unsafe` must stay at zero before any writer is skipped. It skips
+      # nothing; best effort and bounded, like the page dry run below.
+      - name: Writers, rerun and measure, dry run (bean fwtz)
+        continue-on-error: true
+        timeout-minutes: 5
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -eu
+          S=cat-harness-tools/scripts/writer-cone-verify.ts
+          if [ ! -f "$S" ]; then echo "this tools pin has no $S: no dry run"; exit 0; fi
+          # The newest records `writer-records.yml` uploaded after a deploy.
+          D="$RUNNER_TEMP/prev-writer-records"; mkdir -p "$D"
+          URL=$(gh api "repos/$REPO/actions/artifacts?name=writer-records&per_page=1" --jq '.artifacts[0] | select(.expired == false) | .archive_download_url' 2>/dev/null || true)
+          if [ -z "$URL" ] || ! gh api "$URL" > "$D/a.zip" 2>/dev/null || ! unzip -q -o "$D/a.zip" -d "$D"; then
+            echo "no writer records recorded yet: nothing to judge"; exit 0
+          fi
+          P="$D/records.json"
+          bun run "$S" --prev "$P" --out "$RUNNER_TEMP/writer-verdicts.json" --summary "$GITHUB_STEP_SUMMARY"
 
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
       # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
@@ -436,9 +483,12 @@ jobs:
           mkdir -p cat-harness/docs/_data
           {
             echo "sha: \"${GITHUB_SHA}\""
-            echo "short_sha: \"${GITHUB_SHA:0:7}\""
-            echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
-            echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
+            # NO `short_sha`, `built_at` or `run_url` (owner, 2026-10-31): the
+            # footer rendered them into EVERY page, so every page changed on
+            # every deploy and no preview could share main's unchanged files.
+            # The footer renders constant and `docs-ui.js` fills it from
+            # `build.json`, which "Write the build stamp for client-side
+            # readers" below writes with the same facts.
             # Where this commit's CI results appear. The site renders in
             # parallel with CI and does not wait for it (owner, 2026-10-23),
             # so it links to the results instead of stating them.
@@ -1149,6 +1199,12 @@ jobs:
           jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" --arg checksUrl "$CHECKS_URL" \
             --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, checksUrl: $checksUrl, mounts: $mounts}' > ./_site/build.json
           cat ./_site/build.json
+          # Bean fwtz: the writer records sit beside the stamp, so the NEXT
+          # deploy can ask which writers' reads moved since this one.
+          if [ -f build/writer-cone/records.json ]; then
+            mkdir -p ./_site/writer-cone && cp build/writer-cone/records.json ./_site/writer-cone/records.json
+            jq -r '"writer records: \(.writers | length) recorded, \(.unrecorded | length) not"' ./_site/writer-cone/records.json
+          fi
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
       #
@@ -1267,6 +1323,16 @@ jobs:
           bun run "$S" judge --before pages --after ./_site \
             --predicted "$W/rendered-impact.json" --sources "$W/sources.json" --doubts "$W/doubts.json" \
             --out "$W/dryrun.json" --summary "$GITHUB_STEP_SUMMARY"
+
+      # The live site's root 404.html. GitHub Pages serves it for every
+      # missing path, and a preview that shares the live site's unchanged
+      # files (staging-share.ts) relies on it for a deep link opened before
+      # the preview's worker is installed: it registers that worker and
+      # reloads. Elsewhere it says the page is missing.
+      - name: Write the root 404 page
+        run: |
+          S=cat-harness-tools/scripts/staging-share.ts
+          if [ -f "$S" ]; then bun run "$S" write-404 --site ./_site; else echo "this tools pin has no $S: no 404 page"; fi
 
       - name: Publish to gh-pages
         id: deploy
