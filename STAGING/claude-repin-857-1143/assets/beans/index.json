@@ -3852,7 +3852,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T06:42:00Z",
-      "updatedAt": "2026-10-31T15:35:00Z",
+      "updatedAt": "2026-10-31T17:05:00Z",
       "preview": "Owner, 2026-10-31: each WHO Digital Transformation Handbook becomes an L2 DTH that depends on smart-ra. Its narrative is validated against the glossaries and linked to ArchiMate, with BPMN for its business processes, roles as DAK persona blocks, and DMN tables extracted.\n\nWorkplans: litlfred/dth-hrh#47 (HRH pilot), litlfred/dth-phc#1 (PHC), litlfred/dth-sc#2 (SC), litlfred/dth-pc#2 (PC), litlfred/",
       "file": "beans/defs/folio-assistant-dthl--dth-handbooks-as-l2-documents-on-smart-ra-hrh-phc-sc-pc.md"
     },
@@ -4320,7 +4320,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:29:09Z",
-      "updatedAt": "2026-10-31T15:35:00Z",
+      "updatedAt": "2026-10-31T17:05:00Z",
       "preview": "Arc fs43 §4 `site` row, second half. `docs-site.yml` now MOUNTS the tip-keyed graphs before the generators run (PR #2052), so the build reads the work plan wherever it lives. What is missing is the TRIGGER: after the cutover a bean edit is a push to `cat/cat-harness/beans` and nothing rebuilds the site.\n\nAdding `branches: [main, cat/cat-harness/beans]` is NOT the fix on its own, and that is the fi",
       "file": "beans/defs/folio-assistant-fwtz--docs-site-must-rebuild-when-the-bean-branch-moves.md"
     },
@@ -4978,7 +4978,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:00Z",
-      "updatedAt": "2026-10-31T15:35:00Z",
+      "updatedAt": "2026-10-31T17:05:00Z",
       "preview": "Owner, 2026-10-01: \"make sure workplan properly beaned and status trackable\" for the cat-harness / cat-harness-tools separation arc. This epic is the one place that answers \"where is the separation up to\": every stage of the split plan and every placement PR still to do is a child, ordered by `blocked_by`.\n\n**What it delivers:** `cat-harness/` becomes two repositories — litlfred/cat-harness (conte",
       "file": "beans/defs/folio-assistant-iirv--cat-harness-cat-harness-tools-separation.md"
     },
@@ -5614,7 +5614,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:42:44Z",
-      "updatedAt": "2026-10-31T15:35:00Z",
+      "updatedAt": "2026-10-31T17:27:00Z",
       "preview": "Owner-approved process fix, 2026-10-23. Two checks ran only after merge (Liquid undefined-variable check, workflow_run on main; Post-merge regen check and repair, push to main), so a PR could be fully green and still turn main red, and every such merge emailed the owner a failure. The rule: whatever can be judged before a merge is judged before it, on the PR's own runs, and merge-guard is the only",
       "file": "beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md"
     },
@@ -6439,15 +6439,15 @@
     {
       "id": "folio-assistant-negd",
       "title": "COMPUTABLE DSAs: public agreement + ODRL, referenced by hash; GDHCN trust; one PDP (#2702, option D)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "epic",
       "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T14:05:00Z",
-      "updatedAt": "2026-10-30T14:05:00Z",
-      "preview": "Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.\n\nBlocks B1–B14, milestones M1 (in-instance, B1–B4), M2 (server-to-server, B5–B7, B9), M3 (QR + agents, B8, B10, B12), M4 (wallets, B11, B13). Only B1, B2+B3 are beans so far; the rest ",
+      "updatedAt": "2026-10-31T16:53:00Z",
+      "preview": "Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.\n\nBlocks B1–B14, milestones M1 (in-instance, B1–B4), M2 (server-to-server, B5–B7, B9), M3 (QR + agents, B8, B10, B12), M4 (wallets, B11, B13), plus the IHE PCF 1.1.0 / VHL 1.0.0-comment",
       "file": "beans/defs/folio-assistant-negd--computable-dsas-public-agreement-odrl-referenc.md"
     },
     {
@@ -6826,7 +6826,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T07:55:00Z",
-      "updatedAt": "2026-10-31T15:35:00Z",
+      "updatedAt": "2026-10-31T16:18:00Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
@@ -7728,7 +7728,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:26:45Z",
-      "updatedAt": "2026-10-05T04:57:29Z",
+      "updatedAt": "2026-10-31T17:27:00Z",
       "preview": "## There is no owner's quote on this bean, and that is deliberate\n\n`vuip`, `p5wm` and `yg29` each open with the owner's words kept verbatim.\n**This one has none.** The owner chose *\"a fourth milestone: PLATFORM\"* from a\nset of options put to them on 2026-10-03, and the title and scope below were\n**derived from the measurement in the next section** by\n`session_01SjvqTkDQsqa6SLLFjBwoD3` rather than ",
       "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md"
     },

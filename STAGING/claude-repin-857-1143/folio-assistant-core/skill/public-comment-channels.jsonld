@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/folio-assistant-core/skill/public-comment-channels.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "057881d9b34740af565bf96261e8ceac4e9cdeff",
+    "pr": "2855/merge",
+    "run": "41226476373"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/folio-assistant-core/skill/public-comment-channels",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "public-comment-channels",
+      "title": "Public comment channels and intake",
+      "description": "Set up the channels a public-comment release goes out on (an offline Excel sheet, a Google Form, a GitHub issue form, and the review sheet), each limited to the release's fixed references, with the editor's instructions and the announcement, and bring every channel back in through one intake path that ends in agent triage into thematic change-sets. Use when a draft is released for public comment, when a channel is added to a running review, or when returned comments arrive from any channel.",
+      "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
+      "instructionLines": 213,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels"
+    }
+  ]
+}

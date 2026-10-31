@@ -1448,14 +1448,25 @@
       "definition": "Another agent or human working the same store. Present in bean-open (Process_BeanOpen) precisely to mark what is NOT yours to close.",
       "altLabel": [
         "Owning session",
+        "Sibling",
         "Sibling session or human (not yours to close)"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/role/sibling-session",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HandBackToDiscussion",
+      "label": "Sibling",
+      "scopeNote": "Any agent that is not the one talking with the person: a project thread, a subagent, a workflow agent, a cloud session. It did the analysis, so it composes the hand-back.",
+      "source": "cat-harness/processes/process/hand-back-to-discussion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
@@ -2156,15 +2167,26 @@
       "notation": "session-coordinator",
       "definition": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
       "altLabel": [
+        "Discussion agent",
         "Merge steward",
         "Queue keeper"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Discussion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Discussion",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/role/session-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HandBackToDiscussion",
+      "label": "Discussion agent",
+      "scopeNote": "The agent the person is talking with right now. Shows the hand-back, asks, marks every copy answered and routes the answer back.",
+      "source": "cat-harness/processes/process/hand-back-to-discussion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
