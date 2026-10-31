@@ -379,7 +379,12 @@ jobs:
         # made a committed copy stale on main and every open PR (2026-10-05).
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
-        run: bun run cat derive:publish
+        # Each writer's skip-or-run line goes to a file the preview publishes
+        # (STAGING/<slug>/writer-skip.txt): job logs cannot be read from
+        # where the cone is measured (bean fwtz).
+        run: |
+          set -o pipefail
+          bun run cat derive:publish 2>&1 | tee "$RUNNER_TEMP/derive.log"
 
       - name: Determine staging slug
         id: slug
@@ -1335,6 +1340,8 @@ jobs:
           # treated as absent — the copied original stays in the site, so the
           # deploy cannot silently replace it; the failure is an annotation,
           # not a blocked preview.
+          # Which derive:publish writers this preview skipped, and why the rest ran (bean fwtz).
+          { grep -E 'writer skip|skipped |[^ ]+ runs: ' "$RUNNER_TEMP/derive.log" || true; } > ./_site/writer-skip.txt 2>/dev/null || true
           RECORD=./_site/staging-preview.json
           git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
             || rm -f "$RECORD"
