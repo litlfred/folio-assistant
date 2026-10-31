@@ -230,3 +230,10 @@ Still open:
 - [ ] an IG mode for build-instance-site (fhir-harness stage-ig-sites), after 53rv's packages land
 - [ ] the Routine environment allows cloning the litlfred repos and `bun install`/`bun run` (owner setting)
 ```
+
+## 2026-10-31T12:15:30Z — smart-base-clinical AST + harnessed site published; all 7 repositories complete
+
+- **smart-base-clinical (`main` `d99c02b`):**
+  - Cause of `ig-ast-refresh` run `41051844061` failure (confirmed from job `124054820706` log): SUSHI succeeded (`0 Errors, 1 Warning`), and `AstExportCli` failed fetching `who.template.root#current` from `https://build.fhir.org/ig/WorldHealthOrganization/smart-ig-template/branches/main/package.tgz` (`404 Not Found`).
+  - Resolved via `template-repos: who.template.root=WorldHealthOrganization/smart-ig-template` (`fhir-harness#196`): AST cache branch `cat/fhir-harness/fhir-ast/smart.who.int.base-clinical` is seeded, `Site publish (by hand)` run `41158331849` succeeded (`2026-10-31T02:04:54Z`), `gh-pages` is at `dbb243827bbd36ce4b75c13894aedaacd841eab1` (*"Publish smart-base-clinical d99c02b (folio site, built locally)"*), and `pages build and deployment` run `41158735874` succeeded (`2026-10-31T02:10:03Z`).
+- All five per-repository checklist items are now met across all seven `smart-*` repositories (`smart-base`, `smart-base-clinical`, `smart-core`, `smart-hiv`, `smart-immunizations`, `smart-trust`, `smart-ra`).
