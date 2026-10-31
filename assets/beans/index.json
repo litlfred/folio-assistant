@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 45,
+      "count": 33,
       "unit": "open beans"
     }
   },
@@ -435,14 +435,14 @@
     {
       "id": "folio-assistant-1sc6",
       "title": "smart-trust: release.yml is broken and over-privileged (checkout@v2, ::set-output, empty tag ref)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "low",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** correctness, security. **Rule:** `scz-least-privilege`. **Severity:** low: manual dispatch only.\n\n**Evidence** (`.github/workflows/release.yml`, smart-trust `496290a`):\n\n- `:3-7` grants `contents, pages, id-token, pull-requests: write` to every job, including the `check` job that only reads a file.\n- `:22` `actions/checkout@v2` (Node 12, long deprecated).\n- `:24` `ref: ${{ github.eve",
       "file": "beans/defs/folio-assistant-1sc6--smart-trust-release-workflow-is-broken-and-over-privi.md"
     },
@@ -1832,6 +1832,20 @@
       "file": "beans/defs/folio-assistant-6b8u--extraction-md-min-text-len-is-a-threshold-in-chara.md"
     },
     {
+      "id": "folio-assistant-6chd",
+      "title": "Library ingestion: re-segment DTH handbook PDFs the same way every time",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T20:35:18Z",
+      "updatedAt": "2026-10-31T20:35:18Z",
+      "preview": "Owner, 2026-10-31 (card \"A. Both\"): pass litlfred/dth-phc#1 section 9 item 3 to its owner as a bean.\n\nEvery DTH L1 needed the same hand fixes: PHC (running headers, chapter-opener panels, glossary references), PC (outline, step tables, page header), SC (page split, flat tables).\n\n- [ ] Use the PDF outline for sections.\n- [ ] Strip running headers and side navigation.\n- [ ] Keep chapter-opener pane",
+      "file": "beans/defs/folio-assistant-6chd--library-ingestion-re-segment-dth-handbook-pdfs-the.md"
+    },
+    {
       "id": "folio-assistant-6dvy",
       "title": "Witnessed values (:val): prose bug, just-the-docs substitution, namespacing by source",
       "status": "completed",
@@ -1990,14 +2004,14 @@
     {
       "id": "folio-assistant-6zcw",
       "title": "folio-assistant-sci cannot run the security gate",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T08:24:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** false-green · **Severity:** minor\n\nSame shape as folio-core-0dy3, measured",
       "file": "beans/defs/folio-assistant-6zcw--folio-assistant-sci-cannot-run-the-security-gate.md"
     },
@@ -2377,14 +2391,14 @@
     {
       "id": "folio-assistant-8eyy",
       "title": "Lake cache extraction checks member paths but not member types",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T08:24:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** minor\n\nfolio-assistant-sci at `f0d44d9`. Security",
       "file": "beans/defs/folio-assistant-8eyy--lake-cache-extraction-checks-member-paths-but-not.md"
     },
@@ -2881,14 +2895,14 @@
     {
       "id": "folio-assistant-a3fj",
       "title": "Dependency advisories: 7 high, 12 moderate in smart-trust, who-iris and dth-hrh installs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security (dependencies). **Rule:** `scz-review-dependency-changes`. **Severity:** normal: build-time tooling, not served code; `check-dependency-advisories` is warn-only by design.\n\n**Evidence** (`bun audit` after `bun install`, 2026-10-31):\n\n- smart-trust: 24 (7 high, 12 moderate, 5 low). dth-hrh: 24 (7 high, 12 moderate, 5 low). who-iris: 21 (6 high, 11 moderate, 4 low).\n- High: `u",
       "file": "beans/defs/folio-assistant-a3fj--dependency-advisories-7-high-in-smart-trust-who-iris.md"
     },
@@ -3057,14 +3071,14 @@
     {
       "id": "folio-assistant-avcq",
       "title": "terminology-sw.js says no request reaches the network, but unanswered cross-origin requests go out",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** correctness · **severity:** minor\n\n**Where:** litlfred/fhir-harness `scripts/terminology-sw.js` header (lines 2-5: \"every request to another origin is answered from this site … and none reaches the network\") against line 44: `if (!a) return fetch(e.request);`.\n\n**Evidence:** when `faTerminologyMap.answer` has no answer, the service worker forwards the original cross-origin request. W",
       "file": "beans/defs/folio-assistant-avcq--terminology-sw-js-says-no-request-reaches-the-netw.md"
     },
@@ -3689,6 +3703,20 @@
       "file": "beans/defs/folio-assistant-cydz--ig-personas-cross-link-to-bpmn-swimlanes-with-a-la.md"
     },
     {
+      "id": "folio-assistant-cysv",
+      "title": "One DTH scaffold and seed tool in the platform (dth init), replacing per-repo copies",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T20:35:18Z",
+      "updatedAt": "2026-10-31T20:35:18Z",
+      "preview": "Owner, 2026-10-31 (card \"A. Both\"): pass litlfred/dth-phc#1 section 9 item 2 to its owner as a bean.\n\ndth-sc, dth-pc and dth-phc each copied dth-hrh by hand. Each grew its own `seed_from_l1.py`, `pdf_tables.py`, `add_figures.py`, glossary validator and coverage adapter (`scripts/glossary/validate.ts`, `scripts/folio/check_l1_coverage.ts` in dth-phc).\n\n- [ ] List what each DTH repo has locally and ",
+      "file": "beans/defs/folio-assistant-cysv--one-dth-scaffold-and-seed-tool-in-the-platform-dth.md"
+    },
+    {
       "id": "folio-assistant-cztn",
       "title": "WIRE THE HAND-OVER SCREEN into every site where one agent's, tool's or person's text reaches another model",
       "status": "completed",
@@ -3789,14 +3817,14 @@
     {
       "id": "folio-assistant-dnrj",
       "title": "bootstrap: graph.schema.json lets a Subgraph path or Asset src be absolute or climb with ..",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security (path containment). **Rule:** `scz-every-input-is-suspect`; skill `path-containment`. **Severity:** normal: a schema gap, closed today only in one consumer.\n\n**Evidence** (bootstrap `3ce2b5d`): `schemas/graph.schema.json` describes `directories[].path` (line 41, also 273) as \"relative to the declaration\" and `assets[].src` (line 134, also 349) as \"relative to the declaration",
       "file": "beans/defs/folio-assistant-dnrj--bootstrap-graph-schema-lets-a-subgraph-path-or-asset.md"
     },
@@ -3852,7 +3880,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T06:42:00Z",
-      "updatedAt": "2026-10-31T18:18:00Z",
+      "updatedAt": "2026-10-31T20:25:00Z",
       "preview": "Owner, 2026-10-31: each WHO Digital Transformation Handbook becomes an L2 DTH that depends on smart-ra. Its narrative is validated against the glossaries and linked to ArchiMate, with BPMN for its business processes, roles as DAK persona blocks, and DMN tables extracted.\n\nWorkplans: litlfred/dth-hrh#47 (HRH pilot), litlfred/dth-phc#1 (PHC), litlfred/dth-sc#2 (SC), litlfred/dth-pc#2 (PC), litlfred/",
       "file": "beans/defs/folio-assistant-dthl--dth-handbooks-as-l2-documents-on-smart-ra-hrh-phc-sc-pc.md"
     },
@@ -4320,7 +4348,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:29:09Z",
-      "updatedAt": "2026-10-31T17:05:00Z",
+      "updatedAt": "2026-10-31T20:25:00Z",
       "preview": "Arc fs43 §4 `site` row, second half. `docs-site.yml` now MOUNTS the tip-keyed graphs before the generators run (PR #2052), so the build reads the work plan wherever it lives. What is missing is the TRIGGER: after the cutover a bean edit is a push to `cat/cat-harness/beans` and nothing rebuilds the site.\n\nAdding `branches: [main, cat/cat-harness/beans]` is NOT the fix on its own, and that is the fi",
       "file": "beans/defs/folio-assistant-fwtz--docs-site-must-rebuild-when-the-bean-branch-moves.md"
     },
@@ -4709,14 +4737,14 @@
     {
       "id": "folio-assistant-hgxs",
       "title": "smart-immunizations package-lock.json: 27 advisories (1 critical tar, 14 high) via the npm dependency",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security · **severity:** major (advisory) · **rule:** scz-review-dependency-changes\n\n**Where:** litlfred/smart-immunizations `package.json` (dependencies `fsh-sushi ^3.16.5` and `npm ^11.5.2`) and its `package-lock.json`, from `npm audit --package-lock-only` on 2026-10-31.\n\n**Evidence:** critical `tar <=7.5.20` (hardlink path traversal, arbitrary file overwrite); high: axios, brace-e",
       "file": "beans/defs/folio-assistant-hgxs--smart-immunizations-package-lock-json-27-advisorie.md"
     },
@@ -4809,14 +4837,14 @@
     {
       "id": "folio-assistant-hto2",
       "title": "Installs that fall back from the lockfile: smart-trust site-publish, who-iris checks, dth-hrh session hook",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security (supply chain). **Rule:** `scz-review-dependency-changes`; injection-boundaries \"a pin that falls back is not a pin\". **Severity:** normal.\n\n**Evidence** (`check-lockfile-pinning.ts`):\n\n- smart-trust `.github/workflows/site-publish.yml:109` `bun install --no-save` in each mounted layer, with no lockfile (flagged NEW).\n- who-iris `.github/workflows/checks.yml:53` plain `bun i",
       "file": "beans/defs/folio-assistant-hto2--installs-that-fall-back-from-the-lockfile-smart-trus.md"
     },
@@ -5614,7 +5642,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:42:44Z",
-      "updatedAt": "2026-10-31T17:27:00Z",
+      "updatedAt": "2026-10-31T20:25:00Z",
       "preview": "Owner-approved process fix, 2026-10-23. Two checks ran only after merge (Liquid undefined-variable check, workflow_run on main; Post-merge regen check and repair, push to main), so a PR could be fully green and still turn main red, and every such merge emailed the owner a failure. The rule: whatever can be judged before a merge is judged before it, on the PR's own runs, and merge-guard is the only",
       "file": "beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md"
     },
@@ -5861,6 +5889,20 @@
       "file": "beans/defs/folio-assistant-llxa--cat-harness-crdm-skills-cite-phii-and-path-crdm-as-the-me.md"
     },
     {
+      "id": "folio-assistant-lo3p",
+      "title": "DMN QA check for the DTH house rules",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T20:35:18Z",
+      "updatedAt": "2026-10-31T20:35:18Z",
+      "preview": "Owner, 2026-10-31 (card \"A. Both\"): pass litlfred/dth-phc#1 section 9 item 4 to its owner as a bean. The BPMN quality thread (\"Improve BPMN quality checks from research\") proposed it in `bpmn-quality-research-2026-10-31/analysis.md` section 6.\n\nA check, in the platform, for each DTH DMN table:\n\n- [ ] the last rule returns an explicit \"unknown\" outcome, and every earlier rule names its inputs (no a",
+      "file": "beans/defs/folio-assistant-lo3p--dmn-qa-check-for-the-dth-house-rules.md"
+    },
+    {
       "id": "folio-assistant-lodp",
       "title": "Vocabulary drift D1–D3: role naming, fsh-guts description, sl9u condition onto mapping tables",
       "status": "completed",
@@ -5929,6 +5971,20 @@
       "updatedAt": "2026-10-03T16:55:01Z",
       "preview": "Issue #1972, the owner's \"1 2\" of 2026-10-03: (1) a prebuilt search index.\nAsked with the measured trade-off, the owner chose **big scopes only**.\n\n## Measured (Node / V8, scopes from a local build)\n\nBuilding a scope's lunr index costs ~3–5 µs per token, consistently:\n`section-reference` 550k tokens / 2,489 ms, `smart-immunizations` 163k /\n809 ms, `_platform` 138k / 476 ms, `smart-trust` 137k / 40",
       "file": "beans/defs/folio-assistant-lrzn--prebuilt-search-index-serialize-the-lunr-index-at.md"
+    },
+    {
+      "id": "folio-assistant-ls3t",
+      "title": "dth-l1-to-l2-ingest skill: add the lessons from dth-sc, dth-pc and dth-phc as rules",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T20:35:18Z",
+      "updatedAt": "2026-10-31T20:50:00Z",
+      "preview": "Owner, 2026-10-31 (card \"A. Both\" on the PHC workplan thread): pass the section 9 proposals of litlfred/dth-phc#1 to their owners as beans. This one belongs with smart-base#249 (thread \"Update DTH and review processes from recent work\").\n\nAdd to the `dth-l1-to-l2-ingest` skill (smart-base `skills/`), as rules:\n\n- [x] Link blocks through the glossary: a block's md shows a `**Concepts:**` line built",
+      "file": "beans/defs/folio-assistant-ls3t--dth-l1-to-l2-ingest-skill-add-the-lessons-from-dth.md"
     },
     {
       "id": "folio-assistant-lthi",
@@ -6826,7 +6882,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T07:55:00Z",
-      "updatedAt": "2026-10-31T16:18:00Z",
+      "updatedAt": "2026-10-31T20:25:00Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
@@ -6931,14 +6987,14 @@
     {
       "id": "folio-assistant-plxg",
       "title": "lxml parses repository XML with default entity resolution (smart-base)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security · **severity:** minor (inputs are repository-authored) · **rule:** scz-every-input-is-suspect\n\n**Where:** litlfred/smart-base `.github/skills/bpmn_author/validators/bpmn_xml_validator.py:37`, `swimlane_validator.py:48`, `bpmn_import/validators/swimlane_actor_validator.py:42` (`etree.fromstring`), `input/scripts/extract_translations.py:452,501` and `inject_translations.py:473",
       "file": "beans/defs/folio-assistant-plxg--lxml-parses-repository-xml-with-default-entity-res.md"
     },
@@ -7101,14 +7157,14 @@
     {
       "id": "folio-assistant-q7dh",
       "title": "check:dsa-hash: validate against official ODRL/DCAT/DCMI contexts, declare it as a Tool",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-negd",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T20:40:00Z",
-      "updatedAt": "2026-10-31T02:56:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "Follow-up to bean `2z1t` (litlfred/folio-assistant-core#249, merged 2026-10-30 20:30Z). Issue: litlfred/folio-assistant#2702.\n\n## What is left\n1. `folio-assistant-core` `check-dsa-hash.ts` checks field names against hand-written lists of ODRL 2.2, DCAT 3 and DCMI Terms. Bean `2z1t` said to validate against the official published JSON-LD contexts, never a hand-written copy. Vendor (pinned, hashed) ",
       "file": "beans/defs/folio-assistant-q7dh--dsa-hash-check-official-contexts-and-tool.md"
     },
@@ -7728,21 +7784,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:26:45Z",
-      "updatedAt": "2026-10-31T17:27:00Z",
+      "updatedAt": "2026-10-31T20:25:00Z",
       "preview": "## There is no owner's quote on this bean, and that is deliberate\n\n`vuip`, `p5wm` and `yg29` each open with the owner's words kept verbatim.\n**This one has none.** The owner chose *\"a fourth milestone: PLATFORM\"* from a\nset of options put to them on 2026-10-03, and the title and scope below were\n**derived from the measurement in the next section** by\n`session_01SjvqTkDQsqa6SLLFjBwoD3` rather than ",
       "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md"
     },
     {
       "id": "folio-assistant-rx8k",
       "title": "smart-trust: Visual Studio state committed under .vs/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "low",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** provenance (hygiene). **Rule:** `scz-secrets-never-in-text` (preventive). **Severity:** low.\n\n**Evidence:** smart-trust `496290a` tracks `.vs/ProjectSettings.json`, `.vs/VSWorkspaceState.json`, `.vs/slnx.sqlite` and `.vs/smart-ig-starter-kit/v17/.suo`. These are per-user IDE state (opened files, local paths, a SQLite index) and can carry local paths or other machine data. No secret w",
       "file": "beans/defs/folio-assistant-rx8k--smart-trust-visual-studio-state-committed-under-vs.md"
     },
@@ -8375,14 +8431,14 @@
     {
       "id": "folio-assistant-towy",
       "title": "smart-base issue skills: issue body reaches an LLM unfenced and LLM-chosen labels are applied unchecked",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security · **severity:** minor while dormant, major if the triggers return · **rules:** scz-screen-handover-fields, scz-report-never-extends-the-plan, scz-pin-third-party-by-full-sha\n\n**Where:** litlfred/smart-base `.github/skills/dak_authoring/actions/classify_issue_action.py:150-177` and `dak_authoring_action.py:31-47`; workflows `classify-issue.yml`, `skill-l1-review.yml`, `skill-",
       "file": "beans/defs/folio-assistant-towy--smart-base-issue-skills-issue-body-reaches-an-llm.md"
     },
@@ -8739,14 +8795,14 @@
     {
       "id": "folio-assistant-vj2d",
       "title": "dth-hrh: reusable workflows at @main in write-token workflows (security:gate fails)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security (supply chain). **Rule:** `scz-pin-third-party-by-full-sha`. **Severity:** normal: first-party code, but the gate's blocking check fails.\n\n**Evidence** (`security-gate.ts` on dth-hrh `ffb89eb`: `action-sha-pinning — fail: 2 unpinned`):\n\n- `.github/workflows/wg-comment-check.yml:18` `litlfred/folio-assistant-core/.github/workflows/public-comment-check.yml@main`, with `content",
       "file": "beans/defs/folio-assistant-vj2d--dth-hrh-reusable-workflows-at-main-in-write-token-wo.md"
     },
@@ -8797,14 +8853,14 @@
     {
       "id": "folio-assistant-vl71",
       "title": "smart-base ghbuild.yml runs ~36 scripts curled from WorldHealthOrganization/smart-base@main with a write token",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security (RED FLAG, blocking) · **severity:** major · **rules:** scz-pin-third-party-by-full-sha, scz-audit-what-you-run, scz-least-privilege\n\n**Where:** litlfred/smart-base `.github/workflows/ghbuild.yml` lines 152-157 (`SCRIPTS_BASE_URL=https://raw.githubusercontent.com/WorldHealthOrganization/smart-base/main`), then 36 `curl -L -f -o input/scripts/*.py \"${SCRIPTS_BASE_URL}/…\"` ste",
       "file": "beans/defs/folio-assistant-vl71--smart-base-ghbuild-yml-runs-36-scripts-curled-from.md"
     },
@@ -9367,14 +9423,14 @@
     {
       "id": "folio-assistant-wyez",
       "title": "fhir-harness bun.lock: 17 dependency advisories (7 high), node-forge and zod",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security · **severity:** major (advisory) · **rule:** scz-review-dependency-changes\n\n**Where:** litlfred/fhir-harness `bun.lock`, from `bun audit` on 2026-10-31.\n\n**Evidence:**\n- `node-forge@1.4.0` (via `@aehrc/sdc-populate > fhirclient > isomorphic-webcrypto > expo-random > expo > @expo/cli`): 6 high, incl. RSA PKCS#1 v1.5 signature verification accepting extra DigestAlgorithm eleme",
       "file": "beans/defs/folio-assistant-wyez--fhir-harness-bun-lock-17-dependency-advisories-7-h.md"
     },
@@ -9507,14 +9563,14 @@
     {
       "id": "folio-assistant-xbfx",
       "title": "smart-trust: 12 unpinned actions and reusable workflows in write-token workflows (security:gate fails)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-3o2w",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T08:21:00Z",
+      "updatedAt": "2026-10-31T20:26:05Z",
       "preview": "**Category:** security (supply chain). **Rule:** `scz-pin-third-party-by-full-sha`. **Severity:** high: the gate's blocking check fails, and the workflows hold `contents: write`.\n\n**Evidence** (`security-gate.ts` → `action-sha-pinning — fail: 12 unpinned outside exempt staging workflows`; smart-trust `496290a`):\n\n| file:line | uses |\n|---|---|\n| `.github/workflows/fhirbuild.yml:25` | `litlfred/sma",
       "file": "beans/defs/folio-assistant-xbfx--smart-trust-12-unpinned-actions-and-reusable-workflow.md"
     },
@@ -10551,8 +10607,8 @@
         "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 43,
-    "openTotal": 45,
+    "orphanOpen": 31,
+    "openTotal": 33,
     "coveredOpen": 1,
     "duplicateIds": 0
   }
