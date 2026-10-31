@@ -7097,6 +7097,7 @@
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
           "relaxable": true,
           "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
             "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
             "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
           ],
@@ -7115,7 +7116,10 @@
           "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease",
           "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
           "relaxable": true,
-          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment"
+          ],
           "touchesWorkPlan": false
         },
         {

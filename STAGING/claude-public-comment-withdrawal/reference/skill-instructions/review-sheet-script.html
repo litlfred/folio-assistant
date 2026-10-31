@@ -4,7 +4,7 @@
     .site-nav > ul.nav-list:first-child > li > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(313)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(314)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -14,16 +14,16 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(313) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(314) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(130) > button svg,
     .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(313) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(314) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list,
     .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(313) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(314) > ul.nav-list {
       display: block;
     }
   </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>The review sheet’s Apps Script | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="The review sheet’s Apps Script" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="The review sheet’s Apps Script" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
@@ -273,7 +273,7 @@ account, because Google asks the owner to authorise the script:</p><ol><li>Open 
 is the only file to paste: leave the project’s manifest as it is.</li><li>In the function list beside <strong>Run</strong> and <strong>Debug</strong>, pick
 <strong>installTriggers</strong> (not <code class="language-plaintext highlighter-rouge">onOpen</code>, which only adds the menu), and press
 <strong>Run</strong>. Allow access when asked.</li><li>Reload the sheet. A <strong>Review links</strong> menu appears.</li></ol><p><code class="language-plaintext highlighter-rouge">installTriggers</code> runs a full refresh, then installs two triggers: every edit
-of the three tabs marks the sheet dirty, and every five minutes a dirty sheet
+of the three tabs marks the sheet dirty, and every minute a dirty sheet
 is rebuilt. On a public-comment sheet too slow to rebuild per edit, an edit of
 Review Change Sets still flags a stale proposal at once (<code class="language-plaintext highlighter-rouge">staleNow</code>, reading
 only that tab and the agent’s change-set tab; owner, 2026-10-31: “made
@@ -283,13 +283,13 @@ through the API, which fires no edit (found 2026-10-31: CS-001 read Not
 started on Review Change Sets after its PR was open on Agent). A drafting sheet rebuilds <strong>incrementally</strong> (owner,
 2026-10-31): an edit rebuilds only the rows it touched, at once, so a pick
 shows its link and a new row its Change-set within seconds, however large
-the sheet. The 5-minute trigger rebuilds only the rows whose change set’s
+the sheet. The timer rebuilds only the rows whose change set’s
 Agent row changed (the agent writes through the API, which fires no edit;
 the script keeps a short hash per change set to notice). A new table of
 contents in Config, an edit of the header row, or Refresh now rebuilds
 everything. A public-comment sheet rebuilds whole, since a comment feeds its
 change sets: at once while a rebuild takes under 5 s, otherwise gathered for
-the 5-minute trigger. <strong>Review links → Refresh now</strong> rebuilds at once.</p><p><strong>Stale staging previews</strong> (owner, 2026-10-31, option C: sheet and page).
+the timer. <strong>Review links → Refresh now</strong> rebuilds at once.</p><p><strong>Stale staging previews</strong> (owner, 2026-10-31, option C: sheet and page).
 The agent records when it built a change set’s preview in the Agent tab’s
 <strong>Staging built (UTC, change set)</strong>, beside <strong>Agent completed (UTC, change
 set)</strong>. When a PR of the change set was completed after the build, the
@@ -384,7 +384,7 @@ line (“Blue = your input …”) is coloured segment by segment, and every
 later Blue, Green, Orange or Grey word is coloured by itself, bold, in a
 darker shade of its column colour. The script’s <code class="language-plaintext highlighter-rouge">colourInstructions</code> does
 it on every refresh, so text the agent rewrites through the API, which drops
-the colours, gets them back within five minutes.</li><li><strong>Which template</strong> depends on the document’s authoring stage: the
+the colours, gets them back within a minute.</li><li><strong>Which template</strong> depends on the document’s authoring stage: the
 Contributor template while it is being drafted and authored, the Public
 Comment Review template once public comment opens.</li></ul><h2 id="published-with-the-documents-site"><a href="#published-with-the-documents-site" class="anchor-heading" aria-labelledby="published-with-the-documents-site"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Published with the document’s site
   

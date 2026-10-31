@@ -374,14 +374,14 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-31T15:19:10.940Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
-  "sourceCommitSha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
-  "sourceCommitAt": "2026-10-31T14:53:17Z",
+  "generatedAt": "2026-10-31T15:56:00.037Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b96f5dad10c75ddfd573312b6c38d2c5bef1770a",
+  "sourceCommitSha": "b96f5dad10c75ddfd573312b6c38d2c5bef1770a",
+  "sourceCommitAt": "2026-10-31T15:31:41Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 44,
+    "Skill": 45,
     "Decision": 4,
     "Task": 1,
     "Process": 24,
@@ -392,7 +392,7 @@
     "Role": 4,
     "Subgraph": 28,
     "Asset": 4,
-    "Tool": 17
+    "Tool": 19
   },
   "@graph": [
     {
@@ -600,7 +600,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 582,
+      "instructionLines": 587,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -664,6 +664,20 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment-channels",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "public-comment-channels",
+      "title": "Public comment channels and intake",
+      "description": "Set up the channels a public-comment release goes out on (an offline Excel sheet, a Google Form, a GitHub issue form, and the review sheet), each limited to the release's fixed references, with the editor's instructions and the announcement, and bring every channel back in through one intake path that ends in agent triage into thematic change-sets. Use when a draft is released for public comment, when a channel is added to a running review, or when returned comments arrive from any channel.",
+      "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
+      "instructionLines": 213,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/document-publishing",
@@ -925,7 +939,7 @@
       "title": "Figure rebuild: a figure is data, not a picture",
       "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
       "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
-      "instructionLines": 258,
+      "instructionLines": 275,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -7244,6 +7258,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/editor",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
       "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment-channels",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/review-sheet-script"
       ],
@@ -7268,6 +7283,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/editor",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
       "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment-channels",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment"
       ],
       "touchesWorkPlan": false,
@@ -14881,6 +14897,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/catalogue-from-references.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/tools/diig-phases-svg.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "diig-phases-svg",
+      "title": "DIIG phases, steps and resources chart",
+      "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/diig-phases-svg.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "data",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A diig-phases-figure/v1 file, or a diig-phases-adaptation/v1 file whose `adapts` is a repository-root path to one.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the SVG; stdout when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "svg",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/figure-rebuild"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/diig-phases-svg.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/tools/dublin-core-render.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "dublin-core-render",
@@ -15813,6 +15881,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/review-sheet-sync.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/tools/smart-approach-svg.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "smart-approach-svg",
+      "title": "WHO SMART Guidelines approach chart",
+      "description": "Draw the WHO SMART Guidelines approach chart (knowledge layers L1–L5 with their products, and their country adaptations, between the research, localisation and impact bands) as SVG from `smart-guidelines-approach-figure/v1` data on a who-iris library entry, such as the product catalogue handbook's Fig. 5. Every label comes from the data.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/smart-approach-svg.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "data",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A smart-guidelines-approach-figure/v1 file.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the SVG; stdout when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "svg",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The chart, with text as SVG text, one `<g id=\"cell-l<n>-<name>\">` per layer cell."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/figure-rebuild"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/smart-approach-svg.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/tools/tabular-csv.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "tabular-csv",
@@ -16047,6 +16167,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/folio-content-lifecycle",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/folio-content-lifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment-channels",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment-channels",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/skill/public-comment-channels"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld#skill/document-publishing",
@@ -21559,8 +21685,8 @@
   ],
   "staging": {
     "branch": "claude/public-comment-withdrawal",
-    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
+    "sha": "b96f5dad10c75ddfd573312b6c38d2c5bef1770a",
     "pr": "2847/merge",
-    "run": "41212211476"
+    "run": "41215273337"
   }
 }
