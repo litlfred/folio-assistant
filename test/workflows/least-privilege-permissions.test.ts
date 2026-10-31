@@ -8,7 +8,7 @@
  * required reviewers and branch rules can be set.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const DIR = join(resolve(import.meta.dir, "../.."), ".github", "workflows");
@@ -45,7 +45,6 @@ describe("deploy-folio runs only on main, through an environment", () => {
 
 describe("every workflow declares a top-level permissions block (bean folio-assistant-aso6)", () => {
   test("no workflow in .github/workflows/ omits top-level permissions", () => {
-    const { readdirSync } = require("node:fs") as typeof import("node:fs");
     const missing: string[] = [];
     for (const f of readdirSync(DIR).filter((n) => /\.ya?ml$/.test(n)).sort()) {
       const doc = read(f);
