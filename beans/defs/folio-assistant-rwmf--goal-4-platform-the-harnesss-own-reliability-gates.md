@@ -6,7 +6,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-10-03T08:26:45Z
-updated_at: 2026-10-05T04:57:29Z
+updated_at: 2026-10-31T16:35:00Z
 ---
 
 ## There is no owner's quote on this bean, and that is deliberate
@@ -261,3 +261,11 @@ GOAL 2 (`p5wm`) closed with all three of its boxes met. Its 10 open direct child
 - **Post-merge regen & `main` QA gates (`folio-assistant-ksek`, `folio-assistant-p7mb`)**:
   - Merged on `main`: [`litlfred/cat-harness#857`](https://github.com/litlfred/cat-harness/pull/857) (`eef8750`) + [`litlfred/cat-harness-tools#1143`](https://github.com/litlfred/cat-harness-tools/pull/1143) (`1517ad4`) removing committed `test/results/` (`tfqf`/`7mwa`, re-pinned in open [`litlfred/folio-assistant#2855`](https://github.com/litlfred/folio-assistant/pull/2855) `f445a71`); `.github/main-qa-gates.json` merged in `folio-assistant-sci#150` (`11b78e9`), `smart-immunizations#102` (`ab75774`), and `smart-trust#96` (`bb77502`).
   - Open PRs: [`litlfred/cat-harness-tools#1152`](https://github.com/litlfred/cat-harness-tools/pull/1152) (`fa36384`, target-repo scoping and off-checkout `storage` handling in `post-merge-regen.ts` + IG/Java inputs in `layer-post-merge-regen.yml`), [`litlfred/folio-assistant#2857`](https://github.com/litlfred/folio-assistant/pull/2857) (`6edcaed`, pre-gate inputs in `post-merge-regen.yml`), [`litlfred/cat-harness-tools#1146`](https://github.com/litlfred/cat-harness-tools/pull/1146) (`89abe02`, empty baseline in `layer-pr-checks.yml` when `main` has no harness, `#1139`), [`litlfred/cat-harness-tools#1142`](https://github.com/litlfred/cat-harness-tools/pull/1142) (`c6c20ac`, repairing `cat-tools-g7ls` `status: done` → `completed` and skipping generated `README.md` in bean readers), [`litlfred/cat-harness-tools#1150`](https://github.com/litlfred/cat-harness-tools/pull/1150) (`4ac9907`, `schemeOwner` prose `dcterms:source` fix), and `.github/main-qa-gates.json` PRs [`litlfred/folio-assistant-core#432`](https://github.com/litlfred/folio-assistant-core/pull/432) (`c212ddd`), [`litlfred/smart-base#257`](https://github.com/litlfred/smart-base/pull/257) (`3017d04`), and [`litlfred/who-iris#145`](https://github.com/litlfred/who-iris/pull/145) (`3728eb0`).
+- **Fixes for remaining [`litlfred/folio-assistant#2781`](https://github.com/litlfred/folio-assistant/issues/2781) (`main` QA gates) failures**:
+  - **`check:harness-state:check` (`health-result-is-from-the-current-producer`)**: **FIXED on state branches** (`cat/cat-harness-tools/health`, `cat/folio-assistant-core/health`, `cat/who-iris/health` updated to `4c5c53c99d94`; `bun run cat check:harness-state:check` passes with `4 examined, 0 findings`).
+  - **`End-to-end + accessibility, shard 3/3` (`sidebar-rail.e2e.ts` & `who-iris-search.e2e.ts`)**: Fixed in [`litlfred/cat-harness-tools#1159`](https://github.com/litlfred/cat-harness-tools/pull/1159) (`dedcc0d`, all PR checks green).
+  - **`gates-workflows.test.ts:295` (`staging-share.ts apply`)**: Fixed and **Merged** in [`litlfred/cat-harness-tools#1157`](https://github.com/litlfred/cat-harness-tools/pull/1157) (`2f935c8`).
+  - **`tools.test.ts:300` (`diig-phases-svg ~ smart-approach-svg`)**: Fixed in [`litlfred/folio-assistant-core#435`](https://github.com/litlfred/folio-assistant-core/pull/435) (`f8378f0`).
+  - **`subgraphs-checkout.test.ts:66` (`public-comment.md → review-sheet-agent-columns.md`)**: Ready in [`litlfred/folio-assistant-core#315`](https://github.com/litlfred/folio-assistant-core/pull/315) (`4ee7219`).
+  - **`glossary-mapping-block.test.ts:170`**: Fixed in [`litlfred/cat-harness-tools#1150`](https://github.com/litlfred/cat-harness-tools/pull/1150) (`4ac9907`).
+  - **`ingest-and-l1.test.ts:429`**: Fixed in [`litlfred/cat-harness-tools#1095`](https://github.com/litlfred/cat-harness-tools/pull/1095) (`8bb24b4`).
