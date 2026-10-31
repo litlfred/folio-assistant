@@ -1,7 +1,7 @@
 ---
 # folio-assistant-e0jh
 $schema: bean/1.0.0
-title: 'Ingest the BPMN comprehension research papers (7PMG, labeling, PMCF, flow direction, ...) so diagram lint rules cite evidence'
+title: 'Ingest the BPMN and DMN comprehension research papers (7PMG, labeling, PMCF, flow direction, DMN tables, ...) so diagram lint rules cite evidence'
 status: in-progress
 type: task
 priority: normal
@@ -44,11 +44,39 @@ Added by the thread, because they test claims Gemini made:
 16. zur Muehlen, Recker. How Much Language Is Enough? Theoretical and Practical Use of BPMN. CAiSE 2008 (the real source for "a small part of BPMN is used").
 17. Moody. The "Physics" of Notations. IEEE TSE 35(6), 2009.
 
+DMN papers (owner, 2026-10-31 10:11Z, second Gemini paste):
+
+18. Hasić, Vanthienen. Measuring the complexity of DMN decision models. https://lirias.kuleuven.be/retrieve/563607
+19. Hasić, Vanthienen et al. Complexity metrics for DMN decision models. Computer Standards & Interfaces, 2019. https://www.researchgate.net/publication/330663933 (check: are there thresholds such as "inputs ≤ 5" or "NOBE ≤ 25"? Gemini claims them)
+20. Figl, Mendling, Tokdemir, Vanthienen. What we know and what we do not know about DMN. EMISA 13, 2018 (CC BY-SA 4.0). https://dl.gi.de/bitstreams/458c65c0-dc7e-4535-8011-f4f6ae92143b/download
+21. Djurica, Figl, Kummer, Mendling. Investigating the impact of representation features on decision model comprehension. EJIS, 2023. https://www.tandfonline.com/doi/full/10.1080/0960085X.2023.2270456 and the EMISA 2024 extended abstract https://dl.gi.de/server/api/core/bitstreams/f806d101-1ccb-49c0-aba9-90d59184383c/content (record the colour result for tables vs trees, with significance)
+22. Hasić, De Smedt, Vanthienen. Augmenting processes with decision intelligence: principles for integrated modelling (5PDM). Decision Support Systems, 2018. https://lirias.kuleuven.be/retrieve/30b4014a-4721-421c-ac8a-7165629de055 or https://lirias.kuleuven.be/retrieve/466070
+23. Calvanese, Dumas, Laurson, Maggi, Montali, Teinemaa. Semantics and analysis of DMN decision tables. BPM 2016. https://www.researchgate.net/publication/301836662 (check: is there an arXiv copy, maybe 1603.07466? Is any human study in it?)
+24. Aerts, Vandevelde, Vennekens. Tackling the DMN challenges with cDMN. The pasted Lirias link was a Google redirect: search Lirias or arXiv for it.
+25. DMN-guided prompting. arXiv:2505.11701. https://arxiv.org/pdf/2505.11701
+
+## Open-access first (owner, 2026-10-31)
+
+Before taking the notes-only route, look for an open-access copy and use it when its licence allows: an author page, the university repository, arXiv, or PMC. Suggested places to try:
+
+- 4 (7PMG): author copy at https://www.vdaalst.com/publications/p574.pdf
+- 6 (Leopold et al.): WU repository, research.wu.ac.at or epub.wu.ac.at
+- 7 (Genon et al.): University of Namur research portal, researchportal.unamur.be
+- 8, 15 (Zimoch et al.): Ulm DBIS eprints, dbis.eprints.uni-ulm.de
+- 9 (thresholds): https://research.wu.ac.at/files/38083607/JSS12-Metrics.pdf
+- 13 (Avila et al.): https://www.inf.ufrgs.br/~lucineia/?p=710
+- 14 (syntax highlighting): TU/e research portal, research.tue.nl
+- 16 (zur Muehlen & Recker): QUT ePrints, eprints.qut.edu.au
+- 3 (Möller et al.): PMC or the MDPI Brain Sciences page (CC BY)
+- 17 (Moody): no open copy known; notes only unless you find one
+- For each paper, record which copy you used: publisher version, accepted manuscript, or preprint.
+
 If a paper cannot be fetched, record the URL tried and the error, and move on.
 
 ## Done when
 - [ ] each paper above is a `library/` entry or a recorded bibliographic node with findings notes, with its route (full text / notes only) stated
 - [ ] for each, the notes answer: study design (n, participants, notation, task), what was measured (error probability, accuracy, time, perceived ambiguity), and any numeric threshold the paper itself states
 - [ ] the open questions are answered with page cites: the source of "31 nodes"; Leopold et al.'s model and company counts (Gemini said 585 models, six enterprises); whether Leopold et al. use the term "banana model"; whether Zimoch et al. show experts and novices failing alike on complex models
+- [ ] the DMN questions are answered with page cites: thresholds in 19, the colour result in 21, whether 23 has any human study
 - [ ] one PR on litlfred/cat-harness, linked in these notes
 - [ ] needs network: agy only (researchgate, PMC captcha, uni-ulm robots block the cloud container)
