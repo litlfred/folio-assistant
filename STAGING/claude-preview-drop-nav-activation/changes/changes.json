@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "d27817ffbc0ea8c3c38513cc77ca6f2f7e168ff1",
+    "head": "23b9d20bf8b6c6bbeb18338f512217f3a12c6a05",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "d27817ffbc0ea8c3c38513cc77ca6f2f7e168ff1",
+        "ref": "23b9d20bf8b6c6bbeb18338f512217f3a12c6a05",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "d27817ffbc0ea8c3c38513cc77ca6f2f7e168ff1",
+        "ref": "23b9d20bf8b6c6bbeb18338f512217f3a12c6a05",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/lib/site-bar.ts",
-        "ref": "560a89636f2a25b91510f4586c54e1dbf2f729ef",
+        "ref": "430e6e9f3f79d1dce616d10572687dc534167017",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -35,7 +35,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/ui/site-bar.test.ts",
-        "ref": "560a89636f2a25b91510f4586c54e1dbf2f729ef",
+        "ref": "430e6e9f3f79d1dce616d10572687dc534167017",
         "instance": "cat-harness-tools",
         "mounted": true
       }
@@ -44,8 +44,8 @@
       {
         "instance": "cat-harness-tools",
         "repository": "litlfred/cat-harness-tools",
-        "from": "f07c534840e43099a74a6bbd935ecd940c651e78",
-        "to": "560a89636f2a25b91510f4586c54e1dbf2f729ef",
+        "from": "f62a1d9417a60f71b3c96835a33afdc572b957e3",
+        "to": "430e6e9f3f79d1dce616d10572687dc534167017",
         "files": 2
       }
     ]
@@ -72,10 +72,10 @@
     ]
   },
   "qa": {
-    "status": "not-base",
-    "beforeCommit": "18b6d4c0cfcfd5c3bf198bfb4b01cefec3d7bfc2",
-    "baseCommit": "4f4edb7fd07ccf3a01270fdd6c7a37180e3b9afb",
-    "measured": 19476,
+    "status": "known",
+    "beforeCommit": "e7be5d6790904a690bfbb6a8377778ded5e1f946",
+    "baseCommit": "e7be5d6790904a690bfbb6a8377778ded5e1f946",
+    "measured": 19485,
     "notInCone": [
       {
         "path": "api/classes/folio-assistant_schemas_kind-validator.ValidatorRefError.html",
@@ -6139,6 +6139,12 @@
       },
       {
         "path": "api/modules/bootstrap-reading.test.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "api/modules/cat-harness-tools_schemas_harness-root.test.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -16422,7 +16428,7 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.b64232aed7655dd8cf4810ff9f7d3999294f69a01a7e1bdab07f9ca28c112098.sqlite3",
+        "path": "assets/slices/beans.4fa73d96a7cc2a5fcab06723d3f15f06725d108b2d0194e26a14975b213b6002.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
@@ -19623,6 +19629,12 @@
         "path": "cat-harness/site/index.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "cat-harness/state.jsonld",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -51103,7 +51115,7 @@
       },
       {
         "dir": "payload",
-        "count": 2530,
+        "count": 2534,
         "sample": [
           "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf",
           "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf.json",
@@ -51259,7 +51271,7 @@
       },
       {
         "dir": "assets",
-        "count": 267,
+        "count": 268,
         "sample": [
           "assets/beans/burndown.json",
           "assets/harnesses/bootstrap-tools.json",
@@ -51275,12 +51287,12 @@
           "assets/harnesses/smart-trust-phw.json",
           "assets/harnesses/smart-trust.json",
           "assets/harnesses/who-iris.json",
+          "assets/js/fa-pin-links.js",
           "assets/navbar/rail-10i7wejru7e.js",
           "assets/navbar/rail-1noddp5m5gk.js",
           "assets/navbar/rail-1qcgtadm97g.js",
           "assets/navbar/rail-1rrbsc3ywsb.js",
-          "assets/navbar/rail-1vbhy7dvida.js",
-          "assets/navbar/rail-20ewrr2vip7.js"
+          "assets/navbar/rail-1vbhy7dvida.js"
         ]
       },
       {
@@ -51517,9 +51529,10 @@
       },
       {
         "dir": "(root)",
-        "count": 14,
+        "count": 16,
         "sample": [
           ".nojekyll",
+          "404.html",
           "build.json",
           "cat-harness-code-lists.jsonld",
           "cat-harness-glossary.json",
@@ -51531,6 +51544,7 @@
           "fsh-guts.jsonld",
           "index.json",
           "index.jsonld",
+          "pins.json",
           "tool-types.schema.json",
           "tool.schema.json"
         ]
