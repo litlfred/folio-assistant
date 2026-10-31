@@ -1,0 +1,174 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/getting-started",
+  "block": "Getting started",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/start/getting-started.md"
+  },
+  "po": "translations/ru/start/getting-started.po",
+  "source_hashes": {
+    "md": "0c264c7267cb",
+    "po": "efe7ab505ad7"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "0c264c7267cb",
+          "po": "efe7ab505ad7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T20:58:31.668Z",
+        "reviewed_sha": "5a90288f71af4b26f91c0df880d5e59e8ef717d1",
+        "severity": "minor",
+        "metrics": {
+          "translated": 106,
+          "total": 149,
+          "pct": 71
+        },
+        "notes": "43 of 149 strings carry no translation in this locale."
+      },
+      {
+        "field_hash": {
+          "md": "8a1d1fd28f58",
+          "po": "efe7ab505ad7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "4d69a471d0c9",
+          "script_commit_sha": "fc645ae1a775f8b8d14837374868f3e5bdfac397"
+        },
+        "reviewed_at": "2026-10-10T22:03:17.662Z",
+        "reviewed_sha": "467444349ba76654683dbc1aacdea590dc3d67f8",
+        "severity": "minor",
+        "metrics": {
+          "translated": 148,
+          "total": 149,
+          "pct": 99
+        },
+        "notes": "1 of 149 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "0c264c7267cb",
+          "po": "efe7ab505ad7"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T20:58:31.670Z",
+        "reviewed_sha": "5a90288f71af4b26f91c0df880d5e59e8ef717d1",
+        "metrics": {
+          "checked": 106,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        }
+      },
+      {
+        "field_hash": {
+          "md": "8a1d1fd28f58",
+          "po": "efe7ab505ad7"
+        },
+        "result": "fail",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "4d69a471d0c9",
+          "script_commit_sha": "fc645ae1a775f8b8d14837374868f3e5bdfac397"
+        },
+        "reviewed_at": "2026-10-10T22:03:17.666Z",
+        "reviewed_sha": "467444349ba76654683dbc1aacdea590dc3d67f8",
+        "severity": "major",
+        "evidence": [
+          {
+            "text": "14,688 — absent from: \"Проверяйте перед созданием.  генерирует новый id при каждом вызове и ничего не д\""
+          }
+        ],
+        "metrics": {
+          "checked": 148,
+          "missing": 1,
+          "missing_strict": 1,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        }
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "0c264c7267cb",
+          "po": "efe7ab505ad7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-31T20:58:31.672Z",
+        "reviewed_sha": "5a90288f71af4b26f91c0df880d5e59e8ef717d1",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 13,
+          "translated": 106
+        },
+        "notes": "13 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      },
+      {
+        "field_hash": {
+          "md": "8a1d1fd28f58",
+          "po": "efe7ab505ad7"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "4d69a471d0c9",
+          "script_commit_sha": "fc645ae1a775f8b8d14837374868f3e5bdfac397"
+        },
+        "reviewed_at": "2026-10-10T22:03:17.670Z",
+        "reviewed_sha": "467444349ba76654683dbc1aacdea590dc3d67f8",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 13,
+          "translated": 148
+        },
+        "notes": "13 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-31T20:58:31.673Z"
+}
