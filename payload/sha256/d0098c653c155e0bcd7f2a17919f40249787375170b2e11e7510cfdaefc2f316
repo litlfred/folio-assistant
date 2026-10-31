@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-30T20:40:00Z
-updated_at: 2026-10-30T23:30:30Z
+updated_at: 2026-10-31T02:56:00Z
 parent: folio-assistant-negd
 ---
 
@@ -28,3 +28,8 @@ _2026-10-30T23:30:30Z_ — Opened PRs (merge window elapsed, left open for revie
 - `litlfred/folio-assistant-core`: https://github.com/litlfred/folio-assistant-core/pull/303 (official SHA-256-pinned ODRL 2.2 / DCAT 3 / SPDX 2.2.2 / DCMI Metadata Terms contexts in `check-dsa-hash.ts`, `check-dsa-hash` Tool declaration, updated `kg-qa` sidecars)
 - `litlfred/cat-harness`: https://github.com/litlfred/cat-harness/pull/818 (`agent-skill-authoring` voice review attestations for the four `dsa-*` skills)
 - `litlfred/cat-harness-tools`: https://github.com/litlfred/cat-harness-tools/pull/1034 (`skillVoices` fallback to `HARNESS_ROOT` in index checkouts)
+
+_2026-10-31T02:56:00Z_ — Merged latest `origin/main` into all 3 open PRs (and updated `glossary/generated/folio-assistant-core/kg-tools.glossary.json` with `check-dsa-hash` in `folio-assistant-core#303`); all CI checks are now green across all 3 PRs (left open for review, not merged):
+- `litlfred/folio-assistant-core#303` (`63f8f6e`): 11/11 checks passing (`No new failures (tests and gates)`, `Prepare the PR side (and typecheck)`, all 4 base/head shards)
+- `litlfred/cat-harness#818` (`ba8872f2`): 7/7 checks passing (`No new failures (tests and gates)`, `Prepare the PR side (and typecheck)`, all 4 head shards)
+- `litlfred/cat-harness-tools#1034` (`8d7d2cd`): 9/9 checks passing (`Typecheck`, `Tests (no new failures)`, `Index gates (no new failures)`, `Standalone (no new failures)`, `bun test` base/head, `standalone` base/head)
