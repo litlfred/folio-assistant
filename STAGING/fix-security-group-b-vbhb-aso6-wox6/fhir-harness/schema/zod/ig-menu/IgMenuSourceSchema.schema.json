@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/IgMenuSource",
+  "definitions": {
+    "IgMenuSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "sushi-config"
+        },
+        "of": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 7
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readAt": {
+          "type": "string",
+          "minLength": 4
+        }
+      },
+      "required": [
+        "kind",
+        "of",
+        "ref",
+        "path",
+        "readAt"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-menu/IgMenuSourceSchema.schema.json",
+  "title": "IgMenuSourceSchema",
+  "description": "Generated from `IgMenuSourceSchema` in schemas/ig-menu.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

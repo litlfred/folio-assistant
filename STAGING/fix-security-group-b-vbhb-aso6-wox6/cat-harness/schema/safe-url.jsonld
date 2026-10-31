@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/schema/safe-url.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/schema/safe-url",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "safe-url",
+      "title": "safe-url",
+      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/ui/safe-url.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url"
+    }
+  ]
+}

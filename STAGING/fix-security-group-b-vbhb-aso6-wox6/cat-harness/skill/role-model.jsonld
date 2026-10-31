@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/role-model.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/role-model",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "role-model",
+      "title": "Roles are swimlanes",
+      "description": "Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through `inherits` and through a subprocess call chain, how a lane binds to a declared role, and how `kg:audit` finds a dangling skill, lane, role or decision.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/role-model.md",
+      "instructionLines": 736,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model"
+    }
+  ]
+}

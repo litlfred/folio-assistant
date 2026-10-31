@@ -1,0 +1,42 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/smart-base/process/Process_SgEndToEnd/node/Task_L2.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2.jsonld",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "4 · Create / adapt L2 DAK assets",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "http://smart.who.int/base/skill/dak-preprocessing",
+        "http://smart.who.int/base/skill/dak-postprocessing",
+        "http://smart.who.int/base/skill/wireframe-design-review",
+        "http://smart.who.int/base/skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E14",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E37"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E15"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

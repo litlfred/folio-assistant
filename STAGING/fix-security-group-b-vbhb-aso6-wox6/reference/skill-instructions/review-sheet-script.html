@@ -1,0 +1,765 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(313)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(313) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(130) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(130) > ul > li:nth-child(2) > ul > li:nth-child(313) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(130) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(313) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>The review sheet’s Apps Script | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="The review sheet’s Apps Script" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="The review sheet’s Apps Script" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-review-sheet-script",
+    "src": "../../assets/qa/reference-skill-instructions-review-sheet-script/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-review-sheet-script/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=9cd0cc409fcd" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/review-sheet-script.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#inputs-and-outputs-owner-2026-10-31-make-sure-io-on-toolsskills-well-defined","label":"Inputs and outputs (owner, 2026-10-31: “make sure I/O on tools/skills well defined”)"},{"href":"#sheet-conventions-any-agent-written-google-sheet","label":"Sheet conventions (any agent-written Google Sheet)"},{"href":"#published-with-the-documents-site","label":"Published with the document’s site"},{"href":"#trusting-the-script","label":"Trusting the script"},{"href":"#drafting-mode-editors-and-contributors-feedback","label":"Drafting mode: editors’ and contributors’ feedback","children":[{"href":"#setting-up-a-sheet-for-a-new-document","label":"Setting up a sheet for a new document","depth":1},{"href":"#installing-the-script-step-by-step","label":"Installing the script, step by step","depth":1},{"href":"#one-library-a-stub-in-each-sheet-owner-2026-10-31","label":"One library, a stub in each sheet (owner, 2026-10-31)","depth":1},{"href":"#linking-a-sheet-to-a-repository","label":"Linking a sheet to a repository","depth":1}],"fold":"4 sub-sections"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>The review sheet's Apps Script</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md"><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-core/skills/content/folio-document-adapter/review-sheet-script.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="the-review-sheets-apps-script"><a href="#the-review-sheets-apps-script" class="anchor-heading" aria-labelledby="the-review-sheets-apps-script"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The review sheet’s Apps Script
+  
+  
+</h1><p>The sheet itself, its tabs and who writes each column are the
+<a href="../../reference/skill-instructions/public-comment.html"><code class="language-plaintext highlighter-rouge">public-comment</code></a> skill’s (§”The live review sheet”).
+This skill is the script that keeps that sheet’s links current, and the Tool
+<code class="language-plaintext highlighter-rouge">review-sheet-sync</code> that builds it.</p><p>Links inside a cell’s text (a section, a page, a “No. n” in a joined column)
+cannot come from a formula: a formula makes at most one link per cell. They
+are rich text, and rich text goes stale the moment the sheet changes. So the
+sheet keeps them itself, with a Google Apps Script bound to it (owner,
+2026-10-30: “Apps Script in the sheet”). Never paste them by hand from an
+agent: it costs about 30 kB of tool output per 30 rows, and the next edit
+undoes it.</p><h2 id="inputs-and-outputs-owner-2026-10-31-make-sure-io-on-toolsskills-well-defined"><a href="#inputs-and-outputs-owner-2026-10-31-make-sure-io-on-toolsskills-well-defined" class="anchor-heading" aria-labelledby="inputs-and-outputs-owner-2026-10-31-make-sure-io-on-toolsskills-well-defined"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs and outputs (owner, 2026-10-31: “make sure I/O on tools/skills well defined”)
+  
+  
+</h2><p>Every actor on a review sheet reads and writes only what this table says.
+Columns are named by header, never by letter. “People’s tab” is Contributor
+Feedback (drafting) or Review Public Comments and Review Change Sets (public
+comment).</p><div class="table-wrapper"><table><thead><tr><th>actor</th><th>reads</th><th>writes</th><th>never writes</th></tr></thead><tbody><tr><td>People (Authoring Committee, Feedback Review Committee)</td><td>the whole sheet</td><td>Blue columns on the people’s tabs; cell comments</td><td>Green, Grey, Orange, Agent tabs, Config</td></tr><tr><td>Editor (the Config EDITORS list)</td><td>the whole sheet</td><td>Orange <code class="language-plaintext highlighter-rouge">Ready for agent</code>, <code class="language-plaintext highlighter-rouge">Ready for merge</code></td><td>Green, Grey, Agent tabs, Config</td></tr><tr><td>Owner</td><td>the whole sheet</td><td>Config <code class="language-plaintext highlighter-rouge">EDITORS</code></td><td>anything the agent or script writes</td></tr><tr><td>Apps Script (<code class="language-plaintext highlighter-rouge">review-sheet.gs</code>, built by Tool <code class="language-plaintext highlighter-rouge">review-sheet-sync</code>)</td><td>Config (CFG, COLS, DATA, EDITORS); the people’s tabs; the Agent tab(s)</td><td>Grey columns (ids, links, joins); Green columns copied from the Agent tab(s); the STALE mark on the agent column; <code class="language-plaintext highlighter-rouge">Ready for agent</code> back to No once, on the turn to stale; the Watch tab; protections on the Ready columns</td><td>Blue columns’ contents; Orange except the stale reset; the Agent tab(s)</td></tr><tr><td>Agent (sync or watcher)</td><td>the whole sheet; the folio’s repository</td><td>the Agent tab(s) (one row per change set, and in public comment one row per comment on Agent - Comments); the agent column, <code class="language-plaintext highlighter-rouge">Feedback (agent)</code> (drafting) or <code class="language-plaintext highlighter-rouge">Change Set Feedback (agent)</code> (public comment); Config rows other than EDITORS</td><td>Blue, Orange, Grey; the Title on a drafting sheet</td></tr><tr><td>Tool <code class="language-plaintext highlighter-rouge">review-sheet-sync</code></td><td>the folio’s <code class="language-plaintext highlighter-rouge">review/*/sheet-sync.json</code>, anchors, line map</td><td><code class="language-plaintext highlighter-rouge">Code.gs</code> (generic); the Config rows for one sheet (<code class="language-plaintext highlighter-rouge">--config ... --out rows</code>); a drafting sheet’s TOC rows (<code class="language-plaintext highlighter-rouge">--toc-out rows</code>)</td><td>the sheet itself</td></tr><tr><td>Script <code class="language-plaintext highlighter-rouge">review-anchors-from-folio.ts</code></td><td>the folio’s document manifests and block prose; optionally the library file it was seeded from</td><td><code class="language-plaintext highlighter-rouge">folio/&lt;doc&gt;/review-anchors.json</code> (<code class="language-plaintext highlighter-rouge">--check</code> compares)</td><td>the sheet</td></tr></tbody></table></div><p><strong>A question to people goes in the sheet, not only in chat</strong> (owner,
+2026-10-31: “how would the editor / feedback committee / review committee
+know if there was a card … should be there and in the agent column”).
+When the agent needs a person to decide something about a change set, it
+writes the question into that row’s agent column, under its proposal, as</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Decision needed: &lt;the question&gt;
+  A. &lt;option&gt; (recommended)
+  B. &lt;option&gt;
+Answer in your Blue column, or ask an Editor to set Ready for agent.
+</code></pre></div></div><p>and sets the row’s Agentic status to <code class="language-plaintext highlighter-rouge">Needs human</code> on the Agent tab. The
+script shows the whole “Decision needed” block, up to the next blank line,
+in bold, black, in the agent’s feedback cell (owner, 2026-10-31: “decision
+needed should be bold highlighted … so clear”; red was tried and was too
+glaring). The sheet never shows those words (owner, 2026-10-31: “unclear: needs human to do
+what?”): Agentic status opens with <strong>Needs you: answer the agent’s question</strong>,
+saying where the question is and what to do, and Agentic status (filter)
+reads <code class="language-plaintext highlighter-rouge">Needs you: answer the agent's question</code>, so the “Needs you” filter view
+finds it. A card in the agent’s chat may carry the same
+question for the owner, but the sheet is the record people see. When the
+question is answered, the agent replaces the block with the decision and who
+made it.</p><p><strong>What it keeps current.</strong> Columns are found by header text, so people may
+move them.</p><div class="table-wrapper"><table><thead><tr><th>tab</th><th>column</th><th>becomes</th></tr></thead><tbody><tr><td>Review Public Comments</td><td>No.</td><td>a link to the comment’s page (<code class="language-plaintext highlighter-rouge">commentUrl</code> + its ref from Agent’s <em>Comment ref</em>)</td></tr><tr><td>Review Public Comments</td><td>Sections</td><td>each section number, appendix, named section or chapter links to its first page in the draft</td></tr><tr><td>Review Public Comments</td><td>Page</td><td>each printed page or range links to that page</td></tr><tr><td>Review Public Comments</td><td>Agentic status</td><td>one line per pull request of the PC’s change-sets (Agent’s <em>Pull request (change set)</em>), <code class="language-plaintext highlighter-rouge">&lt;repo&gt;#n (status, completed) · what it changed</code> (the repository in the link text, because Sheets’ link popup cuts the URL short): the PR linked; the PC’s Agentic status and the matching line of <em>Agent completed (UTC, change set)</em> in bold; then the matching line of <em>What the PRs changed (change set)</em>. A PC in several change-sets lists all of their PRs, each once. With no PR, the status alone</td></tr><tr><td>Review Public Comments</td><td>Line no(s) / Table / Figure</td><td>each <code class="language-plaintext highlighter-rouge">p.N</code> and each <code class="language-plaintext highlighter-rouge">line(s) N–M</code> / <code class="language-plaintext highlighter-rouge">L N</code> links to its page. Draft line numbers restart, so a line is placed on the page, near the row’s own pages, whose numbered lines hold it</td></tr><tr><td>Review Change Sets</td><td>Sections, Pages</td><td>the union over the change-set’s comments, sorted by page, each linked</td></tr><tr><td>Review Change Sets</td><td>Agentic status</td><td>the same, per change-set; the status is its PCs’ Agentic statuses, each once</td></tr><tr><td>Review Change Sets</td><td>Agentic status (filter)</td><td>one plain value per change set, for a filter view (owner, 2026-10-31): “Needs you: answer the agent’s question” if any of its comments needs a person, else the least advanced of its comments’ Agentic statuses (Not started, Working, PR open, Ready for review, Change merged); “Not in comment record” only when all are</td></tr><tr><td>Review Change Sets</td><td>Public Comments</td><td><code class="language-plaintext highlighter-rouge">No. n (Status) · comment</code>, status in bold, joined by a blank line</td></tr><tr><td>Review Change Sets</td><td>Suggested Revisions, PC Committee Feedback, Dispositions</td><td><code class="language-plaintext highlighter-rouge">No. n · text</code>, one per comment</td></tr></tbody></table></div><p><strong>Change Set Feedback (agent)</strong> (Review Change Sets, green, right of Ready for
+merge; owner, 2026-10-31). The agent writes its proposed direction for
+resolving the change set here, so the Feedback Review Committee and the
+Editor react to a proposal rather than drafting from nothing. Any question
+for people is written here too (§”Inputs and outputs”). The script only
+marks it stale. It is a proposal, never a person’s feedback: a tool that
+collects the people’s <code class="language-plaintext highlighter-rouge">Committee Feedback (…)</code> columns by header must leave
+it out, or show it apart, and it decides nothing.</p><p>Names (owner, 2026-10-31). The people’s columns were <code class="language-plaintext highlighter-rouge">Architect Feedback …</code>
+and are <code class="language-plaintext highlighter-rouge">Committee Feedback …</code>, for the process role. The agent’s columns
+are <code class="language-plaintext highlighter-rouge">Change Set Feedback (agent)</code> (public comment; it was <code class="language-plaintext highlighter-rouge">Architect
+Feedback (agent)</code>) and <code class="language-plaintext highlighter-rouge">Feedback (agent)</code> (drafting; it was <code class="language-plaintext highlighter-rouge">Contributor
+Feedback (agent)</code>). Their names live in Config COLS (<code class="language-plaintext highlighter-rouge">rcs.agentFeedback</code>,
+<code class="language-plaintext highlighter-rouge">draft.agentFeedback</code>). The script finds each column under any of its names
+(<code class="language-plaintext highlighter-rouge">aliasOf</code>, <code class="language-plaintext highlighter-rouge">SAME_COLUMN</code>), and a feedback basis written under the old names
+still matches, so renaming marks no proposal stale.</p><p>Every <code class="language-plaintext highlighter-rouge">No. n</code> in Review Change Sets links to <code class="language-plaintext highlighter-rouge">#gid=&lt;Review Public Comments&gt;&amp;range=A&lt;row&gt;</code>.
+Do not link to a named range by <code class="language-plaintext highlighter-rouge">#rangeid=</code>: Sheets shows “Invalid range”
+for a named range whose id was set through the API.</p><p><strong>One script, one Config tab per sheet</strong> (owner, 2026-10-31, option C).
+<code class="language-plaintext highlighter-rouge">Code.gs</code> is the same file for every document: <code class="language-plaintext highlighter-rouge">review-sheet.gs</code>, stamped
+with its commit and made plain ASCII. Nothing about a document is in it.
+What differs per document lives in the sheet’s <strong>Config</strong> tab: visible,
+locked to the sheet’s owner, columns Key and Value, rows <code class="language-plaintext highlighter-rouge">CFG</code>, <code class="language-plaintext highlighter-rouge">COLS</code> and
+<code class="language-plaintext highlighter-rouge">DATA</code>, each JSON with a leading <code class="language-plaintext highlighter-rouge">|</code> (so Sheets never reads it as a number
+or formula), a long value continued on the next rows under the same key.
+<code class="language-plaintext highlighter-rouge">DATA</code> explains itself in its <code class="language-plaintext highlighter-rouge">ABOUT</code> entry. In public-comment mode it holds
+<code class="language-plaintext highlighter-rouge">SECTIONS</code> (each section the comments can name: key → [name shown, PDF
+page]), <code class="language-plaintext highlighter-rouge">ABBREVIATIONS</code> (short names such as HWR → a section key),
+<code class="language-plaintext highlighter-rouge">PAGE_LINES</code> ([PDF page, first line, last line]), <code class="language-plaintext highlighter-rouge">PAGE_OFFSET</code> (PDF page =
+printed page + this) and <code class="language-plaintext highlighter-rouge">LAST_PAGE</code>. In drafting mode it holds <code class="language-plaintext highlighter-rouge">TOC</code> (the
+dropdown: [name shown, anchor]). A Config written before 2026-10-31 used the
+short names <code class="language-plaintext highlighter-rouge">K</code>, <code class="language-plaintext highlighter-rouge">ABBR</code>, <code class="language-plaintext highlighter-rouge">LP</code>, <code class="language-plaintext highlighter-rouge">OFFSET</code> and <code class="language-plaintext highlighter-rouge">MAX</code>; the script still reads
+them.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># the script, once per platform version</span>
+bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts <span class="nt">--script</span> Code.gs
+<span class="c"># one document's Config rows, from the folio's repository root</span>
+bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts <span class="se">\</span>
+  <span class="nt">--repo</span> <span class="nb">.</span> <span class="nt">--config</span> review/public-comment/sheet-sync.json <span class="nt">--out</span> config-rows.json
+<span class="c"># a drafting sheet also gets its TOC tab (the Selected Sections dropdown)</span>
+bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts <span class="se">\</span>
+  <span class="nt">--repo</span> <span class="nb">.</span> <span class="nt">--config</span> review/drafting/sheet-sync.json <span class="nt">--out</span> config-rows.json <span class="nt">--toc-out</span> toc-rows.json
+</code></pre></div></div><p>The agent writes <code class="language-plaintext highlighter-rouge">config-rows.json</code> into the Config tab (A1 down, columns A
+and B, clearing rows below) with the Sheets connector, which runs as the
+owner, and keeps the tab protected so only the owner can edit it. CFG and
+COLS, which a person might edit by hand (a URL, a tab or column renamed),
+are indented JSON, cut into cells between lines, and column B wraps;
+DATA, generated from the folio and never edited by hand, stays compact
+(owner, 2026-10-31). The script joins a key’s cells and parses them, and
+JSON ignores the line breaks. Neither
+file is committed: both are rebuilt.</p><p><strong>Install it, once per sheet.</strong> A person does this, from the sheet owner’s
+account, because Google asks the owner to authorise the script:</p><ol><li>Open the sheet, then <strong>Extensions → Apps Script</strong>.</li><li>Replace everything in <code class="language-plaintext highlighter-rouge">Code.gs</code> with the built file, and save. Code.gs
+is the only file to paste: leave the project’s manifest as it is.</li><li>In the function list beside <strong>Run</strong> and <strong>Debug</strong>, pick
+<strong>installTriggers</strong> (not <code class="language-plaintext highlighter-rouge">onOpen</code>, which only adds the menu), and press
+<strong>Run</strong>. Allow access when asked.</li><li>Reload the sheet. A <strong>Review links</strong> menu appears.</li></ol><p><code class="language-plaintext highlighter-rouge">installTriggers</code> runs a full refresh, then installs two triggers: every edit
+of the three tabs marks the sheet dirty, and every five minutes a dirty sheet
+is rebuilt. On a public-comment sheet too slow to rebuild per edit, an edit of
+Review Change Sets still flags a stale proposal at once (<code class="language-plaintext highlighter-rouge">staleNow</code>, reading
+only that tab and the agent’s change-set tab; owner, 2026-10-31: “made
+feedback change in RefArch Log but no warning on stale”). A public-comment sheet is also rebuilt on the timer when its
+Agent tab changed since the last rebuild, because the agent writes Agent
+through the API, which fires no edit (found 2026-10-31: CS-001 read Not
+started on Review Change Sets after its PR was open on Agent). A drafting sheet rebuilds <strong>incrementally</strong> (owner,
+2026-10-31): an edit rebuilds only the rows it touched, at once, so a pick
+shows its link and a new row its Change-set within seconds, however large
+the sheet. The 5-minute trigger rebuilds only the rows whose change set’s
+Agent row changed (the agent writes through the API, which fires no edit;
+the script keeps a short hash per change set to notice). A new table of
+contents in Config, an edit of the header row, or Refresh now rebuilds
+everything. A public-comment sheet rebuilds whole, since a comment feeds its
+change sets: at once while a rebuild takes under 5 s, otherwise gathered for
+the 5-minute trigger. <strong>Review links → Refresh now</strong> rebuilds at once.</p><p><strong>Stale staging previews</strong> (owner, 2026-10-31, option C: sheet and page).
+The agent records when it built a change set’s preview in the Agent tab’s
+<strong>Staging built (UTC, change set)</strong>, beside <strong>Agent completed (UTC, change
+set)</strong>. When a PR of the change set was completed after the build, the
+script writes the Staging review cell as <code class="language-plaintext highlighter-rouge">review ⚠ stale: built &lt;time&gt;,
+PR changed since</code>, in both modes (Review Change Sets takes the link from the
+Agent tab’s Staging review page (change set) where it names one). Without a
+build time it claims nothing. The preview page shows its own live banner too
+(the site’s staging build, cat-harness-tools).</p><p><strong>Checked by commit</strong> (owner, 2026-10-31, option A: “agent checks shas, sheet
+shows”). Times can agree while the preview is still wrong, so the agent also
+records, on each pass over a change set with an open PR:</p><div class="table-wrapper"><table><thead><tr><th>Agent tab column</th><th>what the agent writes</th><th>where it reads it</th></tr></thead><tbody><tr><td><strong>PR head (change set)</strong></td><td>each PR’s latest commit, one per line, in the PR order</td><td>the PR (<code class="language-plaintext highlighter-rouge">gh pr view --json headRefOid</code>)</td></tr><tr><td><strong>Staging built from (change set)</strong></td><td>the commit the preview was built from</td><td>the newest gh-pages commit touching <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code>. Its message is <code class="language-plaintext highlighter-rouge">staging(&lt;slug&gt;): from &lt;sha&gt;</code> when an agent staged it (<code class="language-plaintext highlighter-rouge">stage-local.ts</code>), or <code class="language-plaintext highlighter-rouge">Publish &lt;site&gt; &lt;sha8&gt; preview of &lt;branch&gt;</code> when the site-publish workflow did; both forms are accepted</td></tr><tr><td><strong>Staging deploy (change set)</strong></td><td><code class="language-plaintext highlighter-rouge">deployed</code>, <code class="language-plaintext highlighter-rouge">pending</code> or <code class="language-plaintext highlighter-rouge">failed</code></td><td>the Pages deployment of that gh-pages commit: <code class="language-plaintext highlighter-rouge">gh api repos/&lt;o&gt;/&lt;r&gt;/pages/builds/latest</code>, or, where that endpoint is blocked, the conclusion of the “pages build and deployment” run in <code class="language-plaintext highlighter-rouge">actions/runs?head_sha=&lt;gh-pages commit&gt;</code></td></tr></tbody></table></div><p>The script compares only; it stays <code class="language-plaintext highlighter-rouge">@OnlyCurrentDoc</code> with no internet access. Short and full shas both work: it compares the common prefix, at least 7 characters.
+It reads the active PR as the last one listed (one branch, one active PR per
+row) and writes, in this order of precedence: <code class="language-plaintext highlighter-rouge">⚠ deploy failed</code>;
+<code class="language-plaintext highlighter-rouge">⚠ stale: built from &lt;sha&gt;, PR now at &lt;sha&gt;</code>; <code class="language-plaintext highlighter-rouge">⚠ deploy in progress</code>. A
+change set with a recorded PR head but no preview link shows <code class="language-plaintext highlighter-rouge">⚠ no preview
+yet: not ready for merge</code>. A change set is never ready for merge without a
+preview to review (owner, 2026-10-31: “how can it be ready for merge when
+there is no preview?”): the agent stages a preview for every PR it opens, and
+the “Merge decision due” filter view leaves out rows whose Staging review
+starts with ⚠. Without these columns it falls back to the time check above. A sheet
+made before 2026-10-31 gains the three columns at the right of the Agent
+(change sets) tab; the script finds them by header.</p><p><strong>Ready for agent after the preview</strong> (owner, 2026-10-31: “i just set Ready
+for agent to Y … i expected Staging review to get a stale warning”). The PR
+has not changed yet when an Editor sends a row back, so the commit check above
+passes. The script records, as a document property <code class="language-plaintext highlighter-rouge">ready:&lt;CS&gt;</code>, the time it
+first sees a row’s Ready for agent at Yes (cleared on No). A Yes it first sees
+on a row the agent has already completed counts from that completion instead,
+since the script cannot know when it was set: a freshly pasted script would
+otherwise flag work the agent had already done (2026-10-31, CS-001). When that time is
+later than <strong>Staging built</strong>, after the deploy checks, it writes <code class="language-plaintext highlighter-rouge">⚠ missing
+feedback from &lt;time&gt;</code>: the preview still shows the PR, but not the feedback an
+Editor has just sent to the agent (owner, 2026-10-31: “requested from whom?
+what are we waiting on?”). The review page cannot know the sheet, so only the
+sheet says so. The same time makes <strong>Agentic status</strong> open with **Waiting on
+the agent since <time> (Ready for agent set)**, until the agent records a later
+completion or sets the status to Working.</time></p><p><strong>Stale agent proposals.</strong> <code class="language-plaintext highlighter-rouge">Feedback (agent)</code> (drafting) and
+<code class="language-plaintext highlighter-rouge">Change Set Feedback (agent)</code> (Review Change Sets) carry the agent’s proposal.
+The agent records what it wrote against in the Agent tab’s <strong>Feedback basis
+(change set)</strong>: <code class="language-plaintext highlighter-rouge">feedbackBasis()</code> in <code class="language-plaintext highlighter-rouge">tools/review-sheet-sync/feedback-issue.ts</code>,
+a hash of the row’s blue cells (drafting: Title, Selected Sections, people’s
+Contributor Feedback; public comment: Title, TWG (CS), people’s Committee
+Feedback). The script computes the same hash; while they differ it puts
+“⚠ Stale: the row changed since this proposal; the agent will propose
+again.” on the proposal’s first line, and takes it off if the row changes
+back. The agent’s next sync replaces the proposal and the basis.</p><p><strong>How to tell it works.</strong> The first run of <code class="language-plaintext highlighter-rouge">installTriggers</code> takes about 20
+seconds for 800 rows and its execution log ends “Execution completed” (a
+one-second run means <code class="language-plaintext highlighter-rouge">onOpen</code> was picked). Then No. is a blue link, and
+hovering a <code class="language-plaintext highlighter-rouge">No. n</code> on Review Change Sets shows a row such as A327. Failed
+runs are listed with their error under <strong>Executions</strong> (the clock icon) in the
+Apps Script editor. An agent checks from outside by reading a No. cell’s
+formula (<code class="language-plaintext highlighter-rouge">=HYPERLINK(…)</code>) and a joined cell’s text-format runs.</p><p><strong>Protected columns.</strong> The script runs as the account that installed it, so
+it writes the grey and green columns even when they are protected, as long as
+that account is an editor of the protected ranges. Install it from the
+owner’s account.</p><p><strong>Reuse it for another document’s public comment.</strong> Nothing in the template
+names a document. Give the new folio:</p><ol><li>The frozen review version in <code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/</code>, with its
+<code class="language-plaintext highlighter-rouge">pdf-line-map.json</code>, and the folio’s <code class="language-plaintext highlighter-rouge">review-anchors.json</code> (the extraction
+described in <code class="language-plaintext highlighter-rouge">public-comment</code> §”The one fact everything rests on” makes both).</li><li>A <code class="language-plaintext highlighter-rouge">draft/</code> redirect on its site to the library viewer, or use the full
+viewer address as <code class="language-plaintext highlighter-rouge">draftUrl</code>.</li><li><p><code class="language-plaintext highlighter-rouge">review/public-comment/sheet-sync.json</code>:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"anchors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio/&lt;doc&gt;/review-anchors.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lineMap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"library/&lt;slug&gt;/pdf-line-map.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"draftUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"draft/#page="</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"commentUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en/folio-assistant-core/public-comments/folio/&lt;doc&gt;/index.html#"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"namedSections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"CR"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Client Registry"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"aliases"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"how to use the guidance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How to use this guidance"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"tabs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"RPC"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Review Public Comments"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"lines"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Line no(s) / Table / Figure"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">namedSections</code> lists the unnumbered sections reviewers cite by name, and
+their abbreviations, which are matched only in capitals. <code class="language-plaintext highlighter-rouge">aliases</code> gives
+other names for front-matter chapters. <code class="language-plaintext highlighter-rouge">tabs</code> and <code class="language-plaintext highlighter-rouge">columns</code> override the
+defaults in <code class="language-plaintext highlighter-rouge">build-review-sheet-script.ts</code> only where the new sheet’s
+headers differ. The printed-to-PDF offset and the last printed page are
+read from the line map.</p></li><li>A sheet with the tabs above, Agent’s <em>No.</em>, <em>Comment ref</em> and
+<em>Change-sets</em> columns filled, then build and install as above.</li></ol><p><strong>Test it without a sheet.</strong> <code class="language-plaintext highlighter-rouge">bun test folio-assistant-core/tools/review-sheet-sync/review-sheet.test.ts</code>
+builds the script for a small fake folio and runs it against a fake of the
+Apps Script services over the three tabs. It checks every link and join in
+the table above, the Agentic status lines, and the edit-and-timer refresh. It
+proves the template and the builder agree with this skill. It does not prove
+a given sheet has the script installed or current: that is <strong>How to tell it
+works</strong>. Change the template, the builder or this table only together with
+that test.</p><p><strong>Rewrite the Config tab</strong> when the review anchors change, the draft link
+moves, or a tab or a header the script reads is renamed. Re-paste Code.gs
+only when the script itself changes. Renaming a header the script reads,
+without rewriting Config, leaves that column unlinked; it fails nothing.</p><h2 id="sheet-conventions-any-agent-written-google-sheet"><a href="#sheet-conventions-any-agent-written-google-sheet" class="anchor-heading" aria-labelledby="sheet-conventions-any-agent-written-google-sheet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sheet conventions (any agent-written Google Sheet)
+  
+  
+</h2><p>These hold for every Google Sheet an agent writes or keeps current, not only
+the review sheets (owner, 2026-10-31):</p><div class="table-wrapper"><table><thead><tr><th>colour</th><th>who controls it</th><th>lock</th></tr></thead><tbody><tr><td>grey</td><td>mechanical: ids, headers, copied source text</td><td>owner only</td></tr><tr><td>blue</td><td>people: the human-controlled columns</td><td>open to the sheet’s editors</td></tr><tr><td>orange</td><td>editor gates (Ready for agent, Ready for merge)</td><td>its own lock, owner plus the named editors</td></tr><tr><td>green</td><td>agent-derived: links, joins, status</td><td>owner only</td></tr></tbody></table></div><ul><li><strong>Templates</strong> are locked to the owner except the blue columns; the orange
+gates carry their own lock that starts with the owner alone.</li><li><strong>The Config tab</strong> is visible, never hidden, and locked to the owner: the
+agent writes it, people can read what the sheet is set up for.</li><li><strong>The colour key is shown in its colours</strong> (owner, 2026-10-31: “no color
+coded instructions”). In each tab’s Instructions text the key on the first
+line (“Blue = your input …”) is coloured segment by segment, and every
+later Blue, Green, Orange or Grey word is coloured by itself, bold, in a
+darker shade of its column colour. The script’s <code class="language-plaintext highlighter-rouge">colourInstructions</code> does
+it on every refresh, so text the agent rewrites through the API, which drops
+the colours, gets them back within five minutes.</li><li><strong>Which template</strong> depends on the document’s authoring stage: the
+Contributor template while it is being drafted and authored, the Public
+Comment Review template once public comment opens.</li></ul><h2 id="published-with-the-documents-site"><a href="#published-with-the-documents-site" class="anchor-heading" aria-labelledby="published-with-the-documents-site"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Published with the document’s site
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">scripts/review-sheet-site.ts --out &lt;site&gt;</code> (package script
+<code class="language-plaintext highlighter-rouge">site:review-sheet</code> in a folio, a <code class="language-plaintext highlighter-rouge">sourceSteps</code> entry of its site build)
+writes <code class="language-plaintext highlighter-rouge">&lt;site&gt;/review-sheet/</code>: the generic <code class="language-plaintext highlighter-rouge">Code.gs</code>,
+each <code class="language-plaintext highlighter-rouge">review/&lt;mode&gt;/sheet-sync.json</code> as <code class="language-plaintext highlighter-rouge">&lt;mode&gt;.config-rows.json</code>,
+<code class="language-plaintext highlighter-rouge">review-sheet.jsonld</code> (the script as <code class="language-plaintext highlighter-rouge">schema:SoftwareSourceCode</code> with its
+SHA-256 and commit; each document’s settings as a <code class="language-plaintext highlighter-rouge">schema:Dataset</code> linked
+to its sheet and to the Tool), and an <code class="language-plaintext highlighter-rouge">index.html</code> with the setup steps and
+the SHA-256 to check a pasted copy against. Point people there rather than
+sending the file.</p><h2 id="trusting-the-script"><a href="#trusting-the-script" class="anchor-heading" aria-labelledby="trusting-the-script"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Trusting the script
+  
+  
+</h2><p>A copy of a sheet carries its Apps Script, so anyone starting from a
+template, us or someone else, should know what they are running.</p><ul><li><strong>Nothing runs until the sheet’s owner allows it.</strong> The owner runs
+<code class="language-plaintext highlighter-rouge">installTriggers</code>; Google then shows the scopes, and the triggers run as
+the owner, whoever’s edit fires them. So an editor’s edit makes owner
+code read what they typed: the script therefore never writes typed text
+as a formula (<code class="language-plaintext highlighter-rouge">asText</code>, <code class="language-plaintext highlighter-rouge">q</code>), and touches only this sheet.</li><li><strong>Security review.</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/review-sheet-sync/security-review.md"><code class="language-plaintext highlighter-rouge">tools/review-sheet-sync/security-review.md</code></a>
+(2026-10-31) records the threat model and findings F1 to F10, each fixed
+with a test or accepted with its reason. Re-review on any new write sink,
+service, or editor-writable tab.</li><li><strong>The agent caps new issues</strong> (finding F6): it opens a change set’s
+issue only for a row with a Title or feedback text, and asks a person
+before opening more than 20 in one sync.</li><li><strong>This sheet only.</strong> The template starts with <code class="language-plaintext highlighter-rouge">@OnlyCurrentDoc</code>, so the
+consent screen asks for “this spreadsheet”, not all of the owner’s
+spreadsheets. The script uses only SpreadsheetApp, PropertiesService,
+LockService and ScriptApp: no UrlFetchApp, mail or Drive, so it sends
+nothing out. <code class="language-plaintext highlighter-rouge">review-sheet-security.test.ts</code> fails if one of those, or
+<code class="language-plaintext highlighter-rouge">eval</code>/<code class="language-plaintext highlighter-rouge">new Function</code>, appears.</li><li><strong>Three permissions, one file</strong> (owner, 2026-10-31: “why do we need two
+files?”). Google works out a script’s permissions from its code, and
+<code class="language-plaintext highlighter-rouge">@OnlyCurrentDoc</code> narrows the spreadsheet one to this sheet. So the consent
+screen asks for exactly three: this spreadsheet, the script’s own
+triggers, and its menu. <code class="language-plaintext highlighter-rouge">tools/review-sheet-sync/appsscript.json</code> records
+those three for the security test, which fails if the code would need
+more. It is a record, not a file to paste.</li><li><strong>Plain ASCII.</strong> The built script escapes every non-ASCII character, so a
+paste cannot mangle it. The build prints its SHA-256; compare it with the
+pasted copy.</li><li><strong>Wrong sheet.</strong> Pasted into a sheet it was not built for, it stops with a
+message naming the config and tab it expected, before installing triggers.</li><li><strong>Check a copy against its source.</strong> The script is the same for every
+document, so one review covers all copies. Its header names the
+folio-assistant-core commit it was built from. Build again at that
+commit with the folio’s config and compare; or ignore the copied script
+and paste one you built yourself.</li><li><strong>“Google hasn’t verified this app.”</strong> Bound scripts are unverified, so
+the owner clicks Advanced to continue. Publishing as a verified Workspace
+add-on would remove the warning; not done while the users are our own
+sheets.</li></ul><h2 id="drafting-mode-editors-and-contributors-feedback"><a href="#drafting-mode-editors-and-contributors-feedback" class="anchor-heading" aria-labelledby="drafting-mode-editors-and-contributors-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Drafting mode: editors’ and contributors’ feedback
+  
+  
+</h2><p>Before a document goes to public comment, editors and contributors give
+feedback on the working draft (owner, 2026-10-30, for dth-hrh). That needs a
+simpler sheet: no Public Comment Source, no Review Public Comments, no TWGs.
+Each row of feedback <em>is</em> a change set (CS: a list of related comments on one
+topic), and each change set gets a GitHub issue.</p><p><strong>Tabs.</strong></p><div class="table-wrapper"><table><thead><tr><th>tab</th><th>who writes</th><th>columns</th></tr></thead><tbody><tr><td><strong>Contributor Feedback</strong></td><td>people, plus the Apps Script</td><td>one row per change set. Grey, mechanical: <strong>Change-set</strong> (the script gives a used row the next <code class="language-plaintext highlighter-rouge">CS-nnn</code> once; it stays with the row). Blue, people: <strong>Title</strong> (human-controlled), <strong>Selected Sections</strong> (a multi-select dropdown of the document’s table of contents, each section indented under its chapter by three U+2800 blanks per level, since a dropdown cannot nest (owner, 2026-10-31; a “└ “ mark was tried first and found too cluttered); not real spaces, because Sheets trims a multi-select cell and the first chip would lose them and read as Invalid; it stays plain, because a dropdown chip cannot carry a link), any number of <strong>Contributor Feedback (…)</strong> columns, one per contributor, with their initials or name in the brackets (e.g. <code class="language-plaintext highlighter-rouge">Contributor Feedback (CL)</code>); the script reads every column whose header is <code class="language-plaintext highlighter-rouge">Contributor Feedback</code> or starts <code class="language-plaintext highlighter-rouge">Contributor Feedback (</code>; <strong>Disposition</strong> (a dropdown: Pending, Accepted, Partially accepted, Not accepted, Noted, Duplicate, Out of scope; owner, 2026-10-31), the committee’s verdict on the row. Orange: <strong>Ready for agent</strong>, <strong>Ready for merge</strong> (Yes/No, editors). Grey, mechanical, by the script (owner, 2026-10-31): <strong>Section links</strong> (each selected section on its own line, linked to its place on the document page, like the Sections column of the public-comment log; it is mechanical, a copy of Selected Sections with links, so grey, not green). Green, by the agent: <strong>Feedback (agent)</strong>, right of Ready for merge (owner, 2026-10-31): the agent’s proposed direction for resolving the change set, so people react to a proposal rather than draft from nothing; it is not a person’s feedback, the script leaves it out of the Contributor Feedback columns, and it decides nothing. Green, by the script from Agent: <strong>Issue</strong> (<code class="language-plaintext highlighter-rouge">&lt;repo&gt;#n</code>, linked), <strong>Agentic status</strong> (as in public-comment mode: one line per PR, <code class="language-plaintext highlighter-rouge">&lt;repo&gt;#n (status, completed) · what it changed</code>), <strong>Staging review</strong> (a “review” link to the change set’s review page on its staging preview, <code class="language-plaintext highlighter-rouge">STAGING/&lt;branch&gt;/en/review/</code>, while its PR is open; the column was “Staging review page” until 2026-10-31, owner), <strong>Agentic status (filter)</strong> (the change set’s status as one plain value, for the “By agentic status” filter view; green like the other columns the script copies from Agent, owner 2026-10-31)</td></tr><tr><td><strong>Agent</strong></td><td>the agent only</td><td>one row per change set: Change-set, Issue (URL), Agentic status, Pull request (change set), What the PRs changed (change set), Agent completed (UTC, change set), Staging review page (change set), Feedback basis (change set). The agent writes it as each step completes, by the steps of the <code class="language-plaintext highlighter-rouge">review-sheet-agent-columns</code> skill (core#315, not yet merged); a drafting sheet has no per-comment rows, so only its change-set columns apply</td></tr><tr><td><strong>TOC</strong> (hidden)</td><td>the script</td><td>the Sections dropdown’s list and each entry’s link. Rewritten on every refresh, so it follows the document</td></tr></tbody></table></div><p>Colours as in public-comment mode: grey mechanical, blue human, orange
+editor gates, green agent-derived.</p><p><strong>Table of contents.</strong> Built from the folio’s <code class="language-plaintext highlighter-rouge">review-anchors.json</code>: each
+chapter (<code class="language-plaintext highlighter-rouge">Ch 3 Digital Transformation Approach</code>), each numbered section
+(<code class="language-plaintext highlighter-rouge">3.1 DIIG alignment</code>) and each unnumbered section, prefixed by its chapter
+(<code class="language-plaintext highlighter-rouge">Ch 3 · Objectives and key messages</code>). A multi-select cell joins its choices
+with <code class="language-plaintext highlighter-rouge">, </code>, so commas in titles become <code class="language-plaintext highlighter-rouge">;</code>. Each links to
+<code class="language-plaintext highlighter-rouge">sectionUrl</code> + the anchor (<code class="language-plaintext highlighter-rouge">sec:3-1</code>, <code class="language-plaintext highlighter-rouge">chap:&lt;dir&gt;</code>), which the document page
+carries as element ids.</p><p><strong>Config</strong>, <code class="language-plaintext highlighter-rouge">review/drafting/sheet-sync.json</code>:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"drafting"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"anchors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio/&lt;doc&gt;/review-anchors.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"sectionUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en/&lt;doc&gt;/#"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>Write the URLs <strong>relative to the folio’s site</strong>: the build resolves them
+against <code class="language-plaintext highlighter-rouge">iriBase</code> in the folio’s <code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code> (e.g.
+<code class="language-plaintext highlighter-rouge">https://litlfred.github.io/dth-hrh/</code>), so no organisation name is written
+in sheet-sync.json and a folio that moves (to WHO, say) changes one
+<code class="language-plaintext highlighter-rouge">iriBase</code> and rewrites its Config (owner, 2026-10-31). An absolute
+<code class="language-plaintext highlighter-rouge">https://</code> URL is still taken as written.</p><p><code class="language-plaintext highlighter-rouge">tabs</code> and <code class="language-plaintext highlighter-rouge">columns</code> (<code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">draftAgent</code>) override the headers as in
+public-comment mode. Write its Config with <code class="language-plaintext highlighter-rouge">--config review/drafting/sheet-sync.json</code>
+and install as above. The Sections dropdown is a data validation “dropdown
+from a range” on <code class="language-plaintext highlighter-rouge">TOC!A2:A</code> with <strong>Allow multiple selections</strong> ticked; set it
+once in the template (the Sheets API cannot tick that box), and copies keep it.
+Without the tick, a cell with two or more sections shows “Invalid: Input must
+fall within specified range”.</p><p><strong>The agent’s part: every change set has an issue.</strong> On each sync, for every
+Contributor Feedback row with a Change-set:</p><ol><li>If the Agent tab has no row for it, add one (Change-set, Agentic status
+<code class="language-plaintext highlighter-rouge">Not started</code>).</li><li>If that row has no Issue, open a GitHub issue in the folio’s repository:
+title <code class="language-plaintext highlighter-rouge">CS-nnn: &lt;Title&gt;</code> (or the first feedback line while Title is
+empty), body the linked sections, every Contributor Feedback (…) cell
+verbatim, and a link back to the sheet row. Write its URL into Issue.</li><li>When feedback is added to a row later, comment the new text on its issue.</li><li>Propose a direction in <strong>Feedback (agent)</strong> whenever the
+row changes, whoever changed it, a person or an agent. A question for
+people goes there too, as a <code class="language-plaintext highlighter-rouge">Decision needed:</code> block (§”Inputs and
+outputs”). On each sync
+compute <code class="language-plaintext highlighter-rouge">feedbackBasis(header, row)</code> (<code class="language-plaintext highlighter-rouge">tools/review-sheet-sync/feedback-issue.ts</code>:
+a short hash of Title, Selected Sections and the people’s Contributor
+Feedback columns). Where it differs from the Agent tab’s <strong>Feedback
+basis (change set)</strong>, or the proposal cell is empty (a person clears it
+to ask for a fresh one), write a new proposal and the new basis. The
+script’s own writes (ids, links, tree marks) do not change the basis.</li><li>Work a change set only when <strong>Ready for agent</strong> is Yes; its PRs say
+<code class="language-plaintext highlighter-rouge">Closes #n</code> for the change set’s issue, and go to Agent’s PR columns.</li><li>When you pick a row up, say so first (owner, 2026-10-31: “agentic
+status to update saying that an agent has it (w/ link to discussion)”):
+set its Agent status to <code class="language-plaintext highlighter-rouge">Working</code> and put the URL of your conversation
+(the session, thread or PR discussion) in <strong>Agent conversation (change
+set)</strong>. Agentic status then opens with <strong>An agent is working on it:
+conversation</strong>, linked. A sheet made before 2026-10-31 gains that column
+at the right of the Agent (change sets) tab; the script finds it by header.</li></ol><p>Title stays the contributors’: the agent never writes it (in public-comment
+mode, by contrast, Review Change Sets’ Title is agent-derived and green).</p><p><strong>Feedback from the site.</strong> A folio with
+<code class="language-plaintext highlighter-rouge">.github/ISSUE_TEMPLATE/block-feedback.yml</code> (copy the shared
+<code class="language-plaintext highlighter-rouge">templates/issue-forms/block-feedback.yml</code>) gets 📣 feedback links that open
+that form with Content, Section, Block, page and Source prefilled; the
+contributor picks a Type and writes Comment and Proposed change. On each
+sync the agent lists open issues labelled <code class="language-plaintext highlighter-rouge">feedback</code> that no Agent row
+names, and for each appends a Contributor Feedback row from
+<code class="language-plaintext highlighter-rouge">tools/review-sheet-sync/feedback-issue.ts</code> (<code class="language-plaintext highlighter-rouge">feedbackRow</code>): Sections the
+block’s TOC entry, Title a draft (<code class="language-plaintext highlighter-rouge">&lt;section&gt;: &lt;first sentence&gt;</code>, which
+people may rewrite), Contributor Feedback <code class="language-plaintext highlighter-rouge">@login (Type): comment</code> plus
+<code class="language-plaintext highlighter-rouge">Proposed: …</code>. The script then gives it a CS id, and the agent writes the
+issue’s URL into that change set’s Agent row: the feedback issue <em>is</em> the
+change set’s issue, so step 2 above opens none. A comment added to the
+issue later is added to the row’s next empty Contributor Feedback cell.</p><p><strong>Linked templates.</strong> Each mode keeps one template sheet in the
+informatics.avengers Drive, laid out as above, script installed, no rows.
+A new document starts from its “make a copy” link
+(<code class="language-plaintext highlighter-rouge">https://docs.google.com/spreadsheets/d/&lt;template id&gt;/copy</code>); then the agent writes the new document’s Config tab, and the owner runs
+installTriggers. The script in the template needs no change.</p><p><strong>Locks in a template and its copies</strong> (owner, 2026-10-31): every cell is
+locked to the owner except the blue, human-controlled columns. That covers
+the headers, the grey mechanical and green agent-derived columns, the
+Config tab, the Agent tab and the hidden TOC. The orange Ready-for-agent and
+Ready-for-merge columns have a lock of their own, <strong>“Ready columns:
+editors”</strong>, which starts with only the owner; the owner adds each document
+editor to it in each copy (step 4 below).</p><h3 id="setting-up-a-sheet-for-a-new-document"><a href="#setting-up-a-sheet-for-a-new-document" class="anchor-heading" aria-labelledby="setting-up-a-sheet-for-a-new-document"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Setting up a sheet for a new document
+  
+  
+</h3><p>The owner (informatics.avengers) does steps 1 to 6; the agent does step 3.</p><ol><li><strong>Copy the template.</strong> Open the “make a copy” link for the mode (table
+above), name the copy “<document> Contributor Log" or "<document> Public
+Comment Log", and keep it in the informatics.avengers Drive. A file copy
+keeps tabs, colours, dropdowns, locks and the script. **Always copy the
+file** (File, then Make a copy); never build a log by copying tabs into
+a blank spreadsheet, which leaves the script behind (owner, 2026-10-31,
+option A, after DTH-PC and DTH-SC were built tab by tab and needed a
+paste). The owner keeps the latest `dist/Code.gs` pasted into both
+templates, so a copy starts current.</document></document></li><li><strong>Share it.</strong> Share &gt; add contributors or reviewers as <strong>Editor</strong>. The
+locks still keep them to the blue columns.</li><li><strong>Link it to the repository (agent).</strong> Give the agent the copy’s URL and
+the document’s repository. The agent follows “Linking a sheet to a
+repository” below. Until it does, Config holds only its Instructions,
+Key and EDITORS rows, the Selected Sections dropdown is empty, and the
+script says “not linked to a document repository yet” with the sheet’s
+ID when the sheet opens and on every run.</li><li><strong>Name the editors (owner).</strong> Type their emails in Config’s orange
+<code class="language-plaintext highlighter-rouge">EDITORS</code> row, or leave it empty so only the owner can set the Ready
+columns (below).</li><li><p><strong>Install the script.</strong> Extensions &gt; Apps Script. <strong>Rename the project
+to the spreadsheet’s own name</strong> (“Untitled project” at the top left), so
+it is found by name in script.google.com, where bound projects are listed
+apart from their sheets. Replace all of
+<code class="language-plaintext highlighter-rouge">Code.gs</code> with the published generic file and save (the only file to
+paste). The Config tab’s <code class="language-plaintext highlighter-rouge">Instructions - Install script</code> row has these
+steps click by click. Pick <strong>installTriggers</strong>
+in the function list and press Run; allow access. Google shows “Google
+hasn’t verified this app. The app is requesting access to sensitive info
+in your Google Account.” This is expected for a sheet’s own bound script,
+which Google never verifies: choose Advanced, then “Go to <project>
+(unsafe)", then Allow ([Google's explanation](https://support.google.com/cloud/answer/7454865);
+owner, 2026-10-31: "explain they will see ... and provide link to info"). Reload the sheet: a **Review links**
+menu appears. A copy of the template already holds the script, so the
+paste is needed only when the script changes; **installTriggers is needed
+in every copy**, because triggers and the owner's permission do not copy.
+Paste the script into the template itself once, so every copy starts with
+it. A copy keeps the version it was made with: when Code.gs changes,
+paste it again into each sheet in use.</project></p><p><strong>“Sorry, unable to open the file at this time”</strong> (in German, “Datei kann
+derzeit nicht geöffnet werden”) when Apps Script opens means the browser
+is signed in to several Google accounts and Apps Script opened under the
+default one (<code class="language-plaintext highlighter-rouge">/u/0/</code>), which cannot see the sheet (owner, 2026-10-31,
+DTH-PC). Open the sheet in a private window signed in to the owner’s
+account only, or change <code class="language-plaintext highlighter-rouge">/u/0/</code> in the failing address to <code class="language-plaintext highlighter-rouge">/u/1/</code>,
+<code class="language-plaintext highlighter-rouge">/u/2/</code>, and so on.</p></li><li><strong>Drafting only: finish the Selected Sections dropdown.</strong> installTriggers
+checks the dropdown: it adds the rule (a dropdown from <code class="language-plaintext highlighter-rouge">TOC!A2:A</code>) when
+the column has none, and leaves an existing one alone (a rewrite would
+clear its tick). One setting is a person’s, once per sheet:
+    <ul><li>click the column letter above “Selected Sections” to select the column;</li><li>choose Data, then Data validation;</li><li>open the rule for that column (the sidebar lists it by its range, such
+as <code class="language-plaintext highlighter-rouge">'Contributor Feedback'!E2:E1000</code>, as “Dropdown (from a range)”);</li><li>tick <strong>Allow multiple selections</strong>;</li><li>press Done.</li></ul><p>The Chip display style needs nothing: the dropdown rule (in the template,
+and as written through the Sheets API) already carries it (owner,
+2026-10-31: “chip style was preselected on dth-pc log”). Neither Apps
+Script nor the Sheets API can read or set the multiple-selections tick, so installTriggers cannot check them directly. It shows the
+steps, with the exact range, unless it has evidence they are done: a cell
+already holding two sections from the list, or a Yes to the box’s “Is this
+done already?” (kept as the document property <code class="language-plaintext highlighter-rouge">dropdownDone</code>). Copies made
+after the template has them keep them. The same steps are written at the
+top of the Config tab, in its <code class="language-plaintext highlighter-rouge">Instructions - Dropdown</code> row, so they stay with
+the sheet (owner, 2026-10-31); the script ignores that row.</p></li></ol><h3 id="installing-the-script-step-by-step"><a href="#installing-the-script-step-by-step" class="anchor-heading" aria-labelledby="installing-the-script-step-by-step"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Installing the script, step by step
+  
+  
+</h3><p>For the sheet’s owner, once per sheet (owner, 2026-10-31: “where to click
+exactly … a Tool for humans to use”). The Config tab’s <code class="language-plaintext highlighter-rouge">Instructions -
+Install script</code> row carries the same steps and links here.</p><ol><li><strong>Get the latest Code.gs.</strong> Open
+<a href="https://github.com/litlfred/folio-assistant-core/blob/main/tools/review-sheet-sync/dist/Code.gs"><code class="language-plaintext highlighter-rouge">dist/Code.gs</code> on GitHub</a>
+and press <strong>Copy raw file</strong> (the two-squares button at the top right of
+the code), or open the
+<a href="https://raw.githubusercontent.com/litlfred/folio-assistant-core/main/tools/review-sheet-sync/dist/Code.gs">raw file</a>,
+select all and copy. It is the build of <code class="language-plaintext highlighter-rouge">review-sheet.gs</code> on core’s main,
+rewritten by <code class="language-plaintext highlighter-rouge">build-review-sheet-script.ts --dist</code>; a test fails when it
+is stale, so it is always the current script.</li><li><strong>Open the editor.</strong> In the sheet: <strong>Extensions</strong>, then <strong>Apps Script</strong>.
+It opens in a new tab. “Unable to open the file at this time” means
+several Google accounts are signed in: use a private window with only the
+owner’s account.</li><li><strong>Name the project after the sheet.</strong> Click <strong>Untitled project</strong> at the
+top left, type the spreadsheet’s own name (e.g. “DTH-PC Contributor
+Log”), and press <strong>Rename</strong>.</li><li><strong>Paste.</strong> Click <strong>Code.gs</strong> in the Files list on the left. Select all
+(Ctrl+A, or Cmd+A on a Mac), delete, paste, and save (Ctrl+S or Cmd+S,
+or the disk icon).</li><li><strong>Run installTriggers.</strong> Reload the sheet and choose <strong>Review links</strong>,
+then <strong>Install</strong>. Or, in the editor, the function list next to <strong>Run</strong>
+and <strong>Debug</strong> shows <strong>installTriggers</strong> (it is the first function, so the
+default); press <strong>Run</strong>.</li><li><strong>Allow it.</strong> <strong>Review permissions</strong>, pick the owner’s account. Google
+shows “Google hasn’t verified this app. The app is requesting access to
+sensitive info in your Google Account.” That is expected for a sheet’s
+own script: press <strong>Advanced</strong>, then **Go to <project name=""> (unsafe)**,
+then **Allow** ([why](https://support.google.com/cloud/answer/7454865)).</project></li><li><strong>Check it.</strong> The log shows “Execution completed”. Back in the sheet tab,
+reload: a <strong>Review links</strong> menu appears; <strong>Review links</strong>, then
+<strong>Refresh now</strong>, checks it.</li><li><strong>Drafting sheets only:</strong> tick <strong>Allow multiple selections</strong> on the
+Selected Sections dropdown (Data, then Data validation, open the rule).</li></ol><p><strong>Updating later:</strong> steps 1, 2 and 4, then Review links, then Refresh now;
+the automatic refresh stays installed. Sheets drift, and that is accepted
+(owner, 2026-10-31: “sheets likely to drift anyways … they need to know
+where to see latest published”): <strong>Review links, then Which version is
+this?</strong> shows the build the sheet runs (<code class="language-plaintext highlighter-rouge">SCRIPT_VERSION</code>, the stamp on the
+script’s header line) and the link to the latest <code class="language-plaintext highlighter-rouge">dist/Code.gs</code>, whose
+header carries its own stamp to compare.</p><p><strong>A copy of the template needs none of this</strong> (owner, 2026-10-31, option
+A): the script came with the file. Reload the copy, choose <strong>Review links</strong>,
+then <strong>Install</strong>, and allow it as in step 6. The menu runs installTriggers,
+so the editor is never opened. Only renaming the bound project (step 3) is
+left, and it is optional: a copied project is named “Copy of …” by
+Google.</p><p>Screenshots of each step are to be added from the owner’s DTH-PC install
+(the agent cannot sign in to Google to take them).</p><h3 id="one-library-a-stub-in-each-sheet-owner-2026-10-31"><a href="#one-library-a-stub-in-each-sheet-owner-2026-10-31" class="anchor-heading" aria-labelledby="one-library-a-stub-in-each-sheet-owner-2026-10-31"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One library, a stub in each sheet (owner, 2026-10-31)
+  
+  
+</h3><p>Pasting Code.gs into every sheet on every change was “annoying”; the owner
+chose <strong>a library at its latest code (HEAD)</strong>. The code lives once, in a
+standalone Apps Script project, <strong>Folio Review Library</strong>, owned by the sheets’
+owner. Each sheet keeps only
+<a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/review-sheet-sync/dist/Stub.gs"><code class="language-plaintext highlighter-rouge">dist/Stub.gs</code></a>, which never
+changes.</p><p>Setting the library up, once:</p><ol><li>At script.google.com, <strong>New project</strong>; name it <code class="language-plaintext highlighter-rouge">Folio Review Library</code>.</li><li>Replace its code with <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/review-sheet-sync/dist/Code.gs"><code class="language-plaintext highlighter-rouge">dist/Code.gs</code></a>; save.</li><li><strong>Project settings</strong> (the gear): copy the <strong>Script ID</strong>. The library is
+<a href="https://script.google.com/home/projects/1us7_ApIq_XvDG-V1XtqdcyHucF0hSlST0qracv1Tw9KTb4-lAFvK1bMQ/edit"><code class="language-plaintext highlighter-rouge">1us7_ApIq_XvDG-V1XtqdcyHucF0hSlST0qracv1Tw9KTb4-lAFvK1bMQ</code></a>
+(owner, 2026-10-31); the Config tab’s install steps and the stub name it.</li></ol><p>Each sheet, once (templates first, so copies inherit it):</p><ol><li>Extensions, then Apps Script. Replace Code.gs with <code class="language-plaintext highlighter-rouge">dist/Stub.gs</code>; save.</li><li><strong>Libraries +</strong>: paste the Script ID, <strong>Look up</strong>, Version <strong>HEAD
+(Development mode)</strong>, Identifier <code class="language-plaintext highlighter-rouge">Review</code>, <strong>Add</strong>.</li><li>In the sheet, <strong>Review links &gt; Install</strong>.</li></ol><p>An update is one paste of the new <code class="language-plaintext highlighter-rouge">dist/Code.gs</code> into the library. Every sheet
+runs it from its next open, edit or timer. “Which version is this?” reports the
+library’s stamp.</p><p>Why the stub hands its services over (<code class="language-plaintext highlighter-rouge">Review.init</code>): a library has no
+spreadsheet of its own, so its document properties, document lock and
+triggers would not be the sheet’s. The stub passes its own
+<code class="language-plaintext highlighter-rouge">PropertiesService</code>, <code class="language-plaintext highlighter-rouge">LockService</code> and <code class="language-plaintext highlighter-rouge">ScriptApp</code>, and the triggers it
+installs name the stub’s functions. Pasted straight into a sheet, Code.gs still
+works alone: without <code class="language-plaintext highlighter-rouge">init</code> it uses the sheet’s services.</p><p>HEAD runs only for people with edit access to the library. The triggers run as
+the owner who installed them, so that is the owner alone; an editor who uses
+<strong>Refresh now</strong> by hand needs the library shared with them as an editor.</p><h3 id="linking-a-sheet-to-a-repository"><a href="#linking-a-sheet-to-a-repository" class="anchor-heading" aria-labelledby="linking-a-sheet-to-a-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Linking a sheet to a repository
+  
+  
+</h3><p>A copied sheet knows nothing about its document until the agent links it
+(owner, 2026-10-31: DTH-PC’s copy opened with an empty Config and an empty
+dropdown, and nothing said why). Linking is repository work first and sheet
+work second, in this order:</p><ol><li><strong>The folio has a section list.</strong> A drafting sheet’s dropdown is the
+document’s chapters and sections, read from
+<code class="language-plaintext highlighter-rouge">folio/&lt;doc&gt;/review-anchors.json</code>. The folio’s <code class="language-plaintext highlighter-rouge">package.json</code> declares
+<code class="language-plaintext highlighter-rouge">review:anchors</code> and <code class="language-plaintext highlighter-rouge">check:review-anchors</code>, both running
+<code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/review-anchors-from-folio.ts --document &lt;doc&gt;</code>.
+A document seeded from a library file adds `–library <entry> --source
+</entry> <file> --source-label <text>`; one authored from scratch (dth-pc, dth-sc)
+leaves all three out. Run `review:anchors` and commit the file. A new
+document folio declares both scripts from its first commit, so no sheet
+ever waits on them.
+</text></file></li><li><strong>The folio names the sheet.</strong> <code class="language-plaintext highlighter-rouge">review/&lt;mode&gt;/sheet-sync.json</code>:
+<code class="language-plaintext highlighter-rouge">{"mode":"drafting","anchors":"folio/&lt;doc&gt;/review-anchors.json","sectionUrl":"en/&lt;doc&gt;/#","sheet":"&lt;spreadsheet id&gt;"}</code>.</li><li><strong>The agent writes the sheet.</strong> From the folio’s root:
+<code class="language-plaintext highlighter-rouge">bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts --config review/&lt;mode&gt;/sheet-sync.json --out config-rows.json --toc-out toc-rows.json</code>,
+then, with the Sheets connector, the CFG, COLS and DATA rows into Config
+below EDITORS (keep the sheet’s EDITORS value), and for drafting the TOC
+rows into the TOC tab from A1. The connector writes values, not colours,
+so the agent also colours Config: the Key row a Grey header (<code class="language-plaintext highlighter-rouge">#b7b7b7</code>,
+bold), EDITORS Orange (<code class="language-plaintext highlighter-rouge">#f4b26b</code>), and CFG, COLS, DATA and their
+continuation rows Grey (<code class="language-plaintext highlighter-rouge">#efefef</code>), and fits the Instructions rows’
+heights to their text (a Sheets API <code class="language-plaintext highlighter-rouge">autoResizeDimensions</code>; an inserted
+row otherwise inherits its neighbour’s height). Every refresh re-applies
+these (<code class="language-plaintext highlighter-rouge">styleConfig</code>), so a sheet the script runs in heals on its own. The TOC rows are exactly what the script’s
+refresh writes, so the dropdown works before anyone pastes the script.</li><li><strong>The agent says what is left for a person:</strong> paste Code.gs and run
+installTriggers (step 5 above), and tick Allow multiple selections
+(step 6).</li></ol><p>When the branch carrying the folio is not merged yet, the agent may run steps
+1 and 3 from that branch without pushing to it, and write the sheet; the
+branch’s owner commits the anchors and sheet-sync.json. Re-run step 3 after
+any structural change to the document (a section added, moved or renamed).</p><p><strong>Who may set the Ready columns: the <code class="language-plaintext highlighter-rouge">EDITORS</code> row</strong> (owner, 2026-10-31).
+Everyone who works in a log is shared as Editor; protected ranges decide what
+each can change. Blue columns are open to all of them. The orange <strong>Ready for
+agent</strong> and <strong>Ready for merge</strong> columns are for editors only, and the owner
+names them in the Config tab’s <code class="language-plaintext highlighter-rouge">EDITORS</code> row, column B: plain emails, no
+names, one per line (Ctrl+Enter or Cmd+Enter starts a line inside a cell),
+or separated by commas or semicolons. The cell’s format is spelled out, with
+an example, in the <code class="language-plaintext highlighter-rouge">Instructions - Editors</code> row and in a note on the cell
+itself (owner, 2026-10-31: “no instructions on how editors row should look
+like, how separated”). Anything that is not an email is left out, and the
+refresh names it in a toast rather than dropping it silently. installTriggers and Review links &gt; Refresh now lock each
+<code class="language-plaintext highlighter-rouge">Ready for ...</code> column to the owner plus those emails, under a protection the
+script owns and rebuilds each time (other protections are left alone). An
+empty row locks them to the owner alone, which is how every new sheet starts
+(owner, 2026-10-31: “should start w/ empty list (owner is default editor)”);
+a Config with no <code class="language-plaintext highlighter-rouge">EDITORS</code> row leaves them as they are. Both templates carry
+the Orange <code class="language-plaintext highlighter-rouge">EDITORS</code> row, empty, so a copy has it from the start. <code class="language-plaintext highlighter-rouge">EDITORS</code> is the one Config row a person
+keeps: the agent writes it empty and keeps the sheet’s value whenever it
+rewrites the tab, and the emails never go into <code class="language-plaintext highlighter-rouge">sheet-sync.json</code>, which is
+committed. To delegate who decides, the owner can add a delegate to the Config
+tab’s protection, or send the agent the list.</p><p><strong>The Instructions rows</strong> (owner, 2026-10-31). Every visible tab opens with an
+<code class="language-plaintext highlighter-rouge">Instructions</code> row that says what that tab is for and how it works, in that
+tab’s own terms (“make ‘how this sheet works’ specific to each tab”).
+<code class="language-plaintext highlighter-rouge">tabInstructions()</code> in the builder writes the text for each tab. On a people’s
+tab (RPC, RCS, Contributor Feedback) the row is frozen with the header and grey
+like it, a lighter grey than the header. Its first line is the colour key,
+worded for the mode by <code class="language-plaintext highlighter-rouge">colourKey()</code>:</p><ul><li><strong>Blue</strong>: input by people, named by their process role: the Feedback Review
+Committee in public-comment mode (the DPI-H RA’s architects hold it, but the
+sheet names the role, not the job), the Authoring Committee in drafting mode;</li><li><strong>Green</strong>: written by the agent;</li><li><strong>Orange</strong>: workflow, set by an Editor (the <code class="language-plaintext highlighter-rouge">Ready for ...</code> columns);</li><li><strong>Grey</strong>: mechanical, kept by the script or the source.</li></ul><p>Then come the steps for that tab, one per line. Each colour word in the text
+is capitalised (Blue, Green, Orange, Grey), and the sheet shows that word,
+and only that word, bold in its colour (owner, 2026-10-31). On a change-set tab they are
+the human-to-agent workflow, worded by process role: people write in blue, the
+agent proposes in green, an Editor sets Ready for agent, the agent opens one
+pull request for the row whose <code class="language-plaintext highlighter-rouge">Staging review</code> opens the preview’s
+what-changed page, reviewers answer in blue, and an Editor sets Ready for merge
+and the agent merges. On Review Public Comments the steps say that decisions
+are made per change set. Last come the filter views, and a link to the
+harness’s page for the process the sheet runs, where every step and role is in
+full: <code class="language-plaintext highlighter-rouge">public-comment.html</code> for public comment and <code class="language-plaintext highlighter-rouge">contributor-feedback.html</code>
+for drafting, under <code class="language-plaintext highlighter-rouge">en/cat-harness/processes/</code> on the folio-assistant site
+(<code class="language-plaintext highlighter-rouge">processPage()</code>; <code class="language-plaintext highlighter-rouge">CFG.PROCESS</code> overrides it).</p><p>The first cell reads <code class="language-plaintext highlighter-rouge">Instructions</code>, and the text is one merged cell across the
+rest of the row, the colour names in their colours. The script reads any leading
+rows whose first cell starts <code class="language-plaintext highlighter-rouge">Instructions</code> (or <code class="language-plaintext highlighter-rouge">Colour key</code>, the first name) as
+for people: the header is the row after them, and every write, lock and edit
+range starts below the header. Insert the row only after the sheet runs a
+Code.gs that knows it; an older script reads the legend as the header and finds
+no columns. Filter views and protections start at the header row, so shift them
+down by one row when the row is inserted. A filter view’s custom formula does
+not move when a column is inserted, so rewrite it.</p><p>The Config tab keeps its Instructions short, one subject per row, so no row is
+taller than the window (owner, 2026-10-31): <code class="language-plaintext highlighter-rouge">Instructions</code> (the tab’s purpose:
+nothing here needs you unless you install the script), <code class="language-plaintext highlighter-rouge">Instructions - Install script</code>
+(<code class="language-plaintext highlighter-rouge">setupSteps()</code>: copy Code.gs, Extensions &gt; Apps Script, name the project after
+the spreadsheet, paste and save, run installTriggers, allow it, reload; owner,
+2026-10-31: “explain in instructions how to install code.gs … name of
+AppScript project to match google sheet name”), on a drafting sheet
+<code class="language-plaintext highlighter-rouge">Instructions - Dropdown</code> (<code class="language-plaintext highlighter-rouge">dropdownSteps()</code>), and <code class="language-plaintext highlighter-rouge">Instructions - Editors</code>
+(<code class="language-plaintext highlighter-rouge">editorSteps()</code>), then the
+<code class="language-plaintext highlighter-rouge">Key | Value</code> header. Its rows are not frozen. The EDITORS row is Orange, like the Ready columns it controls, because a person keeps it (owner, 2026-10-31); the rows the agent writes stay grey. The script reads Config keys by
+name, so it ignores these rows.</p><p><strong>A stale proposal hands control back to an Editor</strong> (owner, 2026-10-31).
+When a row’s proposal turns stale (a blue cell changed since the agent wrote
+it), the script sets that row’s <code class="language-plaintext highlighter-rouge">Ready for agent</code> from Yes to No, once, on the
+turn. The agent does not act on the row until an Editor sets Yes again, which
+is the signal to update the row’s pull request. A Yes set while the row is
+still stale stays.</p><p><strong>One row, one branch, one active pull request</strong> (owner, 2026-10-31, option A).
+A change-set row keeps one branch for its whole life, and at most one pull
+request is open on it. Every later agent run pushes to that branch and updates
+that PR, so the row’s <code class="language-plaintext highlighter-rouge">Staging review</code> link stays the same. If the PR is
+closed and the committee or contributors want the work back, the agent
+reopens it, or opens a new PR on the same branch when it cannot be reopened.
+It never starts a second branch for the row. Each earlier PR stays listed in
+the row’s Agentic status, one line per PR, so the history is read in the sheet.</p><p><strong>Filter views</strong> (owner, 2026-10-31). Each template carries saved filter
+views, which copy with it. Use Data &gt; Filter views, never a plain filter: a
+plain filter changes the view for everyone, a filter view only for whoever
+opens it.</p><p>Each view is named for who uses it and what it shows (owner, 2026-10-31: “review the views and filters … can we improve?”).</p><div class="table-wrapper"><table><thead><tr><th>sheet</th><th>view</th><th>who</th><th>shows</th></tr></thead><tbody><tr><td>drafting: Contributor Feedback</td><td>Open</td><td>everyone</td><td>rows with a Title, Ready for merge not Yes</td></tr><tr><td></td><td>Needs contributor feedback</td><td>contributors</td><td>rows with a Title and every Contributor Feedback column empty</td></tr><tr><td></td><td>Waiting for editor (Ready for agent not Yes)</td><td>editors</td><td>rows with a Title, Ready for agent not Yes</td></tr><tr><td></td><td>Merge decision due (PR open, not merged)</td><td>editors</td><td>Agentic status (filter) is PR open, Ready for merge not Yes</td></tr><tr><td></td><td>Needs you (answer the agent’s question)</td><td>editors, owner</td><td>Agentic status (filter) starts with “Needs you”</td></tr><tr><td></td><td>Stale (agent proposal or staging out of date)</td><td>owner</td><td>the agent proposal starts with ⚠, or the staging link says stale</td></tr><tr><td></td><td>Decided (Ready for merge Yes)</td><td>everyone</td><td>Ready for merge is Yes</td></tr><tr><td></td><td>By agentic status (pick values)</td><td>everyone</td><td>every row; pick values in the Agentic status (filter) column’s filter (a plain copy of the change set’s Agent status)</td></tr><tr><td>public comment: Review Change Sets</td><td>Change sets: the same eight</td><td>as above</td><td>on its own columns; “Needs architect feedback” checks the three Architect Feedback (initials) columns</td></tr><tr><td>public comment: Review Public Comments</td><td>Comments: Open (no Disposition)</td><td>everyone</td><td>a No., Disposition empty</td></tr><tr><td></td><td>Comments: No change set yet</td><td>review coordinator</td><td>a No., Change Set empty</td></tr><tr><td></td><td>Comments: Needs architect feedback</td><td>architects</td><td>a No., every Architect Feedback (initials) column empty</td></tr><tr><td></td><td>Comments: Decided (Disposition set)</td><td>everyone</td><td>Disposition filled</td></tr></tbody></table></div><p>The “needs feedback” and “stale” views use a custom formula that names
+columns by letter, so a column move breaks them: after moving columns, the
+agent checks each view’s formula against the headers.</p><p>A filter view covers the rows the tab had when the view was made; when rows
+are added past that, widen its range (Data &gt; Filter views &gt; the view &gt;
+Options &gt; Update range).</p><p><strong>Keeping the section list current (agent).</strong> The dropdown’s list is the
+hidden TOC tab, and the script writes it from <code class="language-plaintext highlighter-rouge">DATA.TOC</code> in the Config tab
+on every refresh. So when the document’s chapters or sections change (any PR
+that changes <code class="language-plaintext highlighter-rouge">review-anchors.json</code>, the same moment <code class="language-plaintext highlighter-rouge">review:anchors</code> runs),
+the agent rebuilds the Config rows (<code class="language-plaintext highlighter-rouge">--config review/drafting/sheet-sync.json
+--out config-rows.json</code>) and writes them into each drafting sheet the folio
+names, in the same change. Nobody edits the TOC tab by hand.</p><p><strong>How picks stay valid.</strong> On each refresh the script repairs Selected
+Sections before anything else:</p><div class="table-wrapper"><table><thead><tr><th>the pick</th><th>what the script does</th></tr></thead><tbody><tr><td>a current section, with or without its indent (or the old “└ “ mark)</td><td>rewrites it to the dropdown’s name, indent included</td></tr><tr><td>a section renamed or renumbered since it was picked</td><td>finds it by its anchor (the TOC tab’s column C keeps the anchors of the names it offered before) and rewrites it to the new name</td></tr><tr><td>a section no longer in the document</td><td>keeps it, so nothing a person chose is lost, and adds a line in Section links: ⚠ “<name>" is not in the document now: pick its section again</name></td></tr></tbody></table></div><p>So “Invalid” after a document change clears by itself at the next refresh,
+except for a section that was removed, which a person repicks.</p><p><strong>Change-set ids.</strong> Any row a person has filled in gets the next <code class="language-plaintext highlighter-rouge">CS-nnn</code>
+at the next refresh, whichever column they started in (owner,
+2026-10-31). A cell holding only “No” (a Yes/No dropdown’s default) and the
+script’s own columns do not count.</p><p><strong>Selected Sections shows “Invalid”.</strong> Three causes. A pick of a section
+removed from the document: Section links flags it; pick again. Otherwise: The cell holds several sections
+but the rule does not allow multiple selections: tick it (step 6). Or the
+cell carries links: Sections must be plain text, the links belong in Section
+links. Older scripts linked the column; clear its formatting (Format &gt; Clear
+formatting) and the current script keeps it plain.</p><p><strong>Check it.</strong> Review links &gt; Refresh now. In drafting mode a filled-in row
+gets a CS id and its picked sections appear, linked, in Section links;
+in public-comment mode each No. becomes a link. An error names what is
+missing: no Config tab, a Config row, or a tab the Config names.</p><div class="table-wrapper"><table><thead><tr><th>mode</th><th>template (owned by informatics.avengers)</th><th>make a copy</th></tr></thead><tbody><tr><td>public-comment</td><td>Folio Assistant - Public Comment Review Template, <code class="language-plaintext highlighter-rouge">14PtLd2U_tBQV5OHoEEVRJK1EKfsbZEBPP_MIqo2E3o4</code></td><td>https://docs.google.com/spreadsheets/d/14PtLd2U_tBQV5OHoEEVRJK1EKfsbZEBPP_MIqo2E3o4/copy</td></tr><tr><td>drafting</td><td>Folio Assistant - Contributor Template, <code class="language-plaintext highlighter-rouge">1PtcNJgLQIA1BjapU51pAQzqQjGylBHYNKlCPzZkwVag</code></td><td>https://docs.google.com/spreadsheets/d/1PtcNJgLQIA1BjapU51pAQzqQjGylBHYNKlCPzZkwVag/copy</td></tr></tbody></table></div><p>A copy keeps tabs, colours, dropdowns and formulas. It does not keep
+protected ranges (re-add them: Agent whole tab; the grey and green
+columns), and its TOC tab is empty until the script’s first refresh. A
+document’s own sheet is named in its <code class="language-plaintext highlighter-rouge">sheet-sync.json</code> as <code class="language-plaintext highlighter-rouge">sheet</code> (the
+spreadsheet id), so the agent’s sync knows where to read and write.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/authoring-a-document.html">Authoring a document</a></td><td>Contributor feedback (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/contributor-feedback.html">Contributor feedback on a working draft</a></td><td>Start a change-set row: title, sections, feedback; Propose a direction; Set Ready for agent to Yes; Edit the document in the row’s pull request; Review the preview and answer; Set Ready for merge to Yes; Merge the pull request</td></tr><tr><td><a href="../../en/cat-harness/processes/public-comment-release.html">Release a draft for public comment</a></td><td>Set up the comment channels, with instructions and links</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

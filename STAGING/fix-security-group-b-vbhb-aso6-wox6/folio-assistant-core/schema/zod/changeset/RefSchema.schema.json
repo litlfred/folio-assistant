@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/Ref",
+  "definitions": {
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ref",
+        "commit"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/folio-assistant-core/schema/zod/changeset/RefSchema.schema.json",
+  "title": "RefSchema",
+  "description": "Generated from `RefSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

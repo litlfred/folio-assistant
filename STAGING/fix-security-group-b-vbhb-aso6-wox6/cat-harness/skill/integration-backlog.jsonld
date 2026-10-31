@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/integration-backlog.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/integration-backlog",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "integration-backlog",
+      "title": "/integration-backlog — drive the backlog to zero, one PR at a time",
+      "description": "Dispatcher for the `/integration-backlog <axes>` slash command. Works the backlog identified by the integration watchers (proof, canonical, compute, detangler, one-voice, …) by clustering the open findings into review-sized batches (≤ 49 files per PR — the reviewer-bot limit), proposing each batch to the author via structured AskUserQuestion calls, running `/prepare-merge` on each, resolving review comments (auto if mechanical, structured AskUserQuestion if architectural), then merging — and repeating until the axis is exhausted or the author signals stop. Sister command to `/integration-watch`: the watcher MONITORS for new events; this skill WORKS the backlog the watcher already catalogued.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/integration-backlog.md",
+      "instructionLines": 309,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-backlog"
+    }
+  ]
+}

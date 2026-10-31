@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/folio-assistant-sci/directory/glossary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/folio-assistant-sci/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary"
+      ],
+      "description": "Science's generated glossary (`glossary/generated/folio-assistant-sci/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and DMN decisions by core's `glossary:page`. Moved here from `folio-assistant-core/glossary/generated/folio-assistant-sci/` (bean q3n9, owner ruling 2026-10-24: a scheme is keyed by (instance, scheme), and each layer holds its own glossary, following rfev).",
+      "readmePath": "glossary/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/folio-assistant-sci/directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/glossary"
+    }
+  ]
+}

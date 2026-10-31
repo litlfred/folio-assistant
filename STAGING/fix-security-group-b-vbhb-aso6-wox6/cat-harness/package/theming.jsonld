@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/package/theming.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/package/theming",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "name": "theming",
+      "version": "0.1.0",
+      "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
+      "path": "skills/ui/theming",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/site-presentation-assets",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/theme-artefacts",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/theme-contrast",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/theme-declaration",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/theme-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/skill/theming"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming"
+    }
+  ]
+}

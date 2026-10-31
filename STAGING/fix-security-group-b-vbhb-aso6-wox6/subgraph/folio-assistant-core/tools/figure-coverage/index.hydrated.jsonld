@@ -1,0 +1,80 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/figure-coverage/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/figure-coverage.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/figure-coverage.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--entry"
+            },
+            "description": "The L1 library entry directory; its `sections/*.md` give the declared figures, read with cat-harness-tools `declaredFigureCaptions`.",
+            "name": "entry",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--folio"
+            },
+            "description": "The folio's document directory; every figure, diagram and table block naming a figure is read.",
+            "name": "folio",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--exclusions"
+            },
+            "description": "JSON `[{figure, scope: block|rebuild, reason, signedOffBy?, signedOffAt?}]`. Without `signedOffBy` an exclusion is a proposal and does not count.",
+            "name": "exclusions",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where to write the report; stdout when absent.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "A `figure-coverage-report/v1` JSON report: declared count, counts per state, one row per figure with its blocks, blocks naming undeclared figures, and problems. A per-figure table goes to stderr.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "figure-coverage",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+      "title": "Figure coverage and computability"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/figure-coverage",
+  "path": "tools/figure-coverage/"
+}

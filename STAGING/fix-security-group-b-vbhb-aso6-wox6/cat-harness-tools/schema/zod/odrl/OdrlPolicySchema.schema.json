@@ -1,0 +1,596 @@
+{
+  "$ref": "#/definitions/OdrlPolicy",
+  "definitions": {
+    "OdrlPolicy": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          ]
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Set",
+            "Offer",
+            "Agreement"
+          ]
+        },
+        "uid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inheritFrom": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "conflict": {
+          "type": "string",
+          "enum": [
+            "odrl:perm",
+            "odrl:prohibit",
+            "odrl:invalid"
+          ]
+        },
+        "assigner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignee": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assignee": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "constraint": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "leftOperand": {
+                      "type": "string",
+                      "enum": [
+                        "cat-harness:process",
+                        "cat-harness:task",
+                        "cat-harness:role",
+                        "odrl:purpose",
+                        "odrl:dateTime",
+                        "odrl:elapsedTime",
+                        "purpose",
+                        "dateTime",
+                        "elapsedTime"
+                      ]
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "odrl:eq",
+                        "odrl:neq",
+                        "odrl:isAnyOf",
+                        "odrl:isNoneOf",
+                        "odrl:lt",
+                        "odrl:lteq",
+                        "odrl:gt",
+                        "odrl:gteq",
+                        "odrl:isA",
+                        "eq",
+                        "neq",
+                        "isAnyOf",
+                        "isNoneOf",
+                        "lt",
+                        "lteq",
+                        "gt",
+                        "gteq",
+                        "isA"
+                      ]
+                    },
+                    "rightOperand": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "leftOperand",
+                    "operator",
+                    "rightOperand"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "duty": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "odrl:delete",
+                        "odrl:attribute",
+                        "odrl:inform",
+                        "odrl:obtainConsent",
+                        "delete",
+                        "attribute",
+                        "inform",
+                        "obtainConsent"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assigner": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assignee": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "constraint": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "leftOperand": {
+                            "type": "string",
+                            "enum": [
+                              "cat-harness:process",
+                              "cat-harness:task",
+                              "cat-harness:role",
+                              "odrl:purpose",
+                              "odrl:dateTime",
+                              "odrl:elapsedTime",
+                              "purpose",
+                              "dateTime",
+                              "elapsedTime"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "odrl:eq",
+                              "odrl:neq",
+                              "odrl:isAnyOf",
+                              "odrl:isNoneOf",
+                              "odrl:lt",
+                              "odrl:lteq",
+                              "odrl:gt",
+                              "odrl:gteq",
+                              "odrl:isA",
+                              "eq",
+                              "neq",
+                              "isAnyOf",
+                              "isNoneOf",
+                              "lt",
+                              "lteq",
+                              "gt",
+                              "gteq",
+                              "isA"
+                            ]
+                          },
+                          "rightOperand": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "minItems": 1,
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "leftOperand",
+                          "operator",
+                          "rightOperand"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "assignee",
+              "action"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "prohibition": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assignee": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "constraint": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "leftOperand": {
+                      "type": "string",
+                      "enum": [
+                        "cat-harness:process",
+                        "cat-harness:task",
+                        "cat-harness:role",
+                        "odrl:purpose",
+                        "odrl:dateTime",
+                        "odrl:elapsedTime",
+                        "purpose",
+                        "dateTime",
+                        "elapsedTime"
+                      ]
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "odrl:eq",
+                        "odrl:neq",
+                        "odrl:isAnyOf",
+                        "odrl:isNoneOf",
+                        "odrl:lt",
+                        "odrl:lteq",
+                        "odrl:gt",
+                        "odrl:gteq",
+                        "odrl:isA",
+                        "eq",
+                        "neq",
+                        "isAnyOf",
+                        "isNoneOf",
+                        "lt",
+                        "lteq",
+                        "gt",
+                        "gteq",
+                        "isA"
+                      ]
+                    },
+                    "rightOperand": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "leftOperand",
+                    "operator",
+                    "rightOperand"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "duty": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "odrl:delete",
+                        "odrl:attribute",
+                        "odrl:inform",
+                        "odrl:obtainConsent",
+                        "delete",
+                        "attribute",
+                        "inform",
+                        "obtainConsent"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assigner": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assignee": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "constraint": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "leftOperand": {
+                            "type": "string",
+                            "enum": [
+                              "cat-harness:process",
+                              "cat-harness:task",
+                              "cat-harness:role",
+                              "odrl:purpose",
+                              "odrl:dateTime",
+                              "odrl:elapsedTime",
+                              "purpose",
+                              "dateTime",
+                              "elapsedTime"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "odrl:eq",
+                              "odrl:neq",
+                              "odrl:isAnyOf",
+                              "odrl:isNoneOf",
+                              "odrl:lt",
+                              "odrl:lteq",
+                              "odrl:gt",
+                              "odrl:gteq",
+                              "odrl:isA",
+                              "eq",
+                              "neq",
+                              "isAnyOf",
+                              "isNoneOf",
+                              "lt",
+                              "lteq",
+                              "gt",
+                              "gteq",
+                              "isA"
+                            ]
+                          },
+                          "rightOperand": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "minItems": 1,
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "leftOperand",
+                          "operator",
+                          "rightOperand"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "assignee",
+              "action"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "obligation": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "odrl:delete",
+                  "odrl:attribute",
+                  "odrl:inform",
+                  "odrl:obtainConsent",
+                  "delete",
+                  "attribute",
+                  "inform",
+                  "obtainConsent"
+                ]
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assigner": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assignee": {
+                "type": "string",
+                "minLength": 1
+              },
+              "constraint": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "leftOperand": {
+                      "type": "string",
+                      "enum": [
+                        "cat-harness:process",
+                        "cat-harness:task",
+                        "cat-harness:role",
+                        "odrl:purpose",
+                        "odrl:dateTime",
+                        "odrl:elapsedTime",
+                        "purpose",
+                        "dateTime",
+                        "elapsedTime"
+                      ]
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "odrl:eq",
+                        "odrl:neq",
+                        "odrl:isAnyOf",
+                        "odrl:isNoneOf",
+                        "odrl:lt",
+                        "odrl:lteq",
+                        "odrl:gt",
+                        "odrl:gteq",
+                        "odrl:isA",
+                        "eq",
+                        "neq",
+                        "isAnyOf",
+                        "isNoneOf",
+                        "lt",
+                        "lteq",
+                        "gt",
+                        "gteq",
+                        "isA"
+                      ]
+                    },
+                    "rightOperand": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "leftOperand",
+                    "operator",
+                    "rightOperand"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "@context",
+        "@type",
+        "uid",
+        "profile"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/odrl/OdrlPolicySchema.schema.json",
+  "title": "OdrlPolicySchema",
+  "description": "Generated from `OdrlPolicySchema` in schemas/content/odrl.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

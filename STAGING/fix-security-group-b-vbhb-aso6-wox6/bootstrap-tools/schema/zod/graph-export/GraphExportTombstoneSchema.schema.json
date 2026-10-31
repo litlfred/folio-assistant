@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/GraphExportTombstone",
+  "definitions": {
+    "GraphExportTombstone": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "deprecated": {
+          "type": "boolean",
+          "const": true
+        },
+        "isReplacedBy": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sameAs": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "@id",
+        "deprecated",
+        "isReplacedBy",
+        "sameAs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap-tools/schema/zod/graph-export/GraphExportTombstoneSchema.schema.json",
+  "title": "GraphExportTombstoneSchema",
+  "description": "Generated from `GraphExportTombstoneSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

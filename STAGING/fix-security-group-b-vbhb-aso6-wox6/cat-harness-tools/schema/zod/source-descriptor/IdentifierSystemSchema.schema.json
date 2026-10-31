@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/IdentifierSystem",
+  "definitions": {
+    "IdentifierSystem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authoritative": {
+          "type": "boolean"
+        },
+        "example": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "authoritative"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-descriptor/IdentifierSystemSchema.schema.json",
+  "title": "IdentifierSystemSchema",
+  "description": "Generated from `IdentifierSystemSchema` in schemas/library/source-descriptor.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

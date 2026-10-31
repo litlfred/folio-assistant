@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap/process/Process_InitializeHarness/node/A_WriteRootReadme.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap/process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Write the root README, if it is not there",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/fix-security-group-b-vbhb-aso6-wox6/bootstrap/skill/root-readme"
+    }
+  ]
+}

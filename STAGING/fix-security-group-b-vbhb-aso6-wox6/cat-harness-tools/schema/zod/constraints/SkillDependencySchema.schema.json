@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/SkillDependency",
+  "definitions": {
+    "SkillDependency": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "skill",
+            "requirement"
+          ]
+        },
+        "conformance": {
+          "type": "string",
+          "enum": [
+            "SHALL",
+            "SHOULD",
+            "MAY",
+            "SHALL NOT"
+          ]
+        }
+      },
+      "required": [
+        "ref",
+        "kind",
+        "conformance"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillDependencySchema.schema.json",
+  "title": "SkillDependencySchema",
+  "description": "Generated from `SkillDependencySchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

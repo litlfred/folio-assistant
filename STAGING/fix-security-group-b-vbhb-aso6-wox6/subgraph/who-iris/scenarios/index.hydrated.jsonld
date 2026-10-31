@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/scenarios/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scenarios",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "`scenarios/roles.json`: the roles the IRIS CDN export processes' lanes bind (owner, exporter agent, Cloudflare R2 and CDN, Cloudflare git, release signer, verifier). Each mechanical role inherits the harness role it specialises. Declared so the lanes resolve and the checkout's role graph sees them (folio-assistant#2781).",
+      "fileCount": 0,
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scenarios",
+      "name": "who-iris-scenarios",
+      "path": "scenarios/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/scenarios"
+  ],
+  "name": "scenarios",
+  "path": "scenarios/"
+}

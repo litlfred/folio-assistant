@@ -1,0 +1,110 @@
+{
+  "$ref": "#/definitions/SessionContext",
+  "definitions": {
+    "SessionContext": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-session-context/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "declared": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id",
+            "declared"
+          ]
+        },
+        "startedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "updatedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "open": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "instance": {
+                "type": "string",
+                "minLength": 1
+              },
+              "process": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+                "description": "A BPMN process element id, e.g. Process_CRDM"
+              },
+              "atNode": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "instance",
+              "process"
+            ]
+          }
+        },
+        "claimed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "waitingOn": {
+          "type": "object",
+          "properties": {
+            "what": {
+              "type": "string",
+              "minLength": 1
+            },
+            "since": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "what",
+            "since"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "actor",
+        "startedAt",
+        "updatedAt",
+        "open",
+        "claimed"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-context/SessionContextSchema.schema.json",
+  "title": "SessionContextSchema",
+  "description": "Generated from `SessionContextSchema` in schemas/sdlc/session-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}

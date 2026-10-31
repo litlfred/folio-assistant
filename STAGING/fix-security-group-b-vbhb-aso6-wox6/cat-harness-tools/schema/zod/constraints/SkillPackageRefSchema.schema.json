@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/SkillPackageRef",
+  "definitions": {
+    "SkillPackageRef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A skill name, e.g. todo-manager"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "repo",
+        "path",
+        "ref",
+        "skills"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillPackageRefSchema.schema.json",
+  "title": "SkillPackageRefSchema",
+  "description": "Generated from `SkillPackageRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/security-group-b-vbhb-aso6-wox6",
+    "sha": "277eb53126a6a064eba3f65590ddf0f7775c23f0",
+    "pr": "2829/merge",
+    "run": "41212829135"
+  }
+}
