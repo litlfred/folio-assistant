@@ -31,19 +31,8 @@
     },
     "open-bean-linked-inferred": {
       "summary": "Not a finding: an open bean tied to a task only because its file NAMES a diagram id (inferred — a mention is not a run). Listed so the inference can be checked.",
-      "count": 3,
+      "count": 2,
       "entries": [
-        {
-          "severity": "info",
-          "bean": "folio-assistant-dthl",
-          "title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
-          "status": "in-progress",
-          "parent": "",
-          "basis": "named-id",
-          "named": [
-            "Process_Editing"
-          ]
-        },
         {
           "severity": "info",
           "bean": "folio-assistant-ksek",
@@ -75,7 +64,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 30,
+      "count": 31,
       "entries": [
         {
           "severity": "warning",
@@ -85,7 +74,7 @@
           "parent": "folio-assistant-uhkv",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.542
+          "cosine": 0.543
         },
         {
           "severity": "warning",
@@ -95,7 +84,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.828
+          "cosine": 0.829
         },
         {
           "severity": "warning",
@@ -115,7 +104,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.878
+          "cosine": 0.877
         },
         {
           "severity": "warning",
@@ -135,7 +124,7 @@
           "parent": "folio-assistant-slw1",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.516
+          "cosine": 0.517
         },
         {
           "severity": "warning",
@@ -175,7 +164,17 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.792
+          "cosine": 0.791
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-dthl",
+          "title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
+          "status": "in-progress",
+          "parent": "",
+          "basis": "none",
+          "group": "folio-assistant-dthl",
+          "cosine": 0.815
         },
         {
           "severity": "warning",
@@ -195,7 +194,7 @@
           "parent": "folio-assistant-fs43",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.354
+          "cosine": 0.353
         },
         {
           "severity": "warning",
@@ -225,7 +224,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.697
+          "cosine": 0.695
         },
         {
           "severity": "warning",
@@ -245,7 +244,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.72
+          "cosine": 0.719
         },
         {
           "severity": "warning",
@@ -315,7 +314,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.733
+          "cosine": 0.734
         },
         {
           "severity": "warning",
@@ -345,7 +344,7 @@
           "parent": "folio-assistant-sb31",
           "basis": "none",
           "group": "folio-assistant-sb31",
-          "cosine": 0.815
+          "cosine": 0.814
         },
         {
           "severity": "warning",
@@ -375,7 +374,7 @@
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.741
+          "cosine": 0.742
         }
       ]
     },
@@ -386,26 +385,27 @@
         {
           "severity": "warning",
           "group": "folio-assistant-dthl",
-          "size": 8,
+          "size": 9,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-dthl",
           "nearest_epic_title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
-          "mean_cosine": 0.719,
+          "mean_cosine": 0.73,
           "terms": [
-            "dth-phc section",
             "litlfred dth-phc",
-            "phii crdm",
-            "referencing phii",
+            "dth-phc section",
             "phc handbook",
+            "pass dth",
+            "phii crdm",
             "phc workplan",
-            "dth repo",
-            "pass litlfred"
+            "crdm pdf",
+            "glossary archimate"
           ],
           "beans": [
             "folio-assistant-17iw",
             "folio-assistant-6chd",
             "folio-assistant-75c5",
             "folio-assistant-cysv",
+            "folio-assistant-dthl",
             "folio-assistant-llxa",
             "folio-assistant-lo3p",
             "folio-assistant-ls3t",
@@ -421,12 +421,7 @@
               "beans": 1
             }
           ],
-          "known_processes": [
-            {
-              "process": "Process_Editing",
-              "beans": 1
-            }
-          ]
+          "known_processes": []
         },
         {
           "severity": "warning",
@@ -468,7 +463,7 @@
           "size_class": "small",
           "nearest_epic": "folio-assistant-33iz",
           "nearest_epic_title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
-          "mean_cosine": 0.759,
+          "mean_cosine": 0.76,
           "terms": [
             "group security",
             "security review",
@@ -588,7 +583,7 @@
           "size_class": "small",
           "nearest_epic": "folio-assistant-uhkv",
           "nearest_epic_title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
-          "mean_cosine": 0.655,
+          "mean_cosine": 0.656,
           "terms": [
             "smart-ig instance",
             "pre post-processing",
@@ -684,7 +679,7 @@
           "size_class": "singleton",
           "nearest_epic": "folio-assistant-ksek",
           "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.354,
+          "mean_cosine": 0.353,
           "terms": [
             "cone deploy",
             "deploy stamps",
