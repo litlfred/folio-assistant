@@ -16,6 +16,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
@@ -80,14 +81,14 @@
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/input.schema.json",
-      "instructionLines": 53,
+      "instructionLines": 59,
       "instructionsPath": "skills/conduct/conduct-core/ask-the-person.md",
       "name": "ask-the-person",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae49bcbdfb0a2b65f51dca1ca233c06871fe018c2e05c94c82e841c3985e4770",
-        "bytes": 2792,
-        "sha256": "ae49bcbdfb0a2b65f51dca1ca233c06871fe018c2e05c94c82e841c3985e4770"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae",
+        "bytes": 3233,
+        "sha256": "6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae"
       },
       "title": "Ask the person"
     },
@@ -187,6 +188,27 @@
       "title": "/getting-started — what did they actually ask for?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "A sibling agent, spawned during or working beside a live agent-human discussion, hands every card, question, decision, result, blocker or piece of context back to the discussion agent that is talking with the person, and never leaves it only in its own thread. The discussion agent asks the person (ask-the-person), marks every copy answered, and routes the answer back. A review sheet or issue in play is an extra channel. Use whenever an agent that is not the one talking with the person has something the person must see.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/hand-back-to-discussion/input.schema.json",
+      "instructionLines": 142,
+      "instructionsPath": "skills/conduct/conduct-core/hand-back-to-discussion.md",
+      "name": "hand-back-to-discussion",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/hand-back-to-discussion/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e839b4fe5f268a27b8ee00c1e4286694ca77f9a9a5e87f085b28dbd73a101d27",
+        "bytes": 8314,
+        "sha256": "e839b4fe5f268a27b8ee00c1e4286694ca77f9a9a5e87f085b28dbd73a101d27"
+      },
+      "title": "Hand back to the discussion"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -214,13 +236,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-      "instructionLines": 693,
+      "instructionLines": 696,
       "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
       "name": "interaction-modality",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/00efa6414cd17c95c0ef818e6d2b85b714a2c015212231fcd7b34e217bfa4927",
-        "bytes": 39430,
-        "sha256": "00efa6414cd17c95c0ef818e6d2b85b714a2c015212231fcd7b34e217bfa4927"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ac7b2829846ebfdfee5b53949d3b1b88ce7764ac9861bd13350db94dbb12a91e",
+        "bytes": 39671,
+        "sha256": "ac7b2829846ebfdfee5b53949d3b1b88ce7764ac9861bd13350db94dbb12a91e"
       },
       "title": "/interaction-modality — ask in a form the person can answer"
     },
@@ -233,13 +255,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-      "instructionLines": 263,
+      "instructionLines": 272,
       "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
       "name": "repo-conversion",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0b7628be43e896515c1f256023f54555ddc056949432af945e3964622514acab",
-        "bytes": 14986,
-        "sha256": "0b7628be43e896515c1f256023f54555ddc056949432af945e3964622514acab"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8765ca5cefc4d453dd805a03b43551b8b1971d015e64ebe97708abdd52bd40ca",
+        "bytes": 15584,
+        "sha256": "8765ca5cefc4d453dd805a03b43551b8b1971d015e64ebe97708abdd52bd40ca"
       },
       "title": "/repo-conversion — folio-assistant over a repo that already has a life"
     },

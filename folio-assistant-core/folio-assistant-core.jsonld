@@ -370,14 +370,14 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-31T15:31:27.922Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/26b2d4314437d6d28978a323fa9c05f198e1d55a",
-  "sourceCommitSha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
-  "sourceCommitAt": "2026-10-31T16:14:05+01:00",
+  "generatedAt": "2026-10-31T19:10:28.660Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
+  "sourceCommitSha": "7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
+  "sourceCommitAt": "2026-10-31T18:53:21Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 44,
+    "Skill": 45,
     "Decision": 4,
     "Task": 1,
     "Process": 24,
@@ -516,7 +516,7 @@
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 870,
+      "instructionLines": 892,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -582,7 +582,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 582,
+      "instructionLines": 587,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -637,6 +637,19 @@
       "description": "The content-folio half of the harness's content-lifecycle skills (content-author, content-feedback, content-plan, content-publish, content-review, content-test, content-validate, evidence-appraisal): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules.",
       "instructionsPath": "skills/content/folio-document-adapter/folio-content-lifecycle.md",
       "instructionLines": 59,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "public-comment-channels",
+      "title": "Public comment channels and intake",
+      "description": "Set up the channels a public-comment release goes out on (an offline Excel sheet, a Google Form, a GitHub issue form, and the review sheet), each limited to the release's fixed references, with the editor's instructions and the announcement, and bring every channel back in through one intake path that ends in agent triage into thematic change-sets. Use when a draft is released for public comment, when a channel is added to a running review, or when returned comments arrive from any channel.",
+      "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
+      "instructionLines": 213,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6777,6 +6790,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
       "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
       ],
@@ -6800,6 +6814,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
       "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment"
       ],
       "touchesWorkPlan": false,
@@ -13951,7 +13966,7 @@
       "io": {
         "inputs": [
           {
-            "name": "data",
+            "name": "figure-or-adaptation",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A diig-phases-figure/v1 file, or a diig-phases-adaptation/v1 file whose `adapts` is a repository-root path to one.",
             "required": true,
@@ -14922,7 +14937,7 @@
       "io": {
         "inputs": [
           {
-            "name": "data",
+            "name": "figure",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
             "description": "A smart-guidelines-approach-figure/v1 file.",
             "required": true,
@@ -15191,6 +15206,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle",
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment-channels",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-publishing",
@@ -20703,8 +20724,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "sha": "7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
     "pr": "main",
-    "run": "41213874215"
+    "run": "41231576122"
   }
 }

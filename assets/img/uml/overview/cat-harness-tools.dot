@@ -10,6 +10,12 @@ digraph "cat_harness_tools" {
     "grid_pkg_cat_harness_tools_cat_harness_tools_adapters_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_tools_cat_harness_tools_adapters_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_tools_cat_harness_tools_validators" {
+    label=<<b>cat-harness-tools/cat-harness-tools-validators</b><br/><i>«validators»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "cat_harness_tools_cat_harness_tools_validators_folio_validator_v1_folio_validator_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_validators", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-validator/v1</b></td></tr><tr><td><i>«json: ValidatorNodeSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-validator/v1&quot;</td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">validates [1] : object</td></tr><tr><td align="left">schema [1] : string</td></tr><tr><td align="left">pages [0..1] : string</td></tr><tr><td align="left">rationale [0..1] : string</td></tr></table>>];
+    "grid_pkg_cat_harness_tools_cat_harness_tools_validators_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_tools_cat_harness_tools_validators_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_tools_cat_harness_tools_ui" {
     label=<<b>cat-harness-tools/cat-harness-tools-ui</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "n_cat_harness_tools_cat_harness_tools_ui_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
@@ -186,6 +192,8 @@ digraph "cat_harness_tools" {
   "cat_harness_tools_health_HealthReport" -> "cat_harness_tools_health_Check" [dir=both, arrowtail=diamond, arrowhead=none, label="checks", headlabel="1..*", class="fa_uml_composition"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_adapters_top" -> "n_cat_harness_tools_cat_harness_tools_adapters_code" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_tools_cat_harness_tools_adapters_code" -> "grid_pkg_cat_harness_tools_cat_harness_tools_adapters_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_validators_top" -> "cat_harness_tools_cat_harness_tools_validators_folio_validator_v1_folio_validator_v1" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_tools_cat_harness_tools_validators_folio_validator_v1_folio_validator_v1" -> "grid_pkg_cat_harness_tools_cat_harness_tools_validators_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_ui_top" -> "n_cat_harness_tools_cat_harness_tools_ui_code" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_tools_cat_harness_tools_ui_code" -> "grid_pkg_cat_harness_tools_cat_harness_tools_ui_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_viewer_top" -> "n_cat_harness_tools_cat_harness_tools_viewer_code" [style=invis, class="kg-graph-anchor"];
@@ -260,7 +268,8 @@ digraph "cat_harness_tools" {
   "cat_harness_tools_workflows_folio_workflow_instance_v1" -> "grid_pkg_cat_harness_tools_workflows_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_marks_top" -> "n_cat_harness_tools_marks_sweep_marks" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_tools_marks_sweep_marks" -> "grid_pkg_cat_harness_tools_marks_bottom" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_cat_harness_tools_adapters_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_scripts_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_adapters_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_schemas_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_validators_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_scripts_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_ui_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_id_lookup_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_viewer_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_tests_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_schemas_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_src_top" [style=invis, class="kg-graph-anchor"];

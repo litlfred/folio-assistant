@@ -117,6 +117,14 @@
     ]
   },
   {
+    &quot;id&quot;: &quot;cat-harness-tools-validators&quot;,
+    &quot;path&quot;: &quot;validators/&quot;,
+    &quot;description&quot;: &quot;The validators this layer&#39;s code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit), as cat-harness and folio-assistant-core declare theirs. The first is `dynamic-state.json`, for the `cat-harness-dynamic-state/v1` document `writeDynamicState` writes: its family is listed in the docs typology here, so its node is here too and both land in one change.&quot;,
+    &quot;graphTypologies&quot;: [
+      &quot;validators&quot;
+    ]
+  },
+  {
     &quot;id&quot;: &quot;cat-harness-tools-ui&quot;,
     &quot;path&quot;: &quot;ui/&quot;,
     &quot;description&quot;: &quot;The standalone tool pages the MCP server serves at `/ui/` (`adapters/mcp-server/server.ts`): the bibliography QA, glossary curator and source-relevance pages, their index and shared stylesheet. Static HTML with no build step. Declared 2026-10-24 under bean `0uu2` (owner, card \&quot;A. Declare and keep\&quot;): every top-level directory is a declared subgraph, and before this nothing named it, so a consumer scanning the declaration could not see it.&quot;,

@@ -451,16 +451,34 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
-              "instructionLines": 582,
+              "instructionLines": 587,
               "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
               "name": "public-comment",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d35f47952c252866edea2cc66356c95e6f7ab13914d8187e17bcbe010106d4c",
-                "bytes": 37978,
-                "sha256": "8d35f47952c252866edea2cc66356c95e6f7ab13914d8187e17bcbe010106d4c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a0893bae2f80e2b5384448e1794da95fe94a60dfe7f3c2c5bda2ee547e8f344",
+                "bytes": 38390,
+                "sha256": "2a0893bae2f80e2b5384448e1794da95fe94a60dfe7f3c2c5bda2ee547e8f344"
               },
               "title": "public-comment"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Set up the channels a public-comment release goes out on (an offline Excel sheet, a Google Form, a GitHub issue form, and the review sheet), each limited to the release's fixed references, with the editor's instructions and the announcement, and bring every channel back in through one intake path that ends in agent triage into thematic change-sets. Use when a draft is released for public comment, when a channel is added to a running review, or when returned comments arrive from any channel.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "instructionLines": 213,
+              "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
+              "name": "public-comment-channels",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f150d5b4e9404a1a9e96d24812797e47d54c421ab6f4ce65e14943c2c8641914",
+                "bytes": 12113,
+                "sha256": "f150d5b4e9404a1a9e96d24812797e47d54c421ab6f4ce65e14943c2c8641914"
+              },
+              "title": "Public comment channels and intake"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script",
@@ -470,13 +488,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 870,
+              "instructionLines": 892,
               "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
               "name": "review-sheet-script",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ba14cb6b31fee25a258ff3b47edacbc7d0fee88632baabbfe5181776572dff1",
-                "bytes": 58234,
-                "sha256": "3ba14cb6b31fee25a258ff3b47edacbc7d0fee88632baabbfe5181776572dff1"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/701bfa2d5e3dd3faf3e4d9bdb1b5323478b847b98bae4d59a68705a20e40797d",
+                "bytes": 59519,
+                "sha256": "701bfa2d5e3dd3faf3e4d9bdb1b5323478b847b98bae4d59a68705a20e40797d"
               },
               "title": "The review sheet's Apps Script"
             }

@@ -6,9 +6,9 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "sha": "7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
     "pr": "main",
-    "run": "41213874215"
+    "run": "41231576122"
   },
   "@graph": [
     {
@@ -10100,6 +10100,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment-channels",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
+      "sameAs": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/q-usage-watcher",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/q-usage-watcher",
@@ -10548,6 +10554,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skill/unverified-constraints",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/skill/unverified-constraints"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/hand-back-to-discussion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
@@ -16010,6 +16022,24 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_2"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_12"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/flow/SF_Ask_3",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_3",
@@ -16074,6 +16104,24 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_Compose",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_Compose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/GW_Discussing",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/GW_Discussing",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/GW_Discussing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_HandBack",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_HandBack",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_HandBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/End_HandedBack",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/End_HandedBack",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/End_HandedBack"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AskThePerson/node/A_WriteInChat",
@@ -17022,6 +17070,192 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
       "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_13",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_13",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/flow/SF_HB_14",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_14",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/lane/Lane_Sibling",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/lane/Lane_Discussion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/Start_Process_HandBackToDiscussion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/Start_Process_HandBackToDiscussion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/Start_Process_HandBackToDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/S_Compose",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Compose",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Compose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/GW_Channel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_Channel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_Channel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/S_Mirror",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Mirror",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Mirror"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/GW_ChannelJoin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_ChannelJoin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_ChannelJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/S_HandBack",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_HandBack",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_HandBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/GW_NeedsAnswer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_NeedsAnswer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/GW_NeedsAnswer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/D_Inform",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Inform",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Inform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/End_Informed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Informed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Informed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/D_Ask",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Ask",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Ask"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/D_RouteBack",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_RouteBack",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_RouteBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/D_MarkAnswered",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_MarkAnswered",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_MarkAnswered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/S_Act",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Act",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Act"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HandBackToDiscussion/node/End_Acted",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Acted",
+      "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Acted"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review",

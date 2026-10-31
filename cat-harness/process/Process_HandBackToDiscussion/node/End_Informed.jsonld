@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Informed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
+    "pr": "main",
+    "run": "41231576122"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Informed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Person informed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

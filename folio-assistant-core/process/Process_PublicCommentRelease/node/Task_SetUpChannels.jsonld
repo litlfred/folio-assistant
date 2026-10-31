@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "sha": "7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
     "pr": "main",
-    "run": "41213874215"
+    "run": "41231576122"
   },
   "@graph": [
     {
@@ -19,6 +19,7 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/editor",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
       "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
       ],

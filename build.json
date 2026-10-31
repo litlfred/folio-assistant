@@ -1,24 +1,24 @@
 {
-  "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
-  "built": "2026-10-31T15:38:21Z",
-  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/41213874215",
-  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/26b2d4314437d6d28978a323fa9c05f198e1d55a/checks",
+  "sha": "7b8fbda68821fdf05df59eb0639e4b3dcd5759bb",
+  "built": "2026-10-31T19:12:32Z",
+  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/41231576122",
+  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/7b8fbda68821fdf05df59eb0639e4b3dcd5759bb/checks",
   "mounts": {
-    "beans": "6b49d999352cddbf88d83e9764d2347fc736e7c3",
-    "health": "e254f37b54c1d9960ac5867b5573dbb3ddc27ce1",
+    "beans": "9a9a567bc18b883c4c7ccb27b26d58c81a1b7ecf",
+    "health": "fc357776a3b4e04aa9de22df51efa8c22338c103",
     "fsh-guts": "cf2b8bd4663cf51435443a1ec4942d260a8060c8",
     "issue-marks": "dda51b18e5841231a0f1ae2365d82c6438a7f200",
     "marks": "7f04e6b9c0db670945ffd22fda7241a078d75032",
     "merge-reviews": "4c3cc6b644e8ac01b35412e0d1b96403ad0047ce",
     "subscribed-harnesses": "29c70685067da1b158f5cf6c73b4ba88496d13b4",
     "todos": "9e1af0ab07c018288ae31ac9ae74a85d601bd942",
-    "cat-harness-tools.health": "24c229768bbaba8f5b6dbc6296fde704f75d3ba9",
-    "folio-assistant-core.health": "1495fcb167db3c4a77393c4a1d3ae44dac46e4df",
-    "who-iris.health": "e254f37b54c1d9960ac5867b5573dbb3ddc27ce1",
+    "cat-harness-tools.health": "49f7aa6e6f549000fc3d285ea9a5427048b15fd6",
+    "folio-assistant-core.health": "8a4e1d7ea9ed2643421f0bcc866eca232fc0e56b",
+    "who-iris.health": "fc357776a3b4e04aa9de22df51efa8c22338c103",
     "cat-harness.health": "46bc82f17fe2281cdb6b69209a896273758847ed"
   },
   "writerVerdicts": {
-    "prev": "f187b31c0b1510e12b53a19f9fcb5605b32e0b59",
+    "prev": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
     "verdicts": [
       {
         "writer": "handler:index",
@@ -28,17 +28,17 @@
       {
         "writer": "uml:overview",
         "verdict": "rerun",
-        "why": ".git/branch-mounts changed"
+        "why": "not recorded: git hash-object --stdin-paths reads stdin, writes or runs a helper"
       },
       {
         "writer": "subgraph:jsonld",
         "verdict": "rerun",
-        "why": "not recorded: the trace is 309758993 bytes, more than 268435456"
+        "why": "not recorded: the trace is 313596749 bytes, more than 268435456"
       },
       {
         "writer": "library:viz",
         "verdict": "rerun",
-        "why": "not recorded: the run touched 35554 paths, more than 20000"
+        "why": "bootstrap changed"
       },
       {
         "writer": "voices:viz",
@@ -53,7 +53,7 @@
       {
         "writer": "uploads:viz",
         "verdict": "rerun",
-        "why": "not recorded: the run touched 25259 paths, more than 20000"
+        "why": "bootstrap changed"
       },
       {
         "writer": "ig-index:build",
@@ -73,12 +73,12 @@
       {
         "writer": "skills:docs",
         "verdict": "rerun",
-        "why": ".git/branch-mounts changed"
+        "why": ".git/branch-mounts/beans.json changed"
       },
       {
         "writer": "node-kinds",
         "verdict": "rerun",
-        "why": ".git/branch-mounts changed"
+        "why": ".git/branch-mounts/beans.json changed"
       },
       {
         "writer": "node-kind:pages",
@@ -88,7 +88,7 @@
       {
         "writer": "glossary:page",
         "verdict": "rerun",
-        "why": "not recorded: the writer reads cat-harness/docs/en/folio-assistant-core/glossary/index.md and then rewrites it"
+        "why": "not recorded: the writer reads cat-harness/docs/assets/glossary/bootstrap--terms.skos.jsonld and then rewrites it"
       },
       {
         "writer": "bibliography:page",
@@ -103,72 +103,72 @@
       {
         "writer": "jsonld:contexts",
         "verdict": "rerun",
-        "why": "not recorded: the run touched 20348 paths, more than 20000"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "tools:viz",
         "verdict": "rerun",
-        "why": "build/qa-refresh.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "smart-base:pages",
         "verdict": "rerun",
-        "why": "not recorded: the writer reads smart-base/docs/assets and then rewrites it"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "smart-base:l1-extraction:pages",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "smart-trust:pages",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "smart-trust-phw:pages",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "auto:docs",
         "verdict": "rerun",
-        "why": "not recorded: the writer reads cat-harness/docs/cat-harness/auto-docs/index/docs/index.html and then rewrites it"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "lsi:viz",
         "verdict": "rerun",
-        "why": "beans/defs/folio-assistant-dthl--dth-handbooks-as-l2-documents-on-smart-ra-hrh-phc-sc-pc.md changed"
+        "why": "beans/defs/folio-assistant-33iz--security-and-qa-review-of-the-fhir-and-smart-layer.md changed"
       },
       {
         "writer": "translation:status",
         "verdict": "rerun",
-        "why": "build/qa-refresh.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "openapi:viz",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "schema:viz",
         "verdict": "rerun",
-        "why": ".git/branch-mounts changed"
+        "why": ".git/branch-mounts/beans.json changed"
       },
       {
         "writer": "methodologies:viz",
         "verdict": "rerun",
-        "why": "bootstrap/models/models.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "external-schemas:viz",
         "verdict": "rerun",
-        "why": "not recorded: the run touched 49518 paths, more than 20000"
+        "why": ".github/workflows/code-quality-gates.yml changed"
       },
       {
         "writer": "subscriptions:viz",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "docs:pages",
@@ -183,37 +183,37 @@
       {
         "writer": "navbar:include",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "kind:table",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "avatars:css",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "themes:css",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "folio:viz",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "kg:viewer",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "bootstrap-tools/package.json changed"
       },
       {
         "writer": "state:visualizer",
         "verdict": "rerun",
-        "why": "not recorded: the writer reads cat-harness/docs/en/cat-harness/beans/index.html and then rewrites it"
+        "why": ".git/branch-mounts/beans.json changed"
       },
       {
         "writer": "site:viz",
@@ -228,41 +228,68 @@
       {
         "writer": "render:bpmn",
         "verdict": "rerun",
-        "why": "not recorded: the writer reads bootstrap/processes/complete-initialization.svg and then rewrites it"
+        "why": "not recorded: unparsed trace line: ???() = ?"
       },
       {
         "writer": "processes:viz",
         "verdict": "rerun",
-        "why": ".git/branch-mounts changed"
+        "why": ".git/branch-mounts/beans.json changed"
       }
     ]
   },
   "writerVerifyLog": [
     "### Writers, rerun and measure — dry run (bean `fwtz`, option B)",
     "",
-    "**safe** · records from f187b31c0b15 · could skip 0 of 43 · would have been stale 0 · must rerun 43",
+    "**safe** · records from 26b2d4314437 · could skip 0 of 43 · would have been stale 0 · must rerun 43",
     "",
     "- `handler:index` reruns: bootstrap changed",
-    "- `uml:overview` reruns: .git/branch-mounts changed",
-    "- `subgraph:jsonld` reruns: not recorded: the trace is 309758993 bytes, more than 268435456",
-    "- `library:viz` reruns: not recorded: the run touched 35554 paths, more than 20000",
+    "- `uml:overview` reruns: not recorded: git hash-object --stdin-paths reads stdin, writes or runs a helper",
+    "- `subgraph:jsonld` reruns: not recorded: the trace is 313596749 bytes, more than 268435456",
+    "- `library:viz` reruns: bootstrap changed",
     "- `voices:viz` reruns: bootstrap changed",
     "- `theme:viz` reruns: bootstrap changed",
-    "- `uploads:viz` reruns: not recorded: the run touched 25259 paths, more than 20000",
+    "- `uploads:viz` reruns: bootstrap changed",
     "- `ig-index:build` reruns: not recorded: git ls-remote is not a read-only command the cone replays",
     "- `smart-base:document-kinds` reruns: bootstrap changed",
     "- `document-kinds:viz` reruns: bootstrap changed",
-    "- `skills:docs` reruns: .git/branch-mounts changed",
-    "- `node-kinds` reruns: .git/branch-mounts changed",
+    "- `skills:docs` reruns: .git/branch-mounts/beans.json changed",
+    "- `node-kinds` reruns: .git/branch-mounts/beans.json changed",
     "- `node-kind:pages` reruns: not recorded: the writer reads cat-harness/docs/en/cat-harness/todo/index.html and then rewrites it",
-    "- `glossary:page` reruns: not recorded: the writer reads cat-harness/docs/en/folio-assistant-core/glossary/index.md and then rewrites it",
+    "- `glossary:page` reruns: not recorded: the writer reads cat-harness/docs/assets/glossary/bootstrap--terms.skos.jsonld and then rewrites it",
     "- `bibliography:page` reruns: bootstrap changed",
     "- `smart:pages` reruns: not recorded: the writer reads smart-base/docs/assets and then rewrites it",
-    "- `jsonld:contexts` reruns: not recorded: the run touched 20348 paths, more than 20000",
-    "- `tools:viz` reruns: build/qa-refresh.json changed",
-    "- `smart-base:pages` reruns: not recorded: the writer reads smart-base/docs/assets and then rewrites it",
-    "- `smart-base:l1-extraction:pages` reruns: cat-harness-tools/package.json changed",
+    "- `jsonld:contexts` reruns: bootstrap-tools/package.json changed",
+    "- `tools:viz` reruns: bootstrap-tools/package.json changed",
+    "- `smart-base:pages` reruns: bootstrap-tools/package.json changed",
+    "- `smart-base:l1-extraction:pages` reruns: bootstrap-tools/package.json changed",
     "- … 23 more rerun",
     ""
+  ],
+  "kgStepTimes": [
+    "1793473804 STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)",
+    "1793473804 bun run cat-harness-tools/scripts/kg-export.ts --scope instance --out \"./_site/${STUB}/${STUB}.jsonld\"",
+    "1793473818 bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site",
+    "1793473819 bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site",
+    "1793473819 BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)",
+    "1793473819 BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap)",
+    "1793473819 bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url \"${SITE}/${BOOT_DIR}/\" --provenance --out \"./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld",
+    "1793473819 bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site",
+    "1793473839 bun run cat-harness-tools/scripts/glossary-export.ts --out \"./_site/${STUB}/${STUB}-glossary.jsonld\"",
+    "1793473841 bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld\"",
+    "1793473841 bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir \"./_site/${STUB}\"",
+    "1793473855 bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir \"./_site/${BOOT_DIR}\"",
+    "1793473857 bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}\" --allow-collision bootstrap.json",
+    "1793473857 bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site",
+    "1793473858 bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs",
+    "1793473915 bun run cat-harness-tools/scripts/fsh-guts-export.ts --out \"./_site/fsh-guts.jsonld\"",
+    "1793473916 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans",
+    "1793473916 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos",
+    "1793473917 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library",
+    "1793473918 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg",
+    "1793473926 bun run cat harness:state --out ./_site/assets/harnesses",
+    "1793473927 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
+    "1793473927 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
+    "1793473927 bun run cat-harness-tools/scripts/root-index.ts --site ./_site",
+    "1793473928 end"
   ]
 }

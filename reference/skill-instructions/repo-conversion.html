@@ -209,7 +209,14 @@ marker pairs the author has opted into, so offer to add markers rather than
 content.</li><li><strong><code class="language-plaintext highlighter-rouge">.gitignore</code></strong> — append the folio entries; keep theirs.</li></ul><p><strong>If the remote is empty, push <code class="language-plaintext highlighter-rouge">main</code> first.</strong> A repository with work
 locally can still have an empty remote, and GitHub makes the first branch
 pushed to an empty repository its default. Run <code class="language-plaintext highlighter-rouge">init-folio</code> or push <code class="language-plaintext highlighter-rouge">main</code>
-before any feature branch (litlfred/dth-hrh, owner 2026-10-14).</p><p>A harness built on this platform may add adoption steps of its own for its
+before any feature branch (litlfred/dth-hrh, owner 2026-10-14).</p><p><strong>If <code class="language-plaintext highlighter-rouge">main</code> has no harness yet, land a setup-only PR first.</strong> A fork or an
+existing repository whose <code class="language-plaintext highlighter-rouge">main</code> has no <code class="language-plaintext highlighter-rouge">index.config.json</code> and
+<code class="language-plaintext highlighter-rouge">index.lock.json</code> gives the full PR checks nothing to compare against: the
+base side fails before any test runs, and the PR’s own gates are skipped
+(https://github.com/litlfred/cat-harness-tools/issues/1139). So open one small PR with only what <code class="language-plaintext highlighter-rouge">folio_init</code>
+writes and the pins, merge it, and only then branch for content. Draft-tier
+checks never build the base, so this does not show until the content PR
+leaves draft (litlfred/dth-sc#1, owner 2026-10-31).</p><p>A harness built on this platform may add adoption steps of its own for its
 kind of repository, for example about CI that already publishes a site on
 every push. Ask <code class="language-plaintext highlighter-rouge">skill_list</code> for the skill governing that kind before
 calling the conversion done.</p><h2 id="5-publishing--provision-gh-pages-first-an-overlay-needs-it-too"><a href="#5-publishing--provision-gh-pages-first-an-overlay-needs-it-too" class="anchor-heading" aria-labelledby="5-publishing--provision-gh-pages-first-an-overlay-needs-it-too"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Publishing — provision <code class="language-plaintext highlighter-rouge">gh-pages</code> first; an overlay needs it too

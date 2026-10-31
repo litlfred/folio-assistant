@@ -4366,7 +4366,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "When comment closes, the release (PDF, PC/<version> site and the channel exports) is archived with the review record, so every comment's citation can still be followed. Skill: document-publishing."
+          "@value": "When comment closes, the release (PDF, PC/<version> site and the channel exports) is archived with the review record, so every comment's citation can still be followed. Run `bun run cat pc:release close`, which changes only the release's release.json; the frozen copy is never rewritten. Skill: document-publishing."
         }
       ],
       "skos:notation": "Task_ArchiveRelease",
@@ -4386,7 +4386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Freeze the draft as \"Draft for Public Comment Release vX\": a PDF with fixed line numbers and a site copy under a permanent PC/<version>/ path (not STAGING, never deleted on merge). Every channel cites this release's pages, lines and block ids. Skill: document-publishing."
+          "@value": "Freeze the draft as \"Draft for Public Comment Release vX\": a PDF with fixed line numbers and a site copy under a permanent PC/<version>/ path (not STAGING, never deleted on merge). Every channel cites this release's pages, lines and block ids. Line numbers run continuously through the document. Run `bun run cat pc:pdf` for the line-numbered PDF and its line map, then `bun run cat pc:release freeze` for the write-once copy under PC/<version>/. Skill: document-publishing."
         }
       ],
       "skos:notation": "Task_BuildPcRelease",
@@ -4426,7 +4426,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Before anything is sent, the editor sets up each channel the review will use: the review sheet, the GitHub issue forms, an offline Excel sheet and a Google Form, each constrained to the release's fixed references, with precise instructions, all links, and how submitters are recorded. Skills: public-comment, review-sheet-script."
+          "@value": "Before anything is sent, the editor sets up each channel the review will use: the review sheet, the GitHub issue forms, an offline Excel sheet and a Google Form, each constrained to the release's fixed references, with precise instructions, all links, and how submitters are recorded. Skills: public-comment-channels, public-comment, review-sheet-script."
         }
       ],
       "skos:notation": "Task_SetUpChannels",
@@ -4446,7 +4446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A short communication for the public: what is under review, the comment period, a high-level description of the process, and links to the release, every channel and the published process. Skill: public-comment."
+          "@value": "A short communication for the public: what is under review, the comment period, a high-level description of the process, and links to the release, every channel and the published process. Skills: public-comment-channels, public-comment."
         }
       ],
       "skos:notation": "Task_WriteAnnouncement",

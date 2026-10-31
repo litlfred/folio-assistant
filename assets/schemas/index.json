@@ -4083,7 +4083,7 @@
           "type": "z.array(z.union([GraphExportNodeSchema, GraphExportTombstoneSchema]))",
           "optional": false,
           "array": true,
-          "doc": "Subjects, and for one release a tombstone per pre-#958 `#fragment` (litlfred/cat-harness-tools#958)."
+          "doc": "Subjects, and for one release a tombstone per pre-path `#fragment` (https://github.com/litlfred/cat-harness-tools/issues/958)."
         },
         {
           "name": "omitted",
@@ -50158,6 +50158,59 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestations",
+      "name": "AdversarialReviewAttestations",
+      "module": "cat-harness-tools/schemas/sdlc/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestationsSchema",
+      "name": "AdversarialReviewAttestationsSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-attestations.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(ADVERSARIAL_REVIEW_FAMILY)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "adversarial_reviews",
+          "type": "z.array(AdversarialReviewSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "source_hash",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsBaseSchema",
+        "cat-harness-tools/schemas/sdlc/red-flag.ts#AdversarialReviewSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ADVERSARIAL_REVIEW_FAMILY",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AttestationFamily",
       "name": "AttestationFamily",
       "module": "cat-harness-tools/schemas/sdlc/qa-attestations.ts",
@@ -51304,6 +51357,36 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#StoredAdversarialReviews",
+      "name": "StoredAdversarialReviews",
+      "module": "cat-harness-tools/schemas/sdlc/qa-attestations.ts",
+      "kind": "interface",
+      "doc": "One subject's adversarial reviews as the store holds them.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Absolute path of the attestation file."
+        },
+        {
+          "name": "file",
+          "type": "AdversarialReviewAttestations",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestations"
+      ],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -88862,6 +88945,22 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestationsSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestationsSchema",
+      "to": "cat-harness-tools/schemas/sdlc/red-flag.ts#AdversarialReviewSchema",
+      "via": "adversarial_reviews",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AttestationKey",
       "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#CriteriaFamily",
       "via": "family",
@@ -89025,6 +89124,14 @@
       "from": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#SectionTitleAttestationsSchema",
       "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#SectionTitleVerdictSchema",
       "via": "title_coherence",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#StoredAdversarialReviews",
+      "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestations",
+      "via": "file",
       "kind": "field",
       "optional": false,
       "array": false
@@ -93467,6 +93574,18 @@
       "note": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclarationKind — an export this reader does not model as a declaration"
     },
     {
+      "id": "cat-harness-dynamic-state/v1",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "docs"
+      ],
+      "page": "en/cat-harness-tools/cat-harness-dynamic-state/v1/",
+      "note": "cat-harness-tools/scripts/workflow-view.ts#DynamicStateKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "cat-harness-payload/v1",
       "source": "family",
       "instance": "cat-harness",
@@ -93575,6 +93694,14 @@
       ],
       "page": "en/smart-base/dak-swimlanes/",
       "note": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "diig-phases-figure/v1",
+      "source": "family",
+      "typologies": [
+        "library"
+      ],
+      "note": "no validator is named for it, so no schema defines it"
     },
     {
       "id": "doco:Section",
@@ -94473,6 +94600,14 @@
       "typologies": [
         "skills"
       ]
+    },
+    {
+      "id": "smart-guidelines-approach-figure/v1",
+      "source": "family",
+      "typologies": [
+        "library"
+      ],
+      "note": "no validator is named for it, so no schema defines it"
     },
     {
       "id": "sme-case-verdict",
