@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/package-release.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/package-release",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "package-release",
+      "title": "Cutting a package release",
+      "description": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/package-release.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release"
+    }
+  ]
+}

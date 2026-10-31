@@ -1,0 +1,45 @@
+{
+  "$ref": "#/definitions/PermissionDef",
+  "definitions": {
+    "PermissionDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "includedIn": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "includedIn"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/PermissionDefSchema.schema.json",
+  "title": "PermissionDefSchema",
+  "description": "Generated from `PermissionDefSchema` in schemas/process/role-graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}

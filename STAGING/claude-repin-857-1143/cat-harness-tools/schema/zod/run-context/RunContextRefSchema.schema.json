@@ -1,0 +1,27 @@
+{
+  "$ref": "#/definitions/RunContextRef",
+  "definitions": {
+    "RunContextRef": {
+      "type": "object",
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunContextRefSchema.schema.json",
+  "title": "RunContextRefSchema",
+  "description": "Generated from `RunContextRefSchema` in schemas/sdlc/run-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}

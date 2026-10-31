@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HumanTranslation/node/Task_SubmitPO.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HumanTranslation/node/Task_SubmitPO",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Submit completed .po file",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HumanTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/role/translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HumanTranslation/lane/Lane_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HumanTranslation#flow/F07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_HumanTranslation#flow/F08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_SubmitPO"
+    }
+  ]
+}

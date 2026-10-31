@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/role/validation-pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/role/validation-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Validation pipeline",
+      "title": "Validation pipeline",
+      "notation": "validation-pipeline",
+      "description": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/content-test",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/kg-affordances",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/skill/qa-reports"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline"
+    }
+  ]
+}

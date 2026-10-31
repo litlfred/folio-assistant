@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/DirectoryStorage",
+  "definitions": {
+    "DirectoryStorage": {
+      "type": "object",
+      "properties": {
+        "branch": {
+          "type": "string",
+          "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+        },
+        "keyedBy": {
+          "type": "string",
+          "enum": [
+            "commit",
+            "tip",
+            "route",
+            "route-family",
+            "family"
+          ]
+        },
+        "branchPrefix": {
+          "type": "string",
+          "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+        },
+        "keyFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+        },
+        "tool": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        }
+      },
+      "required": [
+        "keyedBy"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/DirectoryStorageSchema.schema.json",
+  "title": "DirectoryStorageSchema",
+  "description": "Generated from `DirectoryStorageSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}

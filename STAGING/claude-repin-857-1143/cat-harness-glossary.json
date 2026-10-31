@@ -1,0 +1,1083 @@
+{
+  "@context": [
+    {
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
+      "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns#",
+      "label": "rdfs:label",
+      "prefLabel": "skos:prefLabel",
+      "altLabel": "skos:altLabel",
+      "hiddenLabel": "skos:hiddenLabel",
+      "isReplacedBy": {
+        "@id": "dcterms:isReplacedBy",
+        "@type": "@id"
+      },
+      "definition": "skos:definition",
+      "scopeNote": "skos:scopeNote",
+      "changeNote": "skos:changeNote",
+      "notation": "skos:notation",
+      "title": "dcterms:title",
+      "source": "dcterms:source",
+      "isPartOf": {
+        "@id": "dcterms:isPartOf",
+        "@type": "@id"
+      },
+      "deprecated": "owl:deprecated",
+      "inScheme": {
+        "@id": "skos:inScheme",
+        "@type": "@id"
+      },
+      "usage": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasLaneUsage",
+        "@type": "@id"
+      },
+      "ofConcept": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#ofConcept",
+        "@type": "@id"
+      },
+      "inProcess": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#inProcess",
+        "@type": "@id"
+      },
+      "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns#performerVaries"
+    },
+    {
+      "deprecated": {
+        "@id": "http://www.w3.org/2002/07/owl#deprecated",
+        "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+      },
+      "isReplacedBy": {
+        "@id": "http://purl.org/dc/terms/isReplacedBy",
+        "@type": "@id"
+      },
+      "sameAs": {
+        "@id": "http://www.w3.org/2002/07/owl#sameAs",
+        "@type": "@id"
+      }
+    }
+  ],
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness-glossary.jsonld",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_0",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_0",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_0",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_AskThePerson/Lane_Person",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Person",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Person"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Review/Lane_EditorDecides",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_EditorDecides",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_EditorDecides"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Editorial",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Editorial",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Editorial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_NarrativeReview/Lane_NarrativeReviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeReview/Lane_NarrativeReviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeReview/Lane_NarrativeReviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_VoiceReview/Lane_NarrativeReviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_VoiceReview/Lane_NarrativeReviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_VoiceReview/Lane_NarrativeReviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CodeReview/Lane_CodeReviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeReview/Lane_CodeReviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeReview/Lane_CodeReviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Reviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Coordinator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Coordinator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Translator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Translator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Reviewer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Stakeholders",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Stakeholders",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Stakeholders"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Platform",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Platform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanClose/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubscribeKg/Lane_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_IngestTheme/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Engine",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Engine",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Engine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Target",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Target",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Target"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubscribeKg/Lane_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Portal",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Portal",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Portal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier"
+    }
+  ]
+}

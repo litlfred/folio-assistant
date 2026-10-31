@@ -1,0 +1,89 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Related work: find, sort, summarize, ask to coordinate",
+      "summary": "Before new work takes shape, find the work it touches.",
+      "description": "Before new work takes shape, find the work it touches. When a requirement is initiated or updated through a human-agent chat (CRDM), or a method is adopted from a source, search the beans and the repository's issues and open PRs for relevance. Categorize and summarize every hit, then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation; the user decides the coordination. Owner, 2026-09-23 (issue #1023): 'existing beans need to be searched for relevance and categorized (and summarized), same for issues (e.g. github). ask user if they want to coordinate. judgement is used to determine how'. Operating skill: related-work-coordination.",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/related-work.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/related-work.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/assets/img/workflows/related-work.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/Start_RW"
+      ],
+      "nodeCount": 7,
+      "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/Start_RW",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_SearchBeans",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_SearchBeans",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_SearchIssues",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_SearchIssues",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_Categorize",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_Categorize",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/U_Coordinate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/U_Coordinate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/A_Record",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/process/Process_RelatedWork/node/End_RW",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_6"
+    }
+  ]
+}

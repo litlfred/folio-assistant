@@ -1,0 +1,106 @@
+{
+  "$ref": "#/definitions/AdversarialFinding",
+  "definitions": {
+    "AdversarialFinding": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "security",
+            "data-loss",
+            "correctness",
+            "false-green",
+            "provenance",
+            "scope-breach",
+            "irreversible-action",
+            "licence"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ]
+        },
+        "weight": {
+          "type": "string",
+          "enum": [
+            "blocking",
+            "suggestion",
+            "praise"
+          ]
+        },
+        "where": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "default": "",
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "status": {
+          "default": "open",
+          "type": "string",
+          "enum": [
+            "open",
+            "resolved",
+            "overridden"
+          ]
+        },
+        "resolution": {
+          "type": "object",
+          "properties": {
+            "by": {
+              "type": "string",
+              "minLength": 1
+            },
+            "at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "commit": {
+              "type": "string"
+            },
+            "decision": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "by",
+            "at",
+            "reason"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "severity",
+        "weight",
+        "where"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/AdversarialFindingSchema.schema.json",
+  "title": "AdversarialFindingSchema",
+  "description": "Generated from `AdversarialFindingSchema` in schemas/sdlc/red-flag.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}

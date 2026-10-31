@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/tool-types/Locale.schema.json",
+  "title": "Locale",
+  "type": "string",
+  "minLength": 2,
+  "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+  "description": "A BCP-47 language tag, e.g. en or fr-CA",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}

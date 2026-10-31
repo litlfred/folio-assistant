@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-KGPublicationTypeVS.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-KGPublicationType"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-KGPublicationTypeVS.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-10-31T14:56:09.219Z",
+  "@graph": [
+    {
+      "id": "#standard-guideline",
+      "name": "Standard guideline"
+    },
+    {
+      "id": "#consolidated-guideline",
+      "name": "Consolidated guideline"
+    },
+    {
+      "id": "#interim-guideline",
+      "name": "Interim guideline"
+    },
+    {
+      "id": "#rapid-advice-guideline",
+      "name": "Rapid advice guideline"
+    },
+    {
+      "id": "#emergency-guideline",
+      "name": "Emergency guideline"
+    },
+    {
+      "id": "#collaborative-guideline",
+      "name": "Collaborative guideline"
+    },
+    {
+      "id": "#external-guideline",
+      "name": "External guideline"
+    },
+    {
+      "id": "#adapted-guideline",
+      "name": "Adapted guideline"
+    },
+    {
+      "id": "#position-paper",
+      "name": "Position paper"
+    },
+    {
+      "id": "#summary-table",
+      "name": "Summary table"
+    },
+    {
+      "id": "#classification",
+      "name": "Classification"
+    },
+    {
+      "id": "#implementation-guidance",
+      "name": "Implementation guidance"
+    },
+    {
+      "id": "#methodology",
+      "name": "Methodology"
+    },
+    {
+      "id": "#supplement",
+      "name": "Supplement"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

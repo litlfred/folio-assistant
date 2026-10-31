@@ -1,0 +1,238 @@
+{
+  "$ref": "#/definitions/ArchiveContents",
+  "definitions": {
+    "ArchiveContents": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio-assistant/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio-assistant/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "$schema": {
+          "type": "string",
+          "const": "folio-archive-contents/v1"
+        },
+        "@id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "zip",
+            "tar"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "file",
+                  "directory",
+                  "symlink",
+                  "special"
+                ]
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "mtime": {
+                "type": "string"
+              },
+              "sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "mimetype_sniffed": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "mimetype_source": {
+                "type": "string",
+                "enum": [
+                  "magic-bytes",
+                  "unrecognised",
+                  "unreadable"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "kind"
+            ]
+          }
+        },
+        "n_entries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "n_files": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "n_directories": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "uncompressed_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "$schema",
+        "@id",
+        "archive",
+        "format",
+        "entries",
+        "n_entries",
+        "n_files",
+        "n_directories",
+        "uncompressed_bytes"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archive-contents/ArchiveContentsSchema.schema.json",
+  "title": "ArchiveContentsSchema",
+  "description": "Generated from `ArchiveContentsSchema` in schemas/library/archive-contents.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}

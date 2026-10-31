@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-KGL1ClassesVS.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-KGL1Classes"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-KGL1ClassesVS.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-10-31T14:56:09.219Z",
+  "@graph": [
+    {
+      "id": "#publication",
+      "name": "Publication"
+    },
+    {
+      "id": "#publication-section",
+      "name": "Publication section"
+    },
+    {
+      "id": "#publication-element",
+      "name": "Publication element"
+    },
+    {
+      "id": "#recommendation",
+      "name": "Recommendation"
+    },
+    {
+      "id": "#remark",
+      "name": "Remark"
+    },
+    {
+      "id": "#key-question",
+      "name": "Key question"
+    },
+    {
+      "id": "#outcome",
+      "name": "Outcome"
+    },
+    {
+      "id": "#evidence",
+      "name": "Evidence"
+    },
+    {
+      "id": "#health-intervention",
+      "name": "Health intervention"
+    },
+    {
+      "id": "#indicator",
+      "name": "Indicator"
+    },
+    {
+      "id": "#citation",
+      "name": "Citation"
+    },
+    {
+      "id": "#reference-entry",
+      "name": "Reference entry"
+    },
+    {
+      "id": "#terminology-code",
+      "name": "Terminology code"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

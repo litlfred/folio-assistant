@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-857-1143/cat-harness/tool-types/NamespaceLayer.schema.json",
+  "title": "NamespaceLayer",
+  "type": "string",
+  "enum": [
+    "bootstrap",
+    "harness",
+    "core"
+  ],
+  "description": "A namespace layer: bootstrap resolves before anything else, then harness, then core.",
+  "staging": {
+    "branch": "claude/repin-857-1143",
+    "sha": "c19e4ec7e3f18845d743879c24d42adde22555f8",
+    "pr": "2855/merge",
+    "run": "41211987816"
+  }
+}
