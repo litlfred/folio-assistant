@@ -30,6 +30,10 @@ concurrency:
   group: pyodide-smoke-${{ github.ref }}
   cancel-in-progress: true
 
+# Least privilege: the jobs here only read the repository.
+permissions:
+  contents: read
+
 jobs:
   smoke:
     name: Build wheels + Pyodide micropip-install smoke

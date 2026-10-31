@@ -46,8 +46,21 @@ env:
   SERVER_NAME: qou-folio
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+# Least privilege: the job reads the repository and nothing else. The
+# deployment credentials it uses are secrets, not token scopes.
+permissions:
+  contents: read
+
 jobs:
   deploy:
+    # Main only. The job hands deployment and OAuth secrets to scripts in
+    # the checked-out tree, so it runs only on main's tree, and only through
+    # the `production` environment, where the owner can require a reviewer
+    # and restrict deployment branches to main. Note that `deploy/` does not
+    # exist on main today (see the TRIGGERS, ACTUAL note above), so on main
+    # the job stops at "Parse config".
+    if: github.ref == 'refs/heads/main'
+    environment: production
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
