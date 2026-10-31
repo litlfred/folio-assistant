@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-30T21:29:30Z
+updated_at: 2026-10-31T04:12:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -184,3 +184,24 @@ _2026-10-30T21:29:30Z_ — Checked `litlfred/folio-assistant` `main` `index.lock
 4. **Next**: Once `litlfred/folio-assistant` `main` merges `#2790` or re-pins `cat-harness-tools` past `948747762569` (`#1021`), `Release security gate` (Step 11) in `docs-site.yml` will pass and Step 55 (`Dependency-cone deploy, dry run (bean fwtz)`) will execute and report its cone verdict.
 
 _2026-10-31T01:15:00Z_ — Live check after the first deploy since #903. `docs-site.yml` run `41150189192` (`51690a5`) deployed (gh-pages `db3f36f`, 00:59Z) and step 55 `Dependency-cone deploy, dry run (bean fwtz)` ran for the first time: **full** · `71f74d2..51690a5` · predicted 340 · measured 16610 · missed 16519 · over-carried 275 · Jekyll pages in the cone 42. Not eligible, with five fallback reasons: four branch mounts (`cat-harness.health`, `cat-harness-tools.health`, `folio-assistant-core.health`, `who-iris.health`) had no tip in the old stamp, and `smart-trust-phw` was newly mounted. That is expected for a first run against a stamp written before #903; this deploy writes `mounts`, so the next run measures a real cone. Box 3: `assets/beans/index.json` on gh-pages was fresh at deploy (it carries `k6nw` `completed`, a bean edit at 00:28Z), but that came from a main push; a bean-only edit still rebuilds nothing, by the owner's 2026-10-20 "leave as is". Boxes 1 and 2 stay open under that ruling. Session https://claude.ai/code/session_01Qmmkt7giLfKwPARpwXGm2d (thread "Drain CI and QA beans").
+
+_2026-10-31T04:12:00Z_ — Measured the four subsequent post-`#903` `docs-site.yml` Step 55 (`Dependency-cone deploy, dry run (bean fwtz)`) runs on `litlfred/folio-assistant` and opened [`litlfred/cat-harness-tools#1084`](https://github.com/litlfred/cat-harness-tools/pull/1084) (`f55ab2b` on `claude/fwtz-deploy-stamps-and-burndown-pin`):
+
+| Run | `main` range | `gh-pages` commit | `inputs` doubts | Verdict | Predicted | Measured | Missed | Over-carried | Jekyll pages |
+|---|---|---|---|---|---:|---:|---:|---:|---:|
+| `41150189192` | `71f74d2..51690a5` | `db3f36f5` (`00:59Z`) | `4` (pre-`#903` stamp) | `full` | 340 | 16610 | 16519 | 275 | 42 |
+| `41151975027` | `51690a5..1783b00` | `af27288a` (`01:31Z`) | `0` | `full` | 0 | 285 | 285 | 0 | 0 |
+| `41157057132` | `1783b00..7c9a579` | `50ec43de` (`02:20Z`) | `0` | `full` | 21 | 212 | 180 | 14 | 20 |
+| `41159867361` | `7c9a579..2a8ba97` | `58263b64` (`02:48Z`) | `0` | `full` | 0 | 5871 | 5871 | 0 | 0 |
+| `41161331133` | `2a8ba97..949a3bc` | `cd63a2ac` (`03:19Z`) | `0` | `full` | 0 | 294 | 294 | 0 | 0 |
+| `41164686924` | `949a3bc..24a29d7` | `fc97586d` (`04:03Z`) | `0` | `full` | 0 | 146 | 146 | 0 | 0 |
+
+Findings and fixes in [`litlfred/cat-harness-tools#1084`](https://github.com/litlfred/cat-harness-tools/pull/1084) (`f55ab2b`):
+1. **Branch-mount stamp doubts resolved (`0 doubt(s)`)**: Once `41150189192` (`db3f36f5`) wrote disambiguated `mounts` keys (`cat-harness.health`, `cat-harness-tools.health`, `folio-assistant-core.health`, `who-iris.health`, `beans`, `todos`, etc.) into `build.json`, all five subsequent runs (`41151975027`..`41164686924`) reported `0 doubt(s)` from `docs-cone-dryrun.ts inputs`.
+2. **Per-deploy stamps in untouched instance graph exports and workflow visualizer pages (`DEPLOY_STAMPS` / `BUILD_STAMPS`)**:
+   - Inspecting the `Measured, not predicted` files across `41151975027`..`41164686924` showed that all 26 `<instance>/<stub>.json` and `<instance>/<stub>.jsonld` files (from `instance-exports.ts` / `kg-export.ts` and `bootstrap-tools/scripts/export-graph.ts`) changed on every deploy even for untouched instances because they stamp the index checkout's `HEAD` commit (`"sourceCommit"`, `"sourceCommitSha"`, `"sourceCommitAt"`, `"wasDerivedFrom": "git:<sha>"`, `"generatedAtTime"`).
+   - Similarly, all 17 workflow visualizer HTML pages (`en/cat-harness/beans/**/workflows/**/index.html`, written by `state-visualizer.ts`) changed on every deploy solely in `measured at <ISO> (when this page was built)`, `Measured at <ISO>, when this page was built`, and `data-wv-built="{&quot;at&quot;:&quot;<ISO>&quot;,...}"`.
+   - Added these patterns to `DEPLOY_STAMPS` (`scripts/docs-cone-dryrun.ts`) and `generatedAtTime` to `BUILD_STAMPS` (`schemas/ui/rendered-impact.ts`), verified against live `gh-pages` blobs between `cd63a2ac` and `fc97586d`.
+3. **Pin `fetchBeanHistory` (`assets/beans/burndown.json`) to the mounted `beans` tip (`scripts/bean-burndown-feed.ts`)**:
+   - In run `41151975027` (`51690a5..1783b00`), `build.json.mounts.beans` was unchanged (`349f62f4ef1b`), yet `assets/beans/burndown.json` changed because `fetchBeanHistory` fetched `+refs/heads/cat/cat-harness/beans` live from `origin` later in the build after commit `dfb92c303b78` landed mid-run.
+   - `fetchBeanHistory` now reads `mountedTipFor(root, opts.branch)` from `<git-dir>/branch-mounts/*.json` and updates `refs/cat-burndown/<branch>` to the mounted tip when present, keeping `assets/beans/burndown.json` aligned with `assets/beans/index.json` and `build.json.mounts.beans`.
