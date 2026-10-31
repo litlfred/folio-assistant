@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_CompleteInitialization/node/A_RecordStep.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_CompleteInitialization/node/A_RecordStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the step in its state",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_CompleteInitialization",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/skill/initialization-steps"
+    }
+  ]
+}

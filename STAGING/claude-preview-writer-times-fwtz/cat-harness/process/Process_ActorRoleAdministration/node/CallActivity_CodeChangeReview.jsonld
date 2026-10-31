@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Branch, gates, PR and review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/role/administrator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/skill/continual-progress"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_CodeChangeReview",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_ActorRoleAdministration#flow/A10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_ActorRoleAdministration#flow/A11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview"
+    }
+  ]
+}

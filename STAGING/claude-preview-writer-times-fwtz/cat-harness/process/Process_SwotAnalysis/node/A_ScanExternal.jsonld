@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_SwotAnalysis/node/A_ScanExternal.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_SwotAnalysis/node/A_ScanExternal",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Scan the environment opportunities and threats",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_SwotAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/skill/swot-analysis"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_SwotAnalysis#flow/SF_Process_SwotAnalysis_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_SwotAnalysis#flow/SF_Process_SwotAnalysis_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_ScanExternal"
+    }
+  ]
+}

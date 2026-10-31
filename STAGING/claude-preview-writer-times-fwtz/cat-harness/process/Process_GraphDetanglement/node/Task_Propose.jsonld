@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_GraphDetanglement/node/Task_Propose.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_GraphDetanglement/node/Task_Propose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Report what would move — sizes, and what breaks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_GraphDetanglement/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/globalTask/GT_ReportWhatMoves",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_GraphDetanglement#flow/G12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/process/Process_GraphDetanglement#flow/G13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/Task_Propose"
+    }
+  ]
+}

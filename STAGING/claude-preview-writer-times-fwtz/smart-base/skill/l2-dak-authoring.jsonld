@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/smart-base/skill/l2-dak-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/l2-dak-authoring.jsonld",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/l2-dak-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l2-dak-authoring",
+      "title": "l2-dak-authoring",
+      "description": "Author the L2 layer of a WHO SMART Guideline — the Digital Adaptation Kit between the narrative L1 guideline and the L3 FHIR artefacts — one DAK component per pass (personas, user scenarios, business processes, data dictionary, decision and scheduling logic, indicators, requirements), each edited and then reviewed alongside through l2-component-edit-review. Stage 4 of smart-guideline-end-to-end and the authoring steps of l2-dak-authoring.bpmn. Read before authoring or adapting any DAK component.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
+      "instructionLines": 110,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

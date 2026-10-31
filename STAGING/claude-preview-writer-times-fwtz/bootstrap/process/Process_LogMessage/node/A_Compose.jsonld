@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_LogMessage/node/A_Compose.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_LogMessage/node/A_Compose",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Compose the message",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_LogMessage",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/skill/log-message"
+    }
+  ]
+}

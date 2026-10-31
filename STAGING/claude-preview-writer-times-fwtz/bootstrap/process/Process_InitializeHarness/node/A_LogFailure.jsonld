@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_InitializeHarness/node/A_LogFailure.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_InitializeHarness/node/A_LogFailure",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Log the failure",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/skill/log-message",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/bootstrap/process/Process_LogMessage"
+    }
+  ]
+}

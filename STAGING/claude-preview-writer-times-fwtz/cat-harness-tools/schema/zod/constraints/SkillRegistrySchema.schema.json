@@ -1,0 +1,769 @@
+{
+  "$ref": "#/definitions/SkillRegistry",
+  "definitions": {
+    "SkillRegistry": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "person",
+                  "agent",
+                  "system",
+                  "external"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "inherits": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "permissions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "reach": {
+                "type": "string",
+                "enum": [
+                  "internet",
+                  "egress-restricted",
+                  "air-gapped"
+                ]
+              },
+              "systemUnderTest": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "skill",
+                      "agent",
+                      "tool",
+                      "machine",
+                      "ig",
+                      "process"
+                    ]
+                  },
+                  "version": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "version"
+                ],
+                "additionalProperties": false
+              },
+              "meta": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "kind",
+              "description",
+              "capabilities"
+            ]
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string"
+              },
+              "detection": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "const": "command"
+                      },
+                      "command": {
+                        "type": "string"
+                      },
+                      "expectExitCode": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "method",
+                      "command"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "const": "env-var"
+                      },
+                      "variable": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "method",
+                      "variable"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "const": "file-exists"
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "method",
+                      "path"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "const": "mcp-probe"
+                      },
+                      "endpoint": {
+                        "type": "string"
+                      },
+                      "healthPath": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "method",
+                      "endpoint"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "const": "always"
+                      }
+                    },
+                    "required": [
+                      "method"
+                    ]
+                  }
+                ]
+              },
+              "requires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fallbackTo": {
+                "type": "string",
+                "minLength": 1
+              },
+              "satisfies": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^req:[a-z0-9-]+#[a-z0-9-]+$"
+                }
+              },
+              "setupSkill": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "A skill name, e.g. todo-manager"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "description",
+              "detection"
+            ]
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string"
+              },
+              "requiredCapabilities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "capabilityId": {
+                      "type": "string"
+                    },
+                    "degradation": {
+                      "type": "string",
+                      "enum": [
+                        "fail",
+                        "warn",
+                        "skip",
+                        "fallback"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "capabilityId",
+                    "degradation"
+                  ]
+                }
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ref": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "skill",
+                        "requirement"
+                      ]
+                    },
+                    "conformance": {
+                      "type": "string",
+                      "enum": [
+                        "SHALL",
+                        "SHOULD",
+                        "MAY",
+                        "SHALL NOT"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ref",
+                    "kind",
+                    "conformance"
+                  ]
+                }
+              },
+              "allowedTools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "routingPatterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "package": {
+                "type": "string"
+              },
+              "lifecycleStages": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "plan",
+                    "author",
+                    "validate",
+                    "review",
+                    "test",
+                    "publish",
+                    "feedback",
+                    "retire"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "description",
+              "requiredCapabilities"
+            ]
+          }
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^req:[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "proposed",
+                  "in-force",
+                  "superseded",
+                  "retired"
+                ]
+              },
+              "derivedFrom": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "actors": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "statements": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "conformance": {
+                      "type": "string",
+                      "enum": [
+                        "SHALL",
+                        "SHOULD",
+                        "MAY",
+                        "SHALL NOT"
+                      ]
+                    },
+                    "requirement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "functional",
+                        "non-functional"
+                      ]
+                    },
+                    "activity": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "capability": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "benefit": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "category": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "actors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "dependsOn": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "successCriteria": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+                          },
+                          "criterion": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "verification": {
+                            "type": "string",
+                            "enum": [
+                              "test",
+                              "inspection",
+                              "review",
+                              "analysis"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "criterion",
+                          "verification"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "label",
+                    "conformance",
+                    "requirement"
+                  ]
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "proposedIn": {
+                "type": "string",
+                "minLength": 1
+              },
+              "supersededBy": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "actors",
+              "statements"
+            ]
+          }
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-z][a-z0-9-]*$",
+                  "description": "A skill name, e.g. todo-manager"
+                }
+              },
+              "docker": {
+                "type": "object",
+                "properties": {
+                  "baseImage": {
+                    "default": "ubuntu:24.04",
+                    "type": "string"
+                  },
+                  "aptPackages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "pipPackages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "npmPackages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "setupCommands": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "exposePorts": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "env": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "labels": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "aptPackages"
+                ]
+              },
+              "providesCapabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "requiresCapabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "lifecycleStages": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "plan",
+                    "author",
+                    "validate",
+                    "review",
+                    "test",
+                    "publish",
+                    "feedback",
+                    "retire"
+                  ]
+                }
+              },
+              "schemas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "description",
+              "skills",
+              "docker"
+            ]
+          }
+        },
+        "hooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "event": {
+                "type": "string",
+                "enum": [
+                  "SessionStart",
+                  "PreToolUse",
+                  "PostToolUse",
+                  "PreCommit",
+                  "PostCommit",
+                  "UserPromptSubmit",
+                  "Stop"
+                ]
+              },
+              "matcher": {
+                "type": "string"
+              },
+              "commands": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "command"
+                    },
+                    "command": {
+                      "type": "string"
+                    },
+                    "timeout": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "command"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "event",
+              "commands"
+            ]
+          }
+        },
+        "roleAssignments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "userPattern": {
+                "type": "string"
+              },
+              "identitySource": {
+                "type": "string",
+                "enum": [
+                  "git-config",
+                  "github-oauth",
+                  "google-oauth",
+                  "env-var",
+                  "bearer-token",
+                  "default"
+                ]
+              },
+              "actorId": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "userPattern",
+              "identitySource",
+              "actorId",
+              "priority"
+            ]
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "repository",
+        "actors",
+        "capabilities",
+        "skills",
+        "requirements",
+        "packages",
+        "hooks",
+        "roleAssignments"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillRegistrySchema.schema.json",
+  "title": "SkillRegistrySchema",
+  "description": "Generated from `SkillRegistrySchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  }
+}

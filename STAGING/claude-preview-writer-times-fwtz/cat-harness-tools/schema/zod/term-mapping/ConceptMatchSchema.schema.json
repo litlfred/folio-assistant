@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/ConceptMatch",
+  "definitions": {
+    "ConceptMatch": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "predicate": {
+          "type": "string",
+          "enum": [
+            "skos:exactMatch",
+            "skos:closeMatch",
+            "skos:broadMatch",
+            "skos:relatedMatch"
+          ]
+        },
+        "via": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scheme": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "uri",
+        "predicate",
+        "via",
+        "scheme"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/ConceptMatchSchema.schema.json",
+  "title": "ConceptMatchSchema",
+  "description": "Generated from `ConceptMatchSchema` in schemas/content/term-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  }
+}

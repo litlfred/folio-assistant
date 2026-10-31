@@ -1,0 +1,337 @@
+{
+  "$ref": "#/definitions/BeanIndex",
+  "definitions": {
+    "BeanIndex": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-bean-index/v1"
+        },
+        "tile": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "count",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "repoWeb": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fileWeb": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fileRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string"
+              },
+              "parent": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$",
+                    "description": "A bean identifier, e.g. folio-assistant-1dfh"
+                  }
+                ]
+              },
+              "blocking": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "blockedBy": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "preview": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "status",
+              "type",
+              "priority",
+              "parent",
+              "blocking",
+              "blockedBy",
+              "createdAt",
+              "updatedAt",
+              "preview",
+              "file"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "blocker": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$",
+                "description": "A bean identifier, e.g. folio-assistant-1dfh"
+              },
+              "blocked": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$",
+                "description": "A bean identifier, e.g. folio-assistant-1dfh"
+              },
+              "declaredOn": {
+                "minItems": 1,
+                "maxItems": 2,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "blocked_by",
+                    "blocking"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "blocker",
+              "blocked",
+              "declaredOn"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "blocked-without-expiry",
+                  "blocker-closed",
+                  "blocking-unknown"
+                ]
+              },
+              "bean": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$",
+                "description": "A bean identifier, e.g. folio-assistant-1dfh"
+              },
+              "blocks": {
+                "type": "string"
+              },
+              "detail": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "bean",
+              "blocks",
+              "detail"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "plan": {
+          "type": "object",
+          "properties": {
+            "milestones": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "epics": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "total": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "closed": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "open": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "inProgress": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "todo": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "draft": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "unclassified": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "share": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "file",
+                  "status",
+                  "epics",
+                  "total",
+                  "closed",
+                  "open",
+                  "inProgress",
+                  "todo",
+                  "draft",
+                  "unclassified",
+                  "share"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "orphanOpen": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "openTotal": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "coveredOpen": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "duplicateIds": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "milestones",
+            "orphanOpen",
+            "openTotal",
+            "coveredOpen",
+            "duplicateIds"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "repoWeb",
+        "items",
+        "edges",
+        "findings"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BeanIndexSchema.schema.json",
+  "title": "BeanIndexSchema",
+  "description": "Generated from `BeanIndexSchema` in schemas/ui/site-indexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  }
+}

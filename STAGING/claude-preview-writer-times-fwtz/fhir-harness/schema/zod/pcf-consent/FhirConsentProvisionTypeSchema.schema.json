@@ -1,0 +1,21 @@
+{
+  "$ref": "#/definitions/FhirConsentProvisionType",
+  "definitions": {
+    "FhirConsentProvisionType": {
+      "type": "string",
+      "enum": [
+        "deny",
+        "permit"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/pcf-consent/FhirConsentProvisionTypeSchema.schema.json",
+  "title": "FhirConsentProvisionTypeSchema",
+  "description": "Generated from `FhirConsentProvisionTypeSchema` in schemas/pcf-consent.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  }
+}

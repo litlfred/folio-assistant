@@ -1,0 +1,1101 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>UML — folio-assistant-sci | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="UML — folio-assistant-sci" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="UML — folio-assistant-sci" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "uml-overview-folio-assistant-sci",
+    "src": "../../assets/qa/uml-overview-folio-assistant-sci/page.translation.json",
+    "index": "../../assets/qa/uml-overview-folio-assistant-sci/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=9cd0cc409fcd" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/uml/overview/folio-assistant-sci.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#sub-graphs","label":"Sub-graphs"},{"href":"#the-same-model-drawn-by-mermaid","label":"The same model, drawn by Mermaid"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><span>UML — folio-assistant-sci</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 id="uml--folio-assistant-sci"><a href="#uml--folio-assistant-sci" class="anchor-heading" aria-labelledby="uml--folio-assistant-sci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UML — folio-assistant-sci
+  
+  
+</h1><p>Generated by <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/gen-uml-overview.ts</code> — do not edit. Every named sub-graph the <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code> instance declares, one box each, with the node schema kinds found in it.</p><p><strong>Sources (same model):</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/overview/folio-assistant-sci.puml">PlantUML</a> · <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/overview/folio-assistant-sci.mmd">Mermaid</a> · <a href="../../assets/img/uml/overview/folio-assistant-sci.dot">Graphviz DOT</a></p><div class="fa-uml-views"><fieldset class="fa-uml-view-pick"><legend>Layout</legend><input type="radio" name="fa-uml-overview_folio_assistant_sci" id="fa-uml-overview_folio_assistant_sci-portrait" class="fa-uml-pick-portrait" checked="" /><label for="fa-uml-overview_folio_assistant_sci-portrait">Portrait</label> <input type="radio" name="fa-uml-overview_folio_assistant_sci" id="fa-uml-overview_folio_assistant_sci-landscape" class="fa-uml-pick-landscape" /><label for="fa-uml-overview_folio_assistant_sci-landscape">Landscape</label> <input type="radio" name="fa-uml-overview_folio_assistant_sci" id="fa-uml-overview_folio_assistant_sci-interactive" class="fa-uml-pick-interactive" /><label for="fa-uml-overview_folio_assistant_sci-interactive">Interactive</label></fieldset><figure class="bpmn-figure fa-uml-portrait"><img src="../../assets/img/uml/overview/folio-assistant-sci.svg" alt="UML class diagram of folio-assistant-sci: one package per named sub-graph, one class per node schema, with its data fields. Portrait layout." /></figure><figure class="bpmn-figure fa-uml-landscape"><img src="../../assets/img/uml/overview/folio-assistant-sci.landscape.svg" alt="UML class diagram of folio-assistant-sci: one package per named sub-graph, one class per node schema, with its data fields. Landscape layout." /></figure><div class="kg-graph fa-uml-interactive fa-figure-scope" id="kg-overview_folio_assistant_sci" data-dot-src="../../assets/img/uml/overview/folio-assistant-sci.dot" data-label="UML class diagram of folio-assistant-sci, laid out by Graphviz in the browser: drag a node to move it and its edges."><p class="kg-graph-status">The interactive view lays this diagram out in your browser with Graphviz, and needs JavaScript. Without it, pick Portrait or Landscape, or read <a href="../../assets/img/uml/overview/folio-assistant-sci.dot">the DOT source</a>.</p></div></div><script type="module" src="../../assets/js/kg-graph.js"></script><div class="table-wrapper"><table><thead><tr><th>sub-graph</th><th>directory</th><th>graph typologies</th><th>node schema</th><th>nodes</th><th>cohesion</th><th>in</th><th>out</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-docs</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/docs</code></td><td>docs</td><td>docs: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-qa-checkers</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/qa-checkers</code></td><td>qa-checkers</td><td><code class="language-plaintext highlighter-rouge">QaCheckerNodeSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-editor-checkers</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/editor-checkers</code></td><td>editor-checkers</td><td><code class="language-plaintext highlighter-rouge">EditorCheckerKind</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-validators</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/validators</code></td><td>validators</td><td><code class="language-plaintext highlighter-rouge">ValidatorNodeSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-pipeline-plugins</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/pipeline-plugins</code></td><td>pipeline-plugins</td><td><code class="language-plaintext highlighter-rouge">PipelinePluginNodeSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-translations</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/translations</code></td><td>translation-sources</td><td><code class="language-plaintext highlighter-rouge">TranslationConfigSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-block-typologies</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/block-kinds</code></td><td>block-kinds</td><td><code class="language-plaintext highlighter-rouge">BlockKindNodeSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-content-adapters</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/content-adapters</code></td><td>content-adapters</td><td><code class="language-plaintext highlighter-rouge">ContentAdapterNodeSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-typologies</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/typologies</code></td><td>typologies</td><td><code class="language-plaintext highlighter-rouge">GraphTypologyNodeSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/library</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/library</code></td><td>library</td><td><code class="language-plaintext highlighter-rouge">ImagesSidecarSchema</code>; <code class="language-plaintext highlighter-rouge">ts: VerdictFile</code>; <code class="language-plaintext highlighter-rouge">VectorLabelsSidecarSchema</code>; <code class="language-plaintext highlighter-rouge">VectorFiguresSidecarSchema</code>; <code class="language-plaintext highlighter-rouge">BlockSummariesSidecarSchema</code>; <code class="language-plaintext highlighter-rouge">KeywordsFileSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-extracted-references</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/extracted-references</code></td><td>references</td><td><code class="language-plaintext highlighter-rouge">ReferenceKind</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-methodologies</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/methodologies</code></td><td>methodology</td><td>methodology: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills</code></td><td>skills</td><td><code class="language-plaintext highlighter-rouge">VoiceProfileSchema</code>; <code class="language-plaintext highlighter-rouge">VoiceSkillSchema</code>; <code class="language-plaintext highlighter-rouge">RemoteSkillRecordSchema</code>; <code class="language-plaintext highlighter-rouge">SkillTopicsSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-adapters</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/adapters</code></td><td>code</td><td>code: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-scripts</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/scripts</code></td><td>code</td><td>code: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-assistant-sci-libraries</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/libraries</code></td><td>software-library</td><td><code class="language-plaintext highlighter-rouge">SoftwareLibraryKind</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-lean</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/lean</code></td><td>lean</td><td>lean: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/folio-templates</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/templates</code></td><td>code</td><td>code: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-tools</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/tools</code></td><td>tools</td><td><code class="language-plaintext highlighter-rouge">ToolDefinitionSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-sources</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sources</code></td><td>schemas</td><td><code class="language-plaintext highlighter-rouge">SourceDescriptorSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-processes</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/processes</code></td><td>processes</td><td><code class="language-plaintext highlighter-rouge">ext: omg-bpmn-2.0</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/scenarios</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/scenarios</code></td><td>scenarios</td><td><code class="language-plaintext highlighter-rouge">RoleGraphSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/qa</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/test/results</code></td><td>qa</td><td><code class="language-plaintext highlighter-rouge">KgQaReportSchema</code>; <code class="language-plaintext highlighter-rouge">KgQaManifestSchema</code>; <code class="language-plaintext highlighter-rouge">BlockQaReport</code>; <code class="language-plaintext highlighter-rouge">ts: QaWitness</code>; <code class="language-plaintext highlighter-rouge">ts: QaResult</code>; <code class="language-plaintext highlighter-rouge">QaIndexSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/attestations</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/test/attestations</code></td><td>attestations</td><td><code class="language-plaintext highlighter-rouge">QaAttestationsSchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/glossary</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/glossary</code></td><td>glossary</td><td><code class="language-plaintext highlighter-rouge">GlossarySchema</code></td><td><em>not measured</em></td><td></td><td></td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/voices</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/voices</code></td><td>voices</td><td><code class="language-plaintext highlighter-rouge">VoiceProfileSchema</code></td><td>5</td><td>0.00</td><td>0</td><td>0</td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/lean-skills</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/lean</code></td><td>skills</td><td>skills: <em>could not determine</em></td><td>2</td><td>0.00</td><td>0</td><td>0</td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/data-skills</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/data</code></td><td>skills</td><td>skills: <em>could not determine</em></td><td>1</td><td>0.00</td><td>0</td><td>0</td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/docs-source</code></td><td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/docs/source</code></td><td>docs</td><td>docs: <em>could not determine</em></td><td><em>not measured</em></td><td></td><td></td><td></td></tr></tbody></table></div><p><em>Nodes, cohesion, in and out</em> are the detangler’s pinned measurements for the same directory (<code class="language-plaintext highlighter-rouge">bun run cat kg:detangle</code>; skill <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-detanglement.md"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a>). <em>Not measured</em> means the detangler does not scan that directory, not that it has no edges.</p><h2 id="sub-graphs"><a href="#sub-graphs" class="anchor-heading" aria-labelledby="sub-graphs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sub-graphs
+  
+  
+</h2><ul><li><a href="folio-assistant-sci/folio-assistant-sci-docs.html">folio-assistant-sci/folio-assistant-sci-docs</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-qa-checkers.html">folio-assistant-sci/folio-assistant-sci-qa-checkers</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-editor-checkers.html">folio-assistant-sci/folio-assistant-sci-editor-checkers</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-validators.html">folio-assistant-sci/folio-assistant-sci-validators</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-pipeline-plugins.html">folio-assistant-sci/folio-assistant-sci-pipeline-plugins</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-translations.html">folio-assistant-sci/folio-assistant-sci-translations</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-block-typologies.html">folio-assistant-sci/folio-assistant-sci-block-typologies</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-content-adapters.html">folio-assistant-sci/folio-assistant-sci-content-adapters</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-typologies.html">folio-assistant-sci/folio-assistant-sci-typologies</a></li><li><a href="folio-assistant-sci/library.html">folio-assistant-sci/library</a></li><li><a href="folio-assistant-sci/sci-extracted-references.html">folio-assistant-sci/sci-extracted-references</a></li><li><a href="folio-assistant-sci/sci-methodologies.html">folio-assistant-sci/sci-methodologies</a></li><li><a href="folio-assistant-sci/skills.html">folio-assistant-sci/skills</a></li><li><a href="folio-assistant-sci/sci-adapters.html">folio-assistant-sci/sci-adapters</a></li><li><a href="folio-assistant-sci/sci-scripts.html">folio-assistant-sci/sci-scripts</a></li><li><a href="folio-assistant-sci/folio-assistant-sci-libraries.html">folio-assistant-sci/folio-assistant-sci-libraries</a></li><li><a href="folio-assistant-sci/sci-lean.html">folio-assistant-sci/sci-lean</a></li><li><a href="folio-assistant-sci/folio-templates.html">folio-assistant-sci/folio-templates</a></li><li><a href="folio-assistant-sci/sci-tools.html">folio-assistant-sci/sci-tools</a></li><li><a href="folio-assistant-sci/sci-sources.html">folio-assistant-sci/sci-sources</a></li><li><a href="folio-assistant-sci/sci-processes.html">folio-assistant-sci/sci-processes</a></li><li><a href="folio-assistant-sci/scenarios.html">folio-assistant-sci/scenarios</a></li><li><a href="folio-assistant-sci/qa.html">folio-assistant-sci/qa</a></li><li><a href="folio-assistant-sci/attestations.html">folio-assistant-sci/attestations</a></li><li><a href="folio-assistant-sci/glossary.html">folio-assistant-sci/glossary</a></li><li><a href="folio-assistant-sci/voices.html">folio-assistant-sci/voices</a></li><li><a href="folio-assistant-sci/lean-skills.html">folio-assistant-sci/lean-skills</a></li><li><a href="folio-assistant-sci/data-skills.html">folio-assistant-sci/data-skills</a></li><li><a href="folio-assistant-sci/docs-source.html">folio-assistant-sci/docs-source</a></li></ul><h2 id="the-same-model-drawn-by-mermaid"><a href="#the-same-model-drawn-by-mermaid" class="anchor-heading" aria-labelledby="the-same-model-drawn-by-mermaid"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The same model, drawn by Mermaid
+  
+  
+</h2><p>Kept so the page renders even where the PlantUML image is missing, and because Mermaid nodes carry the CSS class that colours them from <code class="language-plaintext highlighter-rouge">uml.css</code>.</p><pre><code class="language-mermaid">classDiagram
+  direction LR
+  namespace folio_assistant_sci__folio_assistant_sci_docs {
+    class n_folio_assistant_sci_folio_assistant_sci_docs_docs["docs: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_qa_checkers {
+    class folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1["folio-qa-checker/v1"] {
+      &lt;&lt;json: QaCheckerNodeSchema&gt;&gt;
+      $schema [1] 'folio-qa-checker/v1'
+      criterion [1] string
+      check [1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_editor_checkers {
+    class folio_assistant_sci_folio_assistant_sci_editor_checkers_folio_editor_checker_v1_folio_editor_checker_v1["folio-editor-checker/v1"] {
+      &lt;&lt;json: EditorCheckerKind&gt;&gt;
+      $schema [1] 'folio-editor-checker/v1'
+      id [1] string
+      contentType [1] string
+      kinds [1..*] string[]
+      check [1] string
+      macros [0..1] string
+      crepe [0..1] object
+      rawFirstFor [0..*] string[]
+      tokens [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_validators {
+    class folio_assistant_sci_folio_assistant_sci_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      &lt;&lt;json: ValidatorNodeSchema&gt;&gt;
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      pages [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_pipeline_plugins {
+    class folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1["folio-pipeline-plugin/v1"] {
+      &lt;&lt;json: PipelinePluginNodeSchema&gt;&gt;
+      $schema [1] 'folio-pipeline-plugin/v1'
+      slot [1] string
+      implementation [1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_translations {
+    class folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig["TranslationConfig"] {
+      &lt;&lt;json: TranslationConfigSchema&gt;&gt;
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_block_typologies {
+    class folio_assistant_sci_folio_assistant_sci_block_typologies_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
+      &lt;&lt;json: BlockKindNodeSchema&gt;&gt;
+      $schema [1] 'folio-block-kind/v1'
+      kind [1] string
+      adapter [1] string
+      profile [0..1] document | paper
+      builder [0..1] string
+      labelPrefix [1] string
+      prefixEnforced [0..1] boolean
+      provable [0..1] boolean
+      folioType [1] string
+      docoType [0..1] string
+      heading [0..1] string
+      headingPlural [0..1] string
+      indexRank [0..1] integer
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_content_adapters {
+    class folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1["folio-content-adapter/v1"] {
+      &lt;&lt;json: ContentAdapterNodeSchema&gt;&gt;
+      $schema [1] 'folio-content-adapter/v1'
+      adapter [1] string
+      typed [1] boolean
+      companionRoles [1..*] enum(9)[]
+      vocabulary [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_typologies {
+    class folio_assistant_sci_folio_assistant_sci_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      &lt;&lt;json: GraphTypologyNodeSchema&gt;&gt;
+      $schema [1] 'folio-graph-typology/v1'
+      kind [1] string
+      title [0..1] string
+      layer [0..1] 'core'
+      perInstance [0..1] true
+      newInstanceSource [0..1] object
+      renderable [1] boolean
+      shownOnPublishedPages [0..1] true
+      recordsWork [0..1] boolean
+      holds [1] content | context | state | derived
+      summary [1] string
+      schema [0..1] string
+      validator [0..1] string
+      validatorNotApplicable [0..1] string
+      nodeSchemas [0..1] map~object~
+      declarationFile [0..1] string
+      concernGroups [0..1] true
+      within [0..1] string
+      avatar [0..1] object
+      tileIcon [0..1] string
+      published [0..1] false
+      skillBearing [0..1] true
+      kgContent [0..1] true
+      description [0..1] string
+      renderableNote [0..1] string
+      anyLayer [0..1] true
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__library {
+    class folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
+      &lt;&lt;json: ImagesSidecarSchema&gt;&gt;
+      $schema [1] 'folio-document-images/v1'
+      doc_id [1] string
+      images [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+    class folio_assistant_sci_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
+      &lt;&lt;ts: VerdictFile&gt;&gt;
+      inspected_by [1] unknown
+      inspected_at [1] string
+      attribution [0..1] Record~string,  inspected_by: unknown; inspected_at: string ~
+      verdicts [1] Record~string, Record~string, Verdict~~
+    }
+    class folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1["folio-vector-labels/v1"] {
+      &lt;&lt;json: VectorLabelsSidecarSchema&gt;&gt;
+      $schema [1] 'folio-vector-labels/v1'
+      doc_id [1] string
+      pages [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+    class folio_assistant_sci_library_folio_vector_figures_v1_folio_vector_figures_v1["folio-vector-figures/v1"] {
+      &lt;&lt;json: VectorFiguresSidecarSchema&gt;&gt;
+      $schema [1] 'folio-vector-figures/v1'
+      doc_id [1] string
+      figures [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+    class folio_assistant_sci_library_folio_block_summaries_v1_Superseded["Superseded"] {
+      &lt;&lt;json: BlockSummariesSidecarSchema&gt;&gt;
+      text [1] string | null
+      lang [0..1] string
+      state [1] not-authored | draft | confirmed | rejected
+      drafted_by [0..1] object
+      drafted_at [0..1] string
+      confirmed_by [0..1] object
+      confirmed_at [0..1] string
+      rejected_by [0..1] object
+      rejected_at [0..1] string
+      rejection_reason [0..1] string
+    }
+    class folio_assistant_sci_library_folio_block_summaries_v1_Summary["Summary"] {
+      &lt;&lt;json: BlockSummariesSidecarSchema&gt;&gt;
+      block [1] string
+      source [1] string
+      source_hash [1] string
+      narrative [1] object | object[]
+      superseded [0..*] Superseded[]
+    }
+    class folio_assistant_sci_library_folio_block_summaries_v1_folio_block_summaries_v1["folio-block-summaries/v1"] {
+      &lt;&lt;json: BlockSummariesSidecarSchema&gt;&gt;
+      $schema [1] 'folio-block-summaries/v1'
+      entry [1] string
+      summaries [0..*] Summary[]
+    }
+    class folio_assistant_sci_library_folio_keywords_v1_Document["Document"] {
+      &lt;&lt;json: KeywordsFileSchema&gt;&gt;
+      term [1] string
+      score [1] number
+      evidence [0..*] heading[]
+    }
+    class folio_assistant_sci_library_folio_keywords_v1_folio_keywords_v1["folio-keywords/v1"] {
+      &lt;&lt;json: KeywordsFileSchema&gt;&gt;
+      $schema [1] 'folio-keywords/v1'
+      entry [1] string
+      corpus [1] object
+      document [0..*] Document[]
+      sections [1] map~object[]~
+    }
+  }
+  namespace folio_assistant_sci__sci_extracted_references {
+    class folio_assistant_sci_sci_extracted_references_folio_reference_v1_Author["Author"] {
+      &lt;&lt;json: ReferenceKind&gt;&gt;
+      family [0..1] string
+      given [0..1] string
+      literal [0..1] string
+    }
+    class folio_assistant_sci_sci_extracted_references_folio_reference_v1_Editor["Editor"] {
+      &lt;&lt;json: ReferenceKind&gt;&gt;
+      family [0..1] string
+      given [0..1] string
+      literal [0..1] string
+    }
+    class folio_assistant_sci_sci_extracted_references_folio_reference_v1_folio_reference_v1["folio-reference/v1"] {
+      &lt;&lt;json: ReferenceKind&gt;&gt;
+      $schema [1] 'folio-reference/v1'
+      id [1] string
+      type [1] string
+      title [0..1] string
+      author [0..*] Author[]
+      editor [0..*] Editor[]
+      issued [0..1] object
+      container-title [0..1] string
+      publisher [0..1] string
+      volume [0..1] string | number
+      issue [0..1] string | number
+      page [0..1] string
+      DOI [0..1] string
+      ISBN [0..1] string
+      URL [0..1] string
+      language [0..1] string
+      abstract [0..1] string
+      provenance [0..1] authored | catalogue | library | extracted
+      derivedFrom [0..1] string
+      heldAt [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__sci_methodologies {
+    class n_folio_assistant_sci_sci_methodologies_methodology["methodology: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__skills {
+    class folio_assistant_sci_skills_folio_voice_v1_Source["Source"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class folio_assistant_sci_skills_folio_voice_v1_Pattern["Pattern"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_v1_Terminology["Terminology"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_v1_Rule["Rule"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class folio_assistant_sci_skills_folio_voice_v1_folio_voice_v1["folio-voice/v1"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(17) | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Source["Source"] {
+      &lt;&lt;json: VoiceSkillSchema&gt;&gt;
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Pattern["Pattern"] {
+      &lt;&lt;json: VoiceSkillSchema&gt;&gt;
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Terminology["Terminology"] {
+      &lt;&lt;json: VoiceSkillSchema&gt;&gt;
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Rule["Rule"] {
+      &lt;&lt;json: VoiceSkillSchema&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+      counterintuitive [0..1] boolean
+      commonError [0..1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1["folio-voice-skill/v1"] {
+      &lt;&lt;json: VoiceSkillSchema&gt;&gt;
+      $schema [1] 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      owner [0..1] string
+      instructions [1] object
+      sources [0..*] Source[]
+      provenance [1] assertion | evidence | house
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(17) | docs | skill | readme | specification | code~
+      activeIn [0..1] object
+      extends [0..1] object
+      superseded [0..1] object
+    }
+    class folio_assistant_sci_skills_folio_remote_skill_v1_File["File"] {
+      &lt;&lt;json: RemoteSkillRecordSchema&gt;&gt;
+      id [1] string
+      name [1] string
+      materialization [1] object
+    }
+    class folio_assistant_sci_skills_folio_remote_skill_v1_folio_remote_skill_v1["folio-remote-skill/v1"] {
+      &lt;&lt;json: RemoteSkillRecordSchema&gt;&gt;
+      $schema [1] 'folio-remote-skill/v1'
+      skill [1] string
+      package [1] string
+      repo [1] string~uri~
+      ref [1] string
+      wrapper [1] string
+      note [1] string
+      files [1..*] File[]
+    }
+    class folio_assistant_sci_skills_skill_topics_v1_Topic["Topic"] {
+      &lt;&lt;json: SkillTopicsSchema&gt;&gt;
+      id [1] string
+      path [1] string
+      title [1] string
+      description [1] string
+    }
+    class folio_assistant_sci_skills_skill_topics_v1_Directory["Directory"] {
+      &lt;&lt;json: SkillTopicsSchema&gt;&gt;
+      id [1] string
+      path [1] string
+      subgraph [1] true
+      graphTypologies [1..*] string[]
+    }
+    class folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
+      &lt;&lt;json: SkillTopicsSchema&gt;&gt;
+      $schema [1] 'skill-topics/v1'
+      _comment [0..1] string
+      topics [0..*] Topic[]
+      directories [0..*] Directory[]
+    }
+  }
+  namespace folio_assistant_sci__sci_adapters {
+    class n_folio_assistant_sci_sci_adapters_code["code: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__sci_scripts {
+    class n_folio_assistant_sci_sci_scripts_code["code: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_libraries {
+    class folio_assistant_sci_folio_assistant_sci_libraries_software_library_1_0_0_software_library_1_0_0["software-library/1.0.0"] {
+      &lt;&lt;json: SoftwareLibraryKind&gt;&gt;
+      name [1] string
+      version [1] string
+      digest [1] object
+      source [1] object
+      licence [1] string
+      licenceSource [1] string
+      range [0..1] string
+      dev [0..1] boolean
+      vendored [0..1] object
+      layer [0..1] string
+      usedBy [0..*] string[]
+      shim [0..1] string
+      $schema [1] string
+    }
+  }
+  namespace folio_assistant_sci__sci_lean {
+    class n_folio_assistant_sci_sci_lean_lean["lean: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__folio_templates {
+    class n_folio_assistant_sci_folio_templates_code["code: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__sci_tools {
+    class folio_assistant_sci_sci_tools_Remedy["Remedy"] {
+      &lt;&lt;json: ToolDefinitionSchema&gt;&gt;
+      host [1] string
+      error [0..1] string
+      tool [0..1] string
+      none [0..1] string
+    }
+    class folio_assistant_sci_sci_tools_Maintain["Maintain"] {
+      &lt;&lt;json: ToolDefinitionSchema&gt;&gt;
+      source [1] string
+      artefact [1] string
+      format [0..1] string
+    }
+    class folio_assistant_sci_sci_tools_ToolDefinition["ToolDefinition"] {
+      &lt;&lt;json: ToolDefinitionSchema&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      install [1] object
+      invoke [1] object
+      io [1] object
+      satisfies [1..*] string[]
+      selection [0..1] object
+      requires [0..1] object
+      remedies [0..*] Remedy[]
+      maintains [0..*] Maintain[]
+      downstream [0..1] object
+      renders [0..*] string[]
+      subprocesses [0..*] string[]
+    }
+  }
+  namespace folio_assistant_sci__sci_sources {
+    class folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier["Identifier"] {
+      &lt;&lt;json: SourceDescriptorSchema&gt;&gt;
+      name [1] string
+      authoritative [1] boolean
+      example [0..1] string
+      note [0..1] string
+    }
+    class folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1["folio-source-descriptor/v1"] {
+      &lt;&lt;json: SourceDescriptorSchema&gt;&gt;
+      $schema [1] 'folio-source-descriptor/v1'
+      id [1] string
+      title [1] string
+      system [0..1] string
+      baseUrl [0..1] string~uri~
+      nodeKind [1] string
+      subsetStrategies [1..*] list~container | identifier | facet | range | closure~
+      subsetIsSelfContained [1] boolean
+      subsetBasis [0..1] string
+      identifiers [1..*] Identifier[]
+      enumeration [1] object
+      termsUrl [0..1] string~uri~
+      character [1] object
+    }
+  }
+  namespace folio_assistant_sci__sci_processes {
+    class folio_assistant_sci_sci_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      &lt;&lt;ext: omg-bpmn-2.0&gt;&gt;
+      bpmn:assignment [0..*] element
+      bpmn:callActivity [0..*] element
+      bpmn:collaboration [0..*] element
+      bpmn:dataInput [0..*] element
+      bpmn:dataInputAssociation [0..*] element
+      bpmn:dataInputRefs [0..*] element
+      bpmn:definitions [0..*] element
+      bpmn:documentation [0..*] element
+      bpmn:endEvent [0..*] element
+      bpmn:exclusiveGateway [0..*] element
+      bpmn:extensionElements [0..*] element
+      bpmn:flowNodeRef [0..*] element
+      bpmn:from [0..*] element
+      bpmn:globalScriptTask [0..*] element
+      bpmn:globalTask [0..*] element
+      bpmn:import [0..*] element
+      bpmn:incoming [0..*] element
+      bpmn:inputSet [0..*] element
+      bpmn:ioSpecification [0..*] element
+      bpmn:lane [0..*] element
+      bpmn:laneSet [0..*] element
+      bpmn:outgoing [0..*] element
+      bpmn:outputSet [0..*] element
+      bpmn:parallelGateway [0..*] element
+      bpmn:participant [0..*] element
+      bpmn:process [0..*] element
+      bpmn:resource [0..*] element
+      bpmn:sequenceFlow [0..*] element
+      bpmn:serviceTask [0..*] element
+      bpmn:startEvent [0..*] element
+      bpmn:targetRef [0..*] element
+      bpmn:task [0..*] element
+      bpmn:timerEventDefinition [0..*] element
+      bpmn:to [0..*] element
+      bpmn:userTask [0..*] element
+    }
+  }
+  namespace folio_assistant_sci__scenarios {
+    class folio_assistant_sci_scenarios_FormerName["FormerName"] {
+      &lt;&lt;json: RoleGraphSchema&gt;&gt;
+      name [1] string
+      retiredOn [1] string
+    }
+    class folio_assistant_sci_scenarios_Role["Role"] {
+      &lt;&lt;json: RoleGraphSchema&gt;&gt;
+      persona [0..1] string
+      id [1] string
+      title [1] string
+      description [1] string
+      actorKinds [1..*] list~person | agent | system | external~
+      otherNames [0..*] string[]
+      formerNames [0..*] FormerName[]
+      skills [0..*] string[]
+      inherits [0..*] string[]
+      judgementOnly [0..1] boolean
+      requiredCapabilities [0..1] object
+    }
+    class folio_assistant_sci_scenarios_Actor["Actor"] {
+      &lt;&lt;json: RoleGraphSchema&gt;&gt;
+      id [1] string
+      title [1] string
+      kind [1] person | agent | system | external
+      description [0..1] string
+      roles [0..*] string[]
+    }
+    class folio_assistant_sci_scenarios_Extension["Extension"] {
+      &lt;&lt;json: RoleGraphSchema&gt;&gt;
+      role [1] string
+      skills [1..*] string[]
+    }
+    class folio_assistant_sci_scenarios_RoleGraph["RoleGraph"] {
+      &lt;&lt;json: RoleGraphSchema&gt;&gt;
+      name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
+      extensions [0..*] Extension[]
+    }
+  }
+  namespace folio_assistant_sci__qa {
+    class folio_assistant_sci_qa_kg_qa_v1_Flag["Flag"] {
+      &lt;&lt;json: KgQaReportSchema&gt;&gt;
+      id [1] string
+      category [0..1] enum(8)
+      severity [1] critical | major | minor
+      weight [1] blocking | suggestion | praise
+      where [1] string
+      evidence [0..1] string
+      detail [0..1] string
+      status [0..1] open | resolved | overridden
+      resolution [0..1] object
+    }
+    class folio_assistant_sci_qa_kg_qa_v1_Finding["Finding"] {
+      &lt;&lt;json: KgQaReportSchema&gt;&gt;
+      id [1] string
+      category [0..1] enum(8)
+      severity [1] critical | major | minor
+      weight [1] blocking | suggestion | praise
+      where [1] string
+      evidence [0..1] string
+      detail [0..1] string
+      status [0..1] open | resolved | overridden
+      resolution [0..1] object
+    }
+    class folio_assistant_sci_qa_kg_qa_v1_Adversarial_review["Adversarial_review"] {
+      &lt;&lt;json: KgQaReportSchema&gt;&gt;
+      reviewer [1] object
+      author_sessions [0..*] string[]
+      skill_hash [1] string
+      at [1] string
+      coverage [1] object
+      result [1] pass | fail | unknown
+      flags [0..*] Flag[]
+      findings [0..*] Finding[]
+    }
+    class folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
+      &lt;&lt;json: KgQaReportSchema&gt;&gt;
+      $schema [1] 'kg-qa/v1'
+      subject [1] object
+      source_hash [1] string | null
+      criteria [1] map~object~
+      totals [1] map~number~
+      pair_attestations [0..1] any
+      voice_reviews [0..1] any
+      adversarial_reviews [0..*] Adversarial_review[]
+      runContext [0..1] object
+    }
+    class folio_assistant_sci_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
+      &lt;&lt;json: KgQaManifestSchema&gt;&gt;
+      $schema [1] 'kg-qa-manifest/v1'
+      auditor [1] object
+      runContext [0..1] object
+    }
+    class folio_assistant_sci_qa_block_qa_v1_block_qa_v1["block-qa/v1"] {
+      &lt;&lt;json: BlockQaReport&gt;&gt;
+      $schema [1] 'block-qa/v1'
+      label [1] string
+      kind [1] string
+      paths [1] object
+      source_hashes [1] object
+      criteria [1] map~object[]~
+      updated_at [1] string
+    }
+    class folio_assistant_sci_qa_qa_witness_v1["qa-witness/v1"] {
+      &lt;&lt;ts: QaWitness&gt;&gt;
+      kind [1] 'script' | 'agent' | 'human'
+      id [1] string
+      version [0..1] string
+      at [0..1] string
+      sha [0..1] string
+      scriptHash [0..1] string
+      scriptCommitSha [0..1] string
+      depsHash [0..1] string
+      model [0..1] string
+      session [0..1] string
+      skill [0..1] string
+      method [0..1] string
+      freshness [1] QaFreshness
+      changed [0..1] string[]
+      notCompared [0..1] string[]
+      notes [0..1] string
+    }
+    class folio_assistant_sci_qa_qa_results_v1["qa-results/v1"] {
+      &lt;&lt;ts: QaResult&gt;&gt;
+      $schema [1] 'qa-results/v1'
+      producer [1]  /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; 
+      subject [1]  kind: string; id: string 
+      families [1] Record~string, QaResultFamily~
+      total [1] number
+    }
+    class folio_assistant_sci_qa_folio_qa_index_v1_folio_qa_index_v1["folio-qa-index/v1"] {
+      &lt;&lt;json: QaIndexSchema&gt;&gt;
+      $schema [1] 'folio-qa-index/v1'
+      page [1] string
+      corpus [0..1] present | absent
+      badges [1] map~object~
+      unswept [0..*] string[]
+    }
+  }
+  namespace folio_assistant_sci__attestations {
+    class folio_assistant_sci_attestations_QaAttestations["QaAttestations"] {
+      &lt;&lt;json: QaAttestationsSchema&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__glossary {
+    class folio_assistant_sci_glossary_folio_glossary_v1_Term["Term"] {
+      &lt;&lt;json: GlossarySchema&gt;&gt;
+      id [1] string
+      prefLabel [1] string | map~string~
+      altLabel [0..*] string[]
+      definition [0..1] string | map~string~
+      notation [0..1] string
+      scopeNote [0..1] string
+      broader [0..*] string[]
+      related [0..*] string[]
+      exactMatch [0..*] string[]
+      closeMatch [0..*] string[]
+      broadMatch [0..*] string[]
+      narrowMatch [0..*] string[]
+      requires [0..*] string[]
+      isDefinedBy [0..1] string
+      iri [0..1] string
+      focus [0..1] object
+      source [0..1] string
+      status [1] authored | candidate | could-not-extract
+      reason [0..1] string
+    }
+    class folio_assistant_sci_glossary_folio_glossary_v1_folio_glossary_v1["folio-glossary/v1"] {
+      &lt;&lt;json: GlossarySchema&gt;&gt;
+      $schema [1] 'folio-glossary/v1'
+      id [1] string
+      title [1] string
+      description [0..1] string
+      hasVersion [0..1] string
+      modified [0..1] string
+      source [0..1] string
+      license [0..1] string
+      terms [0..*] Term[]
+      ordered [0..1] boolean
+      members [0..*] string[]
+    }
+  }
+  namespace folio_assistant_sci__voices {
+    class folio_assistant_sci_voices_Source["Source"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class folio_assistant_sci_voices_Pattern["Pattern"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class folio_assistant_sci_voices_Terminology["Terminology"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class folio_assistant_sci_voices_Rule["Rule"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class folio_assistant_sci_voices_VoiceProfile["VoiceProfile"] {
+      &lt;&lt;json: VoiceProfileSchema&gt;&gt;
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(17) | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  namespace folio_assistant_sci__lean_skills {
+    class n_folio_assistant_sci_lean_skills_skills["skills: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__data_skills {
+    class n_folio_assistant_sci_data_skills_skills["skills: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  namespace folio_assistant_sci__docs_source {
+    class n_folio_assistant_sci_docs_source_docs["docs: no node schema"] {
+      &lt;&lt;could not determine&gt;&gt;
+    }
+  }
+  cssClass "n_folio_assistant_sci_folio_assistant_sci_docs_docs" fa_uml_kind_docs
+  cssClass "n_folio_assistant_sci_folio_assistant_sci_docs_docs" fa_uml_undetermined
+  cssClass "folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1" fa_uml_kind_qa_checkers
+  cssClass "folio_assistant_sci_folio_assistant_sci_editor_checkers_folio_editor_checker_v1_folio_editor_checker_v1" fa_uml_kind_editor_checkers
+  cssClass "folio_assistant_sci_folio_assistant_sci_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
+  cssClass "folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" fa_uml_kind_pipeline_plugins
+  cssClass "folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "folio_assistant_sci_folio_assistant_sci_block_typologies_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
+  cssClass "folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1" fa_uml_kind_content_adapters
+  cssClass "folio_assistant_sci_folio_assistant_sci_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
+  folio_assistant_sci_library_folio_block_summaries_v1_Summary *-- "0..*" folio_assistant_sci_library_folio_block_summaries_v1_Superseded : superseded
+  folio_assistant_sci_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" folio_assistant_sci_library_folio_block_summaries_v1_Summary : summaries
+  folio_assistant_sci_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" folio_assistant_sci_library_folio_keywords_v1_Document : document
+  cssClass "folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_image_verdicts_v1" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_vector_figures_v1_folio_vector_figures_v1" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_keywords_v1_Document" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_keywords_v1_folio_keywords_v1" fa_uml_kind_library
+  folio_assistant_sci_sci_extracted_references_folio_reference_v1_folio_reference_v1 *-- "0..*" folio_assistant_sci_sci_extracted_references_folio_reference_v1_Author : author
+  folio_assistant_sci_sci_extracted_references_folio_reference_v1_folio_reference_v1 *-- "0..*" folio_assistant_sci_sci_extracted_references_folio_reference_v1_Editor : editor
+  cssClass "folio_assistant_sci_sci_extracted_references_folio_reference_v1_Author" fa_uml_kind_references
+  cssClass "folio_assistant_sci_sci_extracted_references_folio_reference_v1_Editor" fa_uml_kind_references
+  cssClass "folio_assistant_sci_sci_extracted_references_folio_reference_v1_folio_reference_v1" fa_uml_kind_references
+  cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_kind_methodology
+  cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_undetermined
+  folio_assistant_sci_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_sci_skills_folio_voice_v1_Source : sources
+  folio_assistant_sci_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_sci_skills_folio_voice_v1_Pattern : patterns
+  folio_assistant_sci_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_sci_skills_folio_voice_v1_Terminology : terminology
+  folio_assistant_sci_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_sci_skills_folio_voice_v1_Rule : rules
+  folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" folio_assistant_sci_skills_folio_voice_skill_v1_Source : sources
+  folio_assistant_sci_skills_folio_voice_skill_v1_Rule *-- "0..*" folio_assistant_sci_skills_folio_voice_skill_v1_Pattern : patterns
+  folio_assistant_sci_skills_folio_voice_skill_v1_Rule *-- "0..*" folio_assistant_sci_skills_folio_voice_skill_v1_Terminology : terminology
+  folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" folio_assistant_sci_skills_folio_voice_skill_v1_Rule : rules
+  folio_assistant_sci_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" folio_assistant_sci_skills_folio_remote_skill_v1_File : files
+  folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" folio_assistant_sci_skills_skill_topics_v1_Topic : topics
+  folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" folio_assistant_sci_skills_skill_topics_v1_Directory : directories
+  cssClass "folio_assistant_sci_skills_folio_voice_v1_Source" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_v1_Pattern" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_v1_Terminology" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_v1_Rule" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_v1_folio_voice_v1" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Source" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Pattern" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Terminology" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Rule" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_remote_skill_v1_File" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_remote_skill_v1_folio_remote_skill_v1" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_skill_topics_v1_Topic" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_skill_topics_v1_Directory" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1" fa_uml_kind_skills
+  cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_undetermined
+  cssClass "n_folio_assistant_sci_sci_scripts_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_sci_sci_scripts_code" fa_uml_undetermined
+  cssClass "folio_assistant_sci_folio_assistant_sci_libraries_software_library_1_0_0_software_library_1_0_0" fa_uml_kind_software_library
+  cssClass "n_folio_assistant_sci_sci_lean_lean" fa_uml_kind_lean
+  cssClass "n_folio_assistant_sci_sci_lean_lean" fa_uml_undetermined
+  cssClass "n_folio_assistant_sci_folio_templates_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_sci_folio_templates_code" fa_uml_undetermined
+  folio_assistant_sci_sci_tools_ToolDefinition *-- "0..*" folio_assistant_sci_sci_tools_Remedy : remedies
+  folio_assistant_sci_sci_tools_ToolDefinition *-- "0..*" folio_assistant_sci_sci_tools_Maintain : maintains
+  cssClass "folio_assistant_sci_sci_tools_Remedy" fa_uml_kind_tools
+  cssClass "folio_assistant_sci_sci_tools_Maintain" fa_uml_kind_tools
+  cssClass "folio_assistant_sci_sci_tools_ToolDefinition" fa_uml_kind_tools
+  folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier : identifiers
+  cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier" fa_uml_kind_schemas
+  cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas
+  cssClass "folio_assistant_sci_sci_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  folio_assistant_sci_scenarios_Role *-- "0..*" folio_assistant_sci_scenarios_FormerName : formerNames
+  folio_assistant_sci_scenarios_RoleGraph *-- "0..*" folio_assistant_sci_scenarios_Role : roles
+  folio_assistant_sci_scenarios_RoleGraph *-- "0..*" folio_assistant_sci_scenarios_Actor : actors
+  folio_assistant_sci_scenarios_RoleGraph *-- "0..*" folio_assistant_sci_scenarios_Extension : extensions
+  cssClass "folio_assistant_sci_scenarios_FormerName" fa_uml_kind_scenarios
+  cssClass "folio_assistant_sci_scenarios_Role" fa_uml_kind_scenarios
+  cssClass "folio_assistant_sci_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "folio_assistant_sci_scenarios_Extension" fa_uml_kind_scenarios
+  cssClass "folio_assistant_sci_scenarios_RoleGraph" fa_uml_kind_scenarios
+  folio_assistant_sci_qa_kg_qa_v1_Adversarial_review *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Flag : flags
+  folio_assistant_sci_qa_kg_qa_v1_Adversarial_review *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Finding : findings
+  folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Adversarial_review : adversarial_reviews
+  cssClass "folio_assistant_sci_qa_kg_qa_v1_Flag" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_kg_qa_v1_Finding" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_kg_qa_v1_Adversarial_review" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_qa_witness_v1" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_qa_results_v1" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
+  cssClass "folio_assistant_sci_attestations_QaAttestations" fa_uml_kind_attestations
+  folio_assistant_sci_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_sci_glossary_folio_glossary_v1_Term : terms
+  cssClass "folio_assistant_sci_glossary_folio_glossary_v1_Term" fa_uml_kind_glossary
+  cssClass "folio_assistant_sci_glossary_folio_glossary_v1_folio_glossary_v1" fa_uml_kind_glossary
+  folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Source : sources
+  folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
+  folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
+  folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
+  cssClass "folio_assistant_sci_voices_Source" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_Pattern" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_Terminology" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_Rule" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_VoiceProfile" fa_uml_kind_voices
+  cssClass "n_folio_assistant_sci_lean_skills_skills" fa_uml_kind_skills
+  cssClass "n_folio_assistant_sci_lean_skills_skills" fa_uml_undetermined
+  cssClass "n_folio_assistant_sci_data_skills_skills" fa_uml_kind_skills
+  cssClass "n_folio_assistant_sci_data_skills_skills" fa_uml_undetermined
+  cssClass "n_folio_assistant_sci_docs_source_docs" fa_uml_kind_docs
+  cssClass "n_folio_assistant_sci_docs_source_docs" fa_uml_undetermined
+</code></pre></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>

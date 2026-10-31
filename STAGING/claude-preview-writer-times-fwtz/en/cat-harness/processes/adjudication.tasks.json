@@ -1,0 +1,158 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Adjudication",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+ "tasks": {
+  "A_StateFinding": {
+   "id": "A_StateFinding",
+   "name": "State the finding and what it read",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_StateFinding",
+   "lane": "Feedback provider",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_FeedbackProvider",
+   "skills": [
+    {
+     "name": "content-feedback"
+    }
+   ],
+   "role": {
+    "name": "feedback-provider",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+    "title": "Feedback provider",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_Dispatch": {
+   "id": "A_Dispatch",
+   "name": "Dispatch with adjudicator_sees — never the artefact",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Dispatch",
+   "lane": "Adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+   "skills": [
+    {
+     "name": "untainted-verification"
+    }
+   ],
+   "role": {
+    "name": "adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+    "title": "Adjudicator",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "A_Adjudicate": {
+   "id": "A_Adjudicate",
+   "name": "Adjudicate the disagreement",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Adjudicate",
+   "lane": "Adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+   "skills": [
+    {
+     "name": "adjudication"
+    }
+   ],
+   "role": {
+    "name": "adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+    "title": "Adjudicator",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  }
+ }
+}

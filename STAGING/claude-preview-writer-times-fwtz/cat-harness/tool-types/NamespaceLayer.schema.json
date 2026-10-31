@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-writer-times-fwtz/cat-harness/tool-types/NamespaceLayer.schema.json",
+  "title": "NamespaceLayer",
+  "type": "string",
+  "enum": [
+    "bootstrap",
+    "harness",
+    "core"
+  ],
+  "description": "A namespace layer: bootstrap resolves before anything else, then harness, then core.",
+  "staging": {
+    "branch": "claude/preview-writer-times-fwtz",
+    "sha": "a4d3da7ed6985fcf1e2a6fc173245edce75728b1",
+    "pr": "2861/merge",
+    "run": "41235459201"
+  }
+}

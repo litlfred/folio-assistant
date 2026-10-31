@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(20)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(127) > ul > li:nth-child(20) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(127) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(127) > ul > li:nth-child(20) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(127) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(127) > ul.nav-list > li.nav-list-item:nth-child(20) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../assets/js/vendor/lunr.min.js"></script><script src="../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>LSI — applicability to ingestion, KG development, QA and the work plan | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="LSI — applicability to ingestion, KG development, QA and the work plan" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="LSI — applicability to ingestion, KG development, QA and the work plan" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-lsi-applicability",
+    "src": "../assets/qa/proposals-lsi-applicability/page.translation.json",
+    "index": "../assets/qa/proposals-lsi-applicability/qa-index.json",
+    "list": "../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../folio-assistant-core/","jsonld":"../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../assets/harness/site.json"><meta name="fa-todo-src" content="../assets/todos/index.json"><meta name="fa-todo-graph" content="../todos.jsonld"><meta name="fa-zoom-src" content="../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content=".."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../assets/beans/index.json"><meta name="fa-processes-src" content="../subgraph/index.jsonld"><meta name="fa-build-src" content="../build.json"><meta name="fa-fsh-guts-src" content="../fsh-guts.json"><link rel="stylesheet" href="../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../assets/js/harness-data.js" defer></script><script src="../assets/js/vendor/qrcode.js" defer></script><script src="../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../assets/js/kg-render.js" defer></script><script src="../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../assets/js/docs-ui.js?v=9cd0cc409fcd" defer></script><script src="../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../assets/js/work-plan.js" defer></script><script src="../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-giobbw31pa","here":"/proposals/lsi-applicability.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-the-problem-lsi-solves-stated-in-this-repositorys-own-words","label":"The problem LSI solves, stated in this repository’s own words","icon":"1"},{"href":"#2-applicability-problem-by-problem","label":"Applicability, problem by problem","icon":"2","children":[{"href":"#21-document-ingestion","label":"Document ingestion","icon":"2.1","depth":1},{"href":"#22-knowledge-graph-development","label":"Knowledge-graph development","icon":"2.2","depth":1},{"href":"#23-qa","label":"QA","icon":"2.3","depth":1},{"href":"#24-the-work-plan--epics","label":"The work plan — epics","icon":"2.4","depth":1}],"fold":"4 sub-sections"},{"href":"#3-what-lsi-is-not-good-at-here","label":"What LSI is NOT good at, here","icon":"3"},{"href":"#4-options-for-skills-tools-and-docs","label":"Options for skills, tools and docs","icon":"4"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>LSI — applicability to ingestion, KG development, QA and the work plan</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 id="latent-semantic-indexing-where-it-applies-here-measured"><a href="#latent-semantic-indexing-where-it-applies-here-measured" class="anchor-heading" aria-labelledby="latent-semantic-indexing-where-it-applies-here-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Latent Semantic Indexing: where it applies here, measured
+  
+  
+</h1><p><strong>Method:</strong> <a href="../../methodologies/lsi.md"><code class="language-plaintext highlighter-rouge">methodologies/lsi.md</code></a> · <strong>Skill:</strong> <a href="../../skills/kg/graph-management/lsi-indexing.md"><code class="language-plaintext highlighter-rouge">lsi-indexing</code></a> · <strong>Engine:</strong> <code class="language-plaintext highlighter-rouge">content/pipeline/lsi.ts</code> · <strong>Bean</strong> <code class="language-plaintext highlighter-rouge">ansc</code>, <strong>issue</strong> #1482.</p><p>Every number below was measured on 2026-09-29 in this checkout, by the commands
+named beside it. None is quoted from the literature.</p><h2 id="1-the-problem-lsi-solves-stated-in-this-repositorys-own-words"><a href="#1-the-problem-lsi-solves-stated-in-this-repositorys-own-words" class="anchor-heading" aria-labelledby="1-the-problem-lsi-solves-stated-in-this-repositorys-own-words"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The problem LSI solves, stated in this repository’s own words
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">content/pipeline/graph-search.ts</code> already names it in its docblock: a lexical
+search <em>“cannot answer [has anyone worked this topic?] for a prior result
+written in different words — which is the case that actually costs a session,
+because the grep comes back empty and reads as a clean bill.”</em> The graph walk
+it adds recovers the case where the related node is <strong>linked</strong>. LSI recovers the
+case where it is <strong>not linked and not worded the same</strong>, which neither lexical
+search nor the graph can see.</p><p>That is the whole argument for adopting it, and it also sets the limit: LSI is a
+retrieval aid, so every output here is a proposal (method refusals 1–4).</p><h2 id="2-applicability-problem-by-problem"><a href="#2-applicability-problem-by-problem" class="anchor-heading" aria-labelledby="2-applicability-problem-by-problem"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Applicability, problem by problem
+  
+  
+</h2><h3 id="21-document-ingestion"><a href="#21-document-ingestion" class="anchor-heading" aria-labelledby="21-document-ingestion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.1 Document ingestion
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>use</th><th>measured on the IRIS replica (3 docs, 342 sections, 47,552 words, ~1 s)</th><th>verdict</th></tr></thead><tbody><tr><td><strong>Outlier / non-prose detection</strong> (<code class="language-plaintext highlighter-rouge">narrowDimensions</code>)</td><td>two dimensions are placeholder text in the WPRO style guide: Lorem-ipsum layout filler (pp. 21, 29–31) and pseudo-Latin font specimens (pp. 14–15, 28). Found on the first run, by nobody looking for it</td><td><strong>strong</strong> — cheap, and finds what a per-page check cannot, because “unusual” is only defined against the rest of the corpus</td></tr><tr><td><strong>Near-duplicate pages</strong> (<code class="language-plaintext highlighter-rouge">nearDuplicates</code>)</td><td>12 pairs, all inside the WPRO guide: repeated layout pages (pp. 6–10) and font-specimen pages (14/15, cos 0.993)</td><td><strong>useful</strong>, needs a person: similar is not duplicate</td></tr><tr><td><strong>Cross-document “about the same thing”</strong></td><td>query <em>certainty of the evidence</em> → Handbook §9.5.2, §9.1 lexically, then §9.2 <em>GRADE evidence profiles</em> and §9.6 <strong>latent-only</strong>; <em>tuberculosis drug susceptibility</em> → the Handbook’s PICO examples, all latent-only</td><td><strong>strong</strong> for the vocabulary gap; weak across documents whose vocabularies do not overlap (the style manuals and the guideline handbook share little)</td></tr><tr><td>Prioritising agent summaries (bean <code class="language-plaintext highlighter-rouge">x80s</code>)</td><td>not run</td><td>plausible: summarise a dimension’s central units first</td></tr><tr><td>Round-trip translation QA (bean <code class="language-plaintext highlighter-rouge">ktt2</code>)</td><td>not run</td><td><strong>not with this node.</strong> Cross-language LSI is a different method (Dumais et al. 1997) and needs a parallel corpus</td></tr></tbody></table></div><h3 id="22-knowledge-graph-development"><a href="#22-knowledge-graph-development" class="anchor-heading" aria-labelledby="22-knowledge-graph-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.2 Knowledge-graph development
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>use</th><th>measured</th><th>verdict</th></tr></thead><tbody><tr><td><strong>Vocabulary-gap search beside <code class="language-plaintext highlighter-rouge">graph-search</code></strong></td><td>see 2.1</td><td><strong>strong</strong>; report as its own provenance, never merged</td></tr><tr><td>Duplicate / overlapping skills</td><td>302 skills, 7,514 terms: <strong>0</strong> pairs ≥ 0.95</td><td>a measured negative — the skills graph is not restating itself at that threshold</td></tr><tr><td><code class="language-plaintext highlighter-rouge">uses[]</code> candidates for a block</td><td>not run</td><td><strong>propose only</strong> — <code class="language-plaintext highlighter-rouge">uses[]</code> is editorial; writing it from a score destroys the signal (refusal 3)</td></tr><tr><td>Glossary candidates (bean <code class="language-plaintext highlighter-rouge">lqo9</code>)</td><td>not run</td><td>plausible: term–term neighbours in <code class="language-plaintext highlighter-rouge">U_k Σ_k</code> surface synonyms a glossary should reconcile</td></tr><tr><td>Cohesion of a candidate subgraph (bean <code class="language-plaintext highlighter-rouge">j79e</code>, detangle)</td><td>not run</td><td>a second, independent cohesion measure; parallel to the structural one, not a replacement</td></tr><tr><td><strong>Formal math content</strong></td><td>—</td><td><strong>excluded.</strong> A similarity score is never evidence for a claim, never enters a proof (refusal 4)</td></tr></tbody></table></div><h3 id="23-qa"><a href="#23-qa" class="anchor-heading" aria-labelledby="23-qa"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.3 QA
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">bun run cat lsi:audit</code> — which declared prose graphs need an index, and is each
+fresh. First run: <strong>8 graphs</strong> met the threshold (≥ 100 units, ≥ 20,000 words;
+a house number, basis stated in <code class="language-plaintext highlighter-rouge">scripts/lsi.ts</code>). After this PR: the IRIS replica’s <code class="language-plaintext highlighter-rouge">library</code>
+and <code class="language-plaintext highlighter-rouge">cat-harness/skills</code> <strong>pass</strong>; <code class="language-plaintext highlighter-rouge">cat-harness/beans</code> is <strong>n/a by design</strong>
+(a state graph, rebuilt on demand); five still <strong>fail</strong> —
+<code class="language-plaintext highlighter-rouge">agent-skills/library</code>, <code class="language-plaintext highlighter-rouge">cat-harness/library</code>, <code class="language-plaintext highlighter-rouge">cat-harness/docs</code>,
+the DAK layer’s <code class="language-plaintext highlighter-rouge">library</code>, the trust IG’s <code class="language-plaintext highlighter-rouge">smart-trust-docs</code>.</p><h3 id="24-the-work-plan--epics"><a href="#24-the-work-plan--epics" class="anchor-heading" aria-labelledby="24-the-work-plan--epics"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.4 The work plan — epics
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">bun run cat lsi:epics</code> over <strong>1,061 beans</strong> (every status), 21 open epics as
+classes. Full output: <a href="../proposals/lsi-epic-filing-2026-09-29.html"><code class="language-plaintext highlighter-rouge">lsi-epic-filing-2026-09-29.md</code></a>.</p><ul><li><strong>The store is already well filed</strong>: 7 of 254 open beans have no epic.</li><li><strong>Calibration</strong>: leave-one-out, LSI’s best epic equals the current one for
+<strong>145 / 247 (59 %)</strong>; chance is ~5 %. Flat across k = 50–250 (59–63 %).
+Log-entropy beat tf-idf (59 % vs 52 %). (Dumais 1991, credited with that
+weighting, is not held, so this is our measurement, not a replication.)</li><li><strong>34 disputed filings.</strong> The strongest are <em>symptom vs subject</em>: translation
+catalogue beans under CI RELIABILITY (they turned <code class="language-plaintext highlighter-rouge">main</code> red) that LSI puts
+under TRANSLATION (what they are about). Both are defensible; which axis an
+epic means is an owner decision.</li><li><strong>Duplicates found</strong>: 13 bean pairs ≥ 0.95, e.g. <code class="language-plaintext highlighter-rouge">3ozg</code>/<code class="language-plaintext highlighter-rouge">rmcf</code> (72 sidecars
+churn), <code class="language-plaintext highlighter-rouge">d3yq</code>/<code class="language-plaintext highlighter-rouge">xffc</code> (themes), <code class="language-plaintext highlighter-rouge">gx86</code>/<code class="language-plaintext highlighter-rouge">whwf</code>, <code class="language-plaintext highlighter-rouge">o3p3</code>/<code class="language-plaintext highlighter-rouge">ukfw</code>.</li><li><strong>Branches</strong>: 145 unmerged. 39 name a bean in their commits (explicit home);
+106 do not and get a latent proposal, mostly with small margins — most are
+one-commit leftovers whose work landed another way.</li></ul><h2 id="3-what-lsi-is-not-good-at-here"><a href="#3-what-lsi-is-not-good-at-here" class="anchor-heading" aria-labelledby="3-what-lsi-is-not-good-at-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. What LSI is NOT good at, here
+  
+  
+</h2><p>Since this page was first written, the sources were ingested and the method
+node was checked against them (<a href="../../methodologies/lsi.md"><code class="language-plaintext highlighter-rouge">lsi</code></a>): the
+engine reproduces the 1990 paper’s worked example, and two claims in the
+first draft were corrected — <code class="language-plaintext highlighter-rouge">k</code> (the paper uses 50–100) and stemming (the
+paper’s CISI result shows stemming captured structure LSI did not).</p><ul><li><p><strong>The first dimension is a margin.</strong> Qi et al. (2023): LSA’s first
+dimensions mainly show document length and term frequency. Both our
+committed indexes have a dimension 1 with no negative pole — that signature.</p></li><li><strong>Word order and negation.</strong> Bag of words: “X is not Y” and “X is Y” are the
+same vector. Useless for checking what a text <em>asserts</em>.</li><li><strong>Polysemy is only partly handled.</strong> A term has one vector — the average of
+its senses; context disambiguates only at the unit level.</li><li><strong>Small graphs.</strong> Below ~100 units the co-occurrence statistics are thin;
+that is why the audit says <code class="language-plaintext highlighter-rouge">n/a</code>, not <code class="language-plaintext highlighter-rouge">pass</code>.</li><li><strong><code class="language-plaintext highlighter-rouge">k</code> is empirical.</strong> The literature gives no rule; the calibration above is
+how this repo chose (and found the choice barely matters for filing).</li><li><strong>Dimensions are identifiable only up to sign and rotation within equal
+singular values.</strong> The engine fixes the sign; naming a dimension is still a
+person’s act.</li></ul><h2 id="4-options-for-skills-tools-and-docs"><a href="#4-options-for-skills-tools-and-docs" class="anchor-heading" aria-labelledby="4-options-for-skills-tools-and-docs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Options for skills, tools and docs
+  
+  
+</h2><p>Built in this PR: the methodology node, the engine, <code class="language-plaintext highlighter-rouge">lsi</code> / <code class="language-plaintext highlighter-rouge">lsi:audit</code> /
+<code class="language-plaintext highlighter-rouge">lsi:epics</code>, the <code class="language-plaintext highlighter-rouge">lsi-indexing</code> skill, committed sidecars for
+the IRIS replica and skills, this page and the epic proposal.</p><div class="table-wrapper"><table><thead><tr><th>#</th><th>option</th><th>what it adds</th><th>cost</th><th>recommendation</th></tr></thead><tbody><tr><td>A</td><td><strong>Semantic check before <code class="language-plaintext highlighter-rouge">beans create</code></strong></td><td>fold the new title in, show the 3 nearest beans; <code class="language-plaintext highlighter-rouge">beans create</code> dedupes on nothing (the 14,688-duplicate incident)</td><td>small: one call in the check-before-create recipe</td><td><strong>do first</strong> — highest value per line</td></tr><tr><td>B</td><td><strong>Ingestion QA step</strong></td><td>run <code class="language-plaintext highlighter-rouge">narrowDimensions</code> + <code class="language-plaintext highlighter-rouge">nearDuplicates</code> as a sidecar when a library document is ingested (<code class="language-plaintext highlighter-rouge">library-ingestion</code>)</td><td>small–medium; one BPMN task</td><td>do second</td></tr><tr><td>C</td><td><strong><code class="language-plaintext highlighter-rouge">--latent</code> on <code class="language-plaintext highlighter-rouge">graph-search</code> + an MCP <code class="language-plaintext highlighter-rouge">lsi_query</code> Tool node</strong></td><td>agents get vocabulary-gap search where they already search, as a separate provenance</td><td>medium; a Tool node + satisfies</td><td>do third</td></tr><tr><td>D</td><td>Fold <code class="language-plaintext highlighter-rouge">lsi-index-fresh</code> into <code class="language-plaintext highlighter-rouge">kg:audit</code> as a sidecar criterion</td><td>the verdict joins the audited record, like <code class="language-plaintext highlighter-rouge">check:raci</code> did (bean <code class="language-plaintext highlighter-rouge">3kbd</code>)</td><td>medium; kg:audit sidecar churn, and PR #1472 is reshaping kg:audit now</td><td>after #1472 lands</td></tr><tr><td>E</td><td>Index the five remaining graphs</td><td><code class="language-plaintext highlighter-rouge">bun run cat lsi index</code> per graph; <code class="language-plaintext highlighter-rouge">docs</code> is 434k words (~10 s)</td><td>trivial compute, large sidecars to review</td><td>after deciding sidecar size policy</td></tr><tr><td>F</td><td>Apply the epic proposal</td><td><code class="language-plaintext highlighter-rouge">beans update --parent</code> for the 7 unfiled, scrap-with-pointer for confirmed duplicates</td><td>owner review per bean</td><td>owner decides</td></tr><tr><td>G</td><td><strong>Correspondence analysis as its own method node</strong> — ✅ <strong>built and measured 2026-09-29</strong></td><td><code class="language-plaintext highlighter-rouge">methodologies/correspondence-analysis.md</code>, <code class="language-plaintext highlighter-rouge">content/pipeline/ca.ts</code> (tested on Qi et al.’s Table 1). On the pre-refiling bean store: CA-raw 146 vs LSI-raw 136 of 250 (the paper’s direction, McNemar p = 0.17); vs log-entropy LSI p = 0.71. Removes the margin dimension (the IRIS replica dim 1: LSI 342/342 one side, CA 46/296) but its leading dimensions go to outliers</td><td>done</td><td>parallel track; LSI stays the filing default</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>
