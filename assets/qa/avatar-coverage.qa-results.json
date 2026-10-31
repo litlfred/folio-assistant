@@ -25,14 +25,8 @@
     },
     "kind-has-avatar": {
       "summary": "Every declared kind has an avatar of its own. A kind with none renders as the generic question mark — deliberately a gap rather than a neutral mark, because a reader must be able to tell \"no art yet\" from \"this is what it looks like\".",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "subscribed-harnesses",
-          "where": "schemas/content/avatars.ts",
-          "note": "no avatar is declared, so this kind renders as the generic question mark"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "trash-state-derived": {
       "summary": "The trash state is composed from the base glyph rather than drawn per kind, so its coverage cannot lag. Asserted ONCE: a per-kind criterion here could never fail, which would read as coverage while measuring nothing.",
@@ -40,5 +34,5 @@
       "entries": []
     }
   },
-  "total": 3
+  "total": 2
 }

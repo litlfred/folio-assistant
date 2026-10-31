@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 49,
+      "count": 50,
       "unit": "open beans"
     }
   },
@@ -1844,6 +1844,20 @@
       "updatedAt": "2026-09-30T15:42:28Z",
       "preview": "Owner 2026-09-30: fix the platform; first analyze consistency with the just-the-docs pipeline, and how to namespace values by source (paper, dataset e.g. CODATA with provenance via ingestion, FHIR IG metadata).\n\n## Done when\n- [x] prose :val resolves names with underscores (render-latex), tested and calibrated\n- [x] consistency analysis across PDF / just-the-docs / blueprint / FHIR IG, recorded (b",
       "file": "beans/defs/folio-assistant-6dvy--witnessed-values-val-prose-bug-just-the-docs-subst.md"
+    },
+    {
+      "id": "folio-assistant-6fez",
+      "title": "Library sources regroup: cat-harness/library/ into library/<group>/<slug>/ (split from f8wp)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-iirv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T10:50:00Z",
+      "updatedAt": "2026-10-31T10:50:00Z",
+      "preview": "Split from `f8wp` (owner card 2026-10-31 10:45Z, \"A. Close f8wp, new bean\"). f8wp's body carried placement ruling 3 (2026-09-30): `library/` sources regroup to `library/<group>/<slug>/`. That part was never a Done-when box of f8wp, so it moved here. As of 2026-10-30, `cat-harness/library/` is flat: 62 entries plus a README.\n\nRules from the placement proposal: references move with the subject; gene",
+      "file": "beans/defs/folio-assistant-6fez--library-sources-regroup-into-library-group-slug.md"
     },
     {
       "id": "folio-assistant-6g6o",
@@ -10523,8 +10537,8 @@
         "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 47,
-    "openTotal": 49,
+    "orphanOpen": 48,
+    "openTotal": 50,
     "coveredOpen": 1,
     "duplicateIds": 0
   }

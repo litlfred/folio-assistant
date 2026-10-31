@@ -16,8 +16,13 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
+          "names": 2
+        }
+      ]
     },
     "pending-held": {
       "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
@@ -35,11 +40,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6109,
+          "occurrences": 6159,
           "allowed": 0,
-          "wrongDirection": 4,
-          "wrongDirectionFiles": 1,
-          "exempt": 6105,
+          "wrongDirection": 7,
+          "wrongDirectionFiles": 3,
+          "exempt": 6152,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -49,8 +54,20 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 1,
+      "count": 4,
       "entries": [
+        {
+          "file": "cat-harness-tools/schemas/harness-root.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
+          "target": "folio-assistant-core"
+        },
         {
           "file": "cat-harness/skills/ui/ui-core/archimate-models.md",
           "target": "cat-harness-tools"
@@ -58,5 +75,5 @@
       ]
     }
   },
-  "total": 2
+  "total": 6
 }
